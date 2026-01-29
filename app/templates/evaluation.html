@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block title %}Evaluation{% endblock %}
+
+{% block content %}
+<h4 class="mb-2">Evaluation</h4>
+<p class="text-muted mb-4">
+    Select candidates and rounds to evaluate test performance.
+</p>
+
+<!-- ================= FILTER SECTION ================= -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h6 class="mb-3">Evaluation Criteria</h6>
+
+        <div class="row mb-3">
+            <!-- Candidates -->
+            <div class="col-md-6">
+                <label class="form-label">Select Candidates</label>
+                <select class="form-select" multiple>
+                    <option selected>All candidates (this session)</option>
+                    <option>Ravi Kumar</option>
+                    <option>Anita Sharma</option>
+                    <option>Rahul Verma</option>
+                </select>
+                <small class="text-muted">
+                    Hold Ctrl (Cmd) to select multiple
+                </small>
+            </div>
+
+            <!-- Rounds -->
+            <div class="col-md-6">
+                <label class="form-label">Select Rounds</label>
+                <div class="border rounded p-2">
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="allRounds" checked>
+                        <label class="form-check-label fw-semibold" for="allRounds">
+                            All Rounds
+                        </label>
+                    </div>
+
+                    <hr class="my-2">
+
+                    <div class="form-check">
+                        <input class="form-check-input roundCheck" type="checkbox" checked>
+                        <label class="form-check-label">L1 – Aptitude</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input roundCheck" type="checkbox" checked>
+                        <label class="form-check-label">L2 – Theory</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input roundCheck" type="checkbox" checked>
+                        <label class="form-check-label">L3 – Skill / Debugging</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input roundCheck" type="checkbox" checked>
+                        <label class="form-check-label">L4 – Coding</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input roundCheck" type="checkbox">
+                        <label class="form-check-label">L5 – Domain</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input roundCheck" type="checkbox" checked>
+                        <label class="form-check-label">L6 – Soft Skills</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary" id="evaluateBtn">
+                Evaluate
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ================= PROGRESS SECTION ================= -->
+<div class="card shadow-sm mb-4 d-none" id="progressSection">
+    <div class="card-body text-center">
+        <div class="spinner-border text-primary mb-3" role="status"></div>
+        <p class="mb-2 fw-semibold">Evaluating selected candidates…</p>
+
+        <div class="progress" style="height: 6px;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                 style="width: 100%"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= RESULT SECTION ================= -->
+<div class="card shadow-sm d-none" id="resultSection">
+    <div class="card-body">
+        <h6 class="mb-3">Evaluation Results</h6>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+            <tr>
+                <th>Candidate</th>
+                <th>L1</th>
+                <th>L2</th>
+                <th>L3</th>
+                <th>L4</th>
+                <th>L5</th>
+                <th>L6</th>
+                <th>Overall</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <strong>Ravi Kumar</strong><br>
+                    <small class="text-muted">Python Entry Level</small>
+                </td>
+                <td class="text-success">PASS</td>
+                <td class="text-success">PASS</td>
+                <td class="text-danger">FAIL</td>
+                <td class="text-success">PASS</td>
+                <td class="text-muted">—</td>
+                <td class="text-success">PASS</td>
+                <td class="fw-semibold">PASS</td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>Anita Sharma</strong><br>
+                    <small class="text-muted">Python QA</small>
+                </td>
+                <td class="text-success">PASS</td>
+                <td class="text-success">PASS</td>
+                <td class="text-success">PASS</td>
+                <td class="text-success">PASS</td>
+                <td class="text-muted">—</td>
+                <td class="text-success">PASS</td>
+                <td class="fw-semibold">PASS</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ================= JS LOGIC ================= -->
+<script>
+    const evaluateBtn = document.getElementById("evaluateBtn");
+    const progressSection = document.getElementById("progressSection");
+    const resultSection = document.getElementById("resultSection");
+    const allRounds = document.getElementById("allRounds");
+    const roundChecks = document.querySelectorAll(".roundCheck");
+
+    // All rounds toggle
+    allRounds.addEventListener("change", () => {
+        roundChecks.forEach(cb => cb.checked = allRounds.checked);
+    });
+
+    // Evaluate click
+    evaluateBtn.addEventListener("click", () => {
+        resultSection.classList.add("d-none");
+        progressSection.classList.remove("d-none");
+
+        // Simulate evaluation delay
+        setTimeout(() => {
+            progressSection.classList.add("d-none");
+            resultSection.classList.remove("d-none");
+        }, 3000);
+    });
+</script>
+
+{% endblock %}

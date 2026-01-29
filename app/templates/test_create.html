@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}Generate Test{% endblock %}
+
+{% block content %}
+<h4 class="mb-2">Generate Candidate Test</h4>
+<p class="text-muted mb-4">
+    Create assessment links for single or multiple candidates.
+</p>
+
+<form method="POST" id="generateForm">
+
+<!-- ================= CANDIDATE MODE ================= -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h6 class="mb-3">Candidate Mode</h6>
+
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="candidate_mode"
+                   id="single_mode" checked>
+            <label class="form-check-label" for="single_mode">
+                Single Candidate
+            </label>
+        </div>
+
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="candidate_mode"
+                   id="multi_mode">
+            <label class="form-check-label" for="multi_mode">
+                Multiple Candidates
+            </label>
+        </div>
+    </div>
+</div>
+
+<!-- ================= SINGLE CANDIDATE ================= -->
+<div class="card shadow-sm mb-4" id="singleCandidateSection">
+    <div class="card-body">
+        <h6 class="mb-3">Candidate Details</h6>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control"
+                       name="name"
+                       placeholder="John Doe"
+                       required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control"
+                       name="email"
+                       placeholder="john.doe@email.com"
+                       required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Role</label>
+                <select class="form-select" name="role" required>
+                    <option value="">Select role</option>
+                    <option>Python Entry Level (0–2 Years)</option>
+                    <option>Java Entry Level (0–2 Years)</option>
+                    <option>JavaScript Entry Level (0–2 Years)</option>
+                    <option>Python QA / System / Linux (4+ Years)</option>
+                    <option>Python QA (4+ Years)</option>
+                    <option>Python Development (4+ Years)</option>
+                    <option>Python + AI/ML (4+ Years)</option>
+                    <option>Java + AWS Development (5+ Years)</option>
+                    <option>Java QA (5+ Years)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Domain (Optional)</label>
+                <select class="form-select" name="domain">
+                    <option selected>None</option>
+                    <option>Virtualization</option>
+                    <option>Cloud</option>
+                    <option>Networking</option>
+                    <option>Storage</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= ACTION BUTTONS ================= -->
+<div class="d-flex justify-content-end">
+    <a href="/dashboard" class="btn btn-outline-secondary me-2">
+        Cancel
+    </a>
+    <button class="btn btn-primary" id="generateBtn">
+        Generate Test
+    </button>
+</div>
+
+</form>
+
+<!-- ================= LOADING OVERLAY ================= -->
+<div id="loadingOverlay" class="loading-overlay d-none">
+    <div class="loading-card text-center">
+        <div class="spinner-border text-primary mb-3" role="status"></div>
+        <h6 class="mb-1">Generating tests…</h6>
+        <p class="text-muted small mb-0">
+            Please do not refresh or click back
+        </p>
+    </div>
+</div>
+
+<!-- ================= JS ================= -->
+<script>
+    const form = document.getElementById("generateForm");
+    const overlay = document.getElementById("loadingOverlay");
+    const button = document.getElementById("generateBtn");
+
+    form.addEventListener("submit", () => {
+        button.disabled = true;
+        overlay.classList.remove("d-none");
+    });
+</script>
+
+{% endblock %}

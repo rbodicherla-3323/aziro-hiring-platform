@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Generated Tests{% endblock %}
+
+{% block content %}
+<h4 class="mb-2">Generated Tests</h4>
+<p class="text-muted mb-4">
+    View and share test links generated in this session.
+</p>
+
+<!-- ================= BULK ACTIONS ================= -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body d-flex align-items-center justify-content-between">
+        <div>
+            <input class="form-check-input me-2" type="checkbox" id="selectAll">
+            <label class="form-check-label fw-semibold">
+                Select all candidates
+            </label>
+        </div>
+
+        <button class="btn btn-primary btn-sm" id="bulkEmailBtn">
+            Send Emails to All
+        </button>
+    </div>
+</div>
+
+<!-- ================= CANDIDATE TEST LIST ================= -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+
+        {% if candidates %}
+            {% for cand in candidates %}
+            <div class="border rounded p-3 mb-3 candidate-card">
+
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <input type="checkbox" class="candidateCheck me-2">
+                        <strong>{{ cand.name }}</strong>
+                        <div class="text-muted small">
+                            {{ cand.email }} · {{ cand.role }}
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="list-unstyled mt-3 small">
+                    {% for level, test in cand.tests.items() %}
+                    <li>
+                        {{ level }} – {{ test.label }}
+                        <button class="btn btn-link btn-sm copyBtn"
+                                data-link="{{ test.url }}">
+                            Copy Link
+                        </button>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted mb-0">
+                No tests generated yet. Please create a test first.
+            </p>
+        {% endif %}
+
+    </div>
+</div>
+
+<!-- ================= JS ================= -->
+<script>
+    const selectAll = document.getElementById("selectAll");
+    const candidateChecks = document.querySelectorAll(".candidateCheck");
+
+    selectAll.addEventListener("change", () => {
+        candidateChecks.forEach(cb => cb.checked = selectAll.checked);
+    });
+
+    document.querySelectorAll(".copyBtn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            navigator.clipboard.writeText(btn.dataset.link);
+            btn.innerText = "Copied";
+            setTimeout(() => btn.innerText = "Copy Link", 1000);
+        });
+    });
+</script>
+
+{% endblock %}

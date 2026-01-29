@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<!-- ================= BANNER IMAGE ================= -->
+<div class="dashboard-banner mb-4">
+    <img src="{{ url_for('static', filename='images/aziro_banner.jpg') }}"
+         alt="Aziro Hiring Banner"
+         class="img-fluid rounded shadow-sm w-100"
+         style="max-height: 260px; object-fit: cover;">
+</div>
+
+<!-- ================= WELCOME MESSAGE ================= -->
+<h4 class="mb-2">Welcome to Aziro Hiring Page</h4>
+<p class="text-muted mb-4">
+    Manage candidate assessments, evaluations, and reports from a single place.
+</p>
+
+<!-- ================= INSTRUCTIONS ================= -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h6 class="mb-3">Instructions</h6>
+
+        <ul class="mb-0">
+            <li>
+                Use <strong>Create Test</strong> to generate assessment links for
+                single or multiple candidates.
+            </li>
+            <li>
+                After generating tests, visit <strong>Generated Tests</strong> to
+                copy or resend test links if required.
+            </li>
+            <li>
+                Allow candidates sufficient time to complete their tests before
+                starting evaluation.
+            </li>
+            <li>
+                Use <strong>Evaluation</strong> to review candidate performance
+                across individual or multiple rounds.
+            </li>
+            <li>
+                Reports and analytics will be available after evaluation is completed.
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- ================= QUICK ACTIONS ================= -->
+<div class="row g-4">
+
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h6>Create Test</h6>
+                <p class="text-muted small">
+                    Generate test links based on candidate role and domain.
+                </p>
+                <a href="/create-test" class="btn btn-outline-primary btn-sm">
+                    Create Test
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h6>Generated Tests</h6>
+                <p class="text-muted small">
+                    View, copy, or resend generated test links.
+                </p>
+                <a href="/generated-tests" class="btn btn-outline-primary btn-sm">
+                    View Tests
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h6>Evaluation</h6>
+                <p class="text-muted small">
+                    Evaluate candidate performance after test completion.
+                </p>
+                <a href="/evaluation" class="btn btn-outline-primary btn-sm">
+                    Evaluate
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
