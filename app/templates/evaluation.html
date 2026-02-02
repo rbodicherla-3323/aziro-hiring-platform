@@ -1,86 +1,75 @@
 {% extends "base.html" %}
 {% block title %}Evaluation{% endblock %}
+{% block breadcrumb %}Evaluation{% endblock %}
 
 {% block content %}
-<h4 class="mb-2">Evaluation</h4>
-<p class="text-muted mb-4">
-    Select candidates and rounds to evaluate test performance.
-</p>
+<div class="mb-4">
+    <h4 class="mb-1">Evaluation</h4>
+    <p class="text-muted mb-0 small">
+        Select candidates to evaluate test performance.
+    </p>
+</div>
 
-<!-- ================= FILTER SECTION ================= -->
+<!-- ================= CANDIDATES SELECTION ================= -->
 <div class="card shadow-sm mb-4">
     <div class="card-body">
-        <h6 class="mb-3">Evaluation Criteria</h6>
+        <!-- Dropdown Toggle -->
+        <div id="candidateDropdownToggle" class="form-control d-flex justify-content-between align-items-center" role="button">
+            <span id="selectedCountText">Select Candidates</span>
+            <svg id="candidateChevron" width="14" height="14" viewBox="0 0 16 16" fill="none"
+                 xmlns="http://www.w3.org/2000/svg" style="transition: transform 0.2s;">
+                <path d="M2 5L8 11L14 5"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+        </div>
 
-        <div class="row mb-3">
-            <!-- Candidates -->
-            <div class="col-md-6">
-                <label class="form-label">Select Candidates</label>
-                <select class="form-select" multiple>
-                    <option selected>All candidates (this session)</option>
-                    <option>Ravi Kumar</option>
-                    <option>Anita Sharma</option>
-                    <option>Rahul Verma</option>
-                </select>
-                <small class="text-muted">
-                    Hold Ctrl (Cmd) to select multiple
-                </small>
+        <!-- Collapsible Candidate List -->
+        <div id="candidateSelectContainer" class="border rounded mt-2 p-3 d-none">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="fw-semibold small text-muted">Session Candidates</span>
+                <div class="d-flex gap-3">
+                    <button type="button" class="btn btn-link btn-sm p-0" id="selectAllCandidates">
+                        Select All
+                    </button>
+                    <button type="button" class="btn btn-link btn-sm p-0 text-danger" id="clearAllCandidates">
+                        Clear
+                    </button>
+                </div>
             </div>
-
-            <!-- Rounds -->
-            <div class="col-md-6">
-                <label class="form-label">Select Rounds</label>
-                <div class="border rounded p-2">
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="allRounds" checked>
-                        <label class="form-check-label fw-semibold" for="allRounds">
-                            All Rounds
-                        </label>
-                    </div>
-
-                    <hr class="my-2">
-
-                    <div class="form-check">
-                        <input class="form-check-input roundCheck" type="checkbox" checked>
-                        <label class="form-check-label">L1 – Aptitude</label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input roundCheck" type="checkbox" checked>
-                        <label class="form-check-label">L2 – Theory</label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input roundCheck" type="checkbox" checked>
-                        <label class="form-check-label">L3 – Skill / Debugging</label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input roundCheck" type="checkbox" checked>
-                        <label class="form-check-label">L4 – Coding</label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input roundCheck" type="checkbox">
-                        <label class="form-check-label">L5 – Domain</label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input roundCheck" type="checkbox" checked>
-                        <label class="form-check-label">L6 – Soft Skills</label>
-                    </div>
-
+            
+            <!-- Simple Candidate List with Checkboxes -->
+            <div class="candidate-list">
+                <div class="form-check py-2 border-bottom candidate-item">
+                    <input class="form-check-input candidate-checkbox" type="checkbox" id="candidate1">
+                    <label class="form-check-label" for="candidate1">
+                        <span class="fw-medium">Ravi Kumar</span>
+                    </label>
+                </div>
+                <div class="form-check py-2 border-bottom candidate-item">
+                    <input class="form-check-input candidate-checkbox" type="checkbox" id="candidate2">
+                    <label class="form-check-label" for="candidate2">
+                        <span class="fw-medium">Anita Sharma</span>
+                    </label>
+                </div>
+                <div class="form-check py-2 candidate-item">
+                    <input class="form-check-input candidate-checkbox" type="checkbox" id="candidate3">
+                    <label class="form-check-label" for="candidate3">
+                        <span class="fw-medium">Rahul Verma</span>
+                    </label>
                 </div>
             </div>
         </div>
-
-        <div class="d-flex justify-content-end">
-            <button class="btn btn-primary" id="evaluateBtn">
-                Evaluate
-            </button>
-        </div>
     </div>
+</div>
+
+<!-- ================= EVALUATE BUTTON ================= -->
+<div class="d-flex justify-content-end mb-4">
+    <button class="btn btn-primary" id="evaluateBtn">
+        <i class="bi bi-lightning-charge me-1"></i>Evaluate Selected
+    </button>
 </div>
 
 <!-- ================= PROGRESS SECTION ================= -->
@@ -114,34 +103,7 @@
                 <th>Overall</th>
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td>
-                    <strong>Ravi Kumar</strong><br>
-                    <small class="text-muted">Python Entry Level</small>
-                </td>
-                <td class="text-success">PASS</td>
-                <td class="text-success">PASS</td>
-                <td class="text-danger">FAIL</td>
-                <td class="text-success">PASS</td>
-                <td class="text-muted">—</td>
-                <td class="text-success">PASS</td>
-                <td class="fw-semibold">PASS</td>
-            </tr>
-
-            <tr>
-                <td>
-                    <strong>Anita Sharma</strong><br>
-                    <small class="text-muted">Python QA</small>
-                </td>
-                <td class="text-success">PASS</td>
-                <td class="text-success">PASS</td>
-                <td class="text-success">PASS</td>
-                <td class="text-success">PASS</td>
-                <td class="text-muted">—</td>
-                <td class="text-success">PASS</td>
-                <td class="fw-semibold">PASS</td>
-            </tr>
+            <tbody id="resultsTableBody">
             </tbody>
         </table>
     </div>
@@ -152,23 +114,111 @@
     const evaluateBtn = document.getElementById("evaluateBtn");
     const progressSection = document.getElementById("progressSection");
     const resultSection = document.getElementById("resultSection");
-    const allRounds = document.getElementById("allRounds");
-    const roundChecks = document.querySelectorAll(".roundCheck");
+    const resultsTableBody = document.getElementById("resultsTableBody");
 
-    // All rounds toggle
-    allRounds.addEventListener("change", () => {
-        roundChecks.forEach(cb => cb.checked = allRounds.checked);
+    // Candidate data for results
+    const candidateResults = {
+        'candidate1': {
+            name: 'Ravi Kumar',
+            role: 'Python Entry Level',
+            results: ['PASS', 'PASS', 'FAIL', 'PASS', '—', 'PASS'],
+            overall: 'PASS'
+        },
+        'candidate2': {
+            name: 'Anita Sharma',
+            role: 'Python QA',
+            results: ['PASS', 'PASS', 'PASS', 'PASS', '—', 'PASS'],
+            overall: 'PASS'
+        },
+        'candidate3': {
+            name: 'Rahul Verma',
+            role: 'Java + AWS',
+            results: ['PASS', 'PASS', 'PASS', '—', '—', '—'],
+            overall: 'IN PROGRESS'
+        }
+    };
+
+    // Toggle candidate dropdown visibility
+    const dropdownToggle = document.getElementById('candidateDropdownToggle');
+    const selectContainer = document.getElementById('candidateSelectContainer');
+    const chevron = document.getElementById('candidateChevron');
+    const selectedCountText = document.getElementById('selectedCountText');
+
+    dropdownToggle.addEventListener('click', function() {
+        selectContainer.classList.toggle('d-none');
+        const isOpen = !selectContainer.classList.contains('d-none');
+        chevron.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+    });
+
+    // Checkbox logic
+    const candidateCheckboxes = document.querySelectorAll('.candidate-checkbox');
+
+    function updateSelectedCount() {
+        const count = Array.from(candidateCheckboxes).filter(cb => cb.checked).length;
+        if (count === 0) {
+            selectedCountText.textContent = 'Select Candidates';
+        } else {
+            selectedCountText.textContent = count + ' candidate' + (count > 1 ? 's' : '') + ' selected';
+        }
+    }
+
+    candidateCheckboxes.forEach(cb => {
+        cb.addEventListener('change', updateSelectedCount);
+    });
+
+    // Select All Candidates logic
+    const selectAllBtn = document.getElementById("selectAllCandidates");
+    selectAllBtn.addEventListener("click", () => {
+        const allChecked = Array.from(candidateCheckboxes).every(cb => cb.checked);
+        candidateCheckboxes.forEach(cb => cb.checked = !allChecked);
+        updateSelectedCount();
+    });
+
+    // Clear All Candidates logic
+    const clearBtn = document.getElementById("clearAllCandidates");
+    clearBtn.addEventListener("click", () => {
+        candidateCheckboxes.forEach(cb => cb.checked = false);
+        updateSelectedCount();
     });
 
     // Evaluate click
     evaluateBtn.addEventListener("click", () => {
+        const checkedCandidates = Array.from(candidateCheckboxes).filter(cb => cb.checked);
+        
+        if (checkedCandidates.length === 0) {
+            if (typeof showToast === 'function') showToast('Please select candidates to evaluate', 'warning');
+            return;
+        }
+        
         resultSection.classList.add("d-none");
         progressSection.classList.remove("d-none");
 
         // Simulate evaluation delay
         setTimeout(() => {
             progressSection.classList.add("d-none");
+            
+            // Build results table
+            let html = '';
+            checkedCandidates.forEach(cb => {
+                const data = candidateResults[cb.id];
+                if (data) {
+                    html += `
+                        <tr>
+                            <td>
+                                <strong>${data.name}</strong><br>
+                                <small class="text-muted">${data.role}</small>
+                            </td>
+                            ${data.results.map(r => `<td class="${r === 'PASS' ? 'text-success' : r === 'FAIL' ? 'text-danger' : 'text-muted'}">${r}</td>`).join('')}
+                            <td class="fw-semibold ${data.overall === 'PASS' ? 'text-success' : data.overall === 'FAIL' ? 'text-danger' : 'text-warning'}">${data.overall}</td>
+                        </tr>
+                    `;
+                }
+            });
+            
+            resultsTableBody.innerHTML = html;
             resultSection.classList.remove("d-none");
+            
+            if (typeof showToast === 'function') showToast(`Evaluation completed for ${checkedCandidates.length} candidate(s)!`, 'success');
         }, 3000);
     });
 </script>
