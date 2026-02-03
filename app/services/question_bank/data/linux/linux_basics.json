@@ -1,0 +1,662 @@
+[
+  {
+    "question": "What does the 'pwd' command display?",
+    "options": [
+      "The password file",
+      "The current working directory path",
+      "All available directories",
+      "The previous working directory"
+    ],
+    "correct_answer": "The current working directory path",
+    "topic": "File & Directory Operations"
+  },
+  {
+    "question": "Which command is used to change to the home directory?",
+    "options": [
+      "cd /home",
+      "cd ~",
+      "cd home",
+      "cd ."
+    ],
+    "correct_answer": "cd ~",
+    "topic": "File & Directory Operations"
+  },
+  {
+    "question": "What is the difference between 'ls' and 'ls -la'?",
+    "options": [
+      "No difference, both show the same output",
+      "ls -la shows hidden files and detailed information",
+      "ls shows hidden files while ls -la doesn't",
+      "ls -la only works in the home directory"
+    ],
+    "correct_answer": "ls -la shows hidden files and detailed information",
+    "topic": "File & Directory Operations"
+  },
+  {
+    "question": "Which command creates a new empty file?",
+    "options": [
+      "make",
+      "touch",
+      "create",
+      "new"
+    ],
+    "correct_answer": "touch",
+    "topic": "File & Directory Operations"
+  },
+  {
+    "question": "What does 'cp file1.txt file2.txt' accomplish?",
+    "options": [
+      "Moves file1.txt to file2.txt",
+      "Copies file1.txt to a new file named file2.txt",
+      "Creates a symbolic link",
+      "Compares the contents of both files"
+    ],
+    "correct_answer": "Copies file1.txt to a new file named file2.txt",
+    "topic": "File & Directory Operations"
+  },
+  {
+    "question": "How does 'mv' differ from 'cp'?",
+    "options": [
+      "mv copies files while cp moves them",
+      "mv moves files while cp copies them",
+      "They are identical commands",
+      "mv requires sudo while cp doesn't"
+    ],
+    "correct_answer": "mv moves files while cp copies them",
+    "topic": "File & Directory Operations"
+  },
+  {
+    "question": "What is the primary risk of using 'rm -rf'?",
+    "options": [
+      "It only works on empty directories",
+      "It recursively and forcefully deletes files without prompting, risking permanent data loss",
+      "It requires root privileges",
+      "It compresses files instead of deleting them"
+    ],
+    "correct_answer": "It recursively and forcefully deletes files without prompting, risking permanent data loss",
+    "topic": "File & Directory Operations"
+  },
+  {
+    "question": "Which command creates a new directory?",
+    "options": [
+      "newdir",
+      "mkdir",
+      "makedir",
+      "createdir"
+    ],
+    "correct_answer": "mkdir",
+    "topic": "File & Directory Operations"
+  },
+  {
+    "question": "What is an absolute path?",
+    "options": [
+      "A path that starts from the current directory",
+      "A path that always starts from the root directory (/)",
+      "A path that points to a file outside the system",
+      "A temporary path that expires after logout"
+    ],
+    "correct_answer": "A path that always starts from the root directory (/)",
+    "topic": "File & Directory Operations"
+  },
+  {
+    "question": "What does a relative path start from?",
+    "options": [
+      "The root directory",
+      "The home directory",
+      "The current working directory",
+      "The /etc directory"
+    ],
+    "correct_answer": "The current working directory",
+    "topic": "File & Directory Operations"
+  },
+  {
+    "question": "How would you navigate to the parent directory?",
+    "options": [
+      "cd ..",
+      "cd -",
+      "cd /parent",
+      "cd \\"
+    ],
+    "correct_answer": "cd ..",
+    "topic": "File & Directory Operations"
+  },
+  {
+    "question": "Which command removes an empty directory?",
+    "options": [
+      "rmdir",
+      "rm -dir",
+      "deletedir",
+      "remove"
+    ],
+    "correct_answer": "rmdir",
+    "topic": "File & Directory Operations"
+  },
+  {
+    "question": "What does the 'r' permission allow a user to do?",
+    "options": [
+      "Remove files",
+      "Read file contents",
+      "Run executable files",
+      "Rename files"
+    ],
+    "correct_answer": "Read file contents",
+    "topic": "Permissions & Ownership"
+  },
+  {
+    "question": "What does the 'x' permission enable?",
+    "options": [
+      "File deletion",
+      "Executing a file or entering a directory",
+      "File modification",
+      "File copying"
+    ],
+    "correct_answer": "Executing a file or entering a directory",
+    "topic": "Permissions & Ownership"
+  },
+  {
+    "question": "In 'chmod 755 file', what does 755 represent?",
+    "options": [
+      "File size in bytes",
+      "Permissions for user, group, and others respectively",
+      "File modification date",
+      "File creation time"
+    ],
+    "correct_answer": "Permissions for user, group, and others respectively",
+    "topic": "Permissions & Ownership"
+  },
+  {
+    "question": "What does the number '7' in chmod 755 mean?",
+    "options": [
+      "Execute only",
+      "Read and write only",
+      "Read, write, and execute",
+      "Write and execute only"
+    ],
+    "correct_answer": "Read, write, and execute",
+    "topic": "Permissions & Ownership"
+  },
+  {
+    "question": "What does 'chown user file' accomplish?",
+    "options": [
+      "Changes the file permissions",
+      "Changes the file owner to the specified user",
+      "Changes the group ownership",
+      "Creates a backup of the file"
+    ],
+    "correct_answer": "Changes the file owner to the specified user",
+    "topic": "Permissions & Ownership"
+  },
+  {
+    "question": "What is the primary purpose of 'sudo'?",
+    "options": [
+      "To switch to another user",
+      "To execute commands with superuser/root privileges",
+      "To change file permissions",
+      "To manage user accounts"
+    ],
+    "correct_answer": "To execute commands with superuser/root privileges",
+    "topic": "Permissions & Ownership"
+  },
+  {
+    "question": "Which user category does the second set of three characters (rwx) represent in file permissions?",
+    "options": [
+      "The owner (user)",
+      "The group",
+      "Other users",
+      "The root user"
+    ],
+    "correct_answer": "The group",
+    "topic": "Permissions & Ownership"
+  },
+  {
+    "question": "What does 'chmod 644 file' allow for each permission group?",
+    "options": [
+      "Owner: rwx, Group: r, Others: r",
+      "Owner: rw, Group: r, Others: r",
+      "Owner: r, Group: w, Others: x",
+      "Owner: rwx, Group: rwx, Others: rwx"
+    ],
+    "correct_answer": "Owner: rw, Group: r, Others: r",
+    "topic": "Permissions & Ownership"
+  },
+  {
+    "question": "Can a regular user change ownership of their own file without sudo?",
+    "options": [
+      "Yes, always",
+      "No, ownership changes require sudo",
+      "Only to change the group, not the owner",
+      "Only if the file is in the home directory"
+    ],
+    "correct_answer": "No, ownership changes require sudo",
+    "topic": "Permissions & Ownership"
+  },
+  {
+    "question": "What does the 'cat' command do?",
+    "options": [
+      "Changes file access time",
+      "Displays the entire contents of a file",
+      "Categorizes files",
+      "Concatenates and compresses files"
+    ],
+    "correct_answer": "Displays the entire contents of a file",
+    "topic": "File Content & Viewers"
+  },
+  {
+    "question": "Which command shows only the first 10 lines of a file?",
+    "options": [
+      "tail",
+      "head",
+      "top",
+      "less"
+    ],
+    "correct_answer": "head",
+    "topic": "File Content & Viewers"
+  },
+  {
+    "question": "What is 'tail -f' primarily used for?",
+    "options": [
+      "Finding the end of a file",
+      "Monitoring log files in real-time",
+      "Copying the last lines of a file",
+      "Formatting file output"
+    ],
+    "correct_answer": "Monitoring log files in real-time",
+    "topic": "File Content & Viewers"
+  },
+  {
+    "question": "How would you search for the word 'error' in a file named 'log.txt'?",
+    "options": [
+      "find error log.txt",
+      "grep error log.txt",
+      "search error log.txt",
+      "locate error log.txt"
+    ],
+    "correct_answer": "grep error log.txt",
+    "topic": "File Content & Viewers"
+  },
+  {
+    "question": "Which editor is known for being easier to learn for beginners?",
+    "options": [
+      "vi",
+      "vim",
+      "nano",
+      "emacs"
+    ],
+    "correct_answer": "nano",
+    "topic": "File Content & Viewers"
+  },
+  {
+    "question": "What is the primary difference between 'head' and 'tail'?",
+    "options": [
+      "head shows the beginning of a file, tail shows the end",
+      "head modifies files while tail views them",
+      "tail is faster than head",
+      "head works only for text files while tail works for all types"
+    ],
+    "correct_answer": "head shows the beginning of a file, tail shows the end",
+    "topic": "File Content & Viewers"
+  },
+  {
+    "question": "How do you exit from the vi/vim editor without saving?",
+    "options": [
+      "Press Ctrl+C",
+      "Type :q!",
+      "Type :exit",
+      "Type quit"
+    ],
+    "correct_answer": "Type :q!",
+    "topic": "File Content & Viewers"
+  },
+  {
+    "question": "What command would display only lines containing 'warning' from a file?",
+    "options": [
+      "cat | warning",
+      "grep warning file.txt",
+      "find warning file.txt",
+      "search warning file.txt"
+    ],
+    "correct_answer": "grep warning file.txt",
+    "topic": "File Content & Viewers"
+  },
+  {
+    "question": "What does 'ps -ef' display?",
+    "options": [
+      "All process details in an extended format",
+      "Personal settings for the system",
+      "File system information",
+      "Process scheduling details"
+    ],
+    "correct_answer": "All process details in an extended format",
+    "topic": "System Monitoring & Processes"
+  },
+  {
+    "question": "What is a PID in Linux?",
+    "options": [
+      "Personal ID for users",
+      "Process Identification number assigned to each running process",
+      "Program Implementation Data",
+      "Peripheral Interface Device"
+    ],
+    "correct_answer": "Process Identification number assigned to each running process",
+    "topic": "System Monitoring & Processes"
+  },
+  {
+    "question": "Which command displays real-time system and process information?",
+    "options": [
+      "ps",
+      "df",
+      "top",
+      "ls"
+    ],
+    "correct_answer": "top",
+    "topic": "System Monitoring & Processes"
+  },
+  {
+    "question": "How would you terminate a process with PID 1234?",
+    "options": [
+      "stop 1234",
+      "kill 1234",
+      "terminate 1234",
+      "exit 1234"
+    ],
+    "correct_answer": "kill 1234",
+    "topic": "System Monitoring & Processes"
+  },
+  {
+    "question": "What does 'df -h' show?",
+    "options": [
+      "List of directories and files",
+      "Disk space usage in human-readable format",
+      "Default file permissions",
+      "Directory and file history"
+    ],
+    "correct_answer": "Disk space usage in human-readable format",
+    "topic": "System Monitoring & Processes"
+  },
+  {
+    "question": "Which command displays memory usage information?",
+    "options": [
+      "mem",
+      "free",
+      "memory",
+      "showmem"
+    ],
+    "correct_answer": "free",
+    "topic": "System Monitoring & Processes"
+  },
+  {
+    "question": "What does 'du -sh' calculate?",
+    "options": [
+      "Directory utility settings",
+      "Total disk usage of a directory in human-readable format",
+      "Duplicate files in a directory",
+      "Data upload speed"
+    ],
+    "correct_answer": "Total disk usage of a directory in human-readable format",
+    "topic": "System Monitoring & Processes"
+  },
+  {
+    "question": "How can you find all running processes for a specific user?",
+    "options": [
+      "ps -ef | grep username",
+      "top username",
+      "processes username",
+      "find -user username"
+    ],
+    "correct_answer": "ps -ef | grep username",
+    "topic": "System Monitoring & Processes"
+  },
+  {
+    "question": "What is the difference between 'kill' and 'kill -9'?",
+    "options": [
+      "kill -9 is faster",
+      "kill gives a chance to gracefully shut down, kill -9 forces immediate termination",
+      "They are identical",
+      "kill -9 is only for administrators"
+    ],
+    "correct_answer": "kill gives a chance to gracefully shut down, kill -9 forces immediate termination",
+    "topic": "System Monitoring & Processes"
+  },
+  {
+    "question": "How do you check memory usage in a human-readable format?",
+    "options": [
+      "free -m or free -h",
+      "memory -display",
+      "show memory",
+      "ram -info"
+    ],
+    "correct_answer": "free -m or free -h",
+    "topic": "System Monitoring & Processes"
+  },
+  {
+    "question": "Which command displays the current IP address of a system?",
+    "options": [
+      "getip",
+      "ipconfig",
+      "ifconfig or ip addr",
+      "show-ip"
+    ],
+    "correct_answer": "ifconfig or ip addr",
+    "topic": "Networking & Connectivity"
+  },
+  {
+    "question": "What is the primary purpose of the 'ping' command?",
+    "options": [
+      "Changing network settings",
+      "Testing network connectivity to a host",
+      "Displaying network speed",
+      "Managing network interfaces"
+    ],
+    "correct_answer": "Testing network connectivity to a host",
+    "topic": "Networking & Connectivity"
+  },
+  {
+    "question": "How would you connect to a remote server using SSH?",
+    "options": [
+      "remote username@hostname",
+      "ssh username@hostname",
+      "connect username@hostname",
+      "telnet username@hostname"
+    ],
+    "correct_answer": "ssh username@hostname",
+    "topic": "Networking & Connectivity"
+  },
+  {
+    "question": "What does SSH stand for?",
+    "options": [
+      "Secure Shell",
+      "System Shell Handler",
+      "Software Security Host",
+      "Secure Server Host"
+    ],
+    "correct_answer": "Secure Shell",
+    "topic": "Networking & Connectivity"
+  },
+  {
+    "question": "How can you ping a host a limited number of times?",
+    "options": [
+      "ping -times host",
+      "ping -count host",
+      "ping -c 5 host",
+      "ping -limit host"
+    ],
+    "correct_answer": "ping -c 5 host",
+    "topic": "Networking & Connectivity"
+  },
+  {
+    "question": "What command displays the network configuration details?",
+    "options": [
+      "netinfo",
+      "network",
+      "ifconfig",
+      "config"
+    ],
+    "correct_answer": "ifconfig",
+    "topic": "Networking & Connectivity"
+  },
+  {
+    "question": "Which protocol is used by SSH for secure communication?",
+    "options": [
+      "HTTP",
+      "FTP",
+      "Encryption-based protocol for secure shell access",
+      "Telnet"
+    ],
+    "correct_answer": "Encryption-based protocol for secure shell access",
+    "topic": "Networking & Connectivity"
+  },
+  {
+    "question": "What does 'ip addr' show?",
+    "options": [
+      "IP address of remote hosts",
+      "Current network interface information including IP addresses",
+      "Network adapter drivers",
+      "Internet protocol version only"
+    ],
+    "correct_answer": "Current network interface information including IP addresses",
+    "topic": "Networking & Connectivity"
+  },
+  {
+    "question": "What does the pipe '|' operator do?",
+    "options": [
+      "Creates a backup file",
+      "Connects the output of one command to the input of another",
+      "Redirects output to a file",
+      "Separates multiple commands sequentially"
+    ],
+    "correct_answer": "Connects the output of one command to the input of another",
+    "topic": "Command Redirection & Pipes"
+  },
+  {
+    "question": "What is the difference between '>' and '>>'?",
+    "options": [
+      "'>' is for files, '>>' is for directories",
+      "'>' overwrites the file, '>>' appends to the file",
+      "'>' appends while '>>' overwrites",
+      "They are identical"
+    ],
+    "correct_answer": "'>' overwrites the file, '>>' appends to the file",
+    "topic": "Command Redirection & Pipes"
+  },
+  {
+    "question": "What does 'ls > file.txt' accomplish?",
+    "options": [
+      "Displays file.txt",
+      "Saves the output of ls to file.txt (overwriting if it exists)",
+      "Appends ls output to file.txt",
+      "Searches for file.txt"
+    ],
+    "correct_answer": "Saves the output of ls to file.txt (overwriting if it exists)",
+    "topic": "Command Redirection & Pipes"
+  },
+  {
+    "question": "What does 'ls >> file.txt' accomplish?",
+    "options": [
+      "Overwrites file.txt with ls output",
+      "Appends ls output to the end of file.txt",
+      "Displays file.txt",
+      "Searches within file.txt"
+    ],
+    "correct_answer": "Appends ls output to the end of file.txt",
+    "topic": "Command Redirection & Pipes"
+  },
+  {
+    "question": "How would you find all files named '*.txt' and count them?",
+    "options": [
+      "find *.txt",
+      "find . -name '*.txt' | wc -l",
+      "count *.txt",
+      "search *.txt"
+    ],
+    "correct_answer": "find . -name '*.txt' | wc -l",
+    "topic": "Command Redirection & Pipes"
+  },
+  {
+    "question": "What command counts the number of lines in a file?",
+    "options": [
+      "linecount file",
+      "wc -l file",
+      "count-lines file",
+      "lines file"
+    ],
+    "correct_answer": "wc -l file",
+    "topic": "Command Redirection & Pipes"
+  },
+  {
+    "question": "How would you redirect both stdout and stderr to a file?",
+    "options": [
+      "command > file",
+      "command 2> file",
+      "command > file 2>&1",
+      "command >> file"
+    ],
+    "correct_answer": "command > file 2>&1",
+    "topic": "Command Redirection & Pipes"
+  },
+  {
+    "question": "What is the purpose of combining 'grep' with pipes?",
+    "options": [
+      "To increase file size",
+      "To filter output from other commands",
+      "To create new files",
+      "To backup data"
+    ],
+    "correct_answer": "To filter output from other commands",
+    "topic": "Command Redirection & Pipes"
+  },
+  {
+    "question": "How would you search for 'error' in multiple files?",
+    "options": [
+      "grep error file1.txt file2.txt",
+      "find error file1.txt file2.txt",
+      "search error file1.txt file2.txt",
+      "locate error file1.txt file2.txt"
+    ],
+    "correct_answer": "grep error file1.txt file2.txt",
+    "topic": "Command Redirection & Pipes"
+  },
+  {
+    "question": "What does 'cat file.txt | sort' accomplish?",
+    "options": [
+      "Creates a copy of the file",
+      "Displays the sorted contents of file.txt",
+      "Removes duplicate lines",
+      "Compresses the file"
+    ],
+    "correct_answer": "Displays the sorted contents of file.txt",
+    "topic": "Command Redirection & Pipes"
+  },
+  {
+    "question": "What is 'wc' used for?",
+    "options": [
+      "Working copy command",
+      "Counting lines, words, and characters in a file",
+      "Writing configuration files",
+      "Wireless connection"
+    ],
+    "correct_answer": "Counting lines, words, and characters in a file",
+    "topic": "Command Redirection & Pipes"
+  },
+  {
+    "question": "How would you combine ls and grep to find files containing 'log'?",
+    "options": [
+      "ls grep log",
+      "ls | grep log",
+      "ls 'log'",
+      "find log"
+    ],
+    "correct_answer": "ls | grep log",
+    "topic": "Command Redirection & Pipes"
+  },
+  {
+    "question": "What is the purpose of the '..' notation in a path?",
+    "options": [
+      "Represents the current directory",
+      "Represents the parent directory",
+      "Represents the home directory",
+      "Represents the root directory"
+    ],
+    "correct_answer": "Represents the parent directory",
+    "topic": "File & Directory Operations"
+  }
+]

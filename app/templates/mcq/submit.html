@@ -1,0 +1,26 @@
+{% extends "mcq/base_mcq.html" %}
+{% block content %}
+
+<div class="card" style="text-align:center;">
+
+    <h2>Submit Test</h2>
+
+    <p style="color:var(--aziro-muted); margin-top:15px;">
+        You have reached the end of this assessment.
+    </p>
+
+    <p style="margin-top:10px;">
+        Once submitted, you will <strong>not</strong> be able to change your answers.
+    </p>
+
+    <div class="actions" style="text-align:center;">
+        <form method="POST">
+            <button class="btn btn-danger">
+                Confirm & Submit
+            </button>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

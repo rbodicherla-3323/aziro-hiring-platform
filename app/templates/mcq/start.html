@@ -1,0 +1,42 @@
+{% extends "mcq/base_mcq.html" %}
+{% block content %}
+
+<div class="card">
+
+    <h2 style="margin-bottom:6px;">
+        {{ test.round_name }}
+    </h2>
+
+    <div style="color:var(--aziro-muted); margin-bottom:18px;">
+        Role: <strong>{{ test.role }}</strong>
+    </div>
+
+    <p>
+        This assessment consists of
+        <strong>{{ test.total_questions }}</strong> multiple-choice questions.
+        You will have <strong>{{ test.time_minutes }} minutes</strong> to complete the test.
+    </p>
+
+    <hr style="margin:25px 0; border:0; border-top:1px solid var(--aziro-border);">
+
+    <h4>Instructions</h4>
+    <ul style="margin-top:15px; line-height:1.6;">
+        <li>Each question has only one correct answer</li>
+        <li>Questions must be answered sequentially</li>
+        <li>Do not refresh or close the browser</li>
+        <li>Switching tabs may be monitored</li>
+        <li>Ensure stable internet connectivity</li>
+    </ul>
+
+    <div class="actions">
+        <form method="POST"
+              action="{{ url_for('mcq.begin_test', session_id=test.session_id) }}">
+            <button class="btn btn-primary">
+                Start Test
+            </button>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
