@@ -1,0 +1,3396 @@
+[
+  {
+    "question": "The LCM of two numbers is 168 and their HCF is 12. If one number is 24, what is the other number?",
+    "options": [
+      "72",
+      "84",
+      "96",
+      "108"
+    ],
+    "correct_answer": "84",
+    "topic": "LCM"
+  },
+  {
+    "question": "Three bells ring at intervals of 12, 15, and 20 seconds. If they start together at 9 AM, when will they next ring together?",
+    "options": [
+      "9:02 AM",
+      "9:03 AM",
+      "9:04 AM",
+      "9:05 AM"
+    ],
+    "correct_answer": "9:02 AM",
+    "topic": "LCM"
+  },
+  {
+    "question": "Find the least number which when divided by 4, 6, and 8 leaves a remainder of 3 in each case.",
+    "options": [
+      "19",
+      "23",
+      "27",
+      "31"
+    ],
+    "correct_answer": "27",
+    "topic": "LCM"
+  },
+  {
+    "question": "The LCM of 0.63, 1.05, and 0.075 is:",
+    "options": [
+      "1.575",
+      "1.5750",
+      "1.57500",
+      "1.575000"
+    ],
+    "correct_answer": "1.575000",
+    "topic": "LCM"
+  },
+  {
+    "question": "LCM of 22 × 3^5 × 5^2 and 3^2 × 11 × 5^3 is:",
+    "options": [
+      "2 × 3^5 × 5^3 × 11",
+      "2^2 × 3^5 × 5^3 × 11",
+      "2 × 3^2 × 5^3 × 11",
+      "2 × 3^5 × 5^2 × 11"
+    ],
+    "correct_answer": "2 × 3^5 × 5^3 × 11",
+    "topic": "LCM"
+  },
+  {
+    "question": "The product of two numbers is 2028 and their HCF is 13. The number of such pairs is:",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "correct_answer": "2",
+    "topic": "LCM"
+  },
+  {
+    "question": "The least number which is divisible by all the numbers from 1 to 15 (both inclusive) is:",
+    "options": [
+      "2520",
+      "5040",
+      "3600",
+      "7200"
+    ],
+    "correct_answer": "2520",
+    "topic": "LCM"
+  },
+  {
+    "question": "If the LCM of 12, 15, 18, 20 is N, then N is:",
+    "options": [
+      "180",
+      "360",
+      "120",
+      "240"
+    ],
+    "correct_answer": "180",
+    "topic": "LCM"
+  },
+  {
+    "question": "The smallest number which when divided by 20, 25, 35 and 40 leaves a remainder of 14, 19, 29 and 34 respectively is:",
+    "options": [
+      "1394",
+      "1494",
+      "1399",
+      "1499"
+    ],
+    "correct_answer": "1394",
+    "topic": "LCM"
+  },
+  {
+    "question": "LCM of 1/2, 1/3, 1/4, 1/5 is:",
+    "options": [
+      "1/60",
+      "1/120",
+      "1/30",
+      "1/20"
+    ],
+    "correct_answer": "1/60",
+    "topic": "LCM"
+  },
+  {
+    "question": "Find the fourth proportional to 12, 18, 4.",
+    "options": [
+      "6",
+      "8",
+      "9",
+      "10"
+    ],
+    "correct_answer": "6",
+    "topic": "LCM"
+  },
+  {
+    "question": "Two numbers are in ratio 5:8. If their HCF is 4, find LCM.",
+    "options": [
+      "160",
+      "200",
+      "240",
+      "320"
+    ],
+    "correct_answer": "160",
+    "topic": "LCM"
+  },
+  {
+    "question": "Which of the following is not a prime number?",
+    "options": [
+      "97",
+      "91",
+      "79",
+      "59"
+    ],
+    "correct_answer": "91",
+    "topic": "Number System"
+  },
+  {
+    "question": "The sum of first 5 prime numbers is:",
+    "options": [
+      "11",
+      "15",
+      "17",
+      "28"
+    ],
+    "correct_answer": "17",
+    "topic": "Number System"
+  },
+  {
+    "question": "A number when divided by 5 leaves remainder 3. When divided by 3 leaves remainder 1. Smallest such number is:",
+    "options": [
+      "8",
+      "13",
+      "18",
+      "23"
+    ],
+    "correct_answer": "13",
+    "topic": "Number System"
+  },
+  {
+    "question": "How many three-digit numbers are divisible by 7?",
+    "options": [
+      "128",
+      "129",
+      "130",
+      "131"
+    ],
+    "correct_answer": "129",
+    "topic": "Number System"
+  },
+  {
+    "question": "The number just preceding 9909 which is a perfect square is:",
+    "options": [
+      "9801",
+      "9900",
+      "9908",
+      "9909"
+    ],
+    "correct_answer": "9801",
+    "topic": "Number System"
+  },
+  {
+    "question": "If 25% of a number is 75, what is 40% of that number?",
+    "options": [
+      "120",
+      "150",
+      "180",
+      "200"
+    ],
+    "correct_answer": "120",
+    "topic": "Number System"
+  },
+  {
+    "question": "The smallest number of 5 digits exactly divisible by 476 is:",
+    "options": [
+      "100000",
+      "100040",
+      "100080",
+      "100120"
+    ],
+    "correct_answer": "100120",
+    "topic": "Number System"
+  },
+  {
+    "question": "Find the number which when divided by 5, 8, 12 leaves remainders 3, 6, 10 respectively.",
+    "options": [
+      "67",
+      "77",
+      "87",
+      "97"
+    ],
+    "correct_answer": "77",
+    "topic": "Number System"
+  },
+  {
+    "question": "A number consisting of 8 digits has sum of digits = 36. If it is divisible by 9, sum of digits of quotient is:",
+    "options": [
+      "27",
+      "36",
+      "45",
+      "54"
+    ],
+    "correct_answer": "27",
+    "topic": "Number System"
+  },
+  {
+    "question": "Product of two numbers is 9376 and HCF is 13. Number of pairs:",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "correct_answer": "2",
+    "topic": "Number System"
+  },
+  {
+    "question": "The HCF of two numbers is 11 and their LCM is 7700. If one number is 275, the other is:",
+    "options": [
+      "308",
+      "330",
+      "352",
+      "374"
+    ],
+    "correct_answer": "308",
+    "topic": "Number System"
+  },
+  {
+    "question": "Find the remainder when 2^50 is divided by 7.",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "correct_answer": "4",
+    "topic": "Number System"
+  },
+  {
+    "question": "0.25 + 0.36 + 0.12 = ?",
+    "options": [
+      "0.63",
+      "0.73",
+      "0.83",
+      "0.93"
+    ],
+    "correct_answer": "0.73",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "1/2 of 1/3 of 1/4 of 2400 = ?",
+    "options": [
+      "50",
+      "100",
+      "200",
+      "400"
+    ],
+    "correct_answer": "100",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "If 3/4 of a number is 27, what is 1/6 of that number?",
+    "options": [
+      "6",
+      "9",
+      "12",
+      "18"
+    ],
+    "correct_answer": "6",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "0.04 × 0.16 = ?",
+    "options": [
+      "0.0064",
+      "0.064",
+      "0.64",
+      "6.4"
+    ],
+    "correct_answer": "0.0064",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "Simplify: 2 1/2 ÷ 1 1/4",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correct_answer": "2",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "1/6 + 1/12 + 1/18 = ?",
+    "options": [
+      "1/3",
+      "1/2",
+      "2/3",
+      "1"
+    ],
+    "correct_answer": "1/3",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "What is 25% of 3/5 of 400?",
+    "options": [
+      "30",
+      "40",
+      "50",
+      "60"
+    ],
+    "correct_answer": "30",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "0.75 = ?/20",
+    "options": [
+      "10",
+      "12",
+      "15",
+      "18"
+    ],
+    "correct_answer": "15",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "If 7/9 of a number = 49, the number is:",
+    "options": [
+      "63",
+      "70",
+      "77",
+      "84"
+    ],
+    "correct_answer": "63",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "1/4 + 3/8 + 5/16 = ?",
+    "options": [
+      "11/16",
+      "13/16",
+      "15/16",
+      "1"
+    ],
+    "correct_answer": "15/16",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "A bag has 4 red and 6 black balls. Probability of drawing a red ball is:",
+    "options": [
+      "2/5",
+      "3/5",
+      "4/5",
+      "1/2"
+    ],
+    "correct_answer": "2/5",
+    "topic": "Probability"
+  },
+  {
+    "question": "Two dice are rolled. Probability both show same number:",
+    "options": [
+      "1/12",
+      "1/6",
+      "1/9",
+      "1/36"
+    ],
+    "correct_answer": "1/36",
+    "topic": "Probability"
+  },
+  {
+    "question": "From 52 cards, probability of drawing a king:",
+    "options": [
+      "1/13",
+      "1/26",
+      "4/13",
+      "1/4"
+    ],
+    "correct_answer": "1/13",
+    "topic": "Probability"
+  },
+  {
+    "question": "A coin is tossed 3 times. Probability of exactly 2 heads:",
+    "options": [
+      "1/4",
+      "1/2",
+      "3/8",
+      "3/4"
+    ],
+    "correct_answer": "3/8",
+    "topic": "Probability"
+  },
+  {
+    "question": "Probability of not getting 6 in single dice roll:",
+    "options": [
+      "1/6",
+      "5/6",
+      "1/3",
+      "1/2"
+    ],
+    "correct_answer": "5/6",
+    "topic": "Probability"
+  },
+  {
+    "question": "In a family of 3 children, probability of exactly 1 boy:",
+    "options": [
+      "1/4",
+      "1/2",
+      "3/8",
+      "3/4"
+    ],
+    "correct_answer": "3/8",
+    "topic": "Probability"
+  },
+  {
+    "question": "Bag has 3 red, 2 blue. Probability of red or blue on first draw:",
+    "options": [
+      "1",
+      "3/5",
+      "2/5",
+      "1/5"
+    ],
+    "correct_answer": "1",
+    "topic": "Probability"
+  },
+  {
+    "question": "Two cards drawn from 52. Probability both hearts:",
+    "options": [
+      "13/51",
+      "1/17",
+      "4/17",
+      "1/4"
+    ],
+    "correct_answer": "1/17",
+    "topic": "Probability"
+  },
+  {
+    "question": "Probability of even number on dice:",
+    "options": [
+      "1/2",
+      "1/3",
+      "2/3",
+      "1/6"
+    ],
+    "correct_answer": "1/2",
+    "topic": "Probability"
+  },
+  {
+    "question": "Rain probability 0.4. Probability no rain:",
+    "options": [
+      "0.4",
+      "0.6",
+      "0.5",
+      "1"
+    ],
+    "correct_answer": "0.6",
+    "topic": "Probability"
+  },
+  {
+    "question": "In how many ways can 5 people be seated in a row?",
+    "options": [
+      "120",
+      "60",
+      "24",
+      "5"
+    ],
+    "correct_answer": "120",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "Number of ways to choose 2 students from 5:",
+    "options": [
+      "10",
+      "25",
+      "20",
+      "5"
+    ],
+    "correct_answer": "10",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "Ways to arrange 4 books on shelf:",
+    "options": [
+      "12",
+      "24",
+      "6",
+      "4"
+    ],
+    "correct_answer": "24",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "Number of ways to choose 3 from 7:",
+    "options": [
+      "35",
+      "21",
+      "84",
+      "343"
+    ],
+    "correct_answer": "35",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "Letters of MISSISSIPPI can be arranged in:",
+    "options": [
+      "5040",
+      "34650",
+      "110880",
+      "151200"
+    ],
+    "correct_answer": "34650",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "Ways to divide 6 people into 2 groups of 3:",
+    "options": [
+      "20",
+      "40",
+      "60",
+      "120"
+    ],
+    "correct_answer": "20",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "Number of 3-digit numbers from 1-9 (no repetition):",
+    "options": [
+      "504",
+      "729",
+      "672",
+      "362880"
+    ],
+    "correct_answer": "504",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "Ways to arrange 5 men and 3 women alternately:",
+    "options": [
+      "2*5!*3!",
+      "5!*3!",
+      "8!",
+      "5!+3!"
+    ],
+    "correct_answer": "2*5!*3!",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "Area of square with side 5 cm:",
+    "options": [
+      "20 cm²",
+      "25 cm²",
+      "30 cm²",
+      "15 cm²"
+    ],
+    "correct_answer": "25 cm²",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "Perimeter of rectangle 4×6:",
+    "options": [
+      "16",
+      "20",
+      "24",
+      "10"
+    ],
+    "correct_answer": "20",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "Area of circle radius 7 cm (π=22/7):",
+    "options": [
+      "154 cm²",
+      "44 cm²",
+      "144 cm²",
+      "49 cm²"
+    ],
+    "correct_answer": "154 cm²",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "Ratio of area of square to its perimeter (side=a):",
+    "options": [
+      "a/4",
+      "a/2",
+      "4/a",
+      "2/a"
+    ],
+    "correct_answer": "a/4",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "Equilateral triangle side 6 cm, height:",
+    "options": [
+      "3√3 cm",
+      "6√3 cm",
+      "3 cm",
+      "9 cm"
+    ],
+    "correct_answer": "3√3 cm",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "Area of circle = area of square. Ratio circumference to perimeter:",
+    "options": [
+      "π:2",
+      "√π:2",
+      "1:2",
+      "2:π"
+    ],
+    "correct_answer": "√π:2",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "Rectangle 10×5, diagonal:",
+    "options": [
+      "√125 cm",
+      "15 cm",
+      "12 cm",
+      "√100 cm"
+    ],
+    "correct_answer": "√125 cm",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "Cost of painting circle radius 14 m at Rs 2/sq m (π=22/7):",
+    "options": [
+      "1232",
+      "616",
+      "1540",
+      "308"
+    ],
+    "correct_answer": "1232",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "Rhombus area = (d1×d2)/2 = 120, perimeter if side=10:",
+    "options": [
+      "40",
+      "50",
+      "60",
+      "30"
+    ],
+    "correct_answer": "40",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "Parallelogram base 15 cm, height 8 cm, area:",
+    "options": [
+      "120 cm²",
+      "100 cm²",
+      "90 cm²",
+      "150 cm²"
+    ],
+    "correct_answer": "120 cm²",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "LCM of 9, 12, 15 is:",
+    "options": [
+      "60",
+      "45",
+      "180",
+      "90"
+    ],
+    "correct_answer": "180",
+    "topic": "LCM"
+  },
+  {
+    "question": "1/3 + 2/5 = ?",
+    "options": [
+      "7/15",
+      "5/8",
+      "11/15",
+      "1/2"
+    ],
+    "correct_answer": "11/15",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "Probability of drawing ace from 52 cards:",
+    "options": [
+      "1/13",
+      "4/52",
+      "1/4",
+      "1/52"
+    ],
+    "correct_answer": "1/13",
+    "topic": "Probability"
+  },
+  {
+    "question": "Find the LCM of 12 and 18.",
+    "options": [
+      "36",
+      "72",
+      "24",
+      "48"
+    ],
+    "correct_answer": "36",
+    "topic": "LCM"
+  },
+  {
+    "question": "What is the LCM of 5, 10, and 15?",
+    "options": [
+      "30",
+      "60",
+      "15",
+      "45"
+    ],
+    "correct_answer": "30",
+    "topic": "LCM"
+  },
+  {
+    "question": "The LCM of two numbers is 60 and their HCF is 5. If one number is 15, find the other.",
+    "options": [
+      "20",
+      "25",
+      "30",
+      "12"
+    ],
+    "correct_answer": "20",
+    "topic": "LCM"
+  },
+  {
+    "question": "Find the smallest number which when divided by 6, 9, and 12 leaves no remainder.",
+    "options": [
+      "36",
+      "72",
+      "18",
+      "24"
+    ],
+    "correct_answer": "36",
+    "topic": "LCM"
+  },
+  {
+    "question": "Three bells ring at intervals of 4, 6, and 8 seconds. If they ring together at 12:00, when will they ring together again?",
+    "options": [
+      "12:00:24",
+      "12:00:48",
+      "12:00:12",
+      "12:00:36"
+    ],
+    "correct_answer": "12:00:24",
+    "topic": "LCM"
+  },
+  {
+    "question": "What is the LCM of 8 and 14?",
+    "options": [
+      "56",
+      "112",
+      "28",
+      "42"
+    ],
+    "correct_answer": "56",
+    "topic": "LCM"
+  },
+  {
+    "question": "Find the LCM of 21 and 35.",
+    "options": [
+      "105",
+      "210",
+      "70",
+      "140"
+    ],
+    "correct_answer": "105",
+    "topic": "LCM"
+  },
+  {
+    "question": "The LCM of two consecutive even numbers is 24. What are the numbers?",
+    "options": [
+      "6 and 8",
+      "4 and 6",
+      "8 and 10",
+      "2 and 4"
+    ],
+    "correct_answer": "6 and 8",
+    "topic": "LCM"
+  },
+  {
+    "question": "Find the LCM of 16 and 24.",
+    "options": [
+      "48",
+      "96",
+      "32",
+      "64"
+    ],
+    "correct_answer": "48",
+    "topic": "LCM"
+  },
+  {
+    "question": "What is the smallest positive integer divisible by both 9 and 15?",
+    "options": [
+      "45",
+      "90",
+      "135",
+      "30"
+    ],
+    "correct_answer": "45",
+    "topic": "LCM"
+  },
+  {
+    "question": "Find the LCM of 7 and 11.",
+    "options": [
+      "77",
+      "154",
+      "21",
+      "33"
+    ],
+    "correct_answer": "77",
+    "topic": "LCM"
+  },
+  {
+    "question": "What is the sum of all prime numbers between 10 and 20?",
+    "options": [
+      "60",
+      "58",
+      "52",
+      "54"
+    ],
+    "correct_answer": "60",
+    "topic": "Number System"
+  },
+  {
+    "question": "Which of the following is divisible by 11?",
+    "options": [
+      "121",
+      "123",
+      "125",
+      "127"
+    ],
+    "correct_answer": "121",
+    "topic": "Number System"
+  },
+  {
+    "question": "What is the remainder when 247 is divided by 9?",
+    "options": [
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "correct_answer": "4",
+    "topic": "Number System"
+  },
+  {
+    "question": "How many two-digit numbers are divisible by 7?",
+    "options": [
+      "13",
+      "14",
+      "12",
+      "15"
+    ],
+    "correct_answer": "13",
+    "topic": "Number System"
+  },
+  {
+    "question": "Find the unit digit of 7^23.",
+    "options": [
+      "3",
+      "7",
+      "9",
+      "1"
+    ],
+    "correct_answer": "3",
+    "topic": "Number System"
+  },
+  {
+    "question": "What is the smallest 4-digit number divisible by 12?",
+    "options": [
+      "1008",
+      "1000",
+      "1020",
+      "1012"
+    ],
+    "correct_answer": "1008",
+    "topic": "Number System"
+  },
+  {
+    "question": "Which number is both a perfect square and a perfect cube between 1 and 100?",
+    "options": [
+      "64",
+      "36",
+      "49",
+      "81"
+    ],
+    "correct_answer": "64",
+    "topic": "Number System"
+  },
+  {
+    "question": "If a number is divisible by both 3 and 5, it must be divisible by:",
+    "options": [
+      "15",
+      "8",
+      "10",
+      "12"
+    ],
+    "correct_answer": "15",
+    "topic": "Number System"
+  },
+  {
+    "question": "What is the HCF of 36 and 48?",
+    "options": [
+      "12",
+      "6",
+      "18",
+      "24"
+    ],
+    "correct_answer": "12",
+    "topic": "Number System"
+  },
+  {
+    "question": "How many prime numbers are there between 1 and 30?",
+    "options": [
+      "10",
+      "9",
+      "11",
+      "8"
+    ],
+    "correct_answer": "10",
+    "topic": "Number System"
+  },
+  {
+    "question": "What is the sum of the first 10 natural numbers?",
+    "options": [
+      "55",
+      "45",
+      "50",
+      "60"
+    ],
+    "correct_answer": "55",
+    "topic": "Number System"
+  },
+  {
+    "question": "Convert 0.75 to a fraction in simplest form.",
+    "options": [
+      "3/4",
+      "7/10",
+      "15/20",
+      "6/8"
+    ],
+    "correct_answer": "3/4",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "What is 2/5 + 3/10?",
+    "options": [
+      "7/10",
+      "1/2",
+      "5/15",
+      "4/10"
+    ],
+    "correct_answer": "7/10",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "Convert 5/8 to a decimal.",
+    "options": [
+      "0.625",
+      "0.58",
+      "0.825",
+      "0.525"
+    ],
+    "correct_answer": "0.625",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "What is the result of 3.5 × 2.4?",
+    "options": [
+      "8.4",
+      "8.2",
+      "7.9",
+      "9.4"
+    ],
+    "correct_answer": "8.4",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "Simplify: 7/14 + 2/7",
+    "options": [
+      "11/14",
+      "9/14",
+      "1/2",
+      "5/7"
+    ],
+    "correct_answer": "11/14",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "What is 0.125 as a fraction?",
+    "options": [
+      "1/8",
+      "1/4",
+      "1/5",
+      "1/10"
+    ],
+    "correct_answer": "1/8",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "Find the value of 5/6 - 1/3.",
+    "options": [
+      "1/2",
+      "2/3",
+      "1/3",
+      "1/6"
+    ],
+    "correct_answer": "1/2",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "What is 2.25 divided by 0.5?",
+    "options": [
+      "4.5",
+      "4.25",
+      "5",
+      "3.5"
+    ],
+    "correct_answer": "4.5",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "Which fraction is equivalent to 0.4?",
+    "options": [
+      "2/5",
+      "4/5",
+      "1/4",
+      "3/8"
+    ],
+    "correct_answer": "2/5",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "What is 3/4 of 80?",
+    "options": [
+      "60",
+      "70",
+      "50",
+      "65"
+    ],
+    "correct_answer": "60",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "Find the result of 1.5 + 2.75 + 0.25.",
+    "options": [
+      "4.5",
+      "4.25",
+      "4.75",
+      "5"
+    ],
+    "correct_answer": "4.5",
+    "topic": "Decimals & Fractions"
+  },
+  {
+    "question": "A bag contains 3 red balls and 5 blue balls. What is the probability of drawing a red ball?",
+    "options": [
+      "3/8",
+      "5/8",
+      "1/2",
+      "3/5"
+    ],
+    "correct_answer": "3/8",
+    "topic": "Probability"
+  },
+  {
+    "question": "What is the probability of getting a head when a fair coin is tossed?",
+    "options": [
+      "1/2",
+      "1/4",
+      "1",
+      "0"
+    ],
+    "correct_answer": "1/2",
+    "topic": "Probability"
+  },
+  {
+    "question": "A die is rolled. What is the probability of getting an even number?",
+    "options": [
+      "1/2",
+      "1/3",
+      "2/3",
+      "1/6"
+    ],
+    "correct_answer": "1/2",
+    "topic": "Probability"
+  },
+  {
+    "question": "From a deck of 52 cards, what is the probability of drawing a king?",
+    "options": [
+      "1/13",
+      "4/52",
+      "1/4",
+      "1/26"
+    ],
+    "correct_answer": "1/13",
+    "topic": "Probability"
+  },
+  {
+    "question": "Two coins are tossed. What is the probability of getting at least one head?",
+    "options": [
+      "3/4",
+      "1/2",
+      "1/4",
+      "2/3"
+    ],
+    "correct_answer": "3/4",
+    "topic": "Probability"
+  },
+  {
+    "question": "A bag has 4 white balls and 6 black balls. What is the probability of not drawing a white ball?",
+    "options": [
+      "3/5",
+      "2/5",
+      "1/2",
+      "4/10"
+    ],
+    "correct_answer": "3/5",
+    "topic": "Probability"
+  },
+  {
+    "question": "What is the probability of getting a prime number when a die is rolled?",
+    "options": [
+      "1/2",
+      "1/3",
+      "2/3",
+      "1/6"
+    ],
+    "correct_answer": "1/2",
+    "topic": "Probability"
+  },
+  {
+    "question": "A box contains 2 red, 3 green, and 5 blue balls. What is the probability of picking a green ball?",
+    "options": [
+      "3/10",
+      "1/3",
+      "2/10",
+      "5/10"
+    ],
+    "correct_answer": "3/10",
+    "topic": "Probability"
+  },
+  {
+    "question": "What is the probability of drawing a face card from a standard deck of 52 cards?",
+    "options": [
+      "3/13",
+      "1/4",
+      "12/52",
+      "1/13"
+    ],
+    "correct_answer": "3/13",
+    "topic": "Probability"
+  },
+  {
+    "question": "If two dice are rolled, what is the probability of getting a sum of 7?",
+    "options": [
+      "1/6",
+      "1/9",
+      "5/36",
+      "1/12"
+    ],
+    "correct_answer": "1/6",
+    "topic": "Probability"
+  },
+  {
+    "question": "A letter is chosen at random from the word 'MATHEMATICS'. What is the probability of choosing an 'A'?",
+    "options": [
+      "2/11",
+      "1/11",
+      "3/11",
+      "1/6"
+    ],
+    "correct_answer": "2/11",
+    "topic": "Probability"
+  },
+  {
+    "question": "In how many ways can 5 books be arranged on a shelf?",
+    "options": [
+      "120",
+      "60",
+      "24",
+      "25"
+    ],
+    "correct_answer": "120",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "How many ways can 3 students be selected from a group of 7?",
+    "options": [
+      "35",
+      "21",
+      "42",
+      "28"
+    ],
+    "correct_answer": "35",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "In how many ways can the letters of the word 'CAT' be arranged?",
+    "options": [
+      "6",
+      "3",
+      "9",
+      "12"
+    ],
+    "correct_answer": "6",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "How many 3-digit numbers can be formed using digits 1, 2, 3 without repetition?",
+    "options": [
+      "6",
+      "9",
+      "27",
+      "3"
+    ],
+    "correct_answer": "6",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "In how many ways can 2 boys be chosen from 5 boys?",
+    "options": [
+      "10",
+      "20",
+      "5",
+      "25"
+    ],
+    "correct_answer": "10",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "How many ways can a committee of 2 be formed from 4 people?",
+    "options": [
+      "6",
+      "8",
+      "12",
+      "4"
+    ],
+    "correct_answer": "6",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "Find the number of permutations of 4 items taken 2 at a time.",
+    "options": [
+      "12",
+      "6",
+      "8",
+      "24"
+    ],
+    "correct_answer": "12",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "How many ways can 4 people sit in a row?",
+    "options": [
+      "24",
+      "12",
+      "16",
+      "8"
+    ],
+    "correct_answer": "24",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "In how many ways can you choose 4 cards from a set of 6 cards?",
+    "options": [
+      "15",
+      "24",
+      "30",
+      "20"
+    ],
+    "correct_answer": "15",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "How many different 2-letter codes can be formed from A, B, C, D if repetition is allowed?",
+    "options": [
+      "16",
+      "12",
+      "8",
+      "6"
+    ],
+    "correct_answer": "16",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "A team of 3 is to be selected from 8 players. How many selections are possible?",
+    "options": [
+      "56",
+      "336",
+      "24",
+      "120"
+    ],
+    "correct_answer": "56",
+    "topic": "Permutations and Combinations"
+  },
+  {
+    "question": "Find the perimeter of a rectangle with length 12 cm and breadth 8 cm.",
+    "options": [
+      "40 cm",
+      "96 cm",
+      "20 cm",
+      "48 cm"
+    ],
+    "correct_answer": "40 cm",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "What is the area of a square with side 7 cm?",
+    "options": [
+      "49 sq cm",
+      "28 sq cm",
+      "14 sq cm",
+      "21 sq cm"
+    ],
+    "correct_answer": "49 sq cm",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "Find the area of a triangle with base 10 cm and height 6 cm.",
+    "options": [
+      "30 sq cm",
+      "60 sq cm",
+      "16 sq cm",
+      "36 sq cm"
+    ],
+    "correct_answer": "30 sq cm",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "The circumference of a circle is 44 cm. Find its radius. (Use π = 22/7)",
+    "options": [
+      "7 cm",
+      "14 cm",
+      "22 cm",
+      "11 cm"
+    ],
+    "correct_answer": "7 cm",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "What is the perimeter of an equilateral triangle with side 9 cm?",
+    "options": [
+      "27 cm",
+      "18 cm",
+      "36 cm",
+      "81 cm"
+    ],
+    "correct_answer": "27 cm",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "Find the area of a circle with radius 7 cm. (Use π = 22/7)",
+    "options": [
+      "154 sq cm",
+      "44 sq cm",
+      "49 sq cm",
+      "308 sq cm"
+    ],
+    "correct_answer": "154 sq cm",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "A rectangular field has length 50 m and breadth 30 m. What is its area?",
+    "options": [
+      "1500 sq m",
+      "160 sq m",
+      "80 sq m",
+      "2500 sq m"
+    ],
+    "correct_answer": "1500 sq m",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "The side of a square is 15 cm. Find its perimeter.",
+    "options": [
+      "60 cm",
+      "225 cm",
+      "30 cm",
+      "45 cm"
+    ],
+    "correct_answer": "60 cm",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "What is the area of a rectangle with length 20 cm and breadth 5 cm?",
+    "options": [
+      "100 sq cm",
+      "50 sq cm",
+      "25 sq cm",
+      "200 sq cm"
+    ],
+    "correct_answer": "100 sq cm",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "Find the perimeter of a circle with diameter 14 cm. (Use π = 22/7)",
+    "options": [
+      "44 cm",
+      "22 cm",
+      "88 cm",
+      "28 cm"
+    ],
+    "correct_answer": "44 cm",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "A parallelogram has base 12 cm and height 8 cm. What is its area?",
+    "options": [
+      "96 sq cm",
+      "48 sq cm",
+      "20 sq cm",
+      "40 sq cm"
+    ],
+    "correct_answer": "96 sq cm",
+    "topic": "Perimeter and Area"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'D'. (Ignore the errors of punctuation, if any).]\n\nDo you know to play the guitar?",
+    "options": [
+      "Do you know",
+      "to play",
+      "the guitar?",
+      "No error."
+    ],
+    "correct_answer": "Do you know",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'D'. (Ignore the errors of punctuation, if any).]\n\nAfter leaving his office he went directly to a restaurant.",
+    "options": [
+      "After leaving his office",
+      "he went directly",
+      "to a restaurant.",
+      "No error."
+    ],
+    "correct_answer": "No error.",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'E'. (Ignore the errors of punctuation, if any).]\n\nRamesh did not like leaving his old parents alone in the house but he had no alternative as he has to go out to work.",
+    "options": [
+      "Ramesh did not like",
+      "leaving his old parents alone in the house",
+      "but he had no alternative",
+      "as he has to go out to work."
+    ],
+    "correct_answer": "Ramesh did not like",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'E'. (Ignore the errors of punctuation, if any).]\n\nThe observers felt that the stronger team had to face defeat because the players didn't play whole hearted.",
+    "options": [
+      "The observers felt that",
+      "the stronger team had to face",
+      "defeat because the players",
+      "didn't play whole hearted."
+    ],
+    "correct_answer": "The observers felt that",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: In the following the questions choose the word which best expresses the meaning of the given word.]\n\nRESCUE",
+    "options": [
+      "Command",
+      "Help",
+      "Defence",
+      "Safety"
+    ],
+    "correct_answer": "Safety",
+    "topic": "Synonyms"
+  },
+  {
+    "question": "[Direction: In the following the questions choose the word which best expresses the meaning of the given word.]\n\nAWAKENED",
+    "options": [
+      "Enlightened",
+      "Realised",
+      "Shook",
+      "Waken"
+    ],
+    "correct_answer": "Waken",
+    "topic": "Synonyms"
+  },
+  {
+    "question": "[Direction: In the following the questions choose the word which best expresses the meaning of the given word.]\n\nINSOLVENT",
+    "options": [
+      "Poor",
+      "Bankrupt",
+      "Penniless",
+      "Broke"
+    ],
+    "correct_answer": "Broke",
+    "topic": "Synonyms"
+  },
+  {
+    "question": "[Direction: In the following the questions choose the word which best expresses the meaning of the given word.]\n\nRECKLESS",
+    "options": [
+      "Courageous",
+      "Rash",
+      "Bold",
+      "Daring"
+    ],
+    "correct_answer": "Daring",
+    "topic": "Synonyms"
+  },
+  {
+    "question": "[Direction: In each of the sentences given below a word is printed in bold. Below it four choices are given. Pick up the one which is most nearly the same in meaning as the word printer in bold and can replaces it without altering the meaning of the sentence.]\n\nSwift is known in the world of letters for his misogynism.",
+    "options": [
+      "hate for mankind",
+      "hate for womankind",
+      "love for the reasonable",
+      "love for the womankind"
+    ],
+    "correct_answer": "love for the womankind",
+    "topic": "Synonyms"
+  },
+  {
+    "question": "[Direction: In the following questions choose the word which is the exact OPPOSITE of the given words.]\n\nLEND",
+    "options": [
+      "Borrow",
+      "Cheat",
+      "Pawn",
+      "Hire"
+    ],
+    "correct_answer": "Hire",
+    "topic": "Antonyms"
+  },
+  {
+    "question": "[Direction: In the following questions choose the word which is the exact OPPOSITE of the given words.]\n\nFRUGAL",
+    "options": [
+      "Copious",
+      "Extravagant",
+      "Generous",
+      "Ostentatious"
+    ],
+    "correct_answer": "Ostentatious",
+    "topic": "Antonyms"
+  },
+  {
+    "question": "[Direction: In the following questions choose the word which is the exact OPPOSITE of the given words.]\n\nEXTRAVAGANCE",
+    "options": [
+      "Luxury",
+      "Poverty",
+      "Economical",
+      "Cheapness"
+    ],
+    "correct_answer": "Luxury",
+    "topic": "Antonyms"
+  },
+  {
+    "question": "[Direction: Each sentences below consist of a word or a phrase which is bold. It is followed by four words or phrases. Select the word or pharse which is closes to the OPPOSITE in meaning of the bold word or phrase.]\n\nAdversity teaches man to be humble and self-reliant.",
+    "options": [
+      "sincerity",
+      "animosity",
+      "curiosity",
+      "prosperity"
+    ],
+    "correct_answer": "prosperity",
+    "topic": "Antonyms"
+  },
+  {
+    "question": "[Direction: Each sentences below consist of a word or a phrase which is bold. It is followed by four words or phrases. Select the word or pharse which is closes to the OPPOSITE in meaning of the bold word or phrase.]\n\nUnsettled conditions in the land led to exodus of hundreds of its citizens.",
+    "options": [
+      "invasion",
+      "entry",
+      "immigration",
+      "expulsion"
+    ],
+    "correct_answer": "expulsion",
+    "topic": "Antonyms"
+  },
+  {
+    "question": "[Direction: Pick out the most effective word(s) from the given words to fill in the blank to make the sentence meaningfully complete.]\n\nThe river overflowed its ...... and flooded the area.",
+    "options": [
+      "edges",
+      "fronts",
+      "limits",
+      "banks"
+    ],
+    "correct_answer": "banks",
+    "topic": "Selecting Words"
+  },
+  {
+    "question": "[Direction: In each sentence below, four words which are lettered (A), (B), (C) and (D) have been printed in bold type, one which may be either inappropriate in the context of the sentence or wrongly spelt.The letter of that word is answer.If all the four words are appropriate and also correctly spelt, mark 'E', i.e., 'All Correct' as the answer.]\n\nFind the correctly spelt word:",
+    "options": [
+      "People in our country are distressed",
+      "by the spate of strikes, an almost",
+      "perpetual go slow and",
+      "increadibily low productivity"
+    ],
+    "correct_answer": "People in our country are distressed",
+    "topic": "Spellings"
+  },
+  {
+    "question": "[Direction: Which of phrases given below each sentence should replace the phrase printed in bold type to make the grammatically correct? If the sentence is correct as it is, mark 'E' as the answer.]\n\nThey failed in their attempt to repair the demolished portion of that building. for their attempt to repair",
+    "options": [
+      "in their attempting to repair",
+      "with their attempt to repair",
+      "in their attempt for repairs",
+      "No correction required"
+    ],
+    "correct_answer": "No correction required",
+    "topic": "Sentence Correction"
+  },
+  {
+    "question": "[Direction: In questions below, each passage consist of six sentences. The first and sixth sentence are given in the begining. The middle four sentences in each have been removed and jumbled up. These are labelled as P, Q, R and S. Find out the proper order for the four sentences.]\n\nS1:\tMost of the universities in the country are now facing financial crisis. P :\tCost benefit yardstick thus should not be applied in the case of universities. Q :\tThe current state of affairs cannot be allowed to continue for long. R :\tUniversities cannot be equated with commercial enterprises. S :\tProper development of universities and colleges must be ensured. S6:\tThe Government should realise this before it is too late. The Proper sequence should be:",
+    "options": [
+      "QRPS",
+      "QSPR",
+      "QRSP",
+      "QPRS"
+    ],
+    "correct_answer": "QPRS",
+    "topic": "Ordering of Sentences"
+  },
+  {
+    "question": "[Direction: Each question consist of two words which have a certain relationship to each other followed by four pairs of related words, Select the pair which has the same relationship.]\n\nTEN:DECIMAL",
+    "options": [
+      "seven:septet",
+      "four:quartet",
+      "two:binary",
+      "five:quince"
+    ],
+    "correct_answer": "five:quince",
+    "topic": "Verbal Analogies"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'D'. (Ignore the errors of punctuation, if any).]\n\nDIVA:OPERA producer:theatre director:drama conductor:bus thespian:play",
+    "options": [
+      "DIVA:OPERA",
+      "producer:theatre",
+      "director:drama",
+      "conductor:bus"
+    ],
+    "correct_answer": "conductor:bus",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'D'. (Ignore the errors of punctuation, if any).]\n\nIn management, as you rise higher, the problems you face becomemore and more unstructured and you can't just fall back on the tools you had been",
+    "options": [
+      "In management, as you rise higher,",
+      "the problems you face becomemore and more unstructured and you can't just fall back on",
+      "the tools you had been",
+      "No error."
+    ],
+    "correct_answer": "In management, as you rise higher,",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'E'. (Ignore the errors of punctuation, if any).]\n\nEven after worked in the office for as many as fifteen years, he still does not understand the basic objectives of the work.",
+    "options": [
+      "Even after worked in the office",
+      "for as many as fifteen years,",
+      "he still does not understand",
+      "the basic objectives of the work."
+    ],
+    "correct_answer": "Even after worked in the office",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'E'. (Ignore the errors of punctuation, if any).]\n\nI cannot make from what you are saying about him.",
+    "options": [
+      "I cannot",
+      "make from",
+      "what you are saying",
+      "about him."
+    ],
+    "correct_answer": "I cannot",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'E'. (Ignore the errors of punctuation, if any).]\n\nYour machine would not have given you so much trouble if you had maintained it proper.",
+    "options": [
+      "Your machine would not have",
+      "given you so much trouble",
+      "if you had",
+      "maintained it proper."
+    ],
+    "correct_answer": "Your machine would not have",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: In each of the sentences given below a word is printed in bold. Below it four choices are given. Pick up the one which is most nearly the same in meaning as the word printer in bold and can replaces it without altering the meaning of the sentence.]\n\nCatching snakes can be hazardous for people untrained in the art.",
+    "options": [
+      "tricky",
+      "harmful",
+      "difficult",
+      "dangerous"
+    ],
+    "correct_answer": "dangerous",
+    "topic": "Synonyms"
+  },
+  {
+    "question": "[Direction: In each of the sentences given below a word is printed in bold. Below it four choices are given. Pick up the one which is most nearly the same in meaning as the word printer in bold and can replaces it without altering the meaning of the sentence.]\n\nShe has an insatiable love for music.",
+    "options": [
+      "unsatisfiable",
+      "unchanging",
+      "irreconcilable",
+      "undesirable"
+    ],
+    "correct_answer": "undesirable",
+    "topic": "Synonyms"
+  },
+  {
+    "question": "[Direction: In each of the sentences given below a word is printed in bold. Below it four choices are given. Pick up the one which is most nearly the same in meaning as the word printer in bold and can replaces it without altering the meaning of the sentence.]\n\nTraffic being what it is, it is lamentable that our roads are unable to take the load.",
+    "options": [
+      "unpardonable",
+      "deplorable",
+      "inexcusable",
+      "terrible"
+    ],
+    "correct_answer": "terrible",
+    "topic": "Synonyms"
+  },
+  {
+    "question": "[Direction: In the following questions choose the word which is the exact OPPOSITE of the given words.]\n\nFLAGITIOUS",
+    "options": [
+      "Innocent",
+      "Vapid",
+      "Ignorant",
+      "Frivolous"
+    ],
+    "correct_answer": "Frivolous",
+    "topic": "Antonyms"
+  },
+  {
+    "question": "[Direction: In the following questions choose the word which is the exact OPPOSITE of the given words.]\n\nIMPASSE",
+    "options": [
+      "Resurgence",
+      "Breakthrough",
+      "Continuation",
+      "Combination"
+    ],
+    "correct_answer": "Combination",
+    "topic": "Antonyms"
+  },
+  {
+    "question": "[Direction: Pick out the most effective word(s) from the given words to fill in the blank to make the sentence meaningfully complete.]\n\nThe paths of glory lead ...... to the grave.",
+    "options": [
+      "straight",
+      "but",
+      "in",
+      "directly"
+    ],
+    "correct_answer": "directly",
+    "topic": "Selecting Words"
+  },
+  {
+    "question": "[Direction: Pick out the most effective word(s) from the given words to fill in the blank to make the sentence meaningfully complete.]\n\nHe passed the examination in the first class because he ......",
+    "options": [
+      "was hard working for it",
+      "worked hardly for it",
+      "had worked hard for it",
+      "was working hard for it"
+    ],
+    "correct_answer": "was working hard for it",
+    "topic": "Selecting Words"
+  },
+  {
+    "question": "[Direction: Pick out the most effective word(s) from the given words to fill in the blank to make the sentence meaningfully complete.]\n\nThe English schemed to continue their rule in India by playing off one community ...... the other.",
+    "options": [
+      "before",
+      "upon",
+      "against",
+      "with"
+    ],
+    "correct_answer": "with",
+    "topic": "Selecting Words"
+  },
+  {
+    "question": "[Direction: Pick out the most effective word(s) from the given words to fill in the blank to make the sentence meaningfully complete.]\n\nThe grapes are now ...... enough to be picked.",
+    "options": [
+      "ready",
+      "mature",
+      "ripe",
+      "advanced"
+    ],
+    "correct_answer": "advanced",
+    "topic": "Selecting Words"
+  },
+  {
+    "question": "[Direction: In each question, an incomplete statement (Stem) followed by fillers is given. Pick out the best one which can complete incomplete stem correctly and meaningfully.]\n\nIn order to help the company attain its goal of enhancing profit, all the employees ...... urged the management to grant paid leave",
+    "options": [
+      "appealed the management to implement new welfare schemes",
+      "voluntarily offered to work overtime with lucrative compensation",
+      "voluntarily offered to render additional services in lieu of nothing",
+      "decided to enhance production at the cost of quality of the product"
+    ],
+    "correct_answer": "decided to enhance production at the cost of quality of the product",
+    "topic": "Completing Statements"
+  },
+  {
+    "question": "[Direction: In questions below, each passage consist of six sentences. The first and sixth sentence are given in the begining. The middle four sentences in each have been removed and jumbled up. These are labelled as P, Q, R and S. Find out the proper order for the four sentences.]\n\nS1:\tOnce upon atime there lived three young men in a certain town of Hindustan. P :\tAll the people of the neighbourhood were mortally afraid of them. Q :\tThey were so powerful that they could catch growing lions and tear them to pieces. R :\tSomeone told them that they would become immortal if they killed Death. S :\tThe young men believed themselves to be very good friends. S6:\tAll of them set out in search of their foe called Death. The Proper sequence should be:",
+    "options": [
+      "QPRS",
+      "SQPR",
+      "RSQP",
+      "SRPQ"
+    ],
+    "correct_answer": "SRPQ",
+    "topic": "Ordering of Sentences"
+  },
+  {
+    "question": "[Direction: In questions below, each passage consist of six sentences. The first and sixth sentence are given in the begining. The middle four sentences in each have been removed and jumbled up. These are labelled as P, Q, R and S. Find out the proper order for the four sentences.]\n\nS1:\tAnts eat worms, centipedes and spiders. P :\tThey are usually much quicker than the ant itself. Q :\tNevertheless, these animals do not make easy game for ants. R :\tBesides, they have an extraordinary number of ways of escaping. S :\tThey also eat larvae and insect adults such as flies, moths and spring tails. S6:\tSome jump, and some give out a pungent repellent substance. The Proper sequence should be:",
+    "options": [
+      "SQPR",
+      "SPRQ",
+      "SQRP",
+      "SRQP"
+    ],
+    "correct_answer": "SRQP",
+    "topic": "Ordering of Sentences"
+  },
+  {
+    "question": "[Direction: In the following questions four alternatives are given for the idiom/phrase italicised and underlined in the sentence. Choose the alternative which best expresses the meaning of idiom/phrase.]\n\nIn spite of the immense pressure exerted by the militants, the Government has decided not to give in.",
+    "options": [
+      "accede",
+      "yield",
+      "oblige",
+      "confirm"
+    ],
+    "correct_answer": "confirm",
+    "topic": "Idioms and Phrases"
+  },
+  {
+    "question": "[Direction: In the following questions four alternatives are given for the idiom/phrase italicised and underlined in the sentence. Choose the alternative which best expresses the meaning of idiom/phrase.]\n\nWhy do you wish to tread on the toes?",
+    "options": [
+      "To give offence to them",
+      "To follow them grudgingly",
+      "To treat them indifferently",
+      "To be kicked by them"
+    ],
+    "correct_answer": "To be kicked by them",
+    "topic": "Idioms and Phrases"
+  },
+  {
+    "question": "[Direction: In the questions below the sentences have been given in Direct/Indirect speech. From the given alternatives, choose the one which best expresses the given sentence in Indirect/Direct speech.]\n\nNita ordered her servant to bring her cup of tea. Nita told her servant, \"Bring a cup of tea.\" Nita said, \"Bring me a cup of tea.\" Nita said to her servant, \"Bring me a cup of tea.\" Nita told her servant, \"Bring her that cup of tea.\"",
+    "options": [
+      "Nita ordered her servant to bring her cup of tea.",
+      "Nita told her servant, \"Bring a cup of tea.\"",
+      "Nita said, \"Bring me a cup of tea.\"",
+      "Nita said to her servant, \"Bring me a cup of tea.\""
+    ],
+    "correct_answer": "Nita said to her servant, \"Bring me a cup of tea.\"",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: In the questions below the sentences have been given in Direct/Indirect speech. From the given alternatives, choose the one which best expresses the given sentence in Indirect/Direct speech.]\n\nA body of volunteers have been organised to spread the message of the saint.",
+    "options": [
+      "A body of volunteers",
+      "have been organised",
+      "to spread the message of the saint.",
+      "No error."
+    ],
+    "correct_answer": "A body of volunteers",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: In the questions below the sentences have been given in Direct/Indirect speech. From the given alternatives, choose the one which best expresses the given sentence in Indirect/Direct speech.]\n\nIn spite of several reminders, he did not so far send any reply to me, letters.",
+    "options": [
+      "In spite of several reminders,",
+      "he did not so far send",
+      "any reply to me, letters.",
+      "No error."
+    ],
+    "correct_answer": "In spite of several reminders,",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'E'. (Ignore the errors of punctuation, if any).]\n\nHe being the eldest son, his father expects him to take care of several things besides his regular studies.",
+    "options": [
+      "He being the eldest son,",
+      "his father expects him",
+      "to take care of several things",
+      "besides his regular studies."
+    ],
+    "correct_answer": "besides his regular studies.",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'E'. (Ignore the errors of punctuation, if any).]\n\nHe was very disappointed when he found that someone else had secured higher marks.",
+    "options": [
+      "He was very disappointed",
+      "when he found",
+      "that someone else",
+      "had secured higher marks."
+    ],
+    "correct_answer": "had secured higher marks.",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: In each of the sentences given below a word is printed in bold. Below it four choices are given. Pick up the one which is most nearly the same in meaning as the word printer in bold and can replaces it without altering the meaning of the sentence.]\n\nShe baffled all our attempts to find her.",
+    "options": [
+      "defeated",
+      "thwarted",
+      "foiled",
+      "circumvented"
+    ],
+    "correct_answer": "circumvented",
+    "topic": "Synonyms"
+  },
+  {
+    "question": "[Direction: In each of the sentences given below a word is printed in bold. Below it four choices are given. Pick up the one which is most nearly the same in meaning as the word printer in bold and can replaces it without altering the meaning of the sentence.]\n\nEven today many people are guided by abstruse moral values.",
+    "options": [
+      "dangerous",
+      "impracticable",
+      "obscure",
+      "irrational"
+    ],
+    "correct_answer": "irrational",
+    "topic": "Synonyms"
+  },
+  {
+    "question": "[Direction: In each of the sentences given below a word is printed in bold. Below it four choices are given. Pick up the one which is most nearly the same in meaning as the word printer in bold and can replaces it without altering the meaning of the sentence.]\n\nThe pioneers left a blazing trial of courage, manliness and chivalry.",
+    "options": [
+      "inventors",
+      "explorers",
+      "colonialist",
+      "settlers"
+    ],
+    "correct_answer": "settlers",
+    "topic": "Synonyms"
+  },
+  {
+    "question": "[Direction: Pick out the most effective word(s) from the given words to fill in the blank to make the sentence meaningfully complete.]\n\nShe has an aversion ...... taking even onion and garlic.",
+    "options": [
+      "with",
+      "at",
+      "against",
+      "to"
+    ],
+    "correct_answer": "to",
+    "topic": "Selecting Words"
+  },
+  {
+    "question": "[Direction: Pick out the most effective word(s) from the given words to fill in the blank to make the sentence meaningfully complete.]\n\nHe is a very careful person, he never takes side but remains ......",
+    "options": [
+      "impartial",
+      "unbiased",
+      "neutral",
+      "prejudiced"
+    ],
+    "correct_answer": "prejudiced",
+    "topic": "Selecting Words"
+  },
+  {
+    "question": "[Direction: In each question below, there is a sentence of which some parts have been jumbled up. Rearrange these parts which are labelled P, Q, R and S to produce the correct sentence. Choose the proper sequence.]\n\nThe national unity of a free people P :\tto make it impracticable Q :\tfor there to be an arbitrary administration R :\tdepends upon a sufficiently even balance of political power S :\tagainst a revolutionary opposition that is irreconcilably opposed to it The Proper sequence should be:",
+    "options": [
+      "QRPS",
+      "QRSP",
+      "RPQS",
+      "RSPQ"
+    ],
+    "correct_answer": "RSPQ",
+    "topic": "Ordering of Words"
+  },
+  {
+    "question": "[Direction: Which of phrases given below each sentence should replace the phrase printed in bold type to make the grammatically correct? If the sentence is correct as it is, mark 'E' as the answer.]\n\nWe don't know how did the thief made an escape. how the thief did make",
+    "options": [
+      "how the thief does make",
+      "how the thief made",
+      "how was the thief made",
+      "No correction required"
+    ],
+    "correct_answer": "No correction required",
+    "topic": "Sentence Correction"
+  },
+  {
+    "question": "[Direction: In questions given below, a part of the sentence is italicised and underlined. Below are given alternatives to the italicised part which may improve the sentence. Choose the correct alternative. In case no improvement is needed, option 'D' is the answer.]\n\nThe old man felled some trees in the garden with hardly no effort at all.",
+    "options": [
+      "hard effort",
+      "hardly any effort",
+      "a hardly any effort",
+      "No improvement"
+    ],
+    "correct_answer": "No improvement",
+    "topic": "Sentence Improvement"
+  },
+  {
+    "question": "[Direction: In questions given below, a part of the sentence is italicised and underlined. Below are given alternatives to the italicised part which may improve the sentence. Choose the correct alternative. In case no improvement is needed, option 'D' is the answer.]\n\nAs he is past his teens now, he can look for himself.",
+    "options": [
+      "after",
+      "to",
+      "around",
+      "No improvement"
+    ],
+    "correct_answer": "No improvement",
+    "topic": "Sentence Improvement"
+  },
+  {
+    "question": "[Direction: In questions below, each passage consist of six sentences. The first and sixth sentence are given in the begining. The middle four sentences in each have been removed and jumbled up. These are labelled as P, Q, R and S. Find out the proper order for the four sentences.]\n\nS1:\tThis weather-vane often tops a church spire, tower or high building. P :\tThey are only wind-vanes. Q :\tNeither alone can tell us what the weather will be. R :\tThey are designed to point to direction from which the wind is coming. S :\tJust as the barometer only tells us the pressure of air, the weather-vane tells us the direction of wind. S6:\tThe weather-vane can, however give us some indication of other. The Proper sequence should be:",
+    "options": [
+      "PQRS",
+      "PSRQ",
+      "PRSQ",
+      "SPQR"
+    ],
+    "correct_answer": "SPQR",
+    "topic": "Ordering of Sentences"
+  },
+  {
+    "question": "[Direction: In questions below, each passage consist of six sentences. The first and sixth sentence are given in the begining. The middle four sentences in each have been removed and jumbled up. These are labelled as P, Q, R and S. Find out the proper order for the four sentences.]\n\nS1:\tI took cigarettes from my case. P :\tBut when the fit of coughing was over, he replaced it between his lips. Q :\tI lit one of them and placed it between the lips. R :\tThen with a feeble hand he removed the cigarette. S :\tSlowly he took a pull at it and coughed violently. S6:\tThen he continues to draw on it. The Proper sequence should be:",
+    "options": [
+      "PSQR",
+      "QPSR",
+      "QSRP",
+      "SRPQ"
+    ],
+    "correct_answer": "SRPQ",
+    "topic": "Ordering of Sentences"
+  },
+  {
+    "question": "[Direction: In questions given below out of four alternatives, choose the one which can be substituted for the given word/sentence.]\n\nA voice loud enough to be heard",
+    "options": [
+      "Audible",
+      "Applaudable",
+      "Laudable",
+      "Oral"
+    ],
+    "correct_answer": "Oral",
+    "topic": "One Word Substitutes"
+  },
+  {
+    "question": "[Direction: In questions given below out of four alternatives, choose the one which can be substituted for the given word/sentence.]\n\nA drawing on transparent paper",
+    "options": [
+      "Red print",
+      "Blue print",
+      "Negative",
+      "Transparency"
+    ],
+    "correct_answer": "Transparency",
+    "topic": "One Word Substitutes"
+  },
+  {
+    "question": "[Direction: In questions given below out of four alternatives, choose the one which can be substituted for the given word/sentence.]\n\nExtreme old age when a man behaves like a fool",
+    "options": [
+      "Imbecility",
+      "Senility",
+      "Dotage",
+      "Superannuation"
+    ],
+    "correct_answer": "Superannuation",
+    "topic": "One Word Substitutes"
+  },
+  {
+    "question": "[Direction: In the following questions four alternatives are given for the idiom/phrase italicised and underlined in the sentence. Choose the alternative which best expresses the meaning of idiom/phrase.]\n\nIt was he who put a spoke in my wheel. tried to cause an accident helped in the execution of the plan thwarted in the execution of the plan destroyed the plan",
+    "options": [
+      "It was he who put a spoke in my wheel.",
+      "tried to cause an accident",
+      "helped in the execution of the plan",
+      "thwarted in the execution of the plan"
+    ],
+    "correct_answer": "thwarted in the execution of the plan",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'E'. (Ignore the errors of punctuation, if any).]\n\nMr.Raman said that he had a difference with the chairman at his statement.",
+    "options": [
+      "Mr.Raman said that",
+      "he had a difference",
+      "with",
+      "the chairman at his statement."
+    ],
+    "correct_answer": "Mr.Raman said that",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'E'. (Ignore the errors of punctuation, if any).]\n\nI will put on a note in this regard for your consideration and necessary decision.",
+    "options": [
+      "I will put on",
+      "a note in this regard",
+      "for your consideration",
+      "and necessary decision."
+    ],
+    "correct_answer": "I will put on",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: In each of the sentences given below a word is printed in bold. Below it four choices are given. Pick up the one which is most nearly the same in meaning as the word printer in bold and can replaces it without altering the meaning of the sentence.]\n\nHe was wanted at the outset of his career.",
+    "options": [
+      "end",
+      "beginning",
+      "middle",
+      "entrance"
+    ],
+    "correct_answer": "entrance",
+    "topic": "Synonyms"
+  },
+  {
+    "question": "[Direction: Pick out the most effective word(s) from the given words to fill in the blank to make the sentence meaningfully complete.]\n\nI listened, but I had no idea what he was ...... about.",
+    "options": [
+      "saying",
+      "talking",
+      "telling",
+      "discussing"
+    ],
+    "correct_answer": "discussing",
+    "topic": "Selecting Words"
+  },
+  {
+    "question": "[Direction: Pick out the most effective word(s) from the given words to fill in the blank to make the sentence meaningfully complete.]\n\nHe lives near a lovely ...... of countryside.",
+    "options": [
+      "length",
+      "piece",
+      "section",
+      "stretch"
+    ],
+    "correct_answer": "stretch",
+    "topic": "Selecting Words"
+  },
+  {
+    "question": "[Direction: Pick out the most effective word(s) from the given words to fill in the blank to make the sentence meaningfully complete.]\n\nOwing to the power cut in the area, factories are being forced to ...... men",
+    "options": [
+      "throw away",
+      "send off",
+      "put off",
+      "lay off"
+    ],
+    "correct_answer": "lay off",
+    "topic": "Selecting Words"
+  },
+  {
+    "question": "[Direction: In each question below, there is a sentence of which some parts have been jumbled up. Rearrange these parts which are labelled P, Q, R and S to produce the correct sentence. Choose the proper sequence.]\n\nSince the beginning of history P :\thave managed to catch Q :\tthe Eskimos and Red Indians R :\tby a very difficulty method S :\ta few specimens of this aquatic animal The Proper sequence should be:",
+    "options": [
+      "QRPS",
+      "SQPR",
+      "SQRP",
+      "QPSR"
+    ],
+    "correct_answer": "QPSR",
+    "topic": "Ordering of Words"
+  },
+  {
+    "question": "[Direction: In each question below, there is a sentence of which some parts have been jumbled up. Rearrange these parts which are labelled P, Q, R and S to produce the correct sentence. Choose the proper sequence.]\n\nWe went P :\talong the railway line Q :\tand had a right to R :\twhere other people not allowed to go S :\tbut daddy belonged to the railway The Proper sequence should be:",
+    "options": [
+      "RPQS",
+      "PRSQ",
+      "RSQP",
+      "PRQS"
+    ],
+    "correct_answer": "PRQS",
+    "topic": "Ordering of Words"
+  },
+  {
+    "question": "[Direction: In each question below, there is a sentence of which some parts have been jumbled up. Rearrange these parts which are labelled P, Q, R and S to produce the correct sentence. Choose the proper sequence.]\n\nI was P :\tand stay fro few days in Delhi Q :\twhen my father told me R :\tvery excited S :\tthat I could go with him The Proper sequence should be:",
+    "options": [
+      "PQRS",
+      "RQSP",
+      "QRSP",
+      "SPQR"
+    ],
+    "correct_answer": "SPQR",
+    "topic": "Ordering of Words"
+  },
+  {
+    "question": "[Direction: Which of phrases given below each sentence should replace the phrase printed in bold type to make the grammatically correct? If the sentence is correct as it is, mark 'E' as the answer.]\n\nRamesh is as tall if not, taller than Mahesh. not as tall but",
+    "options": [
+      "not so tall but as",
+      "as tall as, if not",
+      "as if not",
+      "No correction required"
+    ],
+    "correct_answer": "No correction required",
+    "topic": "Sentence Correction"
+  },
+  {
+    "question": "[Direction: Which of phrases given below each sentence should replace the phrase printed in bold type to make the grammatically correct? If the sentence is correct as it is, mark 'E' as the answer.]\n\n\"Friends and comrades, the light has gone away from our lives and there is darkness everywhere\" off",
+    "options": [
+      "out of",
+      "out from",
+      "out off",
+      "No correction required"
+    ],
+    "correct_answer": "No correction required",
+    "topic": "Sentence Correction"
+  },
+  {
+    "question": "[Direction: In each question, an incomplete statement (Stem) followed by fillers is given. Pick out the best one which can complete incomplete stem correctly and meaningfully.]\n\nPractically, very little work could be completed in the last week as it was ...... full of working days",
+    "options": [
+      "a very hectic week",
+      "full of holidays",
+      "a very busy week",
+      "loaded with work"
+    ],
+    "correct_answer": "loaded with work",
+    "topic": "Completing Statements"
+  },
+  {
+    "question": "[Direction: In questions below, each passage consist of six sentences. The first and sixth sentence are given in the begining. The middle four sentences in each have been removed and jumbled up. These are labelled as P, Q, R and S. Find out the proper order for the four sentences.]\n\nS1:\tMs. Parasuram started a Petrol Pump in Madras. P :\tA total to 12 girls now work at the pump. Q :\tShe advertised in newspapers for women staff. R :\tThey operate in 2 shifts. S :\tThe response was good. S6:\tThus she has shown the way for many others. The Proper sequence should be:",
+    "options": [
+      "PQSR",
+      "SQPR",
+      "QSPR",
+      "PQRS"
+    ],
+    "correct_answer": "PQRS",
+    "topic": "Ordering of Sentences"
+  },
+  {
+    "question": "[Direction: In the following questions four alternatives are given for the idiom/phrase italicised and underlined in the sentence. Choose the alternative which best expresses the meaning of idiom/phrase.]\n\nI ran out of money on my European tour.",
+    "options": [
+      "exhausted my stock of",
+      "did not have enough",
+      "lost",
+      "carried a lot"
+    ],
+    "correct_answer": "carried a lot",
+    "topic": "Idioms and Phrases"
+  },
+  {
+    "question": "[Direction: In the following questions four alternatives are given for the idiom/phrase italicised and underlined in the sentence. Choose the alternative which best expresses the meaning of idiom/phrase.]\n\nThe robber took to his heels when the police arrived.",
+    "options": [
+      "opened fire",
+      "hid himself",
+      "ran off",
+      "surrendered"
+    ],
+    "correct_answer": "surrendered",
+    "topic": "Idioms and Phrases"
+  },
+  {
+    "question": "[Direction: Each question consist of two words which have a certain relationship to each other followed by four pairs of related words, Select the pair which has the same relationship.]\n\nGRAVITY:PULL iron:metal north pole:directions magnetism:attraction dust:desert",
+    "options": [
+      "GRAVITY:PULL",
+      "iron:metal",
+      "north pole:directions",
+      "magnetism:attraction"
+    ],
+    "correct_answer": "magnetism:attraction",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: Each question consist of two words which have a certain relationship to each other followed by four pairs of related words, Select the pair which has the same relationship.]\n\nWhen I get a cold it takes me weeks to shake it off.",
+    "options": [
+      "When I get a cold",
+      "it takes me weeks",
+      "to shake it off.",
+      "No error."
+    ],
+    "correct_answer": "When I get a cold",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'E'. (Ignore the errors of punctuation, if any).]\n\nHe tried as he could Naveen did not succeed in getting his car to start up.",
+    "options": [
+      "He tried as he could",
+      "Naveen did not",
+      "succeed in getting",
+      "his car to start up."
+    ],
+    "correct_answer": "He tried as he could",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'E'. (Ignore the errors of punctuation, if any).]\n\nImmediately after boarding the bus, Mahesh asked the conductor. that if he knew where the museum was,",
+    "options": [
+      "Immediately after boarding the bus,",
+      "Mahesh asked the conductor.",
+      "that if he knew",
+      "where the museum was,"
+    ],
+    "correct_answer": "Immediately after boarding the bus,",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'E'. (Ignore the errors of punctuation, if any).]\n\nI am contacting you sometime in next week to explain to you my problem in detail.",
+    "options": [
+      "I am contacting you",
+      "sometime in next week",
+      "to explain to you",
+      "my problem in detail."
+    ],
+    "correct_answer": "I am contacting you",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: Read each sentence to find out whether there is any grammatical error in it. The error, if any will be in one part of the sentence. The letter of that part is the answer. If there is no error, the answer is 'E'. (Ignore the errors of punctuation, if any).]\n\nWhen the national anthem was being sung, everyone were standing in silence.",
+    "options": [
+      "When the national",
+      "anthem was being",
+      "sung, everyone were",
+      "standing in silence."
+    ],
+    "correct_answer": "When the national",
+    "topic": "Spotting Errors"
+  },
+  {
+    "question": "[Direction: In the following the questions choose the word which best expresses the meaning of the given word.]\n\nFORAY",
+    "options": [
+      "Maraud",
+      "Contest",
+      "Ranger",
+      "Intuition"
+    ],
+    "correct_answer": "Intuition",
+    "topic": "Synonyms"
+  },
+  {
+    "question": "[Direction: In each of the sentences given below a word is printed in bold. Below it four choices are given. Pick up the one which is most nearly the same in meaning as the word printer in bold and can replaces it without altering the meaning of the sentence.]\n\nThe attitude of Western countries towards the Third World Countries is rather callous to say the least.",
+    "options": [
+      "passive",
+      "unkind",
+      "cursed",
+      "unfeeling"
+    ],
+    "correct_answer": "unfeeling",
+    "topic": "Synonyms"
+  },
+  {
+    "question": "[Direction: In each of the sentences given below a word is printed in bold. Below it four choices are given. Pick up the one which is most nearly the same in meaning as the word printer in bold and can replaces it without altering the meaning of the sentence.]\n\nWhen he returned he was accompanied by a sprightly young girl.",
+    "options": [
+      "beautiful",
+      "lively",
+      "intelligent",
+      "sportive"
+    ],
+    "correct_answer": "sportive",
+    "topic": "Synonyms"
+  },
+  {
+    "question": "[Direction: Each sentences below consist of a word or a phrase which is bold. It is followed by four words or phrases. Select the word or pharse which is closes to the OPPOSITE in meaning of the bold word or phrase.]\n\nA friendly dog meet us at the farmgate.",
+    "options": [
+      "helpful",
+      "understanding",
+      "quiet",
+      "hostile"
+    ],
+    "correct_answer": "hostile",
+    "topic": "Antonyms"
+  },
+  {
+    "question": "[Direction: Pick out the most effective word(s) from the given words to fill in the blank to make the sentence meaningfully complete.]\n\nSuccess in this examination depends ...... hard work alone.",
+    "options": [
+      "at",
+      "over",
+      "for",
+      "on"
+    ],
+    "correct_answer": "on",
+    "topic": "Selecting Words"
+  },
+  {
+    "question": "[Direction: In questions given below, a part of the sentence is italicised and underlined. Below are given alternatives to the italicised part which may improve the sentence. Choose the correct alternative. In case no improvement is needed, option 'D' is the answer.]\n\nThe poor villagers have waited in the bitter cold for more than 4 hours now.",
+    "options": [
+      "have been waiting",
+      "had waited",
+      "has been waiting",
+      "No improvement"
+    ],
+    "correct_answer": "No improvement",
+    "topic": "Sentence Improvement"
+  },
+  {
+    "question": "[Direction: In each question, an incomplete statement (Stem) followed by fillers is given. Pick out the best one which can complete incomplete stem correctly and meaningfully.]\n\nMahesh need not have purchased the bag, means ...... it was not necessary for Mahesh to purchase the bag but he has purchased it",
+    "options": [
+      "it was necessary for Mahesh to purchase the bag and he has not purchased it",
+      "it was not necessary for Mahesh to purchase the bag and he has not purchased it",
+      "it was necessary for Mahesh to purchase the bag but he has not purchased it",
+      "Mahesh already has a bag but still he purchased another one"
+    ],
+    "correct_answer": "Mahesh already has a bag but still he purchased another one",
+    "topic": "Completing Statements"
+  },
+  {
+    "question": "[Direction: In each question, an incomplete statement (Stem) followed by fillers is given. Pick out the best one which can complete incomplete stem correctly and meaningfully.]\n\nBecause he believes in democratic principles, he always ...... decides all the matters himself",
+    "options": [
+      "listen to others views and enforces his own",
+      "shown respect to others opinions if they match his own",
+      "reconciles with the majority views and gives us his own",
+      "imposes his own views on others"
+    ],
+    "correct_answer": "imposes his own views on others",
+    "topic": "Completing Statements"
+  },
+  {
+    "question": "[Direction: In questions below, each passage consist of six sentences. The first and sixth sentence are given in the begining. The middle four sentences in each have been removed and jumbled up. These are labelled as P, Q, R and S. Find out the proper order for the four sentences.]\n\nS1:\tThere is a touching story of Professor Hardy visiting Ramanujan as he lay desperately ill in hospital at Putney. P :\t'No Hardy, that is not a dull number in the very least. Q :\tHardy, who was a very shy man, could not find the words for his distress. R :\tIt was 1729. S :\tThe best he could do, as he got to the beside was \"I say Ramanujan, I thought the number of taxi I came down in was a very dull number\" S6:\tIt is the lowest number that can be expressed in two different ways as the sum of two cubes. The Proper sequence should be:",
+    "options": [
+      "PRSQ",
+      "QSRP",
+      "QSPR",
+      "SQRP"
+    ],
+    "correct_answer": "SQRP",
+    "topic": "Ordering of Sentences"
+  },
+  {
+    "question": "[Direction: In questions given below out of four alternatives, choose the one which can be substituted for the given word/sentence.]\n\nOne who eats everything",
+    "options": [
+      "Omnivorous",
+      "Omniscient",
+      "Irrestible",
+      "Insolvent"
+    ],
+    "correct_answer": "Insolvent",
+    "topic": "One Word Substitutes"
+  },
+  {
+    "question": "[Direction: In the following questions four alternatives are given for the idiom/phrase italicised and underlined in the sentence. Choose the alternative which best expresses the meaning of idiom/phrase.]\n\nI felt like a fish out of water among all those business tycoons.",
+    "options": [
+      "troubled",
+      "stupid",
+      "uncomfortable",
+      "inferior"
+    ],
+    "correct_answer": "inferior",
+    "topic": "Number Series"
+  },
+  {
+    "question": "[Direction: Three of the words will be in the same classification, the remaining one will not be. Your answer will be the one word that does NOT belong in the same classification as the others.]\n\nWhich word does NOT belong with the others?",
+    "options": [
+      "leopard",
+      "cougar",
+      "elephant",
+      "lion"
+    ],
+    "correct_answer": "leopard",
+    "topic": "Verbal Classification"
+  },
+  {
+    "question": "[Direction: The words in the bottom row are related in the same way as the words in the top row. For each item, find the word that completes the bottom row of words.]\n\nsnow\tmountain\tski",
+    "options": [
+      "warmth\tlake\t?",
+      "sand",
+      "swim",
+      "sunburn"
+    ],
+    "correct_answer": "warmth\tlake\t?",
+    "topic": "Analogies"
+  },
+  {
+    "question": "[Direction: First, you will be given a list of three \"nonsense\" words and their English word meanings. The question(s) that follow will ask you to reverse the process and translate an English word into the artificial language.]\n\nHere are some words translated from an artificial language. myncabel means saddle horse conowir means trail ride cabelalma means horse blanket Which word could mean \"horse ride\"?",
+    "options": [
+      "cabelwir",
+      "conocabel",
+      "almamyn",
+      "conoalma"
+    ],
+    "correct_answer": "cabelwir",
+    "topic": "Artificial Language"
+  },
+  {
+    "question": "[Direction: First, you will be given a list of three \"nonsense\" words and their English word meanings. The question(s) that follow will ask you to reverse the process and translate an English word into the artificial language.]\n\nHere are some words translated from an artificial language. daftafoni means advisement imodafta means misadvise imolokti means misconduct Which word could mean \"statement\"?",
+    "options": [
+      "kratafoni",
+      "kratadafta",
+      "loktifoni",
+      "daftaimo"
+    ],
+    "correct_answer": "kratafoni",
+    "topic": "Artificial Language"
+  },
+  {
+    "question": "[Direction: Read each definition and all four choices carefully, and find the answer that provides the best example of the given definition.]\n\nReentry occurs when a person leaves his or her social system for a period of time and then returns. Which situation below best describes Reentry ?",
+    "options": [
+      "When he is offered a better paying position, Jacob leaves the restaurant he manages to manage a new restaurant on the other side of town.",
+      "Catherine is spending her junior year of college studying abroad in France.",
+      "Malcolm is readjusting to civilian life after two years of overseas military service.",
+      "After several miserable months, Sharon decides that she can no longer share an apartment with her roommate Hilary."
+    ],
+    "correct_answer": "When he is offered a better paying position, Jacob leaves the restaurant he manages to manage a new restaurant on the other side of town.",
+    "topic": "Matching Definitions"
+  },
+  {
+    "question": "[Direction: The logic problems in this set present you with three true statements: Fact 1, Fact 2, and Fact 3. Then, you are given three more statements (labeled I, II, and III), and you must determine which of these, if any, is also a fact. One or two of the statements could be true; all of the statements could be true; or none of the statements could be true. Choose your answer based solely on the information given in the first three facts.]\n\nFact 1:\tAll chickens are birds. Fact 2:\tSome chickens are hens. Fact 3:\tFemale birds lay eggs. If the first three statements are facts, which of the following statements must also be a fact? I:\tAll birds lay eggs. II:\tSome Hens are birds. III:\tSome chickens are not hens.",
+    "options": [
+      "I only",
+      "II only",
+      "II and III only",
+      "None of the statements is a known fact."
+    ],
+    "correct_answer": "I only",
+    "topic": "Logical Problems"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two conclusions numbered I and II. You have to assume everything in the statement to be true, then consider the two conclusions together and decide which of them logically follows beyond a reasonable doubt from the information given in the statement. Give answer: (A) If only conclusion I follows (B) If only conclusion II follows (C) If either I or II follows (D) If neither I nor II follows and (E) If both I and II follow.]\n\nStatements: The percentage of the national income shared by the top 10 per cent of households in India is 35. Conclusions: When an economy grows fast, concentration of wealth in certain pockets of population takes place. The national income is unevenly distributed in India.",
+    "options": [
+      "Only conclusion I follows",
+      "Only conclusion II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only conclusion I follows",
+    "topic": "Statement and Conclusion"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two conclusions numbered I and II. You have to assume everything in the statement to be true, then consider the two conclusions together and decide which of them logically follows beyond a reasonable doubt from the information given in the statement. Give answer: (A) If only conclusion I follows (B) If only conclusion II follows (C) If either I or II follows (D) If neither I nor II follows and (E) If both I and II follow.]\n\nStatements: The best way to escape from a problem is to solve it. Conclusions: Your life will be dull if you don't face a problem. To escape from problems, you should always have some solutions with you.",
+    "options": [
+      "Only conclusion I follows",
+      "Only conclusion II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only conclusion I follows",
+    "topic": "Statement and Conclusion"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two assumptions numbered I and II. You have to consider the statement and the following assumptions and decide which of the assumptions is implicit in the statement. Give answer (A) If only assumption I is implicit (B) If only assumption II is implicit (C) If either I or II is implicit (D) If neither I nor II is implicit (E) If both I and II are implicit.]\n\nStatement: The X-Airlines has decided to increase the passenger fare by 15 percent with immediate effect. Assumptions: The demand for seats of X-Airlines may remain unchanged even after the hike of fare. Other airline companies may also hike the passenger fares.",
+    "options": [
+      "Only assumption I is implicit",
+      "Only assumption II is implicit",
+      "Either I or II is implicit",
+      "Neither I nor II is implicit"
+    ],
+    "correct_answer": "Only assumption I is implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two assumptions numbered I and II. You have to consider the statement and the following assumptions and decide which of the assumptions is implicit in the statement. Give answer (A) If only assumption I is implicit (B) If only assumption II is implicit (C) If either I or II is implicit (D) If neither I nor II is implicit (E) If both I and II are implicit.]\n\nStatement: Deepak has a large collection of books and he keeps on purchasing new books to add to his collection. Assumptions: Deepak loves and cares for books. Deepak has read each and every book that he has purchased.",
+    "options": [
+      "Only assumption I is implicit",
+      "Only assumption II is implicit",
+      "Either I or II is implicit",
+      "Neither I nor II is implicit"
+    ],
+    "correct_answer": "Only assumption I is implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: In each question below are given two statements followed by two conclusions numbered I and II. You have to take the given two statements to be true even if they seem to be at variance from commonly known facts. Read the conclusion and then decide which of the given conclusions logically follows from the two given statements, disregarding commonly known facts. Give answer: (A) If only conclusion I follows (B) If only conclusion II follows (C) If either I or II follows (D) If neither I nor II follows and (E) If both I and II follow.]\n\nStatements: All tubes are handles. All cups are handles. Conclusions: All cups are tubes. Some handles are not cups.",
+    "options": [
+      "Only conclusion I follows",
+      "Only conclusion II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only conclusion I follows",
+    "topic": "Logical Deduction"
+  },
+  {
+    "question": "[Direction: In each question below are given two statements followed by two conclusions numbered I and II. You have to take the given two statements to be true even if they seem to be at variance from commonly known facts. Read the conclusion and then decide which of the given conclusions logically follows from the two given statements, disregarding commonly known facts. Give answer: (A) If only conclusion I follows (B) If only conclusion II follows (C) If either I or II follows (D) If neither I nor II follows and (E) If both I and II follow.]\n\nStatements: All poles are guns. Some boats are not poles. Conclusions: All guns are boats. Some boats are not guns.",
+    "options": [
+      "Only conclusion I follows",
+      "Only conclusion II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only conclusion I follows",
+    "topic": "Logical Deduction"
+  },
+  {
+    "question": "[Direction: Each question given below consists of a statement, followed by two arguments numbered I and II. You have to decide which of the arguments is a 'strong' argument and which is a 'weak' argument. Give answer: (A) If only argument I is strong (B) If only argument II is strong (C) If either I or II is strong (D) If neither I nor II is strong and (E) If both I and II are strong.]\n\nStatement: Should higher education be completely stopped for some time? Arguments: No. It will hamper the country's future progress. Yes. It will reduce the educated unemployment.",
+    "options": [
+      "Only argument I is strong",
+      "Only argument II is strong",
+      "Either I or II is strong",
+      "Neither I nor II is strong"
+    ],
+    "correct_answer": "Only argument I is strong",
+    "topic": "Statement and Argument"
+  },
+  {
+    "question": "[Direction: Each question given below consists of a statement, followed by two arguments numbered I and II. You have to decide which of the arguments is a 'strong' argument and which is a 'weak' argument. Give answer: (A) If only argument I is strong (B) If only argument II is strong (C) If either I or II is strong (D) If neither I nor II is strong and (E) If both I and II are strong.]\n\nStatement: Should import duty on all the electronic goods be dispensed with? Arguments: No. This will considerably reduce the income of the government and will adversely affect the developmental activities. No. The local manufacturers will not be able to compete with the foreign manufacturers who are technologically far superior.",
+    "options": [
+      "Only argument I is strong",
+      "Only argument II is strong",
+      "Either I or II is strong",
+      "Neither I nor II is strong"
+    ],
+    "correct_answer": "Only argument I is strong",
+    "topic": "Statement and Argument"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by three courses of action numbered I, II and III. You have to assume everything in the statement to be true, then decide which of the three given suggested courses of action logically follows for pursuing.]\n\nStatement: The day time temperatures in this summer have been four to five degree Celsius above the normal temperature across the country. Courses of Action: All the district headquarters should be alerted to send prompt reports of death due to heat waves in their jurisdiction. The Government machinery should be put on high alert and provided with necessary equipments to prevent any untoward incident. The Government should make necessary arrangements to provide drinking water in all the areas affected due to extreme heat waves.",
+    "options": [
+      "Only I follows",
+      "Only I and II follow",
+      "All follow",
+      "Only III follows"
+    ],
+    "correct_answer": "Only I follows",
+    "topic": "Course of Action"
+  },
+  {
+    "question": "[Direction: Each question given below consists of a statement, followed by three or four arguments numbered I, II, III and IV. You have to decide which of the arguments is/are 'strong' arguments) and which is/are 'weak' arguments) and accordingly choose your answer from the alternatives given below each question.]\n\nStatement: Should there be only few banks in place of numerous smaller banks in India? Arguments: Yes. This will help secure the investor's money as these big banks will be able to withstand intermittent market related shocks. No. A large number of people will lose their jobs as after the merger many employees will be redundant. Yes. This will help consolidate the entire banking industry and will lead to healthy competition.",
+    "options": [
+      "None is strong",
+      "Only I and II are strong",
+      "Only II and III are strong",
+      "Only I and III are strong"
+    ],
+    "correct_answer": "None is strong",
+    "topic": "Statement and Argument"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by three assumptions numbered I, II and III. You have to consider the statement and the following assumptions, decide which of the assumptions is implicit in the statement and choose your answer accordingly.]\n\nStatement: In order to reduce the gap between income and expenditure, the company has decided to increase the price of its product from next month. Assumptions: The rate will remain more or less same after the increase. The expenditure will more or less remain the same in near future. The rival companies will also increase the price of the similar product.",
+    "options": [
+      "Only I and II are implicit",
+      "Only II and III are implicit",
+      "Only III is implicit",
+      "All are implicit"
+    ],
+    "correct_answer": "Only I and II are implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: In each of the questions below are given three statements followed by three conclusions numbered I, II and III, You have to take the given statements to be true even if they seem to be at variance from the commonly known facts. Read all the conclusions and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts.]\n\nStatements: All tigers are lions. No cow is lion. Some camels are cows. Conclusions: Some lions are camels. No camel- is tiger. Some tigers are cows. None follows",
+    "options": [
+      "Only I follows",
+      "Only II follows",
+      "Only III follows",
+      "Either I or II follows"
+    ],
+    "correct_answer": "Only I follows",
+    "topic": "Essential Part"
+  },
+  {
+    "question": "[Direction: Every one of the following questions consists of a related pair of words, followed by five pairs of words. Choose the pair that best represents a similar relationship to the one expressed in the original pair of words.]\n\nDIVISION : SECTION",
+    "options": [
+      "layer : tier",
+      "tether : bundle",
+      "chapter : verse",
+      "riser : stage"
+    ],
+    "correct_answer": "layer : tier",
+    "topic": "Analogies"
+  },
+  {
+    "question": "[Direction: First, you will be given a list of three \"nonsense\" words and their English word meanings. The question(s) that follow will ask you to reverse the process and translate an English word into the artificial language.]\n\nHere are some words translated from an artificial language. hapllesh means cloudburst srenchoch means pinball resbosrench means ninepin Which word could mean \"cloud nine\"?",
+    "options": [
+      "leshsrench",
+      "ochhapl",
+      "haploch",
+      "haplresbo"
+    ],
+    "correct_answer": "leshsrench",
+    "topic": "Artificial Language"
+  },
+  {
+    "question": "[Direction: Translate from an imaginary language into English. Then, look for the word elements that appear both on the list and in the answer choices.]\n\nHere are some words translated from an artificial language. malgauper means peach cobbler malgaport means peach juice moggagrop means apple jelly Which word could mean \"apple juice\"?",
+    "options": [
+      "moggaport",
+      "malgaauper",
+      "gropport",
+      "moggagrop"
+    ],
+    "correct_answer": "moggaport",
+    "topic": "Artificial Language"
+  },
+  {
+    "question": "[Direction: Each problem consists of three statements. Based on the first two statements, the third statement may be true, false, or uncertain.]\n\nJoe is younger than Kathy. Mark was born after Joe. Kathy is older than Mark. If the first two statements are true, the third statement is",
+    "options": [
+      "true",
+      "false",
+      "uncertain"
+    ],
+    "correct_answer": "true",
+    "topic": "Logical Problems"
+  },
+  {
+    "question": "[Direction: Choose the statement that is best supported by the information given in the question passage.]\n\nYoga has become a very popular type of exercise, but it may not be for everyone. Before you sign yourself up for a yoga class, you need to examine what it is you want from your fitness routine. If you're looking for a high-energy, fast-paced aerobic workout, a yoga class might not be your best choice. This paragraph best supports the statement that yoga is more popular than high-impact aerobics.",
+    "options": [
+      "before embarking on a new exercise regimen, you should think about your needs and desires.",
+      "yoga is changing the world of fitness in major ways",
+      "yoga benefits your body and mind",
+      "most people think that yoga isn't a rigorous form of exercise."
+    ],
+    "correct_answer": "before embarking on a new exercise regimen, you should think about your needs and desires.",
+    "topic": "Analyzing Arguments"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two conclusions numbered I and II. You have to assume everything in the statement to be true, then consider the two conclusions together and decide which of them logically follows beyond a reasonable doubt from the information given in the statement. Give answer: (A) If only conclusion I follows (B) If only conclusion II follows (C) If either I or II follows (D) If neither I nor II follows and (E) If both I and II follow.]\n\nStatements: Vegetable prices are soaring in the market. Conclusions: Vegetables are becoming a rare commodity. People cannot eat vegetables.",
+    "options": [
+      "Only conclusion I follows",
+      "Only conclusion II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only conclusion I follows",
+    "topic": "Statement and Conclusion"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two assumptions numbered I and II. You have to consider the statement and the following assumptions and decide which of the assumptions is implicit in the statement. Give answer (A) If only assumption I is implicit (B) If only assumption II is implicit (C) If either I or II is implicit (D) If neither I nor II is implicit (E) If both I and II are implicit.]\n\nStatement: The 'M' Cooperative Housing Society has put up a notice at its gate those sales persons are not allowed inside the society. Assumptions: All the sales persons will stay away from the 'M' Cooperative Housing Society. The security guard posted at the gate may be able to stop the sales persons entering the society.",
+    "options": [
+      "Only assumption I is implicit",
+      "Only assumption II is implicit",
+      "Either I or II is implicit",
+      "Neither I nor II is implicit"
+    ],
+    "correct_answer": "Only assumption I is implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two assumptions numbered I and II. You have to consider the statement and the following assumptions and decide which of the assumptions is implicit in the statement. Give answer (A) If only assumption I is implicit (B) If only assumption II is implicit (C) If either I or II is implicit (D) If neither I nor II is implicit (E) If both I and II are implicit.]\n\nStatement: Highly brilliant and industrious students do not always excel in the written examination. Assumptions: The written examination is good mainly for mediocre students. The brilliant and industrious students cannot always write good answers in the exam",
+    "options": [
+      "Only assumption I is implicit",
+      "Only assumption II is implicit",
+      "Either I or II is implicit",
+      "Neither I nor II is implicit"
+    ],
+    "correct_answer": "Only assumption I is implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two assumptions numbered I and II. You have to consider the statement and the following assumptions and decide which of the assumptions is implicit in the statement. Give answer (A) If only assumption I is implicit (B) If only assumption II is implicit (C) If either I or II is implicit (D) If neither I nor II is implicit (E) If both I and II are implicit.]\n\nStatement: \"Two months ago, it was announced that Central Government pensioners would get dearness relief with immediate effect but till date, banks have not credited the arrears.\" - A statement from a Pensioners' Forum. Assumptions: Most of the banks normally take care of the pensioners. Two months time is sufficient for the government machinery to move and give effect to pensioners.",
+    "options": [
+      "Only assumption I is implicit",
+      "Only assumption II is implicit",
+      "Either I or II is implicit",
+      "Neither I nor II is implicit"
+    ],
+    "correct_answer": "Only assumption I is implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two assumptions numbered I and II. You have to consider the statement and the following assumptions and decide which of the assumptions is implicit in the statement. Give answer (A) If only assumption I is implicit (B) If only assumption II is implicit (C) If either I or II is implicit (D) If neither I nor II is implicit (E) If both I and II are implicit.]\n\nStatement: Money is the root cause of all the problems in a family. Assumptions: Every problem is caused by something. There are always some problems in a family.",
+    "options": [
+      "Only assumption I is implicit",
+      "Only assumption II is implicit",
+      "Either I or II is implicit",
+      "Neither I nor II is implicit"
+    ],
+    "correct_answer": "Only assumption I is implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two assumptions numbered I and II. You have to consider the statement and the following assumptions and decide which of the assumptions is implicit in the statement. Give answer (A) If only assumption I is implicit (B) If only assumption II is implicit (C) If either I or II is implicit (D) If neither I nor II is implicit (E) If both I and II are implicit.]\n\nStatement: To investigate the murder of the lone resident of a flat, the police interrogated the domestic servant, the watchman of the multi-storeyed buildings and the liftman. Assumptions: The domestic servant, watchman and the liftman can give a clue about the suspected murder. Generally in such cases the persons known to the resident are directly or indirectly involved in the murder.",
+    "options": [
+      "Only assumption I is implicit",
+      "Only assumption II is implicit",
+      "Either I or II is implicit",
+      "Neither I nor II is implicit"
+    ],
+    "correct_answer": "Only assumption I is implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two courses of action numbered I and II. You have to assume everything in the statement to be true and on the basis of the information given in the statement, decide which of the suggested courses of action logically follow(s) for pursuing. Give answer (A) If only I follows (B) If only II follows (C) If either I or II follows (D) If neither I nor II follows (E) If both I and II follow.]\n\nStatement: Most of the development plans develop in papers only. Courses of Action: The in-charges should be instructed to supervise the field-work regularly. The supply of paper to such departments should be cut short.",
+    "options": [
+      "Only I follows",
+      "Only II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only I follows",
+    "topic": "Course of Action"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two courses of action numbered I and II. You have to assume everything in the statement to be true and on the basis of the information given in the statement, decide which of the suggested courses of action logically follow(s) for pursuing. Give answer (A) If only I follows (B) If only II follows (C) If either I or II follows (D) If neither I nor II follows (E) If both I and II follow.]\n\nStatement: A very large number of students have failed in the final high school examination due to faulty questions in one of the subjects. Courses of Action: All the students who have failed in the subject should be allowed to take supplementary examination. All those who are responsible for the error should be suspended and an enquiry should be initiated to find out the facts.",
+    "options": [
+      "Only I follows",
+      "Only II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only I follows",
+    "topic": "Course of Action"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two courses of action numbered I and II. You have to assume everything in the statement to be true and on the basis of the information given in the statement, decide which of the suggested courses of action logically follow(s) for pursuing. Give answer (A) If only I follows (B) If only II follows (C) If either I or II follows (D) If neither I nor II follows (E) If both I and II follow.]\n\nStatement: Four districts in State A have been experiencing severe drought for the last three years resulting into exodus of people from these districts. Courses of Action: The government should immediately start food for work programme in the district to put a halt to the exodus. The government should make since efforts to provide drinking/potable water to these districts",
+    "options": [
+      "Only I follows",
+      "Only II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only I follows",
+    "topic": "Course of Action"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two courses of action numbered I and II. You have to assume everything in the statement to be true and on the basis of the information given in the statement, decide which of the suggested courses of action logically follow(s) for pursuing. Give answer (A) If only I follows (B) If only II follows (C) If either I or II follows (D) If neither I nor II follows (E) If both I and II follow.]\n\nStatement: The Government has decided not to provide financial support to voluntary organisations from next Five Year Plan and has communicated that all such organisations should raise funds to meet their financial needs. Courses of Action: Voluntary organisations should collaborate with foreign agencies. They should explore other sources of financial support.",
+    "options": [
+      "Only I follows",
+      "Only II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only I follows",
+    "topic": "Course of Action"
+  },
+  {
+    "question": "[Direction: Each question given below consists of a statement, followed by two arguments numbered I and II. You have to decide which of the arguments is a 'strong' argument and which is a 'weak' argument. Give answer: (A) If only argument I is strong (B) If only argument II is strong (C) If either I or II is strong (D) If neither I nor II is strong and (E) If both I and II are strong.]\n\nStatement: Should the educated unemployed youth be paid \"unemployment allowance\" by the Government? Arguments: Yes. It will provide them some monetary help to either seek employment or to kick-start some 'self-employment' venture. No. It will dampen their urge to do something to earn their livelihood and thus promote idleness among the unemployed youth.",
+    "options": [
+      "Only argument I is strong",
+      "Only argument II is strong",
+      "Either I or II is strong",
+      "Neither I nor II is strong"
+    ],
+    "correct_answer": "Only argument I is strong",
+    "topic": "Statement and Argument"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by three courses of action numbered I, II and III. You have to assume everything in the statement to be true, then decide which of the three given suggested courses of action logically follows for pursuing.]\n\nStatement: Lack of coordination between the University, its colleges and various authorities has resulted in students ousted from one college seeking migration to another.",
+    "options": [
+      "Courses of Action:",
+      "If a student is ousted from a college, the information should be sent to all the other colleges of the University",
+      "The admissions to all the colleges of the University should be handled by the University directly.",
+      "A separate section should be made for taking strict action against students indulging in anti-social activities."
+    ],
+    "correct_answer": "Courses of Action:",
+    "topic": "Analogies"
+  },
+  {
+    "question": "[Direction: Each problem consists of three statements. Based on the first two statements, the third statement may be true, false, or uncertain.]\n\nAll the trees in the park are flowering trees. Some of the trees in the park are dogwoods. All dogwoods in the park are flowering trees. If the first two statements are true, the third statement is",
+    "options": [
+      "true",
+      "false",
+      "uncertain"
+    ],
+    "correct_answer": "true",
+    "topic": "Logical Problems"
+  },
+  {
+    "question": "[Direction: Each problem consists of three statements. Based on the first two statements, the third statement may be true, false, or uncertain.]\n\nSpot is bigger than King and smaller than Sugar. Ralph is smaller than Sugar and bigger than Spot. King is bigger than Ralph. If the first two statements are true, the third statement is",
+    "options": [
+      "true",
+      "false",
+      "uncertain"
+    ],
+    "correct_answer": "true",
+    "topic": "Logical Problems"
+  },
+  {
+    "question": "[Direction: Choose the statement that is best supported by the information given in the question passage.]\n\nDuring the last six years, the number of practicing physicians has increased by about 20%. During the same time period, the number of healthcare managers has increased by more than 600%. These percentages mean that many doctors have lost the authority to make their own schedules, determine the fees that they charge, and decide on prescribed treatments. This paragraph best supports the statement that doctors resent the interference of healthcare managers.",
+    "options": [
+      "no longer have adequate training.",
+      "care a great deal about their patients.",
+      "are less independent than they used to be.",
+      "are making a lot less money than they used to make."
+    ],
+    "correct_answer": "no longer have adequate training.",
+    "topic": "Analyzing Arguments"
+  },
+  {
+    "question": "[Direction: Read the below passage carefully and answer the questions: Some groups want to outlaw burning the flag. They say that people have fought and died for the flag and that citizens of the United States ought to respect that. But I say that respect cannot be leg-islated. Also, most citizens who have served in the military did not fight for the flag, they fought for what the flag represents. Among the things the flag represents is freedom of speech, which includes, I believe, the right for a citizen to express displeasure with the government by burning the flag in protest.]\n\nWhich of the following, if true, would weaken the speaker's argument? An action is not considered a part of freedom of speech.",
+    "options": [
+      "People who burn the flag usually commit other crimes as well.",
+      "The flag was not recognized by the government until 1812.",
+      "State flags are almost never burned",
+      "Most people are against flag burning."
+    ],
+    "correct_answer": "People who burn the flag usually commit other crimes as well.",
+    "topic": "Analyzing Arguments"
+  },
+  {
+    "question": "[Direction: Each of the following questions contains a small paragraph followed by a question on it. Read each paragraph carefully and answer the question given below it.]\n\nThe virtue of art does not allow the work to be interfered with or immediately ruled by anything other than itself. It insists that it alone shall touch the work in order to bring it into being. Art requires that nothing shall attain the work except through art itself. This passage best supports the statement that: art is governed by external rules and conditions.",
+    "options": [
+      "art is for the sake of art and life.",
+      "art is for the sake of art alone.",
+      "artist realises his dreams through his artistic creation.",
+      "artist should use his art for the sake of society."
+    ],
+    "correct_answer": "artist should use his art for the sake of society.",
+    "topic": "Theme Detection"
+  },
+  {
+    "question": "[Direction: Each of the following questions contains a small paragraph followed by a question on it. Read each paragraph carefully and answer the question given below it.]\n\nThe consumption of harmful drugs by the people can be prevented not only by banning their sale in the market but also by instructing users about their dangerous effects which they must understand for their safety. Also the drug addicts may be provided with proper medical facilities for their rehabilitation. This will help in scaling down the use of drugs. The passage best supports the statement that consumption of harmful drugs - are on increase in the society.",
+    "options": [
+      "can always be reduced.",
+      "are due to lack of medical facilities.",
+      "can be eliminated with the help of banning their sale.",
+      "may be channelized through proper system."
+    ],
+    "correct_answer": "may be channelized through proper system.",
+    "topic": "Theme Detection"
+  },
+  {
+    "question": "[Direction: In each of the following questions, a statement/group of statements is given followed by some conclusions. Without resolving anything yourself choose the conclusion which logically follows from the given statements).]\n\nTo pass the examination, one must work hard. Examination is related with hard work. All those who work hard, pass. Examination causes some anxiety and those who work hard overcome it. Without hard work, one does not pass. Hard-working person is a satisfied person.",
+    "options": [
+      "All those who work hard, pass.",
+      "Examination causes some anxiety and those who work hard overcome it.",
+      "Without hard work, one does not pass.",
+      "Hard-working person is a satisfied person."
+    ],
+    "correct_answer": "Hard-working person is a satisfied person.",
+    "topic": "Statement and Conclusion"
+  },
+  {
+    "question": "[Direction: In each of the following questions, two statements numbered I and II are given. There may be cause and effect relationship between the two statements. These two statements may be the effect of the same cause or independent causes. These statements may be independent causes without having any relationship. Read both the statements in each question and mark your answer as (A) If statement I is the cause and statement II is its effect; (B) If statement II is the cause and statement I is its effect; (C) If both the statements I and II are independent causes; (D) If both the statements I and II are effects of independent causes; and (E) If both the statements I and II are effects of some common cause.]\n\nStatements: The government has recently fixed the fees for professional courses offered by the unaided institutions which are much lower than the fees charged last year. The parents of the aspiring students launched a severe agitation last year protesting against the high fees charged by the unaided institutions. Statement I is the cause and statement II is its effect",
+    "options": [
+      "Statement II is the cause and statement I is its effect",
+      "Both the statements I and II are independent causes",
+      "Both the statements I and II are effects of independent causes",
+      "Both the statements I and II are effects of some common cause"
+    ],
+    "correct_answer": "Statement II is the cause and statement I is its effect",
+    "topic": "Cause and Effect"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two assumptions numbered I and II. You have to consider the statement and the following assumptions and decide which of the assumptions is implicit in the statement. Give answer (A) If only assumption I is implicit (B) If only assumption II is implicit (C) If either I or II is implicit (D) If neither I nor II is implicit (E) If both I and II are implicit.]\n\nStatement: The next meeting of the Governing Board of the Institute will be held after one year. Assumptions: The Institute will remain in function after one year. The Governing Board will be dissolved after one year.",
+    "options": [
+      "Only assumption I is implicit",
+      "Only assumption II is implicit",
+      "Either I or II is implicit",
+      "Neither I nor II is implicit"
+    ],
+    "correct_answer": "Only assumption I is implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two courses of action numbered I and II. You have to assume everything in the statement to be true and on the basis of the information given in the statement, decide which of the suggested courses of action logically follow(s) for pursuing. Give answer (A) If only I follows (B) If only II follows (C) If either I or II follows (D) If neither I nor II follows (E) If both I and II follow.]\n\nStatement: The cinema halls are incurring heavy losses these days as people prefer to watch movies in home on TV than to visit cinema halls. Courses of Action: The cinema halls should be demolished and residential multi-storey buildings should be constructed there. The cinema halls should be converted into shopping malls.",
+    "options": [
+      "Only I follows",
+      "Only II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only I follows",
+    "topic": "Course of Action"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two courses of action numbered I and II. You have to assume everything in the statement to be true and on the basis of the information given in the statement, decide which of the suggested courses of action logically follow(s) for pursuing. Give answer (A) If only I follows (B) If only II follows (C) If either I or II follows (D) If neither I nor II follows (E) If both I and II follow.]\n\nStatement: The Meteorology Department has forecast that a severe cyclonic storm would hit coastal Andhra Pradesh and Orissa in the next forty-eight hours. Courses of Action: The local administration should advise the fishermen not to go to dangerous area in the sea. The local administration should alert the people of coastal areas of these two states and they should be prepared to shift to safer places.",
+    "options": [
+      "Only I follows",
+      "Only II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only I follows",
+    "topic": "Course of Action"
+  },
+  {
+    "question": "[Direction: In each question below are given two statements followed by two conclusions numbered I and II. You have to take the given two statements to be true even if they seem to be at variance from commonly known facts. Read the conclusion and then decide which of the given conclusions logically follows from the two given statements, disregarding commonly known facts. Give answer: (A) If only conclusion I follows (B) If only conclusion II follows (C) If either I or II follows (D) If neither I nor II follows and (E) If both I and II follow.]\n\nStatements: Some books are tables. Some tables are mirrors. Conclusions: Some mirrors are books. No book is mirror.",
+    "options": [
+      "Only conclusion I follows",
+      "Only conclusion II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only conclusion I follows",
+    "topic": "Logical Deduction"
+  },
+  {
+    "question": "[Direction: In each question below are given two statements followed by two conclusions numbered I and II. You have to take the given two statements to be true even if they seem to be at variance from commonly known facts. Read the conclusion and then decide which of the given conclusions logically follows from the two given statements, disregarding commonly known facts. Give answer: (A) If only conclusion I follows (B) If only conclusion II follows (C) If either I or II follows (D) If neither I nor II follows and (E) If both I and II follow.]\n\nStatements: All fishes are grey in colour. Some fishes are heavy. Conclusions: All heavy fishes are grey in colour. All light fishes are not grey in colour.",
+    "options": [
+      "Only conclusion I follows",
+      "Only conclusion II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only conclusion I follows",
+    "topic": "Logical Deduction"
+  },
+  {
+    "question": "[Direction: Each question given below consists of a statement, followed by two arguments numbered I and II. You have to decide which of the arguments is a 'strong' argument and which is a 'weak' argument. Give answer: (A) If only argument I is strong (B) If only argument II is strong (C) If either I or II is strong (D) If neither I nor II is strong and (E) If both I and II are strong.]\n\nStatement: Should Indian scientists working abroad be called back to India? Arguments: Yes. They must serve the motherland first and forget about discoveries, honours, facilities and all. No. We have enough talent; let them stay where they want.",
+    "options": [
+      "Only argument I is strong",
+      "Only argument II is strong",
+      "Either I or II is strong",
+      "Neither I nor II is strong"
+    ],
+    "correct_answer": "Only argument I is strong",
+    "topic": "Statement and Argument"
+  },
+  {
+    "question": "[Direction: Each question given below consists of a statement, followed by two arguments numbered I and II. You have to decide which of the arguments is a 'strong' argument and which is a 'weak' argument. Give answer: (A) If only argument I is strong (B) If only argument II is strong (C) If either I or II is strong (D) If neither I nor II is strong and (E) If both I and II are strong.]\n\nStatement: Should the vehicles older than 15 years be rejected in metros in India? Arguments: Yes. This is a significant step to lower down the pollution level in metros. No. It will be very difficult for vehicle owners to shift to other parts in country because they will not get suitable job for their very existence.",
+    "options": [
+      "Only argument I is strong",
+      "Only argument II is strong",
+      "Either I or II is strong",
+      "Neither I nor II is strong"
+    ],
+    "correct_answer": "Only argument I is strong",
+    "topic": "Statement and Argument"
+  },
+  {
+    "question": "[Direction: Each question given below consists of a statement, followed by two arguments numbered I and II. You have to decide which of the arguments is a 'strong' argument and which is a 'weak' argument. Give answer: (A) If only argument I is strong (B) If only argument II is strong (C) If either I or II is strong (D) If neither I nor II is strong and (E) If both I and II are strong.]\n\nStatement: Is pen mightier than a sword? Arguments: Yes. Writers influence the thinking of the people. No. With the help of physical force one can conquer all.",
+    "options": [
+      "Only argument I is strong",
+      "Only argument II is strong",
+      "Either I or II is strong",
+      "Neither I nor II is strong"
+    ],
+    "correct_answer": "Only argument I is strong",
+    "topic": "Statement and Argument"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by three courses of action numbered I, II and III. You have to assume everything in the statement to be true, then decide which of the three given suggested courses of action logically follows for pursuing.]\n\nStatement: There are more than 200 villages in the hill area of Uttar Pradesh which are severely damaged due to cyclone and it causes an extra burden of Rs 200 crore on State Government for relief and rehabilitation work. Courses of Action: People of hill area should be shifted to other safer places. State Government should ask more financial support from Central Government. Government should levy relief tax to the corporate sector to ease the additional burden.",
+    "options": [
+      "None follows",
+      "Only I and II follow",
+      "Only II and III follow",
+      "Only I and III follow"
+    ],
+    "correct_answer": "None follows",
+    "topic": "Course of Action"
+  },
+  {
+    "question": "[Direction: Each question given below consists of a statement, followed by three or four arguments numbered I, II, III and IV. You have to decide which of the arguments is/are 'strong' arguments) and which is/are 'weak' arguments) and accordingly choose your answer from the alternatives given below each question.]\n\nStatement: Should seniority be the only criterion for the promotion? Arguments: No. It would be an injustice to those juniors who are more deserving and suitable for higher positions than their senior counterparts. Yes. Otherwise senior employees do feel humiliated. Yes. Senior employees are more experienced and must be rewarded for the same.",
+    "options": [
+      "None is strong",
+      "Only I is strong",
+      "Only I and III are strong",
+      "Only I and II are strong"
+    ],
+    "correct_answer": "None is strong",
+    "topic": "Statement and Argument"
+  },
+  {
+    "question": "[Direction: Remember, you are looking for the word that does NOT belong in the same group as the others. Sometimes, all four words seem to fit in the same group. If so, look more closely to further narrow your classification.]\n\nStatement: Should workers/employees be allowed to participate in the management of factories in India? Arguments: Yes. It is the present management theory. No. Many workers are illiterate and so their contributions will not be of any value. Yes. Employees-owned companies generally have higher productivity. No. Employee-union ownership drives up salaries and wages. Only I and II are strong",
+    "options": [
+      "None is strong",
+      "Only II and III are strong",
+      "All are strong",
+      "None of these"
+    ],
+    "correct_answer": "None is strong",
+    "topic": "Verbal Classification"
+  },
+  {
+    "question": "[Direction: First, you will be given a list of three \"nonsense\" words and their English word meanings. The question(s) that follow will ask you to reverse the process and translate an English word into the artificial language.]\n\nHere are some words translated from an artificial language. lelibroon means yellow hat plekafroti means flower garden frotimix means garden salad Which word could mean \"yellow flower\"?",
+    "options": [
+      "lelifroti",
+      "lelipleka",
+      "plekabroon",
+      "frotibroon"
+    ],
+    "correct_answer": "lelifroti",
+    "topic": "Artificial Language"
+  },
+  {
+    "question": "[Direction: Find the statement that must be true according to the given information.]\n\nGeorgia is older than her cousin Marsha. Marsha's brother Bart is older than Georgia. When Marsha and Bart are visiting with Georgia, all three like to play a game of Monopoly. Marsha wins more often than Georgia does.",
+    "options": [
+      "When he plays Monopoly with Marsha and Georgia, Bart often loses.",
+      "Of the three, Georgia is the oldest.",
+      "Georgia hates to lose at Monopoly.",
+      "Of the three, Marsha is the youngest."
+    ],
+    "correct_answer": "When he plays Monopoly with Marsha and Georgia, Bart often loses.",
+    "topic": "Verbal Reasoning"
+  },
+  {
+    "question": "[Direction: Each problem consists of three statements. Based on the first two statements, the third statement may be true, false, or uncertain.]\n\nTom puts on his socks before he puts on his shoes. He puts on his shirt before he puts on his jacket. Tom puts on his shoes before he puts on his shirt. If the first two statements are true, the third statement is",
+    "options": [
+      "true",
+      "false",
+      "uncertain"
+    ],
+    "correct_answer": "true",
+    "topic": "Logical Problems"
+  },
+  {
+    "question": "[Direction: Each problem consists of three statements. Based on the first two statements, the third statement may be true, false, or uncertain.]\n\nThe bookstore has a better selection of postcards than the newsstand does. The selection of postcards at the drugstore is better than at the bookstore. The drugstore has a better selection of postcards than the bookstore or the newsstand. If the first two statements are true, the third statement is",
+    "options": [
+      "true",
+      "false",
+      "uncertain"
+    ],
+    "correct_answer": "true",
+    "topic": "Logical Problems"
+  },
+  {
+    "question": "[Direction: The logic problems in this set present you with three true statements: Fact 1, Fact 2, and Fact 3. Then, you are given three more statements (labeled I, II, and III), and you must determine which of these, if any, is also a fact. One or two of the statements could be true; all of the statements could be true; or none of the statements could be true. Choose your answer based solely on the information given in the first three facts.]\n\nFact 1:\tIslands are surrounded by water. Fact 2:\tMaui is an island. Fact 3:\tMaui was formed by a volcano. If the first three statements are facts, which of the following statements must also be a fact? I:\tMaui is surrounded by water. II:\tAll islands are formed by volcanoes. III:\tAll volcanoes are on islands.",
+    "options": [
+      "I only",
+      "II only",
+      "II and III only",
+      "None of the statements is a known fact."
+    ],
+    "correct_answer": "I only",
+    "topic": "Logical Problems"
+  },
+  {
+    "question": "[Direction: In each of the following questions, two statements numbered I and II are given. There may be cause and effect relationship between the two statements. These two statements may be the effect of the same cause or independent causes. These statements may be independent causes without having any relationship. Read both the statements in each question and mark your answer as (A) If statement I is the cause and statement II is its effect; (B) If statement II is the cause and statement I is its effect; (C) If both the statements I and II are independent causes; (D) If both the statements I and II are effects of independent causes; and (E) If both the statements I and II are effects of some common cause.]\n\nStatements: The school authority has asked the X Std. students to attend special classes to be conducted on Sundays. The parents of the X Std. students have withdrawn their wards from attending private tuitions conducted on Sundays. Statement I is the cause and statement II is its effect",
+    "options": [
+      "Statement II is the cause and statement I is its effect",
+      "Both the statements I and II are independent causes",
+      "Both the statements I and II are effects of independent causes",
+      "Both the statements I and II are effects of some common cause"
+    ],
+    "correct_answer": "Statement II is the cause and statement I is its effect",
+    "topic": "Cause and Effect"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two assumptions numbered I and II. You have to consider the statement and the following assumptions and decide which of the assumptions is implicit in the statement. Give answer (A) If only assumption I is implicit (B) If only assumption II is implicit (C) If either I or II is implicit (D) If neither I nor II is implicit (E) If both I and II are implicit.]\n\nStatement: Please note that the company will provide accommodation to only outside candidates if selected.' - A condition in an advertisement. Assumptions: The local candidates would be having some other arrangement for their stay. The company plans to select only local candidates.",
+    "options": [
+      "Only assumption I is implicit",
+      "Only assumption II is implicit",
+      "Either I or II is implicit",
+      "Neither I nor II is implicit"
+    ],
+    "correct_answer": "Only assumption I is implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two assumptions numbered I and II. You have to consider the statement and the following assumptions and decide which of the assumptions is implicit in the statement. Give answer (A) If only assumption I is implicit (B) If only assumption II is implicit (C) If either I or II is implicit (D) If neither I nor II is implicit (E) If both I and II are implicit.]\n\nStatement: \"In order to bring punctuality in our office, we must provide conveyance allowance to our employees.\" - In charge of a company tells Personnel Manager. Assumptions: Conveyance allowance will not help in bringing punctuality. Discipline and reward should always go hand in hand.",
+    "options": [
+      "Only assumption I is implicit",
+      "Only assumption II is implicit",
+      "Either I or II is implicit",
+      "Neither I nor II is implicit"
+    ],
+    "correct_answer": "Only assumption I is implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two assumptions numbered I and II. You have to consider the statement and the following assumptions and decide which of the assumptions is implicit in the statement. Give answer (A) If only assumption I is implicit (B) If only assumption II is implicit (C) If either I or II is implicit (D) If neither I nor II is implicit (E) If both I and II are implicit.]\n\nStatement: 'Double your money in five months.' - An advertisement. Assumptions: The assurance is not genuine. People want their money to grow.",
+    "options": [
+      "Only assumption I is implicit",
+      "Only assumption II is implicit",
+      "Either I or II is implicit",
+      "Neither I nor II is implicit"
+    ],
+    "correct_answer": "Only assumption I is implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two assumptions numbered I and II. You have to consider the statement and the following assumptions and decide which of the assumptions is implicit in the statement. Give answer (A) If only assumption I is implicit (B) If only assumption II is implicit (C) If either I or II is implicit (D) If neither I nor II is implicit (E) If both I and II are implicit.]\n\nStatement: \"If you want to give any advertisement, give it in the newspaper X.\" - A tells B. Assumptions: B wants to publicise his products. Newspaper X has a wide circulation.",
+    "options": [
+      "Only assumption I is implicit",
+      "Only assumption II is implicit",
+      "Either I or II is implicit",
+      "Neither I nor II is implicit"
+    ],
+    "correct_answer": "Only assumption I is implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two assumptions numbered I and II. You have to consider the statement and the following assumptions and decide which of the assumptions is implicit in the statement. Give answer (A) If only assumption I is implicit (B) If only assumption II is implicit (C) If either I or II is implicit (D) If neither I nor II is implicit (E) If both I and II are implicit.]\n\nStatement: \"In my absence, I request you to look after the affairs of our company.\" - B tells C. Assumptions: C may not accept the request of B. C has the expertise to handle the affairs of the company.",
+    "options": [
+      "Only assumption I is implicit",
+      "Only assumption II is implicit",
+      "Either I or II is implicit",
+      "Neither I nor II is implicit"
+    ],
+    "correct_answer": "Only assumption I is implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two assumptions numbered I and II. You have to consider the statement and the following assumptions and decide which of the assumptions is implicit in the statement. Give answer (A) If only assumption I is implicit (B) If only assumption II is implicit (C) If either I or II is implicit (D) If neither I nor II is implicit (E) If both I and II are implicit.]\n\nStatement: The electric supply corporation has decided to open a few more collection centres in the business district area. Assumptions: The people in the area may welcome the decision. Henceforth there may be less time required by the customers for paying electricity bill.",
+    "options": [
+      "Only assumption I is implicit",
+      "Only assumption II is implicit",
+      "Either I or II is implicit",
+      "Neither I nor II is implicit"
+    ],
+    "correct_answer": "Only assumption I is implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two courses of action numbered I and II. You have to assume everything in the statement to be true and on the basis of the information given in the statement, decide which of the suggested courses of action logically follow(s) for pursuing. Give answer (A) If only I follows (B) If only II follows (C) If either I or II follows (D) If neither I nor II follows (E) If both I and II follow.]\n\nStatement: The police department has come under a cloud with recent revelations that at least two senior police officials are suspected to have been involved in the illegal sale of a large quantity of weapons from the state police armoury. Courses of Action: A thorough investigation should be ordered by the State Government to bring out all those who are involved into the illegal sale of arms. State police armoury should be kept under Central Government's control.",
+    "options": [
+      "Only I follows",
+      "Only II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only I follows",
+    "topic": "Course of Action"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two courses of action numbered I and II. You have to assume everything in the statement to be true and on the basis of the information given in the statement, decide which of the suggested courses of action logically follow(s) for pursuing. Give answer (A) If only I follows (B) If only II follows (C) If either I or II follows (D) If neither I nor II follows (E) If both I and II follow.]\n\nStatement: The Minister said that the teachers are still not familiarised with the need, importance and meaning of population education in the higher education system. They are not even clearly aware about their role and responsibilities in the population education programme. Courses of Action: Population education programme should be included in the college curriculum. Orientation programme should be conducted for teachers on population education",
+    "options": [
+      "Only I follows",
+      "Only II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only I follows",
+    "topic": "Course of Action"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two courses of action numbered I and II. You have to assume everything in the statement to be true and on the basis of the information given in the statement, decide which of the suggested courses of action logically follow(s) for pursuing. Give answer (A) If only I follows (B) If only II follows (C) If either I or II follows (D) If neither I nor II follows (E) If both I and II follow.]\n\nStatement: The kharif crops have been affected by the insects for consecutive three years in the district and the farmers harvested less than fifty percent of produce during these years. Courses of Action: The farmers should seek measures to control the attack of insects to protect their crops next year. The Government should increase the support price of kharif crops considerably to protect the economic interests of farmers.",
+    "options": [
+      "Only I follows",
+      "Only II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only I follows",
+    "topic": "Course of Action"
+  },
+  {
+    "question": "[Direction: Each question given below consists of a statement, followed by two arguments numbered I and II. You have to decide which of the arguments is a 'strong' argument and which is a 'weak' argument. Give answer: (A) If only argument I is strong (B) If only argument II is strong (C) If either I or II is strong (D) If neither I nor II is strong and (E) If both I and II are strong.]\n\nStatement: Should there be a cap on maximum number of contestants for parliamentary elections in any constituency? Arguments: Yes. This will make the parliamentary elections more meaningful as the voters can make a considered judgement for casting their vote. No. In a democracy any person fulfilling the eligibility criteria can contest parliamentary elections and there should be no restrictions.",
+    "options": [
+      "Only argument I is strong",
+      "Only argument II is strong",
+      "Either I or II is strong",
+      "Neither I nor II is strong"
+    ],
+    "correct_answer": "Only argument I is strong",
+    "topic": "Statement and Argument"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by three courses of action numbered I, II and III. You have to assume everything in the statement to be true, then decide which of the three given suggested courses of action logically follows for pursuing.]\n\nStatement: It is estimated that about twenty lakh people will visit the city during the ensuing festival. Courses of Action: The civic authority should monitor the crowd and restrict entry of the people beyond a manageable number. The local police authority should be put on high alert to maintain law and order during the festival. All the hospitals in the city should be put on high alert in case of any eventuality.",
+    "options": [
+      "Only I and II follow",
+      "Only II and III follow",
+      "Only I and III follow",
+      "All follow"
+    ],
+    "correct_answer": "Only I and II follow",
+    "topic": "Course of Action"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by three assumptions numbered I, II and III. You have to consider the statement and the following assumptions, decide which of the assumptions is implicit in the statement and choose your answer accordingly.]\n\nStatement: A State Government suspended two additional district judges. Assumptions: They were negligent in discharging duties. There was a charge of misconduct against them. The government officials were biased against them. None is implicit",
+    "options": [
+      "Either I or II is implicit",
+      "Any one of the three is implicit",
+      "Only I and III are implicit",
+      "Either I or III is implicit"
+    ],
+    "correct_answer": "Either I or II is implicit",
+    "topic": "Letter and Symbol Series"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by three assumptions numbered I, II and III. You have to consider the statement and the following assumptions, decide which of the assumptions is implicit in the statement and choose your answer accordingly.]\n\nSCD, TEF, UGH, ____, WKL",
+    "options": [
+      "CMN",
+      "UJI",
+      "VIJ",
+      "IJT"
+    ],
+    "correct_answer": "CMN",
+    "topic": "Letter and Symbol Series"
+  },
+  {
+    "question": "[Direction: Find the word that names a necessary part of the underlined word.]\n\npurchase",
+    "options": [
+      "trade",
+      "money",
+      "bank",
+      "acquisition"
+    ],
+    "correct_answer": "trade",
+    "topic": "Essential Part"
+  },
+  {
+    "question": "[Direction: The words in the bottom row are related in the same way as the words in the top row. For each item, find the word that completes the bottom row of words.]\n\napples\tfruit\tsupermarket",
+    "options": [
+      "novel\tbook\t?",
+      "bookstore",
+      "magazine",
+      "vegetable"
+    ],
+    "correct_answer": "novel\tbook\t?",
+    "topic": "Analogies"
+  },
+  {
+    "question": "[Direction: Every one of the following questions consists of a related pair of words, followed by five pairs of words. Choose the pair that best represents a similar relationship to the one expressed in the original pair of words.]\n\nPULSATE : THROB",
+    "options": [
+      "walk : run",
+      "tired : sleep",
+      "examine : scrutinize",
+      "ballet : dancer"
+    ],
+    "correct_answer": "walk : run",
+    "topic": "Analogies"
+  },
+  {
+    "question": "[Direction: First, you will be given a list of three \"nonsense\" words and their English word meanings. The question(s) that follow will ask you to reverse the process and translate an English word into the artificial language.]\n\nHere are some words translated from an artificial language. dionot means oak tree blyonot means oak leaf blycrin means maple leaf Which word could mean \"maple syrup\"?",
+    "options": [
+      "blymuth",
+      "hupponot",
+      "patricrin",
+      "crinweel"
+    ],
+    "correct_answer": "blymuth",
+    "topic": "Artificial Language"
+  },
+  {
+    "question": "[Direction: Each of the following questions contains a small paragraph followed by a question on it. Read each paragraph carefully and answer the question given below it.]\n\nThough the waste of time or the expenditure on fashions is very large, yet fashions have come to stay. They will not go, come what may. However, what is now required is that strong efforts should be made to displace the excessive craze for fashion from the minds of these youngsters. The passage best supports the statement that:",
+    "options": [
+      "fashion is the need of the day.",
+      "the excessive craze for fashion is detrimental to one's personality.",
+      "the hoard for fashion should be done away with so as not to let down the constructive development.",
+      "work and other activities should be valued more than the outward appearance."
+    ],
+    "correct_answer": "work and other activities should be valued more than the outward appearance.",
+    "topic": "Theme Detection"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two conclusions numbered I and II. You have to assume everything in the statement to be true, then consider the two conclusions together and decide which of them logically follows beyond a reasonable doubt from the information given in the statement. Give answer: (A) If only conclusion I follows (B) If only conclusion II follows (C) If either I or II follows (D) If neither I nor II follows and (E) If both I and II follow.]\n\nStatements: In a recent survey report, it has been stated that those who undertake physical exercise for at least half an hour a day are less prone to have any heart ailments. Conclusions: Moderate level of physical exercise is necessary for leading a healthy life. All people who do desk-bound jobs definitely suffer from heart ailments.",
+    "options": [
+      "Only conclusion I follows",
+      "Only conclusion II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only conclusion I follows",
+    "topic": "Statement and Conclusion"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two conclusions numbered I and II. You have to assume everything in the statement to be true, then consider the two conclusions together and decide which of them logically follows beyond a reasonable doubt from the information given in the statement. Give answer: (A) If only conclusion I follows (B) If only conclusion II follows (C) If either I or II follows (D) If neither I nor II follows and (E) If both I and II follow.]\n\nStatements: People who speak too much against dowry are those who had taken it themselves. Conclusions: It is easier said than done. People have double standards.",
+    "options": [
+      "Only conclusion I follows",
+      "Only conclusion II follows",
+      "Either I or II follows",
+      "Neither I nor II follows"
+    ],
+    "correct_answer": "Only conclusion I follows",
+    "topic": "Statement and Conclusion"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by two assumptions numbered I and II. You have to consider the statement and the following assumptions and decide which of the assumptions is implicit in the statement. Give answer (A) If only assumption I is implicit (B) If only assumption II is implicit (C) If either I or II is implicit (D) If neither I nor II is implicit (E) If both I and II are implicit.]\n\nStatement: Never before such a lucid book was available on the topic. Assumptions: Some other books were available on this topic. You can write lucid books on very few topics.",
+    "options": [
+      "Only assumption I is implicit",
+      "Only assumption II is implicit",
+      "Either I or II is implicit",
+      "Neither I nor II is implicit"
+    ],
+    "correct_answer": "Only assumption I is implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: Each question given below consists of a statement, followed by two arguments numbered I and II. You have to decide which of the arguments is a 'strong' argument and which is a 'weak' argument. Give answer: (A) If only argument I is strong (B) If only argument II is strong (C) If either I or II is strong (D) If neither I nor II is strong and (E) If both I and II are strong.]\n\nStatement: Should cottage industries be encouraged in rural areas? Arguments: Yes. Rural people are creative. Yes. This would help to solve the problem of unemployment to some extent.",
+    "options": [
+      "Only argument I is strong",
+      "Only argument II is strong",
+      "Either I or II is strong",
+      "Neither I nor II is strong"
+    ],
+    "correct_answer": "Only argument I is strong",
+    "topic": "Statement and Argument"
+  },
+  {
+    "question": "[Direction: Each question given below consists of a statement, followed by two arguments numbered I and II. You have to decide which of the arguments is a 'strong' argument and which is a 'weak' argument. Give answer: (A) If only argument I is strong (B) If only argument II is strong (C) If either I or II is strong (D) If neither I nor II is strong and (E) If both I and II are strong.]\n\nStatement: Should so much money be spent on advertisements? Arguments: Yes. It is an essential concomitant in a capitalist economy. No. It leads to wastage of resources.",
+    "options": [
+      "Only argument I is strong",
+      "Only argument II is strong",
+      "Either I or II is strong",
+      "Neither I nor II is strong"
+    ],
+    "correct_answer": "Only argument I is strong",
+    "topic": "Statement and Argument"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by three courses of action numbered I, II and III. You have to assume everything in the statement to be true, then decide which of the three given suggested courses of action logically follows for pursuing.]\n\nStatement: The meteorological department has reported that a severe storm is likely to hit the city during the next forty-eight hours. Courses of Action: The administration should advise all the business and educational establishments to close down for two days. The administration should not make the information public as it could create panic among the residents of the city. The administration should activate its disaster management program to tackle any possible emergency situation.",
+    "options": [
+      "Only I and II follow",
+      "Only III follows",
+      "Only II and III follow",
+      "Only I and III follow"
+    ],
+    "correct_answer": "Only I and II follow",
+    "topic": "Course of Action"
+  },
+  {
+    "question": "[Direction: Each question given below consists of a statement, followed by three or four arguments numbered I, II, III and IV. You have to decide which of the arguments is/are 'strong' arguments) and which is/are 'weak' arguments) and accordingly choose your answer from the alternatives given below each question.]\n\nStatement: Should government established higher level Institutes of Technology (IIT's) be privatized? Arguments: Yes. Privatization will make these institutes financially healthy, competitive and quality conscious. Yes. Privatization is the key of the new era - can we survive without it? No. Standard of education of these institutes will fall.",
+    "options": [
+      "None is strong",
+      "All are strong",
+      "Only I is strong",
+      "Only I and III are strong"
+    ],
+    "correct_answer": "None is strong",
+    "topic": "Statement and Argument"
+  },
+  {
+    "question": "[Direction: Each question given below consists of a statement, followed by three or four arguments numbered I, II, III and IV. You have to decide which of the arguments is/are 'strong' arguments) and which is/are 'weak' arguments) and accordingly choose your answer from the alternatives given below each question.]\n\nStatement: Should trade unions be banned completely? Arguments: Yes. Workers can concentrate on production. No. This is the only way through which employees can put their demands before the management. Yes. Employees get their illegal demands fulfilled through these unions. No. Trade unions are not banned in other economically advanced countries.",
+    "options": [
+      "Only I is strong",
+      "Only II is strong",
+      "Only I and II are strong",
+      "Only I, II and III are strong"
+    ],
+    "correct_answer": "Only I is strong",
+    "topic": "Statement and Argument"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by three assumptions numbered I, II and III. You have to consider the statement and the following assumptions, decide which of the assumptions is implicit in the statement and choose your answer accordingly.]\n\nStatement: During pre-harvest kharif season, the government has decided to release vast quantity of food grains from FCI. Assumptions: There may be a shortage of food grains in the market during this season. The kharif crop may be able to replenish the stock of FCI. There may be a demand from the farmers to procure kharif crop immediately after harvest.",
+    "options": [
+      "All are implicit",
+      "Only II and III are implicit",
+      "None is implicit",
+      "Only I and II are implicit"
+    ],
+    "correct_answer": "All are implicit",
+    "topic": "Statement and Assumption"
+  },
+  {
+    "question": "[Direction: In each question below is given a statement followed by three assumptions numbered I, II and III. You have to consider the statement and the following assumptions, decide which of the assumptions is implicit in the statement and choose your answer accordingly.]\n\nStatement: Bill Clinton is the second democrat to be re-elected as President of America, the other being the legendary Roosevelt. Assumptions: Clinton has the same qualities that Roosevelt had. The majority of people in America have faith in Clinton. The election campaign of Clinton's rivals was not impressive.",
+    "options": [
+      "Only I is implicit",
+      "Only II is implicit",
+      "Only III is implicit",
+      "Either I or III is implicit"
+    ],
+    "correct_answer": "Only I is implicit",
+    "topic": "Statement and Assumption"
+  }
+]

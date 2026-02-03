@@ -1,0 +1,1322 @@
+[
+  {
+    "question": "What is the primary purpose of virtualization in modern IT infrastructure?",
+    "options": [
+      "To eliminate the need for storage",
+      "To reduce network speed",
+      "To increase hardware costs",
+      "To run multiple operating systems on a single physical machine"
+    ],
+    "correct_answer": "To run multiple operating systems on a single physical machine",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "Which component acts as an intermediary layer between physical hardware and virtual machines?",
+    "options": [
+      "Load Balancer",
+      "Router",
+      "Hypervisor",
+      "BIOS"
+    ],
+    "correct_answer": "Hypervisor",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "In virtualization terminology, what is the Host OS?",
+    "options": [
+      "The OS running inside a virtual machine",
+      "A cloud-based operating system",
+      "The OS used only for networking",
+      "The OS running directly on physical hardware that manages VMs"
+    ],
+    "correct_answer": "The OS running directly on physical hardware that manages VMs",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "What is a Guest OS in the context of virtualization?",
+    "options": [
+      "A temporary operating system",
+      "The operating system running inside a virtual machine",
+      "An operating system for network management",
+      "The operating system running on the physical hardware"
+    ],
+    "correct_answer": "The operating system running inside a virtual machine",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "Which of the following is NOT a benefit of virtualization?",
+    "options": [
+      "Easier disaster recovery",
+      "Better hardware utilization",
+      "Increased physical server requirements",
+      "Reduced power consumption"
+    ],
+    "correct_answer": "Increased physical server requirements",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "How does virtualization help in cost reduction?",
+    "options": [
+      "By increasing electricity consumption",
+      "By consolidating multiple workloads on fewer physical machines",
+      "By eliminating all software licenses",
+      "By requiring more physical servers"
+    ],
+    "correct_answer": "By consolidating multiple workloads on fewer physical machines",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "What is a key limitation of virtualization?",
+    "options": [
+      "Cannot run multiple operating systems",
+      "Requires no physical infrastructure",
+      "Eliminates all hardware failures",
+      "Performance overhead due to the hypervisor layer"
+    ],
+    "correct_answer": "Performance overhead due to the hypervisor layer",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "In a virtualized environment, what happens when the physical host fails?",
+    "options": [
+      "All VMs continue running independently",
+      "All VMs on that host are affected",
+      "The hypervisor continues alone",
+      "Only the Guest OS is affected"
+    ],
+    "correct_answer": "All VMs on that host are affected",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "What is server virtualization primarily used for?",
+    "options": [
+      "Creating virtual network cables",
+      "Backing up data only",
+      "Replacing routers",
+      "Partitioning a physical server into multiple virtual servers"
+    ],
+    "correct_answer": "Partitioning a physical server into multiple virtual servers",
+    "topic": "Types of Virtualisation"
+  },
+  {
+    "question": "Desktop virtualization allows users to:",
+    "options": [
+      "Create physical computers",
+      "Access their desktop environment from any device",
+      "Only work on physical desktops",
+      "Eliminate the need for monitors"
+    ],
+    "correct_answer": "Access their desktop environment from any device",
+    "topic": "Types of Virtualisation"
+  },
+  {
+    "question": "What is the main advantage of desktop virtualization for organizations?",
+    "options": [
+      "Centralized management and improved security",
+      "More physical space required",
+      "Slower user access",
+      "Increased hardware costs"
+    ],
+    "correct_answer": "Centralized management and improved security",
+    "topic": "Types of Virtualisation"
+  },
+  {
+    "question": "Network virtualization involves:",
+    "options": [
+      "Eliminating all routers",
+      "Creating physical network cables",
+      "Abstracting network resources to create logical networks",
+      "Using only wireless connections"
+    ],
+    "correct_answer": "Abstracting network resources to create logical networks",
+    "topic": "Types of Virtualisation"
+  },
+  {
+    "question": "Storage virtualization enables:",
+    "options": [
+      "Pooling storage from multiple devices into a single logical unit",
+      "Using only local storage",
+      "Deleting all data",
+      "Physical expansion of hard drives"
+    ],
+    "correct_answer": "Pooling storage from multiple devices into a single logical unit",
+    "topic": "Types of Virtualisation"
+  },
+  {
+    "question": "OS-level virtualization is the technology behind:",
+    "options": [
+      "Full virtual machines only",
+      "Physical servers",
+      "BIOS updates",
+      "Container technology"
+    ],
+    "correct_answer": "Container technology",
+    "topic": "Types of Virtualisation"
+  },
+  {
+    "question": "Which virtualization type would be most suitable for a company wanting employees to access their work desktop from home?",
+    "options": [
+      "Desktop virtualization",
+      "Storage virtualization",
+      "BIOS virtualization",
+      "Server virtualization"
+    ],
+    "correct_answer": "Desktop virtualization",
+    "topic": "Types of Virtualisation"
+  },
+  {
+    "question": "What distinguishes Type 1 hypervisor from Type 2?",
+    "options": [
+      "Both run on hardware equally",
+      "Type 1 is slower than Type 2",
+      "Type 1 runs on top of an OS, Type 2 runs directly on hardware",
+      "Type 1 runs directly on hardware, Type 2 runs on top of an OS"
+    ],
+    "correct_answer": "Type 1 runs directly on hardware, Type 2 runs on top of an OS",
+    "topic": "Hypervisors"
+  },
+  {
+    "question": "Type 1 hypervisors are also known as:",
+    "options": [
+      "Bare-metal hypervisors",
+      "Virtual hypervisors",
+      "Application hypervisors",
+      "Hosted hypervisors"
+    ],
+    "correct_answer": "Bare-metal hypervisors",
+    "topic": "Hypervisors"
+  },
+  {
+    "question": "Which is an example of a Type 1 hypervisor?",
+    "options": [
+      "VMware Workstation",
+      "VirtualBox",
+      "Windows Media Player",
+      "VMware ESXi"
+    ],
+    "correct_answer": "VMware ESXi",
+    "topic": "Hypervisors"
+  },
+  {
+    "question": "Which is an example of a Type 2 hypervisor?",
+    "options": [
+      "Oracle VirtualBox",
+      "Microsoft Hyper-V Server",
+      "VMware ESXi",
+      "Cisco IOS"
+    ],
+    "correct_answer": "Oracle VirtualBox",
+    "topic": "Hypervisors"
+  },
+  {
+    "question": "What is a key advantage of Type 1 hypervisors over Type 2?",
+    "options": [
+      "Better performance and lower overhead",
+      "Requires no hardware",
+      "Easier to install on personal computers",
+      "Cannot run multiple VMs"
+    ],
+    "correct_answer": "Better performance and lower overhead",
+    "topic": "Hypervisors"
+  },
+  {
+    "question": "When would a Type 2 hypervisor be more appropriate than Type 1?",
+    "options": [
+      "For development and testing on personal workstations",
+      "For production data centers",
+      "For mission-critical applications",
+      "For high-performance computing clusters"
+    ],
+    "correct_answer": "For development and testing on personal workstations",
+    "topic": "Hypervisors"
+  },
+  {
+    "question": "Which hypervisor is built into Windows operating systems?",
+    "options": [
+      "KVM",
+      "VirtualBox",
+      "Hyper-V",
+      "VMware ESXi"
+    ],
+    "correct_answer": "Hyper-V",
+    "topic": "Hypervisors"
+  },
+  {
+    "question": "KVM (Kernel-based Virtual Machine) is primarily used on which operating system?",
+    "options": [
+      "Linux",
+      "MacOS only",
+      "Windows",
+      "DOS"
+    ],
+    "correct_answer": "Linux",
+    "topic": "Hypervisors"
+  },
+  {
+    "question": "What does the hypervisor control in a virtualized environment?",
+    "options": [
+      "Only user passwords",
+      "Only network traffic",
+      "Internet speed",
+      "Allocation of physical resources to VMs"
+    ],
+    "correct_answer": "Allocation of physical resources to VMs",
+    "topic": "Hypervisors"
+  },
+  {
+    "question": "From a security perspective, which hypervisor type typically offers better isolation?",
+    "options": [
+      "Type 1, because it has fewer layers and direct hardware access",
+      "Neither provides security",
+      "Both are equally secure",
+      "Type 2, because it has more layers"
+    ],
+    "correct_answer": "Type 1, because it has fewer layers and direct hardware access",
+    "topic": "Hypervisors"
+  },
+  {
+    "question": "What happens if a hypervisor is compromised?",
+    "options": [
+      "Only the network is affected",
+      "Nothing happens",
+      "All VMs on that hypervisor could potentially be affected",
+      "Only one VM is affected"
+    ],
+    "correct_answer": "All VMs on that hypervisor could potentially be affected",
+    "topic": "Hypervisors"
+  },
+  {
+    "question": "Which component must support virtualization features for efficient hypervisor operation?",
+    "options": [
+      "Monitor",
+      "Keyboard",
+      "Mouse",
+      "CPU (with technologies like Intel VT-x or AMD-V)"
+    ],
+    "correct_answer": "CPU (with technologies like Intel VT-x or AMD-V)",
+    "topic": "Hypervisors"
+  },
+  {
+    "question": "What are the essential virtual hardware components of a VM?",
+    "options": [
+      "CPU, RAM, storage, and network interface",
+      "Only CPU and RAM",
+      "Only storage",
+      "Physical cables"
+    ],
+    "correct_answer": "CPU, RAM, storage, and network interface",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What is a VM snapshot?",
+    "options": [
+      "A network configuration file",
+      "A photograph of the server",
+      "A point-in-time copy of the VM's state and data",
+      "A physical backup of hardware"
+    ],
+    "correct_answer": "A point-in-time copy of the VM's state and data",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "When is it most useful to take a VM snapshot?",
+    "options": [
+      "Never",
+      "During normal operation without changes",
+      "Before making significant changes like updates or configuration modifications",
+      "After deleting the VM"
+    ],
+    "correct_answer": "Before making significant changes like updates or configuration modifications",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What is a potential downside of keeping too many VM snapshots?",
+    "options": [
+      "Makes the VM faster",
+      "Reduces security",
+      "Consumes significant storage space and can slow down VM performance",
+      "Improves performance significantly"
+    ],
+    "correct_answer": "Consumes significant storage space and can slow down VM performance",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What does VM cloning accomplish?",
+    "options": [
+      "Removes all data",
+      "Upgrades the hypervisor",
+      "Creates an exact copy of an existing VM",
+      "Deletes the original VM"
+    ],
+    "correct_answer": "Creates an exact copy of an existing VM",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What is the difference between a full clone and a linked clone?",
+    "options": [
+      "Both are identical",
+      "Linked clone is larger than full clone",
+      "Full clone cannot be started",
+      "Full clone is independent, linked clone shares disk with parent VM"
+    ],
+    "correct_answer": "Full clone is independent, linked clone shares disk with parent VM",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What is VM provisioning?",
+    "options": [
+      "Only backing up VMs",
+      "The process of setting up and deploying new VMs",
+      "Deleting VMs",
+      "Connecting physical cables"
+    ],
+    "correct_answer": "The process of setting up and deploying new VMs",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "How does VM isolation benefit security?",
+    "options": [
+      "Each VM operates independently, preventing issues in one VM from affecting others",
+      "VMs share all data freely",
+      "All VMs run the same applications",
+      "VMs have no security"
+    ],
+    "correct_answer": "Each VM operates independently, preventing issues in one VM from affecting others",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "Can multiple VMs on the same host run different operating systems?",
+    "options": [
+      "No, all VMs must run the same OS",
+      "Only Linux variants",
+      "Yes, each VM can run a different OS",
+      "Only Windows versions"
+    ],
+    "correct_answer": "Yes, each VM can run a different OS",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What determines how many VMs can run on a single physical host?",
+    "options": [
+      "The color of the server",
+      "Available physical resources like CPU, RAM, and storage",
+      "The hypervisor brand",
+      "Only the network speed"
+    ],
+    "correct_answer": "Available physical resources like CPU, RAM, and storage",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What is a VM template?",
+    "options": [
+      "A network diagram",
+      "A backup schedule",
+      "A pre-configured VM image used to quickly deploy new VMs",
+      "A physical server blueprint"
+    ],
+    "correct_answer": "A pre-configured VM image used to quickly deploy new VMs",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What happens to a VM when it is powered off?",
+    "options": [
+      "It is permanently deleted",
+      "All data is lost",
+      "It automatically restarts",
+      "It stops running but its configuration and data remain stored"
+    ],
+    "correct_answer": "It stops running but its configuration and data remain stored",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What is the purpose of VM migration?",
+    "options": [
+      "Deleting VMs",
+      "Upgrading the OS inside the VM",
+      "Moving a VM from one physical host to another",
+      "Installing new applications"
+    ],
+    "correct_answer": "Moving a VM from one physical host to another",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What does live migration allow?",
+    "options": [
+      "Deleting snapshots",
+      "Shutting down VMs permanently",
+      "Moving a running VM to another host without downtime",
+      "Creating snapshots"
+    ],
+    "correct_answer": "Moving a running VM to another host without downtime",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What is a virtual disk?",
+    "options": [
+      "A file that acts as a hard drive for a VM",
+      "A physical hard drive",
+      "A network cable",
+      "A backup tape"
+    ],
+    "correct_answer": "A file that acts as a hard drive for a VM",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "Can a VM access USB devices from the physical host?",
+    "options": [
+      "Yes, through USB passthrough features",
+      "Only keyboards",
+      "Only if the VM is Linux",
+      "Never"
+    ],
+    "correct_answer": "Yes, through USB passthrough features",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What is a benefit of using VM snapshots during software testing?",
+    "options": [
+      "Permanent changes are made",
+      "Snapshots delete the VM",
+      "Testing becomes slower",
+      "You can quickly revert to a clean state if something goes wrong"
+    ],
+    "correct_answer": "You can quickly revert to a clean state if something goes wrong",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What is CPU overcommitment in virtualization?",
+    "options": [
+      "Allocating more virtual CPUs to VMs than physical CPUs available",
+      "Having too many physical CPUs",
+      "Using less CPU than available",
+      "Turning off CPUs"
+    ],
+    "correct_answer": "Allocating more virtual CPUs to VMs than physical CPUs available",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "When is CPU overcommitment acceptable?",
+    "options": [
+      "Only on weekends",
+      "Always for all workloads",
+      "When VMs don't use their allocated CPU resources simultaneously",
+      "Never"
+    ],
+    "correct_answer": "When VMs don't use their allocated CPU resources simultaneously",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is memory overcommitment?",
+    "options": [
+      "Deleting RAM",
+      "Allocating more RAM to VMs than physically available",
+      "Having too much RAM",
+      "Reducing memory usage"
+    ],
+    "correct_answer": "Allocating more RAM to VMs than physically available",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What technique do hypervisors use to enable memory overcommitment?",
+    "options": [
+      "Adding physical RAM dynamically",
+      "Deleting inactive VMs",
+      "Memory ballooning, swapping, or page sharing",
+      "Disabling memory"
+    ],
+    "correct_answer": "Memory ballooning, swapping, or page sharing",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is memory ballooning?",
+    "options": [
+      "Deleting VMs",
+      "Creating new memory",
+      "A technique where the hypervisor reclaims unused memory from VMs",
+      "Inflating physical RAM"
+    ],
+    "correct_answer": "A technique where the hypervisor reclaims unused memory from VMs",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "Which disk format is commonly used for VM virtual disks?",
+    "options": [
+      "TXT",
+      "MP3",
+      "JPG",
+      "VMDK, VHD, or QCOW2"
+    ],
+    "correct_answer": "VMDK, VHD, or QCOW2",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is thin provisioning for VM disks?",
+    "options": [
+      "Allocating all disk space immediately",
+      "Allocating disk space dynamically as data is written",
+      "Deleting disk space",
+      "Using physical disks only"
+    ],
+    "correct_answer": "Allocating disk space dynamically as data is written",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is thick provisioning?",
+    "options": [
+      "Using only network storage",
+      "Deleting unused space",
+      "Not allocating any disk space",
+      "Allocating all required disk space to a VM immediately"
+    ],
+    "correct_answer": "Allocating all required disk space to a VM immediately",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "In NAT networking mode, what can a VM do?",
+    "options": [
+      "Be directly accessible from external networks",
+      "Only local access",
+      "No network access",
+      "Access external networks but is not directly accessible from outside"
+    ],
+    "correct_answer": "Access external networks but is not directly accessible from outside",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "In Bridged networking mode, how does a VM appear on the network?",
+    "options": [
+      "Without any IP address",
+      "Only accessible by host",
+      "Hidden completely",
+      "As a separate physical device with its own IP on the network"
+    ],
+    "correct_answer": "As a separate physical device with its own IP on the network",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "Which networking mode provides better isolation for a VM?",
+    "options": [
+      "Neither provides isolation",
+      "Bridged mode",
+      "NAT mode",
+      "Both are equal"
+    ],
+    "correct_answer": "NAT mode",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What happens when a VM is allocated insufficient RAM?",
+    "options": [
+      "It runs faster",
+      "Performance degrades, excessive swapping may occur",
+      "No effect on performance",
+      "RAM increases automatically"
+    ],
+    "correct_answer": "Performance degrades, excessive swapping may occur",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is resource reservation in virtualization?",
+    "options": [
+      "Deleting resources",
+      "Guaranteeing a minimum amount of resources to a VM",
+      "Using maximum resources always",
+      "Sharing all resources equally"
+    ],
+    "correct_answer": "Guaranteeing a minimum amount of resources to a VM",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is a resource limit in VM configuration?",
+    "options": [
+      "No resources",
+      "The minimum resources a VM can use",
+      "Unlimited resources",
+      "The maximum amount of resources a VM can consume"
+    ],
+    "correct_answer": "The maximum amount of resources a VM can consume",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "Why might you set resource shares for VMs?",
+    "options": [
+      "To delete VMs",
+      "To prioritize resource allocation during contention",
+      "To eliminate all resources",
+      "To disable VMs"
+    ],
+    "correct_answer": "To prioritize resource allocation during contention",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is storage I/O control used for?",
+    "options": [
+      "Deleting storage",
+      "Increasing physical storage",
+      "Disabling storage",
+      "Managing and prioritizing storage access among VMs"
+    ],
+    "correct_answer": "Managing and prioritizing storage access among VMs",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is the primary architectural difference between VMs and containers?",
+    "options": [
+      "Neither uses an OS",
+      "VMs include a full OS, containers share the host OS kernel",
+      "Both are identical",
+      "Containers include a full OS, VMs don't"
+    ],
+    "correct_answer": "VMs include a full OS, containers share the host OS kernel",
+    "topic": "Virtualisation vs Containers"
+  },
+  {
+    "question": "Which is typically more lightweight?",
+    "options": [
+      "Both are equal in size",
+      "Containers",
+      "Virtual machines",
+      "Neither is lightweight"
+    ],
+    "correct_answer": "Containers",
+    "topic": "Virtualisation vs Containers"
+  },
+  {
+    "question": "Why do containers start faster than VMs?",
+    "options": [
+      "They don't need to boot a full operating system",
+      "They have more resources",
+      "They use more memory",
+      "They are slower actually"
+    ],
+    "correct_answer": "They don't need to boot a full operating system",
+    "topic": "Virtualisation vs Containers"
+  },
+  {
+    "question": "Which provides better isolation?",
+    "options": [
+      "Containers, because they share the kernel",
+      "Both provide identical isolation",
+      "Neither provides isolation",
+      "Virtual machines, because each has its own OS and kernel"
+    ],
+    "correct_answer": "Virtual machines, because each has its own OS and kernel",
+    "topic": "Virtualisation vs Containers"
+  },
+  {
+    "question": "When would you choose VMs over containers?",
+    "options": [
+      "When you need to run different operating systems or require strong isolation",
+      "For microservices architectures",
+      "Never",
+      "For lightweight applications only"
+    ],
+    "correct_answer": "When you need to run different operating systems or require strong isolation",
+    "topic": "Virtualisation vs Containers"
+  },
+  {
+    "question": "Can you run containers inside a VM?",
+    "options": [
+      "No, they are mutually exclusive",
+      "Only on Windows",
+      "Yes, this is a common practice for combining benefits",
+      "Only on Linux"
+    ],
+    "correct_answer": "Yes, this is a common practice for combining benefits",
+    "topic": "Virtualisation vs Containers"
+  },
+  {
+    "question": "From a security perspective, what is a key consideration with containers?",
+    "options": [
+      "They are always more secure than VMs",
+      "Containers share the host kernel, so a kernel vulnerability affects all containers",
+      "They are completely isolated",
+      "They have no security concerns"
+    ],
+    "correct_answer": "Containers share the host kernel, so a kernel vulnerability affects all containers",
+    "topic": "Virtualisation vs Containers"
+  },
+  {
+    "question": "Which technology is Docker associated with?",
+    "options": [
+      "Virtual machines",
+      "Physical servers",
+      "Container technology",
+      "Network switches"
+    ],
+    "correct_answer": "Container technology",
+    "topic": "Virtualisation vs Containers"
+  },
+  {
+    "question": "What is a common reason for VM slow performance?",
+    "options": [
+      "Insufficient allocated resources or resource contention",
+      "Too much available RAM",
+      "Having no snapshots",
+      "Too few VMs on the host"
+    ],
+    "correct_answer": "Insufficient allocated resources or resource contention",
+    "topic": "Troubleshooting & Scenarios"
+  },
+  {
+    "question": "A VM won't start and shows a file locking error. What is a likely cause?",
+    "options": [
+      "The VM's files are already in use by another process or snapshot",
+      "Too much RAM",
+      "Not enough network bandwidth",
+      "Wrong keyboard"
+    ],
+    "correct_answer": "The VM's files are already in use by another process or snapshot",
+    "topic": "Troubleshooting & Scenarios"
+  },
+  {
+    "question": "Users report a VM is extremely slow. You notice disk usage is at 100%. What should you check?",
+    "options": [
+      "Monitor resolution",
+      "Disk I/O performance, check for inadequate storage resources or excessive snapshots",
+      "Network cables",
+      "CPU temperature only"
+    ],
+    "correct_answer": "Disk I/O performance, check for inadequate storage resources or excessive snapshots",
+    "topic": "Troubleshooting & Scenarios"
+  },
+  {
+    "question": "A VM cannot connect to the internet. Where should you start troubleshooting?",
+    "options": [
+      "CPU allocation",
+      "Network adapter configuration in VM settings",
+      "VM disk size",
+      "RAM amount"
+    ],
+    "correct_answer": "Network adapter configuration in VM settings",
+    "topic": "Troubleshooting & Scenarios"
+  },
+  {
+    "question": "What could cause network connectivity issues in Bridged mode?",
+    "options": [
+      "Too much RAM",
+      "Low CPU",
+      "Physical network issues or incorrect network selection",
+      "Large disk"
+    ],
+    "correct_answer": "Physical network issues or incorrect network selection",
+    "topic": "Troubleshooting & Scenarios"
+  },
+  {
+    "question": "A VM runs out of disk space. What are possible solutions?",
+    "options": [
+      "Add more RAM",
+      "Delete all VMs",
+      "Change CPU count",
+      "Expand the virtual disk or add additional virtual disks"
+    ],
+    "correct_answer": "Expand the virtual disk or add additional virtual disks",
+    "topic": "Troubleshooting & Scenarios"
+  },
+  {
+    "question": "Too many snapshots exist for a VM and performance is degraded. What should you do?",
+    "options": [
+      "Change network mode",
+      "Add more CPUs",
+      "Create more snapshots",
+      "Consolidate or delete unnecessary snapshots"
+    ],
+    "correct_answer": "Consolidate or delete unnecessary snapshots",
+    "topic": "Troubleshooting & Scenarios"
+  },
+  {
+    "question": "The physical host is running out of memory affecting all VMs. What is an immediate action?",
+    "options": [
+      "Delete all VMs",
+      "Disconnect network",
+      "Shut down or migrate some VMs to other hosts",
+      "Remove all snapshots immediately"
+    ],
+    "correct_answer": "Shut down or migrate some VMs to other hosts",
+    "topic": "Troubleshooting & Scenarios"
+  },
+  {
+    "question": "What does enabling hardware-assisted virtualization in BIOS do?",
+    "options": [
+      "Improves VM performance by allowing better CPU virtualization",
+      "Reduces performance",
+      "Disables the CPU",
+      "Deletes all VMs"
+    ],
+    "correct_answer": "Improves VM performance by allowing better CPU virtualization",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "What is paravirtualization?",
+    "options": [
+      "Using physical servers only",
+      "A technique where the guest OS is modified to be aware of virtualization",
+      "A type of container",
+      "Running VMs without a hypervisor"
+    ],
+    "correct_answer": "A technique where the guest OS is modified to be aware of virtualization",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "What is full virtualization?",
+    "options": [
+      "Only for Linux",
+      "Guest OS runs unmodified and is unaware of virtualization",
+      "No hypervisor needed",
+      "Guest OS requires modification"
+    ],
+    "correct_answer": "Guest OS runs unmodified and is unaware of virtualization",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "Which virtualization approach generally offers better performance?",
+    "options": [
+      "Paravirtualization can offer better performance due to optimized communication",
+      "Full virtualization always",
+      "Both are identical",
+      "Neither has performance benefits"
+    ],
+    "correct_answer": "Paravirtualization can offer better performance due to optimized communication",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "What is the benefit of VMs for disaster recovery?",
+    "options": [
+      "VMs make recovery impossible",
+      "VMs cannot be backed up",
+      "VMs can be quickly backed up and restored across different hardware",
+      "VMs slow down recovery"
+    ],
+    "correct_answer": "VMs can be quickly backed up and restored across different hardware",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "What is VM sprawl?",
+    "options": [
+      "Having too few VMs",
+      "Proper VM management",
+      "Deleting all VMs",
+      "Uncontrolled growth of VMs leading to management challenges"
+    ],
+    "correct_answer": "Uncontrolled growth of VMs leading to management challenges",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "How can VM sprawl negatively impact an organization?",
+    "options": [
+      "Wasted resources, increased costs, and security risks from unmanaged VMs",
+      "Reduces costs",
+      "Improves security",
+      "Better resource utilization"
+    ],
+    "correct_answer": "Wasted resources, increased costs, and security risks from unmanaged VMs",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "What is a key requirement for successful live VM migration?",
+    "options": [
+      "VMs must be powered off",
+      "Shared storage accessible by both source and destination hosts",
+      "No network connection",
+      "Different operating systems"
+    ],
+    "correct_answer": "Shared storage accessible by both source and destination hosts",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What is the purpose of VM resource monitoring?",
+    "options": [
+      "To disable monitoring",
+      "To track resource usage and optimize allocation",
+      "To increase costs",
+      "To delete VMs"
+    ],
+    "correct_answer": "To track resource usage and optimize allocation",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "Which resource is typically most critical for database VMs?",
+    "options": [
+      "CPU cores only",
+      "Network only",
+      "Disk I/O performance and RAM",
+      "Graphics card"
+    ],
+    "correct_answer": "Disk I/O performance and RAM",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is High Availability (HA) in virtualization?",
+    "options": [
+      "Automatically restarting VMs on other hosts if a host fails",
+      "Running VMs slower",
+      "Deleting VMs",
+      "Reducing uptime"
+    ],
+    "correct_answer": "Automatically restarting VMs on other hosts if a host fails",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "What is VM affinity?",
+    "options": [
+      "VMs that must run on separate hosts",
+      "Disabling VMs",
+      "Deleting VMs",
+      "Rules that keep specific VMs together on the same host"
+    ],
+    "correct_answer": "Rules that keep specific VMs together on the same host",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is VM anti-affinity?",
+    "options": [
+      "Disabling all VMs",
+      "Deleting VMs",
+      "Rules that keep specific VMs on separate hosts for redundancy",
+      "Keeping VMs on the same host"
+    ],
+    "correct_answer": "Rules that keep specific VMs on separate hosts for redundancy",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is a VM export?",
+    "options": [
+      "Starting a VM",
+      "Saving a VM to a portable format for backup or migration",
+      "Stopping a VM",
+      "Deleting a VM"
+    ],
+    "correct_answer": "Saving a VM to a portable format for backup or migration",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What format is commonly used for VM exports in VMware?",
+    "options": [
+      "OVF/OVA",
+      "DOC",
+      "MP4",
+      "PDF"
+    ],
+    "correct_answer": "OVF/OVA",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What is nested virtualization?",
+    "options": [
+      "Running VMs in a physical server",
+      "Running a hypervisor inside a VM to create VMs within VMs",
+      "Using containers only",
+      "Deleting VMs"
+    ],
+    "correct_answer": "Running a hypervisor inside a VM to create VMs within VMs",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "When might nested virtualization be useful?",
+    "options": [
+      "For email servers",
+      "Never useful",
+      "Only for gaming",
+      "For testing hypervisors or training environments"
+    ],
+    "correct_answer": "For testing hypervisors or training environments",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "What is a datastore in virtualization?",
+    "options": [
+      "A backup tape",
+      "A network device",
+      "A storage repository where VM files are kept",
+      "A physical server"
+    ],
+    "correct_answer": "A storage repository where VM files are kept",
+    "topic": "Types of Virtualisation"
+  },
+  {
+    "question": "What is SAN in the context of virtualized environments?",
+    "options": [
+      "A type of VM",
+      "Storage Area Network providing centralized storage",
+      "A hypervisor type",
+      "A network protocol"
+    ],
+    "correct_answer": "Storage Area Network providing centralized storage",
+    "topic": "Types of Virtualisation"
+  },
+  {
+    "question": "What is NAS in virtualization storage?",
+    "options": [
+      "A VM type",
+      "A backup method",
+      "A network cable",
+      "Network Attached Storage providing file-level storage access"
+    ],
+    "correct_answer": "Network Attached Storage providing file-level storage access",
+    "topic": "Types of Virtualisation"
+  },
+  {
+    "question": "What is the advantage of using shared storage for VMs?",
+    "options": [
+      "VMs cannot move",
+      "Increases complexity without benefits",
+      "Reduces performance",
+      "Enables features like live migration and HA"
+    ],
+    "correct_answer": "Enables features like live migration and HA",
+    "topic": "Types of Virtualisation"
+  },
+  {
+    "question": "What is the purpose of VM tools (like VMware Tools)?",
+    "options": [
+      "To delete VMs",
+      "To improve integration between the VM and hypervisor, enhancing performance",
+      "To disable features",
+      "To reduce performance"
+    ],
+    "correct_answer": "To improve integration between the VM and hypervisor, enhancing performance",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What feature do VM tools typically provide?",
+    "options": [
+      "Slower network",
+      "Better graphics, time synchronization, and seamless mouse integration",
+      "No benefits",
+      "Worse performance"
+    ],
+    "correct_answer": "Better graphics, time synchronization, and seamless mouse integration",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "Can you convert a physical server to a VM?",
+    "options": [
+      "Never possible",
+      "Yes, through a process called P2V (Physical to Virtual)",
+      "Only manually",
+      "Only for Linux"
+    ],
+    "correct_answer": "Yes, through a process called P2V (Physical to Virtual)",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What is V2V conversion?",
+    "options": [
+      "Deleting VMs",
+      "Virtual to physical",
+      "Converting a VM from one hypervisor format to another",
+      "Physical to virtual"
+    ],
+    "correct_answer": "Converting a VM from one hypervisor format to another",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What is vMotion in VMware?",
+    "options": [
+      "Deleting VMs",
+      "Live migration technology that moves running VMs between hosts",
+      "A static configuration",
+      "Creating snapshots"
+    ],
+    "correct_answer": "Live migration technology that moves running VMs between hosts",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What is DRS (Distributed Resource Scheduler)?",
+    "options": [
+      "A backup solution",
+      "A network protocol",
+      "Manual VM placement",
+      "Automated load balancing of VMs across hosts"
+    ],
+    "correct_answer": "Automated load balancing of VMs across hosts",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What does a resource pool allow you to do?",
+    "options": [
+      "Disable hosts",
+      "Remove all VMs",
+      "Group resources and allocate them hierarchically to VMs",
+      "Delete resources"
+    ],
+    "correct_answer": "Group resources and allocate them hierarchically to VMs",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is the purpose of memory page sharing?",
+    "options": [
+      "To delete VMs",
+      "To waste memory",
+      "To consolidate identical memory pages across VMs to save RAM",
+      "To disable memory"
+    ],
+    "correct_answer": "To consolidate identical memory pages across VMs to save RAM",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is host-only networking?",
+    "options": [
+      "VMs can only communicate with the host and other VMs on the same host",
+      "Internet-only access",
+      "VMs can access external networks",
+      "No communication possible"
+    ],
+    "correct_answer": "VMs can only communicate with the host and other VMs on the same host",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is vSAN?",
+    "options": [
+      "A hypervisor type",
+      "A network protocol",
+      "A backup method",
+      "Virtual Storage Area Network that pools local storage from hosts"
+    ],
+    "correct_answer": "Virtual Storage Area Network that pools local storage from hosts",
+    "topic": "Types of Virtualisation"
+  },
+  {
+    "question": "What is the benefit of using a management plane in virtualization?",
+    "options": [
+      "Complicates management",
+      "No benefits",
+      "Slows down operations",
+      "Centralized control and monitoring of all virtualized resources"
+    ],
+    "correct_answer": "Centralized control and monitoring of all virtualized resources",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "What is vCenter Server?",
+    "options": [
+      "A backup tool",
+      "A Type 2 hypervisor",
+      "A network switch",
+      "A centralized management platform for VMware environments"
+    ],
+    "correct_answer": "A centralized management platform for VMware environments",
+    "topic": "Virtualisation Fundamentals"
+  },
+  {
+    "question": "What does hot-adding resources mean?",
+    "options": [
+      "Cold boot required",
+      "Adding resources like CPU or RAM to a VM while it's running",
+      "Deleting resources",
+      "Shutting down VMs"
+    ],
+    "correct_answer": "Adding resources like CPU or RAM to a VM while it's running",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "Is hot-add supported for all resources in all VMs?",
+    "options": [
+      "No, it depends on the guest OS and VM configuration",
+      "Yes, always",
+      "Only for network",
+      "Only for storage"
+    ],
+    "correct_answer": "No, it depends on the guest OS and VM configuration",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What is VM encryption?",
+    "options": [
+      "Backing up VMs",
+      "Disabling security",
+      "Encrypting VM files and disks to protect data at rest",
+      "Deleting VMs"
+    ],
+    "correct_answer": "Encrypting VM files and disks to protect data at rest",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What is the primary purpose of virtual switches?",
+    "options": [
+      "Delete VMs",
+      "Enable network communication between VMs and external networks",
+      "Store data",
+      "Provide physical connectivity"
+    ],
+    "correct_answer": "Enable network communication between VMs and external networks",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is a VLAN in virtualized networking?",
+    "options": [
+      "A hypervisor type",
+      "Virtual Local Area Network for network segmentation",
+      "A storage type",
+      "A physical cable"
+    ],
+    "correct_answer": "Virtual Local Area Network for network segmentation",
+    "topic": "Types of Virtualisation"
+  },
+  {
+    "question": "What is SR-IOV?",
+    "options": [
+      "A storage protocol",
+      "Single Root I/O Virtualization allowing direct hardware access to VMs",
+      "A hypervisor",
+      "A backup method"
+    ],
+    "correct_answer": "Single Root I/O Virtualization allowing direct hardware access to VMs",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "Why might you use GPU passthrough?",
+    "options": [
+      "To provide a VM with direct access to a physical GPU for better performance",
+      "To delete VMs",
+      "To reduce performance",
+      "To disable graphics"
+    ],
+    "correct_answer": "To provide a VM with direct access to a physical GPU for better performance",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is the purpose of VM heartbeat monitoring?",
+    "options": [
+      "To delete VMs",
+      "To disable monitoring",
+      "To increase costs",
+      "To detect if a VM or its guest OS has failed"
+    ],
+    "correct_answer": "To detect if a VM or its guest OS has failed",
+    "topic": "Troubleshooting & Scenarios"
+  },
+  {
+    "question": "What is the primary difference between a VM backup and a VM snapshot?",
+    "options": [
+      "Snapshots are larger than backups",
+      "Backups cannot be restored",
+      "They are exactly the same thing",
+      "Backups are stored separately and intended for long-term retention, snapshots are short-term and stored with the VM"
+    ],
+    "correct_answer": "Backups are stored separately and intended for long-term retention, snapshots are short-term and stored with the VM",
+    "topic": "Virtual Machines"
+  },
+  {
+    "question": "What happens when multiple VMs on the same host compete for limited CPU resources?",
+    "options": [
+      "All VMs stop working",
+      "The oldest VM gets priority",
+      "All VMs get equal CPU regardless of configuration",
+      "The hypervisor schedules CPU time based on shares, reservations, and limits"
+    ],
+    "correct_answer": "The hypervisor schedules CPU time based on shares, reservations, and limits",
+    "topic": "Resource Management"
+  },
+  {
+    "question": "What is a virtual hardware version in the context of VMs?",
+    "options": [
+      "The physical hardware model",
+      "The set of virtual hardware features available to a VM, determined by the hypervisor version",
+      "The VM's operating system version",
+      "The network adapter speed"
+    ],
+    "correct_answer": "The set of virtual hardware features available to a VM, determined by the hypervisor version",
+    "topic": "Virtual Machines"
+  }
+]
