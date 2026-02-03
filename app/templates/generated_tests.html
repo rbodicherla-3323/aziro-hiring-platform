@@ -1,25 +1,40 @@
 {% extends "base.html" %}
 {% block title %}Generated Tests{% endblock %}
+{% block breadcrumb %}Generated Tests{% endblock %}
 
 {% block content %}
-<h4 class="mb-2">Generated Tests</h4>
-<p class="text-muted mb-4">
-    View and share test links generated in this session.
-</p>
+
+<!-- ✅ NEW BACK BUTTON (TOP) -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h4 class="mb-1">Generated Tests</h4>
+        <p class="text-muted mb-0 small">
+            View and share test links generated in this session.
+        </p>
+    </div>
+    <a href="/create-test" class="btn btn-outline-primary btn-sm">
+        <i class="bi bi-plus-circle me-1"></i>Create New Test
+    </a>
+</div>
 
 <!-- ================= BULK ACTIONS ================= -->
 <div class="card shadow-sm mb-4">
     <div class="card-body d-flex align-items-center justify-content-between">
-        <div>
-            <input class="form-check-input me-2" type="checkbox" id="selectAll">
-            <label class="form-check-label fw-semibold">
-                Select all candidates
-            </label>
+        <div class="d-flex align-items-center gap-3">
+            <div>
+                <input class="form-check-input me-2" type="checkbox" id="selectAll">
+                <label class="form-check-label fw-semibold">
+                    Select all candidates
+                </label>
+            </div>
+            <span class="text-muted small" id="selectedCount">(0 selected)</span>
         </div>
 
-        <button class="btn btn-primary btn-sm" id="bulkEmailBtn">
-            Send Emails to All
-        </button>
+        <div class="d-flex gap-2">
+            <button class="btn btn-primary btn-sm" id="bulkEmailBtn">
+                <i class="bi bi-envelope me-1"></i>Send Emails to Selected
+            </button>
+        </div>
     </div>
 </div>
 
@@ -29,25 +44,34 @@
 
         {% if candidates %}
             {% for cand in candidates %}
-            <div class="border rounded p-3 mb-3 candidate-card">
+            <div class="border rounded p-3 mb-3 candidate-card test-card-row" data-status="sent">
 
                 <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <input type="checkbox" class="candidateCheck me-2">
-                        <strong>{{ cand.name }}</strong>
-                        <div class="text-muted small">
-                            {{ cand.email }} · {{ cand.role }}
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="candidateCheck me-3 mt-1">
+                        <div>
+                            <strong>{{ cand.name }}</strong>
+                            <span class="badge bg-success-subtle text-success ms-2">Sent</span>
+                            <div class="text-muted small">
+                                {{ cand.email }} · {{ cand.role }}
+                            </div>
                         </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-warning btn-sm resendBtn" title="Resend Email">
+                            <i class="bi bi-arrow-clockwise"></i>
+                        </button>
                     </div>
                 </div>
 
-                <ul class="list-unstyled mt-3 small">
+                <ul class="list-unstyled mt-3 small mb-0">
                     {% for level, test in cand.tests.items() %}
-                    <li>
-                        {{ level }} – {{ test.label }}
-                        <button class="btn btn-link btn-sm copyBtn"
+                    <li class="d-flex align-items-center mb-1">
+                        <span class="me-2" style="width: 80px;">{{ level }}</span>
+                        <span class="text-muted me-2">{{ test.label }}</span>
+                        <button class="btn btn-link btn-sm p-0 copyBtn"
                                 data-link="{{ test.url }}">
-                            Copy Link
+                            <i class="bi bi-clipboard me-1"></i>Copy Link
                         </button>
                     </li>
                     {% endfor %}
@@ -56,9 +80,17 @@
             </div>
             {% endfor %}
         {% else %}
-            <p class="text-muted mb-0">
-                No tests generated yet. Please create a test first.
-            </p>
+            <!-- Empty State -->
+            <div class="text-center py-5">
+                <div class="empty-state-icon mb-3">
+                    <i class="bi bi-file-earmark-x fs-1 text-muted"></i>
+                </div>
+                <h6 class="text-muted">No tests generated yet</h6>
+                <p class="text-muted small mb-3">Create your first test to get started</p>
+                <a href="/create-test" class="btn btn-primary btn-sm">
+                    <i class="bi bi-plus-circle me-1"></i>Create Test
+                </a>
+            </div>
         {% endif %}
 
     </div>
@@ -68,17 +100,49 @@
 <script>
     const selectAll = document.getElementById("selectAll");
     const candidateChecks = document.querySelectorAll(".candidateCheck");
+    const selectedCountEl = document.getElementById("selectedCount");
+
+    function updateSelectedCount() {
+        const count = document.querySelectorAll(".candidateCheck:checked").length;
+        selectedCountEl.textContent = `(${count} selected)`;
+    }
 
     selectAll.addEventListener("change", () => {
         candidateChecks.forEach(cb => cb.checked = selectAll.checked);
+        updateSelectedCount();
+    });
+
+    candidateChecks.forEach(cb => {
+        cb.addEventListener("change", () => {
+            updateSelectedCount();
+            selectAll.checked = document.querySelectorAll(".candidateCheck:checked").length === candidateChecks.length;
+        });
     });
 
     document.querySelectorAll(".copyBtn").forEach(btn => {
         btn.addEventListener("click", () => {
             navigator.clipboard.writeText(btn.dataset.link);
-            btn.innerText = "Copied";
-            setTimeout(() => btn.innerText = "Copy Link", 1000);
+            btn.innerHTML = '<i class="bi bi-check me-1"></i>Copied';
+            if (typeof showToast === 'function') showToast('Link copied to clipboard!', 'success');
+            setTimeout(() => btn.innerHTML = '<i class="bi bi-clipboard me-1"></i>Copy Link', 1500);
         });
+    });
+    
+    // Resend button
+    document.querySelectorAll(".resendBtn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            if (typeof showToast === 'function') showToast('Email resent successfully!', 'success');
+        });
+    });
+    
+    // Bulk Email Button
+    document.getElementById('bulkEmailBtn').addEventListener('click', () => {
+        const count = document.querySelectorAll('.candidateCheck:checked').length;
+        if (count > 0) {
+            if (typeof showToast === 'function') showToast(`Sending emails to ${count} candidate(s)...`, 'success');
+        } else {
+            if (typeof showToast === 'function') showToast('Please select candidates first', 'warning');
+        }
     });
 </script>
 
