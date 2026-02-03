@@ -1,0 +1,902 @@
+[
+  {
+    "question": "Identify the bug:\n\nlet x = 5;\nfunction test() {\n  var x = 10;\n  console.log(x);\n}\ntest();\nconsole.log(x);",
+    "options": [
+      "First logs 10, second logs 5 - var creates function scope",
+      "First logs 5, second logs 10 - var overrides global x",
+      "Both log 5 - var is ignored inside functions",
+      "Both log 10 - var hoists to global scope"
+    ],
+    "correct_answer": "First logs 10, second logs 5 - var creates function scope",
+    "topic": "Variables and Scope",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet arr = [1, 2, 3];\narr[10] = 99;\nconsole.log(arr.length);",
+    "options": [
+      "3 - only elements 1, 2, 3 count toward length",
+      "11 - length increases to accommodate index 10",
+      "99 - length equals the last assigned value",
+      "undefined - sparse arrays don't track length"
+    ],
+    "correct_answer": "11 - length increases to accommodate index 10",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nconst obj = { x: 1 };\nobj.x = 2;\nconsole.log(obj.x);",
+    "options": [
+      "Error - const prevents any modification",
+      "Outputs 1 - const freezes the value immediately",
+      "Outputs 2 - const prevents reassignment, not property mutation",
+      "Outputs undefined - obj is frozen"
+    ],
+    "correct_answer": "Outputs 2 - const prevents reassignment, not property mutation",
+    "topic": "Variables (const, let, var)",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this code output?\n\nlet x = 1;\nif (true) {\n  let x = 2;\n  console.log(x);\n}\nconsole.log(x);",
+    "options": [
+      "1 then 1 - let at block scope",
+      "2 then 2 - let creates new variable",
+      "2 then 1 - let creates block scope, doesn't affect outer x",
+      "Error - duplicate variable declaration"
+    ],
+    "correct_answer": "2 then 1 - let creates block scope, doesn't affect outer x",
+    "topic": "Variables and Scope",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nfunction add(a, b) {\n  console.log(a + b);\n}\nadd(5);",
+    "options": [
+      "Error - missing argument b",
+      "Outputs NaN - b is undefined, a + undefined = NaN",
+      "Outputs 5 - b defaults to 0",
+      "Outputs undefined - no return statement"
+    ],
+    "correct_answer": "Outputs NaN - b is undefined, a + undefined = NaN",
+    "topic": "Functions",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet arr = [1, 2, 3];\narr.push(4);\nconsole.log(arr);",
+    "options": [
+      "[1, 2, 3] - push returns the new length, not the array",
+      "[1, 2, 3, 4] - push modifies the array",
+      "4 - push returns the new length",
+      "Error - push is not a valid method"
+    ],
+    "correct_answer": "[1, 2, 3, 4] - push modifies the array",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet str = 'hello';\nstr.toUpperCase();\nconsole.log(str);",
+    "options": [
+      "str is now 'HELLO' - toUpperCase modifies the string",
+      "str is still 'hello' - strings are immutable, toUpperCase returns a new string",
+      "Error - toUpperCase is not a valid method",
+      "str is undefined - method call fails"
+    ],
+    "correct_answer": "str is still 'hello' - strings are immutable, toUpperCase returns a new string",
+    "topic": "Strings",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet x = '5';\nlet y = 5;\nconsole.log(x == y);\nconsole.log(x === y);",
+    "options": [
+      "true, true - both operators check equality",
+      "true, false - == coerces types, === does not",
+      "false, true - === coerces, == does not",
+      "false, false - different types always differ"
+    ],
+    "correct_answer": "true, false - == coerces types, === does not",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nfunction greet(name) {\n  console.log('Hello, ' + name);\n}\ngreet();",
+    "options": [
+      "Error - missing required argument",
+      "Outputs 'Hello, undefined' - name parameter is undefined",
+      "Outputs 'Hello, ' - undefined is coerced to empty string",
+      "No output - function requires argument"
+    ],
+    "correct_answer": "Outputs 'Hello, undefined' - name parameter is undefined",
+    "topic": "Functions",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet obj = { name: 'John' };\nlet copy = obj;\ncopy.name = 'Jane';\nconsole.log(obj.name);",
+    "options": [
+      "'John' - copy is a separate object",
+      "'Jane' - copy and obj reference the same object",
+      "Error - cannot modify copied object",
+      "undefined - object loses reference"
+    ],
+    "correct_answer": "'Jane' - copy and obj reference the same object",
+    "topic": "Objects",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet arr = [1, 2, 3];\nfor (var i = 0; i < arr.length; i++) {\n  setTimeout(() => console.log(i), 100);\n}\n// What logs after 100ms?",
+    "options": [
+      "0, 1, 2 - setTimeout captures each i value",
+      "3, 3, 3 - var is function-scoped, i is 3 after loop",
+      "undefined, undefined, undefined - i loses scope",
+      "Error - cannot use var in setTimeout"
+    ],
+    "correct_answer": "3, 3, 3 - var is function-scoped, i is 3 after loop",
+    "topic": "Closures and Scope",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet x = [];\nlet y = [];\nconsole.log(x == y);\nconsole.log(x === y);",
+    "options": [
+      "true, true - arrays are equal",
+      "true, false - == compares content, === checks reference",
+      "false, false - different object references",
+      "false, true - === checks content"
+    ],
+    "correct_answer": "false, false - different object references",
+    "topic": "Objects and Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet numbers = [1, 2, 3];\nnumbers.map(x => x * 2);\nconsole.log(numbers);",
+    "options": [
+      "[2, 4, 6] - map modifies the array",
+      "[1, 2, 3] - map returns a new array without modifying original",
+      "Error - map requires a function",
+      "undefined - no return statement"
+    ],
+    "correct_answer": "[1, 2, 3] - map returns a new array without modifying original",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nfunction test() {\n  console.log(x);\n  var x = 5;\n}\ntest();",
+    "options": [
+      "5 - x is hoisted and initialized",
+      "undefined - x is hoisted but not initialized",
+      "Error - x is not defined",
+      "null - hoisting sets x to null"
+    ],
+    "correct_answer": "undefined - x is hoisted but not initialized",
+    "topic": "Hoisting",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet obj = { x: 1, y: 2 };\nfor (let key in obj) {\n  console.log(key);\n}",
+    "options": [
+      "Error - cannot iterate over object properties",
+      "Logs 'x' then 'y' - for...in iterates over object keys",
+      "Logs 1 then 2 - for...in iterates over values",
+      "No output - for...in skips objects"
+    ],
+    "correct_answer": "Logs 'x' then 'y' - for...in iterates over object keys",
+    "topic": "Loops",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this output?\n\nlet x = 0 || 5;\nlet y = 0 && 5;\nconsole.log(x, y);",
+    "options": [
+      "0 5 - logical operators return operands",
+      "5 0 - || returns first truthy, && returns first falsy",
+      "true false - logical operators return booleans",
+      "5 undefined - && returns undefined when first is falsy"
+    ],
+    "correct_answer": "5 0 - || returns first truthy, && returns first falsy",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet result = 10;\nif (result = 5) {\n  console.log('Inside if');\n}",
+    "options": [
+      "No output - result is 10, condition is false",
+      "Outputs 'Inside if' - assignment (=) returns 5, which is truthy",
+      "Error - cannot assign in if condition",
+      "result becomes 5 but condition is false"
+    ],
+    "correct_answer": "Outputs 'Inside if' - assignment (=) returns 5, which is truthy",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet x = '5' - 2;\nconsole.log(x, typeof x);",
+    "options": [
+      "'3', 'string' - string subtraction keeps string type",
+      "3, 'number' - string is coerced to number for subtraction",
+      "NaN, 'number' - cannot subtract from string",
+      "'52', 'string' - string concatenation happens"
+    ],
+    "correct_answer": "3, 'number' - string is coerced to number for subtraction",
+    "topic": "Data Types and Coercion",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet arr = [1, 2, 3];\nlet first = arr[0];\narr[0] = 10;\nconsole.log(first);",
+    "options": [
+      "10 - first is a reference to arr[0]",
+      "1 - first stores the value, not the reference",
+      "undefined - first loses its value",
+      "Error - cannot reassign array elements"
+    ],
+    "correct_answer": "1 - first stores the value, not the reference",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this output?\n\nlet x = 'hello';\nconsole.log(x[0]);\nconsole.log(x.charAt(0));",
+    "options": [
+      "'h' then 'h' - both access first character",
+      "'h' then undefined - only charAt works",
+      "undefined then 'h' - array indexing fails",
+      "Error - cannot index strings"
+    ],
+    "correct_answer": "'h' then 'h' - both access first character",
+    "topic": "Strings",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet obj = {};\nobj['key'] = 'value';\nconsole.log(obj.key);",
+    "options": [
+      "undefined - bracket notation and dot notation differ",
+      "'value' - both notations access the same property",
+      "Error - cannot use bracket notation",
+      "'undefined' - property doesn't exist with dot notation"
+    ],
+    "correct_answer": "'value' - both notations access the same property",
+    "topic": "Objects",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet x = [];\nif (x) {\n  console.log('truthy');\n} else {\n  console.log('falsy');\n}",
+    "options": [
+      "logs 'falsy' - empty array is falsy",
+      "logs 'truthy' - empty array is truthy",
+      "Error - cannot test array in if",
+      "undefined - array evaluation fails"
+    ],
+    "correct_answer": "logs 'truthy' - empty array is truthy",
+    "topic": "Data Types",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet str = 'hello';\nstr[0] = 'H';\nconsole.log(str);",
+    "options": [
+      "'Hello' - strings can be modified by index",
+      "'hello' - strings are immutable",
+      "Error - cannot assign to string index",
+      "undefined - operation fails silently"
+    ],
+    "correct_answer": "'hello' - strings are immutable",
+    "topic": "Strings",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this output?\n\nlet x = null;\nconsole.log(typeof x);\nconsole.log(x == undefined);\nconsole.log(x === undefined);",
+    "options": [
+      "'object', true, true - null and undefined are identical",
+      "'object', true, false - == coerces, === does not",
+      "'null', false, false - null is distinct from undefined",
+      "'undefined', false, false - typeof treats null as undefined"
+    ],
+    "correct_answer": "'object', true, false - == coerces, === does not",
+    "topic": "Data Types",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = 10;\nlet y = x++;\nconsole.log(x, y);",
+    "options": [
+      "10, 10 - post-increment happens after evaluation",
+      "11, 10 - post-increment returns old value, then increments",
+      "11, 11 - post-increment happens immediately",
+      "10, 11 - post-increment returns new value"
+    ],
+    "correct_answer": "11, 10 - post-increment returns old value, then increments",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet arr = [1, 2, 3];\narr.splice(1, 1);\nconsole.log(arr);",
+    "options": [
+      "[1, 2, 3] - splice doesn't modify array",
+      "[1, 3] - splice removes 1 element at index 1",
+      "2 - splice returns removed element",
+      "Error - splice requires more parameters"
+    ],
+    "correct_answer": "[1, 3] - splice removes 1 element at index 1",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nfunction test() {\n  return\n  5;\n}\nconsole.log(test());",
+    "options": [
+      "5 - return on separate line still returns value",
+      "undefined - automatic semicolon insertion after return",
+      "Error - return must be on same line",
+      "null - function doesn't return a value"
+    ],
+    "correct_answer": "undefined - automatic semicolon insertion after return",
+    "topic": "Functions",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this output?\n\nlet x = 1;\nlet y = x;\nx = 2;\nconsole.log(x, y);",
+    "options": [
+      "2, 2 - y changes when x changes",
+      "2, 1 - y stores the value at assignment time",
+      "1, 1 - x never changes",
+      "Error - cannot reassign x"
+    ],
+    "correct_answer": "2, 1 - y stores the value at assignment time",
+    "topic": "Variables",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet obj = { x: 1, x: 2 };\nconsole.log(obj.x);",
+    "options": [
+      "1 - first property wins",
+      "2 - last property wins",
+      "Error - duplicate property",
+      "undefined - property is ambiguous"
+    ],
+    "correct_answer": "2 - last property wins",
+    "topic": "Objects",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet x = 0;\nconsole.log(x || 'default');\nconsole.log(x ?? 'default');",
+    "options": [
+      "'default', 0 - || and ?? both evaluate falsy values",
+      "'default', 'default' - both return default",
+      "'default', 0 - || checks truthiness, ?? checks nullish",
+      "0, 'default' - neither uses default"
+    ],
+    "correct_answer": "'default', 0 - || checks truthiness, ?? checks nullish",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = 1n + 2;\nconsole.log(x);",
+    "options": [
+      "3 - BigInt and number mix automatically",
+      "Error - cannot mix BigInt and number",
+      "3n - result is BigInt",
+      "NaN - type mismatch"
+    ],
+    "correct_answer": "Error - cannot mix BigInt and number",
+    "topic": "Data Types",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this output?\n\nlet arr = Array(3);\nconsole.log(arr);\nconsole.log(arr.length);",
+    "options": [
+      "[undefined, undefined, undefined], 3 - Array(3) creates array with 3 undefined",
+      "[3], 1 - Array(3) creates array with 3",
+      "[], 0 - Array(3) creates empty array",
+      "Error - invalid array constructor"
+    ],
+    "correct_answer": "[undefined, undefined, undefined], 3 - Array(3) creates array with 3 undefined",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = parseInt('10x');\nconsole.log(x);",
+    "options": [
+      "NaN - cannot parse string with letters",
+      "10 - parseInt extracts leading digits",
+      "'10x' - parseInt returns the string",
+      "Error - invalid input"
+    ],
+    "correct_answer": "10 - parseInt extracts leading digits",
+    "topic": "Type Coercion",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet x = '10';\nlet y = x * '2';\nconsole.log(y, typeof y);",
+    "options": [
+      "'20', 'string' - multiplication returns string",
+      "20, 'number' - both operands coerce to number",
+      "NaN, 'number' - string multiplication fails",
+      "'102', 'string' - string concatenation"
+    ],
+    "correct_answer": "20, 'number' - both operands coerce to number",
+    "topic": "Type Coercion",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet arr = [1, 2, 3];\nlet doubled = arr.map(x => x * 2);\nconsole.log(doubled);",
+    "options": [
+      "[1, 2, 3] - map doesn't modify arrays",
+      "[2, 4, 6] - map creates new array with doubled values",
+      "Error - map is not a valid method",
+      "undefined - map returns nothing"
+    ],
+    "correct_answer": "[2, 4, 6] - map creates new array with doubled values",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this output?\n\nlet x = -0;\nlet y = 0;\nconsole.log(x === y);\nconsole.log(Object.is(x, y));",
+    "options": [
+      "true, true - -0 and 0 are identical",
+      "true, false - === sees them as equal, Object.is distinguishes",
+      "false, false - they are always different",
+      "false, true - opposite comparison"
+    ],
+    "correct_answer": "true, false - === sees them as equal, Object.is distinguishes",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = NaN;\nconsole.log(x === NaN);\nconsole.log(isNaN(x));",
+    "options": [
+      "true, true - NaN equals itself",
+      "false, true - NaN !== NaN, but isNaN returns true",
+      "true, false - === works but isNaN doesn't",
+      "Error - cannot compare NaN"
+    ],
+    "correct_answer": "false, true - NaN !== NaN, but isNaN returns true",
+    "topic": "Data Types",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet arr = [1, 2, 3, 4, 5];\nlet filtered = arr.filter(x => x > 2);\nconsole.log(filtered);",
+    "options": [
+      "[1, 2, 3, 4, 5] - filter doesn't work",
+      "[3, 4, 5] - filter returns elements where condition is true",
+      "Error - filter requires different syntax",
+      "undefined - filter is not an array method"
+    ],
+    "correct_answer": "[3, 4, 5] - filter returns elements where condition is true",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet obj = { a: 1, b: 2 };\nlet { a, c } = obj;\nconsole.log(a, c);",
+    "options": [
+      "1, 2 - both properties are destructured",
+      "1, undefined - c is not in obj",
+      "Error - cannot destructure object",
+      "undefined, undefined - destructuring fails"
+    ],
+    "correct_answer": "1, undefined - c is not in obj",
+    "topic": "Objects",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet x = Math.max(1, 2, 3);\nconsole.log(x);",
+    "options": [
+      "Error - max requires array",
+      "3 - returns the largest number",
+      "[1, 2, 3] - returns all numbers",
+      "undefined - max is not a function"
+    ],
+    "correct_answer": "3 - returns the largest number",
+    "topic": "Functions",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet arr = [1, 2, 3];\nlet result = arr.reduce((sum, x) => sum + x);\nconsole.log(result);",
+    "options": [
+      "undefined - reduce requires initial value",
+      "6 - sum of all elements",
+      "[1, 2, 3] - reduce doesn't modify",
+      "Error - reduce is not valid"
+    ],
+    "correct_answer": "6 - sum of all elements",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this output?\n\nlet x = 'abc';\nconsole.log(x.length);\nconsole.log(x[100]);",
+    "options": [
+      "3, undefined - length is 3, index 100 is out of bounds",
+      "3, null - out of bounds returns null",
+      "Error, undefined - cannot access string by index",
+      "undefined, undefined - strings don't have length"
+    ],
+    "correct_answer": "3, undefined - length is 3, index 100 is out of bounds",
+    "topic": "Strings",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = [1, 2, 3];\nlet y = x.slice(1, 2);\nconsole.log(y);",
+    "options": [
+      "[1, 2, 3] - slice doesn't modify original",
+      "[2] - slice returns elements from index 1 to 2 (exclusive)",
+      "[2, 3] - slice includes end index",
+      "Error - slice requires different parameters"
+    ],
+    "correct_answer": "[2] - slice returns elements from index 1 to 2 (exclusive)",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet x = '5' + 2;\nlet y = '5' - 2;\nconsole.log(x, y);",
+    "options": [
+      "7, 3 - both operations convert to numbers",
+      "'7', 3 - concatenation and subtraction",
+      "'52', 3 - + concatenates, - subtracts",
+      "Error - type mismatch"
+    ],
+    "correct_answer": "'52', 3 - + concatenates, - subtracts",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet obj = { x: 1 };\ndelete obj.x;\nconsole.log(obj.x);",
+    "options": [
+      "1 - delete doesn't work",
+      "undefined - delete removes the property",
+      "Error - cannot use delete",
+      "null - property becomes null"
+    ],
+    "correct_answer": "undefined - delete removes the property",
+    "topic": "Objects",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this output?\n\nlet x = true;\nlet y = false;\nconsole.log(!x, !y);",
+    "options": [
+      "false, true - NOT inverts boolean",
+      "true, false - NOT doesn't change values",
+      "Error - cannot use NOT on boolean",
+      "undefined, undefined - operation fails"
+    ],
+    "correct_answer": "false, true - NOT inverts boolean",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = function() {\n  return 5;\n};\nconsole.log(x());",
+    "options": [
+      "undefined - function expression doesn't return",
+      "5 - function is called with ()",
+      "function() { return 5; } - the function itself",
+      "Error - cannot call function expression"
+    ],
+    "correct_answer": "5 - function is called with ()",
+    "topic": "Functions",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet x = 0;\nwhile (x < 3) {\n  console.log(x);\n  x++;\n}",
+    "options": [
+      "0, 1, 2 - loop runs while x < 3",
+      "1, 2, 3 - loop starts at x++",
+      "0, 1, 2, 3 - runs up to x == 3",
+      "infinite loop - condition is always true"
+    ],
+    "correct_answer": "0, 1, 2 - loop runs while x < 3",
+    "topic": "Loops",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = 'string'.length;\nconsole.log(x);",
+    "options": [
+      "Error - string doesn't have length",
+      "6 - number of characters",
+      "'string' - returns the string",
+      "undefined - length is not a property"
+    ],
+    "correct_answer": "6 - number of characters",
+    "topic": "Strings",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this output?\n\nlet x = [1, 2].length;\nconsole.log(x);",
+    "options": [
+      "2 - array has 2 elements",
+      "undefined - arrays don't have length",
+      "[1, 2] - returns the array",
+      "Error - cannot access length"
+    ],
+    "correct_answer": "2 - array has 2 elements",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = 'hello';\nlet y = x.toUpperCase();\nconsole.log(y);",
+    "options": [
+      "'hello' - toUpperCase doesn't work",
+      "'HELLO' - toUpperCase returns uppercase copy",
+      "Error - cannot convert string",
+      "undefined - method fails"
+    ],
+    "correct_answer": "'HELLO' - toUpperCase returns uppercase copy",
+    "topic": "Strings",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet x = [1, 2, 3, 4];\nlet y = x[x.length - 1];\nconsole.log(y);",
+    "options": [
+      "undefined - cannot use expression as index",
+      "4 - last element (length 4, index 3)",
+      "3 - length - 1 equals 3",
+      "Error - invalid array access"
+    ],
+    "correct_answer": "4 - last element (length 4, index 3)",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet obj = {};\nlet key = 'a';\nobj[key] = 1;\nconsole.log(obj);",
+    "options": [
+      "{ key: 1 } - uses 'key' as property name",
+      "{ a: 1 } - uses value of key variable",
+      "Error - cannot use variable as key",
+      "undefined - assignment fails"
+    ],
+    "correct_answer": "{ a: 1 } - uses value of key variable",
+    "topic": "Objects",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this output?\n\nlet x = '';\nif (x) {\n  console.log('truthy');\n} else {\n  console.log('falsy');\n}",
+    "options": [
+      "logs 'truthy' - empty string is truthy",
+      "logs 'falsy' - empty string is falsy",
+      "Error - cannot test string",
+      "undefined - condition fails"
+    ],
+    "correct_answer": "logs 'falsy' - empty string is falsy",
+    "topic": "Data Types",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = [1, 2, 3];\nx.forEach(item => console.log(item));",
+    "options": [
+      "No output - forEach doesn't work",
+      "Logs 1, 2, 3 - forEach iterates and executes callback",
+      "Error - forEach requires different syntax",
+      "undefined - forEach is not valid"
+    ],
+    "correct_answer": "Logs 1, 2, 3 - forEach iterates and executes callback",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet x = 5;\nlet y = x * 2 + 3;\nconsole.log(y);",
+    "options": [
+      "13 - 5 * 2 + 3 = 13",
+      "16 - 5 * (2 + 3) = 25",
+      "Error - invalid expression",
+      "undefined - calculation fails"
+    ],
+    "correct_answer": "13 - 5 * 2 + 3 = 13",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = 'test'.indexOf('e');\nconsole.log(x);",
+    "options": [
+      "'e' - returns the character",
+      "-1 - character not found",
+      "1 - index of 'e' in 'test'",
+      "Error - indexOf is not a method"
+    ],
+    "correct_answer": "1 - index of 'e' in 'test'",
+    "topic": "Strings",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this output?\n\nlet x = [1, 2, 3];\nlet y = x.concat([4, 5]);\nconsole.log(y, x);",
+    "options": [
+      "[1, 2, 3, 4, 5], [1, 2, 3] - concat returns new array",
+      "[1, 2, 3, 4, 5], [1, 2, 3, 4, 5] - both arrays change",
+      "Error - cannot concat",
+      "[4, 5], [1, 2, 3] - concat replaces"
+    ],
+    "correct_answer": "[1, 2, 3, 4, 5], [1, 2, 3] - concat returns new array",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = {};\nconsole.log(x.undefined);",
+    "options": [
+      "undefined - property 'undefined' doesn't exist",
+      "undefined - the value undefined",
+      "Error - cannot access undefined",
+      "null - properties default to null"
+    ],
+    "correct_answer": "undefined - property doesn't exist, returns undefined",
+    "topic": "Objects",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet x = 10;\nlet y = 10;\nconsole.log(x == y);\nconsole.log(x === y);",
+    "options": [
+      "true, false - primitives compared differently",
+      "true, true - same type and value",
+      "false, false - different objects",
+      "Error - cannot compare"
+    ],
+    "correct_answer": "true, true - same type and value",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = Number('abc');\nconsole.log(x);",
+    "options": [
+      "'abc' - cannot convert",
+      "NaN - string cannot be converted to number",
+      "0 - defaults to zero",
+      "Error - invalid conversion"
+    ],
+    "correct_answer": "NaN - string cannot be converted to number",
+    "topic": "Type Coercion",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this output?\n\nlet x = typeof [];\nconsole.log(x);",
+    "options": [
+      "'array' - typeof returns array",
+      "'object' - arrays are objects in JavaScript",
+      "Error - typeof doesn't work on arrays",
+      "undefined - type checking fails"
+    ],
+    "correct_answer": "'object' - arrays are objects in JavaScript",
+    "topic": "Data Types",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = 'a', 'b';\nconsole.log(x);",
+    "options": [
+      "'ab' - comma concatenates",
+      "'a' - comma is sequence operator, last value wins",
+      "'b' - second string assigned",
+      "Error - invalid syntax"
+    ],
+    "correct_answer": "'a' - comma is sequence operator, last value wins",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet x = [];\nx[0] = 1;\nconsole.log(x[0]);",
+    "options": [
+      "undefined - cannot assign to array by index",
+      "1 - assignment creates element at index 0",
+      "Error - invalid array assignment",
+      "null - index 0 is protected"
+    ],
+    "correct_answer": "1 - assignment creates element at index 0",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = () => 5;\nconsole.log(x);",
+    "options": [
+      "5 - arrow function executes",
+      "() => 5 - the function itself",
+      "Error - arrow functions don't work",
+      "undefined - function is not defined"
+    ],
+    "correct_answer": "() => 5 - the function itself",
+    "topic": "Functions",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this output?\n\nlet x = '10';\nx = x - 0;\nconsole.log(typeof x);",
+    "options": [
+      "'string' - type doesn't change",
+      "'number' - arithmetic operation converts",
+      "Error - type mismatch",
+      "'10' - value stays string"
+    ],
+    "correct_answer": "'number' - arithmetic operation converts",
+    "topic": "Type Coercion",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = [1, 2, 3];\nconsole.log(x.includes(2));",
+    "options": [
+      "false - includes doesn't work",
+      "true - 2 is in the array",
+      "Error - includes is not a method",
+      "undefined - method fails"
+    ],
+    "correct_answer": "true - 2 is in the array",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet x = 1;\nif (x) { x = 2; }\nconsole.log(x);",
+    "options": [
+      "1 - if block doesn't execute",
+      "2 - condition is truthy, x is updated",
+      "Error - cannot assign in if",
+      "undefined - x is reassigned"
+    ],
+    "correct_answer": "2 - condition is truthy, x is updated",
+    "topic": "Conditional Statements",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = 'hello'.substring(0, 2);\nconsole.log(x);",
+    "options": [
+      "'hello' - substring returns full string",
+      "'he' - substring(0, 2) returns chars 0-1",
+      "Error - substring requires different args",
+      "undefined - method fails"
+    ],
+    "correct_answer": "'he' - substring(0, 2) returns chars 0-1",
+    "topic": "Strings",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this output?\n\nlet x = 1 + '2';\nconsole.log(x);",
+    "options": [
+      "3 - both become numbers",
+      "'12' - number converts to string for concatenation",
+      "Error - type mismatch",
+      "NaN - operation fails"
+    ],
+    "correct_answer": "'12' - number converts to string for concatenation",
+    "topic": "Type Coercion",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = { a: 1 };\nlet y = JSON.stringify(x);\nconsole.log(y);",
+    "options": [
+      "{ a: 1 } - stringify returns object",
+      "'{\"a\":1}' - stringify returns JSON string",
+      "Error - stringify not available",
+      "undefined - conversion fails"
+    ],
+    "correct_answer": "'{\"a\":1}' - stringify returns JSON string",
+    "topic": "JSON",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\n\nlet arr = [1, 2];\nlet [x, y] = arr;\nconsole.log(x, y);",
+    "options": [
+      "[1, 2], undefined - destructuring fails",
+      "1 2 - destructuring assigns variables",
+      "Error - invalid destructuring",
+      "undefined undefined - variables empty"
+    ],
+    "correct_answer": "1 2 - destructuring assigns variables",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = '0';\nif (x) {\n  console.log('true');\n} else {\n  console.log('false');\n}",
+    "options": [
+      "logs 'false' - '0' is falsy",
+      "logs 'true' - non-empty string is truthy",
+      "Error - cannot test string",
+      "undefined - condition fails"
+    ],
+    "correct_answer": "logs 'true' - non-empty string is truthy",
+    "topic": "Data Types",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this output?\n\nlet x = Math.round(4.5);\nconsole.log(x);",
+    "options": [
+      "4 - rounds down",
+      "5 - rounds to nearest integer",
+      "4.5 - round doesn't work",
+      "Error - invalid function"
+    ],
+    "correct_answer": "5 - rounds to nearest integer",
+    "topic": "Functions",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Identify the bug:\n\nlet x = [1, 2, 3];\nx[x.length] = 4;\nconsole.log(x);",
+    "options": [
+      "[1, 2, 3] - cannot extend array",
+      "[1, 2, 3, 4] - adds element at end",
+      "Error - invalid assignment",
+      "[1, 2, 3, undefined, 4] - creates sparse array"
+    ],
+    "correct_answer": "[1, 2, 3, 4] - adds element at end",
+    "topic": "Arrays",
+    "difficulty": "easy"
+  }
+]

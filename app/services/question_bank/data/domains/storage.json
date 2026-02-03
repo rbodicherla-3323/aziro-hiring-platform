@@ -1,0 +1,673 @@
+[
+  {
+    "question": "In HDD technology, what is the primary function of the spindle motor?",
+    "options": [
+      "To amplify electrical signals from the heads",
+      "To generate magnetic fields for data encoding",
+      "To move the read/write head across the platter",
+      "To rotate the platters at a constant speed"
+    ],
+    "correct_answer": "To rotate the platters at a constant speed",
+    "topic": "Storage Drives & Media"
+  },
+  {
+    "question": "Which of the following best explains why SSDs have no moving parts?",
+    "options": [
+      "Air pressure mechanisms replace mechanical systems",
+      "Magnetic fields perform all mechanical operations",
+      "Optical lasers eliminate the need for mechanical components",
+      "Moving parts are replaced by semiconductor memory cells"
+    ],
+    "correct_answer": "Moving parts are replaced by semiconductor memory cells",
+    "topic": "Storage Drives & Media"
+  },
+  {
+    "question": "What is the primary advantage of SSD over HDD in terms of random access patterns?",
+    "options": [
+      "SSDs use sequential access only",
+      "HDDs have faster rotational speed",
+      "HDDs use optical technology for faster access",
+      "SSDs have constant seek time regardless of data location"
+    ],
+    "correct_answer": "SSDs have constant seek time regardless of data location",
+    "topic": "Storage Drives & Media"
+  },
+  {
+    "question": "In SSD technology, what problem does wear leveling address?",
+    "options": [
+      "Thermal imbalance between different controller chips",
+      "Uneven electrical distribution in the power supply",
+      "Inconsistent rotational speed of virtual platters",
+      "Uneven wear of flash memory cells across the storage device"
+    ],
+    "correct_answer": "Uneven wear of flash memory cells across the storage device",
+    "topic": "Storage Drives & Media"
+  },
+  {
+    "question": "What is the purpose of garbage collection in SSDs?",
+    "options": [
+      "To repair corrupted data blocks",
+      "To identify and mark bad sectors for exclusion",
+      "To defragment the file system",
+      "To reclaim storage space from deleted data by reorganizing valid data"
+    ],
+    "correct_answer": "To reclaim storage space from deleted data by reorganizing valid data",
+    "topic": "Storage Drives & Media"
+  },
+  {
+    "question": "Why is over-provisioning important in SSDs?",
+    "options": [
+      "To enable faster rotational speeds",
+      "To provide extra space for garbage collection and wear leveling operations",
+      "To reduce the number of RAID mirrors needed",
+      "To increase the physical capacity of the device"
+    ],
+    "correct_answer": "To provide extra space for garbage collection and wear leveling operations",
+    "topic": "Storage Drives & Media"
+  },
+  {
+    "question": "How does an HDD's latency vary based on data location on the platter?",
+    "options": [
+      "It remains constant regardless of head position",
+      "It depends only on the number of platters",
+      "It is determined solely by the spindle speed",
+      "It varies based on seek time and rotational latency"
+    ],
+    "correct_answer": "It varies based on seek time and rotational latency",
+    "topic": "Storage Drives & Media"
+  },
+  {
+    "question": "What does IOPS refer to in storage performance metrics?",
+    "options": [
+      "Input/Output Operations Per Second",
+      "Integrated Operating Parameters System",
+      "Internal Operational Performance Scale",
+      "Interface Optimization Processing Standard"
+    ],
+    "correct_answer": "Input/Output Operations Per Second",
+    "topic": "Storage Drives & Media"
+  },
+  {
+    "question": "Which storage media offers better performance for sequential workloads compared to random access?",
+    "options": [
+      "SSDs equally support both sequential and random access",
+      "Random access always outperforms sequential on HDDs",
+      "Both perform identically for sequential and random patterns",
+      "HDDs perform better with sequential workloads than random access"
+    ],
+    "correct_answer": "HDDs perform better with sequential workloads than random access",
+    "topic": "Storage Drives & Media"
+  },
+  {
+    "question": "What is the relationship between SSD cell wear and the number of write operations (P/E cycles)?",
+    "options": [
+      "Wear stabilizes after the initial 100 writes",
+      "There is no relationship; wear is independent of writes",
+      "Cell degradation increases with the number of program/erase cycles",
+      "Only the first 1000 writes cause wear"
+    ],
+    "correct_answer": "Cell degradation increases with the number of program/erase cycles",
+    "topic": "Storage Drives & Media"
+  },
+  {
+    "question": "In a typical HDD, which component is responsible for reading and writing data on the platter?",
+    "options": [
+      "The read/write head mounted on an actuator arm",
+      "The thermal regulator",
+      "The logic board controller",
+      "The spindle motor"
+    ],
+    "correct_answer": "The read/write head mounted on an actuator arm",
+    "topic": "Storage Drives & Media"
+  },
+  {
+    "question": "What does TBW (TeraBytes Written) measure in SSD specifications?",
+    "options": [
+      "The time between write operations",
+      "The theoretical maximum data transfer rate",
+      "The total amount of data that can be written to an SSD before it reaches end-of-life",
+      "The average wait time for a read operation"
+    ],
+    "correct_answer": "The total amount of data that can be written to an SSD before it reaches end-of-life",
+    "topic": "Storage Drives & Media"
+  },
+  {
+    "question": "What is the primary purpose of RAID?",
+    "options": [
+      "To improve data reliability and/or performance through redundancy or striping",
+      "To reduce power consumption",
+      "To eliminate the need for backups",
+      "To increase storage capacity only"
+    ],
+    "correct_answer": "To improve data reliability and/or performance through redundancy or striping",
+    "topic": "RAID"
+  },
+  {
+    "question": "In RAID 0, what happens if a single drive fails?",
+    "options": [
+      "The array continues operating with reduced performance",
+      "The entire array becomes inaccessible and all data is lost",
+      "A hot spare automatically rebuilds the data",
+      "Data is reconstructed from parity"
+    ],
+    "correct_answer": "The entire array becomes inaccessible and all data is lost",
+    "topic": "RAID"
+  },
+  {
+    "question": "What is the storage overhead of RAID 1?",
+    "options": [
+      "50% (requires one additional drive for mirroring)",
+      "33% (requires one additional drive for three)",
+      "100% (doubles the required drives)",
+      "0% (no overhead)"
+    ],
+    "correct_answer": "100% (doubles the required drives)",
+    "topic": "RAID"
+  },
+  {
+    "question": "Which RAID level uses distributed parity and tolerates a single drive failure?",
+    "options": [
+      "RAID 5",
+      "RAID 6",
+      "RAID 0",
+      "RAID 1"
+    ],
+    "correct_answer": "RAID 5",
+    "topic": "RAID"
+  },
+  {
+    "question": "How many simultaneous drive failures can RAID 6 tolerate?",
+    "options": [
+      "Two concurrent failures",
+      "Up to half the drives in the array",
+      "Three failures",
+      "One failure"
+    ],
+    "correct_answer": "Two concurrent failures",
+    "topic": "RAID"
+  },
+  {
+    "question": "What is a key disadvantage of RAID 5 compared to RAID 6?",
+    "options": [
+      "RAID 5 cannot tolerate two simultaneous drive failures",
+      "RAID 5 requires more drives",
+      "RAID 5 cannot handle any drive failures",
+      "RAID 5 has higher write latency"
+    ],
+    "correct_answer": "RAID 5 cannot tolerate two simultaneous drive failures",
+    "topic": "RAID"
+  },
+  {
+    "question": "In RAID 10 (1+0), what is the relationship between data protection and performance?",
+    "options": [
+      "Parity calculation slows all operations",
+      "Mirroring enables parallel reads while striping improves write performance",
+      "Performance is sacrificed entirely for redundancy",
+      "Both mirrors and stripes reduce IOPS"
+    ],
+    "correct_answer": "Mirroring enables parallel reads while striping improves write performance",
+    "topic": "RAID"
+  },
+  {
+    "question": "What minimum number of drives is required for RAID 5?",
+    "options": [
+      "3 drives",
+      "4 drives",
+      "2 drives",
+      "5 drives"
+    ],
+    "correct_answer": "3 drives",
+    "topic": "RAID"
+  },
+  {
+    "question": "How does RAID 0 differ from RAID 1 in terms of fault tolerance?",
+    "options": [
+      "RAID 0 has no fault tolerance; RAID 1 tolerates one complete drive failure",
+      "RAID 0 tolerates one failure; RAID 1 tolerates none",
+      "RAID 1 has better performance but no fault tolerance",
+      "Both have identical fault tolerance"
+    ],
+    "correct_answer": "RAID 0 has no fault tolerance; RAID 1 tolerates one complete drive failure",
+    "topic": "RAID"
+  },
+  {
+    "question": "What is the primary advantage of nested RAID (e.g., RAID 50) over single-level RAID?",
+    "options": [
+      "Improved performance and fault tolerance by combining RAID levels",
+      "Faster rebuild times compared to RAID 5",
+      "Elimination of parity calculations",
+      "Reduced storage overhead"
+    ],
+    "correct_answer": "Improved performance and fault tolerance by combining RAID levels",
+    "topic": "RAID"
+  },
+  {
+    "question": "In RAID 01 (0+1), how many drive failures can the array tolerate?",
+    "options": [
+      "One drive per mirror pair",
+      "Any single drive failure within a mirrored pair",
+      "None (complete failure on any drive)",
+      "Up to half the total drives"
+    ],
+    "correct_answer": "Any single drive failure within a mirrored pair",
+    "topic": "RAID"
+  },
+  {
+    "question": "What is the write penalty associated with RAID 5?",
+    "options": [
+      "Each write requires recalculation of all parity blocks",
+      "No penalty; writes are as fast as RAID 0",
+      "Writes are serialized and cannot be parallelized",
+      "Four I/O operations (read, read, write, write) are required per write"
+    ],
+    "correct_answer": "Four I/O operations (read, read, write, write) are required per write",
+    "topic": "RAID"
+  },
+  {
+    "question": "What role does a hot spare play in a RAID array?",
+    "options": [
+      "It automatically replaces a failed drive without manual intervention",
+      "It reduces the rebuild time calculation",
+      "It provides a backup parity block",
+      "It increases the storage capacity of the array"
+    ],
+    "correct_answer": "It automatically replaces a failed drive without manual intervention",
+    "topic": "RAID"
+  },
+  {
+    "question": "How does RAID 6 improve upon RAID 5 in terms of rebuild risk?",
+    "options": [
+      "RAID 6 does not require reading remaining drives during rebuild",
+      "RAID 6 rebuilds faster than RAID 5",
+      "RAID 6 tolerates two simultaneous failures, reducing the window of vulnerability during rebuild",
+      "RAID 6 eliminates the need for parity"
+    ],
+    "correct_answer": "RAID 6 tolerates two simultaneous failures, reducing the window of vulnerability during rebuild",
+    "topic": "RAID"
+  },
+  {
+    "question": "What is RAID-DP?",
+    "options": [
+      "RAID with Dynamic Parity",
+      "A proprietary NetApp RAID variant offering dual parity protection",
+      "RAID using dependent parity blocks",
+      "RAID-5 with double parity (equivalent to RAID 6)"
+    ],
+    "correct_answer": "A proprietary NetApp RAID variant offering dual parity protection",
+    "topic": "RAID"
+  },
+  {
+    "question": "In a RAID 5 array with 8 drives, how much usable storage capacity is available if each drive is 1TB?",
+    "options": [
+      "7TB",
+      "8TB",
+      "6TB",
+      "4TB"
+    ],
+    "correct_answer": "7TB",
+    "topic": "RAID"
+  },
+  {
+    "question": "What is the minimum required rebuild time consideration when choosing RAID 5 over RAID 6?",
+    "options": [
+      "Rebuild time is independent of RAID level",
+      "RAID 6 introduces additional latency during normal operations",
+      "RAID 5 rebuild risk increases significantly on larger capacity drives due to exposure window",
+      "RAID 5 always rebuilds faster"
+    ],
+    "correct_answer": "RAID 5 rebuild risk increases significantly on larger capacity drives due to exposure window",
+    "topic": "RAID"
+  },
+  {
+    "question": "How do RAID 1 and RAID 10 differ in write performance characteristics?",
+    "options": [
+      "RAID 10 serializes all writes to avoid conflicts",
+      "Both have identical write latency",
+      "RAID 10 allows striped writes across multiple mirror pairs, improving throughput",
+      "RAID 1 has better write performance due to mirroring only"
+    ],
+    "correct_answer": "RAID 10 allows striped writes across multiple mirror pairs, improving throughput",
+    "topic": "RAID"
+  },
+  {
+    "question": "What is the relationship between RAID level and recovery time objective (RTO)?",
+    "options": [
+      "RAID 0 has the best RTO",
+      "RTO depends only on drive size, not RAID level",
+      "Higher RAID levels (5, 6) typically have longer rebuild times, affecting RTO",
+      "RTO is unaffected by RAID level"
+    ],
+    "correct_answer": "Higher RAID levels (5, 6) typically have longer rebuild times, affecting RTO",
+    "topic": "RAID"
+  },
+  {
+    "question": "In RAID 50, what does each RAID 5 group represent?",
+    "options": [
+      "A dedicated hot spare group",
+      "A mirrored pair of RAID 5 arrays",
+      "A set of drives that collectively store striped data with distributed parity",
+      "A separate storage pool"
+    ],
+    "correct_answer": "A set of drives that collectively store striped data with distributed parity",
+    "topic": "RAID"
+  },
+  {
+    "question": "What is the primary difference between SAN and NAS?",
+    "options": [
+      "SAN provides block-level storage over a network; NAS provides file-level access",
+      "SAN is slower than NAS",
+      "NAS requires Fibre Channel; SAN requires Ethernet",
+      "SAN operates at the file level; NAS operates at the block level"
+    ],
+    "correct_answer": "SAN provides block-level storage over a network; NAS provides file-level access",
+    "topic": "SAN"
+  },
+  {
+    "question": "Which of the following is NOT a primary protocol used in SAN environments?",
+    "options": [
+      "NFS",
+      "iSCSI",
+      "Fibre Channel (FC)",
+      "FCoE"
+    ],
+    "correct_answer": "NFS",
+    "topic": "SAN"
+  },
+  {
+    "question": "What is iSCSI?",
+    "options": [
+      "A block-level storage protocol that encapsulates SCSI commands over TCP/IP",
+      "An optical storage protocol",
+      "A file-level sharing protocol",
+      "A Fibre Channel variant"
+    ],
+    "correct_answer": "A block-level storage protocol that encapsulates SCSI commands over TCP/IP",
+    "topic": "SAN"
+  },
+  {
+    "question": "In a typical iSCSI connection flow, what is the role of an iSCSI initiator?",
+    "options": [
+      "It stores the data blocks",
+      "It handles parity calculations",
+      "It initiates a connection to the iSCSI target and sends SCSI commands",
+      "It manages redundancy in the storage pool"
+    ],
+    "correct_answer": "It initiates a connection to the iSCSI target and sends SCSI commands",
+    "topic": "SAN"
+  },
+  {
+    "question": "What does CHAP authentication provide in SAN environments?",
+    "options": [
+      "Encryption of all data",
+      "Verification of identity between iSCSI initiator and target",
+      "Data compression",
+      "Automatic failover"
+    ],
+    "correct_answer": "Verification of identity between iSCSI initiator and target",
+    "topic": "SAN"
+  },
+  {
+    "question": "What is the difference between one-way and mutual CHAP authentication?",
+    "options": [
+      "Mutual CHAP is only for Fibre Channel",
+      "They are functionally identical",
+      "One-way authenticates only the target; mutual authenticates both initiator and target",
+      "One-way is faster but less secure"
+    ],
+    "correct_answer": "One-way authenticates only the target; mutual authenticates both initiator and target",
+    "topic": "SAN"
+  },
+  {
+    "question": "What is the primary purpose of multipathing in a SAN?",
+    "options": [
+      "To increase storage capacity",
+      "To reduce latency by caching data",
+      "To eliminate the need for RAID",
+      "To provide redundant network paths for high availability and load balancing"
+    ],
+    "correct_answer": "To provide redundant network paths for high availability and load balancing",
+    "topic": "SAN"
+  },
+  {
+    "question": "What is a LUN (Logical Unit Number)?",
+    "options": [
+      "A physical hard drive",
+      "A network interface card",
+      "A logical block device presented to hosts over a SAN",
+      "A Fibre Channel switch port"
+    ],
+    "correct_answer": "A logical block device presented to hosts over a SAN",
+    "topic": "SAN"
+  },
+  {
+    "question": "Can a single LUN be simultaneously mapped to multiple hosts in a typical SAN setup?",
+    "options": [
+      "Only with Fibre Channel, not iSCSI",
+      "Yes, without any restrictions",
+      "Yes, but hosts must implement file locking mechanisms if they access the same LUN",
+      "No, each LUN can only be accessed by one host at a time"
+    ],
+    "correct_answer": "Yes, but hosts must implement file locking mechanisms if they access the same LUN",
+    "topic": "SAN"
+  },
+  {
+    "question": "What is SAN zoning?",
+    "options": [
+      "The practice of restricting communication between SAN devices using zone membership",
+      "Physical segmentation of data within a drive",
+      "A RAID configuration method",
+      "Encryption of specific storage regions"
+    ],
+    "correct_answer": "The practice of restricting communication between SAN devices using zone membership",
+    "topic": "SAN"
+  },
+  {
+    "question": "How does hard zoning differ from soft zoning in SAN environments?",
+    "options": [
+      "Hard zoning uses Fibre Channel switch port membership; soft zoning uses WWN (World Wide Name) membership",
+      "Soft zoning is enforced at the switch hardware level",
+      "They are completely equivalent in function",
+      "Hard zoning is faster but less flexible"
+    ],
+    "correct_answer": "Hard zoning uses Fibre Channel switch port membership; soft zoning uses WWN (World Wide Name) membership",
+    "topic": "SAN"
+  },
+  {
+    "question": "What is the advantage of mesh topology over cascade topology in Fibre Channel switches?",
+    "options": [
+      "Mesh requires fewer switches",
+      "Both topologies have identical characteristics",
+      "Cascade is more scalable than mesh",
+      "Mesh provides better fault tolerance and lower latency by allowing multiple parallel paths"
+    ],
+    "correct_answer": "Mesh provides better fault tolerance and lower latency by allowing multiple parallel paths",
+    "topic": "SAN"
+  },
+  {
+    "question": "What does an N_Port represent in Fibre Channel terminology?",
+    "options": [
+      "A network management port",
+      "A nesting port on nested switches",
+      "A node port on a Fibre Channel device (HBA)",
+      "A parity port on RAID equipment"
+    ],
+    "correct_answer": "A node port on a Fibre Channel device (HBA)",
+    "topic": "SAN"
+  },
+  {
+    "question": "In Fibre Channel, what is the purpose of an F_Port?",
+    "options": [
+      "It duplicates data for redundancy",
+      "It manages failover operations",
+      "It is a fabric port that provides the connection point between switches and devices",
+      "It connects Fibre Channel devices to switches"
+    ],
+    "correct_answer": "It is a fabric port that provides the connection point between switches and devices",
+    "topic": "SAN"
+  },
+  {
+    "question": "What type of Fibre Channel port is used for inter-switch connections?",
+    "options": [
+      "TE_Port",
+      "F_Port",
+      "N_Port",
+      "E_Port"
+    ],
+    "correct_answer": "E_Port",
+    "topic": "SAN"
+  },
+  {
+    "question": "What does ALUA (Asymmetric Logical Unit Access) enable in SAN environments?",
+    "options": [
+      "Automatic data encryption",
+      "Synchronous replication only",
+      "Intelligent path selection based on port states and access times",
+      "Elimination of the need for multipathing"
+    ],
+    "correct_answer": "Intelligent path selection based on port states and access times",
+    "topic": "SAN"
+  },
+  {
+    "question": "What is NDMP (Network Data Management Protocol) used for?",
+    "options": [
+      "Configuring Fibre Channel switches",
+      "Encrypting SCSI commands",
+      "Backing up NAS devices over a network without impacting production data paths",
+      "Managing network routing in SANs"
+    ],
+    "correct_answer": "Backing up NAS devices over a network without impacting production data paths",
+    "topic": "SAN"
+  },
+  {
+    "question": "How does Fibre Channel differ fundamentally from Ethernet in SAN design?",
+    "options": [
+      "Fibre Channel is slower but more reliable",
+      "Ethernet is exclusively used for storage",
+      "Both are identical for SAN purposes",
+      "Fibre Channel is a dedicated storage protocol designed for lossless communication"
+    ],
+    "correct_answer": "Fibre Channel is a dedicated storage protocol designed for lossless communication",
+    "topic": "SAN"
+  },
+  {
+    "question": "What is the purpose of a target portal group (TPG) in iSCSI?",
+    "options": [
+      "To group multiple iSCSI targets for load balancing",
+      "To define which target network interfaces are used for specific initiator groups",
+      "To encrypt iSCSI traffic",
+      "To manage hot spares in a RAID array"
+    ],
+    "correct_answer": "To define which target network interfaces are used for specific initiator groups",
+    "topic": "SAN"
+  },
+  {
+    "question": "In a SAN, what happens when an initiator tries to access a LUN it is not zoned to?",
+    "options": [
+      "The data is returned but marked as read-only",
+      "A warning is issued but access proceeds",
+      "The access is allowed but logged for audit purposes",
+      "The communication is blocked at the fabric level"
+    ],
+    "correct_answer": "The communication is blocked at the fabric level",
+    "topic": "SAN"
+  },
+  {
+    "question": "What is the primary architectural difference between NAS and block storage?",
+    "options": [
+      "NAS uses RAID; block storage does not",
+      "Both are identical in architecture",
+      "Block storage is slower than NAS",
+      "NAS is accessed via network file protocols; block storage is accessed via block-level protocols"
+    ],
+    "correct_answer": "NAS is accessed via network file protocols; block storage is accessed via block-level protocols",
+    "topic": "NAS"
+  },
+  {
+    "question": "Which protocol is primarily used for NAS in Windows environments?",
+    "options": [
+      "iSCSI",
+      "FTP",
+      "NFS",
+      "SMB/CIFS"
+    ],
+    "correct_answer": "SMB/CIFS",
+    "topic": "NAS"
+  },
+  {
+    "question": "What is the primary advantage of SMB3 over earlier SMB versions?",
+    "options": [
+      "Elimination of the need for file locking",
+      "Better support for Unix systems",
+      "Improved performance, security features, and transparent failover capabilities",
+      "Exclusive use on Linux servers"
+    ],
+    "correct_answer": "Improved performance, security features, and transparent failover capabilities",
+    "topic": "NAS"
+  },
+  {
+    "question": "How does transparent failover benefit NAS environments?",
+    "options": [
+      "It automatically reconnects clients to an alternate NAS node without losing the session",
+      "It eliminates the need for backups",
+      "It prevents all hardware failures",
+      "It reduces storage capacity requirements"
+    ],
+    "correct_answer": "It automatically reconnects clients to an alternate NAS node without losing the session",
+    "topic": "NAS"
+  },
+  {
+    "question": "What is NFS primarily designed for?",
+    "options": [
+      "Windows file sharing",
+      "Unix/Linux file system sharing over a network",
+      "Block-level storage access",
+      "Object storage access"
+    ],
+    "correct_answer": "Unix/Linux file system sharing over a network",
+    "topic": "NAS"
+  },
+  {
+    "question": "What is a key difference between NFSv3 and NFSv4?",
+    "options": [
+      "Both are functionally equivalent",
+      "NFSv3 is faster than NFSv4",
+      "NFSv4 is only for Windows",
+      "NFSv4 introduces stateful connections, delegation, and improved security; NFSv3 is stateless"
+    ],
+    "correct_answer": "NFSv4 introduces stateful connections, delegation, and improved security; NFSv3 is stateless",
+    "topic": "NAS"
+  },
+  {
+    "question": "What is a pseudo mount in NFS?",
+    "options": [
+      "A temporary mount that disappears after reboot",
+      "A mount of a subset of the server's file system based on an export policy",
+      "A virtual file system that doesn't consume disk space",
+      "An encrypted NFS connection"
+    ],
+    "correct_answer": "A mount of a subset of the server's file system based on an export policy",
+    "topic": "NAS"
+  },
+  {
+    "question": "What does delegation in NFSv4 enable?",
+    "options": [
+      "Clients to cache file data with server assurance before server invalidates the cache",
+      "Automatic data compression",
+      "Elimination of authentication requirements",
+      "The server to refuse client connections"
+    ],
+    "correct_answer": "Clients to cache file data with server assurance before server invalidates the cache",
+    "topic": "NAS"
+  },
+  {
+    "question": "What is SAMBA?",
+    "options": [
+      "A file compression algorithm",
+      "An open-source implementation of SMB/CIFS on Unix/Linux systems",
+      "A proprietary backup solution",
+      "A Brazilian music genre used to name storage systems"
+    ],
+    "correct_answer": "An open-source implementation of SMB/CIFS on Unix/Linux systems",
+    "topic": "NAS"
+  }
+]
