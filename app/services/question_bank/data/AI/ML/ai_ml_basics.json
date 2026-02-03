@@ -1,0 +1,1322 @@
+[
+  {
+    "question": "A data scientist is predicting house prices using features like size and location. What learning paradigm does this represent?",
+    "options": [
+      "Self-supervised learning",
+      "Reinforcement learning",
+      "Supervised learning",
+      "Unsupervised learning"
+    ],
+    "correct_answer": "Supervised learning",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "Clustering customer behavior into segments without prior labels is an example of which learning type?",
+    "options": [
+      "Unsupervised learning",
+      "Semi-supervised learning",
+      "Supervised learning",
+      "Reinforcement learning"
+    ],
+    "correct_answer": "Unsupervised learning",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "An agent learns to play a game by receiving rewards and penalties. Which ML paradigm is this?",
+    "options": [
+      "Transfer learning",
+      "Supervised learning",
+      "Reinforcement learning",
+      "Unsupervised learning"
+    ],
+    "correct_answer": "Reinforcement learning",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "Predicting whether an email is 'spam' or 'not spam' best illustrates which problem type?",
+    "options": [
+      "Regression",
+      "Dimensionality reduction",
+      "Clustering",
+      "Classification"
+    ],
+    "correct_answer": "Classification",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "Forecasting tomorrow's temperature in degrees Celsius is an example of which problem type?",
+    "options": [
+      "Clustering",
+      "Association rule learning",
+      "Regression",
+      "Classification"
+    ],
+    "correct_answer": "Regression",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "In a binary classification problem, what is the nature of the target variable?",
+    "options": [
+      "Continuous numeric value",
+      "Free-text string only",
+      "Discrete categorical value",
+      "Ordinal numeric value"
+    ],
+    "correct_answer": "Discrete categorical value",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "Which phase of the ML lifecycle focuses on handling missing values, encoding categories, and scaling features?",
+    "options": [
+      "Data collection",
+      "Model deployment",
+      "Model training",
+      "Data preprocessing"
+    ],
+    "correct_answer": "Data preprocessing",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "During which phase of the ML lifecycle do you typically tune hyperparameters like learning rate and max depth?",
+    "options": [
+      "Feature engineering",
+      "Training and validation",
+      "Monitoring",
+      "Data collection"
+    ],
+    "correct_answer": "Training and validation",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "In hypothesis testing, what does the null hypothesis (H0) usually represent?",
+    "options": [
+      "The model generalizes perfectly",
+      "The effect exists in the population",
+      "There is no effect or no difference",
+      "The alternative claim of the researcher"
+    ],
+    "correct_answer": "There is no effect or no difference",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "In a two-sided hypothesis test, a very small p-value (e.g., 0.001) suggests what?",
+    "options": [
+      "The data distribution is normal",
+      "Evidence against the null hypothesis",
+      "Evidence in favor of the null hypothesis",
+      "No conclusion can be drawn"
+    ],
+    "correct_answer": "Evidence against the null hypothesis",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "A Type I error in hypothesis testing corresponds to which situation?",
+    "options": [
+      "Incorrectly rejecting a true null hypothesis",
+      "Accepting both null and alternative hypotheses",
+      "Failing to reject a true null hypothesis",
+      "Incorrectly rejecting a false null hypothesis"
+    ],
+    "correct_answer": "Incorrectly rejecting a true null hypothesis",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "A Type II error in hypothesis testing corresponds to which situation?",
+    "options": [
+      "Accepting both hypotheses as true",
+      "Rejecting a true null hypothesis",
+      "Rejecting a false alternative hypothesis",
+      "Failing to reject a false null hypothesis"
+    ],
+    "correct_answer": "Failing to reject a false null hypothesis",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "Which characteristic best describes parametric models?",
+    "options": [
+      "They never overfit the data",
+      "They do not use any training data",
+      "They require infinitely many parameters",
+      "They assume a specific functional form for the data distribution"
+    ],
+    "correct_answer": "They assume a specific functional form for the data distribution",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "Which of the following is typically considered a parametric model?",
+    "options": [
+      "Decision Tree",
+      "k-Nearest Neighbors",
+      "DBSCAN",
+      "Linear Regression"
+    ],
+    "correct_answer": "Linear Regression",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "Which characteristic best describes non-parametric models?",
+    "options": [
+      "They assume a fixed number of parameters",
+      "They always require labeled data",
+      "They make fewer assumptions about the underlying data distribution",
+      "They cannot model complex relationships"
+    ],
+    "correct_answer": "They make fewer assumptions about the underlying data distribution",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "Which of the following is an example of a non-parametric algorithm?",
+    "options": [
+      "Linear Discriminant Analysis",
+      "Logistic Regression",
+      "k-Nearest Neighbors",
+      "Naive Bayes"
+    ],
+    "correct_answer": "k-Nearest Neighbors",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "In the ML lifecycle, which phase is primarily concerned with monitoring model drift in production?",
+    "options": [
+      "Model evaluation",
+      "Data preprocessing",
+      "Feature engineering",
+      "Model deployment and monitoring"
+    ],
+    "correct_answer": "Model deployment and monitoring",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "Which step immediately follows data collection in a typical ML workflow?",
+    "options": [
+      "Model ensembling",
+      "Data cleaning and preprocessing",
+      "Hyperparameter tuning",
+      "Model deployment"
+    ],
+    "correct_answer": "Data cleaning and preprocessing",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "Choosing between regression and classification depends primarily on what property of the target variable?",
+    "options": [
+      "The number of features",
+      "Whether the target is continuous or categorical",
+      "The size of the dataset",
+      "The number of missing values"
+    ],
+    "correct_answer": "Whether the target is continuous or categorical",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "Which learning paradigm is most appropriate for learning a policy to maximize long-term reward in an environment?",
+    "options": [
+      "Self-supervised learning",
+      "Reinforcement learning",
+      "Supervised learning",
+      "Unsupervised learning"
+    ],
+    "correct_answer": "Reinforcement learning",
+    "topic": "Foundational Theory"
+  },
+  {
+    "question": "If A is a 2x3 matrix and B is a 3x4 matrix, what is the shape of the product AB?",
+    "options": [
+      "4x2",
+      "3x3",
+      "2x4",
+      "3x4"
+    ],
+    "correct_answer": "2x4",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "In linear algebra, what does the transpose of a matrix do?",
+    "options": [
+      "Squares all elements",
+      "Computes the inverse",
+      "Multiplies all elements by -1",
+      "Swaps rows and columns"
+    ],
+    "correct_answer": "Swaps rows and columns",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "In PCA, eigenvectors of the covariance matrix represent what?",
+    "options": [
+      "Directions of maximum variance in the data",
+      "Cluster centroids",
+      "Gradients of the loss function",
+      "Original features"
+    ],
+    "correct_answer": "Directions of maximum variance in the data",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "In PCA, eigenvalues associated with eigenvectors represent what?",
+    "options": [
+      "Variance explained along the corresponding principal direction",
+      "Number of training examples",
+      "The number of clusters",
+      "Learning rate of the model"
+    ],
+    "correct_answer": "Variance explained along the corresponding principal direction",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "In gradient descent, what does the derivative of the loss with respect to a parameter indicate?",
+    "options": [
+      "The number of epochs required",
+      "The curvature of the model",
+      "The training accuracy",
+      "The sensitivity of the loss to small changes in that parameter"
+    ],
+    "correct_answer": "The sensitivity of the loss to small changes in that parameter",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "Why are partial derivatives used in training multivariate models?",
+    "options": [
+      "They reduce the dimensionality of data",
+      "They measure how the loss changes with respect to each parameter independently",
+      "They improve model interpretability",
+      "They are needed only for regularization"
+    ],
+    "correct_answer": "They measure how the loss changes with respect to each parameter independently",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "Which statement best describes Bayes' Theorem in the context of ML?",
+    "options": [
+      "It normalizes feature values",
+      "It relates posterior, prior, and likelihood probabilities",
+      "It selects the best hyperparameters",
+      "It computes the gradient of the loss function"
+    ],
+    "correct_answer": "It relates posterior, prior, and likelihood probabilities",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "In Naive Bayes, the 'naive' assumption refers to what?",
+    "options": [
+      "All classes have equal prior probability",
+      "The data is normally distributed",
+      "The model ignores prior probabilities",
+      "Features are conditionally independent given the class"
+    ],
+    "correct_answer": "Features are conditionally independent given the class",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "Which distribution is most appropriate for modeling the number of events occurring in a fixed interval of time?",
+    "options": [
+      "Normal distribution",
+      "Uniform distribution",
+      "Bernoulli distribution",
+      "Poisson distribution"
+    ],
+    "correct_answer": "Poisson distribution",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "Which distribution is commonly used to model binary outcomes like success/failure?",
+    "options": [
+      "Bernoulli distribution",
+      "Exponential distribution",
+      "Normal distribution",
+      "Poisson distribution"
+    ],
+    "correct_answer": "Bernoulli distribution",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "In a standard normal distribution, what are the mean and variance?",
+    "options": [
+      "Mean 1, variance 1",
+      "Mean 0, variance 1",
+      "Mean 1, variance 0",
+      "Mean 0, variance 0"
+    ],
+    "correct_answer": "Mean 0, variance 1",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "What does conditional probability P(A|B) represent?",
+    "options": [
+      "Probability of A given that B has occurred",
+      "Probability of either A or B",
+      "Probability of A and B occurring together",
+      "Probability of B given A"
+    ],
+    "correct_answer": "Probability of A given that B has occurred",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "Mean Squared Error (MSE) is best described as which quantity?",
+    "options": [
+      "Average of squared differences between predictions and targets",
+      "Square root of average error",
+      "Average absolute error between predictions and targets",
+      "Maximum error across all samples"
+    ],
+    "correct_answer": "Average of squared differences between predictions and targets",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "Cross-entropy loss is most commonly used for which type of problems?",
+    "options": [
+      "Linear regression",
+      "Classification with probabilistic outputs",
+      "Dimensionality reduction",
+      "Clustering"
+    ],
+    "correct_answer": "Classification with probabilistic outputs",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "What is the effect of using a very high learning rate in gradient descent?",
+    "options": [
+      "Has no impact on convergence",
+      "Faster guaranteed convergence",
+      "Always leads to overfitting",
+      "May cause divergence or oscillation around the minimum"
+    ],
+    "correct_answer": "May cause divergence or oscillation around the minimum",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "What is the effect of using a very low learning rate in gradient descent?",
+    "options": [
+      "Very fast convergence",
+      "Automatically avoids overfitting",
+      "No impact on training time",
+      "Slow convergence and risk of getting stuck in local minima for long"
+    ],
+    "correct_answer": "Slow convergence and risk of getting stuck in local minima for long",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "In the context of optimization, what is a cost function?",
+    "options": [
+      "Any activation function in a neural network",
+      "A function that counts the number of parameters",
+      "A function that generates random noise",
+      "A function that measures how well the model fits the data"
+    ],
+    "correct_answer": "A function that measures how well the model fits the data",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "Which optimization algorithm updates parameters using the gradient of the cost function?",
+    "options": [
+      "k-Means",
+      "Gradient Descent",
+      "Principal Component Analysis",
+      "Apriori"
+    ],
+    "correct_answer": "Gradient Descent",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "In gradient-based optimization, what is the role of the gradient vector?",
+    "options": [
+      "Measures the model complexity",
+      "Indicates direction of steepest increase of the function",
+      "Indicates the global minimum",
+      "Indicates direction of steepest decrease of the function"
+    ],
+    "correct_answer": "Indicates direction of steepest increase of the function",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "Why is feature scaling often important before applying gradient descent?",
+    "options": [
+      "To increase model capacity",
+      "To change the type of distribution",
+      "To reduce overfitting",
+      "To ensure all features contribute equally and improve convergence speed"
+    ],
+    "correct_answer": "To ensure all features contribute equally and improve convergence speed",
+    "topic": "Mathematics for ML"
+  },
+  {
+    "question": "In a binary classification dataset with 95% of samples in one class and 5% in the other, what problem are you likely facing?",
+    "options": [
+      "Data imbalance",
+      "Overfitting",
+      "Multicollinearity",
+      "High variance"
+    ],
+    "correct_answer": "Data imbalance",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "Which technique creates synthetic minority class samples by interpolating between existing minority samples?",
+    "options": [
+      "Random oversampling by duplication",
+      "Random undersampling",
+      "SMOTE",
+      "Bagging"
+    ],
+    "correct_answer": "SMOTE",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "What is a potential downside of random undersampling in imbalanced datasets?",
+    "options": [
+      "Increased computational cost",
+      "Creation of synthetic noise",
+      "Increased class imbalance",
+      "Loss of potentially important majority class information"
+    ],
+    "correct_answer": "Loss of potentially important majority class information",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "Which scaling method rescales features to a fixed range, typically [0, 1]?",
+    "options": [
+      "Min-Max normalization",
+      "Log transformation",
+      "Z-score standardization",
+      "Robust scaling"
+    ],
+    "correct_answer": "Min-Max normalization",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "Z-score standardization transforms a feature using which quantities?",
+    "options": [
+      "Median and IQR",
+      "Mean and standard deviation",
+      "Mode and variance",
+      "Minimum and maximum"
+    ],
+    "correct_answer": "Mean and standard deviation",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "Which encoding technique is best for nominal categorical variables with no inherent order?",
+    "options": [
+      "Label encoding",
+      "Frequency encoding",
+      "One-hot encoding",
+      "Target encoding"
+    ],
+    "correct_answer": "One-hot encoding",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "Label encoding is most appropriate for which type of categorical feature?",
+    "options": [
+      "Continuous numeric features",
+      "Ordinal features with a natural order",
+      "Text documents",
+      "Nominal features with no order"
+    ],
+    "correct_answer": "Ordinal features with a natural order",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "The 'curse of dimensionality' refers to which phenomenon?",
+    "options": [
+      "Models cannot handle more than 10 features",
+      "High dimensions reduce overfitting",
+      "More features always improve model performance",
+      "Data becomes sparse and distance measures lose meaning as dimensionality increases"
+    ],
+    "correct_answer": "Data becomes sparse and distance measures lose meaning as dimensionality increases",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "What is the primary goal of Principal Component Analysis (PCA)?",
+    "options": [
+      "To normalize all features",
+      "To reduce dimensionality while preserving as much variance as possible",
+      "To predict class labels",
+      "To cluster samples into groups"
+    ],
+    "correct_answer": "To reduce dimensionality while preserving as much variance as possible",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "Which imputation strategy is generally suitable for a numerical feature with a symmetric distribution and few outliers?",
+    "options": [
+      "Mode imputation",
+      "Median imputation",
+      "Dropping missing rows",
+      "Mean imputation"
+    ],
+    "correct_answer": "Mean imputation",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "Which imputation strategy is more robust for skewed numerical features with many outliers?",
+    "options": [
+      "Forward fill",
+      "Median imputation",
+      "Mean imputation",
+      "Mode imputation"
+    ],
+    "correct_answer": "Median imputation",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "For a categorical feature with missing values, which simple imputation approach is often used?",
+    "options": [
+      "Mode",
+      "Mean",
+      "Linear interpolation",
+      "Median"
+    ],
+    "correct_answer": "Mode",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "Which method for outlier detection uses the interquartile range (IQR)?",
+    "options": [
+      "Any negative value",
+      "Values below Q1 - 1.5*IQR or above Q3 + 1.5*IQR",
+      "Any value above the median",
+      "Values outside mean ± 1 standard deviation"
+    ],
+    "correct_answer": "Values below Q1 - 1.5*IQR or above Q3 + 1.5*IQR",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "Using Z-score for outlier detection typically flags points whose absolute Z-score exceeds what threshold?",
+    "options": [
+      "1",
+      "0.5",
+      "10",
+      "2 or 3 depending on the context"
+    ],
+    "correct_answer": "2 or 3 depending on the context",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "Why might you apply log transformation to a feature before modeling?",
+    "options": [
+      "To remove duplicates",
+      "To increase dimensionality",
+      "To reduce right skew and stabilize variance",
+      "To convert categorical data to numerical"
+    ],
+    "correct_answer": "To reduce right skew and stabilize variance",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "What is a key risk of performing one-hot encoding on a high-cardinality categorical feature?",
+    "options": [
+      "It prevents overfitting",
+      "It can lead to a very high-dimensional sparse matrix",
+      "It reduces feature space",
+      "It makes the model non-linear"
+    ],
+    "correct_answer": "It can lead to a very high-dimensional sparse matrix",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "Before applying k-Nearest Neighbors (KNN), why is feature scaling usually recommended?",
+    "options": [
+      "Because scaling reduces overfitting",
+      "Because KNN works only with categorical data",
+      "Because distance calculations are sensitive to differing feature scales",
+      "Because KNN ignores feature scales"
+    ],
+    "correct_answer": "Because distance calculations are sensitive to differing feature scales",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "When would dimensionality reduction be most helpful?",
+    "options": [
+      "When the dataset is perfectly balanced",
+      "When using simple linear regression",
+      "When there are very few features",
+      "When many features are highly correlated or redundant"
+    ],
+    "correct_answer": "When many features are highly correlated or redundant",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "What is the primary goal of feature engineering?",
+    "options": [
+      "To eliminate the need for model selection",
+      "To reduce training time only",
+      "To create informative features that improve model performance",
+      "To collect more raw data"
+    ],
+    "correct_answer": "To create informative features that improve model performance",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "Why is it important to perform train-test split before applying data leakage-prone transformations (like scaling)?",
+    "options": [
+      "To avoid imbalanced data",
+      "To prevent information from the test set influencing the training process",
+      "To increase training accuracy",
+      "To speed up computation"
+    ],
+    "correct_answer": "To prevent information from the test set influencing the training process",
+    "topic": "Data Preprocessing & Feature Engineering"
+  },
+  {
+    "question": "Which statement best distinguishes simple from multiple linear regression?",
+    "options": [
+      "Simple uses one feature, multiple uses more than one feature",
+      "Multiple does not require training",
+      "Simple is parametric, multiple is non-parametric",
+      "Simple is linear, multiple is non-linear"
+    ],
+    "correct_answer": "Simple uses one feature, multiple uses more than one feature",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "In logistic regression, the sigmoid function maps real-valued inputs to which range?",
+    "options": [
+      "[0, 1]",
+      "[0, ∞)",
+      "(-∞, ∞)",
+      "[-1, 1]"
+    ],
+    "correct_answer": "[0, 1]",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "Which loss function is commonly used to train logistic regression for binary classification?",
+    "options": [
+      "Mean Squared Error",
+      "Huber loss",
+      "Hinge loss",
+      "Binary cross-entropy (log loss)"
+    ],
+    "correct_answer": "Binary cross-entropy (log loss)",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "In decision trees, information gain is based on which concept?",
+    "options": [
+      "Margin maximization",
+      "Distance minimization",
+      "Entropy reduction",
+      "Variance reduction"
+    ],
+    "correct_answer": "Entropy reduction",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "The Gini index used in decision trees measures what property of a node?",
+    "options": [
+      "Correlation between features",
+      "Model complexity",
+      "Distance between samples",
+      "Purity or impurity of class distribution"
+    ],
+    "correct_answer": "Purity or impurity of class distribution",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "Random Forest improves decision trees primarily through which technique?",
+    "options": [
+      "Boosting",
+      "Dimensionality reduction",
+      "Clustering",
+      "Bagging with feature and sample randomness"
+    ],
+    "correct_answer": "Bagging with feature and sample randomness",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "In ensemble methods, bagging primarily helps reduce which component of error?",
+    "options": [
+      "Irreducible error",
+      "Variance",
+      "Label noise",
+      "Bias"
+    ],
+    "correct_answer": "Variance",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "Boosting methods like AdaBoost focus on what main idea?",
+    "options": [
+      "Using unsupervised learning to pretrain models",
+      "Randomly sampling features",
+      "Training many independent models in parallel",
+      "Sequentially training weak learners that focus on previously misclassified examples"
+    ],
+    "correct_answer": "Sequentially training weak learners that focus on previously misclassified examples",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "Gradient Boosting differs from Random Forest primarily in what way?",
+    "options": [
+      "Both are identical",
+      "Random Forest uses gradient descent",
+      "Gradient Boosting builds trees sequentially to correct errors of previous trees",
+      "Random Forest builds trees sequentially; Gradient Boosting builds in parallel"
+    ],
+    "correct_answer": "Gradient Boosting builds trees sequentially to correct errors of previous trees",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "In XGBoost, regularization terms are added primarily to control what?",
+    "options": [
+      "Training speed",
+      "Number of trees",
+      "Model complexity and overfitting",
+      "Input feature scaling"
+    ],
+    "correct_answer": "Model complexity and overfitting",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "In k-Nearest Neighbors, the choice of 'k' primarily affects which tradeoff?",
+    "options": [
+      "Training vs. test time",
+      "Number of features",
+      "Type of distance metric",
+      "Bias-variance tradeoff"
+    ],
+    "correct_answer": "Bias-variance tradeoff",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "K-Means clustering seeks to minimize which objective?",
+    "options": [
+      "Sum of distances between cluster centroids",
+      "Number of clusters",
+      "Classification error",
+      "Sum of squared distances from points to their assigned cluster centroid"
+    ],
+    "correct_answer": "Sum of squared distances from points to their assigned cluster centroid",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "Which of the following is a limitation of K-Means clustering?",
+    "options": [
+      "It is supervised",
+      "It assumes spherical clusters and is sensitive to initialization",
+      "It cannot scale to large datasets",
+      "It can only handle categorical data"
+    ],
+    "correct_answer": "It assumes spherical clusters and is sensitive to initialization",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "In Support Vector Machines, what does the decision boundary aim to maximize?",
+    "options": [
+      "Training accuracy",
+      "Log-likelihood",
+      "Number of support vectors",
+      "Margin between classes"
+    ],
+    "correct_answer": "Margin between classes",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "The 'kernel trick' in SVM allows what?",
+    "options": [
+      "Automatically selecting C parameter",
+      "Implicitly mapping data to higher-dimensional space without computing coordinates explicitly",
+      "Reducing data dimensionality",
+      "Increasing learning rate"
+    ],
+    "correct_answer": "Implicitly mapping data to higher-dimensional space without computing coordinates explicitly",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "Which kernel is commonly used in SVM to capture non-linear relationships?",
+    "options": [
+      "Sigmoid kernel only",
+      "RBF (Gaussian) kernel",
+      "Linear kernel",
+      "Polynomial kernel of degree 1"
+    ],
+    "correct_answer": "RBF (Gaussian) kernel",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "Which algorithm is most appropriate for predicting a binary outcome using a linear decision boundary with probabilistic output?",
+    "options": [
+      "Logistic Regression",
+      "PCA",
+      "K-Means",
+      "Linear Regression"
+    ],
+    "correct_answer": "Logistic Regression",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "Decision trees are prone to which common problem if not regularized?",
+    "options": [
+      "Overfitting to noise in the training data",
+      "Underfitting",
+      "High bias",
+      "Inability to model non-linear patterns"
+    ],
+    "correct_answer": "Overfitting to noise in the training data",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "Random Forest typically improves generalization compared to a single decision tree by what mechanism?",
+    "options": [
+      "Increasing tree depth",
+      "Using a different loss function",
+      "Averaging predictions across many decorrelated trees",
+      "Using only categorical features"
+    ],
+    "correct_answer": "Averaging predictions across many decorrelated trees",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "KNN has which characteristic compared to parametric models like logistic regression?",
+    "options": [
+      "Faster inference time",
+      "Requires strong distributional assumptions",
+      "No explicit training phase but potentially slow inference",
+      "Cannot handle multi-class problems"
+    ],
+    "correct_answer": "No explicit training phase but potentially slow inference",
+    "topic": "Core Algorithms"
+  },
+  {
+    "question": "High bias in a model typically manifests as what behavior?",
+    "options": [
+      "High variance on test data",
+      "Underfitting both training and test data",
+      "Perfect training accuracy",
+      "Overfitting training data"
+    ],
+    "correct_answer": "Underfitting both training and test data",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "High variance in a model typically manifests as what behavior?",
+    "options": [
+      "Consistently low error on all datasets",
+      "Low training error but high test error",
+      "High training and test error",
+      "Model cannot learn any pattern"
+    ],
+    "correct_answer": "Low training error but high test error",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "In a confusion matrix, which quantity represents correctly predicted positive samples?",
+    "options": [
+      "False Positive (FP)",
+      "False Negative (FN)",
+      "True Negative (TN)",
+      "True Positive (TP)"
+    ],
+    "correct_answer": "True Positive (TP)",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "Precision is defined as which ratio?",
+    "options": [
+      "(TP + TN) / (Total)",
+      "FP / (TP + FP)",
+      "TP / (TP + FP)",
+      "TP / (TP + FN)"
+    ],
+    "correct_answer": "TP / (TP + FP)",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "Recall (Sensitivity) is defined as which ratio?",
+    "options": [
+      "TN / (TN + FP)",
+      "TP / (TP + FN)",
+      "TP / (TP + FP)",
+      "FP / (FP + TN)"
+    ],
+    "correct_answer": "TP / (TP + FN)",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "The F1-score is useful because it represents what?",
+    "options": [
+      "Harmonic mean of precision and recall",
+      "Geometric mean of precision and recall",
+      "Difference between precision and recall",
+      "Arithmetic mean of precision and recall"
+    ],
+    "correct_answer": "Harmonic mean of precision and recall",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "Accuracy can be misleading in which type of dataset?",
+    "options": [
+      "Highly imbalanced datasets",
+      "Small datasets only",
+      "Balanced datasets",
+      "Datasets with no noise"
+    ],
+    "correct_answer": "Highly imbalanced datasets",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "The ROC curve plots which quantities on its axes?",
+    "options": [
+      "Precision vs. Recall",
+      "Loss vs. Epoch",
+      "True Positive Rate vs. False Positive Rate",
+      "Accuracy vs. Threshold"
+    ],
+    "correct_answer": "True Positive Rate vs. False Positive Rate",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "AUC-ROC close to 0.5 typically indicates what?",
+    "options": [
+      "Perfect classifier",
+      "Overfitting",
+      "Random or no discriminative power",
+      "Underfitting"
+    ],
+    "correct_answer": "Random or no discriminative power",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "R-squared in regression represents what proportion?",
+    "options": [
+      "Mean squared error",
+      "Proportion of variance in target explained by the model",
+      "Variance of residuals",
+      "Correlation coefficient"
+    ],
+    "correct_answer": "Proportion of variance in target explained by the model",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "Adjusted R-squared differs from R-squared by accounting for what?",
+    "options": [
+      "Outliers in data",
+      "Non-linear relationships",
+      "Number of predictors relative to sample size",
+      "Regularization strength"
+    ],
+    "correct_answer": "Number of predictors relative to sample size",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "Mean Absolute Error (MAE) differs from RMSE primarily in that MAE is:",
+    "options": [
+      "Only used for classification",
+      "Less sensitive to large errors",
+      "More sensitive to large errors",
+      "Always larger than RMSE"
+    ],
+    "correct_answer": "Less sensitive to large errors",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "Root Mean Squared Error (RMSE) penalizes which type of errors more heavily?",
+    "options": [
+      "Large errors",
+      "Categorical errors",
+      "Small errors",
+      "Zero errors"
+    ],
+    "correct_answer": "Large errors",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "In k-fold cross-validation, what happens to the dataset?",
+    "options": [
+      "Only one fold is used",
+      "Used entirely for training",
+      "Split into train and test only",
+      "Randomly split into k folds; each fold serves once as validation while others are training"
+    ],
+    "correct_answer": "Randomly split into k folds; each fold serves once as validation while others are training",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "Stratified k-fold cross-validation ensures what property?",
+    "options": [
+      "Each fold has only one class",
+      "Each fold has equal size but arbitrary class distribution",
+      "Folds differ only in feature values",
+      "Each fold preserves the overall class distribution"
+    ],
+    "correct_answer": "Each fold preserves the overall class distribution",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "L1 regularization (Lasso) tends to produce models with which characteristic?",
+    "options": [
+      "All weights small but non-zero",
+      "Some weights exactly zero, performing feature selection",
+      "Only bias term is regularized",
+      "No impact on weights"
+    ],
+    "correct_answer": "Some weights exactly zero, performing feature selection",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "L2 regularization (Ridge) primarily encourages what behavior in model weights?",
+    "options": [
+      "Many weights become exactly zero",
+      "Weights increase unbounded",
+      "Weights are shrunk towards zero but rarely exactly zero",
+      "Weights oscillate between positive and negative"
+    ],
+    "correct_answer": "Weights are shrunk towards zero but rarely exactly zero",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "Regularization helps address which issue in complex models?",
+    "options": [
+      "Data imbalance",
+      "Missing values",
+      "Overfitting",
+      "Underfitting"
+    ],
+    "correct_answer": "Overfitting",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "Early stopping during training is best described as what type of technique?",
+    "options": [
+      "Hyperparameter search",
+      "Regularization that stops training before overfitting",
+      "Data augmentation",
+      "Feature selection"
+    ],
+    "correct_answer": "Regularization that stops training before overfitting",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "Which metric would you prioritize for a medical diagnosis model where missing a positive case is very costly?",
+    "options": [
+      "High precision",
+      "High accuracy",
+      "High recall",
+      "Low MAE"
+    ],
+    "correct_answer": "High recall",
+    "topic": "Model Evaluation & Performance"
+  },
+  {
+    "question": "A perceptron can model which type of decision boundary?",
+    "options": [
+      "Quadratic boundary",
+      "No decision boundary",
+      "Non-linear only",
+      "Linear decision boundary"
+    ],
+    "correct_answer": "Linear decision boundary",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "A Multi-Layer Perceptron (MLP) differs from a single perceptron primarily because it:",
+    "options": [
+      "Has only one neuron",
+      "Cannot approximate non-linear functions",
+      "Uses no activation functions",
+      "Uses non-linear activation functions and multiple hidden layers"
+    ],
+    "correct_answer": "Uses non-linear activation functions and multiple hidden layers",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "Backpropagation in neural networks is used for what purpose?",
+    "options": [
+      "Normalizing inputs",
+      "Initializing weights",
+      "Reducing dimensionality",
+      "Computing gradients of the loss with respect to weights for optimization"
+    ],
+    "correct_answer": "Computing gradients of the loss with respect to weights for optimization",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "Which activation function is most commonly used in hidden layers of deep neural networks due to reduced vanishing gradient issues?",
+    "options": [
+      "Sigmoid",
+      "ReLU",
+      "Tanh",
+      "Softmax"
+    ],
+    "correct_answer": "ReLU",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "The sigmoid activation function outputs values in which range?",
+    "options": [
+      "[-1, 1]",
+      "(-∞, ∞)",
+      "[0, 1]",
+      "[0, ∞)"
+    ],
+    "correct_answer": "[0, 1]",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "Tanh activation differs from sigmoid primarily in that its output range is:",
+    "options": [
+      "[0, ∞)",
+      "(-∞, ∞)",
+      "[-1, 1]",
+      "[0, 1]"
+    ],
+    "correct_answer": "[-1, 1]",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "Softmax activation is most commonly used in which scenario?",
+    "options": [
+      "Output layer of multi-class classification networks",
+      "Input normalization",
+      "Autoencoders",
+      "Hidden layers"
+    ],
+    "correct_answer": "Output layer of multi-class classification networks",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "In a Convolutional Neural Network (CNN), convolutional layers primarily help with what?",
+    "options": [
+      "Performing matrix factorization",
+      "Reducing all dimensions to a single value",
+      "Capturing local spatial patterns using shared weights",
+      "Handling sequential data"
+    ],
+    "correct_answer": "Capturing local spatial patterns using shared weights",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "Pooling layers in CNNs are mainly used for what purpose?",
+    "options": [
+      "Normalizing inputs",
+      "Downsampling to reduce spatial dimensions and computation",
+      "Performing convolutions",
+      "Increasing feature map size"
+    ],
+    "correct_answer": "Downsampling to reduce spatial dimensions and computation",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "Recurrent Neural Networks (RNNs) are particularly suited for which type of data?",
+    "options": [
+      "Tabular numeric data only",
+      "Static images",
+      "Sequential data such as time-series or text",
+      "Random noise"
+    ],
+    "correct_answer": "Sequential data such as time-series or text",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "LSTMs address which main limitation of vanilla RNNs?",
+    "options": [
+      "Inability to handle images",
+      "Lack of non-linearity",
+      "High computational cost",
+      "Vanishing and exploding gradients over long sequences"
+    ],
+    "correct_answer": "Vanishing and exploding gradients over long sequences",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "GRUs differ from LSTMs primarily in what aspect?",
+    "options": [
+      "GRUs are only for images",
+      "GRUs combine forget and input gates into a single update gate, using fewer parameters",
+      "GRUs have more gates and parameters than LSTMs",
+      "GRUs cannot handle sequences"
+    ],
+    "correct_answer": "GRUs combine forget and input gates into a single update gate, using fewer parameters",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "Transfer learning in deep learning typically involves what process?",
+    "options": [
+      "Training from scratch on every new task",
+      "Ignoring learned features",
+      "Reusing a pre-trained model's weights as initialization for a new but related task",
+      "Copying labels from one dataset to another"
+    ],
+    "correct_answer": "Reusing a pre-trained model's weights as initialization for a new but related task",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "Which scenario is most suitable for using transfer learning?",
+    "options": [
+      "Tabular regression with few features",
+      "Limited labeled data for a task similar to one with a large pre-trained model",
+      "Huge labeled dataset from scratch",
+      "Unsupervised clustering"
+    ],
+    "correct_answer": "Limited labeled data for a task similar to one with a large pre-trained model",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "Dropout in neural networks is a technique used for what?",
+    "options": [
+      "Handling missing data",
+      "Preventing overfitting by randomly deactivating neurons during training",
+      "Initializing weights",
+      "Speeding up matrix multiplication"
+    ],
+    "correct_answer": "Preventing overfitting by randomly deactivating neurons during training",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "Batch normalization helps training deep networks primarily by:",
+    "options": [
+      "Eliminating the need for activation functions",
+      "Normalizing layer inputs to stabilize and speed up training",
+      "Increasing learning rate",
+      "Reducing batch size"
+    ],
+    "correct_answer": "Normalizing layer inputs to stabilize and speed up training",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "Exploding gradients in deep networks can cause which issue?",
+    "options": [
+      "Gradients become too small to update weights",
+      "Models never overfit",
+      "Gradients become extremely large, leading to unstable updates",
+      "Models cannot converge to any minimum"
+    ],
+    "correct_answer": "Gradients become extremely large, leading to unstable updates",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "Vanishing gradients primarily affect which aspect of training RNNs?",
+    "options": [
+      "Number of layers allowed",
+      "Compute time per epoch",
+      "Ability to learn long-term dependencies",
+      "Ability to process large batches"
+    ],
+    "correct_answer": "Ability to learn long-term dependencies",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "In CNNs for image classification, which layer typically comes last?",
+    "options": [
+      "Convolutional layer",
+      "Recurrent layer",
+      "Pooling layer",
+      "Fully connected (dense) layer with softmax"
+    ],
+    "correct_answer": "Fully connected (dense) layer with softmax",
+    "topic": "Deep Learning & Advanced Concepts"
+  },
+  {
+    "question": "For a sequence-to-sequence language translation model, which architecture is most appropriate?",
+    "options": [
+      "K-Means clustering",
+      "Linear regression",
+      "RNN/LSTM/GRU-based encoder-decoder",
+      "Pure CNN"
+    ],
+    "correct_answer": "RNN/LSTM/GRU-based encoder-decoder",
+    "topic": "Deep Learning & Advanced Concepts"
+  }
+]

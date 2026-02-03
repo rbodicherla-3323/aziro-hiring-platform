@@ -1,0 +1,1322 @@
+[
+  {
+    "question": "A team is building a large, database-heavy internal tool with admin panels, ORM, and built‑in auth. Which Python web framework is most appropriate to minimize boilerplate?",
+    "options": [
+      "FastAPI",
+      "Falcon",
+      "Django",
+      "Flask"
+    ],
+    "correct_answer": "Django",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "You need a minimal, highly customizable microservice where you will manually choose extensions for ORM, auth, and validation. Which framework fits best?",
+    "options": [
+      "FastAPI",
+      "Flask",
+      "Pyramid",
+      "Django"
+    ],
+    "correct_answer": "Flask",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "A new Python API needs to support high-throughput async I/O with automatic OpenAPI docs generation and type hints. Which framework is most suitable?",
+    "options": [
+      "Bottle",
+      "FastAPI",
+      "Flask",
+      "Django"
+    ],
+    "correct_answer": "FastAPI",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "In a RESTful API, which HTTP method should be used for an idempotent update of a full resource representation?",
+    "options": [
+      "DELETE",
+      "PUT",
+      "POST",
+      "PATCH"
+    ],
+    "correct_answer": "PUT",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "A client sends multiple identical requests to update a user's profile using PUT /users/123. What should be true about this operation in a properly designed REST API?",
+    "options": [
+      "It must return 409 Conflict each time",
+      "The operation is idempotent and results in the same final state",
+      "Only the first request succeeds",
+      "Each request creates a new resource"
+    ],
+    "correct_answer": "The operation is idempotent and results in the same final state",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "Which HTTP status code is most appropriate when a client sends a well-formed request that violates business rules (e.g., duplicate email)?",
+    "options": [
+      "409 Conflict",
+      "500 Internal Server Error",
+      "200 OK",
+      "400 Bad Request"
+    ],
+    "correct_answer": "409 Conflict",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "A GET /users/123 endpoint is called with a non-existent user ID. Which HTTP status code is most appropriate?",
+    "options": [
+      "404 Not Found",
+      "422 Unprocessable Entity",
+      "200 OK",
+      "400 Bad Request"
+    ],
+    "correct_answer": "404 Not Found",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "Which response best demonstrates HATEOAS in a REST API returning a user resource?",
+    "options": [
+      "User JSON plus links to related actions/endpoints (e.g., update, delete, list posts)",
+      "Plain text description of endpoints",
+      "HTML with embedded forms only",
+      "Only raw JSON fields of the user without any links"
+    ],
+    "correct_answer": "User JSON plus links to related actions/endpoints (e.g., update, delete, list posts)",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "In Django REST Framework, what is the primary purpose of a Serializer class?",
+    "options": [
+      "Convert complex types to JSON and validate input data",
+      "Configure URL routing",
+      "Handle WebSocket connections",
+      "Define database schema"
+    ],
+    "correct_answer": "Convert complex types to JSON and validate input data",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "FastAPI relies heavily on which library for data validation and serialization?",
+    "options": [
+      "Pydantic",
+      "WTForms",
+      "Cerberus",
+      "Marshmallow"
+    ],
+    "correct_answer": "Pydantic",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "A Flask API returns Python datetime objects directly in JSON responses, causing serialization errors. What is the correct approach?",
+    "options": [
+      "Convert datetimes to ISO 8601 strings before serialization",
+      "Use repr(datetime) in JSON",
+      "Change HTTP method to POST",
+      "Return datetime as-is; the client should handle it"
+    ],
+    "correct_answer": "Convert datetimes to ISO 8601 strings before serialization",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "A backend uses JWT for stateless authentication. Where should the server store user session state?",
+    "options": [
+      "In a local file on disk",
+      "JWT payload itself contains claims; no server-side session needed",
+      "In server memory for each JWT",
+      "In a database row per JWT"
+    ],
+    "correct_answer": "JWT payload itself contains claims; no server-side session needed",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "Which OAuth2 grant type is most appropriate for a single-page application calling a Python backend API?",
+    "options": [
+      "Implicit Grant (legacy)",
+      "Authorization Code Grant with PKCE",
+      "Resource Owner Password Credentials Grant",
+      "Client Credentials Grant"
+    ],
+    "correct_answer": "Authorization Code Grant with PKCE",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "In a session-based Django app, what mechanism is commonly used to prevent session hijacking via network sniffing?",
+    "options": [
+      "Disabling CSRF protection",
+      "Setting the session cookie with Secure and HttpOnly flags and using HTTPS",
+      "Serving over HTTP only",
+      "Storing session ID in URL query string"
+    ],
+    "correct_answer": "Setting the session cookie with Secure and HttpOnly flags and using HTTPS",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "Your API returns stack traces and SQL queries in 500 error responses in production. Which OWASP Top 10 category does this primarily violate?",
+    "options": [
+      "Security Misconfiguration",
+      "Injection",
+      "Broken Access Control",
+      "Sensitive Data Exposure"
+    ],
+    "correct_answer": "Security Misconfiguration",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "A developer concatenates user input directly into an SQL string in a Django view. Which OWASP risk is this?",
+    "options": [
+      "SQL Injection",
+      "Cross-Site Request Forgery (CSRF)",
+      "Insecure Deserialization",
+      "Cross-Site Scripting (XSS)"
+    ],
+    "correct_answer": "SQL Injection",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "To prevent XSS in a Jinja2 template, what is the default and recommended behavior when rendering user-supplied strings?",
+    "options": [
+      "Escape HTML characters by default",
+      "Disable escaping globally",
+      "Strip all tags server-side",
+      "Trust all content from the database"
+    ],
+    "correct_answer": "Escape HTML characters by default",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "In Django, what is the primary purpose of the CSRF token added to forms?",
+    "options": [
+      "Prevent cross-site request forgery attacks",
+      "Speed up form submissions",
+      "Encrypt form fields",
+      "Prevent SQL injection"
+    ],
+    "correct_answer": "Prevent cross-site request forgery attacks",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "A Python REST API should indicate that a new resource was successfully created. Which HTTP status code is most appropriate?",
+    "options": [
+      "201 Created",
+      "202 Accepted",
+      "204 No Content",
+      "200 OK"
+    ],
+    "correct_answer": "201 Created",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "When a client sends an invalid JSON body that cannot be parsed, which HTTP status code is the best fit?",
+    "options": [
+      "400 Bad Request",
+      "500 Internal Server Error",
+      "404 Not Found",
+      "401 Unauthorized"
+    ],
+    "correct_answer": "400 Bad Request",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "In FastAPI, how are request body models typically defined to enable validation and automatic documentation?",
+    "options": [
+      "Pydantic BaseModel subclasses",
+      "Marshmallow Schemas only",
+      "Custom JSONEncoder subclasses",
+      "Plain Python dicts"
+    ],
+    "correct_answer": "Pydantic BaseModel subclasses",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "Django REST Framework viewsets are used primarily to:",
+    "options": [
+      "Bundle common CRUD actions (list, create, retrieve, update, destroy) for a resource",
+      "Configure middleware",
+      "Generate admin panels automatically",
+      "Serve static files"
+    ],
+    "correct_answer": "Bundle common CRUD actions (list, create, retrieve, update, destroy) for a resource",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "A Python API uses JWTs stored in localStorage in a browser. Which security risk must be carefully mitigated?",
+    "options": [
+      "XSS allowing token theft via JavaScript",
+      "SQL injection",
+      "Insecure deserialization",
+      "CSRF"
+    ],
+    "correct_answer": "XSS allowing token theft via JavaScript",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "Which header is typically used to send a Bearer JWT to a Python REST API?",
+    "options": [
+      "Cookie: jwt=<token>",
+      "Authorization: Bearer <token>",
+      "X-JWT-Token",
+      "X-Auth-Token"
+    ],
+    "correct_answer": "Authorization: Bearer <token>",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "Your Flask API defines multiple endpoints for the same resource but uses different nouns (e.g., /createUser, /getUser). This violates which REST principle?",
+    "options": [
+      "Uniform interface using resources and HTTP verbs",
+      "Cacheability",
+      "Statelessness",
+      "Layered system"
+    ],
+    "correct_answer": "Uniform interface using resources and HTTP verbs",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "In Django, when using the ORM, how can you prevent SQL injection without manually escaping values?",
+    "options": [
+      "Use ORM query methods with parameterization (e.g., filter(name=value))",
+      "Escape all user input with HTML escape",
+      "Disable DEBUG mode",
+      "Build raw SQL strings carefully"
+    ],
+    "correct_answer": "Use ORM query methods with parameterization (e.g., filter(name=value))",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "A Python backend uses OAuth2 with scopes like 'read:orders' and 'write:orders'. What is the primary purpose of scopes?",
+    "options": [
+      "Limit the actions a token holder can perform",
+      "Validate refresh tokens",
+      "Encrypt access tokens",
+      "Identify clients"
+    ],
+    "correct_answer": "Limit the actions a token holder can perform",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "Which HTTP status code best indicates that authentication is required and has failed or not been provided?",
+    "options": [
+      "401 Unauthorized",
+      "404 Not Found",
+      "403 Forbidden",
+      "400 Bad Request"
+    ],
+    "correct_answer": "401 Unauthorized",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "Which HTTP status code best indicates that the user is authenticated but not allowed to perform an action on a Python API?",
+    "options": [
+      "403 Forbidden",
+      "400 Bad Request",
+      "404 Not Found",
+      "401 Unauthorized"
+    ],
+    "correct_answer": "403 Forbidden",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "A FastAPI endpoint uses async def but internally calls a blocking database driver. What issue can this cause?",
+    "options": [
+      "Blocking the event loop and reducing concurrency",
+      "Type hint errors only",
+      "Increased throughput",
+      "Automatic connection pooling"
+    ],
+    "correct_answer": "Blocking the event loop and reducing concurrency",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "What is a common way to document REST APIs in a Python backend to share with frontend teams?",
+    "options": [
+      "Swagger/OpenAPI definitions exposed via /docs",
+      "Email descriptions",
+      "Inline comments only",
+      "Readme.txt files"
+    ],
+    "correct_answer": "Swagger/OpenAPI definitions exposed via /docs",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "In Django REST Framework, which class is typically used to restrict access to authenticated users only?",
+    "options": [
+      "IsAuthenticated",
+      "ReadOnly",
+      "IsAdminUser",
+      "AllowAny"
+    ],
+    "correct_answer": "IsAuthenticated",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "Your Python API supports conditional GETs. Which HTTP header combination is used to allow clients to cache and revalidate resources?",
+    "options": [
+      "ETag and If-None-Match",
+      "Host and User-Agent",
+      "Authorization and Cookie",
+      "Content-Type and Accept"
+    ],
+    "correct_answer": "ETag and If-None-Match",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "A REST endpoint returns 200 OK but includes an 'errors' array in the body for validation failures. What is a better design choice?",
+    "options": [
+      "Use 400 Bad Request or 422 Unprocessable Entity with validation error details",
+      "Return 204 No Content",
+      "Use 500 Internal Server Error",
+      "Keep 200 OK and errors in body"
+    ],
+    "correct_answer": "Use 400 Bad Request or 422 Unprocessable Entity with validation error details",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "Which OWASP Top 10 risk is mitigated by validating and sanitizing file upload types in a Python API?",
+    "options": [
+      "Insecure File Upload / Vulnerable Components",
+      "Security Misconfiguration",
+      "Broken Authentication",
+      "Injection"
+    ],
+    "correct_answer": "Insecure File Upload / Vulnerable Components",
+    "topic": "Web Frameworks & API Design"
+  },
+  {
+    "question": "A PostgreSQL table backing a Python API endpoint experiences slow SELECTs on a frequently filtered 'email' column. What is the first optimization to consider?",
+    "options": [
+      "Add an index on the email column",
+      "Use SELECT * instead of specific columns",
+      "Switch to a NoSQL database",
+      "Increase application server threads"
+    ],
+    "correct_answer": "Add an index on the email column",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "In a MySQL-backed Django app, which issue is most likely caused by missing indexes on foreign key columns?",
+    "options": [
+      "Slow JOIN queries between related tables",
+      "Deadlocks on writes only",
+      "Too many connections",
+      "Inconsistent data types"
+    ],
+    "correct_answer": "Slow JOIN queries between related tables",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "A Python app stores time-series logs in PostgreSQL but queries are mostly recent data. What table design approach can help performance and manageability?",
+    "options": [
+      "Partition the table by time (e.g., monthly partitions)",
+      "Disable indexes",
+      "Use a single huge table",
+      "Store logs as JSON in a single row"
+    ],
+    "correct_answer": "Partition the table by time (e.g., monthly partitions)",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "Which SQL clause is essential to limit result size and avoid returning millions of rows to a Python API client?",
+    "options": [
+      "LIMIT/OFFSET",
+      "JOIN",
+      "WHERE",
+      "GROUP BY"
+    ],
+    "correct_answer": "LIMIT/OFFSET",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "When designing relational schemas, which principle aims to reduce redundant data and update anomalies?",
+    "options": [
+      "Normalization (e.g., 3NF)",
+      "Indexing",
+      "Sharding",
+      "Denormalization"
+    ],
+    "correct_answer": "Normalization (e.g., 3NF)",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "A Python service needs flexible document-like storage for user profiles with variable fields. Which database is most appropriate?",
+    "options": [
+      "MongoDB",
+      "Elasticsearch",
+      "Redis",
+      "PostgreSQL only"
+    ],
+    "correct_answer": "MongoDB",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "You need a fast in-memory cache for storing session tokens and rate-limiting counters for a Python API. Which datastore is best suited?",
+    "options": [
+      "Redis",
+      "Elasticsearch",
+      "MongoDB",
+      "MySQL"
+    ],
+    "correct_answer": "Redis",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "A Python service must support full-text search with relevance ranking across millions of documents. Which technology is specialized for this?",
+    "options": [
+      "Elasticsearch",
+      "SQLite",
+      "Redis",
+      "PostgreSQL only"
+    ],
+    "correct_answer": "Elasticsearch",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "In SQLAlchemy, what problem occurs when you iterate over a list of parent objects and access a lazy-loaded relationship inside a loop?",
+    "options": [
+      "N+1 query problem",
+      "Deadlock",
+      "Connection leak",
+      "Race condition"
+    ],
+    "correct_answer": "N+1 query problem",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "Which ORM technique helps avoid N+1 queries when loading related objects for many parents?",
+    "options": [
+      "Using eager loading (select_related/joinedload)",
+      "Using raw SQL only",
+      "Using autocommit",
+      "Disabling transactions"
+    ],
+    "correct_answer": "Using eager loading (select_related/joinedload)",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "In Django ORM, which method best avoids N+1 queries when fetching foreign key related objects?",
+    "options": [
+      "select_related()",
+      "order_by()",
+      "values_list()",
+      "all() only"
+    ],
+    "correct_answer": "select_related()",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "In Django ORM, which method is appropriate for optimizing many-to-many relationship fetching to reduce additional queries?",
+    "options": [
+      "prefetch_related()",
+      "defer()",
+      "only()",
+      "select_related()"
+    ],
+    "correct_answer": "prefetch_related()",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "A migration in Alembic/SQLAlchemy modifies a column type in production. What best practice should be followed?",
+    "options": [
+      "Test migration on a staging copy of production data first",
+      "Drop and recreate the database",
+      "Disable foreign keys",
+      "Apply directly without backups"
+    ],
+    "correct_answer": "Test migration on a staging copy of production data first",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "A Python app frequently reads rarely changing configuration data from PostgreSQL. What strategy can reduce DB load?",
+    "options": [
+      "Introduce an in-memory cache or Redis layer",
+      "Use SELECT * always",
+      "Increase connection pool size",
+      "Denormalize the schema"
+    ],
+    "correct_answer": "Introduce an in-memory cache or Redis layer",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "You notice long-running transactions in PostgreSQL from a Python app using SQLAlchemy. Which pattern most likely contributes to this?",
+    "options": [
+      "Opening a transaction per HTTP request and forgetting to commit/rollback",
+      "Limiting result sets",
+      "Using indexes",
+      "Using connection pooling"
+    ],
+    "correct_answer": "Opening a transaction per HTTP request and forgetting to commit/rollback",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "In SQL, what is the main purpose of a composite index (e.g., index on (user_id, created_at))?",
+    "options": [
+      "Optimize queries filtering on both columns in order",
+      "Encrypt data at rest",
+      "Automatically enforce foreign keys",
+      "Store more data in less space"
+    ],
+    "correct_answer": "Optimize queries filtering on both columns in order",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "A Python analytics job needs strong consistency and complex joins for financial reporting. Which database type is most appropriate?",
+    "options": [
+      "Relational SQL database (e.g., PostgreSQL)",
+      "Wide-column store",
+      "Key-value store",
+      "Document store"
+    ],
+    "correct_answer": "Relational SQL database (e.g., PostgreSQL)",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "A Python microservice stores ephemeral rate limit counters in Redis with a TTL. What is the primary reason for using an expiration time?",
+    "options": [
+      "Automatically clear old keys and prevent unbounded growth",
+      "Avoid serialization",
+      "Enable transactions",
+      "Improve read throughput"
+    ],
+    "correct_answer": "Automatically clear old keys and prevent unbounded growth",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "In SQLAlchemy, what does session.commit() actually do?",
+    "options": [
+      "Flushes pending changes to the database and commits the current transaction",
+      "Closes all connections",
+      "Clears the session cache only",
+      "Sends a ping to the database"
+    ],
+    "correct_answer": "Flushes pending changes to the database and commits the current transaction",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "A Python API frequently performs SELECT * on large tables and then filters in Python. What is a better approach?",
+    "options": [
+      "Filter and project only needed columns in SQL",
+      "Disable indexes",
+      "Add more API replicas",
+      "Increase network bandwidth"
+    ],
+    "correct_answer": "Filter and project only needed columns in SQL",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "When designing a schema for a high-write log table, which pattern can help avoid index bloat and improve insert performance?",
+    "options": [
+      "Minimize indexes to only necessary query patterns",
+      "Use text columns for all data",
+      "Use many foreign keys",
+      "Index every column"
+    ],
+    "correct_answer": "Minimize indexes to only necessary query patterns",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "A Python application uses Django ORM and you see hundreds of queries per request in debug toolbar. What is a likely cause?",
+    "options": [
+      "N+1 query patterns on related objects",
+      "Missing migrations",
+      "Excessive use of select_related",
+      "Too much caching"
+    ],
+    "correct_answer": "N+1 query patterns on related objects",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "Which is a key advantage of using an ORM like SQLAlchemy or Django ORM in a Python backend?",
+    "options": [
+      "Database-agnostic abstractions and safer parameterized queries",
+      "Automatic horizontal scaling",
+      "No need to design schemas",
+      "Guaranteed best query performance"
+    ],
+    "correct_answer": "Database-agnostic abstractions and safer parameterized queries",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "A migration fails in production because a column is dropped while the Python code still reads it. What deployment practice helps prevent this?",
+    "options": [
+      "Use backward-compatible migrations and deploy in two phases",
+      "Use raw SQL only",
+      "Drop all indexes first",
+      "Apply DB migrations after app deployment only"
+    ],
+    "correct_answer": "Use backward-compatible migrations and deploy in two phases",
+    "topic": "Database Management & ORMs"
+  },
+  {
+    "question": "A Python startup app is small, with one team and simple requirements. Which architecture is usually best to start with?",
+    "options": [
+      "Monolith with clear modular boundaries",
+      "Event-driven microservices only",
+      "Serverless functions per endpoint only",
+      "Microservices from day one"
+    ],
+    "correct_answer": "Monolith with clear modular boundaries",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "Which is a strong reason to split a Python monolith into microservices?",
+    "options": [
+      "Independent scaling and deployments for distinct bounded contexts",
+      "To use more programming languages",
+      "To avoid using a database",
+      "Small codebase"
+    ],
+    "correct_answer": "Independent scaling and deployments for distinct bounded contexts",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "When two Python services communicate synchronously over HTTP, what is the main drawback compared to async messaging via a queue?",
+    "options": [
+      "Tighter coupling and increased latency during downstream outages",
+      "Natural backpressure",
+      "Easier error handling",
+      "Higher throughput"
+    ],
+    "correct_answer": "Tighter coupling and increased latency during downstream outages",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "A high-throughput Python system needs strongly-typed, low-latency service-to-service communication. Which protocol is a good choice?",
+    "options": [
+      "gRPC with Protocol Buffers",
+      "Plain text over TCP",
+      "SOAP",
+      "REST over HTTP/1.1"
+    ],
+    "correct_answer": "gRPC with Protocol Buffers",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "A Django app must handle CPU-intensive report generation without blocking web requests. Which approach is most appropriate?",
+    "options": [
+      "Use Celery with a message broker for background tasks",
+      "Switch to async views",
+      "Increase gunicorn workers only",
+      "Run reports inside the request thread"
+    ],
+    "correct_answer": "Use Celery with a message broker for background tasks",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "Which broker is commonly used with Celery for reliable background job processing in Python?",
+    "options": [
+      "RabbitMQ or Redis",
+      "memcached",
+      "Elasticsearch",
+      "SQLite"
+    ],
+    "correct_answer": "RabbitMQ or Redis",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "A team wants to ensure only one instance of a configuration object exists within a Python process. Which design pattern applies?",
+    "options": [
+      "Singleton",
+      "Strategy",
+      "Repository",
+      "Factory"
+    ],
+    "correct_answer": "Singleton",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "You need to encapsulate object creation logic for different payment providers (Stripe, PayPal) in a Python backend. Which pattern is most appropriate?",
+    "options": [
+      "Factory",
+      "Decorator",
+      "Observer",
+      "Singleton"
+    ],
+    "correct_answer": "Factory",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "A Repository pattern in a Python service is primarily used to:",
+    "options": [
+      "Abstract data access so domain logic is decoupled from persistence details",
+      "Provide UI components",
+      "Handle caching only",
+      "Manage HTTP routing"
+    ],
+    "correct_answer": "Abstract data access so domain logic is decoupled from persistence details",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "Your Python API uses Redis as a cache in front of PostgreSQL. What is a typical cache invalidation strategy when data changes?",
+    "options": [
+      "Write-through or delete related cache keys on database update",
+      "Rebuild entire cache nightly",
+      "Disable caching during writes",
+      "Never invalidate cache"
+    ],
+    "correct_answer": "Write-through or delete related cache keys on database update",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "Which caching strategy first checks the cache, then falls back to the database on a miss and stores the result back into the cache?",
+    "options": [
+      "Cache-aside (lazy loading)",
+      "Read-through cache with proxies",
+      "Write-back cache",
+      "Write-through cache"
+    ],
+    "correct_answer": "Cache-aside (lazy loading)",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "To prevent a thundering herd when a popular cache key expires in a Python app, which technique is helpful?",
+    "options": [
+      "Randomize TTLs slightly and use request coalescing",
+      "Increase database size",
+      "Use longer TTLs only",
+      "Disable caching"
+    ],
+    "correct_answer": "Randomize TTLs slightly and use request coalescing",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "A dashboard API needs near real-time data but can tolerate slight staleness to reduce DB load. What is an appropriate caching TTL strategy?",
+    "options": [
+      "Very short TTL (e.g., a few seconds) with periodic refresh",
+      "Cache forever",
+      "TTL of several hours",
+      "No cache"
+    ],
+    "correct_answer": "Very short TTL (e.g., a few seconds) with periodic refresh",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "In a Python microservice architecture, which practice reduces tight coupling between services?",
+    "options": [
+      "Using well-defined APIs and async messaging",
+      "Single shared config file",
+      "Sharing ORM models across services",
+      "Direct database access between services"
+    ],
+    "correct_answer": "Using well-defined APIs and async messaging",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "A Celery task occasionally fails due to transient network issues. What is the best practice to handle this?",
+    "options": [
+      "Configure automatic retries with exponential backoff",
+      "Ignore failures",
+      "Retry immediately in a tight loop",
+      "Disable the task"
+    ],
+    "correct_answer": "Configure automatic retries with exponential backoff",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "In a Python monolith, you plan to break out the user notifications module into its own service. What is the first step?",
+    "options": [
+      "Define clear boundaries and interfaces between core app and notifications",
+      "Deploy a new load balancer",
+      "Move database tables first",
+      "Rewrite it in another language"
+    ],
+    "correct_answer": "Define clear boundaries and interfaces between core app and notifications",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "Which architecture pattern is characterized by a central message broker and multiple worker services handling specific tasks?",
+    "options": [
+      "Event-driven / pub-sub",
+      "Layered monolith",
+      "Peer-to-peer",
+      "Request-response"
+    ],
+    "correct_answer": "Event-driven / pub-sub",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "A Python service processes user uploads asynchronously and sends completion emails. Which combination is most appropriate?",
+    "options": [
+      "Django view plus Celery worker and message broker",
+      "Threading within the request handler",
+      "Direct SMTP from view",
+      "Synchronous Flask endpoint only"
+    ],
+    "correct_answer": "Django view plus Celery worker and message broker",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "In system design, what is the primary tradeoff when introducing aggressive caching in a Python backend?",
+    "options": [
+      "Possible data staleness vs. reduced load and latency",
+      "Harder authentication",
+      "More network hops",
+      "Increased CPU usage"
+    ],
+    "correct_answer": "Possible data staleness vs. reduced load and latency",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "Which pattern can help a Python service remain responsive when a downstream dependency is slow or failing?",
+    "options": [
+      "Circuit breaker with fallback",
+      "Global locks",
+      "Tight coupling",
+      "Shared database"
+    ],
+    "correct_answer": "Circuit breaker with fallback",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "A Python microservice requires idempotent processing of payment events delivered via a message queue. What practice helps ensure this?",
+    "options": [
+      "Track processed event IDs and ignore duplicates",
+      "Use synchronous HTTP only",
+      "Disable retries",
+      "Use at-most-once delivery"
+    ],
+    "correct_answer": "Track processed event IDs and ignore duplicates",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "In a Python system, where should domain business logic ideally reside?",
+    "options": [
+      "In dedicated service/domain modules separate from framework-specific code",
+      "In HTML templates",
+      "Only in database triggers",
+      "Directly in the web routing layer"
+    ],
+    "correct_answer": "In dedicated service/domain modules separate from framework-specific code",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "You notice tight coupling between Django views and ORM models across the project. Which refactoring can improve testability and design?",
+    "options": [
+      "Introduce service/repository layers between views and ORM",
+      "Disable the ORM",
+      "Use global variables",
+      "Move all logic to templates"
+    ],
+    "correct_answer": "Introduce service/repository layers between views and ORM",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "A Python backend must send emails, generate PDFs, and resize images on upload. Which tasks are best suited for asynchronous processing?",
+    "options": [
+      "Sending emails and generating PDFs/images in background jobs",
+      "Simple DB reads",
+      "Basic input validation",
+      "User authentication"
+    ],
+    "correct_answer": "Sending emails and generating PDFs/images in background jobs",
+    "topic": "Architecture & System Design"
+  },
+  {
+    "question": "A Python web app is containerized. Which Dockerfile practice helps keep the image small and secure?",
+    "options": [
+      "Use a slim or alpine base image and remove build-time dependencies",
+      "Run the app as root user",
+      "Install all optional packages globally",
+      "Use a full OS base image with many tools"
+    ],
+    "correct_answer": "Use a slim or alpine base image and remove build-time dependencies",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "You are writing a Dockerfile for a Python app. Which instruction ensures dependencies listed in requirements.txt are installed?",
+    "options": [
+      "RUN pip install -r requirements.txt",
+      "ENV PYTHONUNBUFFERED=1",
+      "CMD [\"python\", \"app.py\"]",
+      "COPY . /app"
+    ],
+    "correct_answer": "RUN pip install -r requirements.txt",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "In Docker Compose, you want a Python web service and a PostgreSQL database to start together. What file defines these multi-container settings?",
+    "options": [
+      "docker-compose.yml",
+      "Makefile",
+      "requirements.txt",
+      "Dockerfile"
+    ],
+    "correct_answer": "docker-compose.yml",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "A CI pipeline for a Python backend should run unit tests on every push. Where is this typically configured in GitHub Actions?",
+    "options": [
+      ".github/workflows/*.yml",
+      "Dockerfile",
+      "setup.cfg",
+      ".gitignore"
+    ],
+    "correct_answer": ".github/workflows/*.yml",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "Which CI/CD step is responsible for building a Python package, running tests, and producing artifacts (e.g., Docker images)?",
+    "options": [
+      "Build stage (e.g., GitHub Actions job, GitLab CI stage, Jenkins build)",
+      "Monitoring stage",
+      "Deployment stage",
+      "Source control"
+    ],
+    "correct_answer": "Build stage (e.g., GitHub Actions job, GitLab CI stage, Jenkins build)",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "A Python app needs to store user-uploaded files and serve them back over HTTP with high durability. Which AWS service is a natural fit?",
+    "options": [
+      "Amazon S3",
+      "AWS Lambda",
+      "Amazon RDS",
+      "EC2 instance store"
+    ],
+    "correct_answer": "Amazon S3",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "You want to deploy a Python API with minimal management of servers and automatic scaling based on requests. Which AWS service is most suitable?",
+    "options": [
+      "AWS Lambda behind API Gateway",
+      "ElastiCache",
+      "EBS volumes",
+      "EC2 only"
+    ],
+    "correct_answer": "AWS Lambda behind API Gateway",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "A Python data processing script runs on schedule and occasionally needs more CPU. Which AWS offering can execute it on demand without full server management?",
+    "options": [
+      "AWS Lambda",
+      "AWS CloudTrail",
+      "Amazon S3",
+      "Amazon RDS"
+    ],
+    "correct_answer": "AWS Lambda",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "In production, your Python app logs are scattered across containers and servers. Which stack centralizes and indexes logs for search and dashboards?",
+    "options": [
+      "ELK stack (Elasticsearch, Logstash, Kibana)",
+      "Django stack",
+      "MEAN stack",
+      "LAMP stack"
+    ],
+    "correct_answer": "ELK stack (Elasticsearch, Logstash, Kibana)",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "A Python microservice exposes Prometheus metrics at /metrics. What is Prometheus typically used for?",
+    "options": [
+      "Time-series metrics collection and alerting",
+      "Secret management",
+      "Log aggregation",
+      "Tracing requests end-to-end"
+    ],
+    "correct_answer": "Time-series metrics collection and alerting",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "You want to capture exceptions, stack traces, and user context from a Django app in production. Which tool is widely used for this?",
+    "options": [
+      "Sentry",
+      "Black",
+      "Gunicorn",
+      "Celery"
+    ],
+    "correct_answer": "Sentry",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "A Dockerized Python app should not run as root inside the container. Why?",
+    "options": [
+      "It increases security risks if the container is compromised",
+      "It prevents logging",
+      "It reduces performance",
+      "It breaks environment variables"
+    ],
+    "correct_answer": "It increases security risks if the container is compromised",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "Which command in a multi-stage Dockerfile is typically used to copy only built artifacts into a smaller runtime image for a Python app?",
+    "options": [
+      "COPY --from=builder",
+      "ENTRYPOINT",
+      "CMD",
+      "RUN"
+    ],
+    "correct_answer": "COPY --from=builder",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "A Python service deployed on EC2 must scale horizontally based on CPU utilization. Which AWS component manages this automatically?",
+    "options": [
+      "Auto Scaling Group",
+      "KMS key policy",
+      "S3 Lifecycle",
+      "CloudTrail"
+    ],
+    "correct_answer": "Auto Scaling Group",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "CI pipeline runs unit tests but not integration tests against a real database. What risk does this introduce?",
+    "options": [
+      "Undetected issues with migrations, ORM queries, and DB configuration",
+      "Higher storage costs",
+      "Too many logs",
+      "Slower builds"
+    ],
+    "correct_answer": "Undetected issues with migrations, ORM queries, and DB configuration",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "A Python backend uses environment variables for secrets in containers. What is a more secure alternative on AWS?",
+    "options": [
+      "AWS Secrets Manager or SSM Parameter Store with IAM access",
+      "Pass secrets via query strings",
+      "Store secrets in static JSON files",
+      "Hard-code secrets in code"
+    ],
+    "correct_answer": "AWS Secrets Manager or SSM Parameter Store with IAM access",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "Your Git-based workflow requires code reviews before merging feature branches into main for a Python project. Which practice does this represent?",
+    "options": [
+      "Pull request-based code review",
+      "Gitflow hotfixes",
+      "Trunk-based development only",
+      "Continuous Deployment"
+    ],
+    "correct_answer": "Pull request-based code review",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "To avoid 'works on my machine' issues for a Python web app, what is a common practice?",
+    "options": [
+      "Use containerization (e.g., Docker) with consistent images",
+      "Share local SQLite database",
+      "Disable virtual environments",
+      "Use different Python versions locally and in prod"
+    ],
+    "correct_answer": "Use containerization (e.g., Docker) with consistent images",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "A Python service is experiencing memory leaks in production. Which tool combination helps detect and alert on increasing memory usage over time?",
+    "options": [
+      "Prometheus and Grafana",
+      "PyPI and pip",
+      "Flake8 and MyPy",
+      "Black and isort"
+    ],
+    "correct_answer": "Prometheus and Grafana",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "Deployment strategy requires zero-downtime deployments of a containerized Python API. Which Kubernetes deployment type helps with this?",
+    "options": [
+      "RollingUpdate",
+      "Blue-only",
+      "Oneshot",
+      "Recreate"
+    ],
+    "correct_answer": "RollingUpdate",
+    "topic": "DevOps & Infrastructure"
+  },
+  {
+    "question": "A browser-based frontend on https://app.example.com calls a Python API on https://api.example.com and gets CORS errors. What is the likely cause?",
+    "options": [
+      "API not sending appropriate Access-Control-Allow-Origin headers",
+      "Expired TLS certificate",
+      "Missing Content-Type header",
+      "DNS misconfiguration"
+    ],
+    "correct_answer": "API not sending appropriate Access-Control-Allow-Origin headers",
+    "topic": "Frontend Awareness"
+  },
+  {
+    "question": "To allow JavaScript running in a browser to include cookies in cross-site requests to a Python API, which CORS setting is required in addition to Allow-Origin?",
+    "options": [
+      "Access-Control-Allow-Credentials: true",
+      "Access-Control-Max-Age: 0",
+      "Access-Control-Expose-Headers: *",
+      "Access-Control-Allow-Methods: POST"
+    ],
+    "correct_answer": "Access-Control-Allow-Credentials: true",
+    "topic": "Frontend Awareness"
+  },
+  {
+    "question": "Which HTTP feature enables browsers to ask a Python API which methods and headers are allowed before sending the actual request?",
+    "options": [
+      "OPTIONS preflight requests",
+      "CONNECT method",
+      "TRACE method",
+      "HEAD requests"
+    ],
+    "correct_answer": "OPTIONS preflight requests",
+    "topic": "Frontend Awareness"
+  },
+  {
+    "question": "A Python backend needs to support real-time chat between browser clients. Which technology is most appropriate?",
+    "options": [
+      "WebSockets",
+      "FTP",
+      "Batch REST requests",
+      "Long polling only"
+    ],
+    "correct_answer": "WebSockets",
+    "topic": "Frontend Awareness"
+  },
+  {
+    "question": "From a browser developer tools perspective, which tab is most useful for inspecting Python API request/response payloads and headers?",
+    "options": [
+      "Network",
+      "Console only",
+      "Sources",
+      "Elements"
+    ],
+    "correct_answer": "Network",
+    "topic": "Frontend Awareness"
+  },
+  {
+    "question": "A frontend developer reports that JSON responses from the Python API are not being parsed correctly due to missing Content-Type. What should the API set?",
+    "options": [
+      "Content-Type: application/json",
+      "X-Content-Type: json",
+      "Accept: application/json",
+      "Content-Type: text/plain"
+    ],
+    "correct_answer": "Content-Type: application/json",
+    "topic": "Frontend Awareness"
+  },
+  {
+    "question": "To help frontend teams understand available endpoints and models, what should a Python backend provide?",
+    "options": [
+      "Interactive API documentation (Swagger/OpenAPI UI)",
+      "Email-based docs",
+      "Source code access",
+      "Database ER diagrams only"
+    ],
+    "correct_answer": "Interactive API documentation (Swagger/OpenAPI UI)",
+    "topic": "Frontend Awareness"
+  },
+  {
+    "question": "Which HTTP status code is most appropriate when a browser sends a request to an outdated URL that has been permanently moved to a new endpoint?",
+    "options": [
+      "301 Moved Permanently",
+      "410 Gone",
+      "307 Temporary Redirect",
+      "302 Found"
+    ],
+    "correct_answer": "301 Moved Permanently",
+    "topic": "Frontend Awareness"
+  },
+  {
+    "question": "A Python API supports both JSON and XML. How should the client tell the API which response format it prefers?",
+    "options": [
+      "Using the Accept header (e.g., Accept: application/json)",
+      "Using User-Agent header",
+      "Using the Host header",
+      "By URL query parameter only"
+    ],
+    "correct_answer": "Using the Accept header (e.g., Accept: application/json)",
+    "topic": "Frontend Awareness"
+  },
+  {
+    "question": "You add an OpenAPI/Swagger definition for a Python REST API. What is the main benefit for frontend developers?",
+    "options": [
+      "Clear, machine-readable contract for endpoints, types, and error codes",
+      "Automatic scaling",
+      "Faster Python execution",
+      "Improved database performance"
+    ],
+    "correct_answer": "Clear, machine-readable contract for endpoints, types, and error codes",
+    "topic": "Frontend Awareness"
+  },
+  {
+    "question": "A React frontend running on https://frontend.local calls a FastAPI backend on http://localhost:8000 during local development. What is the cleanest way to avoid CORS issues without disabling CORS entirely?",
+    "options": [
+      "Serve the frontend through the backend's domain or configure specific CORS origins",
+      "Set Access-Control-Allow-Origin: * and Allow-Credentials: true together",
+      "Disable CSRF protection in the backend",
+      "Use only HTTP instead of HTTPS"
+    ],
+    "correct_answer": "Serve the frontend through the backend's domain or configure specific CORS origins",
+    "topic": "Frontend Awareness"
+  },
+  {
+    "question": "A Python backend pushes live stock price updates to a trading dashboard. Which combination provides the most efficient real-time channel?",
+    "options": [
+      "Server-Sent Events (SSE) or WebSockets",
+      "Email notifications",
+      "FTP file drops",
+      "Periodic polling over REST"
+    ],
+    "correct_answer": "Server-Sent Events (SSE) or WebSockets",
+    "topic": "Frontend Awareness"
+  },
+  {
+    "question": "A JSON response from a Python API includes fields in snake_case, but the frontend uses camelCase. What is a good backend practice to ease integration?",
+    "options": [
+      "Use a serialization layer (e.g., DRF serializer or Pydantic) to map snake_case to camelCase",
+      "Send both versions of each field",
+      "Rename database columns",
+      "Force the frontend to adapt"
+    ],
+    "correct_answer": "Use a serialization layer (e.g., DRF serializer or Pydantic) to map snake_case to camelCase",
+    "topic": "Frontend Awareness"
+  },
+  {
+    "question": "During debugging, a frontend engineer shows a 422 Unprocessable Entity response from a FastAPI backend. Where should the Python developer look first to understand which field failed validation?",
+    "options": [
+      "The error details in the JSON response body",
+      "The browser cache",
+      "The TLS certificate",
+      "The HTML source"
+    ],
+    "correct_answer": "The error details in the JSON response body",
+    "topic": "Frontend Awareness"
+  },
+  {
+    "question": "The frontend sends large file uploads to a Python API and the browser shows network failures after 30 seconds. Which backend or infrastructure setting is most likely involved?",
+    "options": [
+      "Reverse proxy or web server request timeout (e.g., Nginx/Gunicorn timeout)",
+      "DNS TTL",
+      "Number of workers",
+      "Database idle timeout"
+    ],
+    "correct_answer": "Reverse proxy or web server request timeout (e.g., Nginx/Gunicorn timeout)",
+    "topic": "Frontend Awareness"
+  },
+  {
+    "question": "A Python API defines rate limits per IP. Frontend requests are routed through a shared gateway, causing unexpected throttling. Which header can help the backend identify the originating client correctly?",
+    "options": [
+      "X-Forwarded-For or a similar forwarded IP header",
+      "Referer",
+      "Accept-Encoding",
+      "User-Agent"
+    ],
+    "correct_answer": "X-Forwarded-For or a similar forwarded IP header",
+    "topic": "Frontend Awareness"
+  },
+  {
+    "question": "Your OpenAPI schema for a Python backend is used by frontend teams to generate clients. What must be kept in sync to avoid breaking their builds?",
+    "options": [
+      "The OpenAPI spec and the actual implemented request/response shapes",
+      "Internal variable names",
+      "Database indexes",
+      "Only log formats"
+    ],
+    "correct_answer": "The OpenAPI spec and the actual implemented request/response shapes",
+    "topic": "Frontend Awareness"
+  }
+]
