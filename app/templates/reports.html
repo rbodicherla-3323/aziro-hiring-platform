@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block breadcrumb %}Reports{% endblock %}
+
+{% block content %}
+<div class="mb-2">
+    <h4 class="mb-1">Reports</h4>
+    <p class="text-muted mb-0 small">
+        Generate and download candidate evaluation reports.
+    </p>
+</div>
+
+<!-- 🔹 SEARCH BAR (TOP, GLOBAL) -->
+<div class="input-group mb-4" style="max-width: 400px;">
+    <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+    <input type="text" class="form-control" id="candidateSearch" placeholder="Search by candidate name or email">
+</div>
+
+<!-- ================= REPORT FILTERS ================= -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="row gy-3 align-items-end">
+            <!-- Role -->
+            <div class="col">
+                <label class="form-label">Role</label>
+                <select class="form-select" id="roleFilter">
+                    <option selected>All Roles</option>
+                    <option>Python Entry Level (0–2 Years)</option>
+                    <option>Java Entry Level (0–2 Years)</option>
+                    <option>JavaScript Entry Level (0–2 Years)</option>
+                    <option>Python QA / System / Linux (4+ Years)</option>
+                    <option>Python QA (4+ Years)</option>
+                    <option>Python Development (4+ Years)</option>
+                    <option>Python + AI/ML (4+ Years)</option>
+                    <option>Java + AWS Development (5+ Years)</option>
+                    <option>Java QA (5+ Years)</option>
+                </select>
+            </div>
+            <!-- Date Filter -->
+            <div class="col-md-2">
+                <label class="form-label">Date</label>
+                <input type="date" class="form-control" id="dateFilter">
+            </div>
+            <!-- Buttons -->
+            <div class="col-md-auto d-flex gap-2">
+                <button type="button" class="btn btn-primary btn-sm px-3" id="applyFiltersBtn">Apply</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm px-3" id="clearFiltersBtn">Clear</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ================= CANDIDATES TABLE ================= -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="border rounded p-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="fw-semibold">Candidates</span>
+                <div class="d-flex gap-3">
+                    <button type="button"
+                            class="btn btn-link btn-sm p-0"
+                            id="selectAllCandidates">
+                        Select All
+                    </button>
+                    <button type="button"
+                            class="btn btn-link btn-sm p-0 text-danger"
+                            id="clearAllCandidates">
+                        Clear
+                    </button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 40px;"><input type="checkbox" id="selectAllHeader"></th>
+                            <th>Candidate</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th style="width: 120px;">Report</th>
+                            <th style="width: 180px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="candidate-row" data-has-report="false">
+                            <td><input class="form-check-input candidate-checkbox" type="checkbox"></td>
+                            <td>Ravi Kumar</td>
+                            <td>ravi.kumar@email.com</td>
+                            <td>Python Entry Level (0–2 Years)</td>
+                            <td><span class="badge bg-secondary">Not Generated</span></td>
+                            <td>
+                                <button class="btn btn-outline-primary btn-sm" onclick="showToast('Generating report for Ravi Kumar...', 'success')">
+                                    <i class="bi bi-file-earmark-plus me-1"></i>Generate
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="candidate-row" data-has-report="true">
+                            <td><input class="form-check-input candidate-checkbox" type="checkbox"></td>
+                            <td>Anita Sharma</td>
+                            <td>anita.sharma@email.com</td>
+                            <td>Python QA (4+ Years)</td>
+                            <td><span class="badge bg-success">Generated</span></td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#reportPreviewModal">View</button>
+                                    <button class="btn btn-outline-secondary btn-sm" title="Download Report"><i class="bi bi-download"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="candidate-row" data-has-report="false">
+                            <td><input class="form-check-input candidate-checkbox" type="checkbox"></td>
+                            <td>Rahul Verma</td>
+                            <td>rahul.verma@email.com</td>
+                            <td>Java + AWS Development (5+ Years)</td>
+                            <td><span class="badge bg-secondary">Not Generated</span></td>
+                            <td>
+                                <button class="btn btn-outline-primary btn-sm" onclick="showToast('Generating report for Rahul Verma...', 'success')">
+                                    <i class="bi bi-file-earmark-plus me-1"></i>Generate
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= ACTION ================= -->
+<div class="d-flex justify-content-end gap-2">
+    <button class="btn btn-outline-success" id="bulkDownloadBtn">
+        <i class="bi bi-download me-1"></i>Download Selected
+    </button>
+    <button class="btn btn-primary" id="generateReportBtn">
+        <i class="bi bi-file-earmark-plus me-1"></i>Generate Report for Selected
+    </button>
+</div>
+
+<!-- ================= REPORT PREVIEW MODAL ================= -->
+<div class="modal fade" id="reportPreviewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Report Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="border rounded p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div>
+                            <h5 class="mb-1">Candidate Evaluation Report</h5>
+                            <p class="text-muted mb-0">Anita Sharma · Python QA (4+ Years)</p>
+                        </div>
+                        <span class="badge bg-success">PASS</span>
+                    </div>
+                    <hr>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <h6 class="small fw-semibold text-muted mb-2">Round Performance</h6>
+                            <table class="table table-sm table-bordered">
+                                <tr><td>Round 1 (MCQ)</td><td class="text-success">PASS</td></tr>
+                                <tr><td>Round 2 (Coding)</td><td class="text-success">PASS</td></tr>
+                                <tr><td>Round 3 (Debug)</td><td class="text-success">PASS</td></tr>
+                                <tr><td>Round 4 (System Design)</td><td class="text-success">PASS</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="small fw-semibold text-muted mb-2">Summary</h6>
+                            <p class="small">Candidate demonstrated strong technical skills across all rounds. Recommended for next stage.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary"><i class="bi bi-download me-1"></i>Download PDF</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ================= LIVE SEARCH SCRIPT ================= -->
+<script>
+    const searchInput = document.getElementById('candidateSearch');
+    const candidateRows = document.querySelectorAll('.candidate-row');
+    
+    // Filtering logic
+    function filterCandidates() {
+        const searchVal = searchInput.value.toLowerCase();
+        const roleVal = document.getElementById('roleFilter').value;
+        
+        candidateRows.forEach(row => {
+            const rowText = row.innerText.toLowerCase();
+            const rowRole = row.children[3].innerText; // Role is 4th column (index 3)
+            
+            let show = true;
+            
+            // Search filter
+            if (searchVal && !rowText.includes(searchVal)) show = false;
+            
+            // Role filter
+            if (roleVal !== 'All Roles' && rowRole !== roleVal) show = false;
+            
+            row.style.display = show ? '' : 'none';
+        });
+    }
+
+    searchInput.addEventListener('input', filterCandidates);
+    document.getElementById('applyFiltersBtn').addEventListener('click', filterCandidates);
+
+    // Clear Filters logic
+    document.getElementById('clearFiltersBtn').addEventListener('click', () => {
+        // Reset filter inputs
+        document.getElementById('roleFilter').selectedIndex = 0;
+        document.getElementById('dateFilter').value = '';
+        searchInput.value = '';
+
+        // Show all candidates again
+        candidateRows.forEach(row => {
+            row.style.display = '';
+        });
+    });
+
+    // Header checkbox logic
+    const selectAllHeader = document.getElementById('selectAllHeader');
+    const candidateCheckboxes = document.querySelectorAll('.candidate-row .candidate-checkbox');
+
+    function updateHeaderCheckbox() {
+        const allChecked = Array.from(candidateCheckboxes).every(cb => cb.checked);
+        selectAllHeader.checked = allChecked;
+    }
+
+    selectAllHeader.addEventListener('change', function() {
+        candidateCheckboxes.forEach(cb => cb.checked = selectAllHeader.checked);
+    });
+
+    candidateCheckboxes.forEach(cb => {
+        cb.addEventListener('change', updateHeaderCheckbox);
+    });
+
+    // Select All Candidates logic
+    const selectAllBtn = document.getElementById("selectAllCandidates");
+    selectAllBtn.addEventListener("click", () => {
+        const allChecked = Array.from(candidateCheckboxes)
+            .every(cb => cb.checked);
+        candidateCheckboxes.forEach(cb => cb.checked = !allChecked);
+        updateHeaderCheckbox();
+    });
+
+    // Clear All Candidates logic
+    const clearBtn = document.getElementById("clearAllCandidates");
+    clearBtn.addEventListener("click", () => {
+        candidateCheckboxes.forEach(cb => cb.checked = false);
+        updateHeaderCheckbox();
+    });
+    // Bulk Download
+    document.getElementById('bulkDownloadBtn').addEventListener('click', () => {
+        const count = document.querySelectorAll('.candidate-checkbox:checked').length;
+        if (count > 0) {
+            if (typeof showToast === 'function') showToast(`Downloading ${count} report(s)...`, 'info');
+        } else {
+            if (typeof showToast === 'function') showToast('Please select candidates first', 'warning');
+        }
+    });
+    
+    // Generate Report
+    document.getElementById('generateReportBtn').addEventListener('click', () => {
+        const count = document.querySelectorAll('.candidate-checkbox:checked').length;
+        if (count > 0) {
+            if (typeof showToast === 'function') showToast(`Generating ${count} report(s)...`, 'success');
+        } else {
+            if (typeof showToast === 'function') showToast('Please select candidates first', 'warning');
+        }
+    });
+</script>
+{% endblock %}

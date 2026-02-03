@@ -6,55 +6,81 @@
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
 
+<!-- Toast Container -->
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+    <div id="actionToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body" id="toastMessage">Action completed successfully!</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
 <div class="d-flex">
 
     <!-- SIDEBAR -->
     <aside class="sidebar bg-dark text-white">
-        <div class="sidebar-header">
+        <!-- User Profile Section -->
+        <div class="sidebar-user px-3 py-3 mb-2 border-bottom border-secondary">
+            <div class="d-flex align-items-center">
+                <div class="user-avatar me-2">
+                    <i class="bi bi-person-circle fs-4"></i>
+                </div>
+                <div>
+                    <div class="fw-semibold small text-white">HR Admin</div>
+                    <small class="text-muted" style="font-size: 11px;">hr@azirotech.com</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-header px-3">
             <h6 class="mb-0">AI Hiring</h6>
             <small class="text-muted">Admin Panel</small>
         </div>
 
-        <ul class="nav flex-column mt-4">
+        <ul class="nav flex-column mt-3">
 
     <li class="nav-item">
         <a class="nav-link {% if request.path == '/dashboard' %}active{% endif %}"
            href="/dashboard">
-            Dashboard
+            <i class="bi bi-grid-1x2 me-2"></i>Dashboard
         </a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link {% if request.path == '/create-test' %}active{% endif %}"
            href="/create-test">
-            Create Test
+            <i class="bi bi-plus-circle me-2"></i>Create Test
         </a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link {% if request.path == '/generated-tests' %}active{% endif %}"
            href="/generated-tests">
-            Generated Tests
+            <i class="bi bi-file-earmark-text me-2"></i>Generated Tests
         </a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link {% if request.path == '/evaluation' %}active{% endif %}"
            href="/evaluation">
-            Evaluation
+            <i class="bi bi-clipboard-check me-2"></i>Evaluation
         </a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link {% if request.path == '/reports' %}active{% endif %}"
-           href="#">
-            Reports
+           href="/reports">
+            <i class="bi bi-bar-chart-line me-2"></i>Reports
         </a>
     </li>
 
@@ -62,7 +88,7 @@
 
 
         <div class="sidebar-footer">
-            <a href="/logout" class="nav-link text-danger">Logout</a>
+            <a href="/logout" class="nav-link text-danger"><i class="bi bi-box-arrow-left me-2"></i>Logout</a>
         </div>
     </aside>
 
@@ -70,7 +96,7 @@
     <main class="content-area">
 
         <!-- TOP NAVBAR -->
-        <nav class="navbar navbar-light bg-white shadow-sm px-4 d-flex justify-content-between">
+        <nav class="navbar navbar-light bg-white shadow-sm px-4">
             <div class="d-flex align-items-center">
                 <img src="{{ url_for('static', filename='images/azirotech_logo.jpg') }}"
                      alt="Aziro Logo"
@@ -84,6 +110,13 @@
 
         <!-- PAGE CONTENT -->
         <div class="container-fluid">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb small mb-0">
+                    <li class="breadcrumb-item"><a href="/dashboard" class="text-decoration-none"><i class="bi bi-house"></i></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{% block breadcrumb %}Dashboard{% endblock %}</li>
+                </ol>
+            </nav>
             {% block content %}{% endblock %}
         </div>
 
@@ -96,6 +129,17 @@
 
 </div>
 
+<!-- Toast Notification Helper Script -->
+<script>
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('actionToast');
+    const toastMessage = document.getElementById('toastMessage');
+    toastMessage.textContent = message;
+    toast.className = 'toast align-items-center border-0 text-bg-' + type;
+    const bsToast = new bootstrap.Toast(toast);
+    bsToast.show();
+}
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>

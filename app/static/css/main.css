@@ -1,3 +1,22 @@
+/* ================= FIX TABLE BODY CHECKBOX FADED LOOK ================= */
+
+/* Force normal appearance for table body cells containing checkboxes */
+.table tbody td {
+    opacity: 1 !important;
+}
+
+/* Ensure checkbox itself is fully visible */
+.table tbody input[type="checkbox"] {
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+/* Ensure label text (if any) is not muted */
+.table tbody label {
+    opacity: 1 !important;
+    color: var(--text-dark) !important;
+}
+
 /* ================= BRAND VARIABLES ================= */
 :root {
     --aziro-blue: #0d6efd;
@@ -13,27 +32,34 @@ body {
     margin: 0;
     color: var(--text-dark);
     background-color: var(--bg-light);
+
+    /* Reduced font size for main content */
+    font-size: 13px;
 }
 
-/* ================= SIDEBAR ================= */
+/* ================= SIDEBAR (KEEP PREVIOUS SIZE) ================= */
 .sidebar {
     width: 230px;
     min-height: 100vh;
     padding: 20px 15px;
+    padding-top: 0;
     position: fixed;
     top: 0;
     left: 0;
     background-color: var(--aziro-dark-blue);
     z-index: 1000;
-}
 
-.sidebar-header {
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(255,255,255,0.15);
+    /* Restore previous font size */
+    font-size: 1rem;
 }
 
 .sidebar-header h6 {
     color: #ffffff;
+    font-size: 1rem;
+}
+
+.sidebar small {
+    font-size: 0.85rem;
 }
 
 .sidebar .nav-link {
@@ -42,6 +68,11 @@ body {
     border-radius: 6px;
     margin-bottom: 5px;
     transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+
+    /* Restore nav item font size */
+    font-size: 0.9rem;
 }
 
 .sidebar .nav-link:hover {
@@ -60,6 +91,12 @@ body {
     width: 85%;
 }
 
+/* Sidebar Badge */
+.sidebar-badge {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+}
+
 /* ================= MAIN CONTENT ================= */
 .content-area {
     margin-left: 230px;
@@ -67,9 +104,10 @@ body {
     background-color: var(--bg-light);
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
-/* ================= NAVBAR ================= */
+/* ================= NAVBAR (KEEP PREVIOUS SIZE) ================= */
 .navbar {
     height: 56px;
     background-color: #ffffff;
@@ -77,6 +115,31 @@ body {
     position: sticky;
     top: 0;
     z-index: 900;
+    display: flex;
+    justify-content: space-between;
+
+    /* Restore navbar font size */
+    font-size: 1rem;
+}
+
+.navbar .navbar-text {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Notification Dropdown */
+.notification-dropdown {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.notification-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 /* ================= PAGE CONTENT ================= */
@@ -84,18 +147,146 @@ body {
     padding: 24px;
 }
 
+/* ================= BREADCRUMB ================= */
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+}
+
 /* ================= DASHBOARD BANNER ================= */
 .dashboard-banner img {
     width: 100%;
-    max-height: 260px;
+    max-height: 200px;
     object-fit: cover;
     border-radius: 8px;
+}
+
+/* ================= KPI CARDS ================= */
+.kpi-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+}
+
+.kpi-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+/* ================= PIPELINE ================= */
+.pipeline-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 120px;
+    padding: 0 20px;
+}
+
+.pipeline-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.pipeline-number {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.pipeline-bar {
+    width: 50px;
+    border-radius: 4px 4px 0 0;
+    min-height: 20px;
+}
+
+.pipeline-label {
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin-top: 8px;
+    text-align: center;
+}
+
+.pipeline-arrow {
+    color: #dee2e6;
+    margin: 0 5px;
+    padding-bottom: 40px;
+}
+
+/* ================= ACTIVITY FEED ================= */
+.activity-feed {
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.activity-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+/* ================= QUICK ACTION CARDS ================= */
+.quick-action-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.quick-action-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1) !important;
+}
+
+.quick-action-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* ================= CARDS ================= */
 .card {
     border: none;
     border-radius: 10px;
+    transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .card h6 {
@@ -150,6 +341,7 @@ ul li {
 footer {
     color: #6c757d;
 }
+
 /* ================= LOADING OVERLAY ================= */
 .loading-overlay {
     position: fixed;
@@ -169,4 +361,132 @@ footer {
     padding: 30px 40px;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* ================= TABLE CHECKBOX VISIBILITY FIX ================= */
+/* Ensure all table checkboxes look active (not disabled/greyed) */
+.table input[type="checkbox"] {
+    opacity: 1 !important;
+    cursor: pointer;
+}
+
+/* Normalize checkbox appearance inside table body */
+.table tbody input[type="checkbox"] {
+    filter: none;
+}
+
+/* Ensure checked state is clearly visible */
+.table input[type="checkbox"]:checked {
+    accent-color: var(--aziro-blue);
+}
+
+/* ================= TABLE ROW HOVER ================= */
+.table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.04);
+}
+
+/* Alternating row colors */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,0.02);
+}
+
+/* ================= EMPTY STATE ================= */
+.empty-state-icon {
+    width: 80px;
+    height: 80px;
+    background: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+/* ================= BORDER DASHED ================= */
+.border-dashed {
+    border-style: dashed !important;
+}
+
+/* ================= CANDIDATE CARD ROW ================= */
+.candidate-card {
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.candidate-card:hover {
+    background-color: #f8f9ff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* ================= STATUS BADGE COLORS ================= */
+.badge.bg-success-subtle {
+    background-color: rgba(25, 135, 84, 0.15) !important;
+}
+
+.badge.bg-warning-subtle {
+    background-color: rgba(255, 193, 7, 0.2) !important;
+}
+
+.badge.bg-info-subtle {
+    background-color: rgba(13, 202, 240, 0.15) !important;
+}
+
+.badge.bg-primary-subtle {
+    background-color: rgba(13, 110, 253, 0.15) !important;
+}
+
+.badge.bg-secondary-subtle {
+    background-color: rgba(108, 117, 125, 0.15) !important;
+}
+
+/* ================= BUTTON HOVER EFFECTS ================= */
+.btn {
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* ================= INPUT FOCUS ================= */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--aziro-blue);
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+}
+
+/* ================= SCROLLBAR STYLING ================= */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* ================= GLOBAL SEARCH RESULTS ================= */
+.search-result-item:hover {
+    background-color: #f8f9fa;
+}
+
+.search-result-item:last-child {
+    border-bottom: none !important;
 }

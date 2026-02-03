@@ -9,6 +9,7 @@ from .blueprints.auth.routes import auth_bp
 from .blueprints.dashboard.routes import dashboard_bp
 from .blueprints.tests.routes import tests_bp
 from .blueprints.evaluation.routes import evaluation_bp
+from .blueprints.reports.routes import reports_bp
 from .blueprints.mcq import mcq_bp   # ✅ MCQ blueprint
 
 
@@ -36,8 +37,8 @@ def create_app():
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(tests_bp)
     app.register_blueprint(evaluation_bp)
+    app.register_blueprint(reports_bp)
     app.register_blueprint(mcq_bp)   # ✅ MCQ ROUTES ENABLED
-
     # ---------------------------
     # DEV MODE: BYPASS LOGIN
     # ---------------------------
