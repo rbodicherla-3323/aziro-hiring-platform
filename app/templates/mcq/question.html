@@ -1,31 +1,55 @@
 {% extends "mcq/base_mcq.html" %}
 {% block content %}
 
-<div class="card">
+<!-- ================= HEADER STRIP ================= -->
+<div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+">
 
-    <!-- Progress info -->
+    <!-- Progress -->
     <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        margin-bottom:18px;
+        font-size:14px;
+        color:var(--aziro-muted);
+        font-weight:500;
     ">
-        <div style="font-size:14px; color:var(--aziro-muted);">
-            Question {{ q_index + 1 }} of {{ total_questions }}
-        </div>
+        Question {{ q_index + 1 }} of {{ total_questions }}
     </div>
 
-    <!-- Question text -->
+    <!-- Timer -->
+    <div id="timer"
+         style="
+            font-size:14px;
+            font-weight:600;
+            color:var(--aziro-danger);
+         ">
+        Time left: --
+    </div>
+
+</div>
+
+<!-- ================= QUESTION CARD ================= -->
+<div class="card"
+     style="
+        padding:26px 28px;
+     ">
+
+    <!-- Question Text -->
     <h3 style="
         margin-bottom:26px;
-        line-height:1.5;
+        line-height:1.6;
         font-weight:600;
+        color:var(--aziro-dark);
     ">
         {{ question.question or question.text }}
     </h3>
 
     <!-- Options -->
-    <form method="POST">
+    <form method="POST"
+          action="{{ url_for('mcq.question', session_id=session_id, q=q_index) }}">
+
         {% for option in question.options %}
         <label style="
             display:block;
@@ -34,10 +58,11 @@
             border:1px solid var(--aziro-border);
             border-radius:6px;
             cursor:pointer;
+            background:#ffffff;
             transition: background 0.2s ease, border 0.2s ease;
         "
-        onmouseover="this.style.background='#f8f9ff'"
-        onmouseout="this.style.background='white'">
+        onmouseover="this.style.background='#f5f8ff'; this.style.borderColor='var(--aziro-blue)'"
+        onmouseout="this.style.background='white'; this.style.borderColor='var(--aziro-border)'">
 
             <input type="radio"
                    name="answer"
@@ -49,9 +74,13 @@
         </label>
         {% endfor %}
 
-        <!-- Action -->
-        <div class="actions">
-            <button class="btn btn-primary">
+        <!-- Actions -->
+        <div style="
+            display:flex;
+            justify-content:flex-end;
+            margin-top:28px;
+        ">
+            <button class="btn btn-primary px-4">
                 {% if q_index + 1 == total_questions %}
                     Submit
                 {% else %}
@@ -62,5 +91,32 @@
     </form>
 
 </div>
+
+<!-- ================= TIMER SCRIPT ================= -->
+<script>
+    let remaining = {{ remaining_seconds }};
+
+    function formatTime(sec) {
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        return m + ":" + s.toString().padStart(2, '0');
+    }
+
+    function tick() {
+        if (remaining <= 0) {
+            window.location.href =
+                "{{ url_for('mcq.submit', session_id=session_id) }}";
+            return;
+        }
+
+        document.getElementById("timer").innerText =
+            "Time left: " + formatTime(remaining);
+
+        remaining--;
+    }
+
+    tick();
+    setInterval(tick, 1000);
+</script>
 
 {% endblock %}

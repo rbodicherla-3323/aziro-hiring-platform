@@ -42,12 +42,21 @@
             
             <!-- Simple Candidate List with Checkboxes -->
             <div class="candidate-list">
-                <div class="form-check py-2 border-bottom candidate-item">
-                    <input class="form-check-input candidate-checkbox" type="checkbox" id="candidate1">
-                    <label class="form-check-label" for="candidate1">
-                        <span class="fw-medium">Ravi Kumar</span>
-                    </label>
-                </div>
+    {% for c in candidates %}
+    <div class="form-check py-2 border-bottom candidate-item">
+        <input class="form-check-input candidate-checkbox"
+               type="checkbox"
+               name="candidates"
+               value="{{ c.email }}"
+               {% if c.email in selected_emails %}checked{% endif %}>
+        <label class="form-check-label">
+            <span class="fw-medium">{{ c.name }}</span>
+            <div class="text-muted small">{{ c.email }}</div>
+        </label>
+    </div>
+    {% endfor %}
+</div>
+
                 <div class="form-check py-2 border-bottom candidate-item">
                     <input class="form-check-input candidate-checkbox" type="checkbox" id="candidate2">
                     <label class="form-check-label" for="candidate2">
@@ -67,9 +76,12 @@
 
 <!-- ================= EVALUATE BUTTON ================= -->
 <div class="d-flex justify-content-end mb-4">
-    <button class="btn btn-primary" id="evaluateBtn">
+    <form method="POST">
+    <button class="btn btn-primary">
         <i class="bi bi-lightning-charge me-1"></i>Evaluate Selected
     </button>
+</form>
+
 </div>
 
 <!-- ================= PROGRESS SECTION ================= -->
@@ -103,8 +115,38 @@
                 <th>Overall</th>
             </tr>
             </thead>
-            <tbody id="resultsTableBody">
-            </tbody>
+            <tbody>
+{% for c in candidates %}
+<tr>
+    <td>
+        <strong>{{ c.name }}</strong><br>
+        <small class="text-muted">{{ c.email }}</small>
+    </td>
+
+    {% for rk in ["L1","L2","L3","L4","L5","L6"] %}
+        {% if rk in c.rounds %}
+            <td>
+                {{ c.rounds[rk].correct }}/{{ c.rounds[rk].total }}<br>
+                <small class="text-muted">{{ c.rounds[rk].percentage }}%</small>
+            </td>
+        {% else %}
+            <td class="text-muted">—</td>
+        {% endif %}
+    {% endfor %}
+
+    <td class="fw-semibold text-primary">
+        {{
+            (
+              c.rounds.values() | map(attribute="percentage") | sum
+            ) / (c.rounds|length)
+            if c.rounds else 0
+        | round(1)
+        }}%
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+
         </table>
     </div>
 </div>
@@ -116,28 +158,7 @@
     const resultSection = document.getElementById("resultSection");
     const resultsTableBody = document.getElementById("resultsTableBody");
 
-    // Candidate data for results
-    const candidateResults = {
-        'candidate1': {
-            name: 'Ravi Kumar',
-            role: 'Python Entry Level',
-            results: ['PASS', 'PASS', 'FAIL', 'PASS', '—', 'PASS'],
-            overall: 'PASS'
-        },
-        'candidate2': {
-            name: 'Anita Sharma',
-            role: 'Python QA',
-            results: ['PASS', 'PASS', 'PASS', 'PASS', '—', 'PASS'],
-            overall: 'PASS'
-        },
-        'candidate3': {
-            name: 'Rahul Verma',
-            role: 'Java + AWS',
-            results: ['PASS', 'PASS', 'PASS', '—', '—', '—'],
-            overall: 'IN PROGRESS'
-        }
-    };
-
+    
     // Toggle candidate dropdown visibility
     const dropdownToggle = document.getElementById('candidateDropdownToggle');
     const selectContainer = document.getElementById('candidateSelectContainer');
