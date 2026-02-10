@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>{{ title or "Aziro MCQ Test" }}</title>
 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='mcq/mcq.css') }}">
+
     <style>
         :root {
             --aziro-primary: #1f4fd8;
@@ -14,6 +17,7 @@
             --aziro-muted: #6b7280;
             --aziro-success: #198754;
             --aziro-danger: #dc3545;
+            --aziro-warning: #ff9800;
         }
 
         body {
@@ -21,31 +25,6 @@
             font-family: "Segoe UI", Arial, sans-serif;
             background: var(--aziro-bg);
             color: var(--aziro-text);
-        }
-
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 30px;
-            background: white;
-            border-bottom: 1px solid var(--aziro-border);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo img {
-            height: 36px;
-        }
-
-        .candidate {
-            font-size: 13px;
-            color: var(--aziro-muted);
         }
 
         /* Page container */
@@ -96,6 +75,11 @@
             margin-top: 30px;
             text-align: right;
         }
+
+        /* Proctoring visual feedback */
+        body.proctoring-warning {
+            background: #fff3e0 !important;
+        }
     </style>
 
     {% block extra_css %}{% endblock %}
@@ -117,5 +101,8 @@
     {% block content %}{% endblock %}
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+{% block extra_js %}{% endblock %}
+<script src="{{ url_for('static', filename='js/proctoring.js') }}"></script>
 </body>
 </html>
