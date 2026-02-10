@@ -1,26 +1,42 @@
 {% extends "mcq/base_mcq.html" %}
 {% block content %}
 
-<div class="card" style="text-align:center;">
+<div id="mcqSubmitView" class="mcq-submit-shell">
+    <div class="card mcq-submit-card">
+        <div class="mcq-brand-row" style="justify-content:center;">
+            <img class="mcq-inline-logo"
+                 src="{{ url_for('static', filename='images/azirotech_logo.jpg') }}"
+                 alt="Aziro logo">
+            <div>
+                <div class="mcq-brand-copy">Aziro Enterprise Hiring Platform</div>
+            </div>
+        </div>
 
-    <h2>Submit Test</h2>
+        <h2 class="mcq-submit-title">Review & Submit</h2>
 
-    <p style="color:var(--aziro-muted); margin-top:15px;">
-        You have reached the end of this assessment.
-    </p>
+        <p class="mcq-submit-text" style="margin-top:10px;">
+            You have reached the end of this assessment.
+        </p>
 
-    <p style="margin-top:10px;">
-        Once submitted, you will <strong>not</strong> be able to change your answers.
-    </p>
+        <p class="mcq-submit-text" style="margin-top:8px;">
+            Once submitted, you will <strong>not</strong> be able to change your answers.
+        </p>
 
-    <div class="actions" style="text-align:center;">
-        <form method="POST">
-            <button class="btn btn-danger">
-                Confirm & Submit
-            </button>
-        </form>
+        <div class="mcq-submit-warning">
+            Final check: confirm you have reviewed all attempted questions.
+        </div>
+
+        <div class="actions mcq-submit-actions">
+            <button id="mcqBackToTestBtn" type="button" class="btn btn-secondary">Back to Test</button>
+            <form id="mcqSubmitForm" method="POST">
+                <button id="mcqConfirmSubmitBtn" class="btn btn-danger">Confirm & Submit</button>
+            </form>
+        </div>
     </div>
-
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/mcq_flow.js') }}"></script>
 {% endblock %}

@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime, timezone
 from flask import Blueprint, render_template, request, redirect, url_for
 from app.utils.round_display_mapping import ROUND_DISPLAY_MAPPING
 
@@ -22,6 +23,7 @@ def create_test():
         emails = request.form.getlist("email[]")
         roles = request.form.getlist("role[]")
         domains = request.form.getlist("domain[]")
+        batch_id = datetime.now(timezone.utc).strftime("batch_%Y%m%d_%H%M%S")
 
         for name, email, role_label, domain in zip(names, emails, roles, domains):
 
@@ -41,11 +43,13 @@ def create_test():
 
                 MCQ_SESSION_REGISTRY[session_id] = {
                     "role_key": role_key,
+                    "role_label": role_label,
                     "round_key": round_key,
                     "round_label": ROUND_DISPLAY_MAPPING
     .get(role_key, {})
     .get(round_key, round_key),
 
+                    "batch_id": batch_id,
                     "domain": None,
                     "candidate_name": name,
                     "email": email
@@ -66,9 +70,11 @@ def create_test():
 
                 MCQ_SESSION_REGISTRY[session_id] = {
                     "role_key": role_key,
+                    "role_label": role_label,
                     "round_key": "L6",
                     "round_label": f"Domain – {domain}",
                     "domain": domain.lower(),
+                    "batch_id": batch_id,
                     "candidate_name": name,
                     "email": email
                 }
