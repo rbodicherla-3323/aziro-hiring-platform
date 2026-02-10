@@ -76,6 +76,14 @@ class MCQSessionService:
         session.modified = True
 
     @staticmethod
+    def get_answer(session_id, index):
+        data = session.get(f"mcq_{session_id}")
+        if not data:
+            return None
+
+        return data["answers"].get(str(index))
+
+    @staticmethod
     def total_questions(session_id):
         data = session.get(f"mcq_{session_id}")
         return len(data["questions"]) if data else 0

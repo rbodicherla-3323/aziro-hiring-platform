@@ -4,7 +4,129 @@
 
 {% block content %}
 
-<!-- ✅ NEW BACK BUTTON (TOP) -->
+<style>
+    /* Scoped refinement: compact, readable generated-links section only */
+    .candidate-card {
+        padding: 0.65rem 0.75rem !important;
+        margin-bottom: 0.55rem !important;
+        color: #111;
+        font-size: calc(0.875rem + 1px);
+    }
+
+    .candidate-card .candidate-heading {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        line-height: 1;
+    }
+
+    .candidate-card .candidate-name {
+        color: #0d3b8e;
+        font-size: 1.02rem;
+        font-weight: 650;
+        line-height: 1;
+    }
+
+    .candidate-card .candidate-meta {
+        color: #111;
+        font-size: 0.82rem;
+    }
+
+    .candidate-card .test-links-grid {
+        display: grid;
+        gap: 0.22rem;
+        margin-top: 0.38rem !important;
+        margin-left: 1.35rem;
+        padding-left: 0.45rem;
+        border-left: 1px solid var(--bs-border-color-translucent);
+    }
+
+    .candidate-card .test-link-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.35rem;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        padding: 0.05rem 0;
+    }
+
+    .candidate-card .test-link-meta {
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+    }
+
+    .candidate-card .test-level-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 46px;
+        padding: 0.08rem 0.35rem;
+        border-radius: 999px;
+        background: var(--bs-primary-bg-subtle);
+        color: var(--bs-primary-text-emphasis);
+        font-weight: 600;
+        font-size: 0.66rem;
+    }
+
+    .candidate-card .test-link-label {
+        color: #111;
+        font-size: 0.76rem;
+        font-weight: 500;
+        max-width: 260px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .candidate-card .test-link-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .candidate-card .test-link-actions .btn-link {
+        text-decoration: none;
+        font-weight: 600;
+        color: #111;
+        padding: 0 !important;
+        font-size: 0.74rem;
+        line-height: 1;
+    }
+
+    .candidate-card .copyBtn {
+        min-width: 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+        .candidate-card .test-links-grid {
+            margin-left: 0;
+            padding-left: 0;
+            border-left: 0;
+        }
+
+        .candidate-card .test-link-item {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .candidate-card .test-link-actions {
+            width: 100%;
+            justify-content: flex-start;
+        }
+    }
+</style>
+
+<!-- NEW BACK BUTTON (TOP) -->
 <div class="d-flex justify-content-between align-items-center mb-3">
     <div>
         <h4 class="mb-1">Generated Tests</h4>
@@ -50,10 +172,12 @@
                     <div class="d-flex align-items-start">
                         <input type="checkbox" class="candidateCheck me-3 mt-1">
                         <div>
-                            <strong>{{ cand.name }}</strong>
-                            <span class="badge bg-success-subtle text-success ms-2">Sent</span>
-                            <div class="text-muted small">
-                                {{ cand.email }} · {{ cand.role }}
+                            <div class="candidate-heading">
+                                <div class="candidate-name">{{ cand.name }}</div>
+                                <span class="badge bg-success-subtle text-success">Sent</span>
+                            </div>
+                            <div class="candidate-meta">
+                                {{ cand.email }} &middot; {{ cand.role }}
                             </div>
                         </div>
                     </div>
@@ -64,25 +188,30 @@
                     </div>
                 </div>
 
-                <ul class="list-unstyled mt-3 small mb-0">
+                <div class="test-links-grid mt-3">
                     {% for level, test in cand.tests.items() %}
-                    <li class="d-flex align-items-center mb-1">
-                        <span class="me-2" style="width: 80px;">{{ level }}</span>
-                        <span class="text-muted me-2">{{ test.label }}</span>
-                        <a href="{{ test.url }}"
-   target="_blank"
-   class="btn btn-link btn-sm p-0 me-2">
-   <i class="bi bi-box-arrow-up-right me-1"></i>Open
-</a>
+                    <div class="test-link-item">
+                        <div class="test-link-meta">
+                            <span class="test-level-pill">{{ level }}</span>
+                            <span class="test-link-label" title="{{ test.label }}">{{ test.label }}</span>
+                        </div>
+                        <div class="test-link-actions">
+                            <a href="{{ test.url }}"
+                               target="_blank"
+                               class="btn btn-link btn-sm p-0">
+                                <i class="bi bi-box-arrow-up-right me-1"></i>Open
+                            </a>
 
-<button class="btn btn-link btn-sm p-0 copyBtn"
-        data-link="{{ test.url }}">
-    <i class="bi bi-clipboard me-1"></i>Copy
-</button>
-
-                    </li>
+                            <button class="btn btn-link btn-sm p-0 copyBtn"
+                                    data-link="{{ test.url }}"
+                                    title="Copy link"
+                                    aria-label="Copy link">
+                                <i class="bi bi-clipboard"></i>
+                            </button>
+                        </div>
+                    </div>
                     {% endfor %}
-                </ul>
+                </div>
 
             </div>
             {% endfor %}
@@ -129,19 +258,19 @@
     document.querySelectorAll(".copyBtn").forEach(btn => {
         btn.addEventListener("click", () => {
             navigator.clipboard.writeText(btn.dataset.link);
-            btn.innerHTML = '<i class="bi bi-check me-1"></i>Copied';
+            btn.innerHTML = '<i class="bi bi-check"></i>';
             if (typeof showToast === 'function') showToast('Link copied to clipboard!', 'success');
-            setTimeout(() => btn.innerHTML = '<i class="bi bi-clipboard me-1"></i>Copy Link', 1500);
+            setTimeout(() => btn.innerHTML = '<i class="bi bi-clipboard"></i>', 1500);
         });
     });
-    
+
     // Resend button
     document.querySelectorAll(".resendBtn").forEach(btn => {
         btn.addEventListener("click", () => {
             if (typeof showToast === 'function') showToast('Email resent successfully!', 'success');
         });
     });
-    
+
     // Bulk Email Button
     document.getElementById('bulkEmailBtn').addEventListener('click', () => {
         const count = document.querySelectorAll('.candidateCheck:checked').length;

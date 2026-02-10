@@ -1,122 +1,112 @@
 {% extends "mcq/base_mcq.html" %}
-{% block content %}
 
-<!-- ================= HEADER STRIP ================= -->
-<div style="
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:18px;
-">
-
-    <!-- Progress -->
-    <div style="
-        font-size:14px;
-        color:var(--aziro-muted);
-        font-weight:500;
-    ">
-        Question {{ q_index + 1 }} of {{ total_questions }}
-    </div>
-
-    <!-- Timer -->
-    <div id="timer"
-         style="
-            font-size:14px;
-            font-weight:600;
-            color:var(--aziro-danger);
-         ">
-        Time left: --
-    </div>
-
-</div>
-
-<!-- ================= QUESTION CARD ================= -->
-<div class="card"
-     style="
-        padding:26px 28px;
-     ">
-
-    <!-- Question Text -->
-    <h3 style="
-        margin-bottom:26px;
-        line-height:1.6;
-        font-weight:600;
-        color:var(--aziro-dark);
-    ">
-        {{ question.question or question.text }}
-    </h3>
-
-    <!-- Options -->
-    <form method="POST"
-          action="{{ url_for('mcq.question', session_id=session_id, q=q_index) }}">
-
-        {% for option in question.options %}
-        <label style="
-            display:block;
-            margin-bottom:14px;
-            padding:12px 16px;
-            border:1px solid var(--aziro-border);
-            border-radius:6px;
-            cursor:pointer;
-            background:#ffffff;
-            transition: background 0.2s ease, border 0.2s ease;
-        "
-        onmouseover="this.style.background='#f5f8ff'; this.style.borderColor='var(--aziro-blue)'"
-        onmouseout="this.style.background='white'; this.style.borderColor='var(--aziro-border)'">
-
-            <input type="radio"
-                   name="answer"
-                   value="{{ option }}"
-                   required
-                   style="margin-right:10px;">
-
-            {{ option }}
-        </label>
-        {% endfor %}
-
-        <!-- Actions -->
-        <div style="
-            display:flex;
-            justify-content:flex-end;
-            margin-top:28px;
-        ">
-            <button class="btn btn-primary px-4">
-                {% if q_index + 1 == total_questions %}
-                    Submit
-                {% else %}
-                    Next
-                {% endif %}
-            </button>
-        </div>
-    </form>
-
-</div>
-
-<!-- ================= TIMER SCRIPT ================= -->
-<script>
-    let remaining = {{ remaining_seconds }};
-
-    function formatTime(sec) {
-        const m = Math.floor(sec / 60);
-        const s = sec % 60;
-        return m + ":" + s.toString().padStart(2, '0');
+{% block extra_css %}
+<style>
+    .page {
+        max-width: 1200px !important;
     }
-
-    function tick() {
-        if (remaining <= 0) {
-            window.location.href =
-                "{{ url_for('mcq.submit', session_id=session_id) }}";
-            return;
-        }
-
-        document.getElementById("timer").innerText =
-            "Time left: " + formatTime(remaining);
-
-        remaining--;
-    }
-
-    tick();
-    setInterval(tick, 1000);
-</script>
-
+</style>
 {% endblock %}
+
+{% block content %}
+<div id="mcqQuestionView"
+     data-session-id="{{ session_id }}"
+     data-q-index="{{ q_index }}"
+     data-total-questions="{{ total_questions }}"
+     data-remaining-seconds="{{ remaining_seconds }}"
+     data-submit-url="{{ url_for('mcq.submit', session_id=session_id) }}"
+     class="mcq-shell">
+
+    <aside class="mcq-nav-panel">
+        <h4 class="mcq-nav-title">Question Palette</h4>
+        <div id="mcqProgress" class="mcq-nav-subtitle">
+            Question {{ q_index + 1 }} of {{ total_questions }}
+        </div>
+        <div class="mcq-progress-track" aria-hidden="true">
+            <div id="mcqProgressBar" class="mcq-progress-fill"></div>
+        </div>
+
+        <div id="mcqNavGrid" class="mcq-nav-grid">
+            {% for idx in range(total_questions) %}
+            <button type="button"
+                    class="mcq-nav-btn {% if idx == q_index %}active{% endif %}{% if idx < q_index %} answered{% endif %}"
+                    data-go="{{ idx }}"
+                    aria-label="Go to question {{ idx + 1 }}">
+                {{ idx + 1 }}
+            </button>
+            {% endfor %}
+        </div>
+        <div class="mcq-nav-legend">
+            <span class="legend-chip current">Current</span>
+            <span class="legend-chip answered">Answered</span>
+            <span class="legend-chip reviewed">Marked</span>
+        </div>
+    </aside>
+
+    <section class="mcq-main-panel">
+        <div class="mcq-top-strip">
+            <span class="mcq-top-chip">Aziro Enterprise Assessment</span>
+            <div id="timer" class="mcq-top-timer">Time left: --</div>
+            <div id="mcqTimerNotice" class="mcq-timer-notice" role="status" aria-live="polite"></div>
+        </div>
+
+        <div class="card mcq-question-card">
+            <div class="mcq-question-number">Question {{ q_index + 1 }}</div>
+            <h3 id="mcqQuestionText" class="mcq-question-title">
+                {{ question.question or question.text }}
+            </h3>
+            <div class="mcq-question-help">
+                Select the best answer. You can revisit questions using the palette.
+            </div>
+
+            <form id="mcqQuestionForm"
+                  method="POST"
+                  action="{{ url_for('mcq.question', session_id=session_id, q=q_index) }}">
+
+                <div id="mcqOptionsContainer" class="mcq-options">
+                    {% for option in question.options %}
+                    <label class="mcq-option">
+                        <input type="radio"
+                               name="answer"
+                               value="{{ option }}"
+                               {% if selected_answer == option %}checked{% endif %}>
+                        <span class="mcq-option-text">{{ option }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+
+                <div id="mcqActions" class="mcq-actions">
+                    {% if q_index > 0 %}
+                    <button type="submit"
+                            name="nav"
+                            value="prev"
+                            class="btn btn-danger px-4">
+                        Previous
+                    </button>
+                    {% endif %}
+                    <button type="button"
+                            id="mcqReviewBtn"
+                            class="btn btn-secondary px-4">
+                        Mark for Review
+                    </button>
+                    <button type="submit"
+                            name="nav"
+                            value="next"
+                            class="btn btn-primary px-4">
+                        {% if q_index + 1 == total_questions %}
+                            Submit
+                        {% else %}
+                            Next
+                        {% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/mcq_flow.js') }}"></script>
+{% endblock %}
+
