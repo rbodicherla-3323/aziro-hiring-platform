@@ -172,10 +172,14 @@ def start_test(session_id):
     if not session_meta:
         return "Invalid or expired test link", 404
 
-    # ✅ PERMANENT FIX: RESET OLD SESSION (browser-safe)
-    session_key = f"mcq_{session_id}"
-    if session_key in session:
-        session.pop(session_key)
+    # ✅ Clear ALL old test session data to keep cookie small
+    #    (Flask's cookie-based session has a ~4 KB browser limit;
+    #     accumulated question payloads from earlier rounds cause
+    #     the Set-Cookie to be silently dropped.)
+    stale_keys = [k for k in list(session.keys())
+                  if k.startswith(("mcq_", "coding_"))]
+    for k in stale_keys:
+        session.pop(k)
 
     MCQSessionService.init_session(
         session_id=session_id,
@@ -528,6 +532,9 @@ def submit(session_id):
     if request.method == "POST":
         # Evaluate only once here
         EvaluationService.evaluate_mcq(session_id)
+
+        # Free cookie space immediately after evaluation
+        session.pop(f"mcq_{session_id}", None)
 
         completed_url = url_for("mcq.completed", session_id=session_id)
         if _is_ajax_request():

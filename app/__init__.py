@@ -11,6 +11,7 @@ from .blueprints.tests.routes import tests_bp
 from .blueprints.evaluation.routes import evaluation_bp
 from .blueprints.reports.routes import reports_bp
 from .blueprints.mcq import mcq_bp   # ✅ MCQ blueprint
+from .blueprints.coding import coding_bp   # ✅ L4 Coding blueprint
 
 
 def create_app():
@@ -39,6 +40,7 @@ def create_app():
     app.register_blueprint(evaluation_bp)
     app.register_blueprint(reports_bp)
     app.register_blueprint(mcq_bp)   # ✅ MCQ ROUTES ENABLED
+    app.register_blueprint(coding_bp)   # ✅ L4 CODING ROUTES ENABLED
     # ---------------------------
     # DEV MODE: BYPASS LOGIN
     # ---------------------------

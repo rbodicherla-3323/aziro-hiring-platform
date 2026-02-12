@@ -96,7 +96,7 @@ ROUND_QUESTION_MAPPING = {
 
 # Domain rounds (COMMON)
 DOMAIN_QUESTION_FILES = {
-    "Storage": ["domains/storage.json"],
-    "Virtualization": ["domains/virtualisation.json"],
-    "Networking": ["domains/networking.json"]
+    "storage": ["domains/storage.json"],
+    "virtualization": ["domains/virtualisation.json"],
+    "networking": ["domains/networking.json"]
 }

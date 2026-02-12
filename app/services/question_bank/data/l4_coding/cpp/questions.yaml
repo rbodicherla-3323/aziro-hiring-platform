@@ -1,0 +1,3034 @@
+- id: 2
+  title: Reverse a Number
+  difficulty: EASY
+  description: Write a program to reverse a number without using any inbuilt function.
+  function:
+    cpp: 'int solve(int n)'
+  public_tests:
+  - input:
+    - 123
+    expected: 321
+  - input:
+    - 100
+    expected: 1
+  - input:
+    - 0
+    expected: 0
+  hidden_tests:
+  - input:
+    - 456
+    expected: 654
+  - input:
+    - 9
+    expected: 9
+  - input:
+    - 1000
+    expected: 1
+  - input:
+    - 12345
+    expected: 54321
+  - input:
+    - 100
+    expected: 1
+  - input:
+    - 505
+    expected: 505
+  - input:
+    - 1001
+    expected: 1001
+  - input:
+    - 9876
+    expected: 6789
+  - input:
+    - 1230
+    expected: 321
+  - input:
+    - 555
+    expected: 555
+
+- id: 3
+  title: Square of Even and Cube of Odd
+  difficulty: EASY
+  description: Given a list of first 10 natural numbers, write a program to find the
+    square of all even numbers and cube of all odd numbers and store them in another
+    list.
+  function:
+    cpp: 'vector<int> solve(vector<int> nums)'
+  public_tests:
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    expected:
+    - 1
+    - 4
+    - 27
+    - 16
+    - 125
+  - input:
+    - - 2
+      - 4
+      - 6
+    expected:
+    - 4
+    - 16
+    - 36
+  - input:
+    - - 1
+      - 3
+      - 5
+    expected:
+    - 1
+    - 27
+    - 125
+  hidden_tests:
+  - input:
+    - - 1
+    expected:
+    - 1
+  - input:
+    - - 2
+    expected:
+    - 4
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+    expected:
+    - 1
+    - 4
+    - 27
+    - 16
+    - 125
+    - 36
+    - 343
+    - 64
+    - 729
+    - 100
+  - input:
+    - - 10
+      - 9
+      - 8
+      - 7
+    expected:
+    - 100
+    - 729
+    - 64
+    - 343
+  - input:
+    - - 2
+      - 4
+      - 6
+      - 8
+      - 10
+    expected:
+    - 4
+    - 16
+    - 36
+    - 64
+    - 100
+  - input:
+    - - 1
+      - 3
+      - 5
+      - 7
+      - 9
+    expected:
+    - 1
+    - 27
+    - 125
+    - 343
+    - 729
+  - input:
+    - - 5
+      - 5
+    expected:
+    - 125
+    - 125
+  - input:
+    - - 4
+      - 4
+    expected:
+    - 16
+    - 16
+  - input:
+    - - 1
+      - 2
+    expected:
+    - 1
+    - 4
+  - input:
+    - - 3
+      - 6
+    expected:
+    - 27
+    - 36
+
+- id: 4
+  title: Check Anagrams
+  difficulty: EASY
+  description: Write a function that accepts two strings and returns true if the two
+    strings are anagrams of each other.
+  function:
+    cpp: 'bool solve(string s1, string s2)'
+  public_tests:
+  - input:
+    - listen
+    - silent
+    expected: true
+  - input:
+    - hello
+    - world
+    expected: false
+  - input:
+    - a
+    - a
+    expected: true
+  hidden_tests:
+  - input:
+    - abc
+    - bca
+    expected: true
+  - input:
+    - abc
+    - def
+    expected: false
+  - input:
+    - Ravi
+    - Vair
+    expected: true
+  - input:
+    - evil
+    - vile
+    expected: true
+  - input:
+    - python
+    - typhon
+    expected: true
+  - input:
+    - ''
+    - ''
+    expected: true
+  - input:
+    - a
+    - b
+    expected: false
+  - input:
+    - aab
+    - aba
+    expected: true
+  - input:
+    - test
+    - best
+    expected: false
+  - input:
+    - aaa
+    - aaa
+    expected: true
+
+- id: 5
+  title: Convert List to Key-Value Pairs
+  difficulty: MEDIUM
+  description: 'Convert each list element to a key-value pair by splitting the digits.
+    For example, 2323 becomes {23: 23}, 82 becomes {8: 2}.'
+  function:
+    cpp: 'map<int, int> solve(vector<int> test_list)'
+  public_tests:
+  - input:
+    - - 2323
+      - 82
+      - 129388
+      - 95
+    expected:
+      23: 23
+      8: 2
+      129: 388
+      9: 5
+  - input:
+    - - 11
+      - 22
+    expected:
+      1: 1
+      2: 2
+  - input:
+    - - 100
+    expected:
+      10: 0
+  hidden_tests:
+  - input:
+    - - 12
+    expected:
+      1: 2
+  - input:
+    - - 99
+    expected:
+      9: 9
+  - input:
+    - - 1234
+    expected:
+      12: 34
+  - input:
+    - - 505
+    expected:
+      50: 5
+  - input:
+    - - 123456
+    expected:
+      123: 456
+  - input:
+    - - 10
+    expected:
+      1: 0
+  - input:
+    - - 200
+    expected:
+      20: 0
+  - input:
+    - - 77
+    expected:
+      7: 7
+  - input:
+    - - 4567
+    expected:
+      45: 67
+  - input:
+    - - 88
+      - 99
+    expected:
+      8: 8
+      9: 9
+
+- id: 6
+  title: Find Greatest and Smallest
+  difficulty: EASY
+  description: Write a program to find the greatest and smallest number present in
+    the list. Return as a vector where first element is greatest and second is smallest.
+  function:
+    cpp: 'vector<int> solve(vector<int> nums)'
+  public_tests:
+  - input:
+    - - 45
+      - 7
+      - 32
+      - 567
+      - 90
+      - 54
+      - 99
+    expected:
+    - 567
+    - 7
+  - input:
+    - - 1
+      - 2
+      - 3
+    expected:
+    - 3
+    - 1
+  - input:
+    - - 5
+    expected:
+    - 5
+    - 5
+  hidden_tests:
+  - input:
+    - - 10
+      - 20
+      - 30
+    expected:
+    - 30
+    - 10
+  - input:
+    - - 100
+      - 50
+    expected:
+    - 100
+    - 50
+  - input:
+    - - 9
+      - 9
+      - 9
+    expected:
+    - 9
+    - 9
+  - input:
+    - - 1
+      - 100
+      - 50
+      - 75
+    expected:
+    - 100
+    - 1
+  - input:
+    - - 50
+      - 25
+      - 75
+      - 100
+    expected:
+    - 100
+    - 25
+  - input:
+    - - 0
+    expected:
+    - 0
+    - 0
+  - input:
+    - - -5
+      - -10
+      - -1
+    expected:
+    - -1
+    - -10
+  - input:
+    - - 1
+      - -1
+    expected:
+    - 1
+    - -1
+  - input:
+    - - 15
+      - 8
+      - 23
+      - 4
+    expected:
+    - 23
+    - 4
+  - input:
+    - - 999
+      - 1
+      - 500
+    expected:
+    - 999
+    - 1
+
+- id: 7
+  title: Right Rotate List by n
+  difficulty: EASY
+  description: Write a program to right rotate a list by n positions.
+  function:
+    cpp: 'vector<int> solve(vector<int> lst, int n)'
+  public_tests:
+  - input:
+    - - 10
+      - 20
+      - 30
+      - 40
+      - 50
+      - 60
+      - 70
+    - 3
+    expected:
+    - 50
+    - 60
+    - 70
+    - 10
+    - 20
+    - 30
+    - 40
+  - input:
+    - - 1
+      - 2
+      - 3
+    - 1
+    expected:
+    - 3
+    - 1
+    - 2
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+    - 2
+    expected:
+    - 3
+    - 4
+    - 1
+    - 2
+  hidden_tests:
+  - input:
+    - - 1
+    - 1
+    expected:
+    - 1
+  - input:
+    - - 1
+      - 2
+    - 1
+    expected:
+    - 2
+    - 1
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    - 5
+    expected:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+  - input:
+    - - 10
+      - 20
+      - 30
+      - 40
+    - 4
+    expected:
+    - 10
+    - 20
+    - 30
+    - 40
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    - 2
+    expected:
+    - 4
+    - 5
+    - 1
+    - 2
+    - 3
+  - input:
+    - - 5
+      - 4
+      - 3
+      - 2
+      - 1
+    - 3
+    expected:
+    - 3
+    - 2
+    - 1
+    - 5
+    - 4
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+    - 2
+    expected:
+    - 5
+    - 6
+    - 1
+    - 2
+    - 3
+    - 4
+  - input:
+    - - 10
+      - 20
+    - 1
+    expected:
+    - 20
+    - 10
+  - input:
+    - - 1
+      - 2
+      - 3
+    - 3
+    expected:
+    - 1
+    - 2
+    - 3
+  - input:
+    - - 7
+      - 8
+      - 9
+      - 10
+    - 3
+    expected:
+    - 8
+    - 9
+    - 10
+    - 7
+
+- id: 8
+  title: Even Number Dictionary
+  difficulty: MEDIUM
+  description: Create a map where the key is an even number from the given
+    list and the value will be the occurrence of that element in the list.
+  function:
+    cpp: 'map<int, int> solve(vector<int> nums)'
+  public_tests:
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 2
+      - 4
+      - 2
+      - 4
+      - 7
+      - 8
+      - 4
+      - 5
+      - 8
+      - 6
+      - 9
+      - 2
+    expected:
+      2: 4
+      4: 3
+      8: 2
+      6: 1
+  - input:
+    - - 2
+      - 4
+      - 6
+    expected:
+      2: 1
+      4: 1
+      6: 1
+  - input:
+    - - 1
+      - 3
+      - 5
+    expected: {}
+  hidden_tests:
+  - input:
+    - - 2
+    expected:
+      2: 1
+  - input:
+    - - 1
+      - 2
+      - 1
+      - 2
+    expected:
+      2: 2
+  - input:
+    - - 2
+      - 2
+      - 2
+    expected:
+      2: 3
+  - input:
+    - - 4
+      - 4
+      - 6
+      - 6
+      - 6
+    expected:
+      4: 2
+      6: 3
+  - input:
+    - - 1
+      - 1
+      - 1
+    expected: {}
+  - input:
+    - - 2
+      - 4
+      - 2
+      - 4
+      - 2
+      - 4
+    expected:
+      2: 3
+      4: 3
+  - input:
+    - - 8
+      - 10
+      - 8
+    expected:
+      8: 2
+      10: 1
+  - input:
+    - - 6
+      - 8
+      - 6
+    expected:
+      6: 2
+      8: 1
+  - input:
+    - - 2
+      - 2
+      - 4
+      - 4
+      - 4
+    expected:
+      2: 2
+      4: 3
+  - input:
+    - - 10
+      - 12
+      - 10
+    expected:
+      10: 2
+      12: 1
+
+- id: 9
+  title: Swap Elements at Positions
+  difficulty: EASY
+  description: Write a function that swaps the elements present at positions i and j
+    in the given list.
+  function:
+    cpp: 'vector<int> solve(vector<int> lst, int i, int j)'
+  public_tests:
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+    - 0
+    - 7
+    expected:
+    - 8
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 1
+  - input:
+    - - 1
+      - 2
+      - 3
+    - 0
+    - 1
+    expected:
+    - 2
+    - 1
+    - 3
+  - input:
+    - - 5
+      - 10
+    - 0
+    - 1
+    expected:
+    - 10
+    - 5
+  hidden_tests:
+  - input:
+    - - 1
+      - 2
+    - 0
+    - 1
+    expected:
+    - 2
+    - 1
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    - 1
+    - 3
+    expected:
+    - 1
+    - 4
+    - 3
+    - 2
+    - 5
+  - input:
+    - - 10
+      - 20
+      - 30
+    - 0
+    - 2
+    expected:
+    - 30
+    - 20
+    - 10
+  - input:
+    - - 1
+      - 2
+      - 3
+    - 0
+    - 0
+    expected:
+    - 1
+    - 2
+    - 3
+  - input:
+    - - 5
+      - 6
+      - 7
+      - 8
+    - 1
+    - 2
+    expected:
+    - 5
+    - 7
+    - 6
+    - 8
+  - input:
+    - - 100
+      - 200
+      - 300
+      - 400
+    - 0
+    - 3
+    expected:
+    - 400
+    - 200
+    - 300
+    - 100
+  - input:
+    - - 9
+      - 8
+      - 7
+      - 6
+      - 5
+    - 2
+    - 4
+    expected:
+    - 9
+    - 8
+    - 5
+    - 6
+    - 7
+  - input:
+    - - 1
+      - 1
+      - 1
+    - 0
+    - 2
+    expected:
+    - 1
+    - 1
+    - 1
+  - input:
+    - - 11
+      - 22
+      - 33
+      - 44
+    - 1
+    - 3
+    expected:
+    - 11
+    - 44
+    - 33
+    - 22
+  - input:
+    - - 7
+      - 14
+      - 21
+      - 28
+      - 35
+    - 0
+    - 4
+    expected:
+    - 35
+    - 14
+    - 21
+    - 28
+    - 7
+
+- id: 10
+  title: Sort by Last Character
+  difficulty: MEDIUM
+  description: Write a program to sort the given list of strings based on the last character
+    of each word.
+  function:
+    cpp: 'vector<string> solve(vector<string> names)'
+  public_tests:
+  - input:
+    - - Prabhu
+      - Rahul
+      - Arunesh
+      - Sonali
+      - Rakshit
+    expected:
+    - Rahul
+    - Prabhu
+    - Sonali
+    - Rakshit
+    - Arunesh
+  - input:
+    - - cat
+      - dog
+      - bird
+    expected:
+    - bird
+    - dog
+    - cat
+  - input:
+    - - a
+      - b
+      - c
+    expected:
+    - a
+    - b
+    - c
+  hidden_tests:
+  - input:
+    - - apple
+      - people
+      - sample
+    expected:
+    - apple
+    - sample
+    - people
+  - input:
+    - - test
+      - best
+      - rest
+    expected:
+    - test
+    - best
+    - rest
+  - input:
+    - - hello
+      - world
+    expected:
+    - hello
+    - world
+  - input:
+    - - zap
+      - cap
+      - map
+    expected:
+    - cap
+    - map
+    - zap
+  - input:
+    - - orange
+      - range
+    expected:
+    - range
+    - orange
+  - input:
+    - - read
+      - dead
+      - head
+    expected:
+    - read
+    - dead
+    - head
+  - input:
+    - - six
+      - mix
+      - fix
+    expected:
+    - mix
+    - six
+    - fix
+  - input:
+    - - dog
+      - cat
+      - bat
+    expected:
+    - cat
+    - bat
+    - dog
+  - input:
+    - - run
+      - fun
+      - sun
+    expected:
+    - run
+    - fun
+    - sun
+  - input:
+    - - box
+      - fox
+      - sox
+    expected:
+    - box
+    - fox
+    - sox
+
+- id: 11
+  title: Find String Indices
+  difficulty: MEDIUM
+  description: Find the indices of the start and end of string k in S. Return the
+    pairs in format {start_index, end_index}. If no match is found, return empty vector.
+  function:
+    cpp: 'vector<vector<int>> solve(string s, string k)'
+  public_tests:
+  - input:
+    - aaadaa
+    - aa
+    expected:
+    - - 0
+      - 1
+    - - 1
+      - 2
+    - - 4
+      - 5
+  - input:
+    - hello
+    - ll
+    expected:
+    - - 2
+      - 3
+  - input:
+    - world
+    - xy
+    expected: []
+  hidden_tests:
+  - input:
+    - aaa
+    - aa
+    expected:
+    - - 0
+      - 1
+    - - 1
+      - 2
+  - input:
+    - test
+    - es
+    expected:
+    - - 1
+      - 2
+  - input:
+    - python
+    - python
+    expected:
+    - - 0
+      - 5
+  - input:
+    - abc
+    - d
+    expected: []
+  - input:
+    - mississippi
+    - ss
+    expected:
+    - - 2
+      - 3
+    - - 5
+      - 6
+  - input:
+    - banana
+    - an
+    expected:
+    - - 1
+      - 2
+    - - 3
+      - 4
+  - input:
+    - book
+    - oo
+    expected:
+    - - 1
+      - 2
+  - input:
+    - success
+    - ss
+    expected:
+    - - 2
+      - 3
+  - input:
+    - programming
+    - mm
+    expected:
+    - - 7
+      - 8
+  - input:
+    - needle
+    - needle
+    expected:
+    - - 0
+      - 5
+
+- id: 17
+  title: Count Alphabet in Alphanumeric String
+  difficulty: HARD
+  description: Write a program to find the count of alphabet alone in the given alphanumeric
+    string and format the output with counts after each character.
+  function:
+    cpp: 'string solve(string s)'
+  public_tests:
+  - input:
+    - abb24ccc8ddbbca1
+    expected: a1b224c3d2b2c1a11
+  - input:
+    - abc23
+    expected: a1b1c123
+  - input:
+    - a1b2c3
+    expected: a1b1c1123
+  hidden_tests:
+  - input:
+    - aaa
+    expected: a3
+  - input:
+    - aabb
+    expected: a2b2
+  - input:
+    - test
+    expected: t1e1s1t1
+  - input:
+    - hello5
+    expected: h1e1l2o15
+  - input:
+    - xyz
+    expected: x1y1z1
+  - input:
+    - aabbcc123
+    expected: a2b2c2123
+  - input:
+    - zz99zz
+    expected: z299z2
+  - input:
+    - code1code
+    expected: c1o1d1e1c1o1d1e1
+  - input:
+    - 111aaa111
+    expected: 111a3111
+  - input:
+    - ab1ab
+    expected: a1b1a1b1
+
+- id: 20
+  title: Valid Parentheses
+  difficulty: MEDIUM
+  description: Write a program to check the validity of a string of parentheses.
+    These brackets must be closed in the correct order.
+  function:
+    cpp: 'bool solve(string s)'
+  public_tests:
+  - input:
+    - ()
+    expected: true
+  - input:
+    - ()[]{}
+    expected: true
+  - input:
+    - '[)'
+    expected: false
+  hidden_tests:
+  - input:
+    - ([)]
+    expected: false
+  - input:
+    - '{[]}'
+    expected: true
+  - input:
+    - ()()
+    expected: true
+  - input:
+    - (
+    expected: false
+  - input:
+    - (([]){})
+    expected: true
+  - input:
+    - ([{}])
+    expected: true
+  - input:
+    - '{[}]'
+    expected: false
+  - input:
+    - ((()))
+    expected: true
+  - input:
+    - '[]{}()'
+    expected: true
+  - input:
+    - ([{}])(){}[]
+    expected: true
+
+- id: 27
+  title: Remove Parenthesis Area
+  difficulty: HARD
+  description: Write a program to remove parenthesis area in a string using regex.
+  function:
+    cpp: 'string solve(string s)'
+  public_tests:
+  - input:
+    - example (.com)
+    expected: example
+  - input:
+    - github (.com)
+    expected: github
+  - input:
+    - test
+    expected: test
+  hidden_tests:
+  - input:
+    - hello (world)
+    expected: hello
+  - input:
+    - python (.io)
+    expected: python
+  - input:
+    - code (.py)
+    expected: code
+  - input:
+    - file (.txt)
+    expected: file
+  - input:
+    - data (.csv)
+    expected: data
+  - input:
+    - java (.lang)
+    expected: java
+  - input:
+    - node (.js)
+    expected: node
+  - input:
+    - web (.html)
+    expected: web
+  - input:
+    - script (.js)
+    expected: script
+  - input:
+    - style (.css)
+    expected: style
+
+- id: 28
+  title: Second Highest Number
+  difficulty: MEDIUM
+  description: Write a program to find second highest number in an integer
+    array without using inbuilt functions.
+  function:
+    cpp: 'int solve(vector<int> nums)'
+  public_tests:
+  - input:
+    - - 1
+      - 5
+      - 3
+      - 9
+      - 2
+    expected: 5
+  - input:
+    - - 10
+      - 20
+      - 5
+    expected: 10
+  - input:
+    - - 5
+      - 5
+      - 3
+    expected: 5
+  hidden_tests:
+  - input:
+    - - 3
+      - 1
+      - 4
+      - 1
+      - 5
+    expected: 4
+  - input:
+    - - 100
+      - 200
+      - 150
+    expected: 150
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    expected: 4
+  - input:
+    - - 50
+      - 30
+      - 20
+    expected: 30
+  - input:
+    - - 7
+      - 9
+      - 11
+    expected: 9
+  - input:
+    - - 10
+      - 10
+      - 5
+    expected: 10
+  - input:
+    - - 8
+      - 3
+      - 9
+      - 2
+    expected: 8
+  - input:
+    - - 15
+      - 25
+      - 10
+    expected: 15
+  - input:
+    - - 100
+      - 90
+      - 110
+    expected: 100
+  - input:
+    - - 5
+      - 15
+      - 10
+      - 20
+    expected: 15
+
+- id: 29
+  title: Remove Duplicates from Array
+  difficulty: MEDIUM
+  description: Write a program to remove duplicate elements from array without
+    using inbuilt functions.
+  function:
+    cpp: 'vector<int> solve(vector<int> nums)'
+  public_tests:
+  - input:
+    - - 1
+      - 2
+      - 2
+      - 3
+      - 3
+      - 3
+    expected:
+    - 1
+    - 2
+    - 3
+  - input:
+    - - 5
+      - 5
+      - 5
+    expected:
+    - 5
+  - input:
+    - - 1
+      - 2
+      - 3
+    expected:
+    - 1
+    - 2
+    - 3
+  hidden_tests:
+  - input:
+    - - 1
+      - 1
+      - 2
+      - 2
+      - 3
+    expected:
+    - 1
+    - 2
+    - 3
+  - input:
+    - - 4
+      - 4
+      - 4
+      - 4
+    expected:
+    - 4
+  - input:
+    - - 1
+      - 2
+      - 1
+      - 2
+    expected:
+    - 1
+    - 2
+  - input:
+    - - 10
+      - 20
+      - 10
+    expected:
+    - 10
+    - 20
+  - input:
+    - - 7
+      - 8
+      - 7
+      - 9
+    expected:
+    - 7
+    - 8
+    - 9
+  - input:
+    - - 100
+    expected:
+    - 100
+  - input:
+    - - 1
+      - 1
+      - 1
+      - 2
+      - 2
+      - 3
+    expected:
+    - 1
+    - 2
+    - 3
+  - input:
+    - - 5
+      - 6
+      - 5
+      - 7
+      - 6
+    expected:
+    - 5
+    - 6
+    - 7
+  - input:
+    - - 3
+      - 3
+      - 2
+      - 2
+      - 1
+    expected:
+    - 3
+    - 2
+    - 1
+  - input:
+    - - 9
+      - 8
+      - 9
+      - 8
+    expected:
+    - 9
+    - 8
+
+- id: 30
+  title: Left Rotation of Array
+  difficulty: EASY
+  description: Write a program to perform left rotation of array elements by
+    two positions.
+  function:
+    cpp: 'vector<int> solve(vector<int> nums)'
+  public_tests:
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    expected:
+    - 3
+    - 4
+    - 5
+    - 1
+    - 2
+  - input:
+    - - 10
+      - 20
+      - 30
+    expected:
+    - 30
+    - 10
+    - 20
+  - input:
+    - - 1
+      - 2
+    expected:
+    - 2
+    - 1
+  hidden_tests:
+  - input:
+    - - 1
+      - 2
+      - 3
+    expected:
+    - 3
+    - 1
+    - 2
+  - input:
+    - - 5
+      - 10
+      - 15
+      - 20
+    expected:
+    - 15
+    - 20
+    - 5
+    - 10
+  - input:
+    - - 1
+    expected:
+    - 1
+  - input:
+    - - 7
+      - 8
+    expected:
+    - 8
+    - 7
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+    expected:
+    - 3
+    - 4
+    - 5
+    - 6
+    - 1
+    - 2
+  - input:
+    - - 100
+      - 200
+      - 300
+    expected:
+    - 300
+    - 100
+    - 200
+  - input:
+    - - 9
+      - 8
+      - 7
+      - 6
+    expected:
+    - 7
+    - 6
+    - 9
+    - 8
+  - input:
+    - - 2
+      - 4
+      - 6
+      - 8
+      - 10
+    expected:
+    - 6
+    - 8
+    - 10
+    - 2
+    - 4
+  - input:
+    - - 50
+      - 60
+      - 70
+    expected:
+    - 70
+    - 50
+    - 60
+  - input:
+    - - 11
+      - 22
+      - 33
+      - 44
+      - 55
+    expected:
+    - 33
+    - 44
+    - 55
+    - 11
+    - 22
+
+- id: 31
+  title: Square of Prime Numbers
+  difficulty: MEDIUM
+  description: From given list of numbers, create a list of square of prime numbers.
+  function:
+    cpp: 'vector<int> solve(vector<int> nums)'
+  public_tests:
+  - input:
+    - - 1
+      - 4
+      - 6
+      - 11
+      - 15
+      - 24
+      - 19
+      - 25
+      - 27
+      - 30
+      - 17
+    expected:
+    - 121
+    - 361
+    - 289
+  - input:
+    - - 2
+      - 3
+      - 4
+    expected:
+    - 4
+    - 9
+  - input:
+    - - 7
+      - 11
+      - 13
+    expected:
+    - 49
+    - 121
+    - 169
+  hidden_tests:
+  - input:
+    - - 2
+    expected:
+    - 4
+  - input:
+    - - 1
+      - 2
+      - 3
+    expected:
+    - 4
+    - 9
+  - input:
+    - - 5
+      - 7
+      - 9
+    expected:
+    - 25
+    - 49
+  - input:
+    - - 10
+      - 11
+      - 12
+    expected:
+    - 121
+  - input:
+    - - 17
+      - 19
+      - 21
+    expected:
+    - 289
+    - 361
+  - input:
+    - - 2
+      - 3
+      - 5
+      - 7
+    expected:
+    - 4
+    - 9
+    - 25
+    - 49
+  - input:
+    - - 4
+      - 6
+      - 8
+    expected: []
+  - input:
+    - - 1
+      - 1
+      - 1
+    expected: []
+  - input:
+    - - 23
+      - 29
+    expected:
+    - 529
+    - 841
+  - input:
+    - - 13
+      - 14
+      - 15
+    expected:
+    - 169
+
+- id: 32
+  title: Reverse String without Special Characters
+  difficulty: HARD
+  description: Reverse the given string without changing the position of special characters.
+  function:
+    cpp: 'string solve(string s)'
+  public_tests:
+  - input:
+    - adfw$vf&yvy*ugv%uy
+    expected: yug$vy&vyf*wfd%a
+  - input:
+    - a@b
+    expected: b@a
+  - input:
+    - abc!def
+    expected: fed!cba
+  hidden_tests:
+  - input:
+    - hello
+    expected: olleh
+  - input:
+    - a#b#c
+    expected: c#b#a
+  - input:
+    - test@123
+    expected: 321@tset
+  - input:
+    - x$y@z
+    expected: z$y@x
+  - input:
+    - code!code
+    expected: edoc!edoc
+  - input:
+    - a
+    expected: a
+  - input:
+    - ab@cd
+    expected: dc@ba
+  - input:
+    - 1a2b3c
+    expected: 3c2b1a
+  - input:
+    - word*word
+    expected: drow*drow
+  - input:
+    - python%lang
+    expected: gnal%nohtyp
+
+- id: 33
+  title: Hide Credit Card Number
+  difficulty: EASY
+  description: Write a function that accepts a credit card number. It should return
+    a string where all characters are hidden with an asterisk except the last four.
+  function:
+    cpp: 'string solve(string card_num)'
+  public_tests:
+  - input:
+    - '4509876278910046'
+    expected: '************0046'
+  - input:
+    - '1234'
+    expected: '1234'
+  - input:
+    - '123456789012345'
+    expected: '***********2345'
+  hidden_tests:
+  - input:
+    - '5555555555554444'
+    expected: '************4444'
+  - input:
+    - '4532015112830366'
+    expected: '************0366'
+  - input:
+    - '6011000990139424'
+    expected: '************9424'
+  - input:
+    - '378282246310005'
+    expected: '***********0005'
+  - input:
+    - '30569309025904'
+    expected: '**********5904'
+  - input:
+    - '3530111333300000'
+    expected: '************0000'
+  - input:
+    - '1234567890123456'
+    expected: '************3456'
+  - input:
+    - '9999999999999999'
+    expected: '************9999'
+  - input:
+    - '1111111111111111'
+    expected: '************1111'
+  - input:
+    - '4024007134432509'
+    expected: '************2509'
+
+- id: 34
+  title: Average Word Length
+  difficulty: EASY
+  description: For the given sentence, return the average word length after removing
+    punctuation.
+  function:
+    cpp: 'double solve(string sentence)'
+  public_tests:
+  - input:
+    - I need to work very hard to learn more about algorithms in Python!
+    expected: 4.923076923
+  - input:
+    - Hello world.
+    expected: 5.5
+  - input:
+    - Hi!
+    expected: 2.0
+  hidden_tests:
+  - input:
+    - Python is great.
+    expected: 4.5
+  - input:
+    - a b c.
+    expected: 1.0
+  - input:
+    - Hello World Python.
+    expected: 5.666666667
+  - input:
+    - The quick brown fox.
+    expected: 4.25
+  - input:
+    - I am learning coding.
+    expected: 4.4
+  - input:
+    - Java is fun!
+    expected: 4.0
+  - input:
+    - Test case.
+    expected: 4.5
+  - input:
+    - One two three four five.
+    expected: 3.6
+  - input:
+    - Programming is awesome!
+    expected: 9.666666667
+  - input:
+    - Data science rocks.
+    expected: 5.666666667
+
+- id: 35
+  title: Sort in Descending Order without Builtin
+  difficulty: MEDIUM
+  description: Sort the list of integers in descending order without using inbuilt
+    functions.
+  function:
+    cpp: 'vector<int> solve(vector<int> nums)'
+  public_tests:
+  - input:
+    - - 56
+      - 2
+      - 13
+      - 1
+      - 78
+      - 4
+      - 6
+    expected:
+    - 78
+    - 56
+    - 13
+    - 6
+    - 4
+    - 2
+    - 1
+  - input:
+    - - 3
+      - 1
+      - 2
+    expected:
+    - 3
+    - 2
+    - 1
+  - input:
+    - - 5
+    expected:
+    - 5
+  hidden_tests:
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    expected:
+    - 5
+    - 4
+    - 3
+    - 2
+    - 1
+  - input:
+    - - 10
+      - 5
+      - 8
+    expected:
+    - 10
+    - 8
+    - 5
+  - input:
+    - - 100
+      - 50
+      - 75
+    expected:
+    - 100
+    - 75
+    - 50
+  - input:
+    - - 1
+      - 1
+      - 1
+    expected:
+    - 1
+    - 1
+    - 1
+  - input:
+    - - 9
+      - 3
+      - 7
+      - 1
+    expected:
+    - 9
+    - 7
+    - 3
+    - 1
+  - input:
+    - - 45
+      - 23
+      - 67
+      - 12
+    expected:
+    - 67
+    - 45
+    - 23
+    - 12
+  - input:
+    - - 5
+      - 5
+      - 3
+      - 3
+      - 1
+    expected:
+    - 5
+    - 5
+    - 3
+    - 3
+    - 1
+  - input:
+    - - 20
+      - 10
+      - 30
+    expected:
+    - 30
+    - 20
+    - 10
+  - input:
+    - - 7
+      - 2
+      - 9
+      - 4
+    expected:
+    - 9
+    - 7
+    - 4
+    - 2
+  - input:
+    - - 15
+      - 8
+      - 20
+      - 3
+    expected:
+    - 20
+    - 15
+    - 8
+    - 3
+
+- id: 36
+  title: Square String Elements
+  difficulty: EASY
+  description: From the given list, check if element is integer then return square
+    and if string then return string 2 times. Use variant type or string encoding.
+  function:
+    cpp: 'vector<string> solve(vector<string> items)'
+  public_tests:
+  - input:
+    - - '8'
+      - '9'
+      - '10'
+      - f
+      - '5'
+      - '8'
+      - d
+    expected:
+    - '64'
+    - '81'
+    - '100'
+    - ff
+    - '25'
+    - '64'
+    - dd
+  - input:
+    - - '2'
+      - a
+    expected:
+    - '4'
+    - aa
+  - input:
+    - - '3'
+      - '4'
+      - x
+      - y
+    expected:
+    - '9'
+    - '16'
+    - xx
+    - yy
+  hidden_tests:
+  - input:
+    - - '5'
+      - hello
+    expected:
+    - '25'
+    - hellohello
+  - input:
+    - - '1'
+      - '2'
+      - a
+      - b
+    expected:
+    - '1'
+    - '4'
+    - aa
+    - bb
+  - input:
+    - - x
+    expected:
+    - xx
+  - input:
+    - - '10'
+    expected:
+    - '100'
+  - input:
+    - - '3'
+      - test
+      - '4'
+    expected:
+    - '9'
+    - testtest
+    - '16'
+  - input:
+    - - '7'
+      - '8'
+      - abc
+    expected:
+    - '49'
+    - '64'
+    - abcabc
+  - input:
+    - - code
+      - '2'
+      - '3'
+    expected:
+    - codecode
+    - '4'
+    - '9'
+  - input:
+    - - '0'
+      - zero
+    expected:
+    - '0'
+    - zerozero
+  - input:
+    - - '6'
+      - string
+      - '7'
+    expected:
+    - '36'
+    - stringstring
+    - '49'
+  - input:
+    - - a
+      - b
+      - '5'
+      - '6'
+    expected:
+    - aa
+    - bb
+    - '25'
+    - '36'
+
+- id: 37
+  title: Fill Sentinel with Recent Value
+  difficulty: MEDIUM
+  description: In the given list, check if element is -999 (sentinel for null), replace it with the most
+    recent non-sentinel value. If no previous value exists, keep -999.
+  function:
+    cpp: 'vector<int> solve(vector<int> lst)'
+  public_tests:
+  - input:
+    - - 1
+      - -999
+      - -999
+      - 3
+      - -999
+      - 4
+    expected:
+    - 1
+    - 1
+    - 1
+    - 3
+    - 3
+    - 4
+  - input:
+    - - 2
+      - -999
+      - 5
+    expected:
+    - 2
+    - 2
+    - 5
+  - input:
+    - - 10
+      - -999
+      - -999
+      - -999
+    expected:
+    - 10
+    - 10
+    - 10
+    - 10
+  hidden_tests:
+  - input:
+    - - 5
+      - -999
+      - 7
+    expected:
+    - 5
+    - 5
+    - 7
+  - input:
+    - - 1
+      - 2
+      - -999
+      - -999
+      - 5
+    expected:
+    - 1
+    - 2
+    - 2
+    - 2
+    - 5
+  - input:
+    - - 3
+      - -999
+      - -999
+      - 4
+      - -999
+    expected:
+    - 3
+    - 3
+    - 3
+    - 4
+    - 4
+  - input:
+    - - 1
+      - 1
+      - -999
+      - 1
+    expected:
+    - 1
+    - 1
+    - 1
+    - 1
+  - input:
+    - - 7
+      - -999
+      - 8
+      - -999
+      - 9
+    expected:
+    - 7
+    - 7
+    - 8
+    - 8
+    - 9
+  - input:
+    - - -999
+      - 1
+      - -999
+    expected:
+    - -999
+    - 1
+    - 1
+  - input:
+    - - 10
+      - -999
+      - -999
+      - 20
+    expected:
+    - 10
+    - 10
+    - 10
+    - 20
+  - input:
+    - - 2
+      - -999
+      - 3
+      - -999
+      - -999
+    expected:
+    - 2
+    - 2
+    - 3
+    - 3
+    - 3
+  - input:
+    - - 6
+      - 6
+      - -999
+      - 6
+    expected:
+    - 6
+    - 6
+    - 6
+    - 6
+  - input:
+    - - 1
+      - -999
+      - 2
+      - -999
+      - 3
+    expected:
+    - 1
+    - 1
+    - 2
+    - 2
+    - 3
+
+- id: 38
+  title: Two Sum with Indices
+  difficulty: MEDIUM
+  description: Check sum of 2 numbers from given list which matches target value and
+    returns the indexes of those numbers. Should not use more than 1 loop.
+  function:
+    cpp: 'vector<int> solve(vector<int> nums, int target)'
+  public_tests:
+  - input:
+    - - 7
+      - 8
+      - 2
+      - 3
+      - 6
+      - 9
+      - 2
+      - 8
+    - 14
+    expected:
+    - 1
+    - 4
+  - input:
+    - - 2
+      - 7
+      - 11
+      - 15
+    - 9
+    expected:
+    - 0
+    - 1
+  - input:
+    - - 1
+      - 5
+      - 3
+      - 7
+    - 8
+    expected:
+    - 0
+    - 3
+  hidden_tests:
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+    - 5
+    expected:
+    - 0
+    - 3
+  - input:
+    - - 10
+      - 20
+      - 10
+      - 40
+      - 50
+    - 50
+    expected:
+    - 0
+    - 3
+  - input:
+    - - 5
+      - 75
+      - 25
+    - 100
+    expected:
+    - 1
+    - 2
+  - input:
+    - - 2
+      - 5
+      - 5
+      - 11
+    - 10
+    expected:
+    - 1
+    - 2
+  - input:
+    - - 0
+      - 4
+      - 3
+      - 0
+    - 0
+    expected:
+    - 0
+    - 3
+  - input:
+    - - -3
+      - 4
+      - 3
+      - 90
+    - 0
+    expected:
+    - 0
+    - 2
+  - input:
+    - - 1
+      - 3
+      - 4
+      - 2
+    - 6
+    expected:
+    - 1
+    - 3
+  - input:
+    - - 1
+      - 2
+    - 3
+    expected:
+    - 0
+    - 1
+  - input:
+    - - 3
+      - 3
+    - 6
+    expected:
+    - 0
+    - 1
+  - input:
+    - - 8
+      - 7
+      - 2
+      - 1
+    - 9
+    expected:
+    - 1
+    - 3
+
+- id: 39
+  title: Sort without Inbuilt Function
+  difficulty: MEDIUM
+  description: Sort the below list without using inbuilt function.
+  function:
+    cpp: 'vector<int> solve(vector<int> nums)'
+  public_tests:
+  - input:
+    - - 2
+      - 3
+      - -5
+      - -7
+      - 9
+      - 4
+      - 6
+      - -1
+      - -8
+      - 0
+    expected:
+    - -8
+    - -7
+    - -5
+    - -1
+    - 0
+    - 2
+    - 3
+    - 4
+    - 6
+    - 9
+  - input:
+    - - 5
+      - 2
+      - 8
+      - 1
+    expected:
+    - 1
+    - 2
+    - 5
+    - 8
+  - input:
+    - - 3
+    expected:
+    - 3
+  hidden_tests:
+  - input:
+    - - 1
+      - 2
+      - 3
+    expected:
+    - 1
+    - 2
+    - 3
+  - input:
+    - - 3
+      - 2
+      - 1
+    expected:
+    - 1
+    - 2
+    - 3
+  - input:
+    - - -5
+      - -10
+      - 0
+    expected:
+    - -10
+    - -5
+    - 0
+  - input:
+    - - 5
+      - 5
+      - 5
+    expected:
+    - 5
+    - 5
+    - 5
+  - input:
+    - - 10
+      - -10
+      - 5
+      - -5
+    expected:
+    - -10
+    - -5
+    - 5
+    - 10
+  - input:
+    - - 7
+      - 2
+      - 9
+      - 1
+      - 5
+    expected:
+    - 1
+    - 2
+    - 5
+    - 7
+    - 9
+  - input:
+    - - -1
+      - -2
+      - -3
+    expected:
+    - -3
+    - -2
+    - -1
+  - input:
+    - - 0
+      - 0
+      - 0
+    expected:
+    - 0
+    - 0
+    - 0
+  - input:
+    - - 100
+      - 50
+      - 75
+      - 25
+    expected:
+    - 25
+    - 50
+    - 75
+    - 100
+  - input:
+    - - 6
+      - 4
+      - 8
+      - 2
+      - 1
+    expected:
+    - 1
+    - 2
+    - 4
+    - 6
+    - 8
+
+- id: 40
+  title: Palindrome Strings
+  difficulty: EASY
+  description: Define a function which returns a list containing only the palindrome
+    strings from the list of provided string elements.
+  function:
+    cpp: 'vector<string> solve(vector<string> strings)'
+  public_tests:
+  - input:
+    - - a
+      - bb
+      - abc
+      - aba
+      - racecar
+    expected:
+    - a
+    - bb
+    - aba
+    - racecar
+  - input:
+    - - hello
+      - mom
+      - dad
+    expected:
+    - mom
+    - dad
+  - input:
+    - - x
+      - yy
+      - z
+    expected:
+    - x
+    - yy
+    - z
+  hidden_tests:
+  - input:
+    - - level
+      - hello
+    expected:
+    - level
+  - input:
+    - - noon
+      - test
+    expected:
+    - noon
+  - input:
+    - - a
+    expected:
+    - a
+  - input:
+    - - ab
+      - ba
+    expected: []
+  - input:
+    - - madam
+      - hello
+      - radar
+    expected:
+    - madam
+    - radar
+  - input:
+    - - refer
+      - defer
+    expected:
+    - refer
+  - input:
+    - - civic
+      - logic
+    expected:
+    - civic
+  - input:
+    - - kayak
+      - test
+    expected:
+    - kayak
+  - input:
+    - - stats
+      - doors
+    expected:
+    - stats
+  - input:
+    - - pop
+      - push
+    expected:
+    - pop
+
+- id: 41
+  title: Separate Even and Odd
+  difficulty: EASY
+  description: Define logic for identifying the even numbers and odd numbers from
+    the given list and generate a map with keys "even" and "odd".
+  function:
+    cpp: 'map<string, vector<int>> solve(vector<int> numbers)'
+  public_tests:
+  - input:
+    - - 4
+      - 5
+      - 7
+      - 2
+      - 9
+      - 8
+    expected:
+      even:
+      - 4
+      - 2
+      - 8
+      odd:
+      - 5
+      - 7
+      - 9
+  - input:
+    - - 2
+      - 4
+      - 6
+    expected:
+      even:
+      - 2
+      - 4
+      - 6
+      odd: []
+  - input:
+    - - 1
+      - 3
+      - 5
+    expected:
+      even: []
+      odd:
+      - 1
+      - 3
+      - 5
+  hidden_tests:
+  - input:
+    - - 1
+      - 2
+    expected:
+      even:
+      - 2
+      odd:
+      - 1
+  - input:
+    - - 10
+      - 11
+      - 12
+      - 13
+    expected:
+      even:
+      - 10
+      - 12
+      odd:
+      - 11
+      - 13
+  - input:
+    - - 0
+    expected:
+      even:
+      - 0
+      odd: []
+  - input:
+    - - 7
+      - 14
+      - 21
+      - 28
+    expected:
+      even:
+      - 14
+      - 28
+      odd:
+      - 7
+      - 21
+  - input:
+    - - 5
+      - 5
+      - 5
+    expected:
+      even: []
+      odd:
+      - 5
+      - 5
+      - 5
+  - input:
+    - - 6
+      - 6
+    expected:
+      even:
+      - 6
+      - 6
+      odd: []
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+    expected:
+      even:
+      - 2
+      - 4
+      - 6
+      odd:
+      - 1
+      - 3
+      - 5
+  - input:
+    - - 9
+      - 18
+      - 27
+      - 36
+    expected:
+      even:
+      - 18
+      - 36
+      odd:
+      - 9
+      - 27
+  - input:
+    - - 2
+      - 4
+      - 8
+      - 16
+    expected:
+      even:
+      - 2
+      - 4
+      - 8
+      - 16
+      odd: []
+  - input:
+    - - 1
+      - 1
+      - 1
+      - 2
+      - 2
+    expected:
+      even:
+      - 2
+      - 2
+      odd:
+      - 1
+      - 1
+      - 1
+
+- id: 42
+  title: Word Length Map
+  difficulty: EASY
+  description: Define a function which returns a map that stores the words and
+    its length from the given text.
+  function:
+    cpp: 'map<string, int> solve(string text)'
+  public_tests:
+  - input:
+    - Be happy
+    expected:
+      Be: 2
+      happy: 5
+  - input:
+    - Hello World
+    expected:
+      Hello: 5
+      World: 5
+  - input:
+    - a b c
+    expected:
+      a: 1
+      b: 1
+      c: 1
+  hidden_tests:
+  - input:
+    - Python
+    expected:
+      Python: 6
+  - input:
+    - code is fun
+    expected:
+      code: 4
+      is: 2
+      fun: 3
+  - input:
+    - test
+    expected:
+      test: 4
+  - input:
+    - I am learning
+    expected:
+      I: 1
+      am: 2
+      learning: 8
+  - input:
+    - The quick brown
+    expected:
+      The: 3
+      quick: 5
+      brown: 5
+  - input:
+    - a bb ccc
+    expected:
+      a: 1
+      bb: 2
+      ccc: 3
+  - input:
+    - data science
+    expected:
+      data: 4
+      science: 7
+  - input:
+    - java script
+    expected:
+      java: 4
+      script: 6
+  - input:
+    - x y z
+    expected:
+      x: 1
+      y: 1
+      z: 1
+  - input:
+    - machine learning algorithms
+    expected:
+      machine: 7
+      learning: 8
+      algorithms: 10
+
+- id: 43
+  title: Remove Special Characters
+  difficulty: EASY
+  description: In the given string, remove the special characters and add a space
+    instead of that.
+  function:
+    cpp: 'string solve(string s)'
+  public_tests:
+  - input:
+    - Msys&Technologies@Chennai*
+    expected: 'Msys Technologies Chennai '
+  - input:
+    - hello!world#
+    expected: 'hello world '
+  - input:
+    - a@b$c
+    expected: a b c
+  hidden_tests:
+  - input:
+    - test!
+    expected: 'test '
+  - input:
+    - code@python
+    expected: code python
+  - input:
+    - hello-world
+    expected: hello world
+  - input:
+    - a#b#c#d
+    expected: a b c d
+  - input:
+    - java&script
+    expected: java script
+  - input:
+    - test*case
+    expected: test case
+  - input:
+    - x$y$z
+    expected: x y z
+  - input:
+    - data!science
+    expected: data science
+  - input:
+    - web@design
+    expected: web design
+  - input:
+    - python*code
+    expected: python code
+
+- id: 44
+  title: String with Index
+  difficulty: EASY
+  description: Given a string, display the output with index numbers after each character.
+  function:
+    cpp: 'string solve(string s)'
+  public_tests:
+  - input:
+    - abcde
+    expected: a1b2c3d4e5
+  - input:
+    - ab
+    expected: a1b2
+  - input:
+    - x
+    expected: x1
+  hidden_tests:
+  - input:
+    - abc
+    expected: a1b2c3
+  - input:
+    - hello
+    expected: h1e2l3l4o5
+  - input:
+    - xy
+    expected: x1y2
+  - input:
+    - test
+    expected: t1e2s3t4
+  - input:
+    - a
+    expected: a1
+  - input:
+    - python
+    expected: p1y2t3h4o5n6
+  - input:
+    - code
+    expected: c1o2d3e4
+  - input:
+    - data
+    expected: d1a2t3a4
+  - input:
+    - java
+    expected: j1a2v3a4
+  - input:
+    - script
+    expected: s1c2r3i4p5t6
+
+- id: 45
+  title: Common Substring
+  difficulty: MEDIUM
+  description: Write a program in which two strings are given and determine if they
+    share a common substring. Return either "YES" or "NO".
+  function:
+    cpp: 'string solve(string s1, string s2)'
+  public_tests:
+  - input:
+    - hello
+    - world
+    expected: 'YES'
+  - input:
+    - abc
+    - def
+    expected: 'NO'
+  - input:
+    - test
+    - best
+    expected: 'YES'
+  hidden_tests:
+  - input:
+    - python
+    - java
+    expected: 'NO'
+  - input:
+    - code
+    - decode
+    expected: 'YES'
+  - input:
+    - data
+    - date
+    expected: 'YES'
+  - input:
+    - hello
+    - help
+    expected: 'YES'
+  - input:
+    - cat
+    - dog
+    expected: 'NO'
+  - input:
+    - string
+    - ring
+    expected: 'YES'
+  - input:
+    - xyz
+    - abc
+    expected: 'NO'
+  - input:
+    - programming
+    - grammar
+    expected: 'YES'
+  - input:
+    - test
+    - toast
+    expected: 'YES'
+  - input:
+    - script
+    - crypt
+    expected: 'YES'
+
+- id: 46
+  title: Leap Year Check
+  difficulty: EASY
+  description: Create a function that accepts a year and returns true
+    if the given year is a leap year, false otherwise.
+  function:
+    cpp: 'bool solve(int year)'
+  public_tests:
+  - input:
+    - 2020
+    expected: true
+  - input:
+    - 2021
+    expected: false
+  - input:
+    - 2000
+    expected: true
+  hidden_tests:
+  - input:
+    - 2024
+    expected: true
+  - input:
+    - 2025
+    expected: false
+  - input:
+    - 1900
+    expected: false
+  - input:
+    - 2004
+    expected: true
+  - input:
+    - 2100
+    expected: false
+  - input:
+    - 2400
+    expected: true
+  - input:
+    - 2019
+    expected: false
+  - input:
+    - 2016
+    expected: true
+  - input:
+    - 1999
+    expected: false
+  - input:
+    - 2001
+    expected: false
+
+- id: 47
+  title: List Element to Key-Value Pair
+  difficulty: HARD
+  description: Convert each list element to a key-value pair by splitting the digits
+    in half.
+  function:
+    cpp: 'map<int, int> solve(vector<int> test_list)'
+  public_tests:
+  - input:
+    - - 2323
+      - 82
+      - 129388
+      - 95
+    expected:
+      23: 23
+      8: 2
+      129: 388
+      9: 5
+  - input:
+    - - 11
+      - 22
+    expected:
+      1: 1
+      2: 2
+  - input:
+    - - 1234
+    expected:
+      12: 34
+  hidden_tests:
+  - input:
+    - - 12
+    expected:
+      1: 2
+  - input:
+    - - 99
+    expected:
+      9: 9
+  - input:
+    - - 5678
+    expected:
+      56: 78
+  - input:
+    - - 100
+    expected:
+      10: 0
+  - input:
+    - - 4567
+    expected:
+      45: 67
+  - input:
+    - - 77
+    expected:
+      7: 7
+  - input:
+    - - 200
+    expected:
+      20: 0
+  - input:
+    - - 123456
+    expected:
+      123: 456
+  - input:
+    - - 88
+      - 99
+    expected:
+      8: 8
+      9: 9
+  - input:
+    - - 1010
+    expected:
+      10: 10

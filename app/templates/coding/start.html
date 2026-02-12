@@ -1,0 +1,70 @@
+{% extends "coding/base_coding.html" %}
+{% block content %}
+
+<div class="coding-start-shell">
+    <div class="card coding-start-card">
+        <div class="coding-status-row">
+            <span class="coding-status-pill">Secure Proctoring Active</span>
+            <span class="coding-status-pill">Timed Assessment</span>
+        </div>
+
+        <div class="coding-brand-row">
+            <img class="coding-inline-logo"
+                 src="{{ url_for('static', filename='images/azirotech_logo.jpg') }}"
+                 alt="Aziro logo">
+            <div>
+                <div class="coding-brand-copy">Aziro Enterprise Hiring Platform</div>
+                <h2 class="coding-round-title">{{ test.round_name }}</h2>
+            </div>
+        </div>
+
+        <div class="coding-overview-grid">
+            <div class="coding-overview-item">
+                <span class="coding-overview-label">Questions</span>
+                <span class="coding-overview-value">1</span>
+            </div>
+            <div class="coding-overview-item">
+                <span class="coding-overview-label">Duration</span>
+                <span class="coding-overview-value">{{ test.time_minutes }}m</span>
+            </div>
+            <div class="coding-overview-item">
+                <span class="coding-overview-label">Language</span>
+                <span class="coding-overview-value">{{ test.language }}</span>
+            </div>
+            <div class="coding-overview-item">
+                <span class="coding-overview-label">Mode</span>
+                <span class="coding-overview-value">Proctored</span>
+            </div>
+        </div>
+
+        <div class="coding-instruction-wrap">
+            <h4 class="coding-instruction-title">Instructions</h4>
+            <ul class="coding-instruction-list">
+                <li>You will be given <strong>1 coding question</strong> to solve.</li>
+                <li>Write your solution in the integrated code editor.</li>
+                <li>You can run your code against sample test cases at any time.</li>
+                <li>Your code is auto-saved periodically.</li>
+                <li>Do not refresh or close the browser during the test.</li>
+                <li>Switching tabs and leaving fullscreen are monitored.</li>
+            </ul>
+        </div>
+
+        <div class="actions">
+            <form id="codingStartForm"
+                  method="POST"
+                  action="{{ url_for('coding.begin_test', session_id=test.session_id) }}">
+                <button class="btn btn-primary">Start Test</button>
+            </form>
+        </div>
+
+        <p class="coding-start-footer">
+            Once started, your timer begins immediately and full-screen mode will stay enforced.
+        </p>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/coding_flow.js') }}"></script>
+{% endblock %}
