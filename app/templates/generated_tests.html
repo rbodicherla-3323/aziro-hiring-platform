@@ -189,7 +189,8 @@
                 </div>
 
                 <div class="test-links-grid mt-3">
-                    {% for level, test in cand.tests.items() %}
+                    {% for level in ["L1","L2","L3","L4","L5","L6"] if level in cand.tests %}
+                    {% set test = cand.tests[level] %}
                     <div class="test-link-item">
                         <div class="test-link-meta">
                             <span class="test-level-pill">{{ level }}</span>

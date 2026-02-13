@@ -1,0 +1,1571 @@
+/* ================================================================
+   AZIRO CODING ASSESSMENT — Premium Dark Theme
+   Enterprise-grade assessment interface
+   Mirrors MCQ Premium Experience Layer (dark variant)
+   ================================================================ */
+
+/* ---------- Proctoring Lock Overlay ---------- */
+#proctoringLockOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 12, 24, 0.97);
+    z-index: 99999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(12px);
+}
+
+#proctoringLockOverlay .lock-message {
+    color: #fff;
+    font-family: var(--code-ui-font);
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.7;
+    max-width: 460px;
+    padding: 48px;
+    background: linear-gradient(180deg, rgba(22, 29, 46, 0.95) 0%, rgba(16, 22, 38, 0.95) 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(248, 113, 113, 0.2);
+    box-shadow:
+        0 24px 64px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+body.proctoring-violation {
+    background-color: #1a0000 !important;
+}
+
+body.proctoring-warning {
+    background-color: #1a1500 !important;
+}
+
+/* ============================================================
+   DESIGN TOKENS
+   Premium dark palette mirroring MCQ's design system
+   ============================================================ */
+:root {
+    /* Core surfaces */
+    --code-bg:             #0c1120;
+    --code-bg-elevated:    #111827;
+    --code-surface:        #141b2d;
+    --code-surface-alt:    #1a2338;
+    --code-surface-hover:  #1f2a42;
+
+    /* Borders */
+    --code-border:         rgba(56, 78, 122, 0.3);
+    --code-border-subtle:  rgba(56, 78, 122, 0.18);
+    --code-border-strong:  rgba(79, 112, 170, 0.35);
+
+    /* Typography */
+    --code-text:           #e8edf5;
+    --code-text-secondary: #a3b1cc;
+    --code-text-muted:     #7486a6;
+    --code-text-dim:       #4a5b78;
+
+    /* Font stacks */
+    --code-ui-font:        "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --code-mono:           "Cascadia Code", "Fira Code", "JetBrains Mono", "Consolas", monospace;
+
+    /* Brand accents (matching MCQ premium) */
+    --code-primary:        #4f8ff7;
+    --code-primary-soft:   rgba(79, 143, 247, 0.12);
+    --code-primary-strong: #3b7ef5;
+    --code-primary-glow:   rgba(79, 143, 247, 0.08);
+    --code-gold:           #d89b1f;
+    --code-gold-soft:      rgba(216, 155, 31, 0.08);
+
+    /* Semantic */
+    --code-success:        #34d399;
+    --code-success-soft:   rgba(52, 211, 153, 0.1);
+    --code-danger:         #f87171;
+    --code-danger-soft:    rgba(248, 113, 113, 0.1);
+    --code-warning:        #fbbf24;
+    --code-warning-soft:   rgba(251, 191, 36, 0.1);
+    --code-accent:         #a78bfa;
+
+    /* Editor */
+    --code-editor-bg:      #090d17;
+    --code-font:           var(--code-mono);
+
+    /* Layout */
+    --code-header-h:       54px;
+    --code-radius:         8px;
+    --code-radius-lg:      14px;
+    --code-radius-xl:      18px;
+
+    /* Shadows */
+    --code-shadow-sm:      0 2px 8px rgba(0, 0, 0, 0.2);
+    --code-shadow-md:      0 8px 24px rgba(0, 0, 0, 0.25);
+    --code-shadow-lg:      0 16px 48px rgba(0, 0, 0, 0.35);
+    --code-shadow-glow:    0 0 0 1px rgba(79, 143, 247, 0.1);
+}
+
+/* ============================================================
+   GLOBAL BASE
+   ============================================================ */
+body {
+    min-height: 100vh;
+    font-family: var(--code-ui-font);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Ambient background glow (mirrors MCQ ::before) */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        radial-gradient(1200px 600px at -5% -15%, rgba(79, 143, 247, 0.04), transparent 60%),
+        radial-gradient(900px 500px at 105% -5%, rgba(216, 155, 31, 0.03), transparent 55%),
+        radial-gradient(600px 400px at 50% 100%, rgba(79, 143, 247, 0.02), transparent 50%);
+}
+
+/* Scrollbar — refined */
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(79, 112, 170, 0.2);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(79, 112, 170, 0.35);
+}
+
+/* ============================================================
+   HEADER BAR — Premium dark variant of MCQ header
+   ============================================================ */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 12px 20px;
+    background: rgba(10, 14, 28, 0.92);
+    border-bottom: 1px solid rgba(79, 112, 170, 0.18);
+    backdrop-filter: blur(20px) saturate(1.4);
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.04),
+        0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--code-text);
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+}
+
+.logo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid var(--code-border);
+    background: var(--code-surface);
+    box-shadow: var(--code-shadow-sm);
+}
+
+.candidate {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--code-border);
+    background: linear-gradient(135deg, rgba(20, 27, 45, 0.9) 0%, rgba(26, 35, 56, 0.9) 100%);
+    color: var(--code-text-secondary);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+    flex-shrink: 0;
+    max-width: min(46vw, 460px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Green status dot (mirrors MCQ premium) */
+.candidate::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    flex: 0 0 10px;
+    border-radius: 999px;
+    background: #1f9d5a;
+    box-shadow: 0 0 0 4px rgba(31, 157, 90, 0.16);
+}
+
+/* ============================================================
+   HEADER CHIPS — Editor page meta indicators
+   ============================================================ */
+.coding-header-chips {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 20px;
+}
+
+.coding-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    border: 1px solid rgba(79, 143, 247, 0.25);
+    background: rgba(15, 21, 39, 0.85);
+    color: var(--code-text);
+    white-space: nowrap;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    backdrop-filter: blur(8px);
+}
+
+.coding-chip.timer {
+    font-family: var(--code-ui-font);
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--code-text);
+    min-width: 90px;
+    justify-content: center;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.03em;
+}
+
+.coding-chip.timer.warning {
+    color: var(--code-warning);
+    border-color: rgba(245, 158, 11, 0.3);
+    background: var(--code-warning-soft);
+    box-shadow:
+        inset 0 1px 0 rgba(245, 158, 11, 0.06),
+        0 0 12px rgba(245, 158, 11, 0.06);
+}
+
+.coding-chip.timer.danger {
+    color: var(--code-danger);
+    border-color: rgba(239, 68, 68, 0.35);
+    background: var(--code-danger-soft);
+    animation: timerPulse 1.2s ease-in-out infinite;
+    box-shadow:
+        inset 0 1px 0 rgba(239, 68, 68, 0.06),
+        0 0 16px rgba(239, 68, 68, 0.08);
+}
+
+.coding-chip.timer.critical {
+    color: #fff;
+    border-color: rgba(220, 38, 38, 0.6);
+    background: rgba(190, 18, 34, 0.85);
+    animation: timerCriticalFlash 0.6s steps(2, end) infinite;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 0 20px rgba(239, 68, 68, 0.25);
+    font-size: 15px;
+}
+
+@keyframes timerPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+}
+
+@keyframes timerCriticalFlash {
+    0%   { background: rgba(190, 18, 34, 0.85); box-shadow: 0 0 0 rgba(190, 18, 34, 0); }
+    100% { background: rgba(127, 15, 27, 0.9);  box-shadow: 0 0 0 6px rgba(190, 18, 34, 0.2); }
+}
+
+/* ── Timer Milestone Notice Banner ── */
+.coding-timer-notice {
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    z-index: 9999;
+    padding: 10px 28px;
+    border-radius: 12px;
+    font-family: var(--code-ui-font);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    white-space: nowrap;
+}
+
+.coding-timer-notice.notice-warning {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.95), rgba(217, 119, 6, 0.95));
+    color: #1a0e00;
+    border: 1px solid rgba(245, 158, 11, 0.5);
+    box-shadow: 0 8px 32px rgba(245, 158, 11, 0.3);
+}
+
+.coding-timer-notice.notice-danger {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(220, 38, 38, 0.95));
+    color: #fff;
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    box-shadow: 0 8px 32px rgba(239, 68, 68, 0.35);
+}
+
+.coding-timer-notice.notice-critical {
+    background: linear-gradient(135deg, rgba(190, 18, 34, 0.97), rgba(127, 15, 27, 0.97));
+    color: #fff;
+    border: 1px solid rgba(239, 68, 68, 0.6);
+    box-shadow: 0 8px 32px rgba(190, 18, 34, 0.4);
+    animation: timerNoticeUrgentPulse 0.8s ease-in-out infinite;
+}
+
+.coding-timer-notice.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+@keyframes timerNoticeUrgentPulse {
+    0%, 100% { box-shadow: 0 8px 32px rgba(190, 18, 34, 0.4); }
+    50%      { box-shadow: 0 8px 32px rgba(190, 18, 34, 0.7), 0 0 0 4px rgba(239, 68, 68, 0.15); }
+}
+
+.coding-chip.focus {
+    color: var(--code-text-secondary);
+}
+
+/* ============================================================
+   WEBCAM DOCK
+   ============================================================ */
+#proctoringWebcamDock {
+    position: static;
+    width: 176px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.35);
+    margin-left: 10px;
+    flex: 0 0 auto;
+}
+
+#proctoringWebcamDock .webcam-label { display: none; }
+
+#proctoringWebcamPreview {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    transform: scaleX(-1);
+    background: #000;
+}
+
+/* ============================================================
+   START PAGE — MCQ Premium Light Theme (identical)
+   ============================================================ */
+.coding-start-shell {
+    max-width: 920px;
+    margin: 22px auto 0;
+    animation: coding-rise-in 0.35s ease;
+}
+
+@keyframes coding-rise-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Light theme override for start page (identical to MCQ) */
+body.coding-start-page {
+    /* Reset CSS variables to MCQ's light palette so any
+       element that references var(--aziro-*) gets light values */
+    --aziro-bg: #f5f7fb;
+    --aziro-card: #ffffff;
+    --aziro-border: #e3e6ef;
+    --aziro-text: #1f2937;
+    --aziro-muted: #6b7280;
+    --aziro-success: #198754;
+    --aziro-danger: #dc3545;
+    --aziro-warning: #ff9800;
+
+    background:
+        radial-gradient(circle at 12% 10%, rgba(31, 79, 216, 0.08), transparent 40%),
+        radial-gradient(circle at 88% 0%, rgba(25, 135, 84, 0.07), transparent 42%),
+        linear-gradient(180deg, #f4f8ff 0%, #eef3ff 100%) !important;
+    color: #1d294a !important;
+    font-family: "Segoe UI", Arial, sans-serif !important;
+}
+
+body.coding-start-page::before {
+    background:
+        radial-gradient(1200px 500px at -10% -20%, rgba(31, 79, 216, 0.08), transparent 60%),
+        radial-gradient(900px 440px at 110% 0%, rgba(216, 155, 31, 0.08), transparent 58%);
+}
+
+body.coding-start-page .header {
+    background: rgba(255, 255, 255, 0.88);
+    border-bottom: 1px solid rgba(184, 199, 231, 0.62);
+    backdrop-filter: blur(10px);
+    box-shadow: none;
+}
+
+body.coding-start-page .logo {
+    color: #1a2f62;
+}
+
+body.coding-start-page .logo img {
+    width: 40px;
+    height: 40px;
+    border-color: #d6e0f4;
+    background: #fff;
+    box-shadow: none;
+}
+
+body.coding-start-page .candidate {
+    border-color: #cfe0ff;
+    background: linear-gradient(135deg, #f8fbff 0%, #edf3ff 100%);
+    color: #2f446c;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+body.coding-start-page .candidate::before {
+    content: "";
+    position: static;
+    width: 10px;
+    height: 10px;
+    flex: 0 0 10px;
+    border-radius: 999px;
+    background: #1f9d5a;
+    box-shadow: 0 0 0 4px rgba(31, 157, 90, 0.16);
+}
+
+body.coding-start-page .card {
+    background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%) !important;
+    border: 1px solid #dbe5f7 !important;
+    border-radius: 16px;
+    box-shadow: 0 14px 36px rgba(18, 35, 79, 0.09) !important;
+    color: #1d294a;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Premium blue-gold top stripe (mirrors MCQ) */
+body.coding-start-page .card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #1f4fd8 0%, #d89b1f 100%);
+    opacity: 0.9;
+}
+
+body.coding-start-page .btn-primary {
+    background: linear-gradient(135deg, #1f4fd8 0%, #2a63f0 100%);
+    box-shadow: 0 10px 18px rgba(31, 79, 216, 0.24);
+    color: #fff;
+    font-family: "Manrope", "Segoe UI", sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+body.coding-start-page .btn-primary:hover {
+    background: linear-gradient(135deg, #163db5 0%, #2256da 100%);
+    box-shadow: 0 12px 22px rgba(31, 79, 216, 0.28);
+    transform: translateY(-1px);
+}
+
+body.coding-start-page .btn-primary:active {
+    transform: translateY(0);
+}
+
+.coding-start-card {
+    padding: 35px;
+}
+
+.coding-status-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.coding-status-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid #d7e4ff;
+    background: #f2f7ff;
+    color: #2f4f93;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.coding-brand-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.coding-inline-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    border: 1px solid #d8e3f5;
+    object-fit: cover;
+    background: #fff;
+}
+
+.coding-brand-copy {
+    font-size: 12px;
+    font-weight: 700;
+    color: #5d6f97;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.coding-round-title {
+    margin: 3px 0 0;
+    font-size: 31px;
+    line-height: 1.18;
+    color: #172f68;
+    letter-spacing: -0.02em;
+}
+
+.coding-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.coding-overview-item {
+    border: 1px solid #dce6f7;
+    border-radius: 12px;
+    padding: 13px 14px;
+    background: linear-gradient(160deg, #fdfefe 0%, #f4f8ff 100%);
+}
+
+.coding-overview-label {
+    display: block;
+    font-size: 12px;
+    color: #6b7796;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.coding-overview-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e3978;
+}
+
+.coding-instruction-wrap {
+    border: 1px solid #dde7f8;
+    border-radius: 14px;
+    padding: 15px 16px 15px 18px;
+    background: #fff;
+}
+
+.coding-instruction-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800;
+    color: #1f3364;
+}
+
+.coding-instruction-list {
+    margin: 10px 0 0;
+    padding-left: 18px;
+    color: #374463;
+    line-height: 1.56;
+    font-size: 14px;
+}
+
+.coding-instruction-list li {
+    margin-bottom: 4px;
+}
+
+.coding-instruction-list li:last-child {
+    margin-bottom: 0;
+}
+
+.coding-start-footer {
+    margin-top: 10px;
+    color: #5a6a8f;
+    font-size: 13px;
+}
+
+/* ============================================================
+   SUBMIT PAGE — MCQ Premium Light Theme
+   ============================================================ */
+.coding-submit-shell {
+    max-width: 920px;
+    margin: 60px auto 0;
+    animation: coding-rise-in 0.35s ease;
+}
+
+.coding-submit-card {
+    text-align: center;
+    padding-top: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+body.coding-start-page .coding-submit-card::before,
+.coding-submit-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #1f4fd8 0%, #d89b1f 100%);
+    opacity: 0.9;
+}
+
+.coding-submit-title {
+    margin-top: 4px;
+    margin-bottom: 10px;
+    color: #182f62;
+    font-size: 30px;
+    letter-spacing: -0.02em;
+}
+
+.coding-submit-text {
+    color: #3d4c6d;
+    margin: 0;
+    font-size: 15px;
+}
+
+.coding-submit-warning {
+    margin: 16px auto 0;
+    max-width: 540px;
+    border: 1px solid #fde0ab;
+    background: #fff9ee;
+    color: #83551e;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 13px;
+}
+
+.coding-submit-actions {
+    margin-top: 24px;
+    text-align: center;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.coding-submit-actions form {
+    margin: 0;
+}
+
+.coding-submit-actions .btn-secondary {
+    background: #ffffff;
+    color: #213b72;
+    border: 1px solid #c9d9f8;
+    box-shadow: 0 8px 16px rgba(33, 59, 114, 0.08);
+}
+
+.coding-submit-actions .btn-secondary:hover {
+    border-color: #9bb7ec;
+    background: #f6f9ff;
+    transform: translateY(-1px);
+}
+
+.coding-submit-actions .btn-danger {
+    background: linear-gradient(135deg, #d83f4f 0%, #bf2c3b 100%);
+    box-shadow: 0 10px 18px rgba(220, 53, 69, 0.22);
+}
+
+.coding-submit-actions .btn-danger:hover {
+    background: linear-gradient(135deg, #c93546 0%, #ad2434 100%);
+    transform: translateY(-1px);
+}
+
+/* ============================================================
+   IDE SHELL — Main Editor Layout
+   ============================================================ */
+.coding-ide-shell {
+    display: flex;
+    height: calc(100vh - var(--code-header-h));
+    overflow: hidden;
+    background: var(--code-bg);
+    position: relative;
+}
+
+/* Editor page: header uses padding so actual height = ~64px */
+.coding-editor-page .coding-ide-shell {
+    height: calc(100vh - 64px);
+}
+
+/* ---------- Problem Panel (Left) ---------- */
+.coding-problem-panel {
+    width: 42%;
+    min-width: 300px;
+    max-width: 60%;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #111827 0%, #0f1420 100%);
+    border-right: 1px solid rgba(79, 112, 170, 0.2);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Glowing top accent on problem panel */
+.coding-problem-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(79, 143, 247, 0.5) 20%,
+        rgba(167, 139, 250, 0.4) 50%,
+        rgba(79, 143, 247, 0.5) 80%,
+        transparent);
+    z-index: 1;
+}
+
+.coding-problem-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 22px 22px;
+}
+
+.coding-problem-title {
+    margin: 0 0 16px;
+    font-family: var(--code-ui-font);
+    font-size: 23px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    background: linear-gradient(135deg, #f0f4ff 0%, #c4d5ff 50%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.coding-problem-desc {
+    font-family: var(--code-ui-font);
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--code-text);
+    margin-bottom: 22px;
+}
+
+/* Function Signature */
+.coding-func-info {
+    margin-bottom: 22px;
+}
+
+.coding-signature {
+    background: linear-gradient(135deg, #080c16 0%, #0b1020 100%);
+    border: 1px solid rgba(167, 139, 250, 0.2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-family: var(--code-mono);
+    font-size: 14px;
+    color: var(--code-accent);
+    margin: 0;
+    overflow-x: auto;
+    line-height: 1.7;
+    box-shadow:
+        inset 0 2px 8px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(167, 139, 250, 0.05);
+}
+
+/* Section Title ("Sample Tests") */
+.coding-section-title {
+    font-family: var(--code-ui-font);
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--code-primary);
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Examples Box */
+.coding-examples-box {
+    border: 1px solid rgba(79, 143, 247, 0.15);
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(15, 21, 39, 0.6) 0%, rgba(17, 24, 39, 0.4) 100%);
+    padding: 16px 18px;
+    margin-bottom: 22px;
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(4px);
+}
+
+.coding-example-block {
+    padding: 8px 0;
+}
+
+.coding-example-label {
+    font-family: var(--code-ui-font);
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--code-primary);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.coding-example-line {
+    font-family: var(--code-ui-font);
+    font-size: 14px;
+    color: var(--code-text-secondary);
+    padding: 4px 0;
+    line-height: 1.6;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.coding-example-key {
+    color: var(--code-text-secondary);
+    font-weight: 700;
+    margin-right: 6px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+}
+
+.coding-example-val {
+    color: var(--code-text);
+    font-family: var(--code-mono);
+    font-size: 13.5px;
+    background: rgba(79, 143, 247, 0.08);
+    padding: 3px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(79, 143, 247, 0.12);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.coding-example-divider {
+    border: none;
+    border-top: 1px dashed var(--code-border-strong);
+    margin: 14px 0;
+    opacity: 0.6;
+}
+
+/* Notes */
+.coding-notes {
+    margin-bottom: 20px;
+    font-family: var(--code-ui-font);
+    font-size: 14px;
+    color: var(--code-text-secondary);
+    line-height: 1.7;
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: rgba(79, 143, 247, 0.04);
+    border: 1px solid rgba(79, 143, 247, 0.12);
+    border-left: 3px solid var(--code-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.coding-notes strong {
+    color: var(--code-text);
+    font-weight: 700;
+}
+
+.coding-notes ul {
+    margin: 8px 0 0;
+    padding-left: 18px;
+}
+
+.coding-notes li {
+    margin-bottom: 4px;
+}
+
+.coding-notes li:last-child {
+    margin-bottom: 0;
+}
+
+/* ============================================================
+   EDITOR PANEL (Right)
+   ============================================================ */
+.coding-editor-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--code-bg);
+    min-width: 0;
+    position: relative;
+}
+
+/* Subtle top accent on editor panel */
+.coding-editor-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(216, 155, 31, 0.4) 20%,
+        rgba(79, 143, 247, 0.3) 50%,
+        rgba(52, 211, 153, 0.4) 80%,
+        transparent);
+    z-index: 1;
+}
+
+/* Editor Label Bar */
+.coding-editor-label-bar {
+    display: flex;
+    align-items: center;
+    padding: 0 18px;
+    height: 40px;
+    background: linear-gradient(135deg, rgba(20, 27, 45, 0.95) 0%, rgba(15, 21, 39, 0.95) 100%);
+    border-bottom: 1px solid rgba(79, 112, 170, 0.15);
+    flex-shrink: 0;
+    font-family: var(--code-ui-font);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--code-text-secondary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    gap: 8px;
+}
+
+.coding-editor-label-bar::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--code-success);
+    box-shadow: 0 0 8px rgba(52, 211, 153, 0.4);
+    flex-shrink: 0;
+}
+
+/* Code Textarea (hidden — CodeMirror replaces it) */
+.coding-editor-wrap {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    min-height: 0;
+}
+
+.coding-textarea {
+    flex: 1;
+    background: #070b14;
+    color: var(--code-text);
+    font-family: var(--code-mono);
+    font-size: 15px;
+    line-height: 1.65;
+    padding: 16px 20px;
+    border: none;
+    outline: none;
+    resize: none;
+    overflow: auto;
+    tab-size: 4;
+    -moz-tab-size: 4;
+    white-space: pre;
+    caret-color: var(--code-primary);
+    letter-spacing: 0.02em;
+}
+
+.coding-textarea::selection {
+    background: rgba(79, 143, 247, 0.25);
+}
+
+.coding-textarea::placeholder {
+    color: var(--code-text-dim);
+}
+
+.coding-textarea:focus {
+    box-shadow: inset 0 0 0 1px rgba(79, 143, 247, 0.15);
+}
+
+.coding-textarea::-webkit-scrollbar { width: 7px; height: 7px; }
+.coding-textarea::-webkit-scrollbar-track { background: transparent; }
+.coding-textarea::-webkit-scrollbar-thumb { background: rgba(79, 112, 170, 0.18); border-radius: 10px; }
+.coding-textarea::-webkit-scrollbar-thumb:hover { background: rgba(79, 112, 170, 0.3); }
+
+/* ============================================================
+   CODEMIRROR — Aziro Dark Theme
+   Full syntax highlighting, line numbers, bracket matching
+   ============================================================ */
+.coding-editor-wrap .CodeMirror {
+    flex: 1;
+    height: 100% !important;
+    background: #070b14 !important;
+    color: var(--code-text) !important;
+    font-family: var(--code-mono);
+    font-size: 15px;
+    line-height: 1.65;
+    border: none;
+    padding: 0;
+}
+
+.coding-editor-wrap .CodeMirror-gutters {
+    background: #0c1120 !important;
+    border-right: 1px solid rgba(79, 112, 170, 0.15) !important;
+    padding-right: 2px;
+}
+
+.coding-editor-wrap .CodeMirror-linenumber {
+    color: #5a6a88 !important;
+    font-size: 13px;
+    padding: 0 8px 0 12px;
+    min-width: 38px;
+}
+
+.coding-editor-wrap .CodeMirror-cursor {
+    border-left: 2px solid var(--code-primary) !important;
+}
+
+.coding-editor-wrap .CodeMirror-selected {
+    background: rgba(79, 143, 247, 0.18) !important;
+}
+
+.coding-editor-wrap .CodeMirror-focused .CodeMirror-selected {
+    background: rgba(79, 143, 247, 0.25) !important;
+}
+
+.coding-editor-wrap .CodeMirror-activeline-background {
+    background: rgba(79, 143, 247, 0.04) !important;
+}
+
+.coding-editor-wrap .CodeMirror-matchingbracket {
+    color: var(--code-success) !important;
+    font-weight: 700;
+    text-decoration: underline;
+    background: rgba(52, 211, 153, 0.12);
+}
+
+.coding-editor-wrap .CodeMirror-nonmatchingbracket {
+    color: var(--code-danger) !important;
+    font-weight: 700;
+}
+
+/* ── Syntax colours — Electric neon on #070b14 ─────────────────
+   !important overrides CodeMirror's .cm-s-default theme which loads
+   AFTER this stylesheet (via the extra_css block in editor.html).
+   ─────────────────────────────────────────────────────────────── */
+.coding-editor-wrap .cm-keyword    { color: #FF6AC1 !important; font-weight: 700 !important; }
+.coding-editor-wrap .cm-def        { color: #5CF7AB !important; }
+.coding-editor-wrap .cm-variable   { color: #FFFFFF !important; }
+.coding-editor-wrap .cm-variable-2 { color: #FF9E64 !important; }
+.coding-editor-wrap .cm-variable-3,
+.coding-editor-wrap .cm-type       { color: #2EE8FA !important; font-weight: 600 !important; }
+.coding-editor-wrap .cm-property   { color: #FF9E64 !important; }
+.coding-editor-wrap .cm-operator   { color: #FF6AC1 !important; font-weight: 600 !important; }
+.coding-editor-wrap .cm-number     { color: #FF6C6C !important; }
+.coding-editor-wrap .cm-string     { color: #ADFF2F !important; }
+.coding-editor-wrap .cm-string-2   { color: #ADFF2F !important; }
+.coding-editor-wrap .cm-comment    { color: #B0BFD5 !important; font-style: italic !important; }
+.coding-editor-wrap .cm-atom       { color: #FF6C6C !important; }
+.coding-editor-wrap .cm-meta       { color: #FFFFFF !important; }
+.coding-editor-wrap .cm-tag        { color: #FF6AC1 !important; }
+.coding-editor-wrap .cm-attribute  { color: #5CF7AB !important; }
+.coding-editor-wrap .cm-qualifier  { color: #2EE8FA !important; }
+.coding-editor-wrap .cm-builtin    { color: #2EE8FA !important; font-weight: 600 !important; }
+.coding-editor-wrap .cm-bracket    { color: #FFFFFF !important; }
+.coding-editor-wrap .cm-error      { color: #FF3333 !important; background: rgba(255, 51, 51, 0.12) !important; }
+
+/* Scrollbar styling for CodeMirror */
+.coding-editor-wrap .CodeMirror-vscrollbar::-webkit-scrollbar,
+.coding-editor-wrap .CodeMirror-hscrollbar::-webkit-scrollbar { width: 7px; height: 7px; }
+.coding-editor-wrap .CodeMirror-vscrollbar::-webkit-scrollbar-track,
+.coding-editor-wrap .CodeMirror-hscrollbar::-webkit-scrollbar-track { background: transparent; }
+.coding-editor-wrap .CodeMirror-vscrollbar::-webkit-scrollbar-thumb,
+.coding-editor-wrap .CodeMirror-hscrollbar::-webkit-scrollbar-thumb { background: rgba(79, 112, 170, 0.18); border-radius: 10px; }
+.coding-editor-wrap .CodeMirror-vscrollbar::-webkit-scrollbar-thumb:hover,
+.coding-editor-wrap .CodeMirror-hscrollbar::-webkit-scrollbar-thumb:hover { background: rgba(79, 112, 170, 0.3); }
+
+/* ============================================================
+   ACTION BAR — Buttons Row
+   ============================================================ */
+.coding-action-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    background: linear-gradient(135deg, rgba(20, 27, 45, 0.95) 0%, rgba(15, 21, 39, 0.95) 100%);
+    border-top: 1px solid rgba(79, 112, 170, 0.12);
+    border-bottom: 1px solid rgba(79, 112, 170, 0.12);
+    flex-shrink: 0;
+    font-family: var(--code-ui-font);
+}
+
+.coding-btn-run {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+    color: white !important;
+    border: none !important;
+    font-family: var(--code-ui-font);
+    font-weight: 700;
+    padding: 9px 24px;
+    font-size: 14px;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(34, 197, 94, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transition: transform 0.16s ease, box-shadow 0.16s ease;
+    letter-spacing: 0.02em;
+}
+
+.coding-btn-run:hover {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+    box-shadow: 0 6px 16px rgba(34, 197, 94, 0.3);
+    transform: translateY(-1px);
+}
+
+.coding-btn-run:active {
+    transform: translateY(0);
+}
+
+.coding-btn-run-hidden {
+    background: linear-gradient(135deg, #4f8ff7 0%, #3b7ef5 100%) !important;
+    color: #fff !important;
+    border: none !important;
+    font-family: var(--code-ui-font);
+    font-weight: 700;
+    padding: 9px 20px;
+    font-size: 14px;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(79, 143, 247, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transition: transform 0.16s ease, box-shadow 0.16s ease;
+    letter-spacing: 0.02em;
+}
+
+.coding-btn-run-hidden:hover {
+    background: linear-gradient(135deg, #3b7ef5 0%, #2563eb 100%) !important;
+    box-shadow: 0 6px 16px rgba(79, 143, 247, 0.35);
+    transform: translateY(-1px);
+}
+
+.coding-btn-run-hidden:active {
+    transform: translateY(0);
+}
+
+.coding-btn-submit {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    color: #1a1000 !important;
+    border: none !important;
+    font-family: var(--code-ui-font);
+    font-weight: 800;
+    padding: 9px 24px;
+    font-size: 14px;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: transform 0.16s ease, box-shadow 0.16s ease;
+    letter-spacing: 0.02em;
+}
+
+.coding-btn-submit:hover {
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+    box-shadow: 0 6px 18px rgba(245, 158, 11, 0.35);
+    transform: translateY(-1px);
+}
+
+.coding-btn-submit:active {
+    transform: translateY(0);
+}
+
+.coding-btn-reset {
+    background: transparent !important;
+    color: var(--code-text-dim) !important;
+    border: 1px solid rgba(79, 112, 170, 0.18) !important;
+    font-family: var(--code-ui-font);
+    padding: 9px 16px;
+    font-size: 12px;
+    border-radius: 10px;
+    margin-left: auto;
+    font-weight: 600;
+    transition: all 0.16s ease;
+    letter-spacing: 0.02em;
+}
+
+.coding-btn-reset:hover {
+    color: var(--code-text-muted) !important;
+    background: rgba(26, 35, 56, 0.5) !important;
+    border-color: rgba(79, 112, 170, 0.3) !important;
+}
+
+/* ============================================================
+   OUTPUT PANEL
+   ============================================================ */
+.coding-output-panel {
+    height: 180px;
+    min-height: 100px;
+    max-height: 40%;
+    background: linear-gradient(180deg, #0d1322 0%, #0b0f1c 100%);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-top: 1px solid rgba(79, 112, 170, 0.12);
+    position: relative;
+}
+
+/* Output panel top accent */
+.coding-output-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(79, 143, 247, 0.15) 30%,
+        rgba(52, 211, 153, 0.12) 70%,
+        transparent);
+    z-index: 1;
+}
+
+.coding-output-content {
+    flex: 1;
+    overflow: auto;
+    padding: 14px 18px;
+    font-family: var(--code-ui-font);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--code-text-muted);
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.coding-output-content.success { color: var(--code-success); }
+.coding-output-content.error   { color: var(--code-danger); }
+.coding-output-content.partial { color: var(--code-text); }
+
+/* ============================================================
+   TEST CASE RESULTS (in output panel) — Modern Card Style
+   ============================================================ */
+.coding-run-summary {
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-family: var(--code-ui-font);
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.02em;
+}
+
+.coding-run-summary.all-passed {
+    background: linear-gradient(135deg, rgba(52, 211, 153, 0.12) 0%, rgba(52, 211, 153, 0.05) 100%);
+    color: var(--code-success);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    box-shadow: 0 0 16px rgba(52, 211, 153, 0.08);
+}
+
+.coding-run-summary.has-failures {
+    background: linear-gradient(135deg, rgba(248, 113, 113, 0.12) 0%, rgba(248, 113, 113, 0.05) 100%);
+    color: var(--code-danger);
+    border: 1px solid rgba(248, 113, 113, 0.25);
+    box-shadow: 0 0 16px rgba(248, 113, 113, 0.08);
+}
+
+.coding-run-time {
+    font-weight: 500;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.coding-tc-result {
+    border: 1px solid rgba(79, 112, 170, 0.15);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    font-family: var(--code-ui-font);
+    background: rgba(17, 24, 39, 0.6);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    backdrop-filter: blur(4px);
+}
+
+.coding-tc-result.passed {
+    border-color: rgba(52, 211, 153, 0.3);
+    box-shadow: 0 0 12px rgba(52, 211, 153, 0.06);
+}
+
+.coding-tc-result.failed {
+    border-color: rgba(248, 113, 113, 0.3);
+    box-shadow: 0 0 12px rgba(248, 113, 113, 0.06);
+}
+
+.coding-tc-result-header {
+    padding: 10px 16px;
+    font-family: var(--code-ui-font);
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(79, 112, 170, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.coding-tc-result-header::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.coding-tc-result.passed .coding-tc-result-header::before {
+    background: var(--code-success);
+    box-shadow: 0 0 6px rgba(52, 211, 153, 0.5);
+}
+
+.coding-tc-result.failed .coding-tc-result-header::before {
+    background: var(--code-danger);
+    box-shadow: 0 0 6px rgba(248, 113, 113, 0.5);
+}
+
+.coding-tc-result.passed .coding-tc-result-header {
+    color: var(--code-success);
+    background: rgba(52, 211, 153, 0.04);
+}
+
+.coding-tc-result.failed .coding-tc-result-header {
+    color: var(--code-danger);
+    background: rgba(248, 113, 113, 0.04);
+}
+
+.coding-tc-result-row {
+    padding: 6px 14px;
+    font-family: var(--code-ui-font);
+    font-size: 13px;
+    color: var(--code-text-secondary);
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+}
+
+.coding-tc-result-row .label {
+    color: var(--code-text-muted);
+    font-family: var(--code-ui-font);
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    min-width: 75px;
+    flex-shrink: 0;
+}
+
+.coding-tc-result-row code {
+    color: var(--code-text);
+    font-family: var(--code-mono);
+    background: rgba(79, 143, 247, 0.08);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    border: 1px solid rgba(79, 143, 247, 0.12);
+    letter-spacing: 0.01em;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.coding-tc-result-row.actual code {
+    color: var(--code-danger);
+    background: rgba(248, 113, 113, 0.1);
+    border-color: rgba(248, 113, 113, 0.2);
+}
+
+.coding-tc-result-row.error code {
+    color: var(--code-danger);
+    font-size: 12px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.coding-tc-result-row.time {
+    color: var(--code-text-dim);
+    opacity: 0.6;
+    font-size: 11px;
+    padding-bottom: 8px;
+}
+
+/* ============================================================
+   LOADING SPINNER
+   ============================================================ */
+.coding-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: codingSpin 0.5s linear infinite;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+@keyframes codingSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   BANNER NOTIFICATION
+   ============================================================ */
+.coding-banner {
+    position: fixed;
+    top: 64px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    padding: 11px 26px;
+    border-radius: var(--code-radius-lg);
+    font-family: var(--code-ui-font);
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: var(--code-shadow-lg);
+    animation: codingBannerIn 0.3s ease;
+    pointer-events: none;
+    letter-spacing: 0.01em;
+}
+
+.coding-banner.success {
+    background: linear-gradient(135deg, rgba(52, 211, 153, 0.95) 0%, rgba(16, 185, 129, 0.95) 100%);
+    color: #fff;
+}
+
+.coding-banner.danger {
+    background: linear-gradient(135deg, rgba(248, 113, 113, 0.95) 0%, rgba(239, 68, 68, 0.95) 100%);
+    color: #fff;
+}
+
+.coding-banner.warning {
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.95) 0%, rgba(245, 158, 11, 0.95) 100%);
+    color: #fff;
+}
+
+@keyframes codingBannerIn {
+    from { opacity: 0; transform: translate(-50%, -10px); }
+    to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* ============================================================
+   FOCUS STATES (Accessibility — mirrors MCQ premium)
+   ============================================================ */
+.btn:focus-visible,
+.coding-chip:focus-visible {
+    outline: 2px solid rgba(79, 143, 247, 0.45);
+    outline-offset: 2px;
+}
+
+.coding-textarea:focus-visible {
+    outline: none;
+}
+
+/* ============================================================
+   SECURITY — Prevent text selection (matching MCQ)
+   ============================================================ */
+body.coding-editor-page {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Allow text selection only in the code editor (textarea or CodeMirror) */
+body.coding-editor-page .coding-textarea,
+body.coding-editor-page .CodeMirror,
+body.coding-editor-page .CodeMirror * {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+    .coding-ide-shell {
+        flex-direction: column;
+    }
+
+    .coding-problem-panel {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 40vh;
+        border-right: none;
+        border-bottom: 1px solid var(--code-border);
+    }
+
+    .coding-header-chips {
+        display: none;
+    }
+
+    .coding-overview-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #proctoringWebcamDock {
+        width: 148px;
+    }
+}
+
+@media (max-width: 640px) {
+    .candidate {
+        display: none;
+    }
+
+    #proctoringWebcamDock {
+        width: 120px;
+    }
+
+    .coding-overview-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .coding-start-card,
+    .coding-submit-card {
+        padding: 24px !important;
+    }
+
+    .coding-round-title {
+        font-size: 25px;
+    }
+
+    .coding-submit-actions {
+        flex-direction: column;
+    }
+
+    .coding-submit-actions form,
+    .coding-submit-actions button {
+        width: 100%;
+    }
+}

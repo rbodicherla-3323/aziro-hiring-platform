@@ -441,6 +441,11 @@ window.__MCQ_AJAX_FLOW = true;
     }
 
     function renderQuestion(questionData) {
+        // Suppress content-change screenshots during legitimate question navigation
+        if (typeof window.suppressContentChangeDetection === "function") {
+            window.suppressContentChangeDetection(2000);
+        }
+
         state.qIndex = questionData.q_index;
         state.totalQuestions = questionData.total_questions;
         state.submitUrl = questionData.submit_url || state.submitUrl;
@@ -519,6 +524,11 @@ window.__MCQ_AJAX_FLOW = true;
     }
 
     function renderSubmitCard() {
+        // Suppress content-change screenshots during legitimate navigation
+        if (typeof window.suppressContentChangeDetection === "function") {
+            window.suppressContentChangeDetection(2000);
+        }
+
         setPageMode("centered");
         setBodyView("submit");
 
@@ -796,6 +806,25 @@ window.__MCQ_AJAX_FLOW = true;
                         startButton.disabled = false;
                     }
                     return;
+                }
+
+                // Acquire webcam NOW (inside fullscreen) so that
+                // setupExamProctoring() finds it already active and
+                // never needs to exit fullscreen for it.
+                if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === "function") {
+                    try {
+                        const wStream = await navigator.mediaDevices.getUserMedia({
+                            video: { facingMode: "user", width: { ideal: 320 }, height: { ideal: 180 } },
+                            audio: false
+                        });
+                        // Store on the proctoring module's global so
+                        // setupExamProctoring sees it as already active.
+                        if (typeof window.__proctoringSetWebcam === "function") {
+                            window.__proctoringSetWebcam(wStream);
+                        }
+                    } catch (_) {
+                        // Webcam is optional — continue even if denied
+                    }
                 }
 
                 try {

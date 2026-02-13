@@ -8,6 +8,7 @@ from app.utils.role_normalizer import normalize_role
 from app.utils.role_round_mapping import ROLE_ROUND_MAPPING
 from app.services.generated_tests_store import GENERATED_TESTS
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
+from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 
 tests_bp = Blueprint("tests", __name__)
 
@@ -62,6 +63,34 @@ def create_test():
                 }
 
             # -------------------------------
+            # CODING ROUND (L4)
+            # -------------------------------
+            coding_rounds = config.get("coding_rounds", [])
+            coding_language = config.get("coding_language", "java")
+
+            for round_key in coding_rounds:
+                session_id = str(uuid.uuid4())
+
+                CODING_SESSION_REGISTRY[session_id] = {
+                    "role_key": role_key,
+                    "role_label": role_label,
+                    "round_key": round_key,
+                    "round_label": ROUND_DISPLAY_MAPPING
+    .get(role_key, {})
+    .get(round_key, f"Coding Challenge ({round_key})"),
+                    "language": coding_language,
+                    "batch_id": batch_id,
+                    "domain": None,
+                    "candidate_name": name,
+                    "email": email,
+                }
+
+                tests[round_key] = {
+                    "label": ROUND_DISPLAY_MAPPING.get(role_key, {}).get(round_key, f"Coding Challenge ({round_key})"),
+                    "url": f"{request.host_url.rstrip('/')}/coding/start/{session_id}"
+                }
+
+            # -------------------------------
             # DOMAIN ROUND (L6)
             # -------------------------------
             if config["allow_domain"] and domain and domain != "None":
@@ -83,6 +112,12 @@ def create_test():
                     "label": f"Domain – {domain}",
                     "url": f"{request.host_url.rstrip('/')}/mcq/start/{session_id}"
                 }
+
+            ROUND_ORDER = ["L1", "L2", "L3", "L4", "L5", "L6"]
+            tests = dict(sorted(
+                tests.items(),
+                key=lambda x: ROUND_ORDER.index(x[0]) if x[0] in ROUND_ORDER else 99
+            ))
 
             GENERATED_TESTS.append({
                 "name": name,

@@ -17,7 +17,13 @@ const MAX_WARNINGS = 3;
 const TAB_SWITCH_DEBOUNCE_MS = 1200;
 const SCREENSHOT_THROTTLE_MS = 4000;
 const PERIODIC_SCREENSHOT_INTERVAL_MS = 60 * 1000;
-const TAB_SWITCH_CAPTURE_BURST_DELAYS_MS = [0, 120, 280];
+const TAB_SWITCH_CAPTURE_BURST_DELAYS_MS = [0, 500, 1500, 3000, 5000, 8000, 12000];
+const TAB_RETURN_CAPTURE_DELAYS_MS  = [0, 200, 600];
+const CONTENT_CHANGE_SAMPLE_INTERVAL_MS = 750;
+const CONTENT_CHANGE_DIFF_THRESHOLD = 0.12;
+const CONTENT_CHANGE_CAPTURE_COOLDOWN_MS = 2000;
+const CONTENT_CHANGE_SAMPLE_W = 64;
+const CONTENT_CHANGE_SAMPLE_H = 36;
 const MULTI_MONITOR_CHECK_INTERVAL_MS = 4000;
 const MULTI_MONITOR_DEBOUNCE_MS = 6000;
 const MOUSE_OFF_PRIMARY_THRESHOLD_PX = 12;
@@ -57,6 +63,12 @@ let forcedReentryAttempts = 0;
 let screenshotInProgress = false;
 let lastScreenshotAt = 0;
 let tabSwitchCaptureBurstId = 0;
+let lastTabReturnCaptureAt = 0;
+let contentChangeTimer = null;
+let contentChangeSampleCanvas = null;
+let contentChangePrevPixels = null;
+let lastContentChangeCaptureAt = 0;
+let contentChangeSuppressedUntil = 0;
 let webcamStream = null;
 let webcamEnabledLogged = false;
 let webcamRecorder = null;
@@ -78,6 +90,7 @@ let screenStream = null;
 let screenCaptureVideo = null;
 let screenCaptureCanvas = null;
 let screenCaptureReady = false;
+let deferredBlurTimer = null;
 let screenCapturePromptInFlight = false;
 let screenCaptureAutoInitTried = false;
 let screenCaptureGestureAttempted = false;
@@ -360,9 +373,17 @@ async function ensureProctoringReady(options = {}) {
     const requireFullscreen = options.requireFullscreen !== false;
     const withOverlay = options.withOverlay !== false;
 
+    // If we need screen share and don't have it, we MUST exit fullscreen first
+    // because the screen share picker dialog will break fullscreen anyway.
     if (requireScreenShare && !screenCaptureReady) {
+        if (isInFullscreen()) {
+            suppressWarnings = true;
+            try { await exitAppFullscreen(); } catch (_) {}
+            await new Promise(r => setTimeout(r, 300));
+        }
         const started = await startScreenCaptureMonitor();
         if (!started || !screenCaptureReady) {
+            suppressWarnings = false;
             if (withOverlay) {
                 showLockOverlay(getProctoringRequirementMessage());
                 armFullscreenRecovery();
@@ -371,10 +392,12 @@ async function ensureProctoringReady(options = {}) {
         }
     }
 
+    // Now enter fullscreen (all dialogs are done)
     if (requireFullscreen && !isInFullscreen()) {
         try {
             await requestAppFullscreen();
         } catch (_) {
+            suppressWarnings = false;
             if (withOverlay) {
                 showLockOverlay(getProctoringRequirementMessage());
                 armFullscreenRecovery();
@@ -383,6 +406,7 @@ async function ensureProctoringReady(options = {}) {
         }
     }
 
+    suppressWarnings = false;
     const ready = (!requireScreenShare || screenCaptureReady) && (!requireFullscreen || isInFullscreen());
     if (!ready) {
         if (withOverlay) {
@@ -482,6 +506,86 @@ function captureTabSwitchEvidence(details = {}) {
             }
         }, delayMs);
     });
+}
+
+function captureTabReturnEvidence() {
+    const now = Date.now();
+    if ((now - lastTabReturnCaptureAt) < TAB_SWITCH_DEBOUNCE_MS) return;
+    lastTabReturnCaptureAt = now;
+    TAB_RETURN_CAPTURE_DELAYS_MS.forEach((delayMs) => {
+        setTimeout(() => {
+            captureScreenFrame("tab_return", { capture_trigger: "tab_return" }, true);
+        }, delayMs);
+    });
+}
+
+/* ── Screen content-change detection ───────────────── */
+function sampleScreenFrame() {
+    try {
+        const video = screenCaptureVideo;
+        if (!video || !screenStream || !screenStream.active || !screenCaptureReady) return null;
+        const vw = Number(video.videoWidth) || 0, vh = Number(video.videoHeight) || 0;
+        if (!vw || !vh) return null;
+        if (!contentChangeSampleCanvas) contentChangeSampleCanvas = document.createElement("canvas");
+        contentChangeSampleCanvas.width = CONTENT_CHANGE_SAMPLE_W;
+        contentChangeSampleCanvas.height = CONTENT_CHANGE_SAMPLE_H;
+        const ctx = contentChangeSampleCanvas.getContext("2d", { willReadFrequently: true });
+        if (!ctx) return null;
+        ctx.drawImage(video, 0, 0, CONTENT_CHANGE_SAMPLE_W, CONTENT_CHANGE_SAMPLE_H);
+        return ctx.getImageData(0, 0, CONTENT_CHANGE_SAMPLE_W, CONTENT_CHANGE_SAMPLE_H).data;
+    } catch (_) { return null; }
+}
+
+function computeFrameDiff(a, b) {
+    if (!a || !b || a.length !== b.length) return 1;
+    const totalPixels = a.length / 4;
+    let changed = 0;
+    for (let i = 0; i < a.length; i += 4) {
+        const dr = Math.abs(a[i] - b[i]);
+        const dg = Math.abs(a[i + 1] - b[i + 1]);
+        const db = Math.abs(a[i + 2] - b[i + 2]);
+        if (dr + dg + db > 60) changed++;
+    }
+    return changed / totalPixels;
+}
+
+function suppressContentChangeDetection(durationMs = 2000) {
+    contentChangeSuppressedUntil = Date.now() + durationMs;
+    contentChangePrevPixels = null;
+}
+window.suppressContentChangeDetection = suppressContentChangeDetection;
+
+function contentChangeCheck() {
+    if (!proctoringActive || shouldIgnoreProctoringEvent()) return;
+    const now = Date.now();
+    if (now < contentChangeSuppressedUntil) { contentChangePrevPixels = null; return; }
+    const currentPixels = sampleScreenFrame();
+    if (!currentPixels) { contentChangePrevPixels = null; return; }
+    if (contentChangePrevPixels) {
+        const diff = computeFrameDiff(contentChangePrevPixels, currentPixels);
+        if (diff >= CONTENT_CHANGE_DIFF_THRESHOLD) {
+            if ((now - lastContentChangeCaptureAt) >= CONTENT_CHANGE_CAPTURE_COOLDOWN_MS) {
+                lastContentChangeCaptureAt = now;
+                captureScreenFrame("content_change", {
+                    capture_trigger: "screen_content_changed",
+                    diff_ratio: Math.round(diff * 100) / 100
+                }, true);
+            }
+        }
+    }
+    contentChangePrevPixels = currentPixels;
+}
+
+function startContentChangeDetection() {
+    if (contentChangeTimer || !isExamPath()) return;
+    contentChangePrevPixels = null;
+    contentChangeTimer = setInterval(contentChangeCheck, CONTENT_CHANGE_SAMPLE_INTERVAL_MS);
+}
+
+function stopContentChangeDetection() {
+    if (contentChangeTimer) { clearInterval(contentChangeTimer); contentChangeTimer = null; }
+    contentChangePrevPixels = null;
+    contentChangeSampleCanvas = null;
 }
 
 function captureEvidence(eventType, details = {}, force = true) {
@@ -1298,24 +1402,58 @@ function setupStartFullscreenGate() {
     let bypassGate = false;
     beginForm.addEventListener("submit", async (e) => {
         if (bypassGate) return;
-
+        e.preventDefault();
         try {
-            e.preventDefault();
-            const ready = await ensureProctoringReady({
-                requireScreenShare: true,
-                requireFullscreen: true,
-                withOverlay: false
-            });
-            if (!ready) {
-                alert("Share Entire Screen and fullscreen are required to start the test.");
-                return;
+            // All permission dialogs MUST happen BEFORE fullscreen.
+            // Browsers exit fullscreen whenever a system dialog appears.
+            suppressWarnings = true;
+
+            // Step 1: Request screen share (system dialog)
+            if (!screenCaptureReady) {
+                const scOk = await startScreenCaptureMonitor();
+                if (!scOk || !screenCaptureReady) {
+                    suppressWarnings = false;
+                    alert("You must share your Entire Screen to start the test.");
+                    return;
+                }
             }
 
+            // Step 2: Request webcam (system dialog)
+            // Must happen here, NOT on question page, or it will break fullscreen
+            if (!webcamStream || !webcamStream.active) {
+                try {
+                    webcamStream = await navigator.mediaDevices.getUserMedia({
+                        video: { facingMode: "user", width: { ideal: 320 }, height: { ideal: 180 } },
+                        audio: false
+                    });
+                    if (!webcamEnabledLogged) {
+                        webcamEnabledLogged = true;
+                        sendViolation("Webcam preview enabled", { video_track_count: webcamStream.getVideoTracks().length });
+                    }
+                } catch (_) {
+                    // Webcam is optional — continue even if denied
+                    sendViolation("Webcam access denied", { page: "start" });
+                }
+            }
+
+            // Step 3: NOW enter fullscreen (no more dialogs will interrupt it)
+            if (!isInFullscreen()) {
+                try {
+                    await requestAppFullscreen();
+                    await new Promise(r => setTimeout(r, 400));
+                } catch (_) {
+                    // Fullscreen may fail if user gesture expired during dialogs.
+                    // Proceed anyway — question page will enforce fullscreen via lock overlay.
+                    console.warn("[Proctoring] Fullscreen request failed on start page, question page will handle it.");
+                }
+            }
+
+            suppressWarnings = false;
             setFullscreenRequired(true);
             bypassGate = true;
             beginForm.submit();
         } catch (_) {
-            e.preventDefault();
+            suppressWarnings = false;
             alert("Share Entire Screen and fullscreen are required to start the test.");
         }
     });
@@ -1325,30 +1463,101 @@ function setupExamProctoring() {
     if (!isExamPath()) return;
 
     proctoringActive = true;
-    suppressWarnings = false;
     setNavInProgress(false);
     setFullscreenRequired(true);
 
     logSessionStartIfNeeded();
-    captureBaselineScreenshot();
     startPeriodicScreenshotCapture();
+    startContentChangeDetection();
     startMultiMonitorDetection();
-    startWebcamPreview();
-    armScreenCaptureMonitorFromGesture();
-    if (!screenCaptureAutoInitTried) {
-        screenCaptureAutoInitTried = true;
-        startScreenCaptureMonitor();
-    }
 
-    if (!hasProctoringRequirements()) {
-        showLockOverlay(getProctoringRequirementMessage());
-        armFullscreenRecovery();
-        ensureProctoringReady({
-            requireScreenShare: true,
-            requireFullscreen: true,
-            withOverlay: true
-        });
-    }
+    // ── CRITICAL FIX ─────────────────────────────────────
+    // Only getDisplayMedia (screen share) requires exiting fullscreen
+    // because its system-level picker dialog forces the browser out.
+    // getUserMedia (webcam) works fine inside fullscreen — no need to
+    // leave.  The start page (mcq_flow.js) also pre-acquires webcam
+    // so most of the time both streams are already active here.
+    // ─────────────────────────────────────────────────────
+    suppressWarnings = true;
+
+    setTimeout(async () => {
+        try {
+            // Only exit fullscreen when screen share (getDisplayMedia) needs
+            // to be acquired — it shows a system-level picker dialog that the
+            // browser will force-exit fullscreen for.  getUserMedia (webcam)
+            // works fine INSIDE fullscreen so we never need to leave for it.
+            const needScreenShare = !screenCaptureReady;
+            const needWebcam = !webcamStream || !webcamStream.active;
+
+            if (needScreenShare && isInFullscreen()) {
+                try { await exitAppFullscreen(); } catch (_) {}
+                await new Promise(r => setTimeout(r, 300));
+            }
+
+            // Step 2: Acquire screen share (system dialog — must happen BEFORE fullscreen)
+            if (needScreenShare) {
+                screenCaptureAutoInitTried = true;
+                const scOk = await startScreenCaptureMonitor();
+                if (!scOk || !screenCaptureReady) {
+                    console.warn("[Proctoring] Screen share not acquired on question page");
+                }
+            }
+
+            // Step 3: Acquire webcam (system dialog — must happen BEFORE fullscreen)
+            if (webcamStream && webcamStream.active) {
+                const dock = getOrCreateWebcamDock();
+                dock.style.display = "block";
+                const video = document.getElementById(WEBCAM_VIDEO_ID);
+                if (video && video.srcObject !== webcamStream) {
+                    video.srcObject = webcamStream;
+                    try { await video.play(); } catch (_) {}
+                }
+                await startWebcamRecording();
+            } else {
+                try {
+                    webcamStream = await navigator.mediaDevices.getUserMedia({
+                        video: { facingMode: "user", width: { ideal: 320 }, height: { ideal: 180 } },
+                        audio: false
+                    });
+                    const dock = getOrCreateWebcamDock();
+                    dock.style.display = "block";
+                    const video = document.getElementById(WEBCAM_VIDEO_ID);
+                    if (video) { video.srcObject = webcamStream; try { await video.play(); } catch (_) {} }
+                    if (!webcamEnabledLogged) {
+                        webcamEnabledLogged = true;
+                        sendViolation("Webcam preview enabled", { video_track_count: webcamStream.getVideoTracks().length });
+                    }
+                    await startWebcamRecording();
+                } catch (_) {
+                    sendViolation("Webcam access denied", { page: "question" });
+                }
+            }
+
+            // Step 4: NOW enter fullscreen — all dialogs are done
+            if (!isInFullscreen()) {
+                try {
+                    await requestAppFullscreen();
+                    await new Promise(r => setTimeout(r, 400));
+                } catch (_) {
+                    console.warn("[Proctoring] Could not enter fullscreen on question page");
+                }
+            }
+        } catch (err) {
+            console.error("[Proctoring] Setup error:", err);
+        }
+
+        // Step 5: Stop suppressing and start real monitoring
+        suppressWarnings = false;
+        captureBaselineScreenshot();
+
+        // Step 6: Check requirements after everything settles
+        setTimeout(() => {
+            if (!hasProctoringRequirements()) {
+                showLockOverlay(getProctoringRequirementMessage());
+                armFullscreenRecovery();
+            }
+        }, 500);
+    }, 600);
 
     if (examListenersAttached) return;
     examListenersAttached = true;
@@ -1368,6 +1577,7 @@ function setupExamProctoring() {
         stopWebcamPreview({ final: true });
         stopScreenCaptureMonitor();
         stopPeriodicScreenshotCapture();
+        stopContentChangeDetection();
         stopMultiMonitorDetection();
 
         sendViolation("Session page unload", {
@@ -1435,16 +1645,25 @@ function setupExamProctoring() {
             handleTabSwitch("visibility_hidden");
         } else {
             document.body.classList.remove("proctoring-warning");
+            captureTabReturnEvidence();
         }
     });
 
     window.addEventListener("blur", () => {
         if (shouldIgnoreProctoringEvent()) return;
-        handleTabSwitch("window_blur");
+        // Defer: browser-native UI (e.g. "Your screen is being shared" bar)
+        // causes a momentary blur→focus cycle — wait before counting it.
+        if (deferredBlurTimer) clearTimeout(deferredBlurTimer);
+        deferredBlurTimer = setTimeout(() => {
+            deferredBlurTimer = null;
+            if (!document.hasFocus()) handleTabSwitch("window_blur");
+        }, 350);
     });
 
     window.addEventListener("focus", () => {
+        if (deferredBlurTimer) { clearTimeout(deferredBlurTimer); deferredBlurTimer = null; }
         document.body.classList.remove("proctoring-warning");
+        captureTabReturnEvidence();
     });
 
     window.addEventListener("resize", () => {
@@ -1500,6 +1719,7 @@ function finalizeFullscreenOnCompletion() {
     stopWebcamPreview({ final: true });
     stopScreenCaptureMonitor();
     stopPeriodicScreenshotCapture();
+    stopContentChangeDetection();
     stopMultiMonitorDetection();
 
     exitAppFullscreen().catch(() => {});
@@ -1514,3 +1734,17 @@ finalizeFullscreenOnCompletion();
 window.setupExamProctoring = setupExamProctoring;
 window.requestAppFullscreen = requestAppFullscreen;
 window.ensureProctoringReady = ensureProctoringReady;
+
+// Allow mcq_flow.js to hand the webcam stream acquired on the start page
+// to the proctoring module so setupExamProctoring() finds it already active.
+window.__proctoringSetWebcam = function (stream) {
+    if (!stream || !stream.active) return;
+    webcamStream = stream;
+    if (!webcamEnabledLogged) {
+        webcamEnabledLogged = true;
+        sendViolation("Webcam preview enabled", {
+            video_track_count: stream.getVideoTracks().length,
+            source: "start_page_handoff"
+        });
+    }
+};
