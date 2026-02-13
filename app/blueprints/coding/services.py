@@ -2,6 +2,7 @@ import time
 import random
 import yaml
 import os
+import re
 from flask import session
 
 
@@ -84,21 +85,88 @@ class CodingSessionService:
         """Generate the starter code template for the given language."""
         lang = language.lower()
 
+        def extract_return_type(signature, default_type="int"):
+            m = re.match(r"\s*(.+?)\s+[A-Za-z_]\w*\s*\(.*\)\s*$", str(signature or ""))
+            if not m:
+                return default_type
+            ret = m.group(1).strip()
+            # Java signatures may include modifiers in the return-type capture.
+            ret = re.sub(r"^(public|private|protected)\s+", "", ret)
+            ret = re.sub(r"^static\s+", "", ret)
+            ret = re.sub(r"^final\s+", "", ret)
+            return ret.strip() or default_type
+
+        def java_default_return(ret_type):
+            t = re.sub(r"\s+", "", str(ret_type or ""))
+            if t in ("void",):
+                return ""
+            if t in ("int", "Integer", "short", "Short", "long", "Long", "byte", "Byte"):
+                return "        return 0;"
+            if t in ("double", "Double", "float", "Float"):
+                return "        return 0.0;"
+            if t in ("boolean", "Boolean"):
+                return "        return false;"
+            if t == "String":
+                return "        return \"\";"
+            if t.endswith("[]"):
+                return f"        return new {t[:-2]}[0];"
+            if t.startswith("List<"):
+                return "        return new ArrayList<>();"
+            if t.startswith("Map<"):
+                return "        return new HashMap<>();"
+            return "        return null;"
+
+        def cpp_default_return(ret_type):
+            t = re.sub(r"\s+", "", str(ret_type or "")).replace("std::", "")
+            if t == "void":
+                return ""
+            if t in ("int", "short", "long", "longlong"):
+                return "    return 0;"
+            if t in ("double", "float"):
+                return "    return 0.0;"
+            if t == "bool":
+                return "    return false;"
+            if t == "string":
+                return "    return \"\";"
+            if t.startswith("vector<") or t.startswith("map<"):
+                return "    return {};"
+            return "    return {};"
+
+        def c_default_return(ret_type):
+            t = re.sub(r"\s+", "", str(ret_type or ""))
+            if t == "void":
+                return ""
+            if t in ("int", "short", "long"):
+                return "    return 0;"
+            if t in ("double", "float"):
+                return "    return 0.0;"
+            return "    return 0;"
+
         if lang == "java":
-            class_name = func_info.get("class", "Solution")
-            method_sig = func_info.get("method", "public static int solve(int n)")
+            java_info = func_info if isinstance(func_info, dict) else {}
+            class_name = java_info.get("class", "Solution")
+            method_sig = java_info.get("method", str(func_info) if isinstance(func_info, str) else "public static int solve(int n)")
+            ret_type = extract_return_type(method_sig, "int")
+            ret_stmt = java_default_return(ret_type)
+            ret_block = f"{ret_stmt}\n" if ret_stmt else ""
             return (
+                "import java.util.*;\n\n"
                 f"class {class_name} {{\n"
                 f"    {method_sig} {{\n"
-                f"        // Write your solution here\n"
-                f"        \n"
+                f"        // TODO: Implement this method according to the problem statement.\n"
+                f"        // Keep the method signature unchanged.\n"
+                f"{ret_block}"
                 f"    }}\n"
                 f"}}\n"
             )
 
         elif lang == "cpp":
-            includes = func_info.get("includes", [])
-            signature = func_info.get("signature", "int solve(int n)")
+            cpp_info = func_info if isinstance(func_info, dict) else {}
+            includes = cpp_info.get("includes", [])
+            signature = cpp_info.get("signature", str(func_info) if isinstance(func_info, str) else "int solve(int n)")
+            ret_type = extract_return_type(signature, "int")
+            ret_stmt = cpp_default_return(ret_type)
+            ret_block = f"{ret_stmt}\n" if ret_stmt else ""
             include_lines = "\n".join(f"#include <{inc}>" for inc in includes)
             if include_lines:
                 include_lines += "\nusing namespace std;\n\n"
@@ -107,22 +175,28 @@ class CodingSessionService:
             return (
                 f"{include_lines}"
                 f"{signature} {{\n"
-                f"    // Write your solution here\n"
-                f"    \n"
+                f"    // TODO: Implement this function according to the problem statement.\n"
+                f"    // Keep the function signature unchanged.\n"
+                f"{ret_block}"
                 f"}}\n"
             )
 
         elif lang == "c":
-            includes = func_info.get("includes", [])
-            signature = func_info.get("signature", "int solve(int n)")
+            c_info = func_info if isinstance(func_info, dict) else {}
+            includes = c_info.get("includes", [])
+            signature = c_info.get("signature", str(func_info) if isinstance(func_info, str) else "int solve(int n)")
+            ret_type = extract_return_type(signature, "int")
+            ret_stmt = c_default_return(ret_type)
+            ret_block = f"{ret_stmt}\n" if ret_stmt else ""
             include_lines = "\n".join(f"#include <{inc}>" for inc in includes)
             if not include_lines:
                 include_lines = "#include <stdio.h>"
             return (
                 f"{include_lines}\n\n"
                 f"{signature} {{\n"
-                f"    // Write your solution here\n"
-                f"    \n"
+                f"    // TODO: Implement this function according to the problem statement.\n"
+                f"    // Keep the function signature unchanged.\n"
+                f"{ret_block}"
                 f"}}\n"
             )
 
@@ -202,6 +276,14 @@ class CodingSessionService:
         if not data:
             return []
         return data["question"].get("public_tests", [])
+
+    @staticmethod
+    def get_hidden_tests(session_id):
+        """Return the hidden test cases for the question."""
+        data = session.get(f"coding_{session_id}")
+        if not data:
+            return []
+        return data["question"].get("hidden_tests", [])
 
     @staticmethod
     def get_session_data(session_id):
