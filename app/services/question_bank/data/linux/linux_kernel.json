@@ -1,0 +1,601 @@
+[
+  {
+    "question": "What is the Linux kernel?",
+    "options": [
+      "A graphical user interface for Linux",
+      "The core component of the Linux OS that manages hardware, memory, processes, and system calls",
+      "A Linux distribution like Ubuntu",
+      "A command-line shell"
+    ],
+    "correct_answer": "The core component of the Linux OS that manages hardware, memory, processes, and system calls",
+    "topic": "Kernel Basics",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the difference between monolithic and microkernel architectures?",
+    "options": [
+      "Monolithic kernels are smaller than microkernels",
+      "Monolithic kernels run all services in kernel space; microkernels run most services in user space",
+      "Microkernels are faster than monolithic kernels",
+      "There is no architectural difference"
+    ],
+    "correct_answer": "Monolithic kernels run all services in kernel space; microkernels run most services in user space",
+    "topic": "Kernel Architecture",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is a system call in Linux?",
+    "options": [
+      "A function call between two user-space programs",
+      "An interface through which user-space programs request services from the kernel",
+      "A call to the system BIOS",
+      "A network RPC mechanism"
+    ],
+    "correct_answer": "An interface through which user-space programs request services from the kernel",
+    "topic": "System Calls",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the purpose of the 'init' process (PID 1) in Linux?",
+    "options": [
+      "To compile the kernel",
+      "It is the first user-space process; it initializes the system and is the ancestor of all processes",
+      "To manage network connections",
+      "To handle interrupt requests"
+    ],
+    "correct_answer": "It is the first user-space process; it initializes the system and is the ancestor of all processes",
+    "topic": "Process Management",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the difference between kernel space and user space?",
+    "options": [
+      "Kernel space is for storing files; user space is for programs",
+      "Kernel space has unrestricted hardware access; user space has restricted access and must use syscalls",
+      "User space is more privileged than kernel space",
+      "There is no separation in Linux"
+    ],
+    "correct_answer": "Kernel space has unrestricted hardware access; user space has restricted access and must use syscalls",
+    "topic": "Kernel Architecture",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is a loadable kernel module (LKM)?",
+    "options": [
+      "A kernel that can be loaded from a USB drive",
+      "Code that can be loaded into and unloaded from the running kernel without rebooting",
+      "A module for loading user applications",
+      "A precompiled kernel binary"
+    ],
+    "correct_answer": "Code that can be loaded into and unloaded from the running kernel without rebooting",
+    "topic": "Kernel Modules",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which commands are used to load and unload kernel modules?",
+    "options": [
+      "load / unload",
+      "insmod / rmmod (or modprobe / modprobe -r)",
+      "modload / modunload",
+      "kmod_add / kmod_remove"
+    ],
+    "correct_answer": "insmod / rmmod (or modprobe / modprobe -r)",
+    "topic": "Kernel Modules",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the difference between 'insmod' and 'modprobe'?",
+    "options": [
+      "They are identical",
+      "modprobe automatically handles module dependencies; insmod does not",
+      "insmod handles dependencies; modprobe does not",
+      "modprobe works only for network modules"
+    ],
+    "correct_answer": "modprobe automatically handles module dependencies; insmod does not",
+    "topic": "Kernel Modules",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the Virtual File System (VFS) in Linux?",
+    "options": [
+      "A virtual disk for storing temporary files",
+      "An abstraction layer that provides a uniform interface for different file systems",
+      "A virtual machine file system",
+      "A file system stored entirely in RAM"
+    ],
+    "correct_answer": "An abstraction layer that provides a uniform interface for different file systems",
+    "topic": "File Systems",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the purpose of the 'proc' filesystem (/proc)?",
+    "options": [
+      "To store procedure definitions",
+      "A virtual filesystem providing process and kernel information as files",
+      "To store application configuration files",
+      "To provide network protocol information"
+    ],
+    "correct_answer": "A virtual filesystem providing process and kernel information as files",
+    "topic": "File Systems",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is a kernel panic?",
+    "options": [
+      "A warning message in the kernel log",
+      "A fatal error where the kernel cannot safely continue operation and halts",
+      "A scheduled kernel maintenance event",
+      "A kernel performance optimization"
+    ],
+    "correct_answer": "A fatal error where the kernel cannot safely continue operation and halts",
+    "topic": "Kernel Debugging",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the OOM (Out of Memory) killer in Linux?",
+    "options": [
+      "A tool to optimize memory usage",
+      "A kernel mechanism that selects and kills processes when the system runs critically low on memory",
+      "A memory leak detection tool",
+      "A user-space daemon for memory management"
+    ],
+    "correct_answer": "A kernel mechanism that selects and kills processes when the system runs critically low on memory",
+    "topic": "Memory Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between a process and a thread in the Linux kernel?",
+    "options": [
+      "Processes and threads are identical in Linux",
+      "Threads share the same address space within a process; processes have separate address spaces",
+      "Threads have separate address spaces; processes share address space",
+      "Threads cannot be created in the kernel"
+    ],
+    "correct_answer": "Threads share the same address space within a process; processes have separate address spaces",
+    "topic": "Process Management",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the CFS (Completely Fair Scheduler) in Linux?",
+    "options": [
+      "A file system scheduler",
+      "The default CPU process scheduler that uses a red-black tree to fairly allocate CPU time",
+      "A network packet scheduler",
+      "A disk I/O scheduler"
+    ],
+    "correct_answer": "The default CPU process scheduler that uses a red-black tree to fairly allocate CPU time",
+    "topic": "Scheduling",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What are the states a process can be in within the Linux kernel?",
+    "options": [
+      "Running, Waiting, Terminated only",
+      "TASK_RUNNING, TASK_INTERRUPTIBLE, TASK_UNINTERRUPTIBLE, TASK_STOPPED, TASK_ZOMBIE, etc.",
+      "Active, Inactive, Dead",
+      "Start, Run, Stop"
+    ],
+    "correct_answer": "TASK_RUNNING, TASK_INTERRUPTIBLE, TASK_UNINTERRUPTIBLE, TASK_STOPPED, TASK_ZOMBIE, etc.",
+    "topic": "Process Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is a zombie process?",
+    "options": [
+      "A process using too much CPU",
+      "A terminated process whose exit status has not yet been collected by its parent via wait()",
+      "A process running in the background",
+      "A suspended process"
+    ],
+    "correct_answer": "A terminated process whose exit status has not yet been collected by its parent via wait()",
+    "topic": "Process Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the purpose of the sysfs filesystem (/sys)?",
+    "options": [
+      "To store system configuration files",
+      "A virtual filesystem exposing kernel objects, device info, and driver attributes to user space",
+      "To log system events",
+      "To manage system services"
+    ],
+    "correct_answer": "A virtual filesystem exposing kernel objects, device info, and driver attributes to user space",
+    "topic": "File Systems",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is a spinlock in the Linux kernel?",
+    "options": [
+      "A lock that puts the waiting thread to sleep",
+      "A lock where the waiting thread continuously polls (spins) until the lock becomes available",
+      "A file locking mechanism",
+      "A network socket lock"
+    ],
+    "correct_answer": "A lock where the waiting thread continuously polls (spins) until the lock becomes available",
+    "topic": "Synchronization",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between a spinlock and a mutex in the kernel?",
+    "options": [
+      "They are identical",
+      "Spinlocks busy-wait and cannot sleep; mutexes can put the caller to sleep while waiting",
+      "Mutexes busy-wait; spinlocks sleep",
+      "Spinlocks are only for user space; mutexes are for kernel space"
+    ],
+    "correct_answer": "Spinlocks busy-wait and cannot sleep; mutexes can put the caller to sleep while waiting",
+    "topic": "Synchronization",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the purpose of 'dmesg' command?",
+    "options": [
+      "To display disk messages",
+      "To display the kernel ring buffer messages (boot and runtime kernel logs)",
+      "To manage device messages",
+      "To send messages to other users"
+    ],
+    "correct_answer": "To display the kernel ring buffer messages (boot and runtime kernel logs)",
+    "topic": "Kernel Debugging",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the purpose of 'printk' in the Linux kernel?",
+    "options": [
+      "To print to the user's terminal",
+      "The kernel's logging function for outputting messages to the kernel log buffer",
+      "To print kernel configuration",
+      "To format print jobs"
+    ],
+    "correct_answer": "The kernel's logging function for outputting messages to the kernel log buffer",
+    "topic": "Kernel Debugging",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is a kernel work queue?",
+    "options": [
+      "A queue of pending system calls",
+      "A mechanism for deferring work to be executed later in process context by kernel threads",
+      "A job scheduling system for user programs",
+      "A print queue managed by the kernel"
+    ],
+    "correct_answer": "A mechanism for deferring work to be executed later in process context by kernel threads",
+    "topic": "Kernel Mechanisms",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is a tasklet in the Linux kernel?",
+    "options": [
+      "A small user-space task",
+      "A software interrupt mechanism for deferring work from a hardware interrupt handler (runs in softirq context)",
+      "A kernel thread",
+      "A scheduled cron task"
+    ],
+    "correct_answer": "A software interrupt mechanism for deferring work from a hardware interrupt handler (runs in softirq context)",
+    "topic": "Kernel Mechanisms",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between top half and bottom half in interrupt handling?",
+    "options": [
+      "Top half is the first half of the code; bottom half is the second half",
+      "Top half runs immediately in interrupt context (fast); bottom half defers longer work to be done later",
+      "Top half runs in user space; bottom half in kernel space",
+      "There is no such distinction"
+    ],
+    "correct_answer": "Top half runs immediately in interrupt context (fast); bottom half defers longer work to be done later",
+    "topic": "Interrupts",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the purpose of the Linux kernel's memory management unit (MMU)?",
+    "options": [
+      "To manage network memory buffers",
+      "To translate virtual addresses to physical addresses and enforce memory protection",
+      "To manage disk memory",
+      "To compress memory data"
+    ],
+    "correct_answer": "To translate virtual addresses to physical addresses and enforce memory protection",
+    "topic": "Memory Management",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is a page fault in the Linux kernel?",
+    "options": [
+      "A hardware failure in memory",
+      "An event triggered when a process accesses a virtual memory page not currently mapped in physical memory",
+      "An error in the filesystem",
+      "A corrupted memory page"
+    ],
+    "correct_answer": "An event triggered when a process accesses a virtual memory page not currently mapped in physical memory",
+    "topic": "Memory Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the slab allocator in the Linux kernel?",
+    "options": [
+      "A disk allocation mechanism",
+      "A memory allocation mechanism optimized for frequently allocated/freed fixed-size kernel objects",
+      "A network buffer allocator",
+      "A user-space memory allocator"
+    ],
+    "correct_answer": "A memory allocation mechanism optimized for frequently allocated/freed fixed-size kernel objects",
+    "topic": "Memory Management",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the purpose of 'kmalloc' vs 'vmalloc' in the kernel?",
+    "options": [
+      "They are identical",
+      "kmalloc allocates physically contiguous memory; vmalloc allocates virtually contiguous but potentially physically non-contiguous memory",
+      "vmalloc is faster than kmalloc",
+      "kmalloc is for user space; vmalloc is for kernel space"
+    ],
+    "correct_answer": "kmalloc allocates physically contiguous memory; vmalloc allocates virtually contiguous but potentially physically non-contiguous memory",
+    "topic": "Memory Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is a kernel namespace?",
+    "options": [
+      "A C++ naming convention in the kernel",
+      "A feature that isolates and virtualizes system resources (PID, network, mount, etc.) for process groups",
+      "A directory namespace for /proc",
+      "A file naming convention"
+    ],
+    "correct_answer": "A feature that isolates and virtualizes system resources (PID, network, mount, etc.) for process groups",
+    "topic": "Kernel Features",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What are cgroups (control groups) in Linux?",
+    "options": [
+      "Groups of C source files",
+      "A kernel feature to limit, account for, and isolate resource usage (CPU, memory, I/O) of process groups",
+      "A group policy for user accounts",
+      "A version control feature"
+    ],
+    "correct_answer": "A kernel feature to limit, account for, and isolate resource usage (CPU, memory, I/O) of process groups",
+    "topic": "Kernel Features",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the purpose of the inode in the Linux filesystem?",
+    "options": [
+      "To store file content",
+      "A data structure storing file metadata (size, permissions, timestamps, block pointers) but not the filename",
+      "To index network nodes",
+      "To manage input devices"
+    ],
+    "correct_answer": "A data structure storing file metadata (size, permissions, timestamps, block pointers) but not the filename",
+    "topic": "File Systems",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between hard links and soft (symbolic) links?",
+    "options": [
+      "They are the same thing",
+      "Hard links point to the same inode; soft links are separate files pointing to a path name",
+      "Soft links point to the same inode; hard links point to a path",
+      "Hard links work across filesystems; soft links do not"
+    ],
+    "correct_answer": "Hard links point to the same inode; soft links are separate files pointing to a path name",
+    "topic": "File Systems",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the purpose of the Linux kernel's 'kconfig' system?",
+    "options": [
+      "To configure kernel network settings at runtime",
+      "A configuration system (menuconfig/defconfig) that selects which features and modules to build into the kernel",
+      "To configure user account settings",
+      "To configure the bootloader"
+    ],
+    "correct_answer": "A configuration system (menuconfig/defconfig) that selects which features and modules to build into the kernel",
+    "topic": "Kernel Build",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What command is used to build the Linux kernel?",
+    "options": [
+      "gcc kernel.c",
+      "make (with targets like make bzImage, make modules)",
+      "kernel-build",
+      "cmake --build"
+    ],
+    "correct_answer": "make (with targets like make bzImage, make modules)",
+    "topic": "Kernel Build",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is a softirq in the Linux kernel?",
+    "options": [
+      "A software application interrupt",
+      "A statically defined, high-priority kernel mechanism for deferred interrupt processing",
+      "A soft reset interrupt",
+      "A user-defined signal"
+    ],
+    "correct_answer": "A statically defined, high-priority kernel mechanism for deferred interrupt processing",
+    "topic": "Interrupts",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is RCU (Read-Copy-Update) in the Linux kernel?",
+    "options": [
+      "A file versioning system",
+      "A synchronization mechanism allowing concurrent reads without locks while updates create new copies",
+      "A remote configuration utility",
+      "A registry cleanup utility"
+    ],
+    "correct_answer": "A synchronization mechanism allowing concurrent reads without locks while updates create new copies",
+    "topic": "Synchronization",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the purpose of the device tree (DT) in Linux?",
+    "options": [
+      "To list USB device connections",
+      "A data structure describing hardware so the kernel can discover and configure devices (common on ARM)",
+      "A tree structure for /dev directory",
+      "A device driver dependency graph"
+    ],
+    "correct_answer": "A data structure describing hardware so the kernel can discover and configure devices (common on ARM)",
+    "topic": "Device Tree",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the purpose of the 'ioctl' system call?",
+    "options": [
+      "To perform I/O on regular files only",
+      "To send device-specific control commands to a device driver that aren't covered by read/write",
+      "To control I/O ports directly",
+      "To optimize I/O performance"
+    ],
+    "correct_answer": "To send device-specific control commands to a device driver that aren't covered by read/write",
+    "topic": "System Calls",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the purpose of 'mmap' in the Linux kernel?",
+    "options": [
+      "To map email addresses",
+      "To map files or devices into the process's virtual address space for memory-mapped I/O",
+      "To manage memory allocation pools",
+      "To map MAC addresses to IP addresses"
+    ],
+    "correct_answer": "To map files or devices into the process's virtual address space for memory-mapped I/O",
+    "topic": "Memory Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the copy_to_user / copy_from_user function used for?",
+    "options": [
+      "To copy files between user accounts",
+      "To safely transfer data between kernel space and user space, with proper validation",
+      "To copy kernel modules between servers",
+      "To duplicate user processes"
+    ],
+    "correct_answer": "To safely transfer data between kernel space and user space, with proper validation",
+    "topic": "Kernel Development",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the GFP (Get Free Pages) flag used for in kernel memory allocation?",
+    "options": [
+      "To get free disk pages",
+      "To specify the allocation context and constraints (e.g., GFP_KERNEL, GFP_ATOMIC)",
+      "To free unused pages",
+      "To get file permissions"
+    ],
+    "correct_answer": "To specify the allocation context and constraints (e.g., GFP_KERNEL, GFP_ATOMIC)",
+    "topic": "Memory Management",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the difference between GFP_KERNEL and GFP_ATOMIC?",
+    "options": [
+      "No difference",
+      "GFP_KERNEL can sleep and is used in process context; GFP_ATOMIC cannot sleep and is used in interrupt context",
+      "GFP_ATOMIC allocates more memory",
+      "GFP_KERNEL is for atomic operations"
+    ],
+    "correct_answer": "GFP_KERNEL can sleep and is used in process context; GFP_ATOMIC cannot sleep and is used in interrupt context",
+    "topic": "Memory Management",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the Linux kernel's netfilter framework?",
+    "options": [
+      "A network file sharing protocol",
+      "A framework of hooks in the networking stack for packet filtering, NAT, and mangling (basis of iptables/nftables)",
+      "A network monitoring tool",
+      "A DNS filtering service"
+    ],
+    "correct_answer": "A framework of hooks in the networking stack for packet filtering, NAT, and mangling (basis of iptables/nftables)",
+    "topic": "Networking",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the purpose of the 'kthread' API in the Linux kernel?",
+    "options": [
+      "To create user-space threads",
+      "To create and manage kernel threads that run entirely in kernel space",
+      "To manage thread pools in applications",
+      "To kill threads"
+    ],
+    "correct_answer": "To create and manage kernel threads that run entirely in kernel space",
+    "topic": "Kernel Development",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the Linux kernel's 'completion' mechanism?",
+    "options": [
+      "A mechanism for code auto-completion",
+      "A synchronization primitive where one thread waits for another to signal that a task is complete",
+      "A file transfer completion notification",
+      "A process termination handler"
+    ],
+    "correct_answer": "A synchronization primitive where one thread waits for another to signal that a task is complete",
+    "topic": "Synchronization",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the purpose of the 'udev' subsystem?",
+    "options": [
+      "To compile device drivers",
+      "A user-space device manager that dynamically creates/removes device nodes in /dev based on kernel events",
+      "To monitor user activity",
+      "To update device firmware"
+    ],
+    "correct_answer": "A user-space device manager that dynamically creates/removes device nodes in /dev based on kernel events",
+    "topic": "Device Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is eBPF in the Linux kernel?",
+    "options": [
+      "An enhanced boot process framework",
+      "Extended Berkeley Packet Filter – a technology for running sandboxed programs in the kernel for tracing, networking, and security",
+      "An embedded BIOS programming framework",
+      "An error-based packet filter"
+    ],
+    "correct_answer": "Extended Berkeley Packet Filter – a technology for running sandboxed programs in the kernel for tracing, networking, and security",
+    "topic": "Kernel Features",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the kernel ring buffer?",
+    "options": [
+      "A circular buffer for network packets",
+      "A fixed-size circular buffer where the kernel stores log messages (accessible via dmesg)",
+      "A buffer for keyboard input",
+      "A graphics rendering buffer"
+    ],
+    "correct_answer": "A fixed-size circular buffer where the kernel stores log messages (accessible via dmesg)",
+    "topic": "Kernel Debugging",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is KASLR (Kernel Address Space Layout Randomization)?",
+    "options": [
+      "A memory defragmentation technique",
+      "A security feature that randomizes the kernel's base address at boot to mitigate exploits",
+      "A kernel allocation strategy for large pages",
+      "A virtual address sorting algorithm"
+    ],
+    "correct_answer": "A security feature that randomizes the kernel's base address at boot to mitigate exploits",    "topic": "Kernel Security",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the purpose of the 'cgroups' (control groups) feature in the Linux kernel?",
+    "options": [
+      "To group source files during kernel compilation",
+      "To limit, account for, and isolate resource usage (CPU, memory, I/O) of process groups",
+      "To create user groups for file permissions",
+      "To organize kernel modules into categories"
+    ],
+    "correct_answer": "To limit, account for, and isolate resource usage (CPU, memory, I/O) of process groups",
+    "topic": "Resource Management",
+    "difficulty": "medium"
+  }
+]

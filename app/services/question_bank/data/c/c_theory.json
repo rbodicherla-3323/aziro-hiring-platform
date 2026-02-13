@@ -1,0 +1,602 @@
+[
+  {
+    "question": "What is the size of an 'int' data type on most 64-bit systems using a typical C compiler?",
+    "options": [
+      "2 bytes",
+      "4 bytes",
+      "8 bytes",
+      "Depends on the compiler"
+    ],
+    "correct_answer": "4 bytes",
+    "topic": "Data Types",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which of the following is NOT a valid storage class specifier in C?",
+    "options": [
+      "auto",
+      "register",
+      "volatile",
+      "static"
+    ],
+    "correct_answer": "volatile",
+    "topic": "Storage Classes",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What will be the output of: printf(\"%d\", sizeof('A')); in C?",
+    "options": [
+      "1",
+      "2",
+      "4",
+      "Depends on compiler"
+    ],
+    "correct_answer": "4",
+    "topic": "Data Types",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between 'malloc' and 'calloc'?",
+    "options": [
+      "malloc initializes memory to zero, calloc does not",
+      "calloc initializes memory to zero, malloc does not",
+      "There is no difference",
+      "calloc allocates memory on the stack"
+    ],
+    "correct_answer": "calloc initializes memory to zero, malloc does not",
+    "topic": "Memory Management",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does the 'volatile' keyword indicate in C?",
+    "options": [
+      "The variable is constant and cannot be changed",
+      "The variable may be changed by something outside the program's control",
+      "The variable is stored in a register",
+      "The variable is thread-safe"
+    ],
+    "correct_answer": "The variable may be changed by something outside the program's control",
+    "topic": "Keywords",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is a dangling pointer?",
+    "options": [
+      "A pointer that points to a valid memory location",
+      "A pointer that has been freed but still holds the address of deallocated memory",
+      "A pointer that is NULL",
+      "A pointer to a function"
+    ],
+    "correct_answer": "A pointer that has been freed but still holds the address of deallocated memory",
+    "topic": "Pointers",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the output of: int x = 5; printf(\"%d %d %d\", x, x++, ++x);?",
+    "options": [
+      "5 5 7",
+      "7 6 7",
+      "Undefined behavior",
+      "5 6 7"
+    ],
+    "correct_answer": "Undefined behavior",
+    "topic": "Undefined Behavior",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "Which header file is required for dynamic memory allocation functions in C?",
+    "options": [
+      "<memory.h>",
+      "<stdlib.h>",
+      "<alloc.h>",
+      "<malloc.h>"
+    ],
+    "correct_answer": "<stdlib.h>",
+    "topic": "Memory Management",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the purpose of the 'static' keyword when used with a local variable inside a function?",
+    "options": [
+      "Makes the variable global",
+      "Retains the variable's value between function calls",
+      "Makes the variable constant",
+      "Allocates the variable on the heap"
+    ],
+    "correct_answer": "Retains the variable's value between function calls",
+    "topic": "Storage Classes",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is a function pointer in C?",
+    "options": [
+      "A pointer that points to a variable",
+      "A pointer that stores the address of a function",
+      "A function that returns a pointer",
+      "A pointer to the main function only"
+    ],
+    "correct_answer": "A pointer that stores the address of a function",
+    "topic": "Pointers",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What does the 'extern' keyword do in C?",
+    "options": [
+      "Declares a variable that is defined in another file or scope",
+      "Makes a variable local to the current function",
+      "Allocates memory for a variable",
+      "Defines a constant variable"
+    ],
+    "correct_answer": "Declares a variable that is defined in another file or scope",
+    "topic": "Storage Classes",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the result of: int *p = NULL; *p = 10;?",
+    "options": [
+      "p is assigned the value 10",
+      "Segmentation fault / undefined behavior",
+      "p points to address 10",
+      "Compiler error"
+    ],
+    "correct_answer": "Segmentation fault / undefined behavior",
+    "topic": "Pointers",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which of the following correctly declares a pointer to an array of 10 integers?",
+    "options": [
+      "int *p[10];",
+      "int (*p)[10];",
+      "int *(p[10]);",
+      "int p[10]*;"
+    ],
+    "correct_answer": "int (*p)[10];",
+    "topic": "Pointers",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between a structure and a union in C?",
+    "options": [
+      "Structures allocate memory for all members; unions share memory among members",
+      "Unions allocate memory for all members; structures share memory",
+      "There is no difference",
+      "Structures can only hold integers; unions can hold any type"
+    ],
+    "correct_answer": "Structures allocate memory for all members; unions share memory among members",
+    "topic": "Structures & Unions",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does the 'restrict' keyword (C99) tell the compiler?",
+    "options": [
+      "The pointer is the only way to access the pointed-to data",
+      "The pointer cannot be modified",
+      "The pointer is constant",
+      "The pointer must point to a struct"
+    ],
+    "correct_answer": "The pointer is the only way to access the pointed-to data",
+    "topic": "Keywords",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of: printf(\"%d\", 1 << 3);?",
+    "options": [
+      "3",
+      "6",
+      "8",
+      "4"
+    ],
+    "correct_answer": "8",
+    "topic": "Bitwise Operations",
+    "difficulty": "easy"
+  },
+  {
+    "question": "How do you prevent multiple inclusions of a header file?",
+    "options": [
+      "Using #define only",
+      "Using #ifndef / #define / #endif (include guards) or #pragma once",
+      "Using extern keyword",
+      "Using static keyword"
+    ],
+    "correct_answer": "Using #ifndef / #define / #endif (include guards) or #pragma once",
+    "topic": "Preprocessor",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the difference between #include <file.h> and #include \"file.h\"?",
+    "options": [
+      "No difference",
+      "Angle brackets search system directories first; quotes search current directory first",
+      "Quotes are for C files; angle brackets for C++ files",
+      "Angle brackets are for local files; quotes are for system files"
+    ],
+    "correct_answer": "Angle brackets search system directories first; quotes search current directory first",
+    "topic": "Preprocessor",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does 'realloc' do when called with a NULL pointer?",
+    "options": [
+      "Returns NULL",
+      "Behaves like malloc and allocates new memory",
+      "Causes undefined behavior",
+      "Frees the memory"
+    ],
+    "correct_answer": "Behaves like malloc and allocates new memory",
+    "topic": "Memory Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is a memory leak in C?",
+    "options": [
+      "Accessing memory beyond allocated bounds",
+      "Allocating memory that is never freed during the program's lifetime",
+      "Using uninitialized variables",
+      "Writing to read-only memory"
+    ],
+    "correct_answer": "Allocating memory that is never freed during the program's lifetime",
+    "topic": "Memory Management",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the purpose of the 'typedef' keyword in C?",
+    "options": [
+      "To define a new data type from scratch",
+      "To create an alias for an existing type",
+      "To define a macro",
+      "To declare a variable as constant"
+    ],
+    "correct_answer": "To create an alias for an existing type",
+    "topic": "Keywords",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the difference between 'const int *p' and 'int *const p'?",
+    "options": [
+      "Both are identical",
+      "const int *p: pointer to const int (value can't change); int *const p: const pointer to int (pointer can't change)",
+      "const int *p: const pointer; int *const p: pointer to const",
+      "Neither can be modified"
+    ],
+    "correct_answer": "const int *p: pointer to const int (value can't change); int *const p: const pointer to int (pointer can't change)",
+    "topic": "Pointers",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What happens when you free a pointer twice in C?",
+    "options": [
+      "Nothing happens",
+      "The memory is freed again safely",
+      "Undefined behavior (double free)",
+      "A compiler warning is generated"
+    ],
+    "correct_answer": "Undefined behavior (double free)",
+    "topic": "Memory Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the correct way to declare a variable-length array (VLA) in C99?",
+    "options": [
+      "int arr[n]; where n is a runtime variable",
+      "int arr[] = {n};",
+      "int *arr = n;",
+      "VLAs are not supported in C"
+    ],
+    "correct_answer": "int arr[n]; where n is a runtime variable",
+    "topic": "Arrays",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the purpose of the 'enum' type in C?",
+    "options": [
+      "To define floating-point constants",
+      "To define a set of named integer constants",
+      "To create dynamic arrays",
+      "To define string constants"
+    ],
+    "correct_answer": "To define a set of named integer constants",
+    "topic": "Data Types",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does the comma operator do in C?",
+    "options": [
+      "Separates function parameters only",
+      "Evaluates both operands and returns the value of the rightmost operand",
+      "Performs logical AND",
+      "Creates an array of values"
+    ],
+    "correct_answer": "Evaluates both operands and returns the value of the rightmost operand",
+    "topic": "Operators",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between 'break' and 'continue' in C?",
+    "options": [
+      "Both exit the loop",
+      "break exits the loop; continue skips to the next iteration",
+      "continue exits the loop; break skips to the next iteration",
+      "There is no difference"
+    ],
+    "correct_answer": "break exits the loop; continue skips to the next iteration",
+    "topic": "Control Flow",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which of the following causes a stack overflow?",
+    "options": [
+      "Using too many global variables",
+      "Infinite recursion without a base case",
+      "Allocating memory with malloc",
+      "Using too many header files"
+    ],
+    "correct_answer": "Infinite recursion without a base case",
+    "topic": "Memory Management",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of: int a = 10; int b = a++ + ++a; printf(\"%d\", b);?",
+    "options": [
+      "21",
+      "22",
+      "Undefined behavior",
+      "20"
+    ],
+    "correct_answer": "Undefined behavior",
+    "topic": "Undefined Behavior",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the significance of the 'void' pointer in C?",
+    "options": [
+      "It can only point to void functions",
+      "It is a generic pointer that can point to any data type",
+      "It points to NULL always",
+      "It cannot be dereferenced or cast"
+    ],
+    "correct_answer": "It is a generic pointer that can point to any data type",
+    "topic": "Pointers",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the correct way to pass a 2D array to a function in C?",
+    "options": [
+      "void func(int arr[][]);",
+      "void func(int arr[][COLS]); where COLS is known at compile time",
+      "void func(int **arr); only",
+      "2D arrays cannot be passed to functions"
+    ],
+    "correct_answer": "void func(int arr[][COLS]); where COLS is known at compile time",
+    "topic": "Arrays",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the effect of the 'inline' keyword in C99?",
+    "options": [
+      "Forces the compiler to inline the function",
+      "Suggests to the compiler to replace function calls with the function body",
+      "Makes the function recursive",
+      "Makes the function static"
+    ],
+    "correct_answer": "Suggests to the compiler to replace function calls with the function body",
+    "topic": "Keywords",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How do you swap two variables without using a temporary variable in C?",
+    "options": [
+      "Using addition and subtraction: a = a + b; b = a - b; a = a - b;",
+      "It is not possible in C",
+      "Using the swap() function from stdlib",
+      "Using pointer dereferencing only"
+    ],
+    "correct_answer": "Using addition and subtraction: a = a + b; b = a - b; a = a - b;",
+    "topic": "Algorithms",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does 'sizeof' return for a struct with padding?",
+    "options": [
+      "The sum of sizes of all members",
+      "The actual memory size including padding bytes",
+      "Only the size of the largest member",
+      "The size without padding"
+    ],
+    "correct_answer": "The actual memory size including padding bytes",
+    "topic": "Structures & Unions",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is structure padding and why does it occur?",
+    "options": [
+      "Extra bytes added for encryption purposes",
+      "Extra bytes inserted by the compiler for memory alignment requirements",
+      "Padding occurs only in unions, not structures",
+      "Padding is added to prevent buffer overflow"
+    ],
+    "correct_answer": "Extra bytes inserted by the compiler for memory alignment requirements",
+    "topic": "Structures & Unions",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between 'fgets' and 'gets' in C?",
+    "options": [
+      "gets is safer than fgets",
+      "fgets limits input length and is safer; gets has no bounds checking and is unsafe",
+      "Both are equally safe",
+      "fgets works only with files, not stdin"
+    ],
+    "correct_answer": "fgets limits input length and is safer; gets has no bounds checking and is unsafe",
+    "topic": "I/O",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What are bit fields in C structures?",
+    "options": [
+      "Fields that can only store 0 or 1",
+      "Structure members with a specified number of bits for storage",
+      "Fields that use bitwise operators",
+      "Fields declared with the 'bit' keyword"
+    ],
+    "correct_answer": "Structure members with a specified number of bits for storage",
+    "topic": "Structures & Unions",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What does the 'assert' macro do in C?",
+    "options": [
+      "Prints a warning message",
+      "Terminates the program if the given condition is false (debug mode)",
+      "Logs an error to a file",
+      "Throws an exception"
+    ],
+    "correct_answer": "Terminates the program if the given condition is false (debug mode)",
+    "topic": "Debugging",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the difference between stack and heap memory allocation?",
+    "options": [
+      "Stack is slower, heap is faster",
+      "Stack is automatically managed (LIFO); heap is manually managed (malloc/free)",
+      "Both are identical in C",
+      "Heap follows LIFO order; stack does not"
+    ],
+    "correct_answer": "Stack is automatically managed (LIFO); heap is manually managed (malloc/free)",
+    "topic": "Memory Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "Which of the following is true about the 'switch' statement in C?",
+    "options": [
+      "It can use floating-point values as case labels",
+      "It requires a 'default' case",
+      "Case labels must be compile-time integer constants",
+      "It supports string comparison natively"
+    ],
+    "correct_answer": "Case labels must be compile-time integer constants",
+    "topic": "Control Flow",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the purpose of 'setjmp' and 'longjmp' in C?",
+    "options": [
+      "To implement try-catch blocks like in C++",
+      "To perform non-local jumps, saving and restoring the execution context",
+      "To set and get jump tables",
+      "To implement goto with labels"
+    ],
+    "correct_answer": "To perform non-local jumps, saving and restoring the execution context",
+    "topic": "Advanced C",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of: int arr[] = {1,2,3,4,5}; printf(\"%d\", *(arr+3));?",
+    "options": [
+      "1",
+      "3",
+      "4",
+      "5"
+    ],
+    "correct_answer": "4",
+    "topic": "Pointers",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What happens when you perform arithmetic on a void pointer in standard C?",
+    "options": [
+      "It works like pointer to char",
+      "It is not allowed (undefined/illegal in standard C)",
+      "It increments by sizeof(int)",
+      "It causes a compile-time warning only"
+    ],
+    "correct_answer": "It is not allowed (undefined/illegal in standard C)",
+    "topic": "Pointers",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the purpose of the 'offsetof' macro?",
+    "options": [
+      "To find the offset of a file pointer",
+      "To find the byte offset of a member within a struct",
+      "To offset an array index",
+      "To calculate memory alignment"
+    ],
+    "correct_answer": "To find the byte offset of a member within a struct",
+    "topic": "Structures & Unions",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is a flexible array member (C99)?",
+    "options": [
+      "An array with a variable-length specified at compile time",
+      "An incomplete array declared as the last member of a struct with no size",
+      "A dynamic array created with malloc",
+      "An array that can change size at runtime"
+    ],
+    "correct_answer": "An incomplete array declared as the last member of a struct with no size",
+    "topic": "Structures & Unions",
+    "difficulty": "hard"
+  },
+  {
+    "question": "How does the 'ternary' operator work in C?",
+    "options": [
+      "It takes three operands: condition ? value_if_true : value_if_false",
+      "It takes two operands and returns a boolean",
+      "It is the same as if-else but faster",
+      "It can only be used with integers"
+    ],
+    "correct_answer": "It takes three operands: condition ? value_if_true : value_if_false",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the difference between 'strcpy' and 'strncpy'?",
+    "options": [
+      "strcpy is safer than strncpy",
+      "strncpy copies at most n characters, providing bounds checking; strcpy does not",
+      "Both are identical",
+      "strncpy works only with wide characters"
+    ],
+    "correct_answer": "strncpy copies at most n characters, providing bounds checking; strcpy does not",
+    "topic": "String Handling",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does the 'register' storage class suggest to the compiler?",
+    "options": [
+      "The variable must be stored in a CPU register",
+      "The variable should be stored in a CPU register for faster access (hint only)",
+      "The variable is global",
+      "The variable is stored on the heap"
+    ],
+    "correct_answer": "The variable should be stored in a CPU register for faster access (hint only)",
+    "topic": "Storage Classes",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is a segmentation fault?",
+    "options": [
+      "A compilation error",
+      "A runtime error caused by accessing memory that the process does not own",
+      "An arithmetic overflow",
+      "A linker error"
+    ],
+    "correct_answer": "A runtime error caused by accessing memory that the process does not own",
+    "topic": "Memory Management",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the difference between a macro and an inline function in C?",
+    "options": [
+      "Macros are type-safe; inline functions are not",
+      "Inline functions are type-safe and debuggable; macros are text substitution without type checking",
+      "There is no functional difference",
+      "Macros are evaluated at runtime; inline functions at compile time"
+    ],
+    "correct_answer": "Inline functions are type-safe and debuggable; macros are text substitution without type checking",
+    "topic": "Preprocessor",
+    "difficulty": "moderate"
+  }
+]
