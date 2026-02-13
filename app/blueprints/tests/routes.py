@@ -9,6 +9,7 @@ from app.utils.role_round_mapping import ROLE_ROUND_MAPPING
 from app.services.generated_tests_store import GENERATED_TESTS
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
+from app.services import db_service
 
 tests_bp = Blueprint("tests", __name__)
 
@@ -125,6 +126,21 @@ def create_test():
                 "role": role_label,
                 "tests": tests
             })
+
+            # -------------------------------------------
+            # PERSIST to DB (survives server restarts)
+            # -------------------------------------------
+            try:
+                candidate = db_service.get_or_create_candidate(name, email)
+                db_service.get_or_create_test_session(
+                    candidate_id=candidate.id,
+                    role_key=role_key,
+                    role_label=role_label,
+                    batch_id=batch_id,
+                )
+            except Exception:
+                # DB write is best-effort; in-memory store is primary
+                pass
 
         return redirect(url_for("tests.generated_tests"))
 
