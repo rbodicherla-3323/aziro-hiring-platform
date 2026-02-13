@@ -1,0 +1,1322 @@
+[
+  {
+    "question": "What is a computer network?",
+    "options": [
+      "A software application for data storage",
+      "A type of operating system",
+      "A single computer with multiple processors",
+      "A collection of interconnected devices that can communicate and share resources"
+    ],
+    "correct_answer": "A collection of interconnected devices that can communicate and share resources",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "What is the primary purpose of computer networking?",
+    "options": [
+      "To eliminate the need for storage devices",
+      "To replace standalone computers",
+      "To enable resource sharing and communication between devices",
+      "To increase the physical size of computers"
+    ],
+    "correct_answer": "To enable resource sharing and communication between devices",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "Which network type typically covers a small geographical area like a home or office building?",
+    "options": [
+      "WAN",
+      "MAN",
+      "Internet",
+      "LAN"
+    ],
+    "correct_answer": "LAN",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "What does WAN stand for in networking?",
+    "options": [
+      "Web Access Network",
+      "Wide Area Network",
+      "Wired Application Network",
+      "Wireless Area Network"
+    ],
+    "correct_answer": "Wide Area Network",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "A Metropolitan Area Network (MAN) typically covers which geographical scope?",
+    "options": [
+      "Only wireless devices",
+      "A single room",
+      "Entire continents",
+      "A city or large campus"
+    ],
+    "correct_answer": "A city or large campus",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "What is a PAN (Personal Area Network)?",
+    "options": [
+      "A network only for servers",
+      "A network for personal devices within a very short range",
+      "A network protocol",
+      "A network spanning multiple countries"
+    ],
+    "correct_answer": "A network for personal devices within a very short range",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "In a client-server network model, what is the primary role of the server?",
+    "options": [
+      "To request services from clients",
+      "To block all network traffic",
+      "To act as a regular workstation",
+      "To provide resources and services to client machines"
+    ],
+    "correct_answer": "To provide resources and services to client machines",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "In a peer-to-peer network, how do devices interact?",
+    "options": [
+      "Only through a central server",
+      "Each device can act as both client and server",
+      "Only one device controls all others",
+      "Devices cannot communicate directly"
+    ],
+    "correct_answer": "Each device can act as both client and server",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "Which networking model is more suitable for small networks with minimal security requirements?",
+    "options": [
+      "Client-server",
+      "Mainframe",
+      "Cloud-based",
+      "Peer-to-peer"
+    ],
+    "correct_answer": "Peer-to-peer",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "What is a key advantage of networking?",
+    "options": [
+      "Reduced need for software",
+      "Increased individual device processing power",
+      "Centralized data management and resource sharing",
+      "Elimination of all security risks"
+    ],
+    "correct_answer": "Centralized data management and resource sharing",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "What is a potential limitation of computer networks?",
+    "options": [
+      "Security vulnerabilities and dependency on network infrastructure",
+      "They improve efficiency",
+      "They reduce costs",
+      "They enable communication"
+    ],
+    "correct_answer": "Security vulnerabilities and dependency on network infrastructure",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "The Internet is an example of which type of network?",
+    "options": [
+      "WAN",
+      "LAN",
+      "PAN",
+      "MAN"
+    ],
+    "correct_answer": "WAN",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "Which network topology connects all devices to a central hub or switch?",
+    "options": [
+      "Star topology",
+      "Mesh topology",
+      "Ring topology",
+      "Bus topology"
+    ],
+    "correct_answer": "Star topology",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "In which topology does data travel in a circular path through each device?",
+    "options": [
+      "Star",
+      "Ring",
+      "Tree",
+      "Bus"
+    ],
+    "correct_answer": "Ring",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "What is mesh topology?",
+    "options": [
+      "Every device is connected to every other device",
+      "Devices connected in a line",
+      "A hierarchical structure",
+      "All devices connected to a central point"
+    ],
+    "correct_answer": "Every device is connected to every other device",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "Which advantage does a client-server model have over peer-to-peer?",
+    "options": [
+      "No need for specialized hardware",
+      "Easier to set up",
+      "Lower cost",
+      "Better centralized security and administration"
+    ],
+    "correct_answer": "Better centralized security and administration",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "What does scalability in networking refer to?",
+    "options": [
+      "The ability to expand the network by adding more devices",
+      "The color of network equipment",
+      "The speed of data transfer",
+      "The physical size of network cables"
+    ],
+    "correct_answer": "The ability to expand the network by adding more devices",
+    "topic": "Networking Fundamentals"
+  },
+  {
+    "question": "How many layers does the OSI model have?",
+    "options": [
+      "6",
+      "5",
+      "8",
+      "7"
+    ],
+    "correct_answer": "7",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "Which layer of the OSI model is responsible for physical transmission of data?",
+    "options": [
+      "Network Layer",
+      "Physical Layer",
+      "Data Link Layer",
+      "Transport Layer"
+    ],
+    "correct_answer": "Physical Layer",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "What is the primary function of the Data Link Layer in the OSI model?",
+    "options": [
+      "Node-to-node data transfer and error detection",
+      "Establishing sessions",
+      "Routing packets",
+      "Encrypting data"
+    ],
+    "correct_answer": "Node-to-node data transfer and error detection",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "Which OSI layer is responsible for logical addressing and routing?",
+    "options": [
+      "Data Link Layer",
+      "Physical Layer",
+      "Transport Layer",
+      "Network Layer"
+    ],
+    "correct_answer": "Network Layer",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "What is the main responsibility of the Transport Layer?",
+    "options": [
+      "End-to-end communication and data segmentation",
+      "User interface",
+      "Data presentation",
+      "Physical signal transmission"
+    ],
+    "correct_answer": "End-to-end communication and data segmentation",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "Which OSI layer manages dialog control and synchronization between applications?",
+    "options": [
+      "Presentation Layer",
+      "Application Layer",
+      "Session Layer",
+      "Transport Layer"
+    ],
+    "correct_answer": "Session Layer",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "What does the Presentation Layer handle?",
+    "options": [
+      "Physical connections",
+      "Routing",
+      "MAC addressing",
+      "Data translation, encryption, and compression"
+    ],
+    "correct_answer": "Data translation, encryption, and compression",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "Which is the topmost layer of the OSI model?",
+    "options": [
+      "Presentation Layer",
+      "Transport Layer",
+      "Application Layer",
+      "Session Layer"
+    ],
+    "correct_answer": "Application Layer",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "How many layers does the TCP/IP model have?",
+    "options": [
+      "7",
+      "5",
+      "4",
+      "3"
+    ],
+    "correct_answer": "4",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "Which TCP/IP layer is equivalent to the OSI Physical and Data Link layers combined?",
+    "options": [
+      "Internet Layer",
+      "Application Layer",
+      "Network Access Layer",
+      "Transport Layer"
+    ],
+    "correct_answer": "Network Access Layer",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "What is the Internet Layer in TCP/IP model responsible for?",
+    "options": [
+      "Logical addressing and routing",
+      "Error checking",
+      "Data encryption",
+      "User authentication"
+    ],
+    "correct_answer": "Logical addressing and routing",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "Which protocols operate at the Transport Layer of the TCP/IP model?",
+    "options": [
+      "Ethernet and Wi-Fi",
+      "IP and ICMP",
+      "TCP and UDP",
+      "HTTP and FTP"
+    ],
+    "correct_answer": "TCP and UDP",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "The TCP/IP Application Layer corresponds to which OSI layers?",
+    "options": [
+      "Physical and Data Link Layers",
+      "Transport and Network Layers",
+      "Application, Presentation, and Session Layers",
+      "Only Application Layer"
+    ],
+    "correct_answer": "Application, Presentation, and Session Layers",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "What is a key difference between OSI and TCP/IP models?",
+    "options": [
+      "TCP/IP includes more layers",
+      "They are identical",
+      "OSI has 7 layers, TCP/IP has 4 layers",
+      "OSI is practical, TCP/IP is theoretical"
+    ],
+    "correct_answer": "OSI has 7 layers, TCP/IP has 4 layers",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "Why is a layered architecture important in networking?",
+    "options": [
+      "It eliminates the need for protocols",
+      "It increases complexity unnecessarily",
+      "It provides modularity, easier troubleshooting, and standardization",
+      "It makes networks slower"
+    ],
+    "correct_answer": "It provides modularity, easier troubleshooting, and standardization",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "At which OSI layer do routers primarily operate?",
+    "options": [
+      "Data Link Layer",
+      "Network Layer",
+      "Transport Layer",
+      "Physical Layer"
+    ],
+    "correct_answer": "Network Layer",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "At which OSI layer do switches primarily operate?",
+    "options": [
+      "Network Layer",
+      "Data Link Layer",
+      "Physical Layer",
+      "Application Layer"
+    ],
+    "correct_answer": "Data Link Layer",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "What does encapsulation mean in layered networking?",
+    "options": [
+      "Adding layer-specific headers as data moves down the layers",
+      "Removing headers from data",
+      "Encrypting all data",
+      "Compressing data"
+    ],
+    "correct_answer": "Adding layer-specific headers as data moves down the layers",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "What is the process called when headers are removed as data moves up the layers?",
+    "options": [
+      "Encapsulation",
+      "Segmentation",
+      "Decapsulation",
+      "Multiplexing"
+    ],
+    "correct_answer": "Decapsulation",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "Which layer is responsible for converting data into a format suitable for transmission?",
+    "options": [
+      "Physical Layer",
+      "Presentation Layer",
+      "Transport Layer",
+      "Network Layer"
+    ],
+    "correct_answer": "Presentation Layer",
+    "topic": "OSI & TCP/IP Models"
+  },
+  {
+    "question": "What is the primary difference between a hub and a switch?",
+    "options": [
+      "Hubs work at Network Layer, switches at Physical Layer",
+      "There is no difference",
+      "Switches forward data intelligently to specific devices, hubs broadcast to all ports",
+      "Hubs are faster than switches"
+    ],
+    "correct_answer": "Switches forward data intelligently to specific devices, hubs broadcast to all ports",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "At which layer does a hub operate?",
+    "options": [
+      "Physical Layer",
+      "Network Layer",
+      "Transport Layer",
+      "Data Link Layer"
+    ],
+    "correct_answer": "Physical Layer",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "What is the main function of a router?",
+    "options": [
+      "Amplify signals",
+      "Connect devices within the same network only",
+      "Forward data packets between different networks based on IP addresses",
+      "Store data"
+    ],
+    "correct_answer": "Forward data packets between different networks based on IP addresses",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "What does a modem do?",
+    "options": [
+      "Stores web pages",
+      "Routes packets between networks",
+      "Converts digital signals to analog and vice versa",
+      "Filters network traffic"
+    ],
+    "correct_answer": "Converts digital signals to analog and vice versa",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "What is the purpose of a bridge in networking?",
+    "options": [
+      "To connect two network segments and filter traffic based on MAC addresses",
+      "To connect different network types",
+      "To provide wireless connectivity",
+      "To encrypt data"
+    ],
+    "correct_answer": "To connect two network segments and filter traffic based on MAC addresses",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "What is a gateway in networking?",
+    "options": [
+      "A device that connects networks using different protocols",
+      "A type of cable",
+      "A wireless access point",
+      "A device that amplifies signals"
+    ],
+    "correct_answer": "A device that connects networks using different protocols",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "What is the primary function of a repeater?",
+    "options": [
+      "To route packets",
+      "To assign IP addresses",
+      "To filter traffic",
+      "To amplify or regenerate signals to extend network distance"
+    ],
+    "correct_answer": "To amplify or regenerate signals to extend network distance",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "What is a firewall?",
+    "options": [
+      "A security device that monitors and controls network traffic based on rules",
+      "A backup system",
+      "A physical wall in a server room",
+      "A type of router"
+    ],
+    "correct_answer": "A security device that monitors and controls network traffic based on rules",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "What does a load balancer do?",
+    "options": [
+      "Blocks all incoming traffic",
+      "Encrypts data",
+      "Distributes network traffic across multiple servers",
+      "Stores data"
+    ],
+    "correct_answer": "Distributes network traffic across multiple servers",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "Which device operates at Layer 3 of the OSI model?",
+    "options": [
+      "Repeater",
+      "Switch",
+      "Hub",
+      "Router"
+    ],
+    "correct_answer": "Router",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "What makes a switch more efficient than a hub?",
+    "options": [
+      "Switches are cheaper",
+      "Switches work at the Physical Layer",
+      "Switches use MAC address tables to forward data only to the intended recipient",
+      "Switches broadcast to all ports"
+    ],
+    "correct_answer": "Switches use MAC address tables to forward data only to the intended recipient",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "Can a router connect networks with different IP addressing schemes?",
+    "options": [
+      "Only if they use the same cable type",
+      "Only for wireless networks",
+      "Yes, routers can route between different IP networks",
+      "No, networks must have identical addressing"
+    ],
+    "correct_answer": "Yes, routers can route between different IP networks",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "What information does a switch use to forward frames?",
+    "options": [
+      "IP addresses",
+      "Port numbers",
+      "Domain names",
+      "MAC addresses"
+    ],
+    "correct_answer": "MAC addresses",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "What information does a router use to forward packets?",
+    "options": [
+      "MAC addresses",
+      "IP addresses",
+      "Physical port locations",
+      "Cable colors"
+    ],
+    "correct_answer": "IP addresses",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "Where is a firewall typically placed in a network?",
+    "options": [
+      "Inside individual computers only",
+      "Firewalls are not used in networks",
+      "Only on end-user devices",
+      "Between a private network and the public Internet"
+    ],
+    "correct_answer": "Between a private network and the public Internet",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "What is a managed switch?",
+    "options": [
+      "A switch that requires no configuration",
+      "A wireless device",
+      "A switch that only works with routers",
+      "A switch that can be configured and monitored for advanced features"
+    ],
+    "correct_answer": "A switch that can be configured and monitored for advanced features",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "What advantage does a Layer 3 switch have over a regular Layer 2 switch?",
+    "options": [
+      "It operates at the Physical Layer",
+      "It has fewer ports",
+      "It is cheaper",
+      "It can perform routing functions in addition to switching"
+    ],
+    "correct_answer": "It can perform routing functions in addition to switching",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "What is the main difference between IPv4 and IPv6?",
+    "options": [
+      "They are the same",
+      "IPv6 is slower than IPv4",
+      "IPv6 uses 128-bit addresses while IPv4 uses 32-bit addresses",
+      "IPv4 is newer than IPv6"
+    ],
+    "correct_answer": "IPv6 uses 128-bit addresses while IPv4 uses 32-bit addresses",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "Why was IPv6 developed?",
+    "options": [
+      "To slow down the Internet",
+      "To address the exhaustion of IPv4 addresses",
+      "To replace routers",
+      "To eliminate the need for DNS"
+    ],
+    "correct_answer": "To address the exhaustion of IPv4 addresses",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "What is a public IP address?",
+    "options": [
+      "An address used only within a private network",
+      "An address that is routable on the Internet",
+      "An address that changes every second",
+      "A temporary address"
+    ],
+    "correct_answer": "An address that is routable on the Internet",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "What is a private IP address?",
+    "options": [
+      "A permanent Internet address",
+      "An address visible on the Internet",
+      "An address assigned by ISPs",
+      "An address used within a private network and not routable on the Internet"
+    ],
+    "correct_answer": "An address used within a private network and not routable on the Internet",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "Which of the following is a private IPv4 address range?",
+    "options": [
+      "8.8.8.8",
+      "192.168.0.0 to 192.168.255.255",
+      "1.1.1.1",
+      "74.125.224.72"
+    ],
+    "correct_answer": "192.168.0.0 to 192.168.255.255",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "What is a static IP address?",
+    "options": [
+      "An address that changes frequently",
+      "An address assigned automatically",
+      "A temporary address",
+      "A manually configured address that remains constant"
+    ],
+    "correct_answer": "A manually configured address that remains constant",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "What is a dynamic IP address?",
+    "options": [
+      "A private address only",
+      "An address automatically assigned and may change over time",
+      "An address used only for servers",
+      "A fixed address that never changes"
+    ],
+    "correct_answer": "An address automatically assigned and may change over time",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "What is the purpose of a subnet mask?",
+    "options": [
+      "To increase Internet speed",
+      "To distinguish the network portion from the host portion of an IP address",
+      "To encrypt IP addresses",
+      "To block traffic"
+    ],
+    "correct_answer": "To distinguish the network portion from the host portion of an IP address",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "What does CIDR stand for?",
+    "options": [
+      "Classless Inter-Domain Routing",
+      "Computer Internet Data Routing",
+      "Cisco Internet Device Router",
+      "Central IP Domain Registry"
+    ],
+    "correct_answer": "Classless Inter-Domain Routing",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "In CIDR notation, what does /24 represent?",
+    "options": [
+      "24 hosts",
+      "24 subnets",
+      "24 routers",
+      "24-bit network prefix"
+    ],
+    "correct_answer": "24-bit network prefix",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "How many bits are in an IPv4 address?",
+    "options": [
+      "32",
+      "16",
+      "128",
+      "64"
+    ],
+    "correct_answer": "32",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "How many bits are in an IPv6 address?",
+    "options": [
+      "32",
+      "256",
+      "64",
+      "128"
+    ],
+    "correct_answer": "128",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "What is the loopback address in IPv4?",
+    "options": [
+      "192.168.1.1",
+      "127.0.0.1",
+      "255.255.255.255",
+      "0.0.0.0"
+    ],
+    "correct_answer": "127.0.0.1",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "What is subnetting?",
+    "options": [
+      "Combining multiple networks into one",
+      "Encrypting IP addresses",
+      "Dividing a network into smaller sub-networks",
+      "Assigning static IPs"
+    ],
+    "correct_answer": "Dividing a network into smaller sub-networks",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "What is the broadcast address used for?",
+    "options": [
+      "To send data to all devices on a network",
+      "To send data to a specific device",
+      "To route between networks",
+      "To block traffic"
+    ],
+    "correct_answer": "To send data to all devices on a network",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "Which organization is responsible for global IP address allocation?",
+    "options": [
+      "IANA (Internet Assigned Numbers Authority)",
+      "IEEE",
+      "W3C",
+      "ISO"
+    ],
+    "correct_answer": "IANA (Internet Assigned Numbers Authority)",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "What does NAT (Network Address Translation) do?",
+    "options": [
+      "Routes packets",
+      "Translates private IP addresses to public IP addresses",
+      "Encrypts data",
+      "Assigns IP addresses"
+    ],
+    "correct_answer": "Translates private IP addresses to public IP addresses",
+    "topic": "IP Addressing"
+  },
+  {
+    "question": "What is the primary difference between TCP and UDP?",
+    "options": [
+      "UDP is more secure",
+      "TCP is connection-oriented and reliable, UDP is connectionless and faster",
+      "TCP is faster than UDP",
+      "They are identical"
+    ],
+    "correct_answer": "TCP is connection-oriented and reliable, UDP is connectionless and faster",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "Which protocol is used for reliable data transmission?",
+    "options": [
+      "UDP",
+      "ICMP",
+      "TCP",
+      "ARP"
+    ],
+    "correct_answer": "TCP",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "Which protocol is suitable for real-time applications like video streaming?",
+    "options": [
+      "FTP",
+      "TCP",
+      "SMTP",
+      "UDP"
+    ],
+    "correct_answer": "UDP",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "What is the main difference between HTTP and HTTPS?",
+    "options": [
+      "HTTPS is older",
+      "HTTP uses UDP",
+      "HTTP is faster",
+      "HTTPS includes encryption for secure communication"
+    ],
+    "correct_answer": "HTTPS includes encryption for secure communication",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "What does FTP stand for?",
+    "options": [
+      "Fast Transfer Protocol",
+      "Frequency Transmission Protocol",
+      "File Transfer Protocol",
+      "Firewall Transport Protocol"
+    ],
+    "correct_answer": "File Transfer Protocol",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "What is the primary purpose of SMTP?",
+    "options": [
+      "Sending emails",
+      "Browsing websites",
+      "Receiving emails",
+      "File downloads"
+    ],
+    "correct_answer": "Sending emails",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "What is POP3 used for?",
+    "options": [
+      "Transferring files",
+      "Retrieving emails from a server",
+      "Web browsing",
+      "Sending emails"
+    ],
+    "correct_answer": "Retrieving emails from a server",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "How does IMAP differ from POP3?",
+    "options": [
+      "There is no difference",
+      "IMAP keeps emails on the server allowing access from multiple devices",
+      "IMAP is for sending emails",
+      "IMAP downloads and deletes emails from server, POP3 keeps them on server"
+    ],
+    "correct_answer": "IMAP keeps emails on the server allowing access from multiple devices",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "What is the primary function of DNS?",
+    "options": [
+      "Translate domain names to IP addresses",
+      "Encrypt data",
+      "Route packets",
+      "Assign IP addresses"
+    ],
+    "correct_answer": "Translate domain names to IP addresses",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "What does DHCP stand for?",
+    "options": [
+      "Domain Host Control Protocol",
+      "Dynamic Host Configuration Protocol",
+      "Digital Host Connection Protocol",
+      "Data Host Communication Protocol"
+    ],
+    "correct_answer": "Dynamic Host Configuration Protocol",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "What is the main purpose of DHCP?",
+    "options": [
+      "Encrypt communications",
+      "Route packets",
+      "Translate domain names",
+      "Automatically assign IP addresses to devices on a network"
+    ],
+    "correct_answer": "Automatically assign IP addresses to devices on a network",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "Which port does HTTP typically use?",
+    "options": [
+      "25",
+      "21",
+      "80",
+      "443"
+    ],
+    "correct_answer": "80",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "Which port does HTTPS typically use?",
+    "options": [
+      "21",
+      "80",
+      "8080",
+      "443"
+    ],
+    "correct_answer": "443",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "What does ARP (Address Resolution Protocol) do?",
+    "options": [
+      "Encrypts data",
+      "Maps IP addresses to MAC addresses",
+      "Routes packets",
+      "Translates domain names to IPs"
+    ],
+    "correct_answer": "Maps IP addresses to MAC addresses",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "What is ICMP primarily used for?",
+    "options": [
+      "Email transmission",
+      "File transfer",
+      "Error reporting and diagnostic functions like ping",
+      "Web browsing"
+    ],
+    "correct_answer": "Error reporting and diagnostic functions like ping",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "Does TCP perform error checking?",
+    "options": [
+      "Yes, it includes error checking and retransmission",
+      "No, it sends data without verification",
+      "Only for large files",
+      "Only over wireless"
+    ],
+    "correct_answer": "Yes, it includes error checking and retransmission",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "What is the three-way handshake in TCP?",
+    "options": [
+      "A method to close connections",
+      "A routing algorithm",
+      "A security protocol",
+      "A process to establish a reliable connection (SYN, SYN-ACK, ACK)"
+    ],
+    "correct_answer": "A process to establish a reliable connection (SYN, SYN-ACK, ACK)",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "What is bandwidth in networking?",
+    "options": [
+      "The physical width of a cable",
+      "The number of devices connected",
+      "The maximum rate of data transfer across a network",
+      "The delay in data transmission"
+    ],
+    "correct_answer": "The maximum rate of data transfer across a network",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "What is throughput?",
+    "options": [
+      "The delay in transmission",
+      "The actual amount of data successfully transferred in a given time",
+      "The number of packets sent",
+      "The theoretical maximum speed"
+    ],
+    "correct_answer": "The actual amount of data successfully transferred in a given time",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "What is latency?",
+    "options": [
+      "The time delay between sending and receiving data",
+      "The number of errors",
+      "The physical distance",
+      "The maximum bandwidth"
+    ],
+    "correct_answer": "The time delay between sending and receiving data",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "What is a packet in networking?",
+    "options": [
+      "A physical cable",
+      "A unit of data transmitted over a network",
+      "A network topology",
+      "A type of router"
+    ],
+    "correct_answer": "A unit of data transmitted over a network",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "What is a frame in networking?",
+    "options": [
+      "An application message",
+      "A packet at the Network Layer",
+      "A physical connector",
+      "A data unit at the Data Link Layer"
+    ],
+    "correct_answer": "A data unit at the Data Link Layer",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "What is a segment in networking?",
+    "options": [
+      "A network device",
+      "A type of cable",
+      "A data unit at the Physical Layer",
+      "A data unit at the Transport Layer"
+    ],
+    "correct_answer": "A data unit at the Transport Layer",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "What is a MAC address?",
+    "options": [
+      "A logical address assigned by software",
+      "A unique hardware address assigned to a network interface",
+      "A domain name",
+      "An IP address"
+    ],
+    "correct_answer": "A unique hardware address assigned to a network interface",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "How many bits are in a MAC address?",
+    "options": [
+      "64",
+      "32",
+      "128",
+      "48"
+    ],
+    "correct_answer": "48",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "What is the difference between MAC address and IP address?",
+    "options": [
+      "They are the same",
+      "MAC address changes frequently",
+      "IP address is physical",
+      "MAC address is physical and permanent, IP address is logical and can change"
+    ],
+    "correct_answer": "MAC address is physical and permanent, IP address is logical and can change",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "What is unicast transmission?",
+    "options": [
+      "Sending data to all devices",
+      "Sending data from one source to one destination",
+      "Broadcasting to everyone",
+      "Sending data to multiple specific devices"
+    ],
+    "correct_answer": "Sending data from one source to one destination",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "What is multicast transmission?",
+    "options": [
+      "Blocking all traffic",
+      "Sending data to a specific group of devices",
+      "Broadcasting to all devices",
+      "Sending to one device"
+    ],
+    "correct_answer": "Sending data to a specific group of devices",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "What is broadcast transmission?",
+    "options": [
+      "Sending to one specific device",
+      "Sending data to all devices on a network",
+      "Sending to selected devices",
+      "Blocking traffic"
+    ],
+    "correct_answer": "Sending data to all devices on a network",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "What is a collision domain?",
+    "options": [
+      "A security zone",
+      "A routing protocol",
+      "A network segment where data collisions can occur",
+      "A type of IP address"
+    ],
+    "correct_answer": "A network segment where data collisions can occur",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "What is a broadcast domain?",
+    "options": [
+      "A type of cable",
+      "A network segment where broadcast messages are propagated",
+      "A domain name",
+      "A security feature"
+    ],
+    "correct_answer": "A network segment where broadcast messages are propagated",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "How does a switch affect collision domains?",
+    "options": [
+      "It eliminates collision domains entirely",
+      "It has no effect",
+      "It creates one large collision domain",
+      "It creates separate collision domains for each port"
+    ],
+    "correct_answer": "It creates separate collision domains for each port",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "How does a router affect broadcast domains?",
+    "options": [
+      "It eliminates broadcasts",
+      "It has no effect on broadcast domains",
+      "It separates broadcast domains",
+      "It merges all broadcast domains"
+    ],
+    "correct_answer": "It separates broadcast domains",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "What is full-duplex communication?",
+    "options": [
+      "No communication",
+      "One-way communication only",
+      "Simultaneous two-way communication",
+      "Sequential two-way communication"
+    ],
+    "correct_answer": "Simultaneous two-way communication",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "What is half-duplex communication?",
+    "options": [
+      "Two-way communication but not simultaneous",
+      "No communication possible",
+      "One-way communication only",
+      "Simultaneous two-way communication"
+    ],
+    "correct_answer": "Two-way communication but not simultaneous",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "What is the primary purpose of a firewall?",
+    "options": [
+      "To assign IP addresses",
+      "To speed up network traffic",
+      "To translate domain names",
+      "To monitor and control incoming and outgoing network traffic based on security rules"
+    ],
+    "correct_answer": "To monitor and control incoming and outgoing network traffic based on security rules",
+    "topic": "Network Security"
+  },
+  {
+    "question": "What does VPN stand for?",
+    "options": [
+      "Virtual Private Network",
+      "Verified Public Network",
+      "Visual Protocol Network",
+      "Very Private Network"
+    ],
+    "correct_answer": "Virtual Private Network",
+    "topic": "Network Security"
+  },
+  {
+    "question": "What is the main purpose of a VPN?",
+    "options": [
+      "To block all traffic",
+      "To increase Internet speed",
+      "To assign IP addresses",
+      "To create a secure, encrypted connection over a public network"
+    ],
+    "correct_answer": "To create a secure, encrypted connection over a public network",
+    "topic": "Network Security"
+  },
+  {
+    "question": "What does HTTPS use to encrypt data?",
+    "options": [
+      "DHCP",
+      "SSL/TLS protocols",
+      "FTP",
+      "Plain text"
+    ],
+    "correct_answer": "SSL/TLS protocols",
+    "topic": "Network Security"
+  },
+  {
+    "question": "What is authentication in network security?",
+    "options": [
+      "Verifying the identity of a user or device",
+      "Granting access to resources",
+      "Blocking traffic",
+      "Encrypting data"
+    ],
+    "correct_answer": "Verifying the identity of a user or device",
+    "topic": "Network Security"
+  },
+  {
+    "question": "What is authorization in network security?",
+    "options": [
+      "Creating user accounts",
+      "Verifying identity",
+      "Granting or denying access to resources based on permissions",
+      "Encrypting data"
+    ],
+    "correct_answer": "Granting or denying access to resources based on permissions",
+    "topic": "Network Security"
+  },
+  {
+    "question": "What is a DDoS attack?",
+    "options": [
+      "A secure protocol",
+      "Distributed Denial of Service attack that overwhelms a network with traffic",
+      "A backup method",
+      "A type of encryption"
+    ],
+    "correct_answer": "Distributed Denial of Service attack that overwhelms a network with traffic",
+    "topic": "Network Security"
+  },
+  {
+    "question": "What is phishing?",
+    "options": [
+      "A network protocol",
+      "A fraudulent attempt to obtain sensitive information by disguising as trustworthy",
+      "A firewall feature",
+      "A legitimate email service"
+    ],
+    "correct_answer": "A fraudulent attempt to obtain sensitive information by disguising as trustworthy",
+    "topic": "Network Security"
+  },
+  {
+    "question": "What is malware?",
+    "options": [
+      "A type of router",
+      "Malicious software designed to harm or exploit devices",
+      "A network protocol",
+      "Antivirus software"
+    ],
+    "correct_answer": "Malicious software designed to harm or exploit devices",
+    "topic": "Network Security"
+  },
+  {
+    "question": "What is encryption?",
+    "options": [
+      "Converting data into a coded format to prevent unauthorized access",
+      "Backing up data",
+      "Compressing files",
+      "Deleting data"
+    ],
+    "correct_answer": "Converting data into a coded format to prevent unauthorized access",
+    "topic": "Network Security"
+  },
+  {
+    "question": "What is the purpose of QoS (Quality of Service) in networking?",
+    "options": [
+      "To increase the number of devices",
+      "To assign IP addresses",
+      "To block all traffic",
+      "To prioritize certain types of network traffic for better performance"
+    ],
+    "correct_answer": "To prioritize certain types of network traffic for better performance",
+    "topic": "Networking Concepts"
+  },
+  {
+    "question": "What does TTL (Time To Live) indicate in an IP packet?",
+    "options": [
+      "The priority level",
+      "The packet size",
+      "The creation time of the packet",
+      "The maximum number of hops a packet can traverse before being discarded"
+    ],
+    "correct_answer": "The maximum number of hops a packet can traverse before being discarded",
+    "topic": "Network Protocols"
+  },
+  {
+    "question": "What is the difference between a default gateway and a router?",
+    "options": [
+      "Router cannot be a gateway",
+      "Default gateway is faster",
+      "They are completely different devices",
+      "A default gateway is the router interface that serves as the exit point from a local network"
+    ],
+    "correct_answer": "A default gateway is the router interface that serves as the exit point from a local network",
+    "topic": "Network Devices"
+  },
+  {
+    "question": "What is an Access Control List (ACL) used for?",
+    "options": [
+      "To increase network speed",
+      "To define rules that permit or deny traffic based on specific criteria",
+      "To assign MAC addresses",
+      "To compress data"
+    ],
+    "correct_answer": "To define rules that permit or deny traffic based on specific criteria",
+    "topic": "Network Security"
+  }
+]

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
+{% block breadcrumb %}Dashboard{% endblock %}
 
 {% block content %}
 
@@ -8,84 +9,199 @@
     <img src="{{ url_for('static', filename='images/aziro_banner.jpg') }}"
          alt="Aziro Hiring Banner"
          class="img-fluid rounded shadow-sm w-100"
-         style="max-height: 260px; object-fit: cover;">
+         style="max-height: 200px; object-fit: cover;">
 </div>
 
 <!-- ================= WELCOME MESSAGE ================= -->
-<h4 class="mb-2">Welcome to Aziro Hiring Page</h4>
-<p class="text-muted mb-4">
+<h4 class="mb-2">Welcome to Aziro Hiring Platform</h4>
+<p class="text-muted mb-2">
     Manage candidate assessments, evaluations, and reports from a single place.
 </p>
+
+<!-- ================= SESSION SUMMARY ================= -->
+<div class="d-flex align-items-center mb-4">
+    <span class="badge bg-primary-subtle text-primary px-3 py-2">
+        <i class="bi bi-clock-history me-1"></i>Present Session
+    </span>
+</div>
+
+<!-- ================= KPI SUMMARY CARDS ================= -->
+<!-- Note: All values below will be dynamically populated from database -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100 kpi-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="text-muted small mb-1">Total Candidates</div>
+                        <h3 class="mb-1 fw-bold" id="kpiTotalCandidates">{{ total_candidates | default(3) }}</h3>
+                        <small class="text-primary"><i class="bi bi-person-check me-1"></i><span id="kpiAttemptingTest">{{ attempting_test | default(1) }}</span> attempting test</small>
+                    </div>
+                    <div class="kpi-icon bg-primary-subtle text-primary">
+                        <i class="bi bi-people"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100 kpi-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="text-muted small mb-1">Tests Sent</div>
+                        <h3 class="mb-1 fw-bold" id="kpiTestsSent">{{ tests_sent | default(3) }}</h3>
+                        <small class="text-warning"><i class="bi bi-send me-1"></i>Links sent to <span id="kpiLinksSent">{{ links_sent | default(3) }}</span></small>
+                    </div>
+                    <div class="kpi-icon bg-warning-subtle text-warning">
+                        <i class="bi bi-file-earmark-text"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100 kpi-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="text-muted small mb-1">Evaluations Done</div>
+                        <h3 class="mb-1 fw-bold" id="kpiEvaluationsDone">{{ evaluations_done | default(1) }}</h3>
+                        <small class="text-info"><i class="bi bi-hourglass-split me-1"></i><span id="kpiPendingEvaluation">{{ pending_evaluation | default(2) }}</span> pending evaluation</small>
+                    </div>
+                    <div class="kpi-icon bg-info-subtle text-info">
+                        <i class="bi bi-clipboard-check"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100 kpi-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="text-muted small mb-1">Reports Generated</div>
+                        <h3 class="mb-1 fw-bold" id="kpiReportsGenerated">{{ reports_generated | default(1) }}</h3>
+                        <small class="text-success"><i class="bi bi-file-earmark-check me-1"></i><span id="kpiReadyToDownload">{{ ready_to_download | default(1) }}</span> ready to download</small>
+                    </div>
+                    <div class="kpi-icon bg-success-subtle text-success">
+                        <i class="bi bi-bar-chart-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- ================= INSTRUCTIONS ================= -->
 <div class="card shadow-sm mb-4">
     <div class="card-body">
-        <h6 class="mb-3">Instructions</h6>
+        <h6 class="mb-3">Quick Start Guide</h6>
 
-        <ul class="mb-0">
-            <li>
-                Use <strong>Create Test</strong> to generate assessment links for
-                single or multiple candidates.
-            </li>
-            <li>
-                After generating tests, visit <strong>Generated Tests</strong> to
-                copy or resend test links if required.
-            </li>
-            <li>
-                Allow candidates sufficient time to complete their tests before
-                starting evaluation.
-            </li>
-            <li>
-                Use <strong>Evaluation</strong> to review candidate performance
-                across individual or multiple rounds.
-            </li>
-            <li>
-                Reports and analytics will be available after evaluation is completed.
-            </li>
-        </ul>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="d-flex align-items-start">
+                    <span class="badge bg-primary rounded-circle me-2" style="width: 24px; height: 24px; line-height: 18px;">1</span>
+                    <div class="small">
+                        <strong>Create Test</strong> – Generate assessment links for single or multiple candidates based on their role.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex align-items-start">
+                    <span class="badge bg-primary rounded-circle me-2" style="width: 24px; height: 24px; line-height: 18px;">2</span>
+                    <div class="small">
+                        <strong>Track Progress</strong> – Monitor test completion status in Generated Tests section.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex align-items-start">
+                    <span class="badge bg-primary rounded-circle me-2" style="width: 24px; height: 24px; line-height: 18px;">3</span>
+                    <div class="small">
+                        <strong>Evaluate</strong> – Review candidate performance across all rounds after test completion.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex align-items-start">
+                    <span class="badge bg-primary rounded-circle me-2" style="width: 24px; height: 24px; line-height: 18px;">4</span>
+                    <div class="small">
+                        <strong>Generate Reports</strong> – Create comprehensive evaluation reports for stakeholders.
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <!-- ================= QUICK ACTIONS ================= -->
 <div class="row g-4">
 
-    <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-body">
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100 quick-action-card">
+            <div class="card-body text-center py-4">
+                <div class="quick-action-icon bg-primary-subtle text-primary mx-auto mb-3">
+                    <i class="bi bi-plus-circle fs-4"></i>
+                </div>
                 <h6>Create Test</h6>
-                <p class="text-muted small">
-                    Generate test links based on candidate role and domain.
+                <p class="text-muted small mb-3">
+                    Generate test links for candidates
                 </p>
-                <a href="/create-test" class="btn btn-outline-primary btn-sm">
+                <a href="/create-test" class="btn btn-primary btn-sm">
                     Create Test
                 </a>
             </div>
         </div>
     </div>
 
-    <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-body">
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100 quick-action-card">
+            <div class="card-body text-center py-4">
+                <div class="quick-action-icon bg-warning-subtle text-warning mx-auto mb-3">
+                    <i class="bi bi-file-earmark-text fs-4"></i>
+                </div>
                 <h6>Generated Tests</h6>
-                <p class="text-muted small">
-                    View, copy, or resend generated test links.
+                <p class="text-muted small mb-3">
+                    View and manage test links
                 </p>
-                <a href="/generated-tests" class="btn btn-outline-primary btn-sm">
+                <a href="/generated-tests" class="btn btn-outline-warning btn-sm">
                     View Tests
                 </a>
             </div>
         </div>
     </div>
 
-    <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-body">
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100 quick-action-card">
+            <div class="card-body text-center py-4">
+                <div class="quick-action-icon bg-info-subtle text-info mx-auto mb-3">
+                    <i class="bi bi-clipboard-check fs-4"></i>
+                </div>
                 <h6>Evaluation</h6>
-                <p class="text-muted small">
-                    Evaluate candidate performance after test completion.
+                <p class="text-muted small mb-3">
+                    Evaluate candidate performance
                 </p>
-                <a href="/evaluation" class="btn btn-outline-primary btn-sm">
+                <a href="/evaluation" class="btn btn-outline-info btn-sm">
                     Evaluate
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100 quick-action-card">
+            <div class="card-body text-center py-4">
+                <div class="quick-action-icon bg-success-subtle text-success mx-auto mb-3">
+                    <i class="bi bi-bar-chart-line fs-4"></i>
+                </div>
+                <h6>Reports</h6>
+                <p class="text-muted small mb-3">
+                    View and download reports
+                </p>
+                <a href="/reports" class="btn btn-outline-success btn-sm">
+                    View Reports
                 </a>
             </div>
         </div>

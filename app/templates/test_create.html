@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Generate Test{% endblock %}
+{% block breadcrumb %}Create Test{% endblock %}
 
 {% block content %}
 <h4 class="mb-2">Generate Candidate Test</h4>
@@ -32,68 +33,112 @@
     </div>
 </div>
 
-<!-- ================= SINGLE CANDIDATE ================= -->
-<div class="card shadow-sm mb-4" id="singleCandidateSection">
+<!-- ================= CANDIDATE DETAILS ================= -->
+<div class="card shadow-sm mb-4">
     <div class="card-body">
         <h6 class="mb-3">Candidate Details</h6>
 
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <label class="form-label">Full Name</label>
-                <input type="text" class="form-control"
-                       name="name"
-                       placeholder="John Doe"
-                       required>
+        <div id="candidateContainer">
+
+            <div class="candidate-row position-relative mb-3">
+
+                <!-- REMOVE (TRASH BIN) BUTTON -->
+                <button type="button"
+                        class="btn position-absolute top-0 end-0 d-none removeCandidateBtn"
+                        title="Remove candidate"
+                        style="padding: 2px; background: transparent;">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="14" height="14"
+                         fill="#dc3545"
+                         viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 5h4a.5.5 0 0 1 
+                        .5.5v7a.5.5 0 0 1-.5.5H6a.5.5 0 0 1-.5-.5v-7z"/>
+                        <path fill-rule="evenodd"
+                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 
+                              2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1 0-2H5.5l.5-.5h4l.5.5h3.5a1 1 0 0 1 1 1z"/>
+                    </svg>
+                </button>
+
+                <div class="row align-items-end">
+                    <div class="col-md-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control"
+                               name="name[]"
+                               placeholder="John Doe"
+                               required>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control"
+                               name="email[]"
+                               placeholder="john.doe@email.com"
+                               required>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Role</label>                        <select class="form-select" name="role[]" required>
+                            <option value="">Select role</option>
+                            <optgroup label="Entry Level (0–2 Years)">
+                                <option>Python Entry Level (0–2 Years)</option>
+                                <option>Java Entry Level (0–2 Years)</option>
+                                <option>JavaScript Entry Level (0–2 Years)</option>
+                            </optgroup>
+                            <optgroup label="Mid / Senior Level (2–5 Years)">
+                                <option>BMC Engineer (2–5 Years)</option>
+                                <option>Staff Engineer – Linux Kernel &amp; Device Driver (3–5 Years)</option>
+                                <option>Systems Architect – C++ (3–5 Years)</option>
+                            </optgroup>
+                            <optgroup label="Experienced (4+ Years)">
+                                <option>Python QA / System / Linux (4+ Years)</option>
+                                <option>Python QA (4+ Years)</option>
+                                <option>Python Development (4+ Years)</option>
+                                <option>Python + AI/ML (4+ Years)</option>
+                                <option>Java + AWS Development (5+ Years)</option>
+                                <option>Java QA (5+ Years)</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Domain (Optional)</label>
+                        <select class="form-select" name="domain[]">
+                            <option selected>None</option>
+                            <option>Virtualization</option>
+                            <option>Networking</option>
+                            <option>Storage</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-md-4 mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control"
-                       name="email"
-                       placeholder="john.doe@email.com"
-                       required>
-            </div>
-
-            <div class="col-md-4 mb-3">
-                <label class="form-label">Role</label>
-                <select class="form-select" name="role" required>
-                    <option value="">Select role</option>
-                    <option>Python Entry Level (0–2 Years)</option>
-                    <option>Java Entry Level (0–2 Years)</option>
-                    <option>JavaScript Entry Level (0–2 Years)</option>
-                    <option>Python QA / System / Linux (4+ Years)</option>
-                    <option>Python QA (4+ Years)</option>
-                    <option>Python Development (4+ Years)</option>
-                    <option>Python + AI/ML (4+ Years)</option>
-                    <option>Java + AWS Development (5+ Years)</option>
-                    <option>Java QA (5+ Years)</option>
-                </select>
-            </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <label class="form-label">Domain (Optional)</label>
-                <select class="form-select" name="domain">
-                    <option selected>None</option>
-                    <option>Virtualization</option>
-                    <option>Cloud</option>
-                    <option>Networking</option>
-                    <option>Storage</option>
-                </select>
-            </div>
+        <div class="text-end mt-3 d-none" id="addCandidateWrapper">
+            <button type="button" class="btn btn-outline-primary btn-sm"
+                    id="addCandidateBtn">
+                <i class="bi bi-plus-circle me-1"></i>Add Candidate
+            </button>
         </div>
     </div>
 </div>
 
 <!-- ================= ACTION BUTTONS ================= -->
-<div class="d-flex justify-content-end">
-    <a href="/dashboard" class="btn btn-outline-secondary me-2">
+<div class="d-flex justify-content-end gap-2">
+    <a href="/dashboard" class="btn btn-outline-secondary">
         Cancel
     </a>
     <button class="btn btn-primary" id="generateBtn">
-        Generate Test
+        <i class="bi bi-lightning-charge me-1"></i>Generate Test
     </button>
+</div>
+
+<div class="text-center" style="margin-top: 3rem;">
+    <a href="/generated-tests"
+       class="btn"
+       style="background-color: #f57c00; color: #ffffff;">
+        <i class="bi bi-arrow-right-circle me-1"></i>Go to Generated Tests
+    </a>
 </div>
 
 </form>
@@ -111,13 +156,86 @@
 
 <!-- ================= JS ================= -->
 <script>
+    const singleMode = document.getElementById("single_mode");
+    const multiMode = document.getElementById("multi_mode");
+    const addCandidateWrapper = document.getElementById("addCandidateWrapper");
+    const addCandidateBtn = document.getElementById("addCandidateBtn");
+    const candidateContainer = document.getElementById("candidateContainer");
+
+    function updateRemoveButtons() {
+        const rows = document.querySelectorAll(".candidate-row");
+        rows.forEach((row, index) => {
+            const btn = row.querySelector(".removeCandidateBtn");
+            btn.classList.toggle("d-none", index === 0 || !multiMode.checked);
+        });
+    }
+
+    multiMode.addEventListener("change", () => {
+        addCandidateWrapper.classList.remove("d-none");
+        updateRemoveButtons();
+    });
+
+    singleMode.addEventListener("change", () => {
+        addCandidateWrapper.classList.add("d-none");
+        candidateContainer.innerHTML = candidateContainer.firstElementChild.outerHTML;
+        updateRemoveButtons();
+    });
+
+    addCandidateBtn.addEventListener("click", () => {
+        const newRow = candidateContainer.firstElementChild.cloneNode(true);
+        newRow.querySelectorAll("input").forEach(i => i.value = "");
+        newRow.querySelectorAll("select").forEach(s => s.selectedIndex = 0);
+
+        newRow.querySelector(".removeCandidateBtn")
+              .addEventListener("click", () => newRow.remove());
+
+        candidateContainer.appendChild(newRow);
+        updateRemoveButtons();
+    });
+
+    document.querySelector(".removeCandidateBtn")
+        .addEventListener("click", function () {
+            this.closest(".candidate-row").remove();
+            updateRemoveButtons();
+        });
+
     const form = document.getElementById("generateForm");
     const overlay = document.getElementById("loadingOverlay");
     const button = document.getElementById("generateBtn");
 
-    form.addEventListener("submit", () => {
+    form.addEventListener("submit", (e) => {
+        
+        // Validate form
+        const nameInputs = document.querySelectorAll('input[name="name[]"]');
+        const emailInputs = document.querySelectorAll('input[name="email[]"]');
+        const roleSelects = document.querySelectorAll('select[name="role[]"]');
+        
+        let isValid = true;
+        nameInputs.forEach((input, i) => {
+            if (!input.value.trim() || !emailInputs[i].value.trim() || !roleSelects[i].value) {
+                isValid = false;
+            }
+        });
+        
+        if (!isValid) {
+            if (typeof showToast === 'function') showToast('Please fill all required fields', 'warning');
+            return;
+        }
+        
         button.disabled = true;
         overlay.classList.remove("d-none");
+        
+        // Simulate test generation
+        setTimeout(() => {
+            overlay.classList.add("d-none");
+            button.disabled = false;
+            if (typeof showToast === 'function') showToast('Test generated successfully! Redirecting...', 'success');
+            
+            // Redirect to generated tests page after 1 second
+            setTimeout(() => {
+                window.location.href = '/generated-tests';
+            }, 1000);
+        }, 2000);
     });
 </script>
 

@@ -1,176 +1,560 @@
 {% extends "base.html" %}
 {% block title %}Evaluation{% endblock %}
+{% block breadcrumb %}Evaluation{% endblock %}
 
 {% block content %}
-<h4 class="mb-2">Evaluation</h4>
-<p class="text-muted mb-4">
-    Select candidates and rounds to evaluate test performance.
-</p>
 
-<!-- ================= FILTER SECTION ================= -->
+<style>
+    /* ===== Evaluation Page Styles ===== */
+    .eval-header {
+        background: linear-gradient(135deg, #0d3b66 0%, #1a5276 100%);
+        color: white;
+        border-radius: 12px;
+        padding: 24px 28px;
+        margin-bottom: 24px;
+    }
+    .eval-header h4 {
+        margin: 0;
+        font-weight: 700;
+        font-size: 1.3rem;
+    }
+    .eval-header p {
+        margin: 6px 0 0 0;
+        opacity: 0.85;
+        font-size: 0.9rem;
+    }
+
+    /* Candidate selector */
+    .candidate-selector {
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        transition: border-color 0.2s;
+    }
+    .candidate-selector:hover {
+        border-color: #0d6efd;
+    }
+    .candidate-selector .toggle-bar {
+        padding: 14px 18px;
+        cursor: pointer;
+        user-select: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #fafbfc;
+        border-radius: 8px;
+    }
+    .candidate-selector .toggle-bar:hover {
+        background: #f0f4ff;
+    }
+    .candidate-selector .toggle-bar .arrow {
+        transition: transform 0.3s;
+        font-size: 0.85rem;
+        color: #0d6efd;
+    }
+    .candidate-selector.open .arrow {
+        transform: rotate(180deg);
+    }
+    .candidate-list {
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 12px 18px;
+    }
+    .candidate-list .form-check {
+        padding: 10px 0 10px 28px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .candidate-list .form-check:last-child {
+        border-bottom: none;
+    }
+
+    /* Candidate result card */
+    .candidate-result-card {
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 28px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .candidate-result-header {
+        padding: 20px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .candidate-info .candidate-name {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #0d3b66;
+    }
+    .candidate-info .candidate-meta {
+        font-size: 0.85rem;
+        color: #555;
+        margin-top: 2px;
+    }    /* Stat pills (header summary) */
+    .stat-pill {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 10px 18px;
+        text-align: center;
+        flex: 1;
+        min-width: 120px;
+    }
+    .stat-pill .stat-value {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #0d3b66;
+    }
+    .stat-pill .stat-label {
+        font-size: 0.75rem;
+        color: #6c757d;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 2px;
+    }
+
+    /* Score table */
+    .score-table {
+        margin: 0;
+        font-size: 0.88rem;
+    }
+    .score-table thead th {
+        background: #0d3b66;
+        color: white;
+        font-weight: 600;
+        padding: 12px 16px;
+        border: none;
+        white-space: nowrap;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .score-table tbody td {
+        padding: 14px 16px;
+        vertical-align: middle;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .score-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    .score-table tbody tr:hover {
+        background: #f8f9ff;
+    }
+
+    /* Progress bar for percentage */
+    .score-progress {
+        height: 8px;
+        border-radius: 4px;
+        background: #e9ecef;
+        overflow: hidden;
+        min-width: 80px;
+    }
+    .score-progress-bar {
+        height: 100%;
+        border-radius: 4px;
+        transition: width 0.6s ease;
+    }
+
+    /* Status pills in table */
+    .status-pill {
+        padding: 4px 14px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.78rem;
+        display: inline-block;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+    .status-pass {
+        background: #d4edda;
+        color: #155724;
+    }
+    .status-fail {
+        background: #f8d7da;
+        color: #721c24;
+    }
+    .status-not-attempted {
+        background: #e2e3e5;
+        color: #383d41;
+    }
+
+    /* Threshold info */
+    .threshold-info {
+        padding: 16px 24px;
+        background: #fafbfc;
+        border-top: 1px solid #e9ecef;
+    }
+    .threshold-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-right: 20px;
+        font-size: 0.8rem;
+        color: #555;
+    }
+    .threshold-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    /* Empty state */
+    .eval-empty-state {
+        text-align: center;
+        padding: 60px 20px;
+    }
+    .eval-empty-state .empty-icon {
+        font-size: 3rem;
+        color: #dee2e6;
+        margin-bottom: 16px;
+    }
+    .eval-empty-state h5 {
+        color: #6c757d;
+        font-weight: 600;
+    }
+    .eval-empty-state p {
+        color: #adb5bd;
+        font-size: 0.9rem;
+    }
+
+    /* Select all */
+    .select-all-bar {
+        padding: 8px 0;
+        border-bottom: 2px solid #e9ecef;
+        margin-bottom: 4px;
+    }
+</style>
+
+<!-- ===== PAGE HEADER ===== -->
+<div class="eval-header">
+    <h4><i class="bi bi-clipboard-data me-2"></i>Candidate Evaluation</h4>
+    <p>Evaluate MCQ round scores per candidate. Select candidates below to view detailed results.</p>
+</div>
+
+<!-- ===== PASS THRESHOLD LEGEND ===== -->
 <div class="card shadow-sm mb-4">
-    <div class="card-body">
-        <h6 class="mb-3">Evaluation Criteria</h6>
+    <div class="card-body py-3">
+        <div class="d-flex align-items-center flex-wrap gap-3">
+            <span class="fw-semibold text-muted" style="font-size:0.82rem;">
+                <i class="bi bi-info-circle me-1"></i> Pass Thresholds:
+            </span>
+            <span class="threshold-item">
+                <span class="threshold-dot" style="background:#0d6efd;"></span>
+                Aptitude (L1): {{ pass_thresholds.get('L1', default_threshold) }}%
+            </span>
+            <span class="threshold-item">
+                <span class="threshold-dot" style="background:#6610f2;"></span>
+                Technical (L2): {{ pass_thresholds.get('L2', default_threshold) }}%
+            </span>
+            <span class="threshold-item">
+                <span class="threshold-dot" style="background:#e76f51;"></span>
+                Practical (L3): {{ pass_thresholds.get('L3', default_threshold) }}%
+            </span>
+            <span class="threshold-item">
+                <span class="threshold-dot" style="background:#2a9d8f;"></span>
+                Soft Skills (L5): {{ pass_thresholds.get('L5', default_threshold) }}%
+            </span>
+            <span class="threshold-item">
+                <span class="threshold-dot" style="background:#f4a261;"></span>
+                Domain (L6): {{ pass_thresholds.get('L6', default_threshold) }}%
+            </span>
+        </div>
+    </div>
+</div>
 
-        <div class="row mb-3">
-            <!-- Candidates -->
-            <div class="col-md-6">
-                <label class="form-label">Select Candidates</label>
-                <select class="form-select" multiple>
-                    <option selected>All candidates (this session)</option>
-                    <option>Ravi Kumar</option>
-                    <option>Anita Sharma</option>
-                    <option>Rahul Verma</option>
-                </select>
-                <small class="text-muted">
-                    Hold Ctrl (Cmd) to select multiple
-                </small>
+
+<!-- ===== CANDIDATE SELECTOR FORM ===== -->
+<form method="POST">
+
+<div class="candidate-selector mb-4" id="candidateSelector">
+    <div class="toggle-bar" id="candidateDropdownToggle">
+        <span>
+            <i class="bi bi-people me-2"></i>
+            <span class="fw-semibold">Select Candidates</span>
+            {% if candidates %}
+                <span class="text-muted ms-2" style="font-size:0.85rem;">({{ candidates|length }} available)</span>
+            {% endif %}
+        </span>
+        <span class="arrow"><i class="bi bi-chevron-down"></i></span>
+    </div>
+
+    <div id="candidateSelectContainer" class="d-none">
+
+        {% if candidates %}
+        <!-- Select All -->
+        <div class="select-all-bar px-3 pt-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="selectAllCandidates">
+                <label class="form-check-label fw-semibold" for="selectAllCandidates"
+                       style="font-size:0.9rem; color:#0d3b66;">
+                    Select All
+                </label>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="candidate-list">
+            {% for c in candidates %}
+            <div class="form-check">
+                <input class="form-check-input candidate-checkbox"
+                       type="checkbox"
+                       name="candidates"
+                       value="{{ c.email }}"
+                       id="cand_{{ loop.index }}"
+                       {% if c.email in selected_emails %}checked{% endif %}>
+                <label class="form-check-label" for="cand_{{ loop.index }}">
+                    <span class="fw-bold" style="color:#0d3b66;">{{ c.name }}</span>
+                    <div style="font-size:0.82rem; color:#666;">
+                        {{ c.email }} &nbsp;&middot;&nbsp; <span class="text-primary">{{ c.role }}</span>
+                    </div>
+                </label>
+            </div>
+            {% endfor %}
+
+            {% if not candidates %}
+            <div class="text-center text-muted py-4">
+                <i class="bi bi-inbox" style="font-size:1.5rem;"></i>
+                <div class="mt-2" style="font-size:0.9rem;">No candidates found. Create tests first.</div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-end mb-4">
+    <button class="btn btn-primary px-4 py-2" {% if not candidates %}disabled{% endif %}>
+        <i class="bi bi-search me-1"></i> Evaluate Selected
+    </button>
+</div>
+
+</form>
+
+
+<!-- ===== EVALUATION RESULTS ===== -->
+{% if filtered_candidates %}
+
+    {% for c in filtered_candidates %}
+
+    <div class="candidate-result-card">        <!-- Candidate Header -->
+        <div class="candidate-result-header" style="background: #f8f9fa;">
+
+            <div class="candidate-info">
+                <div class="candidate-name">
+                    <i class="bi bi-person-fill me-1"></i> {{ c.name }}
+                </div>
+                <div class="candidate-meta">
+                    <i class="bi bi-envelope me-1"></i> {{ c.email }}
+                    &nbsp;&middot;&nbsp;
+                    <i class="bi bi-briefcase me-1"></i> {{ c.role }}
+                </div>
             </div>
 
-            <!-- Rounds -->
-            <div class="col-md-6">
-                <label class="form-label">Select Rounds</label>
-                <div class="border rounded p-2">
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="allRounds" checked>
-                        <label class="form-check-label fw-semibold" for="allRounds">
-                            All Rounds
-                        </label>
-                    </div>
-
-                    <hr class="my-2">
-
-                    <div class="form-check">
-                        <input class="form-check-input roundCheck" type="checkbox" checked>
-                        <label class="form-check-label">L1 – Aptitude</label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input roundCheck" type="checkbox" checked>
-                        <label class="form-check-label">L2 – Theory</label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input roundCheck" type="checkbox" checked>
-                        <label class="form-check-label">L3 – Skill / Debugging</label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input roundCheck" type="checkbox" checked>
-                        <label class="form-check-label">L4 – Coding</label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input roundCheck" type="checkbox">
-                        <label class="form-check-label">L5 – Domain</label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input roundCheck" type="checkbox" checked>
-                        <label class="form-check-label">L6 – Soft Skills</label>
-                    </div>
-
+            <!-- Summary pills: rounds passed/failed/attempted only -->
+            <div class="d-flex gap-3">
+                <div class="stat-pill" style="padding:8px 14px;">
+                    <div class="stat-value text-success" style="font-size:1.1rem;">{{ c.summary.passed_rounds }}</div>
+                    <div class="stat-label">Passed</div>
+                </div>
+                <div class="stat-pill" style="padding:8px 14px;">
+                    <div class="stat-value text-danger" style="font-size:1.1rem;">{{ c.summary.failed_rounds }}</div>
+                    <div class="stat-label">Failed</div>
+                </div>
+                <div class="stat-pill" style="padding:8px 14px;">
+                    <div class="stat-value" style="font-size:1.1rem;">{{ c.summary.attempted_rounds }} / {{ c.summary.total_rounds }}</div>
+                    <div class="stat-label">Attempted</div>
                 </div>
             </div>
         </div>
 
-        <div class="d-flex justify-content-end">
-            <button class="btn btn-primary" id="evaluateBtn">
-                Evaluate
-            </button>
-        </div>
-    </div>
-</div>
+        <!-- Score Table -->
+        <div class="table-responsive">
+        <table class="table score-table align-middle mb-0">
 
-<!-- ================= PROGRESS SECTION ================= -->
-<div class="card shadow-sm mb-4 d-none" id="progressSection">
-    <div class="card-body text-center">
-        <div class="spinner-border text-primary mb-3" role="status"></div>
-        <p class="mb-2 fw-semibold">Evaluating selected candidates…</p>
-
-        <div class="progress" style="height: 6px;">
-            <div class="progress-bar progress-bar-striped progress-bar-animated"
-                 style="width: 100%"></div>
-        </div>
-    </div>
-</div>
-
-<!-- ================= RESULT SECTION ================= -->
-<div class="card shadow-sm d-none" id="resultSection">
-    <div class="card-body">
-        <h6 class="mb-3">Evaluation Results</h6>
-
-        <table class="table table-bordered align-middle">
-            <thead class="table-light">
+            <thead>
             <tr>
-                <th>Candidate</th>
-                <th>L1</th>
-                <th>L2</th>
-                <th>L3</th>
-                <th>L4</th>
-                <th>L5</th>
-                <th>L6</th>
-                <th>Overall</th>
+                <th style="width:22%;">Round</th>
+                <th style="width:10%;">Score</th>
+                <th style="width:24%;">Percentage</th>
+                <th style="width:12%;">Pass Mark</th>
+                <th style="width:10%;">Attempted</th>
+                <th style="width:12%;">Time</th>
+                <th style="width:10%;">Status</th>
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td>
-                    <strong>Ravi Kumar</strong><br>
-                    <small class="text-muted">Python Entry Level</small>
-                </td>
-                <td class="text-success">PASS</td>
-                <td class="text-success">PASS</td>
-                <td class="text-danger">FAIL</td>
-                <td class="text-success">PASS</td>
-                <td class="text-muted">—</td>
-                <td class="text-success">PASS</td>
-                <td class="fw-semibold">PASS</td>
-            </tr>
 
-            <tr>
-                <td>
-                    <strong>Anita Sharma</strong><br>
-                    <small class="text-muted">Python QA</small>
-                </td>
-                <td class="text-success">PASS</td>
-                <td class="text-success">PASS</td>
-                <td class="text-success">PASS</td>
-                <td class="text-success">PASS</td>
-                <td class="text-muted">—</td>
-                <td class="text-success">PASS</td>
-                <td class="fw-semibold">PASS</td>
-            </tr>
+            <tbody>
+            {% for rk, r in c.rounds.items() %}
+
+                {% if r.status == "Not Attempted" %}
+
+                    <tr>
+                        <td>
+                            <span class="fw-semibold" style="color:#1d3557;">
+                                {{ r.round_label }}
+                            </span>
+                            <div style="font-size:0.75rem; color:#aaa;">{{ rk }}</div>
+                        </td>
+                        <td colspan="5" class="text-center text-muted" style="font-style:italic;">
+                            <i class="bi bi-dash-circle me-1"></i> Not Attempted
+                        </td>
+                        <td>
+                            <span class="status-pill status-not-attempted">Pending</span>
+                        </td>
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+                        <td>
+                            <span class="fw-semibold" style="color:#1d3557;">
+                                {{ r.round_label }}
+                            </span>
+                            <div style="font-size:0.75rem; color:#aaa;">{{ rk }}</div>
+                        </td>
+
+                        <td>
+                            <span class="fw-bold" style="font-size:1rem; color:#0d3b66;">
+                                {{ r.correct }}
+                            </span>
+                            <span class="text-muted">/ {{ r.total }}</span>
+                        </td>
+
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="score-progress flex-grow-1">
+                                    <div class="score-progress-bar"
+                                         style="width: {{ r.percentage }}%;
+                                                background:
+                                                {% if r.percentage >= r.pass_threshold %}
+                                                    linear-gradient(90deg, #2a9d8f, #52c7b8)
+                                                {% elif r.percentage >= (r.pass_threshold - 10) %}
+                                                    linear-gradient(90deg, #f4a261, #f7c99e)
+                                                {% else %}
+                                                    linear-gradient(90deg, #d62828, #e76f51)
+                                                {% endif %};"></div>
+                                </div>
+                                <span class="fw-bold" style="min-width:45px;
+                                    color:
+                                    {% if r.percentage >= r.pass_threshold %}#2a9d8f
+                                    {% elif r.percentage >= (r.pass_threshold - 10) %}#e67e22
+                                    {% else %}#d62828{% endif %};">
+                                    {{ r.percentage }}%
+                                </span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="text-muted fw-semibold">&ge; {{ r.pass_threshold }}%</span>
+                        </td>
+
+                        <td>
+                            <span style="color:#333;">{{ r.attempted }} / {{ r.total }}</span>
+                        </td>
+
+                        <td>
+                            <span style="color:#e76f51; font-weight:600;">
+                                <i class="bi bi-clock me-1"></i>
+                                {{ (r.time_taken_seconds // 60) }}m {{ (r.time_taken_seconds % 60) }}s
+                            </span>
+                        </td>
+
+                        <td>
+                            {% if r.status == 'PASS' %}
+                                <span class="status-pill status-pass">
+                                    <i class="bi bi-check2"></i> Pass
+                                </span>
+                            {% else %}
+                                <span class="status-pill status-fail">
+                                    <i class="bi bi-x-lg"></i> Fail
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                {% endif %}
+
+            {% endfor %}
             </tbody>
         </table>
+        </div>
+
+        <!-- Threshold Legend (per card) -->
+        <div class="threshold-info">
+            <small class="text-muted">
+                <i class="bi bi-lightbulb me-1"></i>
+                Each round has its own pass threshold.
+                A candidate is <strong>Selected</strong> only if they pass <strong>all</strong> rounds.
+            </small>
+        </div>
+
     </div>
-</div>
 
-<!-- ================= JS LOGIC ================= -->
+    {% endfor %}
+
+{% elif request.method == 'POST' and selected_emails %}
+
+    <div class="eval-empty-state">
+        <div class="empty-icon"><i class="bi bi-search"></i></div>
+        <h5>No results found</h5>
+        <p>The selected candidates don't have any evaluation data yet.</p>
+    </div>
+
+{% elif not candidates %}
+
+    <div class="eval-empty-state">
+        <div class="empty-icon"><i class="bi bi-inbox"></i></div>
+        <h5>No Candidates Available</h5>
+        <p>Create tests for candidates first from the <a href="/create-test">Create Test</a> page.</p>
+    </div>
+
+{% else %}
+
+    <div class="eval-empty-state">
+        <div class="empty-icon"><i class="bi bi-hand-index-thumb"></i></div>
+        <h5>Select Candidates to Evaluate</h5>
+        <p>Choose one or more candidates from the dropdown above and click <strong>Evaluate Selected</strong>.</p>
+    </div>
+
+{% endif %}
+
+
 <script>
-    const evaluateBtn = document.getElementById("evaluateBtn");
-    const progressSection = document.getElementById("progressSection");
-    const resultSection = document.getElementById("resultSection");
-    const allRounds = document.getElementById("allRounds");
-    const roundChecks = document.querySelectorAll(".roundCheck");
+// ----- Dropdown toggle -----
+const selector = document.getElementById('candidateSelector');
+const toggle = document.getElementById('candidateDropdownToggle');
+const container = document.getElementById('candidateSelectContainer');
 
-    // All rounds toggle
-    allRounds.addEventListener("change", () => {
-        roundChecks.forEach(cb => cb.checked = allRounds.checked);
+toggle.addEventListener('click', function() {
+    container.classList.toggle('d-none');
+    selector.classList.toggle('open');
+});
+
+// ----- Select All -----
+const selectAll = document.getElementById('selectAllCandidates');
+if (selectAll) {
+    const checkboxes = document.querySelectorAll('.candidate-checkbox');
+
+    selectAll.addEventListener('change', function() {
+        checkboxes.forEach(cb => cb.checked = selectAll.checked);
     });
 
-    // Evaluate click
-    evaluateBtn.addEventListener("click", () => {
-        resultSection.classList.add("d-none");
-        progressSection.classList.remove("d-none");
-
-        // Simulate evaluation delay
-        setTimeout(() => {
-            progressSection.classList.add("d-none");
-            resultSection.classList.remove("d-none");
-        }, 3000);
+    // Update "Select All" state when individual checkboxes change
+    checkboxes.forEach(cb => {
+        cb.addEventListener('change', function() {
+            selectAll.checked = [...checkboxes].every(c => c.checked);
+            selectAll.indeterminate = !selectAll.checked && [...checkboxes].some(c => c.checked);
+        });
     });
+
+    // Set initial state
+    if (checkboxes.length > 0) {
+        selectAll.checked = [...checkboxes].every(c => c.checked);
+        selectAll.indeterminate = !selectAll.checked && [...checkboxes].some(c => c.checked);
+    }
+}
 </script>
 
 {% endblock %}

@@ -1,0 +1,65 @@
+{% extends "mcq/base_mcq.html" %}
+{% block content %}
+
+<div class="mcq-start-shell">
+    <div class="card mcq-start-card">
+        <div class="mcq-status-row">
+            <span class="mcq-status-pill">Secure Proctoring Active</span>
+            <span class="mcq-status-pill">Timed Assessment</span>
+        </div>
+
+        <div class="mcq-brand-row">
+            <img class="mcq-inline-logo"
+                 src="{{ url_for('static', filename='images/azirotech_logo.jpg') }}"
+                 alt="Aziro logo">
+            <div>
+                <div class="mcq-brand-copy">Aziro Enterprise Hiring Platform</div>
+                <h2 class="mcq-round-title">{{ test.round_name }}</h2>
+            </div>
+        </div>
+
+        <div class="mcq-overview-grid">
+            <div class="mcq-overview-item">
+                <span class="mcq-overview-label">Questions</span>
+                <span class="mcq-overview-value">{{ test.total_questions }}</span>
+            </div>
+            <div class="mcq-overview-item">
+                <span class="mcq-overview-label">Duration</span>
+                <span class="mcq-overview-value">{{ test.time_minutes }}m</span>
+            </div>
+            <div class="mcq-overview-item">
+                <span class="mcq-overview-label">Mode</span>
+                <span class="mcq-overview-value">Proctored</span>
+            </div>
+        </div>
+
+        <div class="mcq-instruction-wrap">
+            <h4 class="mcq-instruction-title">Instructions</h4>
+            <ul class="mcq-instruction-list">
+                <li>Each question has only one correct answer.</li>
+                <li>Question palette is available to jump between questions.</li>
+                <li>You can move next even without selecting an answer.</li>
+                <li>Do not refresh or close the browser while taking the test.</li>
+                <li>Switching tabs and leaving fullscreen are monitored.</li>
+            </ul>
+        </div>
+
+        <div class="actions">
+            <form id="mcqStartForm"
+                  method="POST"
+                  action="{{ url_for('mcq.begin_test', session_id=test.session_id) }}">
+                <button class="btn btn-primary">Start Test</button>
+            </form>
+        </div>
+
+        <p class="mcq-start-footer">
+            Once started, your timer begins immediately and full-screen mode will stay enforced.
+        </p>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/mcq_flow.js') }}"></script>
+{% endblock %}

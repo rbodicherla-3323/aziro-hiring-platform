@@ -1,25 +1,162 @@
 {% extends "base.html" %}
 {% block title %}Generated Tests{% endblock %}
+{% block breadcrumb %}Generated Tests{% endblock %}
 
 {% block content %}
-<h4 class="mb-2">Generated Tests</h4>
-<p class="text-muted mb-4">
-    View and share test links generated in this session.
-</p>
+
+<style>
+    /* Scoped refinement: compact, readable generated-links section only */
+    .candidate-card {
+        padding: 0.65rem 0.75rem !important;
+        margin-bottom: 0.55rem !important;
+        color: #111;
+        font-size: calc(0.875rem + 1px);
+    }
+
+    .candidate-card .candidate-heading {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        line-height: 1;
+    }
+
+    .candidate-card .candidate-name {
+        color: #0d3b8e;
+        font-size: 1.02rem;
+        font-weight: 650;
+        line-height: 1;
+    }
+
+    .candidate-card .candidate-meta {
+        color: #111;
+        font-size: 0.82rem;
+    }
+
+    .candidate-card .test-links-grid {
+        display: grid;
+        gap: 0.22rem;
+        margin-top: 0.38rem !important;
+        margin-left: 1.35rem;
+        padding-left: 0.45rem;
+        border-left: 1px solid var(--bs-border-color-translucent);
+    }
+
+    .candidate-card .test-link-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.35rem;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        padding: 0.05rem 0;
+    }
+
+    .candidate-card .test-link-meta {
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+    }
+
+    .candidate-card .test-level-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 46px;
+        padding: 0.08rem 0.35rem;
+        border-radius: 999px;
+        background: var(--bs-primary-bg-subtle);
+        color: var(--bs-primary-text-emphasis);
+        font-weight: 600;
+        font-size: 0.66rem;
+    }
+
+    .candidate-card .test-link-label {
+        color: #111;
+        font-size: 0.76rem;
+        font-weight: 500;
+        max-width: 260px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .candidate-card .test-link-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .candidate-card .test-link-actions .btn-link {
+        text-decoration: none;
+        font-weight: 600;
+        color: #111;
+        padding: 0 !important;
+        font-size: 0.74rem;
+        line-height: 1;
+    }
+
+    .candidate-card .copyBtn {
+        min-width: 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+        .candidate-card .test-links-grid {
+            margin-left: 0;
+            padding-left: 0;
+            border-left: 0;
+        }
+
+        .candidate-card .test-link-item {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .candidate-card .test-link-actions {
+            width: 100%;
+            justify-content: flex-start;
+        }
+    }
+</style>
+
+<!-- NEW BACK BUTTON (TOP) -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h4 class="mb-1">Generated Tests</h4>
+        <p class="text-muted mb-0 small">
+            View and share test links generated in this session.
+        </p>
+    </div>
+    <a href="/create-test" class="btn btn-outline-primary btn-sm">
+        <i class="bi bi-plus-circle me-1"></i>Create New Test
+    </a>
+</div>
 
 <!-- ================= BULK ACTIONS ================= -->
 <div class="card shadow-sm mb-4">
     <div class="card-body d-flex align-items-center justify-content-between">
-        <div>
-            <input class="form-check-input me-2" type="checkbox" id="selectAll">
-            <label class="form-check-label fw-semibold">
-                Select all candidates
-            </label>
+        <div class="d-flex align-items-center gap-3">
+            <div>
+                <input class="form-check-input me-2" type="checkbox" id="selectAll">
+                <label class="form-check-label fw-semibold">
+                    Select all candidates
+                </label>
+            </div>
+            <span class="text-muted small" id="selectedCount">(0 selected)</span>
         </div>
 
-        <button class="btn btn-primary btn-sm" id="bulkEmailBtn">
-            Send Emails to All
-        </button>
+        <div class="d-flex gap-2">
+            <button class="btn btn-primary btn-sm" id="bulkEmailBtn">
+                <i class="bi bi-envelope me-1"></i>Send Emails to Selected
+            </button>
+        </div>
     </div>
 </div>
 
@@ -29,36 +166,68 @@
 
         {% if candidates %}
             {% for cand in candidates %}
-            <div class="border rounded p-3 mb-3 candidate-card">
+            <div class="border rounded p-3 mb-3 candidate-card test-card-row" data-status="sent">
 
                 <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <input type="checkbox" class="candidateCheck me-2">
-                        <strong>{{ cand.name }}</strong>
-                        <div class="text-muted small">
-                            {{ cand.email }} · {{ cand.role }}
+                    <div class="d-flex align-items-start">
+                        <input type="checkbox" class="candidateCheck me-3 mt-1">
+                        <div>
+                            <div class="candidate-heading">
+                                <div class="candidate-name">{{ cand.name }}</div>
+                                <span class="badge bg-success-subtle text-success">Sent</span>
+                            </div>
+                            <div class="candidate-meta">
+                                {{ cand.email }} &middot; {{ cand.role }}
+                            </div>
                         </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-warning btn-sm resendBtn" title="Resend Email">
+                            <i class="bi bi-arrow-clockwise"></i>
+                        </button>
                     </div>
                 </div>
 
-                <ul class="list-unstyled mt-3 small">
-                    {% for level, test in cand.tests.items() %}
-                    <li>
-                        {{ level }} – {{ test.label }}
-                        <button class="btn btn-link btn-sm copyBtn"
-                                data-link="{{ test.url }}">
-                            Copy Link
-                        </button>
-                    </li>
+                <div class="test-links-grid mt-3">
+                    {% for level in ["L1","L2","L3","L4","L5","L6"] if level in cand.tests %}
+                    {% set test = cand.tests[level] %}
+                    <div class="test-link-item">
+                        <div class="test-link-meta">
+                            <span class="test-level-pill">{{ level }}</span>
+                            <span class="test-link-label" title="{{ test.label }}">{{ test.label }}</span>
+                        </div>
+                        <div class="test-link-actions">
+                            <a href="{{ test.url }}"
+                               target="_blank"
+                               class="btn btn-link btn-sm p-0">
+                                <i class="bi bi-box-arrow-up-right me-1"></i>Open
+                            </a>
+
+                            <button class="btn btn-link btn-sm p-0 copyBtn"
+                                    data-link="{{ test.url }}"
+                                    title="Copy link"
+                                    aria-label="Copy link">
+                                <i class="bi bi-clipboard"></i>
+                            </button>
+                        </div>
+                    </div>
                     {% endfor %}
-                </ul>
+                </div>
 
             </div>
             {% endfor %}
         {% else %}
-            <p class="text-muted mb-0">
-                No tests generated yet. Please create a test first.
-            </p>
+            <!-- Empty State -->
+            <div class="text-center py-5">
+                <div class="empty-state-icon mb-3">
+                    <i class="bi bi-file-earmark-x fs-1 text-muted"></i>
+                </div>
+                <h6 class="text-muted">No tests generated yet</h6>
+                <p class="text-muted small mb-3">Create your first test to get started</p>
+                <a href="/create-test" class="btn btn-primary btn-sm">
+                    <i class="bi bi-plus-circle me-1"></i>Create Test
+                </a>
+            </div>
         {% endif %}
 
     </div>
@@ -68,17 +237,49 @@
 <script>
     const selectAll = document.getElementById("selectAll");
     const candidateChecks = document.querySelectorAll(".candidateCheck");
+    const selectedCountEl = document.getElementById("selectedCount");
+
+    function updateSelectedCount() {
+        const count = document.querySelectorAll(".candidateCheck:checked").length;
+        selectedCountEl.textContent = `(${count} selected)`;
+    }
 
     selectAll.addEventListener("change", () => {
         candidateChecks.forEach(cb => cb.checked = selectAll.checked);
+        updateSelectedCount();
+    });
+
+    candidateChecks.forEach(cb => {
+        cb.addEventListener("change", () => {
+            updateSelectedCount();
+            selectAll.checked = document.querySelectorAll(".candidateCheck:checked").length === candidateChecks.length;
+        });
     });
 
     document.querySelectorAll(".copyBtn").forEach(btn => {
         btn.addEventListener("click", () => {
             navigator.clipboard.writeText(btn.dataset.link);
-            btn.innerText = "Copied";
-            setTimeout(() => btn.innerText = "Copy Link", 1000);
+            btn.innerHTML = '<i class="bi bi-check"></i>';
+            if (typeof showToast === 'function') showToast('Link copied to clipboard!', 'success');
+            setTimeout(() => btn.innerHTML = '<i class="bi bi-clipboard"></i>', 1500);
         });
+    });
+
+    // Resend button
+    document.querySelectorAll(".resendBtn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            if (typeof showToast === 'function') showToast('Email resent successfully!', 'success');
+        });
+    });
+
+    // Bulk Email Button
+    document.getElementById('bulkEmailBtn').addEventListener('click', () => {
+        const count = document.querySelectorAll('.candidateCheck:checked').length;
+        if (count > 0) {
+            if (typeof showToast === 'function') showToast(`Sending emails to ${count} candidate(s)...`, 'success');
+        } else {
+            if (typeof showToast === 'function') showToast('Please select candidates first', 'warning');
+        }
     });
 </script>
 

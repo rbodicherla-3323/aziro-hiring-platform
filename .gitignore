@@ -65,6 +65,9 @@ db.sqlite3-journal
 instance/
 .webassets-cache
 
+# Runtime data (proctoring screenshots, webcam recordings, logs)
+app/runtime/
+
 # Scrapy stuff:
 .scrapy
 

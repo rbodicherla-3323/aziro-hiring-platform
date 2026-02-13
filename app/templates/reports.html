@@ -1,0 +1,368 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block breadcrumb %}Reports{% endblock %}
+
+{% block content %}
+<div class="mb-2">
+    <h4 class="mb-1">Reports</h4>
+    <p class="text-muted mb-0 small">
+        Generate and download candidate evaluation reports.
+    </p>
+</div>
+
+<!-- ================= SEARCH + FILTERS ================= -->
+<form method="GET" action="/reports" id="filterForm">
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="row gy-3 align-items-end">
+            <!-- Search -->
+            <div class="col-md-4">
+                <label class="form-label">Search</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control" name="q" id="candidateSearch"
+                           placeholder="Name or email" value="{{ search_q }}">
+                </div>
+            </div>
+            <!-- Role -->
+            <div class="col-md-4">
+                <label class="form-label">Role</label>
+                <select class="form-select" name="role" id="roleFilter">
+                    <option value="">All Roles</option>
+                    {% for r in roles %}
+                    <option value="{{ r }}" {% if role_filter == r %}selected{% endif %}>{{ r }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <!-- Buttons -->
+            <div class="col-md-auto d-flex gap-2">
+                <button type="submit" class="btn btn-primary btn-sm px-3">
+                    <i class="bi bi-funnel me-1"></i>Apply
+                </button>
+                <a href="/reports" class="btn btn-outline-secondary btn-sm px-3">Clear</a>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+<!-- ================= CANDIDATES TABLE ================= -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="border rounded p-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="fw-semibold">
+                    Candidates
+                    <span class="badge bg-secondary ms-1">{{ candidates|length }}</span>
+                </span>
+                <div class="d-flex gap-3">
+                    <button type="button" class="btn btn-link btn-sm p-0" id="selectAllCandidates">Select All</button>
+                    <button type="button" class="btn btn-link btn-sm p-0 text-danger" id="clearAllCandidates">Clear</button>
+                </div>
+            </div>
+
+            {% if candidates %}
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle mb-0" id="candidatesTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width:40px;"><input type="checkbox" id="selectAllHeader"></th>
+                            <th>Candidate</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Verdict</th>
+                            <th style="width:120px;">Report</th>
+                            <th style="width:220px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in candidates %}
+                        <tr class="candidate-row"
+                            data-ts-id="{{ c.test_session_id }}"
+                            data-has-report="{{ 'true' if c.has_report else 'false' }}"
+                            data-report-filename="{{ c.report_filename or '' }}">
+                            <td><input class="form-check-input candidate-checkbox" type="checkbox" value="{{ c.test_session_id }}"></td>
+                            <td>{{ c.name }}</td>
+                            <td class="small text-muted">{{ c.email }}</td>
+                            <td class="small">{{ c.role }}</td>
+                            <td>
+                                {% set v = c.summary.overall_verdict %}
+                                {% if v == 'Selected' %}
+                                <span class="badge bg-success">Selected</span>
+                                {% elif v == 'Rejected' %}
+                                <span class="badge bg-danger">Rejected</span>
+                                {% elif v == 'In Progress' %}
+                                <span class="badge bg-warning text-dark">In Progress</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Pending</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if c.has_report %}
+                                <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Generated</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Not Generated</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if c.has_report %}
+                                <div class="d-flex gap-1">
+                                    <button class="btn btn-outline-primary btn-sm btn-preview"
+                                            data-ts-id="{{ c.test_session_id }}" title="Preview">
+                                        <i class="bi bi-eye me-1"></i>View
+                                    </button>
+                                    <a class="btn btn-outline-success btn-sm"
+                                       href="/reports/download/{{ c.report_filename }}" title="Download PDF">
+                                        <i class="bi bi-download"></i>
+                                    </a>
+                                    <button class="btn btn-outline-warning btn-sm btn-regen"
+                                            data-ts-id="{{ c.test_session_id }}" title="Re-generate">
+                                        <i class="bi bi-arrow-repeat"></i>
+                                    </button>
+                                </div>
+                                {% else %}
+                                <button class="btn btn-outline-primary btn-sm btn-generate"
+                                        data-ts-id="{{ c.test_session_id }}">
+                                    <i class="bi bi-file-earmark-plus me-1"></i>Generate
+                                </button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-5 text-muted">
+                <i class="bi bi-inbox" style="font-size:2rem;"></i>
+                <p class="mt-2 mb-0">No candidates found. Create tests first to see candidates here.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- ================= BULK ACTIONS ================= -->
+{% if candidates %}
+<div class="d-flex justify-content-end gap-2 mb-4">
+    <button class="btn btn-outline-success" id="bulkDownloadBtn">
+        <i class="bi bi-download me-1"></i>Download Selected
+    </button>
+    <button class="btn btn-primary" id="generateSelectedBtn">
+        <i class="bi bi-file-earmark-plus me-1"></i>Generate Reports for Selected
+    </button>
+</div>
+{% endif %}
+
+<!-- ================= REPORT PREVIEW MODAL ================= -->
+<div class="modal fade" id="reportPreviewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background:linear-gradient(135deg,#1a73e8,#6c63ff);color:#fff;">
+                <h5 class="modal-title"><i class="bi bi-file-earmark-text me-2"></i>Report Preview</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="previewBody">
+                <div class="text-center py-5 text-muted">
+                    <div class="spinner-border spinner-border-sm me-2"></div>Loading…
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                <a id="previewDownloadBtn" href="#" class="btn btn-primary">
+                    <i class="bi bi-download me-1"></i>Download PDF
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= SCRIPTS ================= -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // ---- CHECKBOX LOGIC ----
+    const headerCb = document.getElementById('selectAllHeader');
+    const allCbs = () => document.querySelectorAll('.candidate-checkbox');
+
+    function syncHeader() {
+        const cbs = allCbs();
+        headerCb.checked = cbs.length > 0 && Array.from(cbs).every(c => c.checked);
+    }
+    headerCb?.addEventListener('change', () => allCbs().forEach(c => c.checked = headerCb.checked));
+    document.querySelectorAll('.candidate-checkbox').forEach(c => c.addEventListener('change', syncHeader));
+    document.getElementById('selectAllCandidates')?.addEventListener('click', () => {
+        const all = Array.from(allCbs()).every(c => c.checked);
+        allCbs().forEach(c => c.checked = !all);
+        syncHeader();
+    });
+    document.getElementById('clearAllCandidates')?.addEventListener('click', () => {
+        allCbs().forEach(c => c.checked = false);
+        syncHeader();
+    });
+
+    // ---- SINGLE GENERATE ----
+    document.querySelectorAll('.btn-generate, .btn-regen').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const tsId = btn.dataset.tsId;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Generating…';
+            try {
+                const fd = new FormData();
+                fd.append('test_session_id', tsId);
+                const res = await fetch('/reports/generate', { method: 'POST', body: fd });
+                const data = await res.json();
+                if (data.status === 'ok') {
+                    showToast('Report generated successfully!', 'success');
+                    setTimeout(() => location.reload(), 800);
+                } else {
+                    showToast(data.error || 'Generation failed', 'danger');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="bi bi-file-earmark-plus me-1"></i>Generate';
+                }
+            } catch (e) {
+                showToast('Network error', 'danger');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bi bi-file-earmark-plus me-1"></i>Generate';
+            }
+        });
+    });
+
+    // ---- BULK GENERATE ----
+    document.getElementById('generateSelectedBtn')?.addEventListener('click', async () => {
+        const selected = Array.from(allCbs()).filter(c => c.checked).map(c => c.value);
+        if (!selected.length) { showToast('Select candidates first', 'warning'); return; }
+        const btn = document.getElementById('generateSelectedBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Generating…';
+        try {
+            const fd = new FormData();
+            selected.forEach(id => fd.append('test_session_ids[]', id));
+            const res = await fetch('/reports/generate-bulk', { method: 'POST', body: fd });
+            const data = await res.json();
+            if (data.status === 'ok') {
+                showToast(`${data.count} report(s) generated!`, 'success');
+                setTimeout(() => location.reload(), 800);
+            } else {
+                showToast(data.error || 'Bulk generation failed', 'danger');
+            }
+        } catch (e) {
+            showToast('Network error', 'danger');
+        }
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-file-earmark-plus me-1"></i>Generate Reports for Selected';
+    });
+
+    // ---- BULK DOWNLOAD ----
+    document.getElementById('bulkDownloadBtn')?.addEventListener('click', () => {
+        const selected = Array.from(allCbs()).filter(c => c.checked);
+        if (!selected.length) { showToast('Select candidates first', 'warning'); return; }
+
+        const filenames = [];
+        selected.forEach(cb => {
+            const row = cb.closest('tr');
+            const fn = row?.dataset.reportFilename;
+            if (fn) filenames.push(fn);
+        });
+
+        if (!filenames.length) {
+            showToast('No generated reports found among selected. Generate reports first.', 'warning');
+            return;
+        }
+
+        // Submit via hidden form for file download
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/reports/download-bulk';
+        filenames.forEach(fn => {
+            const inp = document.createElement('input');
+            inp.type = 'hidden'; inp.name = 'filenames[]'; inp.value = fn;
+            form.appendChild(inp);
+        });
+        document.body.appendChild(form);
+        form.submit();
+        form.remove();
+    });
+
+    // ---- PREVIEW MODAL ----
+    const previewModal = document.getElementById('reportPreviewModal');
+    const previewBody = document.getElementById('previewBody');
+    const previewDlBtn = document.getElementById('previewDownloadBtn');
+
+    document.querySelectorAll('.btn-preview').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const tsId = btn.dataset.tsId;
+            const modal = new bootstrap.Modal(previewModal);
+            previewBody.innerHTML = '<div class="text-center py-5 text-muted"><div class="spinner-border spinner-border-sm me-2"></div>Loading…</div>';
+            previewDlBtn.href = '#';
+            modal.show();
+
+            try {
+                const res = await fetch(`/reports/preview/${tsId}`);
+                const d = await res.json();
+                if (d.error) { previewBody.innerHTML = `<p class="text-danger">${d.error}</p>`; return; }
+
+                let roundsHtml = '';
+                for (const [rk, rd] of Object.entries(d.rounds)) {
+                    const statusCls = rd.status === 'PASS' ? 'text-success' : rd.status === 'FAIL' ? 'text-danger' : 'text-muted';
+                    roundsHtml += `<tr>
+                        <td class="small">${rk}</td>
+                        <td class="small">${rd.round_label}</td>
+                        <td class="small text-center">${rd.correct} / ${rd.total}</td>
+                        <td class="small text-center">${rd.percentage.toFixed(1)}%</td>
+                        <td class="small text-center">${rd.pass_threshold}%</td>
+                        <td class="small fw-bold ${statusCls}">${rd.status}</td>
+                    </tr>`;
+                }
+
+                const verdictCls = d.summary.overall_verdict === 'Selected' ? 'bg-success'
+                    : d.summary.overall_verdict === 'Rejected' ? 'bg-danger' : 'bg-secondary';
+
+                previewBody.innerHTML = `
+                    <div class="border rounded p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="mb-1">${d.name}</h5>
+                                <p class="text-muted mb-0 small">${d.email} · ${d.role}</p>
+                                <p class="text-muted mb-0 small">Batch: ${d.batch_id}</p>
+                            </div>
+                            <span class="badge ${verdictCls}">${d.summary.overall_verdict}</span>
+                        </div>
+                        <hr>
+                        <h6 class="small fw-semibold text-muted mb-2">Round Performance</h6>
+                        <table class="table table-sm table-bordered mb-3">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="small">Round</th>
+                                    <th class="small">Label</th>
+                                    <th class="small text-center">Score</th>
+                                    <th class="small text-center">%</th>
+                                    <th class="small text-center">Threshold</th>
+                                    <th class="small">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>${roundsHtml}</tbody>
+                        </table>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="small"><strong>Passed:</strong> ${d.summary.passed_rounds} of ${d.summary.total_rounds} rounds</div>
+                                <div class="small"><strong>Overall %:</strong> ${d.summary.overall_percentage.toFixed(1)}%</div>
+                            </div>
+                        </div>
+                    </div>`;
+
+                if (d.report_filename) {
+                    previewDlBtn.href = '/reports/download/' + d.report_filename;
+                    previewDlBtn.style.display = '';
+                } else {
+                    previewDlBtn.style.display = 'none';
+                }
+
+            } catch (e) {
+                previewBody.innerHTML = '<p class="text-danger">Failed to load preview.</p>';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

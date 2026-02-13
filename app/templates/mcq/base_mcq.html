@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title or "Aziro MCQ Test" }}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='mcq/mcq.css') }}">
+
+    <style>
+        :root {
+            --aziro-primary: #1f4fd8;
+            --aziro-bg: #f5f7fb;
+            --aziro-card: #ffffff;
+            --aziro-border: #e3e6ef;
+            --aziro-text: #1f2937;
+            --aziro-muted: #6b7280;
+            --aziro-success: #198754;
+            --aziro-danger: #dc3545;
+            --aziro-warning: #ff9800;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--aziro-bg);
+            color: var(--aziro-text);
+        }
+
+        /* Page container */
+        .page {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Card */
+        .card {
+            background: var(--aziro-card);
+            border-radius: 10px;
+            padding: 35px;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 26px;
+            border-radius: 6px;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--aziro-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #163db5;
+        }
+
+        .btn-danger {
+            background: var(--aziro-danger);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--aziro-success);
+            color: white;
+        }
+
+        /* Footer spacing */
+        .actions {
+            margin-top: 30px;
+            text-align: right;
+        }
+
+        /* Proctoring visual feedback */
+        body.proctoring-warning {
+            background: #fff3e0 !important;
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='images/azirotech_logo.jpg') }}">
+        <strong>Aziro Hiring</strong>
+    </div>
+
+    <div class="candidate">
+        Candidate: {{ candidate_name or "Candidate" }}
+    </div>
+</div>
+
+<div class="page">
+    {% block content %}{% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+{% block extra_js %}{% endblock %}
+<script src="{{ url_for('static', filename='js/proctoring.js') }}"></script>
+</body>
+</html>
