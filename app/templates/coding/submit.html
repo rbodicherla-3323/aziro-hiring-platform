@@ -1,0 +1,63 @@
+{% extends "coding/base_coding.html" %}
+{% block content %}
+
+<div id="codingSubmitView" class="coding-submit-shell">
+    <div class="card coding-submit-card">
+        <div class="coding-brand-row" style="justify-content:center;">
+            <img class="coding-inline-logo"
+                 src="{{ url_for('static', filename='images/azirotech_logo.jpg') }}"
+                 alt="Aziro logo">
+            <div>
+                <div class="coding-brand-copy">Aziro Enterprise Hiring Platform</div>
+            </div>
+        </div>
+
+        <h2 class="coding-submit-title">Review & Submit</h2>
+
+        <p class="coding-submit-text" style="margin-top:10px;">
+            You are about to submit your coding solution.
+        </p>
+
+        <p class="coding-submit-text" style="margin-top:8px;">
+            Once submitted, you will <strong>not</strong> be able to modify your code.
+        </p>
+
+        <div class="coding-submit-warning">
+            Final check: make sure your code compiles and produces the expected output.
+        </div>
+
+        <div class="actions coding-submit-actions">
+            <button id="codingBackToEditorBtn" type="button" class="btn btn-secondary">Back to Editor</button>
+            <form id="codingSubmitForm" method="POST"
+                  action="{{ url_for('coding.submit', session_id=session_id) }}">
+                <button id="codingConfirmSubmitBtn" class="btn btn-danger">Confirm & Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function() {
+    const backBtn = document.getElementById("codingBackToEditorBtn");
+    if (backBtn) {
+        backBtn.addEventListener("click", function() {
+            window.history.back();
+        });
+    }
+
+    const submitForm = document.getElementById("codingSubmitForm");
+    if (submitForm) {
+        submitForm.addEventListener("submit", function(e) {
+            const btn = document.getElementById("codingConfirmSubmitBtn");
+            if (btn) {
+                btn.disabled = true;
+                btn.textContent = "Submitting…";
+            }
+        });
+    }
+})();
+</script>
+{% endblock %}

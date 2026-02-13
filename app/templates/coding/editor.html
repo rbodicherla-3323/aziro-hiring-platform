@@ -1,0 +1,158 @@
+{% extends "coding/base_coding.html" %}
+
+{% block extra_css %}
+<!-- CodeMirror 5 — Syntax Highlighting -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.18/lib/codemirror.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.18/addon/hint/show-hint.min.css">
+<style>
+    .page {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+</style>
+{% endblock %}
+
+{% block header_center %}
+<div class="coding-header-chips">
+    <span class="coding-chip">
+        {{ language | upper }} ▾
+    </span>
+    <span class="coding-chip timer" id="codingTimer">
+        <span id="codingTimerValue">--:--</span>
+    </span>
+    <span class="coding-chip">
+        Score: <strong id="codingScore">0/0</strong>
+    </span>
+    <span class="coding-chip focus" id="codingFocusChip">
+        Focus lost <strong id="codingFocusCount">0</strong> time(s)
+    </span>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Timer milestone notice -->
+<div id="codingTimerNotice" class="coding-timer-notice" role="status" aria-live="polite"></div>
+
+<div id="codingEditorView"
+     data-session-id="{{ session_id }}"
+     data-remaining-seconds="{{ remaining_seconds }}"
+     data-language="{{ language }}"
+     data-save-url="{{ url_for('coding.save_code', session_id=session_id) }}"
+     data-run-url="{{ url_for('coding.run_code', session_id=session_id) }}"
+     data-submit-url="{{ submit_url }}"
+     class="coding-ide-shell">
+
+    <!-- ═══════════ LEFT PANEL: Problem ═══════════ -->
+    <aside class="coding-problem-panel" id="codingProblemPanel">
+        <div class="coding-problem-scroll">
+
+            <h2 class="coding-problem-title">{{ question.title }}</h2>
+
+            <div class="coding-problem-desc">
+                {{ question.description }}
+            </div>
+
+            {% if question.function and question.function[language] %}
+            <div class="coding-func-info">
+                {% if language == 'java' %}
+                <pre class="coding-signature">{{ question.function[language].method }}</pre>
+                {% else %}
+                <pre class="coding-signature">{{ question.function[language].signature }}</pre>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if public_tests %}
+            <h3 class="coding-section-title">Sample Tests</h3>
+            <div class="coding-examples-box">
+                {% for tc in public_tests %}
+                <div class="coding-example-block">
+                    <div class="coding-example-label">Example {{ loop.index }}</div>
+                    <div class="coding-example-line"><span class="coding-example-key">Input:</span> <span class="coding-example-val">{{ tc.input | join(', ') }}</span></div>
+                    <div class="coding-example-line"><span class="coding-example-key">Expected:</span> <span class="coding-example-val">{{ tc.expected }}</span></div>
+                </div>
+                {% if not loop.last %}
+                <div class="coding-example-divider"></div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if question.notes %}
+            <div class="coding-notes">
+                <strong>Note:</strong>
+                <ul>
+                    {% for note in question.notes %}
+                    <li>{{ note }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+        </div>
+    </aside>
+
+    <!-- ═══════════ RIGHT PANEL: Editor + Buttons + Output ═══════════ -->
+    <main class="coding-editor-panel">
+
+        <!-- Editor Label -->
+        <div class="coding-editor-label-bar">
+            Write your solution
+            {% if question.function and question.function[language] %}
+            (implement {{ question.function[language].name if question.function[language].name else 'solve' }})
+            {% endif %}
+        </div>
+
+        <!-- Code Editor Area -->
+        <div class="coding-editor-wrap" id="codingEditorWrap">
+            <textarea id="codingEditor"
+                      class="coding-textarea"
+                      spellcheck="false"
+                      autocomplete="off"
+                      autocorrect="off"
+                      autocapitalize="off"
+                      wrap="off">{{ code }}</textarea>
+        </div>
+
+        <!-- Action Buttons Row -->
+        <div class="coding-action-bar">
+            <button id="codingRunBtn" class="btn coding-btn-run" type="button">
+                Run
+            </button>
+            <button id="codingRunHiddenBtn" class="btn coding-btn-run-hidden" type="button">
+                Run Hidden Tests
+            </button>
+            <button id="codingSubmitBtn" class="btn coding-btn-submit" type="button">
+                Submit Test
+            </button>
+            <button id="codingResetBtn" class="btn coding-btn-reset" type="button">
+                ↺ Reset
+            </button>
+        </div>
+
+        <!-- Output Panel -->
+        <div class="coding-output-panel" id="codingOutputPanel">
+            <pre id="codingOutputContent" class="coding-output-content">Ready.</pre>
+        </div>
+    </main>
+</div>
+
+<!-- Hidden elements for JS compatibility -->
+<div id="codingLineNumbers" style="display:none;"></div>
+<div id="codingSaveStatus" style="display:none;">
+    <span class="coding-save-dot saved"></span>
+    <span class="coding-save-label">Saved</span>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- CodeMirror 5 core + language modes -->
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.18/lib/codemirror.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.18/mode/clike/clike.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.18/addon/edit/closebrackets.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.18/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.18/addon/selection/active-line.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.18/addon/comment/comment.min.js"></script>
+<script src="{{ url_for('static', filename='js/coding_editor.js') }}"></script>
+{% endblock %}

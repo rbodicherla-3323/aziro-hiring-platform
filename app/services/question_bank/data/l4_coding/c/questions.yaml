@@ -1,0 +1,2181 @@
+- id: 2
+  title: Reverse a Number
+  difficulty: EASY
+  description: Write a program to reverse a number without using any inbuilt function.
+  function:
+    c: 'int solve(int n)'
+  public_tests:
+  - input:
+    - 123
+    expected: 321
+  - input:
+    - 100
+    expected: 1
+  - input:
+    - 0
+    expected: 0
+  hidden_tests:
+  - input:
+    - 456
+    expected: 654
+  - input:
+    - 9
+    expected: 9
+  - input:
+    - 1000
+    expected: 1
+  - input:
+    - 12345
+    expected: 54321
+  - input:
+    - 100
+    expected: 1
+  - input:
+    - 505
+    expected: 505
+  - input:
+    - 1001
+    expected: 1001
+  - input:
+    - 9876
+    expected: 6789
+  - input:
+    - 1230
+    expected: 321
+  - input:
+    - 555
+    expected: 555
+
+- id: 3
+  title: Square of Even and Cube of Odd
+  difficulty: EASY
+  description: Given a list of first 10 natural numbers, write a program to find the
+    square of all even numbers and cube of all odd numbers and store them in another
+    list.
+  function:
+    c: 'void solve(int* nums, int size, int* result)'
+  public_tests:
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    expected:
+    - 1
+    - 4
+    - 27
+    - 16
+    - 125
+  - input:
+    - - 2
+      - 4
+      - 6
+    expected:
+    - 4
+    - 16
+    - 36
+  - input:
+    - - 1
+      - 3
+      - 5
+    expected:
+    - 1
+    - 27
+    - 125
+  hidden_tests:
+  - input:
+    - - 1
+    expected:
+    - 1
+  - input:
+    - - 2
+    expected:
+    - 4
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+    expected:
+    - 1
+    - 4
+    - 27
+    - 16
+    - 125
+    - 36
+    - 343
+    - 64
+    - 729
+    - 100
+  - input:
+    - - 10
+      - 9
+      - 8
+      - 7
+    expected:
+    - 100
+    - 729
+    - 64
+    - 343
+  - input:
+    - - 2
+      - 4
+      - 6
+      - 8
+      - 10
+    expected:
+    - 4
+    - 16
+    - 36
+    - 64
+    - 100
+  - input:
+    - - 1
+      - 3
+      - 5
+      - 7
+      - 9
+    expected:
+    - 1
+    - 27
+    - 125
+    - 343
+    - 729
+  - input:
+    - - 5
+      - 5
+    expected:
+    - 125
+    - 125
+  - input:
+    - - 4
+      - 4
+    expected:
+    - 16
+    - 16
+  - input:
+    - - 1
+      - 2
+    expected:
+    - 1
+    - 4
+  - input:
+    - - 3
+      - 6
+    expected:
+    - 27
+    - 36
+
+- id: 4
+  title: Check Anagrams
+  difficulty: EASY
+  description: Write a function that accepts two strings and returns 1 if the two
+    strings are anagrams of each other, 0 otherwise.
+  function:
+    c: 'int solve(char* s1, char* s2)'
+  public_tests:
+  - input:
+    - listen
+    - silent
+    expected: 1
+  - input:
+    - hello
+    - world
+    expected: 0
+  - input:
+    - a
+    - a
+    expected: 1
+  hidden_tests:
+  - input:
+    - abc
+    - bca
+    expected: 1
+  - input:
+    - abc
+    - def
+    expected: 0
+  - input:
+    - Ravi
+    - Vair
+    expected: 1
+  - input:
+    - evil
+    - vile
+    expected: 1
+  - input:
+    - python
+    - typhon
+    expected: 1
+  - input:
+    - ''
+    - ''
+    expected: 1
+  - input:
+    - a
+    - b
+    expected: 0
+  - input:
+    - aab
+    - aba
+    expected: 1
+  - input:
+    - test
+    - best
+    expected: 0
+  - input:
+    - aaa
+    - aaa
+    expected: 1
+
+- id: 6
+  title: Find Greatest and Smallest
+  difficulty: EASY
+  description: Write a program to find the greatest and smallest number present in
+    the array. Return result as an array where result[0] is greatest and result[1] is smallest.
+  function:
+    c: 'void solve(int* nums, int size, int* result)'
+  public_tests:
+  - input:
+    - - 45
+      - 7
+      - 32
+      - 567
+      - 90
+      - 54
+      - 99
+    expected:
+    - 567
+    - 7
+  - input:
+    - - 1
+      - 2
+      - 3
+    expected:
+    - 3
+    - 1
+  - input:
+    - - 5
+    expected:
+    - 5
+    - 5
+  hidden_tests:
+  - input:
+    - - 10
+      - 20
+      - 30
+    expected:
+    - 30
+    - 10
+  - input:
+    - - 100
+      - 50
+    expected:
+    - 100
+    - 50
+  - input:
+    - - 9
+      - 9
+      - 9
+    expected:
+    - 9
+    - 9
+  - input:
+    - - 1
+      - 100
+      - 50
+      - 75
+    expected:
+    - 100
+    - 1
+  - input:
+    - - 50
+      - 25
+      - 75
+      - 100
+    expected:
+    - 100
+    - 25
+  - input:
+    - - 0
+    expected:
+    - 0
+    - 0
+  - input:
+    - - -5
+      - -10
+      - -1
+    expected:
+    - -1
+    - -10
+  - input:
+    - - 1
+      - -1
+    expected:
+    - 1
+    - -1
+  - input:
+    - - 15
+      - 8
+      - 23
+      - 4
+    expected:
+    - 23
+    - 4
+  - input:
+    - - 999
+      - 1
+      - 500
+    expected:
+    - 999
+    - 1
+
+- id: 7
+  title: Right Rotate Array by n
+  difficulty: EASY
+  description: Write a program to right rotate an array by n positions.
+  function:
+    c: 'void solve(int* arr, int size, int n, int* result)'
+  public_tests:
+  - input:
+    - - 10
+      - 20
+      - 30
+      - 40
+      - 50
+      - 60
+      - 70
+    - 3
+    expected:
+    - 50
+    - 60
+    - 70
+    - 10
+    - 20
+    - 30
+    - 40
+  - input:
+    - - 1
+      - 2
+      - 3
+    - 1
+    expected:
+    - 3
+    - 1
+    - 2
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+    - 2
+    expected:
+    - 3
+    - 4
+    - 1
+    - 2
+  hidden_tests:
+  - input:
+    - - 1
+    - 1
+    expected:
+    - 1
+  - input:
+    - - 1
+      - 2
+    - 1
+    expected:
+    - 2
+    - 1
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    - 5
+    expected:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+  - input:
+    - - 10
+      - 20
+      - 30
+      - 40
+    - 4
+    expected:
+    - 10
+    - 20
+    - 30
+    - 40
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    - 2
+    expected:
+    - 4
+    - 5
+    - 1
+    - 2
+    - 3
+  - input:
+    - - 5
+      - 4
+      - 3
+      - 2
+      - 1
+    - 3
+    expected:
+    - 3
+    - 2
+    - 1
+    - 5
+    - 4
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+    - 2
+    expected:
+    - 5
+    - 6
+    - 1
+    - 2
+    - 3
+    - 4
+  - input:
+    - - 10
+      - 20
+    - 1
+    expected:
+    - 20
+    - 10
+  - input:
+    - - 1
+      - 2
+      - 3
+    - 3
+    expected:
+    - 1
+    - 2
+    - 3
+  - input:
+    - - 7
+      - 8
+      - 9
+      - 10
+    - 3
+    expected:
+    - 8
+    - 9
+    - 10
+    - 7
+
+- id: 9
+  title: Swap Elements at Positions
+  difficulty: EASY
+  description: Write a function that swaps the elements present at positions i and j
+    in the given array.
+  function:
+    c: 'void solve(int* arr, int size, int i, int j, int* result)'
+  public_tests:
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+    - 0
+    - 7
+    expected:
+    - 8
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 1
+  - input:
+    - - 1
+      - 2
+      - 3
+    - 0
+    - 1
+    expected:
+    - 2
+    - 1
+    - 3
+  - input:
+    - - 5
+      - 10
+    - 0
+    - 1
+    expected:
+    - 10
+    - 5
+  hidden_tests:
+  - input:
+    - - 1
+      - 2
+    - 0
+    - 1
+    expected:
+    - 2
+    - 1
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    - 1
+    - 3
+    expected:
+    - 1
+    - 4
+    - 3
+    - 2
+    - 5
+  - input:
+    - - 10
+      - 20
+      - 30
+    - 0
+    - 2
+    expected:
+    - 30
+    - 20
+    - 10
+  - input:
+    - - 1
+      - 2
+      - 3
+    - 0
+    - 0
+    expected:
+    - 1
+    - 2
+    - 3
+  - input:
+    - - 5
+      - 6
+      - 7
+      - 8
+    - 1
+    - 2
+    expected:
+    - 5
+    - 7
+    - 6
+    - 8
+  - input:
+    - - 100
+      - 200
+      - 300
+      - 400
+    - 0
+    - 3
+    expected:
+    - 400
+    - 200
+    - 300
+    - 100
+  - input:
+    - - 9
+      - 8
+      - 7
+      - 6
+      - 5
+    - 2
+    - 4
+    expected:
+    - 9
+    - 8
+    - 5
+    - 6
+    - 7
+  - input:
+    - - 1
+      - 1
+      - 1
+    - 0
+    - 2
+    expected:
+    - 1
+    - 1
+    - 1
+  - input:
+    - - 11
+      - 22
+      - 33
+      - 44
+    - 1
+    - 3
+    expected:
+    - 11
+    - 44
+    - 33
+    - 22
+  - input:
+    - - 7
+      - 14
+      - 21
+      - 28
+      - 35
+    - 0
+    - 4
+    expected:
+    - 35
+    - 14
+    - 21
+    - 28
+    - 7
+
+- id: 20
+  title: Valid Parentheses
+  difficulty: MEDIUM
+  description: Write a program to check the validity of a string of parentheses.
+    These brackets must be closed in the correct order. Return 1 for valid, 0 for invalid.
+  function:
+    c: 'int solve(char* s)'
+  public_tests:
+  - input:
+    - ()
+    expected: 1
+  - input:
+    - ()[]{}
+    expected: 1
+  - input:
+    - '[)'
+    expected: 0
+  hidden_tests:
+  - input:
+    - ([)]
+    expected: 0
+  - input:
+    - '{[]}'
+    expected: 1
+  - input:
+    - ()()
+    expected: 1
+  - input:
+    - (
+    expected: 0
+  - input:
+    - (([]){})
+    expected: 1
+  - input:
+    - ([{}])
+    expected: 1
+  - input:
+    - '{[}]'
+    expected: 0
+  - input:
+    - ((()))
+    expected: 1
+  - input:
+    - '[]{}()'
+    expected: 1
+  - input:
+    - ([{}])(){}[]
+    expected: 1
+
+- id: 27
+  title: Remove Parenthesis Area
+  difficulty: HARD
+  description: Write a program to remove parenthesis area in a string. Return the
+    trimmed result.
+  function:
+    c: 'void solve(char* s, char* result)'
+  public_tests:
+  - input:
+    - example (.com)
+    expected: example
+  - input:
+    - github (.com)
+    expected: github
+  - input:
+    - test
+    expected: test
+  hidden_tests:
+  - input:
+    - hello (world)
+    expected: hello
+  - input:
+    - python (.io)
+    expected: python
+  - input:
+    - code (.py)
+    expected: code
+  - input:
+    - file (.txt)
+    expected: file
+  - input:
+    - data (.csv)
+    expected: data
+  - input:
+    - java (.lang)
+    expected: java
+  - input:
+    - node (.js)
+    expected: node
+  - input:
+    - web (.html)
+    expected: web
+  - input:
+    - script (.js)
+    expected: script
+  - input:
+    - style (.css)
+    expected: style
+
+- id: 28
+  title: Second Highest Number
+  difficulty: MEDIUM
+  description: Write a program to find the second highest number in an integer
+    array without using inbuilt functions.
+  function:
+    c: 'int solve(int* nums, int size)'
+  public_tests:
+  - input:
+    - - 1
+      - 5
+      - 3
+      - 9
+      - 2
+    expected: 5
+  - input:
+    - - 10
+      - 20
+      - 5
+    expected: 10
+  - input:
+    - - 5
+      - 5
+      - 3
+    expected: 5
+  hidden_tests:
+  - input:
+    - - 3
+      - 1
+      - 4
+      - 1
+      - 5
+    expected: 4
+  - input:
+    - - 100
+      - 200
+      - 150
+    expected: 150
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    expected: 4
+  - input:
+    - - 50
+      - 30
+      - 20
+    expected: 30
+  - input:
+    - - 7
+      - 9
+      - 11
+    expected: 9
+  - input:
+    - - 10
+      - 10
+      - 5
+    expected: 10
+  - input:
+    - - 8
+      - 3
+      - 9
+      - 2
+    expected: 8
+  - input:
+    - - 15
+      - 25
+      - 10
+    expected: 15
+  - input:
+    - - 100
+      - 90
+      - 110
+    expected: 100
+  - input:
+    - - 5
+      - 15
+      - 10
+      - 20
+    expected: 15
+
+- id: 29
+  title: Remove Duplicates from Array
+  difficulty: MEDIUM
+  description: Write a program to remove duplicate elements from an array without
+    using inbuilt functions. Return the unique elements in original order.
+  function:
+    c: 'int solve(int* nums, int size, int* result)'
+  public_tests:
+  - input:
+    - - 1
+      - 2
+      - 2
+      - 3
+      - 3
+      - 3
+    expected:
+    - 1
+    - 2
+    - 3
+  - input:
+    - - 5
+      - 5
+      - 5
+    expected:
+    - 5
+  - input:
+    - - 1
+      - 2
+      - 3
+    expected:
+    - 1
+    - 2
+    - 3
+  hidden_tests:
+  - input:
+    - - 1
+      - 1
+      - 2
+      - 2
+      - 3
+    expected:
+    - 1
+    - 2
+    - 3
+  - input:
+    - - 4
+      - 4
+      - 4
+      - 4
+    expected:
+    - 4
+  - input:
+    - - 1
+      - 2
+      - 1
+      - 2
+    expected:
+    - 1
+    - 2
+  - input:
+    - - 10
+      - 20
+      - 10
+    expected:
+    - 10
+    - 20
+  - input:
+    - - 7
+      - 8
+      - 7
+      - 9
+    expected:
+    - 7
+    - 8
+    - 9
+  - input:
+    - - 100
+    expected:
+    - 100
+  - input:
+    - - 1
+      - 1
+      - 1
+      - 2
+      - 2
+      - 3
+    expected:
+    - 1
+    - 2
+    - 3
+  - input:
+    - - 5
+      - 6
+      - 5
+      - 7
+      - 6
+    expected:
+    - 5
+    - 6
+    - 7
+  - input:
+    - - 3
+      - 3
+      - 2
+      - 2
+      - 1
+    expected:
+    - 3
+    - 2
+    - 1
+  - input:
+    - - 9
+      - 8
+      - 9
+      - 8
+    expected:
+    - 9
+    - 8
+
+- id: 30
+  title: Left Rotation of Array
+  difficulty: EASY
+  description: Write a program to perform left rotation of array elements by
+    two positions.
+  function:
+    c: 'void solve(int* nums, int size, int* result)'
+  public_tests:
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    expected:
+    - 3
+    - 4
+    - 5
+    - 1
+    - 2
+  - input:
+    - - 10
+      - 20
+      - 30
+    expected:
+    - 30
+    - 10
+    - 20
+  - input:
+    - - 1
+      - 2
+    expected:
+    - 2
+    - 1
+  hidden_tests:
+  - input:
+    - - 1
+      - 2
+      - 3
+    expected:
+    - 3
+    - 1
+    - 2
+  - input:
+    - - 5
+      - 10
+      - 15
+      - 20
+    expected:
+    - 15
+    - 20
+    - 5
+    - 10
+  - input:
+    - - 1
+    expected:
+    - 1
+  - input:
+    - - 7
+      - 8
+    expected:
+    - 8
+    - 7
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+    expected:
+    - 3
+    - 4
+    - 5
+    - 6
+    - 1
+    - 2
+  - input:
+    - - 100
+      - 200
+      - 300
+    expected:
+    - 300
+    - 100
+    - 200
+  - input:
+    - - 9
+      - 8
+      - 7
+      - 6
+    expected:
+    - 7
+    - 6
+    - 9
+    - 8
+  - input:
+    - - 2
+      - 4
+      - 6
+      - 8
+      - 10
+    expected:
+    - 6
+    - 8
+    - 10
+    - 2
+    - 4
+  - input:
+    - - 50
+      - 60
+      - 70
+    expected:
+    - 70
+    - 50
+    - 60
+  - input:
+    - - 11
+      - 22
+      - 33
+      - 44
+      - 55
+    expected:
+    - 33
+    - 44
+    - 55
+    - 11
+    - 22
+
+- id: 31
+  title: Square of Prime Numbers
+  difficulty: MEDIUM
+  description: From given array of numbers, create an array of squares of prime numbers only.
+  function:
+    c: 'int solve(int* nums, int size, int* result)'
+  public_tests:
+  - input:
+    - - 1
+      - 4
+      - 6
+      - 11
+      - 15
+      - 24
+      - 19
+      - 25
+      - 27
+      - 30
+      - 17
+    expected:
+    - 121
+    - 361
+    - 289
+  - input:
+    - - 2
+      - 3
+      - 4
+    expected:
+    - 4
+    - 9
+  - input:
+    - - 7
+      - 11
+      - 13
+    expected:
+    - 49
+    - 121
+    - 169
+  hidden_tests:
+  - input:
+    - - 2
+    expected:
+    - 4
+  - input:
+    - - 1
+      - 2
+      - 3
+    expected:
+    - 4
+    - 9
+  - input:
+    - - 5
+      - 7
+      - 9
+    expected:
+    - 25
+    - 49
+  - input:
+    - - 10
+      - 11
+      - 12
+    expected:
+    - 121
+  - input:
+    - - 17
+      - 19
+      - 21
+    expected:
+    - 289
+    - 361
+  - input:
+    - - 2
+      - 3
+      - 5
+      - 7
+    expected:
+    - 4
+    - 9
+    - 25
+    - 49
+  - input:
+    - - 4
+      - 6
+      - 8
+    expected: []
+  - input:
+    - - 1
+      - 1
+      - 1
+    expected: []
+  - input:
+    - - 23
+      - 29
+    expected:
+    - 529
+    - 841
+  - input:
+    - - 13
+      - 14
+      - 15
+    expected:
+    - 169
+
+- id: 32
+  title: Reverse String without Special Characters
+  difficulty: HARD
+  description: Reverse the given string without changing the position of special characters.
+  function:
+    c: 'void solve(char* s, char* result)'
+  public_tests:
+  - input:
+    - adfw$vf&yvy*ugv%uy
+    expected: yug$vy&vyf*wfd%a
+  - input:
+    - a@b
+    expected: b@a
+  - input:
+    - abc!def
+    expected: fed!cba
+  hidden_tests:
+  - input:
+    - hello
+    expected: olleh
+  - input:
+    - a#b#c
+    expected: c#b#a
+  - input:
+    - test@123
+    expected: 321@tset
+  - input:
+    - x$y@z
+    expected: z$y@x
+  - input:
+    - code!code
+    expected: edoc!edoc
+  - input:
+    - a
+    expected: a
+  - input:
+    - ab@cd
+    expected: dc@ba
+  - input:
+    - 1a2b3c
+    expected: 3c2b1a
+  - input:
+    - word*word
+    expected: drow*drow
+  - input:
+    - python%lang
+    expected: gnal%nohtyp
+
+- id: 33
+  title: Hide Credit Card Number
+  difficulty: EASY
+  description: Write a function that accepts a credit card number string. It should return
+    a string where all characters are hidden with an asterisk except the last four.
+  function:
+    c: 'void solve(char* card_num, char* result)'
+  public_tests:
+  - input:
+    - '4509876278910046'
+    expected: '************0046'
+  - input:
+    - '1234'
+    expected: '1234'
+  - input:
+    - '123456789012345'
+    expected: '***********2345'
+  hidden_tests:
+  - input:
+    - '5555555555554444'
+    expected: '************4444'
+  - input:
+    - '4532015112830366'
+    expected: '************0366'
+  - input:
+    - '6011000990139424'
+    expected: '************9424'
+  - input:
+    - '378282246310005'
+    expected: '***********0005'
+  - input:
+    - '30569309025904'
+    expected: '**********5904'
+  - input:
+    - '3530111333300000'
+    expected: '************0000'
+  - input:
+    - '1234567890123456'
+    expected: '************3456'
+  - input:
+    - '9999999999999999'
+    expected: '************9999'
+  - input:
+    - '1111111111111111'
+    expected: '************1111'
+  - input:
+    - '4024007134432509'
+    expected: '************2509'
+
+- id: 34
+  title: Average Word Length
+  difficulty: EASY
+  description: For the given sentence, return the average word length after removing
+    punctuation.
+  function:
+    c: 'double solve(char* sentence)'
+  public_tests:
+  - input:
+    - I need to work very hard to learn more about algorithms in Python!
+    expected: 4.923076923
+  - input:
+    - Hello world.
+    expected: 5.5
+  - input:
+    - Hi!
+    expected: 2.0
+  hidden_tests:
+  - input:
+    - Python is great.
+    expected: 4.5
+  - input:
+    - a b c.
+    expected: 1.0
+  - input:
+    - Hello World Python.
+    expected: 5.666666667
+  - input:
+    - The quick brown fox.
+    expected: 4.25
+  - input:
+    - I am learning coding.
+    expected: 4.4
+  - input:
+    - Java is fun!
+    expected: 4.0
+  - input:
+    - Test case.
+    expected: 4.5
+  - input:
+    - One two three four five.
+    expected: 3.6
+  - input:
+    - Programming is awesome!
+    expected: 9.666666667
+  - input:
+    - Data science rocks.
+    expected: 5.666666667
+
+- id: 35
+  title: Sort in Descending Order without Builtin
+  difficulty: MEDIUM
+  description: Sort the array of integers in descending order without using inbuilt
+    functions.
+  function:
+    c: 'void solve(int* nums, int size, int* result)'
+  public_tests:
+  - input:
+    - - 56
+      - 2
+      - 13
+      - 1
+      - 78
+      - 4
+      - 6
+    expected:
+    - 78
+    - 56
+    - 13
+    - 6
+    - 4
+    - 2
+    - 1
+  - input:
+    - - 3
+      - 1
+      - 2
+    expected:
+    - 3
+    - 2
+    - 1
+  - input:
+    - - 5
+    expected:
+    - 5
+  hidden_tests:
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    expected:
+    - 5
+    - 4
+    - 3
+    - 2
+    - 1
+  - input:
+    - - 10
+      - 5
+      - 8
+    expected:
+    - 10
+    - 8
+    - 5
+  - input:
+    - - 100
+      - 50
+      - 75
+    expected:
+    - 100
+    - 75
+    - 50
+  - input:
+    - - 1
+      - 1
+      - 1
+    expected:
+    - 1
+    - 1
+    - 1
+  - input:
+    - - 9
+      - 3
+      - 7
+      - 1
+    expected:
+    - 9
+    - 7
+    - 3
+    - 1
+  - input:
+    - - 45
+      - 23
+      - 67
+      - 12
+    expected:
+    - 67
+    - 45
+    - 23
+    - 12
+  - input:
+    - - 5
+      - 5
+      - 3
+      - 3
+      - 1
+    expected:
+    - 5
+    - 5
+    - 3
+    - 3
+    - 1
+  - input:
+    - - 20
+      - 10
+      - 30
+    expected:
+    - 30
+    - 20
+    - 10
+  - input:
+    - - 7
+      - 2
+      - 9
+      - 4
+    expected:
+    - 9
+    - 7
+    - 4
+    - 2
+  - input:
+    - - 15
+      - 8
+      - 20
+      - 3
+    expected:
+    - 20
+    - 15
+    - 8
+    - 3
+
+- id: 37
+  title: Fill Zero with Recent Value
+  difficulty: MEDIUM
+  description: In the given array, check if element is 0, replace it with the most
+    recent non-zero value. Use -1 to represent no previous value.
+  function:
+    c: 'void solve(int* arr, int size, int* result)'
+  public_tests:
+  - input:
+    - - 1
+      - 0
+      - 0
+      - 3
+      - 0
+      - 4
+    expected:
+    - 1
+    - 1
+    - 1
+    - 3
+    - 3
+    - 4
+  - input:
+    - - 2
+      - 0
+      - 5
+    expected:
+    - 2
+    - 2
+    - 5
+  - input:
+    - - 10
+      - 0
+      - 0
+      - 0
+    expected:
+    - 10
+    - 10
+    - 10
+    - 10
+  hidden_tests:
+  - input:
+    - - 5
+      - 0
+      - 7
+    expected:
+    - 5
+    - 5
+    - 7
+  - input:
+    - - 1
+      - 2
+      - 0
+      - 0
+      - 5
+    expected:
+    - 1
+    - 2
+    - 2
+    - 2
+    - 5
+  - input:
+    - - 3
+      - 0
+      - 0
+      - 4
+      - 0
+    expected:
+    - 3
+    - 3
+    - 3
+    - 4
+    - 4
+  - input:
+    - - 1
+      - 1
+      - 0
+      - 1
+    expected:
+    - 1
+    - 1
+    - 1
+    - 1
+  - input:
+    - - 7
+      - 0
+      - 8
+      - 0
+      - 9
+    expected:
+    - 7
+    - 7
+    - 8
+    - 8
+    - 9
+  - input:
+    - - 0
+      - 1
+      - 0
+    expected:
+    - -1
+    - 1
+    - 1
+  - input:
+    - - 10
+      - 0
+      - 0
+      - 20
+    expected:
+    - 10
+    - 10
+    - 10
+    - 20
+  - input:
+    - - 2
+      - 0
+      - 3
+      - 0
+      - 0
+    expected:
+    - 2
+    - 2
+    - 3
+    - 3
+    - 3
+  - input:
+    - - 6
+      - 6
+      - 0
+      - 6
+    expected:
+    - 6
+    - 6
+    - 6
+    - 6
+  - input:
+    - - 1
+      - 0
+      - 2
+      - 0
+      - 3
+    expected:
+    - 1
+    - 1
+    - 2
+    - 2
+    - 3
+
+- id: 38
+  title: Two Sum with Indices
+  difficulty: MEDIUM
+  description: Check sum of 2 numbers from given array which matches target value and
+    return the indexes of those numbers. Should not use more than 1 loop.
+  function:
+    c: 'void solve(int* nums, int size, int target, int* result)'
+  public_tests:
+  - input:
+    - - 7
+      - 8
+      - 2
+      - 3
+      - 6
+      - 9
+      - 2
+      - 8
+    - 14
+    expected:
+    - 1
+    - 4
+  - input:
+    - - 2
+      - 7
+      - 11
+      - 15
+    - 9
+    expected:
+    - 0
+    - 1
+  - input:
+    - - 1
+      - 5
+      - 3
+      - 7
+    - 8
+    expected:
+    - 0
+    - 3
+  hidden_tests:
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+    - 5
+    expected:
+    - 0
+    - 3
+  - input:
+    - - 10
+      - 20
+      - 10
+      - 40
+      - 50
+    - 50
+    expected:
+    - 0
+    - 3
+  - input:
+    - - 5
+      - 75
+      - 25
+    - 100
+    expected:
+    - 1
+    - 2
+  - input:
+    - - 2
+      - 5
+      - 5
+      - 11
+    - 10
+    expected:
+    - 1
+    - 2
+  - input:
+    - - 0
+      - 4
+      - 3
+      - 0
+    - 0
+    expected:
+    - 0
+    - 3
+  - input:
+    - - -3
+      - 4
+      - 3
+      - 90
+    - 0
+    expected:
+    - 0
+    - 2
+  - input:
+    - - 1
+      - 3
+      - 4
+      - 2
+    - 6
+    expected:
+    - 1
+    - 3
+  - input:
+    - - 1
+      - 2
+    - 3
+    expected:
+    - 0
+    - 1
+  - input:
+    - - 3
+      - 3
+    - 6
+    expected:
+    - 0
+    - 1
+  - input:
+    - - 8
+      - 7
+      - 2
+      - 1
+    - 9
+    expected:
+    - 1
+    - 3
+
+- id: 39
+  title: Sort without Inbuilt Function
+  difficulty: MEDIUM
+  description: Sort the given array in ascending order without using inbuilt functions.
+  function:
+    c: 'void solve(int* nums, int size, int* result)'
+  public_tests:
+  - input:
+    - - 2
+      - 3
+      - -5
+      - -7
+      - 9
+      - 4
+      - 6
+      - -1
+      - -8
+      - 0
+    expected:
+    - -8
+    - -7
+    - -5
+    - -1
+    - 0
+    - 2
+    - 3
+    - 4
+    - 6
+    - 9
+  - input:
+    - - 5
+      - 2
+      - 8
+      - 1
+    expected:
+    - 1
+    - 2
+    - 5
+    - 8
+  - input:
+    - - 3
+    expected:
+    - 3
+  hidden_tests:
+  - input:
+    - - 1
+      - 2
+      - 3
+    expected:
+    - 1
+    - 2
+    - 3
+  - input:
+    - - 3
+      - 2
+      - 1
+    expected:
+    - 1
+    - 2
+    - 3
+  - input:
+    - - -5
+      - -10
+      - 0
+    expected:
+    - -10
+    - -5
+    - 0
+  - input:
+    - - 5
+      - 5
+      - 5
+    expected:
+    - 5
+    - 5
+    - 5
+  - input:
+    - - 10
+      - -10
+      - 5
+      - -5
+    expected:
+    - -10
+    - -5
+    - 5
+    - 10
+  - input:
+    - - 7
+      - 2
+      - 9
+      - 1
+      - 5
+    expected:
+    - 1
+    - 2
+    - 5
+    - 7
+    - 9
+  - input:
+    - - -1
+      - -2
+      - -3
+    expected:
+    - -3
+    - -2
+    - -1
+  - input:
+    - - 0
+      - 0
+      - 0
+    expected:
+    - 0
+    - 0
+    - 0
+  - input:
+    - - 100
+      - 50
+      - 75
+      - 25
+    expected:
+    - 25
+    - 50
+    - 75
+    - 100
+  - input:
+    - - 6
+      - 4
+      - 8
+      - 2
+      - 1
+    expected:
+    - 1
+    - 2
+    - 4
+    - 6
+    - 8
+
+- id: 40
+  title: Palindrome Strings
+  difficulty: EASY
+  description: Define a function which checks if a given string is a palindrome.
+    Return 1 if palindrome, 0 otherwise.
+  function:
+    c: 'int solve(char* s)'
+  public_tests:
+  - input:
+    - aba
+    expected: 1
+  - input:
+    - hello
+    expected: 0
+  - input:
+    - racecar
+    expected: 1
+  hidden_tests:
+  - input:
+    - level
+    expected: 1
+  - input:
+    - noon
+    expected: 1
+  - input:
+    - a
+    expected: 1
+  - input:
+    - ab
+    expected: 0
+  - input:
+    - madam
+    expected: 1
+  - input:
+    - refer
+    expected: 1
+  - input:
+    - civic
+    expected: 1
+  - input:
+    - kayak
+    expected: 1
+  - input:
+    - stats
+    expected: 1
+  - input:
+    - pop
+    expected: 1
+
+- id: 43
+  title: Remove Special Characters
+  difficulty: EASY
+  description: In the given string, remove the special characters and add a space
+    instead of that.
+  function:
+    c: 'void solve(char* s, char* result)'
+  public_tests:
+  - input:
+    - Msys&Technologies@Chennai*
+    expected: 'Msys Technologies Chennai '
+  - input:
+    - hello!world#
+    expected: 'hello world '
+  - input:
+    - a@b$c
+    expected: a b c
+  hidden_tests:
+  - input:
+    - test!
+    expected: 'test '
+  - input:
+    - code@python
+    expected: code python
+  - input:
+    - hello-world
+    expected: hello world
+  - input:
+    - a#b#c#d
+    expected: a b c d
+  - input:
+    - java&script
+    expected: java script
+  - input:
+    - test*case
+    expected: test case
+  - input:
+    - x$y$z
+    expected: x y z
+  - input:
+    - data!science
+    expected: data science
+  - input:
+    - web@design
+    expected: web design
+  - input:
+    - python*code
+    expected: python code
+
+- id: 44
+  title: String with Index
+  difficulty: EASY
+  description: Given a string, display the output with index numbers (1-based) after each character.
+  function:
+    c: 'void solve(char* s, char* result)'
+  public_tests:
+  - input:
+    - abcde
+    expected: a1b2c3d4e5
+  - input:
+    - ab
+    expected: a1b2
+  - input:
+    - x
+    expected: x1
+  hidden_tests:
+  - input:
+    - abc
+    expected: a1b2c3
+  - input:
+    - hello
+    expected: h1e2l3l4o5
+  - input:
+    - xy
+    expected: x1y2
+  - input:
+    - test
+    expected: t1e2s3t4
+  - input:
+    - a
+    expected: a1
+  - input:
+    - python
+    expected: p1y2t3h4o5n6
+  - input:
+    - code
+    expected: c1o2d3e4
+  - input:
+    - data
+    expected: d1a2t3a4
+  - input:
+    - java
+    expected: j1a2v3a4
+  - input:
+    - script
+    expected: s1c2r3i4p5t6
+
+- id: 45
+  title: Common Substring
+  difficulty: MEDIUM
+  description: Write a program in which two strings are given and determine if they
+    share a common substring (single character). Return "YES" or "NO".
+  function:
+    c: 'void solve(char* s1, char* s2, char* result)'
+  public_tests:
+  - input:
+    - hello
+    - world
+    expected: 'YES'
+  - input:
+    - abc
+    - def
+    expected: 'NO'
+  - input:
+    - test
+    - best
+    expected: 'YES'
+  hidden_tests:
+  - input:
+    - python
+    - java
+    expected: 'NO'
+  - input:
+    - code
+    - decode
+    expected: 'YES'
+  - input:
+    - data
+    - date
+    expected: 'YES'
+  - input:
+    - hello
+    - help
+    expected: 'YES'
+  - input:
+    - cat
+    - dog
+    expected: 'NO'
+  - input:
+    - string
+    - ring
+    expected: 'YES'
+  - input:
+    - xyz
+    - abc
+    expected: 'NO'
+  - input:
+    - programming
+    - grammar
+    expected: 'YES'
+  - input:
+    - test
+    - toast
+    expected: 'YES'
+  - input:
+    - script
+    - crypt
+    expected: 'YES'
+
+- id: 46
+  title: Leap Year Check
+  difficulty: EASY
+  description: Create a function that accepts a year and returns 1 if the given year
+    is a leap year, 0 otherwise.
+  function:
+    c: 'int solve(int year)'
+  public_tests:
+  - input:
+    - 2020
+    expected: 1
+  - input:
+    - 2021
+    expected: 0
+  - input:
+    - 2000
+    expected: 1
+  hidden_tests:
+  - input:
+    - 2024
+    expected: 1
+  - input:
+    - 2025
+    expected: 0
+  - input:
+    - 1900
+    expected: 0
+  - input:
+    - 2004
+    expected: 1
+  - input:
+    - 2100
+    expected: 0
+  - input:
+    - 2400
+    expected: 1
+  - input:
+    - 2019
+    expected: 0
+  - input:
+    - 2016
+    expected: 1
+  - input:
+    - 1999
+    expected: 0
+  - input:
+    - 2001
+    expected: 0
+
+- id: 17
+  title: Count Alphabet in Alphanumeric String
+  difficulty: HARD
+  description: Write a program to find the count of alphabet alone in the given alphanumeric
+    string and format the output with counts after each character group.
+  function:
+    c: 'void solve(char* s, char* result)'
+  public_tests:
+  - input:
+    - abb24ccc8ddbbca1
+    expected: a1b224c3d2b2c1a11
+  - input:
+    - abc23
+    expected: a1b1c123
+  - input:
+    - a1b2c3
+    expected: a1b1c1123
+  hidden_tests:
+  - input:
+    - aaa
+    expected: a3
+  - input:
+    - aabb
+    expected: a2b2
+  - input:
+    - test
+    expected: t1e1s1t1
+  - input:
+    - hello5
+    expected: h1e1l2o15
+  - input:
+    - xyz
+    expected: x1y1z1
+  - input:
+    - aabbcc123
+    expected: a2b2c2123
+  - input:
+    - zz99zz
+    expected: z299z2
+  - input:
+    - code1code
+    expected: c1o1d1e1c1o1d1e1
+  - input:
+    - 111aaa111
+    expected: 111a3111
+  - input:
+    - ab1ab
+    expected: a1b1a1b1
