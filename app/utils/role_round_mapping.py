@@ -1,3 +1,4 @@
+# app/utils/role_round_mapping.py
 ROLE_ROUND_MAPPING = {
     "python_entry": {
         "rounds": ["L1", "L2", "L3", "L5"],
@@ -46,15 +47,43 @@ ROLE_ROUND_MAPPING = {
         "coding_rounds": ["L4"],
         "coding_language": "java",
         "allow_domain": True
-    }
+    },
+
+    # ---- Phase 3: New Roles ----
+
+    # BMC Engineer: Aptitude -> C Theory -> BMC/Firmware -> Coding (C) -> Soft Skills
+    "bmc_engineer": {
+        "rounds": ["L1", "L2", "L3", "L5"],
+        "coding_rounds": ["L4"],
+        "coding_language": "c",
+        "allow_domain": False
+    },
+
+    # Staff Engineer - Linux Kernel & Device Driver:
+    # C Theory -> Linux Kernel -> Device Driver -> Coding (C) -> Soft Skills (Leadership)
+    "linux_kernel_dd": {
+        "rounds": ["L1", "L2", "L3", "L5"],
+        "coding_rounds": ["L4"],
+        "coding_language": "c",
+        "allow_domain": False
+    },
+
+    # Systems Architect (C++ Based):
+    # Aptitude -> C++ Theory -> System Design -> Coding (C++) -> Soft Skills
+    "systems_architect_cpp": {
+        "rounds": ["L1", "L2", "L3", "L5"],
+        "coding_rounds": ["L4"],
+        "coding_language": "cpp",
+        "allow_domain": False
+    },
 }
 
-# Map role_key → coding language for L4
-# Roles with C/C++ can be added here as needed
+# Map role_key -> coding language for L4
 ROLE_CODING_LANGUAGE = {
     "java_entry": "java",
     "java_aws": "java",
     "java_qa": "java",
-    # "python_entry": "c",      # uncomment to enable C coding for python roles
-    # "python_dev": "cpp",      # uncomment to enable C++ coding for python dev
+    "bmc_engineer": "c",
+    "linux_kernel_dd": "c",
+    "systems_architect_cpp": "cpp",
 }
