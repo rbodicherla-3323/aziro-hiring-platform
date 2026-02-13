@@ -3,245 +3,159 @@
 {% block breadcrumb %}Evaluation{% endblock %}
 
 {% block content %}
+
 <div class="mb-4">
-    <h4 class="mb-1">Evaluation</h4>
-    <p class="text-muted mb-0 small">
-        Select candidates to evaluate test performance.
-    </p>
+    <h4 class="fw-bold" style="color:#0d3b66;">
+        Candidate Evaluation
+    </h4>
 </div>
 
-<!-- ================= CANDIDATES SELECTION ================= -->
+<form method="POST">
+
 <div class="card shadow-sm mb-4">
     <div class="card-body">
-        <!-- Dropdown Toggle -->
-        <div id="candidateDropdownToggle" class="form-control d-flex justify-content-between align-items-center" role="button">
-            <span id="selectedCountText">Select Candidates</span>
-            <svg id="candidateChevron" width="14" height="14" viewBox="0 0 16 16" fill="none"
-                 xmlns="http://www.w3.org/2000/svg" style="transition: transform 0.2s;">
-                <path d="M2 5L8 11L14 5"
-                      stroke="currentColor"
-                      stroke-width="2.2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"/>
-            </svg>
+
+        <div id="candidateDropdownToggle"
+             class="form-control d-flex justify-content-between align-items-center"
+             role="button">
+            <span>Select Candidates</span>
+            <span>▼</span>
         </div>
 
-        <!-- Collapsible Candidate List -->
-        <div id="candidateSelectContainer" class="border rounded mt-2 p-3 d-none">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="fw-semibold small text-muted">Session Candidates</span>
-                <div class="d-flex gap-3">
-                    <button type="button" class="btn btn-link btn-sm p-0" id="selectAllCandidates">
-                        Select All
-                    </button>
-                    <button type="button" class="btn btn-link btn-sm p-0 text-danger" id="clearAllCandidates">
-                        Clear
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Simple Candidate List with Checkboxes -->
-            <div class="candidate-list">
-    {% for c in candidates %}
-    <div class="form-check py-2 border-bottom candidate-item">
-        <input class="form-check-input candidate-checkbox"
-               type="checkbox"
-               name="candidates"
-               value="{{ c.email }}"
-               {% if c.email in selected_emails %}checked{% endif %}>
-        <label class="form-check-label">
-            <span class="fw-medium">{{ c.name }}</span>
-            <div class="text-muted small">{{ c.email }}</div>
-        </label>
-    </div>
-    {% endfor %}
-</div>
+        <div id="candidateSelectContainer"
+             class="border rounded mt-2 p-3 d-none">
 
-                <div class="form-check py-2 border-bottom candidate-item">
-                    <input class="form-check-input candidate-checkbox" type="checkbox" id="candidate2">
-                    <label class="form-check-label" for="candidate2">
-                        <span class="fw-medium">Anita Sharma</span>
-                    </label>
-                </div>
-                <div class="form-check py-2 candidate-item">
-                    <input class="form-check-input candidate-checkbox" type="checkbox" id="candidate3">
-                    <label class="form-check-label" for="candidate3">
-                        <span class="fw-medium">Rahul Verma</span>
-                    </label>
-                </div>
+            {% for c in candidates %}
+            <div class="form-check py-2 border-bottom">
+                <input class="form-check-input"
+                       type="checkbox"
+                       name="candidates"
+                       value="{{ c.email }}"
+                       {% if c.email in selected_emails %}checked{% endif %}>
+                <label class="form-check-label">
+                    <span class="fw-bold fs-6">{{ c.name }}</span>
+                    <div style="font-size:14px; color:#111;">
+                        {{ c.email }}
+                    </div>
+                </label>
             </div>
+            {% endfor %}
+
         </div>
     </div>
 </div>
 
-<!-- ================= EVALUATE BUTTON ================= -->
 <div class="d-flex justify-content-end mb-4">
-    <form method="POST">
-    <button class="btn btn-primary">
-        <i class="bi bi-lightning-charge me-1"></i>Evaluate Selected
+    <button class="btn btn-primary px-4">
+        Evaluate Selected
     </button>
+</div>
+
 </form>
 
-</div>
 
-<!-- ================= PROGRESS SECTION ================= -->
-<div class="card shadow-sm mb-4 d-none" id="progressSection">
-    <div class="card-body text-center">
-        <div class="spinner-border text-primary mb-3" role="status"></div>
-        <p class="mb-2 fw-semibold">Evaluating selected candidates…</p>
+{% if filtered_candidates %}
 
-        <div class="progress" style="height: 6px;">
-            <div class="progress-bar progress-bar-striped progress-bar-animated"
-                 style="width: 100%"></div>
+    {% for c in filtered_candidates %}
+
+    <div class="card shadow-sm mb-5">
+        <div class="card-body">
+
+            <!-- Candidate Header -->
+            <div class="mb-3">
+                <div class="fw-bold fs-4" style="color:#0d3b66;">
+                    {{ c.name }}
+                </div>
+                <div style="font-size:15px; color:#111;">
+                    {{ c.email }}
+                </div>
+            </div>
+
+            <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+
+                <thead style="background-color:#0d3b66; color:white;" class="text-center">
+                <tr>
+                    <th>Test Name</th>
+                    <th>Score</th>
+                    <th>Percentage</th>
+                    <th>Time Taken</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                {% for r in c.rounds.values() %}
+
+                    {% if r.status == "No Response" %}
+
+                        <tr>
+                            <td class="fw-semibold" style="color:#1d3557;">
+                                {{ r.round_label }}
+                            </td>
+                            <td colspan="4"
+                                style="text-align:center; font-weight:500; color:#444;">
+                                No Response
+                            </td>
+                        </tr>
+
+                    {% else %}
+
+                        <tr>
+
+                            <td class="fw-semibold" style="color:#1d3557;">
+                                {{ r.round_label }}
+                            </td>
+
+                            <td style="color:black; font-weight:600;">
+                                {{ r.correct }} / {{ r.total }}
+                            </td>
+
+                            <td style="color:black;">
+                                {{ r.percentage }}%
+                            </td>
+
+                            <td style="color:#e76f51; font-weight:500;">
+                                {{ (r.time_taken_seconds // 60) }}m
+                                {{ (r.time_taken_seconds % 60) }}s
+                            </td>
+
+                            <td style="font-weight:700;
+                                color:
+                                {% if r.status == 'PASS' %}
+                                    #2a9d8f
+                                {% else %}
+                                    #d62828
+                                {% endif %};">
+                                {{ r.status }}
+                            </td>
+
+                        </tr>
+
+                    {% endif %}
+
+                {% endfor %}
+
+                </tbody>
+            </table>
+            </div>
+
         </div>
     </div>
-</div>
 
-<!-- ================= RESULT SECTION ================= -->
-<div class="card shadow-sm d-none" id="resultSection">
-    <div class="card-body">
-        <h6 class="mb-3">Evaluation Results</h6>
-
-        <table class="table table-bordered align-middle">
-            <thead class="table-light">
-            <tr>
-                <th>Candidate</th>
-                <th>L1</th>
-                <th>L2</th>
-                <th>L3</th>
-                <th>L4</th>
-                <th>L5</th>
-                <th>L6</th>
-                <th>Overall</th>
-            </tr>
-            </thead>
-            <tbody>
-{% for c in candidates %}
-<tr>
-    <td>
-        <strong>{{ c.name }}</strong><br>
-        <small class="text-muted">{{ c.email }}</small>
-    </td>
-
-    {% for rk in ["L1","L2","L3","L4","L5","L6"] %}
-        {% if rk in c.rounds %}
-            <td>
-                {{ c.rounds[rk].correct }}/{{ c.rounds[rk].total }}<br>
-                <small class="text-muted">{{ c.rounds[rk].percentage }}%</small>
-            </td>
-        {% else %}
-            <td class="text-muted">—</td>
-        {% endif %}
     {% endfor %}
 
-    <td class="fw-semibold text-primary">
-        {{
-            (
-              c.rounds.values() | map(attribute="percentage") | sum
-            ) / (c.rounds|length)
-            if c.rounds else 0
-        | round(1)
-        }}%
-    </td>
-</tr>
-{% endfor %}
-</tbody>
+{% endif %}
 
-        </table>
-    </div>
-</div>
 
-<!-- ================= JS LOGIC ================= -->
 <script>
-    const evaluateBtn = document.getElementById("evaluateBtn");
-    const progressSection = document.getElementById("progressSection");
-    const resultSection = document.getElementById("resultSection");
-    const resultsTableBody = document.getElementById("resultsTableBody");
+const dropdown = document.getElementById('candidateDropdownToggle');
+const container = document.getElementById('candidateSelectContainer');
 
-    
-    // Toggle candidate dropdown visibility
-    const dropdownToggle = document.getElementById('candidateDropdownToggle');
-    const selectContainer = document.getElementById('candidateSelectContainer');
-    const chevron = document.getElementById('candidateChevron');
-    const selectedCountText = document.getElementById('selectedCountText');
-
-    dropdownToggle.addEventListener('click', function() {
-        selectContainer.classList.toggle('d-none');
-        const isOpen = !selectContainer.classList.contains('d-none');
-        chevron.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
-    });
-
-    // Checkbox logic
-    const candidateCheckboxes = document.querySelectorAll('.candidate-checkbox');
-
-    function updateSelectedCount() {
-        const count = Array.from(candidateCheckboxes).filter(cb => cb.checked).length;
-        if (count === 0) {
-            selectedCountText.textContent = 'Select Candidates';
-        } else {
-            selectedCountText.textContent = count + ' candidate' + (count > 1 ? 's' : '') + ' selected';
-        }
-    }
-
-    candidateCheckboxes.forEach(cb => {
-        cb.addEventListener('change', updateSelectedCount);
-    });
-
-    // Select All Candidates logic
-    const selectAllBtn = document.getElementById("selectAllCandidates");
-    selectAllBtn.addEventListener("click", () => {
-        const allChecked = Array.from(candidateCheckboxes).every(cb => cb.checked);
-        candidateCheckboxes.forEach(cb => cb.checked = !allChecked);
-        updateSelectedCount();
-    });
-
-    // Clear All Candidates logic
-    const clearBtn = document.getElementById("clearAllCandidates");
-    clearBtn.addEventListener("click", () => {
-        candidateCheckboxes.forEach(cb => cb.checked = false);
-        updateSelectedCount();
-    });
-
-    // Evaluate click
-    evaluateBtn.addEventListener("click", () => {
-        const checkedCandidates = Array.from(candidateCheckboxes).filter(cb => cb.checked);
-        
-        if (checkedCandidates.length === 0) {
-            if (typeof showToast === 'function') showToast('Please select candidates to evaluate', 'warning');
-            return;
-        }
-        
-        resultSection.classList.add("d-none");
-        progressSection.classList.remove("d-none");
-
-        // Simulate evaluation delay
-        setTimeout(() => {
-            progressSection.classList.add("d-none");
-            
-            // Build results table
-            let html = '';
-            checkedCandidates.forEach(cb => {
-                const data = candidateResults[cb.id];
-                if (data) {
-                    html += `
-                        <tr>
-                            <td>
-                                <strong>${data.name}</strong><br>
-                                <small class="text-muted">${data.role}</small>
-                            </td>
-                            ${data.results.map(r => `<td class="${r === 'PASS' ? 'text-success' : r === 'FAIL' ? 'text-danger' : 'text-muted'}">${r}</td>`).join('')}
-                            <td class="fw-semibold ${data.overall === 'PASS' ? 'text-success' : data.overall === 'FAIL' ? 'text-danger' : 'text-warning'}">${data.overall}</td>
-                        </tr>
-                    `;
-                }
-            });
-            
-            resultsTableBody.innerHTML = html;
-            resultSection.classList.remove("d-none");
-            
-            if (typeof showToast === 'function') showToast(`Evaluation completed for ${checkedCandidates.length} candidate(s)!`, 'success');
-        }, 3000);
-    });
+dropdown.addEventListener('click', function() {
+    container.classList.toggle('d-none');
+});
 </script>
 
 {% endblock %}
