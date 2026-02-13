@@ -1,7 +1,12 @@
 from authlib.integrations.flask_client import OAuth
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 import os
 
 oauth = OAuth()
+db = SQLAlchemy()
+migrate = Migrate()
+
 
 def init_oauth(app):
     oauth.init_app(app)

@@ -11,3 +11,18 @@ class Config:
 
     # 🔴 DEV MODE AUTH BYPASS
     AUTH_DISABLED = True   # <-- change to False later
+
+    # ---------------------------------------------------------------
+    # DATABASE
+    # ---------------------------------------------------------------
+    # For local Windows dev  : sqlite (zero setup)
+    # For Ubuntu VM (prod)   : postgresql
+    #
+    # Set DATABASE_URL in .env to override:
+    #   DATABASE_URL=postgresql://aziro:yourpass@localhost/aziro_hiring
+    # ---------------------------------------------------------------
+    SQLALCHEMY_DATABASE_URI = os.getenv(
+        "DATABASE_URL",
+        "sqlite:///aziro_hiring.db"           # fallback for local dev
+    )
+    SQLALCHEMY_TRACK_MODIFICATIONS = False

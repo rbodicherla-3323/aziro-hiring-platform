@@ -1,6 +1,6 @@
 from flask import Flask
 from .config import Config
-from .extensions import oauth
+from .extensions import oauth, db, migrate
 
 # ---------------------------
 # BLUEPRINT IMPORTS
@@ -17,6 +17,15 @@ from .blueprints.coding import coding_bp   # ✅ L4 Coding blueprint
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+
+    # ---------------------------
+    # DATABASE INITIALIZATION
+    # ---------------------------
+    db.init_app(app)
+    migrate.init_app(app, db)
+
+    # Import models so Alembic sees them
+    from . import models  # noqa: F401
 
     # ---------------------------
     # OAUTH INITIALIZATION
@@ -41,6 +50,7 @@ def create_app():
     app.register_blueprint(reports_bp)
     app.register_blueprint(mcq_bp)   # ✅ MCQ ROUTES ENABLED
     app.register_blueprint(coding_bp)   # ✅ L4 CODING ROUTES ENABLED
+
     # ---------------------------
     # DEV MODE: BYPASS LOGIN
     # ---------------------------
