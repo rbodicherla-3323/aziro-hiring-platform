@@ -2,6 +2,7 @@ from collections import defaultdict
 from app.services.evaluation_store import EVALUATION_STORE
 from app.services.generated_tests_store import GENERATED_TESTS
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
+from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 from app.services.evaluation_service import EvaluationService
 
 
@@ -74,10 +75,31 @@ class EvaluationAggregator:
                     "time_taken_seconds": 0
                 }
 
+        for session_id, meta in CODING_SESSION_REGISTRY.items():
+
+            email = meta["email"]
+            round_key = meta["round_key"]
+
+            if email not in candidates_map:
+                continue
+
+            if round_key not in candidates_map[email]["rounds"]:
+                pass_threshold = EvaluationService.get_pass_threshold(round_key)
+                candidates_map[email]["rounds"][round_key] = {
+                    "round_label": meta["round_label"],
+                    "correct": 0,
+                    "total": 1,
+                    "attempted": 0,
+                    "percentage": 0,
+                    "pass_threshold": pass_threshold,
+                    "status": "Not Attempted",
+                    "time_taken_seconds": 0
+                }
+
         # -------------------------------
         # 4️⃣ Sort rounds & compute overall
         # -------------------------------
-        ordered_rounds = ["L1", "L2", "L3", "L5", "L6"]
+        ordered_rounds = ["L1", "L2", "L3", "L4", "L5", "L6"]
 
         final_list = []
 

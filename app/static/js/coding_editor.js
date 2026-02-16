@@ -17,6 +17,7 @@
     const saveUrl        = view.dataset.saveUrl;
     const runUrl         = view.dataset.runUrl;
     const submitUrl      = view.dataset.submitUrl;
+    const completedUrl   = `/coding/completed/${encodeURIComponent(sessionId)}`;
     let remainingSeconds = parseInt(view.dataset.remainingSeconds, 10) || 0;
 
     const textarea       = document.getElementById("codingEditor");
@@ -391,9 +392,16 @@
                 body: JSON.stringify({ code: getCode() }),
             });
 
+            if (resp.redirected && resp.url) {
+                window.location.href = resp.url;
+                return;
+            }
+
             const data = await readJsonResponse(resp, "Could not submit test");
             if (data.redirect_url) {
                 window.location.href = data.redirect_url;
+            } else if (resp.ok) {
+                window.location.href = completedUrl;
             } else {
                 window.location.href = submitUrl;
             }

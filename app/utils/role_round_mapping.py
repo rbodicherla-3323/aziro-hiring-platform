@@ -56,7 +56,7 @@ ROLE_ROUND_MAPPING = {
         "rounds": ["L1", "L2", "L3", "L5"],
         "coding_rounds": ["L4"],
         "coding_language": "c",
-        "allow_domain": False
+        "allow_domain": True
     },
 
     # Staff Engineer - Linux Kernel & Device Driver:
@@ -65,7 +65,7 @@ ROLE_ROUND_MAPPING = {
         "rounds": ["L1", "L2", "L3", "L5"],
         "coding_rounds": ["L4"],
         "coding_language": "c",
-        "allow_domain": False
+        "allow_domain": True
     },
 
     # Systems Architect (C++ Based):
@@ -74,7 +74,7 @@ ROLE_ROUND_MAPPING = {
         "rounds": ["L1", "L2", "L3", "L5"],
         "coding_rounds": ["L4"],
         "coding_language": "cpp",
-        "allow_domain": False
+        "allow_domain": True
     },
 }
 
