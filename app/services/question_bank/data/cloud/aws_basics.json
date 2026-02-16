@@ -2,10 +2,10 @@
   {
     "question": "A startup is running a stateless web application on a single EC2 instance with an attached EBS volume. Traffic has grown 10x in the last month and the instance frequently maxes out CPU. What is the most scalable and cost-effective architecture migration?",
     "options": [
-      "Upgrade to the largest EC2 instance type available (vertical scaling)",
-      "Move to an Auto Scaling Group behind an Application Load Balancer, store sessions in ElastiCache or DynamoDB, and serve static assets from S3+CloudFront — enabling horizontal scaling based on CPU/request metrics",
+      "Switch to a single larger RDS instance",
       "Add more EBS volumes to increase I/O performance",
-      "Switch to a single larger RDS instance"
+      "Upgrade to the largest EC2 instance type available (vertical scaling)",
+      "Move to an Auto Scaling Group behind an Application Load Balancer, store sessions in ElastiCache or DynamoDB, and serve static assets from S3+CloudFront — enabling horizontal scaling based on CPU/request metrics"
     ],
     "correct_answer": "Move to an Auto Scaling Group behind an Application Load Balancer, store sessions in ElastiCache or DynamoDB, and serve static assets from S3+CloudFront — enabling horizontal scaling based on CPU/request metrics",
     "topic": "Architecture & Scalability"
@@ -13,10 +13,10 @@
   {
     "question": "Your application uses an RDS PostgreSQL Multi-AZ deployment. During a failover event, your application experienced 3 minutes of downtime because DNS propagation was slow and connection pools held stale connections. How can you minimize failover impact?",
     "options": [
-      "Switch to a Single-AZ deployment to avoid failover issues",
       "Use RDS Proxy for connection pooling (handles failover transparently), reduce DNS TTL, implement connection retry logic with exponential backoff, and use the RDS endpoint (not IP) — RDS Proxy pins connections and redirects to the new primary automatically",
       "Manually update the application configuration with the new IP after failover",
-      "Use a read replica instead of Multi-AZ"
+      "Use a read replica instead of Multi-AZ",
+      "Switch to a Single-AZ deployment to avoid failover issues"
     ],
     "correct_answer": "Use RDS Proxy for connection pooling (handles failover transparently), reduce DNS TTL, implement connection retry logic with exponential backoff, and use the RDS endpoint (not IP) — RDS Proxy pins connections and redirects to the new primary automatically",
     "topic": "Databases & Storage"
@@ -24,10 +24,10 @@
   {
     "question": "You need to design a DynamoDB table for an e-commerce application with access patterns: get orders by customer_id, get orders by order_date range, and get order details by order_id. What is the optimal key design?",
     "options": [
-      "Use order_id as partition key only; scan and filter for other access patterns",
-      "Partition key: customer_id, Sort key: order_date (composite); create a GSI with partition key: order_id for direct lookups — this supports all three access patterns efficiently without table scans",
       "Use a single attribute 'data' as partition key and store all queries in application code",
-      "Create three separate DynamoDB tables, one for each access pattern"
+      "Use order_id as partition key only; scan and filter for other access patterns",
+      "Create three separate DynamoDB tables, one for each access pattern",
+      "Partition key: customer_id, Sort key: order_date (composite); create a GSI with partition key: order_id for direct lookups — this supports all three access patterns efficiently without table scans"
     ],
     "correct_answer": "Partition key: customer_id, Sort key: order_date (composite); create a GSI with partition key: order_id for direct lookups — this supports all three access patterns efficiently without table scans",
     "topic": "Databases & Storage"
@@ -35,10 +35,10 @@
   {
     "question": "Your DynamoDB table is experiencing throttling on a specific partition key ('hot partition'). The table has 10,000 WCU provisioned but certain items receive 80% of writes. What strategies can help?",
     "options": [
-      "Increase the provisioned WCU to 100,000",
-      "Implement write sharding by appending a random suffix to the partition key (e.g., customer_id#shard_N), use DynamoDB Adaptive Capacity, consider switching to on-demand capacity mode, or redesign the key to distribute writes more evenly",
       "Add a GSI to absorb the extra writes",
-      "Enable DynamoDB Streams to buffer writes"
+      "Implement write sharding by appending a random suffix to the partition key (e.g., customer_id#shard_N), use DynamoDB Adaptive Capacity, consider switching to on-demand capacity mode, or redesign the key to distribute writes more evenly",
+      "Enable DynamoDB Streams to buffer writes",
+      "Increase the provisioned WCU to 100,000"
     ],
     "correct_answer": "Implement write sharding by appending a random suffix to the partition key (e.g., customer_id#shard_N), use DynamoDB Adaptive Capacity, consider switching to on-demand capacity mode, or redesign the key to distribute writes more evenly",
     "topic": "Databases & Storage"
@@ -47,9 +47,9 @@
     "question": "A Lambda function processes S3 events but occasionally executes twice for the same event, causing duplicate records in the database. Why does this happen and how do you fix it?",
     "options": [
       "Lambda guarantees exactly-once execution; this is impossible",
+      "Use S3 versioning to prevent duplicate events",
       "S3 event notifications provide at-least-once delivery, and Lambda may retry on transient failures — implement idempotency using a unique event ID stored in DynamoDB with a conditional write (PutItem with condition_expression) to detect and skip duplicates",
-      "Increase Lambda timeout to prevent retries",
-      "Use S3 versioning to prevent duplicate events"
+      "Increase Lambda timeout to prevent retries"
     ],
     "correct_answer": "S3 event notifications provide at-least-once delivery, and Lambda may retry on transient failures — implement idempotency using a unique event ID stored in DynamoDB with a conditional write (PutItem with condition_expression) to detect and skip duplicates",
     "topic": "Serverless & Event-Driven"
@@ -57,10 +57,10 @@
   {
     "question": "Your Lambda function connects to an RDS database inside a VPC. Cold starts take 8-12 seconds due to ENI attachment. What are the best approaches to reduce cold start latency?",
     "options": [
-      "Move the database outside the VPC",
+      "Use longer function timeouts",
       "Use RDS Proxy (eliminates per-function DB connections), enable Provisioned Concurrency for critical functions, use Lambda SnapStart (for Java), minimize deployment package size, and keep functions warm with scheduled invocations",
       "Increase Lambda memory to 10GB",
-      "Use longer function timeouts"
+      "Move the database outside the VPC"
     ],
     "correct_answer": "Use RDS Proxy (eliminates per-function DB connections), enable Provisioned Concurrency for critical functions, use Lambda SnapStart (for Java), minimize deployment package size, and keep functions warm with scheduled invocations",
     "topic": "Serverless & Event-Driven"
@@ -68,10 +68,10 @@
   {
     "question": "You're designing a multi-account AWS organization with separate accounts for dev, staging, prod, and shared services. How should you set up cross-account access for developers who need to deploy to staging?",
     "options": [
-      "Create IAM users in each account with the same credentials",
-      "Use IAM roles with cross-account trust policies — create a deployment role in the staging account that trusts the dev account, and use STS AssumeRole; manage through AWS Organizations SCPs to enforce guardrails",
       "Share root account credentials across teams",
-      "Use the same AWS account for all environments with tag-based separation"
+      "Use the same AWS account for all environments with tag-based separation",
+      "Use IAM roles with cross-account trust policies — create a deployment role in the staging account that trusts the dev account, and use STS AssumeRole; manage through AWS Organizations SCPs to enforce guardrails",
+      "Create IAM users in each account with the same credentials"
     ],
     "correct_answer": "Use IAM roles with cross-account trust policies — create a deployment role in the staging account that trusts the dev account, and use STS AssumeRole; manage through AWS Organizations SCPs to enforce guardrails",
     "topic": "IAM & Security"
@@ -79,10 +79,10 @@
   {
     "question": "An IAM policy has an explicit Deny for 's3:DeleteObject' on a bucket, but the user's group policy has an explicit Allow for 's3:*' on the same bucket. Can the user delete objects?",
     "options": [
-      "Yes, the Allow in the group policy overrides the Deny",
       "No — an explicit Deny always overrides any Allow in AWS IAM policy evaluation; the user cannot delete objects regardless of other Allow statements",
       "It depends on which policy was created first",
-      "The policies cancel each other out, defaulting to the AWS account root behavior"
+      "The policies cancel each other out, defaulting to the AWS account root behavior",
+      "Yes, the Allow in the group policy overrides the Deny"
     ],
     "correct_answer": "No — an explicit Deny always overrides any Allow in AWS IAM policy evaluation; the user cannot delete objects regardless of other Allow statements",
     "topic": "IAM & Security"
@@ -90,10 +90,10 @@
   {
     "question": "Your company needs to comply with HIPAA. You're storing PHI (Protected Health Information) in S3 and RDS. What encryption and access control measures are required?",
     "options": [
+      "Use S3 public access with password-protected files",
       "S3 default encryption is sufficient for HIPAA compliance",
       "Enable server-side encryption (SSE-KMS with CMK) for S3, encryption at rest and in transit for RDS, use VPC endpoints for S3 access, enable CloudTrail and S3 access logging, restrict access with bucket policies and IAM, enable MFA delete, and sign a BAA (Business Associate Agreement) with AWS",
-      "HIPAA only requires encryption in transit, not at rest",
-      "Use S3 public access with password-protected files"
+      "HIPAA only requires encryption in transit, not at rest"
     ],
     "correct_answer": "Enable server-side encryption (SSE-KMS with CMK) for S3, encryption at rest and in transit for RDS, use VPC endpoints for S3 access, enable CloudTrail and S3 access logging, restrict access with bucket policies and IAM, enable MFA delete, and sign a BAA (Business Associate Agreement) with AWS",
     "topic": "IAM & Security"
@@ -101,10 +101,10 @@
   {
     "question": "You need to set up a VPC with public and private subnets across 3 AZs. Web servers are in public subnets, application servers in private subnets need to download patches from the internet. What is the correct networking setup?",
     "options": [
-      "Put all instances in public subnets with security groups",
       "Public subnets have route to Internet Gateway; private subnets route outbound traffic through a NAT Gateway (placed in a public subnet) — each AZ should have its own NAT Gateway for high availability; use NACLs and security groups for defense in depth",
-      "Use a VPN connection for all internet access",
-      "Private subnets don't need internet access; use VPC endpoints for everything"
+      "Private subnets don't need internet access; use VPC endpoints for everything",
+      "Put all instances in public subnets with security groups",
+      "Use a VPN connection for all internet access"
     ],
     "correct_answer": "Public subnets have route to Internet Gateway; private subnets route outbound traffic through a NAT Gateway (placed in a public subnet) — each AZ should have its own NAT Gateway for high availability; use NACLs and security groups for defense in depth",
     "topic": "Networking & VPC"
@@ -112,10 +112,10 @@
   {
     "question": "Your application in VPC-A (10.0.0.0/16) needs to access a database in VPC-B (172.16.0.0/16) in a different AWS account. What are the options and their trade-offs?",
     "options": [
-      "Use public IP addresses for both VPCs",
       "VPC Peering (free, low latency, but not transitive); AWS Transit Gateway (scalable hub-and-spoke, supports transitive routing, but costs more); or PrivateLink (for specific service endpoints, most restrictive but most secure) — VPC peering for simple two-VPC connectivity, Transit Gateway for multiple VPCs",
+      "Merge both VPCs into a single large VPC",
       "Use S3 as an intermediary to transfer data between VPCs",
-      "Merge both VPCs into a single large VPC"
+      "Use public IP addresses for both VPCs"
     ],
     "correct_answer": "VPC Peering (free, low latency, but not transitive); AWS Transit Gateway (scalable hub-and-spoke, supports transitive routing, but costs more); or PrivateLink (for specific service endpoints, most restrictive but most secure) — VPC peering for simple two-VPC connectivity, Transit Gateway for multiple VPCs",
     "topic": "Networking & VPC"
@@ -123,10 +123,10 @@
   {
     "question": "An ECS Fargate service behind an ALB is experiencing intermittent 502 Bad Gateway errors. The application logs show no errors. What should you investigate?",
     "options": [
-      "The ALB is misconfigured and should be replaced with NLB",
-      "Check ALB target group health checks (containers may be failing health checks before being fully ready), verify the container's health check path returns 200, check deregistration delay settings, ensure the container doesn't exit before draining completes, and examine ALB access logs for timing patterns",
+      "Increase the ECS task CPU to maximum",
       "502 errors always indicate a DNS issue",
-      "Increase the ECS task CPU to maximum"
+      "Check ALB target group health checks (containers may be failing health checks before being fully ready), verify the container's health check path returns 200, check deregistration delay settings, ensure the container doesn't exit before draining completes, and examine ALB access logs for timing patterns",
+      "The ALB is misconfigured and should be replaced with NLB"
     ],
     "correct_answer": "Check ALB target group health checks (containers may be failing health checks before being fully ready), verify the container's health check path returns 200, check deregistration delay settings, ensure the container doesn't exit before draining completes, and examine ALB access logs for timing patterns",
     "topic": "Compute & Containers"
@@ -134,10 +134,10 @@
   {
     "question": "You're choosing between ECS Fargate and EKS for running containerized microservices. What are the key differences that should influence your decision?",
     "options": [
-      "ECS and EKS are identical services with different names",
-      "ECS Fargate is serverless (no cluster management), simpler to operate, tightly integrated with AWS services, and good for AWS-native teams; EKS provides full Kubernetes (portable, rich ecosystem, complex), better for multi-cloud strategies or teams with Kubernetes expertise — cost and operational complexity are higher with EKS",
+      "ECS Fargate cannot auto-scale; EKS can",
       "EKS only supports Java applications",
-      "ECS Fargate cannot auto-scale; EKS can"
+      "ECS Fargate is serverless (no cluster management), simpler to operate, tightly integrated with AWS services, and good for AWS-native teams; EKS provides full Kubernetes (portable, rich ecosystem, complex), better for multi-cloud strategies or teams with Kubernetes expertise — cost and operational complexity are higher with EKS",
+      "ECS and EKS are identical services with different names"
     ],
     "correct_answer": "ECS Fargate is serverless (no cluster management), simpler to operate, tightly integrated with AWS services, and good for AWS-native teams; EKS provides full Kubernetes (portable, rich ecosystem, complex), better for multi-cloud strategies or teams with Kubernetes expertise — cost and operational complexity are higher with EKS",
     "topic": "Compute & Containers"
@@ -145,10 +145,10 @@
   {
     "question": "Your S3 bucket receives 50,000 PUT requests per second for IoT sensor data with keys like 'sensors/2024/01/15/device-001/data.json'. Recently, you started getting 503 Slow Down errors. What is the issue?",
     "options": [
-      "S3 has a hard limit of 100 requests per second",
+      "Enable S3 Transfer Acceleration",
       "While S3 supports 3,500 PUT/s per prefix, all writes share the 'sensors/' prefix creating a hot partition — add randomness to key prefixes (e.g., hash-based prefixing) to distribute writes across S3's internal partitions, or use date-based prefixes that naturally spread the load",
       "Switch from S3 to EBS for high-throughput writes",
-      "Enable S3 Transfer Acceleration"
+      "S3 has a hard limit of 100 requests per second"
     ],
     "correct_answer": "While S3 supports 3,500 PUT/s per prefix, all writes share the 'sensors/' prefix creating a hot partition — add randomness to key prefixes (e.g., hash-based prefixing) to distribute writes across S3's internal partitions, or use date-based prefixes that naturally spread the load",
     "topic": "Databases & Storage"
@@ -156,9 +156,9 @@
   {
     "question": "Your company's monthly AWS bill jumped from $50,000 to $120,000. CloudWatch shows no increase in traffic. What tools and approaches should you use to investigate?",
     "options": [
-      "Just increase the budget and continue",
-      "Use AWS Cost Explorer (filter by service/region/tag), check for unattached EBS volumes/idle NAT Gateways/unused Elastic IPs, review AWS Trusted Advisor cost recommendations, enable Cost Allocation Tags, check for accidental resource provisioning in wrong regions, and review data transfer charges (often hidden cost drivers)",
       "Contact AWS support; only they can explain the bill",
+      "Use AWS Cost Explorer (filter by service/region/tag), check for unattached EBS volumes/idle NAT Gateways/unused Elastic IPs, review AWS Trusted Advisor cost recommendations, enable Cost Allocation Tags, check for accidental resource provisioning in wrong regions, and review data transfer charges (often hidden cost drivers)",
+      "Just increase the budget and continue",
       "Delete all resources and start over"
     ],
     "correct_answer": "Use AWS Cost Explorer (filter by service/region/tag), check for unattached EBS volumes/idle NAT Gateways/unused Elastic IPs, review AWS Trusted Advisor cost recommendations, enable Cost Allocation Tags, check for accidental resource provisioning in wrong regions, and review data transfer charges (often hidden cost drivers)",
@@ -167,10 +167,10 @@
   {
     "question": "A team is using on-demand EC2 instances for a batch processing workload that runs nightly for 4-6 hours and can tolerate interruptions. How can they reduce costs by up to 90%?",
     "options": [
-      "Switch to Reserved Instances for the batch workload",
       "Use Spot Instances with diversified instance types and AZs, implement checkpointing so work can resume after interruption, use Spot Fleet or ASG with mixed instance types, and set a maximum price — Spot provides up to 90% discount for interruption-tolerant workloads",
       "Run the workload on Lambda functions",
-      "Use smaller instance types running 24/7 instead"
+      "Use smaller instance types running 24/7 instead",
+      "Switch to Reserved Instances for the batch workload"
     ],
     "correct_answer": "Use Spot Instances with diversified instance types and AZs, implement checkpointing so work can resume after interruption, use Spot Fleet or ASG with mixed instance types, and set a maximum price — Spot provides up to 90% discount for interruption-tolerant workloads",
     "topic": "Cost Optimization"
@@ -179,9 +179,9 @@
     "question": "You notice your NAT Gateway charges are $2,000/month for a development environment. What is likely causing this and how can you reduce costs?",
     "options": [
       "NAT Gateway has a fixed monthly fee that cannot be reduced",
+      "Use a t2.micro NAT instance instead",
       "NAT Gateway charges per GB of data processed — common culprits: S3/DynamoDB traffic going through NAT instead of VPC Endpoints (Gateway Endpoints are free), ECR image pulls, or excessive logging traffic; add S3 and DynamoDB Gateway VPC Endpoints, use Interface VPC Endpoints for other services, and review traffic flow with VPC Flow Logs",
-      "Replace NAT Gateway with an Internet Gateway",
-      "Use a t2.micro NAT instance instead"
+      "Replace NAT Gateway with an Internet Gateway"
     ],
     "correct_answer": "NAT Gateway charges per GB of data processed — common culprits: S3/DynamoDB traffic going through NAT instead of VPC Endpoints (Gateway Endpoints are free), ECR image pulls, or excessive logging traffic; add S3 and DynamoDB Gateway VPC Endpoints, use Interface VPC Endpoints for other services, and review traffic flow with VPC Flow Logs",
     "topic": "Cost Optimization"
@@ -189,10 +189,10 @@
   {
     "question": "Your application uses SQS standard queues for order processing. Occasionally, orders are processed twice, causing double charges. How do you ensure exactly-once processing?",
     "options": [
-      "SQS Standard queues guarantee exactly-once delivery",
       "Switch to SQS FIFO queues with content-based deduplication (or provide explicit MessageDeduplicationId), implement idempotent consumers using a deduplication table (DynamoDB with conditional writes), and ensure proper visibility timeout configuration to prevent re-delivery during processing",
+      "Use SNS instead of SQS for guaranteed delivery",
       "Increase the message retention period",
-      "Use SNS instead of SQS for guaranteed delivery"
+      "SQS Standard queues guarantee exactly-once delivery"
     ],
     "correct_answer": "Switch to SQS FIFO queues with content-based deduplication (or provide explicit MessageDeduplicationId), implement idempotent consumers using a deduplication table (DynamoDB with conditional writes), and ensure proper visibility timeout configuration to prevent re-delivery during processing",
     "topic": "Serverless & Event-Driven"
@@ -200,9 +200,9 @@
   {
     "question": "You need to design an event-driven architecture where a single order event triggers: inventory update, email notification, analytics recording, and fraud check — all independently. What AWS architecture pattern is best?",
     "options": [
-      "Chain four Lambda functions sequentially",
       "Use SNS fan-out pattern — publish the order event to an SNS topic with SQS subscriptions for each consumer (inventory, email, analytics, fraud); each SQS queue independently processes the event with its own Lambda/service, providing decoupling, independent scaling, and failure isolation",
       "Use a single Lambda function that handles all four tasks",
+      "Chain four Lambda functions sequentially",
       "Store the event in S3 and have each service poll the bucket"
     ],
     "correct_answer": "Use SNS fan-out pattern — publish the order event to an SNS topic with SQS subscriptions for each consumer (inventory, email, analytics, fraud); each SQS queue independently processes the event with its own Lambda/service, providing decoupling, independent scaling, and failure isolation",
@@ -212,9 +212,9 @@
     "question": "A Step Functions workflow orchestrating a payment process needs to handle a scenario where the payment service is temporarily unavailable. What error handling pattern should you implement?",
     "options": [
       "Let the workflow fail and manually retry",
-      "Use Step Functions built-in retry with exponential backoff (Retry field with BackoffRate, MaxAttempts, IntervalSeconds), implement a Catch block that routes failures to a dead-letter queue or compensation workflow, and use the Parallel state with a timeout for the payment step",
       "Set an infinite timeout on the payment step",
-      "Use a cron job to retry failed payments"
+      "Use a cron job to retry failed payments",
+      "Use Step Functions built-in retry with exponential backoff (Retry field with BackoffRate, MaxAttempts, IntervalSeconds), implement a Catch block that routes failures to a dead-letter queue or compensation workflow, and use the Parallel state with a timeout for the payment step"
     ],
     "correct_answer": "Use Step Functions built-in retry with exponential backoff (Retry field with BackoffRate, MaxAttempts, IntervalSeconds), implement a Catch block that routes failures to a dead-letter queue or compensation workflow, and use the Parallel state with a timeout for the payment step",
     "topic": "Serverless & Event-Driven"
@@ -222,8 +222,8 @@
   {
     "question": "Your CloudFront distribution serves a React SPA from S3. After deploying a new version, users still see the old version for up to 24 hours. How do you solve this?",
     "options": [
-      "Delete and recreate the CloudFront distribution",
       "Create a CloudFront invalidation for '/*' after each deployment, or better yet — use content-hashed filenames for assets (e.g., main.a1b2c3.js) with long cache TTLs, and only invalidate index.html (which references the new hashed filenames)",
+      "Delete and recreate the CloudFront distribution",
       "Disable caching on CloudFront entirely",
       "Use Route 53 to force DNS cache refresh"
     ],
@@ -234,9 +234,9 @@
     "question": "You're designing a disaster recovery strategy for a critical application with an RPO of 1 hour and RTO of 15 minutes. The primary region is us-east-1. Which DR strategy meets these requirements?",
     "options": [
       "Backup & Restore (RPO and RTO of hours to days)",
+      "Simply back up to S3 with cross-region replication",
       "Warm Standby — maintain a scaled-down but functional copy of the production environment in us-west-2 with cross-region RDS read replica (promotes to primary), replicated S3 buckets, and pre-configured Auto Scaling that scales up during failover; Route 53 health checks trigger DNS failover",
-      "Pilot Light (RTO would be 30+ minutes to spin up resources)",
-      "Simply back up to S3 with cross-region replication"
+      "Pilot Light (RTO would be 30+ minutes to spin up resources)"
     ],
     "correct_answer": "Warm Standby — maintain a scaled-down but functional copy of the production environment in us-west-2 with cross-region RDS read replica (promotes to primary), replicated S3 buckets, and pre-configured Auto Scaling that scales up during failover; Route 53 health checks trigger DNS failover",
     "topic": "Architecture & Scalability"
@@ -244,10 +244,10 @@
   {
     "question": "You deployed a CloudFormation stack that creates an RDS instance, but the creation failed after 30 minutes due to an invalid parameter. The stack rolled back, but the failed RDS instance took another 20 minutes to delete. How can you improve this experience?",
     "options": [
-      "Always test with large EC2 instances to speed up creation",
       "Use CloudFormation change sets to preview changes before execution, validate templates with 'aws cloudformation validate-template', use shorter resource creation timeouts, implement stack policies to protect critical resources, and test in a sandbox account first with smaller/cheaper resource configurations",
       "Avoid CloudFormation and provision resources manually",
-      "Set DisableRollback=true to keep failed resources for debugging"
+      "Set DisableRollback=true to keep failed resources for debugging",
+      "Always test with large EC2 instances to speed up creation"
     ],
     "correct_answer": "Use CloudFormation change sets to preview changes before execution, validate templates with 'aws cloudformation validate-template', use shorter resource creation timeouts, implement stack policies to protect critical resources, and test in a sandbox account first with smaller/cheaper resource configurations",
     "topic": "Infrastructure as Code"
@@ -255,10 +255,10 @@
   {
     "question": "What is the difference between CloudFormation drift detection and AWS Config rules for infrastructure compliance?",
     "options": [
-      "They are the same feature",
       "CloudFormation drift detection checks if actual resource configurations have diverged from the CloudFormation template definition (point-in-time check); AWS Config continuously monitors resource configurations against compliance rules, maintains a configuration timeline, and can trigger automatic remediation — Config provides continuous monitoring, drift detection is on-demand",
       "Drift detection is for EC2 only; Config is for S3 only",
-      "AWS Config replaces CloudFormation entirely"
+      "AWS Config replaces CloudFormation entirely",
+      "They are the same feature"
     ],
     "correct_answer": "CloudFormation drift detection checks if actual resource configurations have diverged from the CloudFormation template definition (point-in-time check); AWS Config continuously monitors resource configurations against compliance rules, maintains a configuration timeline, and can trigger automatic remediation — Config provides continuous monitoring, drift detection is on-demand",
     "topic": "Infrastructure as Code"
@@ -267,9 +267,9 @@
     "question": "Your CI/CD pipeline deploys to ECS using CodePipeline. A bad deployment caused an outage because all containers were replaced simultaneously. How do you implement a safer deployment strategy?",
     "options": [
       "Deploy to a single container first and test manually",
-      "Implement blue/green deployment using CodeDeploy with ECS (creates new task set, shifts traffic gradually), configure automatic rollback on CloudWatch alarms (5xx rate, latency), set minimum healthy percent to 100% in the ECS service to ensure old tasks remain until new ones are healthy",
       "Use CodeCommit webhooks to notify the team before deploying",
-      "Deploy only on weekends to minimize impact"
+      "Deploy only on weekends to minimize impact",
+      "Implement blue/green deployment using CodeDeploy with ECS (creates new task set, shifts traffic gradually), configure automatic rollback on CloudWatch alarms (5xx rate, latency), set minimum healthy percent to 100% in the ECS service to ensure old tasks remain until new ones are healthy"
     ],
     "correct_answer": "Implement blue/green deployment using CodeDeploy with ECS (creates new task set, shifts traffic gradually), configure automatic rollback on CloudWatch alarms (5xx rate, latency), set minimum healthy percent to 100% in the ECS service to ensure old tasks remain until new ones are healthy",
     "topic": "DevOps & CI/CD"
@@ -277,10 +277,10 @@
   {
     "question": "You need to troubleshoot a Lambda function that processes API Gateway requests. Some requests return 504 (timeout) but the Lambda function logs show execution completed in 2 seconds. Where is the bottleneck?",
     "options": [
+      "Increase the API Gateway throttling limits",
       "Lambda is too slow; increase memory to 10GB",
       "API Gateway has a hard 29-second integration timeout, but the issue might be elsewhere — check API Gateway access logs for timeout details, verify the Lambda function's response format matches API Gateway expectations (status code, headers, body format), and check if the Lambda is in a VPC with slow ENI attachment causing cold start delays exceeding the API Gateway timeout",
-      "The 504 is coming from CloudFront, not API Gateway",
-      "Increase the API Gateway throttling limits"
+      "The 504 is coming from CloudFront, not API Gateway"
     ],
     "correct_answer": "API Gateway has a hard 29-second integration timeout, but the issue might be elsewhere — check API Gateway access logs for timeout details, verify the Lambda function's response format matches API Gateway expectations (status code, headers, body format), and check if the Lambda is in a VPC with slow ENI attachment causing cold start delays exceeding the API Gateway timeout",
     "topic": "Serverless & Event-Driven"
@@ -288,9 +288,9 @@
   {
     "question": "Your application stores sensitive customer data. A security audit requires that all API calls to your AWS account are logged, cannot be tampered with, and are retained for 7 years. How do you implement this?",
     "options": [
+      "Use VPC Flow Logs to capture all API calls",
       "Enable CloudWatch Logs for all services",
       "Enable AWS CloudTrail in all regions with a trail that logs to S3 with SSE-KMS encryption, enable log file validation (digest files for tamper detection), set S3 bucket policy to deny deletion, enable S3 Object Lock (WORM) for compliance retention, and use S3 Lifecycle policies for cost-effective storage tiers",
-      "Use VPC Flow Logs to capture all API calls",
       "Enable AWS X-Ray for all services"
     ],
     "correct_answer": "Enable AWS CloudTrail in all regions with a trail that logs to S3 with SSE-KMS encryption, enable log file validation (digest files for tamper detection), set S3 bucket policy to deny deletion, enable S3 Object Lock (WORM) for compliance retention, and use S3 Lifecycle policies for cost-effective storage tiers",
@@ -299,10 +299,10 @@
   {
     "question": "An EC2 instance in a private subnet needs to access the S3 API. Currently, traffic routes through a NAT Gateway. What is the most cost-effective and secure alternative?",
     "options": [
-      "Move the EC2 instance to a public subnet",
-      "Create an S3 Gateway VPC Endpoint — it's free, keeps traffic within the AWS network (never traverses the internet), supports S3 bucket policies for endpoint-based access control, and eliminates NAT Gateway data processing charges for S3 traffic",
       "Use AWS Direct Connect for S3 access",
-      "Use S3 Transfer Acceleration"
+      "Use S3 Transfer Acceleration",
+      "Move the EC2 instance to a public subnet",
+      "Create an S3 Gateway VPC Endpoint — it's free, keeps traffic within the AWS network (never traverses the internet), supports S3 bucket policies for endpoint-based access control, and eliminates NAT Gateway data processing charges for S3 traffic"
     ],
     "correct_answer": "Create an S3 Gateway VPC Endpoint — it's free, keeps traffic within the AWS network (never traverses the internet), supports S3 bucket policies for endpoint-based access control, and eliminates NAT Gateway data processing charges for S3 traffic",
     "topic": "Networking & VPC"
@@ -311,9 +311,9 @@
     "question": "You have a microservices architecture where Service A needs to call Service B's internal API. Both run on ECS in private subnets. You want to avoid exposing Service B to the internet. What is the best approach?",
     "options": [
       "Use a public ALB with IP whitelisting",
+      "Use public Route 53 DNS with security groups",
       "Use AWS PrivateLink (VPC Endpoint Service) — Service B registers with an NLB, creates a VPC Endpoint Service; Service A accesses it via an Interface VPC Endpoint — traffic stays on the AWS private network, Service B is never exposed publicly, and it works across accounts/VPCs",
-      "Use S3 as a message queue between services",
-      "Use public Route 53 DNS with security groups"
+      "Use S3 as a message queue between services"
     ],
     "correct_answer": "Use AWS PrivateLink (VPC Endpoint Service) — Service B registers with an NLB, creates a VPC Endpoint Service; Service A accesses it via an Interface VPC Endpoint — traffic stays on the AWS private network, Service B is never exposed publicly, and it works across accounts/VPCs",
     "topic": "Networking & VPC"
@@ -321,10 +321,10 @@
   {
     "question": "Your CloudWatch alarm for high CPU on an Auto Scaling Group triggered 10 scale-out events in 5 minutes due to a brief traffic spike, then 10 scale-in events when traffic dropped — causing instance thrashing. How do you prevent this?",
     "options": [
-      "Disable Auto Scaling during traffic spikes",
-      "Implement Auto Scaling cooldown periods (prevent scaling actions during cooldown), use step scaling policies with wider step ranges, add scale-in protection for recently launched instances, use target tracking scaling (more stable), and set a minimum instance count to avoid over-scaling-in",
       "Set the maximum instance count to 1",
-      "Use scheduled scaling instead of dynamic scaling"
+      "Disable Auto Scaling during traffic spikes",
+      "Use scheduled scaling instead of dynamic scaling",
+      "Implement Auto Scaling cooldown periods (prevent scaling actions during cooldown), use step scaling policies with wider step ranges, add scale-in protection for recently launched instances, use target tracking scaling (more stable), and set a minimum instance count to avoid over-scaling-in"
     ],
     "correct_answer": "Implement Auto Scaling cooldown periods (prevent scaling actions during cooldown), use step scaling policies with wider step ranges, add scale-in protection for recently launched instances, use target tracking scaling (more stable), and set a minimum instance count to avoid over-scaling-in",
     "topic": "Compute & Containers"
@@ -332,10 +332,10 @@
   {
     "question": "What is the difference between an Application Load Balancer (ALB) and a Network Load Balancer (NLB)? When would you choose one over the other?",
     "options": [
-      "They are identical; ALB is just the newer version of NLB",
-      "ALB operates at Layer 7 (HTTP/HTTPS) with content-based routing, host/path rules, and WAF integration; NLB operates at Layer 4 (TCP/UDP) with ultra-low latency, static IPs, and millions of requests per second — use ALB for HTTP APIs, NLB for TCP/gaming/IoT/gRPC or when you need static IPs",
       "ALB supports TCP; NLB supports HTTP only",
-      "NLB is always cheaper than ALB"
+      "NLB is always cheaper than ALB",
+      "They are identical; ALB is just the newer version of NLB",
+      "ALB operates at Layer 7 (HTTP/HTTPS) with content-based routing, host/path rules, and WAF integration; NLB operates at Layer 4 (TCP/UDP) with ultra-low latency, static IPs, and millions of requests per second — use ALB for HTTP APIs, NLB for TCP/gaming/IoT/gRPC or when you need static IPs"
     ],
     "correct_answer": "ALB operates at Layer 7 (HTTP/HTTPS) with content-based routing, host/path rules, and WAF integration; NLB operates at Layer 4 (TCP/UDP) with ultra-low latency, static IPs, and millions of requests per second — use ALB for HTTP APIs, NLB for TCP/gaming/IoT/gRPC or when you need static IPs",
     "topic": "Networking & Content Delivery"
@@ -343,9 +343,9 @@
   {
     "question": "A developer accidentally committed AWS access keys to a public GitHub repository. What immediate actions should you take?",
     "options": [
-      "Delete the GitHub commit and the keys will be safe",
-      "Immediately rotate/deactivate the compromised access keys in IAM, check CloudTrail logs for unauthorized API calls during the exposure window, review and revoke any resources created by the compromised keys, enable AWS GuardDuty for ongoing threat detection, and implement secrets management (AWS Secrets Manager/SSM Parameter Store) with automated rotation",
       "Change the AWS account password",
+      "Immediately rotate/deactivate the compromised access keys in IAM, check CloudTrail logs for unauthorized API calls during the exposure window, review and revoke any resources created by the compromised keys, enable AWS GuardDuty for ongoing threat detection, and implement secrets management (AWS Secrets Manager/SSM Parameter Store) with automated rotation",
+      "Delete the GitHub commit and the keys will be safe",
       "Enable MFA on the root account only"
     ],
     "correct_answer": "Immediately rotate/deactivate the compromised access keys in IAM, check CloudTrail logs for unauthorized API calls during the exposure window, review and revoke any resources created by the compromised keys, enable AWS GuardDuty for ongoing threat detection, and implement secrets management (AWS Secrets Manager/SSM Parameter Store) with automated rotation",
@@ -354,10 +354,10 @@
   {
     "question": "What is the difference between S3 Standard, S3 Intelligent-Tiering, S3 Standard-IA, S3 One Zone-IA, and S3 Glacier Deep Archive in terms of use cases and cost?",
     "options": [
-      "They all have the same performance and cost",
-      "Standard: frequently accessed data (highest cost); Intelligent-Tiering: unknown access patterns (auto-moves between tiers); Standard-IA: infrequent access, still instant retrieval (lower storage, higher retrieval cost); One Zone-IA: same but single AZ (cheapest IA, less durable); Glacier Deep Archive: archival (cheapest, 12-48hr retrieval) — choose based on access frequency and retrieval time requirements",
       "Glacier is the only option for compliance",
-      "Standard-IA is more expensive than Standard"
+      "Standard-IA is more expensive than Standard",
+      "They all have the same performance and cost",
+      "Standard: frequently accessed data (highest cost); Intelligent-Tiering: unknown access patterns (auto-moves between tiers); Standard-IA: infrequent access, still instant retrieval (lower storage, higher retrieval cost); One Zone-IA: same but single AZ (cheapest IA, less durable); Glacier Deep Archive: archival (cheapest, 12-48hr retrieval) — choose based on access frequency and retrieval time requirements"
     ],
     "correct_answer": "Standard: frequently accessed data (highest cost); Intelligent-Tiering: unknown access patterns (auto-moves between tiers); Standard-IA: infrequent access, still instant retrieval (lower storage, higher retrieval cost); One Zone-IA: same but single AZ (cheapest IA, less durable); Glacier Deep Archive: archival (cheapest, 12-48hr retrieval) — choose based on access frequency and retrieval time requirements",
     "topic": "Databases & Storage"
@@ -365,9 +365,9 @@
   {
     "question": "You need to migrate a 50TB on-premises Oracle database to AWS with minimal downtime. The database must remain operational during migration. What is the recommended approach?",
     "options": [
-      "Stop the database, take a backup, and restore on RDS",
       "Use AWS Database Migration Service (DMS) with Schema Conversion Tool (SCT) for heterogeneous migration; set up continuous replication from on-premises to RDS/Aurora via DMS CDC (Change Data Capture), validate data consistency, then perform a cutover during a short maintenance window with DNS switch",
       "Use S3 to transfer database files and import manually",
+      "Stop the database, take a backup, and restore on RDS",
       "Use AWS Snowball to ship the database"
     ],
     "correct_answer": "Use AWS Database Migration Service (DMS) with Schema Conversion Tool (SCT) for heterogeneous migration; set up continuous replication from on-premises to RDS/Aurora via DMS CDC (Change Data Capture), validate data consistency, then perform a cutover during a short maintenance window with DNS switch",
@@ -378,8 +378,8 @@
     "options": [
       "Upgrade the primary instance to the largest available",
       "Add more read replicas and use Aurora Reader endpoint for load distribution, enable Aurora Auto Scaling for read replicas based on CPU/connections, implement application-level read/write splitting, use ElastiCache for frequently accessed query results, and review slow query logs to optimize expensive queries",
-      "Switch to DynamoDB for all queries",
-      "Enable Multi-AZ on the primary instance"
+      "Enable Multi-AZ on the primary instance",
+      "Switch to DynamoDB for all queries"
     ],
     "correct_answer": "Add more read replicas and use Aurora Reader endpoint for load distribution, enable Aurora Auto Scaling for read replicas based on CPU/connections, implement application-level read/write splitting, use ElastiCache for frequently accessed query results, and review slow query logs to optimize expensive queries",
     "topic": "Databases & Storage"
@@ -387,9 +387,9 @@
   {
     "question": "You're implementing a CI/CD pipeline with CodePipeline. The pipeline needs to deploy the same artifact to staging first, run integration tests, and only proceed to production if tests pass. How do you structure this?",
     "options": [
-      "Create two separate pipelines — one for staging and one for production",
-      "Use CodePipeline stages: Source → Build (CodeBuild) → Deploy to Staging (CodeDeploy/ECS) → Manual Approval + Automated Test stage (CodeBuild running integration tests) → Deploy to Production; use CodePipeline artifact passing to ensure the exact same build artifact reaches production",
       "Deploy directly to production and run tests there",
+      "Use CodePipeline stages: Source → Build (CodeBuild) → Deploy to Staging (CodeDeploy/ECS) → Manual Approval + Automated Test stage (CodeBuild running integration tests) → Deploy to Production; use CodePipeline artifact passing to ensure the exact same build artifact reaches production",
+      "Create two separate pipelines — one for staging and one for production",
       "Use cron jobs to trigger deployments after tests"
     ],
     "correct_answer": "Use CodePipeline stages: Source → Build (CodeBuild) → Deploy to Staging (CodeDeploy/ECS) → Manual Approval + Automated Test stage (CodeBuild running integration tests) → Deploy to Production; use CodePipeline artifact passing to ensure the exact same build artifact reaches production",
@@ -398,10 +398,10 @@
   {
     "question": "Your application needs to process 100,000 messages per second from IoT devices. Messages must be processed in order per device (but not globally) and stored for replay. What AWS service architecture is best?",
     "options": [
-      "Use SQS Standard queue with a single consumer",
-      "Use Amazon Kinesis Data Streams with the device ID as the partition key (ensures per-device ordering), Lambda or KCL consumers for processing, and configure appropriate shard count (~100 shards at 1,000 records/shard/sec); Kinesis retains data for 24hrs-365 days for replay",
       "Use SNS topics with one topic per device",
-      "Use S3 event notifications for message processing"
+      "Use SQS Standard queue with a single consumer",
+      "Use S3 event notifications for message processing",
+      "Use Amazon Kinesis Data Streams with the device ID as the partition key (ensures per-device ordering), Lambda or KCL consumers for processing, and configure appropriate shard count (~100 shards at 1,000 records/shard/sec); Kinesis retains data for 24hrs-365 days for replay"
     ],
     "correct_answer": "Use Amazon Kinesis Data Streams with the device ID as the partition key (ensures per-device ordering), Lambda or KCL consumers for processing, and configure appropriate shard count (~100 shards at 1,000 records/shard/sec); Kinesis retains data for 24hrs-365 days for replay",
     "topic": "Serverless & Event-Driven"
@@ -411,8 +411,8 @@
     "options": [
       "They are the same thing at different levels",
       "Security Groups are stateful (return traffic auto-allowed), operate at the instance/ENI level, support only Allow rules; NACLs are stateless (return traffic must be explicitly allowed), operate at the subnet level, support both Allow and Deny rules with numbered priority — use both for defense in depth",
-      "NACLs are stateful; Security Groups are stateless",
-      "Security Groups operate at the subnet level; NACLs at the instance level"
+      "Security Groups operate at the subnet level; NACLs at the instance level",
+      "NACLs are stateful; Security Groups are stateless"
     ],
     "correct_answer": "Security Groups are stateful (return traffic auto-allowed), operate at the instance/ENI level, support only Allow rules; NACLs are stateless (return traffic must be explicitly allowed), operate at the subnet level, support both Allow and Deny rules with numbered priority — use both for defense in depth",
     "topic": "Networking & VPC"
@@ -420,10 +420,10 @@
   {
     "question": "You have a global application serving users from North America, Europe, and Asia. Each region needs low-latency database access. What is the most appropriate multi-region database architecture?",
     "options": [
-      "Use a single RDS instance in us-east-1 for all regions",
-      "Use DynamoDB Global Tables for automatic multi-region replication with local read/write in each region, or Aurora Global Database (one primary write region with read-only secondary regions that can be promoted) — DynamoDB Global Tables for multi-master writes, Aurora Global Database for single-master with read scaling",
       "Replicate data manually using cron jobs between regions",
-      "Use S3 Cross-Region Replication as the database"
+      "Use S3 Cross-Region Replication as the database",
+      "Use DynamoDB Global Tables for automatic multi-region replication with local read/write in each region, or Aurora Global Database (one primary write region with read-only secondary regions that can be promoted) — DynamoDB Global Tables for multi-master writes, Aurora Global Database for single-master with read scaling",
+      "Use a single RDS instance in us-east-1 for all regions"
     ],
     "correct_answer": "Use DynamoDB Global Tables for automatic multi-region replication with local read/write in each region, or Aurora Global Database (one primary write region with read-only secondary regions that can be promoted) — DynamoDB Global Tables for multi-master writes, Aurora Global Database for single-master with read scaling",
     "topic": "Architecture & Scalability"
@@ -431,9 +431,9 @@
   {
     "question": "A production Lambda function that processes payment webhooks is hitting the default concurrency limit. Some webhook events are being throttled and lost. How do you handle this properly?",
     "options": [
+      "Switch to EC2 instances for webhook processing",
       "Request a limit increase and remove all concurrency controls",
       "Set up an SQS queue in front of Lambda as a buffer (SQS triggers Lambda with batching), configure reserved concurrency for the payment function to guarantee capacity, implement a Dead Letter Queue for failed events, use Lambda Destinations for success/failure routing, and request a concurrency limit increase",
-      "Switch to EC2 instances for webhook processing",
       "Add CloudFront in front of the webhook endpoint"
     ],
     "correct_answer": "Set up an SQS queue in front of Lambda as a buffer (SQS triggers Lambda with batching), configure reserved concurrency for the payment function to guarantee capacity, implement a Dead Letter Queue for failed events, use Lambda Destinations for success/failure routing, and request a concurrency limit increase",
@@ -442,9 +442,9 @@
   {
     "question": "Your Terraform state file for production infrastructure is stored in a local file on a developer's laptop. What are the risks and what is the recommended approach?",
     "options": [
-      "Local state is the recommended default for all environments",
       "Risks: state loss if laptop fails, no locking (concurrent modifications corrupt state), no team collaboration, secrets in state are unprotected; use S3 backend with DynamoDB locking table, enable versioning on the S3 bucket, encrypt with KMS, and restrict access via IAM policies",
       "Store the state file in the Git repository",
+      "Local state is the recommended default for all environments",
       "Email the state file to the team after each change"
     ],
     "correct_answer": "Risks: state loss if laptop fails, no locking (concurrent modifications corrupt state), no team collaboration, secrets in state are unprotected; use S3 backend with DynamoDB locking table, enable versioning on the S3 bucket, encrypt with KMS, and restrict access via IAM policies",
@@ -453,10 +453,10 @@
   {
     "question": "You need to implement mutual TLS (mTLS) authentication between microservices running on ECS. What AWS services can help?",
     "options": [
-      "Use IAM roles for all service-to-service authentication",
-      "Use AWS App Mesh (service mesh) with Envoy proxies for automatic mTLS between services, or AWS Certificate Manager Private CA to issue client certificates — App Mesh handles certificate rotation and provides observability; alternatively, use ECS Service Connect with TLS enabled",
       "Use Security Groups to authenticate services",
-      "Use API Keys stored in environment variables"
+      "Use API Keys stored in environment variables",
+      "Use AWS App Mesh (service mesh) with Envoy proxies for automatic mTLS between services, or AWS Certificate Manager Private CA to issue client certificates — App Mesh handles certificate rotation and provides observability; alternatively, use ECS Service Connect with TLS enabled",
+      "Use IAM roles for all service-to-service authentication"
     ],
     "correct_answer": "Use AWS App Mesh (service mesh) with Envoy proxies for automatic mTLS between services, or AWS Certificate Manager Private CA to issue client certificates — App Mesh handles certificate rotation and provides observability; alternatively, use ECS Service Connect with TLS enabled",
     "topic": "Networking & VPC"
@@ -464,9 +464,9 @@
   {
     "question": "Your AWS account has been compromised through a phishing attack. GuardDuty shows unusual API activity from an unknown IP. What is the incident response procedure?",
     "options": [
+      "Only change the root account password",
       "Delete the AWS account and create a new one",
       "Isolate: revoke compromised credentials, apply restrictive SCP/IAM policies; Investigate: analyze CloudTrail logs to scope the blast radius, check for persistence mechanisms (new IAM users/roles/keys, EC2 instances, Lambda functions); Remediate: rotate all credentials, remove unauthorized resources, patch the vulnerability; Recover: restore from known-good backups if needed; Document and improve controls",
-      "Only change the root account password",
       "Wait 24 hours to see if the activity stops"
     ],
     "correct_answer": "Isolate: revoke compromised credentials, apply restrictive SCP/IAM policies; Investigate: analyze CloudTrail logs to scope the blast radius, check for persistence mechanisms (new IAM users/roles/keys, EC2 instances, Lambda functions); Remediate: rotate all credentials, remove unauthorized resources, patch the vulnerability; Recover: restore from known-good backups if needed; Document and improve controls",
@@ -475,10 +475,10 @@
   {
     "question": "Your application runs behind CloudFront and has been hit by a Layer 7 DDoS attack (HTTP flood). Rate limiting in the application is not sufficient. What AWS services can help?",
     "options": [
-      "Increase EC2 instance sizes to absorb the traffic",
       "Use AWS WAF with rate-based rules attached to CloudFront, enable AWS Shield Advanced for DDoS protection with 24/7 DDoS Response Team, implement geo-blocking for suspicious regions, use WAF managed rules for common attack patterns, and configure CloudFront with origin failover",
       "Disable CloudFront and expose the origin directly",
-      "Use Route 53 to block all traffic temporarily"
+      "Use Route 53 to block all traffic temporarily",
+      "Increase EC2 instance sizes to absorb the traffic"
     ],
     "correct_answer": "Use AWS WAF with rate-based rules attached to CloudFront, enable AWS Shield Advanced for DDoS protection with 24/7 DDoS Response Team, implement geo-blocking for suspicious regions, use WAF managed rules for common attack patterns, and configure CloudFront with origin failover",
     "topic": "IAM & Security"
@@ -486,10 +486,10 @@
   {
     "question": "You're using EventBridge to route events from multiple SaaS integrations to different Lambda functions. An event rule stopped matching events after a source application updated its event schema. How can you prevent this?",
     "options": [
-      "EventBridge rules never stop working",
       "Use EventBridge Schema Registry with schema discovery to detect schema changes automatically, implement schema versioning, create CloudWatch alarms on matched event counts (drop detection), use EventBridge Archive and Replay to reprocess missed events, and implement input transformation to normalize event formats",
-      "Use SQS instead of EventBridge",
-      "Manually check event schemas weekly"
+      "EventBridge rules never stop working",
+      "Manually check event schemas weekly",
+      "Use SQS instead of EventBridge"
     ],
     "correct_answer": "Use EventBridge Schema Registry with schema discovery to detect schema changes automatically, implement schema versioning, create CloudWatch alarms on matched event counts (drop detection), use EventBridge Archive and Replay to reprocess missed events, and implement input transformation to normalize event formats",
     "topic": "Serverless & Event-Driven"
@@ -499,8 +499,8 @@
     "options": [
       "Increase the TTL on all session keys",
       "Enable Redis Cluster Mode with multiple shards to distribute data across nodes (horizontal scaling), implement data partitioning by user hash, set appropriate maxmemory-policy (volatile-lru for session data), add read replicas per shard for read scaling, and implement session data compression to reduce memory footprint",
-      "Switch from Redis to Memcached for sessions",
-      "Move sessions to the application server's local memory"
+      "Move sessions to the application server's local memory",
+      "Switch from Redis to Memcached for sessions"
     ],
     "correct_answer": "Enable Redis Cluster Mode with multiple shards to distribute data across nodes (horizontal scaling), implement data partitioning by user hash, set appropriate maxmemory-policy (volatile-lru for session data), add read replicas per shard for read scaling, and implement session data compression to reduce memory footprint",
     "topic": "Databases & Storage"
@@ -509,9 +509,9 @@
     "question": "You're migrating from a monolith to microservices on AWS. During the transition, the monolith and new microservices need to coexist. What is the recommended migration pattern?",
     "options": [
       "Rewrite the entire monolith as microservices in one big bang release",
-      "Use the Strangler Fig pattern — gradually route specific API paths from the monolith to new microservices via ALB path-based routing or API Gateway, keeping the monolith as the default; migrate one bounded context at a time, ensuring data consistency between old and new services during the transition",
+      "Freeze monolith development and only build new features as microservices",
       "Run both systems in parallel with manual data synchronization",
-      "Freeze monolith development and only build new features as microservices"
+      "Use the Strangler Fig pattern — gradually route specific API paths from the monolith to new microservices via ALB path-based routing or API Gateway, keeping the monolith as the default; migrate one bounded context at a time, ensuring data consistency between old and new services during the transition"
     ],
     "correct_answer": "Use the Strangler Fig pattern — gradually route specific API paths from the monolith to new microservices via ALB path-based routing or API Gateway, keeping the monolith as the default; migrate one bounded context at a time, ensuring data consistency between old and new services during the transition",
     "topic": "Architecture & Scalability"
@@ -519,10 +519,10 @@
   {
     "question": "You need to implement distributed tracing across Lambda functions, ECS services, and API Gateway to debug latency issues in a microservices architecture. What should you use?",
     "options": [
+      "Implement custom logging with timestamps",
       "CloudWatch Logs are sufficient for tracing",
-      "Use AWS X-Ray — instrument Lambda functions (enable active tracing), ECS tasks (X-Ray daemon sidecar), and API Gateway (enable tracing); X-Ray creates a service map showing request flow, latency per service, error rates, and bottleneck identification across the distributed system",
       "Use tcpdump on all containers",
-      "Implement custom logging with timestamps"
+      "Use AWS X-Ray — instrument Lambda functions (enable active tracing), ECS tasks (X-Ray daemon sidecar), and API Gateway (enable tracing); X-Ray creates a service map showing request flow, latency per service, error rates, and bottleneck identification across the distributed system"
     ],
     "correct_answer": "Use AWS X-Ray — instrument Lambda functions (enable active tracing), ECS tasks (X-Ray daemon sidecar), and API Gateway (enable tracing); X-Ray creates a service map showing request flow, latency per service, error rates, and bottleneck identification across the distributed system",
     "topic": "Monitoring & Observability"
@@ -530,10 +530,10 @@
   {
     "question": "Your production application suddenly started returning 500 errors. CloudWatch shows the RDS instance has reached its maximum storage capacity. The auto-scaling storage feature was not enabled. What is the immediate fix and long-term prevention?",
     "options": [
-      "Delete the database and create a new one with more storage",
+      "Switch to DynamoDB which has unlimited storage",
       "Immediately modify the RDS instance to increase allocated storage (can be done without downtime for most engines); long-term: enable RDS Storage Autoscaling with a maximum storage threshold, set CloudWatch alarms on FreeStorageSpace metric, implement log rotation, and review data retention policies",
       "Restore from the latest snapshot to a new instance",
-      "Switch to DynamoDB which has unlimited storage"
+      "Delete the database and create a new one with more storage"
     ],
     "correct_answer": "Immediately modify the RDS instance to increase allocated storage (can be done without downtime for most engines); long-term: enable RDS Storage Autoscaling with a maximum storage threshold, set CloudWatch alarms on FreeStorageSpace metric, implement log rotation, and review data retention policies",
     "topic": "Databases & Storage"
@@ -541,10 +541,10 @@
   {
     "question": "What is the AWS Well-Architected Framework's definition of the 'Reliability' pillar, and what are its key design principles?",
     "options": [
-      "Reliability means the application never has bugs",
+      "Reliability means using the most expensive instance types",
       "Reliability ensures a workload performs its intended function correctly and consistently — key principles: automatically recover from failure, test recovery procedures, scale horizontally, stop guessing capacity, and manage change through automation; implemented via multi-AZ deployments, auto-scaling, health checks, and chaos engineering",
-      "Reliability only applies to database systems",
-      "Reliability means using the most expensive instance types"
+      "Reliability means the application never has bugs",
+      "Reliability only applies to database systems"
     ],
     "correct_answer": "Reliability ensures a workload performs its intended function correctly and consistently — key principles: automatically recover from failure, test recovery procedures, scale horizontally, stop guessing capacity, and manage change through automation; implemented via multi-AZ deployments, auto-scaling, health checks, and chaos engineering",
     "topic": "Architecture & Scalability"
@@ -552,10 +552,10 @@
   {
     "question": "Your Lambda function triggered by API Gateway needs to access secrets stored in AWS Secrets Manager. What is the most efficient way to retrieve secrets without adding latency to every request?",
     "options": [
-      "Hardcode the secrets in environment variables",
       "Retrieve secrets during Lambda initialization (outside the handler function) so they're cached across warm invocations, use the AWS Parameters and Secrets Lambda Extension (caches and auto-refreshes), or implement in-memory caching with a TTL — avoid calling Secrets Manager on every invocation",
-      "Store secrets in a DynamoDB table for faster access",
-      "Use S3 to store secrets as text files"
+      "Hardcode the secrets in environment variables",
+      "Use S3 to store secrets as text files",
+      "Store secrets in a DynamoDB table for faster access"
     ],
     "correct_answer": "Retrieve secrets during Lambda initialization (outside the handler function) so they're cached across warm invocations, use the AWS Parameters and Secrets Lambda Extension (caches and auto-refreshes), or implement in-memory caching with a TTL — avoid calling Secrets Manager on every invocation",
     "topic": "Serverless & Event-Driven"
@@ -563,10 +563,10 @@
   {
     "question": "You need to enable cross-region replication for an S3 bucket. After enabling it, only new objects are replicated. How do you replicate existing objects?",
     "options": [
-      "Cross-region replication automatically replicates all existing objects",
-      "Use S3 Batch Replication (via S3 Batch Operations) to replicate existing objects — CRR only applies to new objects uploaded after the rule is enabled; Batch Replication can be initiated from the replication configuration and handles retry logic for failed replications",
+      "Use AWS DataSync to copy existing objects once",
       "Delete and re-upload all existing objects",
-      "Use AWS DataSync to copy existing objects once"
+      "Cross-region replication automatically replicates all existing objects",
+      "Use S3 Batch Replication (via S3 Batch Operations) to replicate existing objects — CRR only applies to new objects uploaded after the rule is enabled; Batch Replication can be initiated from the replication configuration and handles retry logic for failed replications"
     ],
     "correct_answer": "Use S3 Batch Replication (via S3 Batch Operations) to replicate existing objects — CRR only applies to new objects uploaded after the rule is enabled; Batch Replication can be initiated from the replication configuration and handles retry logic for failed replications",
     "topic": "Databases & Storage"
@@ -574,10 +574,10 @@
   {
     "question": "What is the key difference between Amazon Cognito User Pools and Identity Pools (Federated Identities)?",
     "options": [
-      "They are the same service with different names",
-      "User Pools handle user authentication (sign-up, sign-in, tokens, MFA) — like a user directory; Identity Pools provide temporary AWS credentials for accessing AWS services (S3, DynamoDB) by exchanging tokens from User Pools or external IdPs (Google, Facebook) for IAM role credentials — they're often used together",
       "User Pools are for mobile apps; Identity Pools are for web apps",
-      "Identity Pools replace IAM entirely"
+      "They are the same service with different names",
+      "Identity Pools replace IAM entirely",
+      "User Pools handle user authentication (sign-up, sign-in, tokens, MFA) — like a user directory; Identity Pools provide temporary AWS credentials for accessing AWS services (S3, DynamoDB) by exchanging tokens from User Pools or external IdPs (Google, Facebook) for IAM role credentials — they're often used together"
     ],
     "correct_answer": "User Pools handle user authentication (sign-up, sign-in, tokens, MFA) — like a user directory; Identity Pools provide temporary AWS credentials for accessing AWS services (S3, DynamoDB) by exchanging tokens from User Pools or external IdPs (Google, Facebook) for IAM role credentials — they're often used together",
     "topic": "IAM & Security"
@@ -585,9 +585,9 @@
   {
     "question": "Your ECS service has a task definition requesting 2 vCPU and 4GB memory, but the application inside the container only uses 0.5 vCPU and 1GB on average. What is the cost implication and how do you right-size?",
     "options": [
-      "Over-provisioning has no cost impact on Fargate",
-      "Fargate charges based on requested (not used) vCPU and memory — you're paying 4x more than needed; use CloudWatch Container Insights to monitor actual CPU/memory utilization, reduce task definition resources to match actual usage with headroom (e.g., 1 vCPU, 2GB), and use AWS Compute Optimizer for recommendations",
       "Fargate always uses the minimum required resources automatically",
+      "Fargate charges based on requested (not used) vCPU and memory — you're paying 4x more than needed; use CloudWatch Container Insights to monitor actual CPU/memory utilization, reduce task definition resources to match actual usage with headroom (e.g., 1 vCPU, 2GB), and use AWS Compute Optimizer for recommendations",
+      "Over-provisioning has no cost impact on Fargate",
       "You can only change task resources by creating a new ECS cluster"
     ],
     "correct_answer": "Fargate charges based on requested (not used) vCPU and memory — you're paying 4x more than needed; use CloudWatch Container Insights to monitor actual CPU/memory utilization, reduce task definition resources to match actual usage with headroom (e.g., 1 vCPU, 2GB), and use AWS Compute Optimizer for recommendations",
@@ -596,10 +596,10 @@
   {
     "question": "You're designing an API that must handle 50,000 requests per second with sub-10ms latency. The data is read-heavy (95% reads) with simple key-value lookups. Which AWS database service is most appropriate?",
     "options": [
-      "RDS PostgreSQL with read replicas",
-      "DynamoDB with DynamoDB Accelerator (DAX) — DAX provides a fully managed in-memory cache with microsecond read latency for DynamoDB; DynamoDB handles the throughput with on-demand or provisioned capacity, and DAX caches hot reads for sub-millisecond response times",
+      "ElastiCache Redis standalone",
       "Aurora Serverless v2",
-      "ElastiCache Redis standalone"
+      "RDS PostgreSQL with read replicas",
+      "DynamoDB with DynamoDB Accelerator (DAX) — DAX provides a fully managed in-memory cache with microsecond read latency for DynamoDB; DynamoDB handles the throughput with on-demand or provisioned capacity, and DAX caches hot reads for sub-millisecond response times"
     ],
     "correct_answer": "DynamoDB with DynamoDB Accelerator (DAX) — DAX provides a fully managed in-memory cache with microsecond read latency for DynamoDB; DynamoDB handles the throughput with on-demand or provisioned capacity, and DAX caches hot reads for sub-millisecond response times",
     "topic": "Databases & Storage"
@@ -607,8 +607,8 @@
   {
     "question": "Your team uses separate AWS accounts for dev, staging, and production. A CloudFormation template works in dev but fails in production with 'Access Denied'. The IAM roles appear identical. What should you check?",
     "options": [
-      "CloudFormation templates are account-specific and cannot be reused",
       "Check for Service Control Policies (SCPs) in AWS Organizations that may restrict actions in the production OU, verify the CloudFormation service role has all required permissions, check for resource-based policies (S3 bucket policies, KMS key policies) that reference specific account IDs, and verify regional service availability",
+      "CloudFormation templates are account-specific and cannot be reused",
       "The production account has a different AWS region",
       "Recreate the IAM roles in production by copying from dev"
     ],
@@ -618,10 +618,10 @@
   {
     "question": "What is the difference between Route 53 routing policies: Simple, Weighted, Latency-based, Failover, and Geolocation?",
     "options": [
-      "They all route traffic identically",
       "Simple: single resource, no health checks; Weighted: distribute traffic by percentage (A/B testing); Latency-based: route to region with lowest latency for the user; Failover: active-passive with health checks; Geolocation: route based on user's geographic location (compliance, localization) — choose based on availability, performance, or compliance requirements",
       "They only differ in DNS TTL values",
-      "Weighted is the only policy that supports health checks"
+      "Weighted is the only policy that supports health checks",
+      "They all route traffic identically"
     ],
     "correct_answer": "Simple: single resource, no health checks; Weighted: distribute traffic by percentage (A/B testing); Latency-based: route to region with lowest latency for the user; Failover: active-passive with health checks; Geolocation: route based on user's geographic location (compliance, localization) — choose based on availability, performance, or compliance requirements",
     "topic": "Networking & Content Delivery"
@@ -629,9 +629,9 @@
   {
     "question": "You need to run a one-time data processing job that requires 256 vCPUs and 512GB RAM for 4 hours. What is the most cost-effective AWS service?",
     "options": [
-      "Use a large EC2 on-demand instance",
-      "Use AWS Batch with Spot Instances — Batch automatically provisions the optimal compute resources, manages job queues, and uses Spot Instances for up to 90% cost savings; for a single large job, it handles resource allocation and cleanup automatically",
       "Use Lambda functions chained together",
+      "Use AWS Batch with Spot Instances — Batch automatically provisions the optimal compute resources, manages job queues, and uses Spot Instances for up to 90% cost savings; for a single large job, it handles resource allocation and cleanup automatically",
+      "Use a large EC2 on-demand instance",
       "Use 256 t2.micro instances in parallel"
     ],
     "correct_answer": "Use AWS Batch with Spot Instances — Batch automatically provisions the optimal compute resources, manages job queues, and uses Spot Instances for up to 90% cost savings; for a single large job, it handles resource allocation and cleanup automatically",
@@ -641,9 +641,9 @@
     "question": "What are the key differences between Amazon SQS and Amazon MSK (Managed Kafka) for message processing?",
     "options": [
       "SQS and MSK are interchangeable for all use cases",
-      "SQS is serverless, pay-per-message, simple queue semantics, auto-scaling, and best for decoupling services; MSK provides persistent ordered log streams, consumer groups, high throughput, message replay, and is better for event streaming, real-time analytics, and event sourcing architectures — SQS for task queues, MSK for event streams",
       "SQS supports ordering; MSK does not",
-      "MSK is serverless; SQS requires provisioned capacity"
+      "MSK is serverless; SQS requires provisioned capacity",
+      "SQS is serverless, pay-per-message, simple queue semantics, auto-scaling, and best for decoupling services; MSK provides persistent ordered log streams, consumer groups, high throughput, message replay, and is better for event streaming, real-time analytics, and event sourcing architectures — SQS for task queues, MSK for event streams"
     ],
     "correct_answer": "SQS is serverless, pay-per-message, simple queue semantics, auto-scaling, and best for decoupling services; MSK provides persistent ordered log streams, consumer groups, high throughput, message replay, and is better for event streaming, real-time analytics, and event sourcing architectures — SQS for task queues, MSK for event streams",
     "topic": "Serverless & Event-Driven"
@@ -651,10 +651,10 @@
   {
     "question": "An application uses CloudWatch custom metrics to track business KPIs. Publishing 50 custom metrics every 10 seconds is costing $500/month. How can you reduce costs while maintaining the same monitoring granularity?",
     "options": [
-      "Publish metrics every 1 second instead for better granularity",
-      "Use CloudWatch Embedded Metric Format (EMF) to batch-publish metrics from application logs at lower cost, use metric math instead of separate derived metrics, aggregate metrics before publishing (pre-compute percentiles), and consider using a third-party solution (Prometheus/Grafana) for high-cardinality metrics",
       "Disable all custom metrics and rely on AWS default metrics",
-      "Publish metrics to S3 instead of CloudWatch"
+      "Publish metrics to S3 instead of CloudWatch",
+      "Publish metrics every 1 second instead for better granularity",
+      "Use CloudWatch Embedded Metric Format (EMF) to batch-publish metrics from application logs at lower cost, use metric math instead of separate derived metrics, aggregate metrics before publishing (pre-compute percentiles), and consider using a third-party solution (Prometheus/Grafana) for high-cardinality metrics"
     ],
     "correct_answer": "Use CloudWatch Embedded Metric Format (EMF) to batch-publish metrics from application logs at lower cost, use metric math instead of separate derived metrics, aggregate metrics before publishing (pre-compute percentiles), and consider using a third-party solution (Prometheus/Grafana) for high-cardinality metrics",
     "topic": "Monitoring & Observability"
@@ -662,10 +662,10 @@
   {
     "question": "Your application processes credit card transactions and must be PCI-DSS compliant. You need to store card numbers for recurring billing. What AWS architecture ensures compliance?",
     "options": [
+      "Use RDS encryption and store card numbers directly",
       "Store card numbers in a DynamoDB table with client-side encryption",
       "Use AWS Payment Cryptography or tokenization — never store raw card numbers; use a tokenization service that replaces card data with a non-sensitive token, store tokens in your database; for encryption, use AWS KMS with HSM-backed keys (CloudHSM for dedicated HSMs), implement VPC isolation, enable encryption everywhere, and maintain audit trails via CloudTrail",
-      "Store card numbers in an encrypted S3 bucket",
-      "Use RDS encryption and store card numbers directly"
+      "Store card numbers in an encrypted S3 bucket"
     ],
     "correct_answer": "Use AWS Payment Cryptography or tokenization — never store raw card numbers; use a tokenization service that replaces card data with a non-sensitive token, store tokens in your database; for encryption, use AWS KMS with HSM-backed keys (CloudHSM for dedicated HSMs), implement VPC isolation, enable encryption everywhere, and maintain audit trails via CloudTrail",
     "topic": "IAM & Security"
@@ -673,10 +673,10 @@
   {
     "question": "You're running containerized workloads on EKS and need to automatically scale both pods (application) and nodes (infrastructure) based on demand. What components do you need?",
     "options": [
+      "Use a single large node and scale pods only",
       "Manually add EC2 instances when pods are pending",
-      "Horizontal Pod Autoscaler (HPA) scales pods based on CPU/memory/custom metrics; Karpenter or Cluster Autoscaler scales nodes — Karpenter (preferred) provisions right-sized nodes faster by directly matching pod requirements to instance types, supports Spot and mixed instances, and removes unused nodes automatically",
       "Use Lambda instead of EKS for auto-scaling",
-      "Use a single large node and scale pods only"
+      "Horizontal Pod Autoscaler (HPA) scales pods based on CPU/memory/custom metrics; Karpenter or Cluster Autoscaler scales nodes — Karpenter (preferred) provisions right-sized nodes faster by directly matching pod requirements to instance types, supports Spot and mixed instances, and removes unused nodes automatically"
     ],
     "correct_answer": "Horizontal Pod Autoscaler (HPA) scales pods based on CPU/memory/custom metrics; Karpenter or Cluster Autoscaler scales nodes — Karpenter (preferred) provisions right-sized nodes faster by directly matching pod requirements to instance types, supports Spot and mixed instances, and removes unused nodes automatically",
     "topic": "Compute & Containers"
@@ -684,10 +684,10 @@
   {
     "question": "What is the AWS Shared Responsibility Model, and how does responsibility differ between EC2, RDS, and Lambda?",
     "options": [
-      "AWS is responsible for everything when you use their services",
-      "AWS manages security OF the cloud (physical, network, hypervisor); customer manages security IN the cloud — for EC2: customer manages OS patches, firewall, apps; for RDS: AWS manages OS/engine patching, customer manages access/encryption config; for Lambda: AWS manages everything except function code and IAM — responsibility shifts toward AWS as you move to higher-level services",
       "Customers are responsible for physical data center security",
-      "The model only applies to government cloud regions"
+      "The model only applies to government cloud regions",
+      "AWS is responsible for everything when you use their services",
+      "AWS manages security OF the cloud (physical, network, hypervisor); customer manages security IN the cloud — for EC2: customer manages OS patches, firewall, apps; for RDS: AWS manages OS/engine patching, customer manages access/encryption config; for Lambda: AWS manages everything except function code and IAM — responsibility shifts toward AWS as you move to higher-level services"
     ],
     "correct_answer": "AWS manages security OF the cloud (physical, network, hypervisor); customer manages security IN the cloud — for EC2: customer manages OS patches, firewall, apps; for RDS: AWS manages OS/engine patching, customer manages access/encryption config; for Lambda: AWS manages everything except function code and IAM — responsibility shifts toward AWS as you move to higher-level services",
     "topic": "IAM & Security"
@@ -695,10 +695,10 @@
   {
     "question": "Your data lake on S3 has grown to 500TB. Data analysts are running Athena queries that scan the entire dataset for each query, resulting in high costs and slow queries. How do you optimize?",
     "options": [
-      "Move all data to RDS for faster queries",
       "Partition data in S3 by date/region/type (e.g., s3://bucket/year=2024/month=01/region=us/), convert to columnar format (Parquet/ORC) for column pruning, use AWS Glue Crawler to maintain the data catalog, add partition projection for automatic partition management, and use Athena workgroups with per-query data scan limits",
-      "Use larger Athena query concurrency",
-      "Compress all files to reduce scan costs"
+      "Compress all files to reduce scan costs",
+      "Move all data to RDS for faster queries",
+      "Use larger Athena query concurrency"
     ],
     "correct_answer": "Partition data in S3 by date/region/type (e.g., s3://bucket/year=2024/month=01/region=us/), convert to columnar format (Parquet/ORC) for column pruning, use AWS Glue Crawler to maintain the data catalog, add partition projection for automatic partition management, and use Athena workgroups with per-query data scan limits",
     "topic": "Databases & Storage"
@@ -706,9 +706,9 @@
   {
     "question": "Your CloudFormation stack update is stuck in UPDATE_ROLLBACK_FAILED state. You cannot update, rollback, or delete the stack. What options do you have?",
     "options": [
+      "Create a new AWS account and migrate all resources",
       "Wait indefinitely; CloudFormation will eventually resolve it",
       "Use 'ContinueUpdateRollback' API with resources-to-skip parameter to skip the problematic resources that are preventing rollback, then fix or manually delete those resources; alternatively, contact AWS support for stacks in truly unrecoverable states — prevention: use stack policies and change sets",
-      "Create a new AWS account and migrate all resources",
       "Delete the stack using the AWS CLI force flag"
     ],
     "correct_answer": "Use 'ContinueUpdateRollback' API with resources-to-skip parameter to skip the problematic resources that are preventing rollback, then fix or manually delete those resources; alternatively, contact AWS support for stacks in truly unrecoverable states — prevention: use stack policies and change sets",
@@ -717,10 +717,10 @@
   {
     "question": "You need to implement a real-time notification system that sends push notifications, SMS, and emails when specific events occur. What AWS architecture pattern is most appropriate?",
     "options": [
-      "Use a cron job to check for events every minute",
+      "Use SES for all notification types",
       "EventBridge captures events → triggers Lambda → Lambda formats messages and publishes to SNS with platform-specific endpoints (APNs/FCM for push, SMS, email) — use SNS message filtering to route to appropriate channels based on user preferences, and SQS as DLQ for failed deliveries",
-      "Poll a database table for new events",
-      "Use SES for all notification types"
+      "Use a cron job to check for events every minute",
+      "Poll a database table for new events"
     ],
     "correct_answer": "EventBridge captures events → triggers Lambda → Lambda formats messages and publishes to SNS with platform-specific endpoints (APNs/FCM for push, SMS, email) — use SNS message filtering to route to appropriate channels based on user preferences, and SQS as DLQ for failed deliveries",
     "topic": "Serverless & Event-Driven"
@@ -728,9 +728,9 @@
   {
     "question": "What is the maximum execution duration of an AWS Lambda function, and how should you handle long-running tasks that exceed this limit?",
     "options": [
-      "Lambda has no execution time limit",
-      "Lambda has a 15-minute maximum timeout; for longer tasks: use Step Functions to orchestrate multiple Lambda invocations, offload to ECS/Fargate tasks for hours-long processing, use SQS with visibility timeout for chunked processing, or use AWS Batch for truly long-running compute jobs",
       "Lambda timeout can be extended to 24 hours with a support request",
+      "Lambda has a 15-minute maximum timeout; for longer tasks: use Step Functions to orchestrate multiple Lambda invocations, offload to ECS/Fargate tasks for hours-long processing, use SQS with visibility timeout for chunked processing, or use AWS Batch for truly long-running compute jobs",
+      "Lambda has no execution time limit",
       "Use nested Lambda invocations to chain execution indefinitely"
     ],
     "correct_answer": "Lambda has a 15-minute maximum timeout; for longer tasks: use Step Functions to orchestrate multiple Lambda invocations, offload to ECS/Fargate tasks for hours-long processing, use SQS with visibility timeout for chunked processing, or use AWS Batch for truly long-running compute jobs",
@@ -740,9 +740,9 @@
     "question": "Your application needs to handle a 'flash sale' event where traffic is expected to spike from 1,000 to 100,000 concurrent users within minutes. The architecture uses ALB → ECS Fargate → Aurora. What pre-scaling measures should you take?",
     "options": [
       "Hope that auto-scaling handles it in time",
-      "Pre-warm the ALB (contact AWS or gradually increase traffic), pre-provision Fargate tasks by temporarily increasing minimum task count, pre-scale Aurora with provisioned reader instances, warm ElastiCache with expected hot data, enable Aurora Serverless v2 for auto-scaling, and set aggressive step scaling policies with short cooldowns",
+      "Use only CloudFront caching with no dynamic content",
       "Switch to a static HTML page during the sale",
-      "Use only CloudFront caching with no dynamic content"
+      "Pre-warm the ALB (contact AWS or gradually increase traffic), pre-provision Fargate tasks by temporarily increasing minimum task count, pre-scale Aurora with provisioned reader instances, warm ElastiCache with expected hot data, enable Aurora Serverless v2 for auto-scaling, and set aggressive step scaling policies with short cooldowns"
     ],
     "correct_answer": "Pre-warm the ALB (contact AWS or gradually increase traffic), pre-provision Fargate tasks by temporarily increasing minimum task count, pre-scale Aurora with provisioned reader instances, warm ElastiCache with expected hot data, enable Aurora Serverless v2 for auto-scaling, and set aggressive step scaling policies with short cooldowns",
     "topic": "Architecture & Scalability"

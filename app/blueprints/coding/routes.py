@@ -16,6 +16,8 @@ from flask import render_template, redirect, url_for, request, session, jsonify
 from . import coding_bp
 
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
+from app.services.evaluation_store import EVALUATION_STORE
+from app.services.evaluation_service import EvaluationService
 from .services import CodingSessionService
 
 # -------------------------------------------------
@@ -1217,6 +1219,17 @@ def run_code(session_id):
             if tr.get("time_ms"):
                 output_lines.append(f"  Time:     {tr['time_ms']}ms")
 
+        coding_data = CodingSessionService.get_session_data(session_id)
+        if coding_data is not None:
+            coding_data["latest_run_summary"] = {
+                "passed": total_passed,
+                "total": total,
+                "run_hidden": run_hidden,
+                "time_ms": total_time,
+                "status": "PASS" if total and total_passed == total else "FAIL",
+            }
+            session.modified = True
+
         return jsonify({
             "status": "executed" if total_passed == total else "partial",
             "output": "\n".join(output_lines),
@@ -1260,6 +1273,129 @@ def run_code(session_id):
 # -------------------------------------------------
 # SUBMIT CONFIRMATION
 # -------------------------------------------------
+def _evaluate_and_store_coding_result(session_id):
+    session_meta = CODING_SESSION_REGISTRY.get(session_id)
+    if not session_meta:
+        return
+
+    coding_data = CodingSessionService.get_session_data(session_id) or {}
+    question = coding_data.get("question") or {}
+
+    round_key = session_meta.get("round_key", "L4")
+    round_label = session_meta.get("round_label", "Coding Round")
+    pass_threshold = EvaluationService.get_pass_threshold(round_key)
+
+    code = str(coding_data.get("code") or "")
+    starter_code = str(coding_data.get("starter_code") or "")
+    attempted = 1 if code.strip() and code.strip() != starter_code.strip() else 0
+
+    hidden_tests = question.get("hidden_tests") or []
+    public_tests = question.get("public_tests") or []
+
+    latest_run_summary = coding_data.get("latest_run_summary") or {}
+    if attempted and isinstance(latest_run_summary, dict):
+        try:
+            latest_total = int(latest_run_summary.get("total", 0) or 0)
+            latest_passed = int(latest_run_summary.get("passed", 0) or 0)
+            latest_run_hidden = bool(latest_run_summary.get("run_hidden", False))
+        except (TypeError, ValueError):
+            latest_total = 0
+            latest_passed = 0
+            latest_run_hidden = False
+
+        # If hidden tests exist, use cached run summary only when it came from hidden suite.
+        if latest_total > 0 and (latest_run_hidden or not hidden_tests):
+            percentage = round((latest_passed / latest_total) * 100, 2)
+            status = "PASS" if percentage >= pass_threshold else "FAIL"
+            start_time = int(coding_data.get("start_time", 0) or 0)
+            time_taken = max(0, int(_time.time()) - start_time) if start_time else 0
+
+            result_data = {
+                "candidate_name": session_meta.get("candidate_name", ""),
+                "email": session_meta.get("email", ""),
+                "round_key": round_key,
+                "round_label": round_label,
+                "total_questions": latest_total,
+                "attempted": attempted,
+                "correct": latest_passed,
+                "percentage": percentage,
+                "pass_threshold": pass_threshold,
+                "status": status,
+                "time_taken_seconds": time_taken,
+            }
+            EVALUATION_STORE[session_id] = result_data
+            EvaluationService._persist_result_to_db(session_meta, result_data)
+            return
+
+    language = str(coding_data.get("language") or session_meta.get("language") or "java").lower()
+    test_suite = hidden_tests or public_tests
+
+    total_questions = len(test_suite) if test_suite else 1
+    correct = 0
+    work_dir = None
+
+    if attempted and test_suite:
+        try:
+            work_dir = _create_execution_work_dir()
+            for tc in test_suite:
+                tc_input_values = tc.get("input", []) or []
+                tc_expected_obj = tc.get("expected")
+
+                driver_code = _build_driver_code(
+                    language,
+                    code,
+                    question,
+                    tc_input_values,
+                    tc_expected_obj,
+                )
+
+                success, stdout, stderr, elapsed = _compile_and_run(
+                    language, driver_code, "", work_dir
+                )
+                if not success:
+                    continue
+
+                actual_obj = _parse_candidate_output(stdout)
+                if _outputs_match(tc_expected_obj, actual_obj):
+                    correct += 1
+        except Exception:
+            # Keep evaluation non-blocking for candidate submit flow.
+            correct = 0
+        finally:
+            if work_dir:
+                try:
+                    shutil.rmtree(work_dir, ignore_errors=True)
+                except Exception:
+                    pass
+    elif attempted and not test_suite:
+        # If no test suite is configured, do not block evaluation visibility.
+        correct = 1
+        total_questions = 1
+
+    percentage = round((correct / total_questions) * 100, 2) if total_questions else 0
+    status = "PASS" if attempted and percentage >= pass_threshold else "FAIL"
+
+    start_time = int(coding_data.get("start_time", 0) or 0)
+    time_taken = max(0, int(_time.time()) - start_time) if start_time else 0
+
+    result_data = {
+        "candidate_name": session_meta.get("candidate_name", ""),
+        "email": session_meta.get("email", ""),
+        "round_key": round_key,
+        "round_label": round_label,
+        "total_questions": total_questions,
+        "attempted": attempted,
+        "correct": correct,
+        "percentage": percentage,
+        "pass_threshold": pass_threshold,
+        "status": status,
+        "time_taken_seconds": time_taken,
+    }
+
+    EVALUATION_STORE[session_id] = result_data
+    EvaluationService._persist_result_to_db(session_meta, result_data)
+
+
 @coding_bp.route("/submit/<session_id>", methods=["GET", "POST"])
 def submit(session_id):
     session_meta = CODING_SESSION_REGISTRY.get(session_id)
@@ -1273,6 +1409,11 @@ def submit(session_id):
             CodingSessionService.save_code(session_id, payload["code"])
 
         CodingSessionService.mark_submitted(session_id)
+        try:
+            _evaluate_and_store_coding_result(session_id)
+        except Exception:
+            # Submission must never be blocked by evaluation bookkeeping.
+            pass
 
         # Free cookie space immediately after submission
         session.pop(f"coding_{session_id}", None)

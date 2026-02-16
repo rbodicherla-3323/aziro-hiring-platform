@@ -3,8 +3,8 @@
     "question": "What is a device driver in Linux?",
     "options": [
       "A user application to configure devices",
-      "A piece of kernel code that enables the OS to communicate with a hardware device",
       "A hardware component on the motherboard",
+      "A piece of kernel code that enables the OS to communicate with a hardware device",
       "A graphical interface for device management"
     ],
     "correct_answer": "A piece of kernel code that enables the OS to communicate with a hardware device",
@@ -15,8 +15,8 @@
     "question": "What are the three main types of device drivers in Linux?",
     "options": [
       "Input, Output, and Network",
-      "Character, Block, and Network drivers",
       "PCI, USB, and Serial drivers",
+      "Character, Block, and Network drivers",
       "Kernel, User, and System drivers"
     ],
     "correct_answer": "Character, Block, and Network drivers",
@@ -26,10 +26,10 @@
   {
     "question": "What is a character device driver?",
     "options": [
-      "A driver that handles block-level I/O",
       "A driver that provides sequential, byte-stream access to a device (e.g., serial ports, keyboards)",
+      "A driver for text file processing",
       "A driver for character encoding",
-      "A driver for text file processing"
+      "A driver that handles block-level I/O"
     ],
     "correct_answer": "A driver that provides sequential, byte-stream access to a device (e.g., serial ports, keyboards)",
     "topic": "Character Devices",
@@ -38,10 +38,10 @@
   {
     "question": "What is a block device driver?",
     "options": [
-      "A driver that blocks I/O operations",
       "A driver that provides random-access, fixed-size block I/O (e.g., hard disks, SSDs)",
-      "A driver for blocking network connections",
-      "A driver that prevents device access"
+      "A driver that blocks I/O operations",
+      "A driver that prevents device access",
+      "A driver for blocking network connections"
     ],
     "correct_answer": "A driver that provides random-access, fixed-size block I/O (e.g., hard disks, SSDs)",
     "topic": "Block Devices",
@@ -50,10 +50,10 @@
   {
     "question": "What is the purpose of the 'module_init' and 'module_exit' macros?",
     "options": [
-      "To define global variables",
+      "To handle module errors",
       "To specify the functions called when a kernel module is loaded (init) and unloaded (exit)",
-      "To initialize module parameters",
-      "To handle module errors"
+      "To define global variables",
+      "To initialize module parameters"
     ],
     "correct_answer": "To specify the functions called when a kernel module is loaded (init) and unloaded (exit)",
     "topic": "Kernel Modules",
@@ -62,10 +62,10 @@
   {
     "question": "What is a major number and minor number in Linux device files?",
     "options": [
-      "Major is the file size; minor is the file type",
-      "Major identifies the driver; minor identifies the specific device handled by that driver",
       "Major is the device version; minor is the revision",
-      "Major is for block devices; minor is for character devices"
+      "Major is the file size; minor is the file type",
+      "Major is for block devices; minor is for character devices",
+      "Major identifies the driver; minor identifies the specific device handled by that driver"
     ],
     "correct_answer": "Major identifies the driver; minor identifies the specific device handled by that driver",
     "topic": "Device Files",
@@ -75,9 +75,9 @@
     "question": "What is the 'file_operations' structure in a Linux driver?",
     "options": [
       "A structure for file I/O in user space",
-      "A structure containing function pointers (open, read, write, ioctl, release, etc.) that define driver behavior",
       "A structure for managing file permissions",
-      "A structure for network file operations"
+      "A structure for network file operations",
+      "A structure containing function pointers (open, read, write, ioctl, release, etc.) that define driver behavior"
     ],
     "correct_answer": "A structure containing function pointers (open, read, write, ioctl, release, etc.) that define driver behavior",
     "topic": "Driver Architecture",
@@ -86,9 +86,9 @@
   {
     "question": "What is the 'cdev' structure used for?",
     "options": [
-      "To manage C development tools",
-      "To represent a character device within the kernel's device model",
       "To store compile-time device information",
+      "To represent a character device within the kernel's device model",
+      "To manage C development tools",
       "To handle CD-ROM devices"
     ],
     "correct_answer": "To represent a character device within the kernel's device model",
@@ -98,10 +98,10 @@
   {
     "question": "How do you create a device node in /dev?",
     "options": [
-      "Using 'touch /dev/mydevice'",
-      "Using 'mknod' command or dynamically via udev with device_create()",
       "Using 'mkdir /dev/mydevice'",
-      "Device nodes are created automatically by the compiler"
+      "Device nodes are created automatically by the compiler",
+      "Using 'touch /dev/mydevice'",
+      "Using 'mknod' command or dynamically via udev with device_create()"
     ],
     "correct_answer": "Using 'mknod' command or dynamically via udev with device_create()",
     "topic": "Device Files",
@@ -110,9 +110,9 @@
   {
     "question": "What is the purpose of 'register_chrdev_region' vs 'alloc_chrdev_region'?",
     "options": [
-      "They are the same function",
-      "register_chrdev_region uses a specified major number; alloc_chrdev_region dynamically allocates one",
       "alloc is for allocation; register is for registration with the network stack",
+      "register_chrdev_region uses a specified major number; alloc_chrdev_region dynamically allocates one",
+      "They are the same function",
       "register is deprecated; alloc is the only option"
     ],
     "correct_answer": "register_chrdev_region uses a specified major number; alloc_chrdev_region dynamically allocates one",
@@ -123,9 +123,9 @@
     "question": "What is the purpose of the 'probe' function in a platform driver?",
     "options": [
       "To probe network connections",
-      "Called by the kernel when a matching device is found; initializes the device and allocates resources",
       "To test the driver compilation",
-      "To probe hardware for errors"
+      "To probe hardware for errors",
+      "Called by the kernel when a matching device is found; initializes the device and allocates resources"
     ],
     "correct_answer": "Called by the kernel when a matching device is found; initializes the device and allocates resources",
     "topic": "Platform Drivers",
@@ -134,10 +134,10 @@
   {
     "question": "What is the 'remove' function in a platform driver?",
     "options": [
+      "A function to remove user permissions",
       "A function to remove source files",
-      "Called when the device is detached or the module is unloaded; cleans up resources",
       "A function to remove kernel logs",
-      "A function to remove user permissions"
+      "Called when the device is detached or the module is unloaded; cleans up resources"
     ],
     "correct_answer": "Called when the device is detached or the module is unloaded; cleans up resources",
     "topic": "Platform Drivers",
@@ -146,10 +146,10 @@
   {
     "question": "What is a platform device in Linux?",
     "options": [
-      "A device connected via USB",
       "A device that is directly connected to the CPU bus and described in the device tree or board file (not discoverable like PCI/USB)",
-      "A cross-platform device driver",
-      "A virtual device for testing"
+      "A virtual device for testing",
+      "A device connected via USB",
+      "A cross-platform device driver"
     ],
     "correct_answer": "A device that is directly connected to the CPU bus and described in the device tree or board file (not discoverable like PCI/USB)",
     "topic": "Platform Drivers",
@@ -158,10 +158,10 @@
   {
     "question": "What is the 'of_match_table' in a device driver?",
     "options": [
-      "A table of file offsets",
-      "A table of compatible strings used to match a driver with devices described in the device tree",
+      "A table of memory offsets",
       "A table of kernel modules",
-      "A table of memory offsets"
+      "A table of compatible strings used to match a driver with devices described in the device tree",
+      "A table of file offsets"
     ],
     "correct_answer": "A table of compatible strings used to match a driver with devices described in the device tree",
     "topic": "Device Tree",
@@ -170,10 +170,10 @@
   {
     "question": "What is the purpose of 'ioremap' in a device driver?",
     "options": [
+      "To optimize I/O operations",
       "To remap I/O ports to different numbers",
-      "To map physical device memory (MMIO registers) into the kernel's virtual address space",
       "To remap input/output streams",
-      "To optimize I/O operations"
+      "To map physical device memory (MMIO registers) into the kernel's virtual address space"
     ],
     "correct_answer": "To map physical device memory (MMIO registers) into the kernel's virtual address space",
     "topic": "Memory-Mapped I/O",
@@ -182,10 +182,10 @@
   {
     "question": "What is the difference between MMIO and port I/O?",
     "options": [
-      "They are the same thing",
+      "MMIO is only for network devices",
       "MMIO maps device registers to memory addresses; port I/O uses special CPU instructions (inb/outb) on a separate I/O address space",
       "Port I/O is faster than MMIO",
-      "MMIO is only for network devices"
+      "They are the same thing"
     ],
     "correct_answer": "MMIO maps device registers to memory addresses; port I/O uses special CPU instructions (inb/outb) on a separate I/O address space",
     "topic": "Memory-Mapped I/O",
@@ -194,10 +194,10 @@
   {
     "question": "What is DMA (Direct Memory Access) in the context of device drivers?",
     "options": [
-      "Dynamic Memory Allocation",
-      "A mechanism allowing hardware devices to transfer data directly to/from memory without CPU involvement",
+      "A debug mode for memory access",
       "A type of virtual memory",
-      "A debug mode for memory access"
+      "Dynamic Memory Allocation",
+      "A mechanism allowing hardware devices to transfer data directly to/from memory without CPU involvement"
     ],
     "correct_answer": "A mechanism allowing hardware devices to transfer data directly to/from memory without CPU involvement",
     "topic": "DMA",
@@ -207,8 +207,8 @@
     "question": "What is the difference between coherent and streaming DMA mappings?",
     "options": [
       "They are identical",
-      "Coherent mappings are long-lived and hardware-consistent; streaming mappings are for single transfers and require explicit sync",
       "Streaming is faster and always preferred",
+      "Coherent mappings are long-lived and hardware-consistent; streaming mappings are for single transfers and require explicit sync",
       "Coherent is for network; streaming is for storage"
     ],
     "correct_answer": "Coherent mappings are long-lived and hardware-consistent; streaming mappings are for single transfers and require explicit sync",
@@ -218,10 +218,10 @@
   {
     "question": "What is an interrupt handler (ISR) in a device driver?",
     "options": [
-      "A function that handles user interruptions",
-      "A function registered to handle hardware interrupts from a device, executing in interrupt context",
       "A handler for keyboard shortcuts",
-      "A signal handler in user space"
+      "A function registered to handle hardware interrupts from a device, executing in interrupt context",
+      "A signal handler in user space",
+      "A function that handles user interruptions"
     ],
     "correct_answer": "A function registered to handle hardware interrupts from a device, executing in interrupt context",
     "topic": "Interrupts",
@@ -230,10 +230,10 @@
   {
     "question": "What function is used to register an interrupt handler in the kernel?",
     "options": [
-      "register_interrupt()",
-      "request_irq() or devm_request_irq()",
       "set_irq_handler()",
-      "irq_register()"
+      "irq_register()",
+      "register_interrupt()",
+      "request_irq() or devm_request_irq()"
     ],
     "correct_answer": "request_irq() or devm_request_irq()",
     "topic": "Interrupts",
@@ -242,10 +242,10 @@
   {
     "question": "What does the IRQF_SHARED flag mean when requesting an IRQ?",
     "options": [
+      "The IRQ is shared between top half and bottom half",
       "The IRQ is shared among CPUs",
-      "Multiple devices can share the same IRQ line, and each handler must check if its device generated the interrupt",
       "The IRQ handler is shared between kernel and user space",
-      "The IRQ is shared between top half and bottom half"
+      "Multiple devices can share the same IRQ line, and each handler must check if its device generated the interrupt"
     ],
     "correct_answer": "Multiple devices can share the same IRQ line, and each handler must check if its device generated the interrupt",
     "topic": "Interrupts",
@@ -254,10 +254,10 @@
   {
     "question": "What is a threaded interrupt handler?",
     "options": [
-      "An interrupt handler that creates new threads",
       "An interrupt handler where the top half acknowledges the interrupt and the bottom half runs in a dedicated kernel thread (process context)",
-      "A multi-threaded application handler",
-      "An interrupt handler for multi-core CPUs"
+      "An interrupt handler for multi-core CPUs",
+      "An interrupt handler that creates new threads",
+      "A multi-threaded application handler"
     ],
     "correct_answer": "An interrupt handler where the top half acknowledges the interrupt and the bottom half runs in a dedicated kernel thread (process context)",
     "topic": "Interrupts",
@@ -266,10 +266,10 @@
   {
     "question": "What is the 'devm_' prefix convention in kernel driver APIs?",
     "options": [
-      "Device management prefix",
       "Managed device resource APIs that automatically free resources when the device is removed",
       "Debug-enabled version of the function",
-      "Deprecated version of the function"
+      "Deprecated version of the function",
+      "Device management prefix"
     ],
     "correct_answer": "Managed device resource APIs that automatically free resources when the device is removed",
     "topic": "Driver Architecture",
@@ -278,10 +278,10 @@
   {
     "question": "What is a PCI device driver?",
     "options": [
-      "A driver for serial port devices",
       "A driver that communicates with devices connected via the PCI/PCIe bus (e.g., NICs, GPUs)",
-      "A driver for printer devices",
-      "A parallel computing interface driver"
+      "A driver for serial port devices",
+      "A parallel computing interface driver",
+      "A driver for printer devices"
     ],
     "correct_answer": "A driver that communicates with devices connected via the PCI/PCIe bus (e.g., NICs, GPUs)",
     "topic": "PCI Drivers",
@@ -290,10 +290,10 @@
   {
     "question": "What is the 'pci_driver' structure used for?",
     "options": [
+      "To configure PCI interrupt routing",
       "To define PCI bus configuration",
       "To define a PCI driver with probe/remove callbacks and a device ID table for matching",
-      "To define PCI memory regions",
-      "To configure PCI interrupt routing"
+      "To define PCI memory regions"
     ],
     "correct_answer": "To define a PCI driver with probe/remove callbacks and a device ID table for matching",
     "topic": "PCI Drivers",
@@ -302,10 +302,10 @@
   {
     "question": "How does a PCI driver identify its supported devices?",
     "options": [
-      "By checking the device name string",
       "Using a pci_device_id table containing vendor ID, device ID, and other match fields",
-      "By scanning all PCI slots manually",
-      "By reading the device tree"
+      "By reading the device tree",
+      "By checking the device name string",
+      "By scanning all PCI slots manually"
     ],
     "correct_answer": "Using a pci_device_id table containing vendor ID, device ID, and other match fields",
     "topic": "PCI Drivers",
@@ -314,8 +314,8 @@
   {
     "question": "What is the purpose of 'pci_enable_device' in a PCI driver?",
     "options": [
-      "To power on the PCI slot",
       "To enable the PCI device, turn on its I/O and memory regions, and prepare it for use",
+      "To power on the PCI slot",
       "To enable PCI passthrough",
       "To enable PCI debugging"
     ],
@@ -326,9 +326,9 @@
   {
     "question": "What is the I2C subsystem in Linux?",
     "options": [
-      "A file compression system",
       "A bus framework in the kernel for communicating with I2C devices (sensors, EEPROMs, etc.)",
       "An internet protocol version 2",
+      "A file compression system",
       "An input control interface"
     ],
     "correct_answer": "A bus framework in the kernel for communicating with I2C devices (sensors, EEPROMs, etc.)",
@@ -338,9 +338,9 @@
   {
     "question": "What is the purpose of the 'i2c_driver' and 'i2c_client' structures?",
     "options": [
-      "i2c_driver is for server; i2c_client is for client networking",
-      "i2c_driver defines the driver with probe/remove; i2c_client represents a specific device on the I2C bus",
       "They are identical structures",
+      "i2c_driver defines the driver with probe/remove; i2c_client represents a specific device on the I2C bus",
+      "i2c_driver is for server; i2c_client is for client networking",
       "i2c_client manages the bus; i2c_driver manages the device"
     ],
     "correct_answer": "i2c_driver defines the driver with probe/remove; i2c_client represents a specific device on the I2C bus",
@@ -350,10 +350,10 @@
   {
     "question": "What is the SPI bus and how does it differ from I2C?",
     "options": [
-      "SPI and I2C are identical",
-      "SPI is full-duplex with separate MOSI/MISO lines and uses chip-select; I2C is half-duplex with addressing on a shared bus",
+      "SPI uses fewer wires than I2C",
       "I2C is faster than SPI",
-      "SPI uses fewer wires than I2C"
+      "SPI and I2C are identical",
+      "SPI is full-duplex with separate MOSI/MISO lines and uses chip-select; I2C is half-duplex with addressing on a shared bus"
     ],
     "correct_answer": "SPI is full-duplex with separate MOSI/MISO lines and uses chip-select; I2C is half-duplex with addressing on a shared bus",
     "topic": "SPI Drivers",
@@ -362,10 +362,10 @@
   {
     "question": "What is the purpose of the 'wait_queue' mechanism in device drivers?",
     "options": [
+      "To schedule device shutdown",
       "To queue user requests",
-      "To put processes to sleep until a condition is met (e.g., data available from device)",
       "To queue network packets",
-      "To schedule device shutdown"
+      "To put processes to sleep until a condition is met (e.g., data available from device)"
     ],
     "correct_answer": "To put processes to sleep until a condition is met (e.g., data available from device)",
     "topic": "Driver Mechanisms",
@@ -374,10 +374,10 @@
   {
     "question": "What is polling vs. interrupt-driven I/O in device drivers?",
     "options": [
+      "Polling is always preferred in modern drivers",
       "They are the same approach",
       "Polling repeatedly checks device status (wastes CPU); interrupt-driven lets the device signal when ready",
-      "Interrupt-driven wastes more CPU than polling",
-      "Polling is always preferred in modern drivers"
+      "Interrupt-driven wastes more CPU than polling"
     ],
     "correct_answer": "Polling repeatedly checks device status (wastes CPU); interrupt-driven lets the device signal when ready",
     "topic": "I/O Models",
@@ -386,10 +386,10 @@
   {
     "question": "What is the 'select' / 'poll' mechanism in device drivers?",
     "options": [
-      "A mechanism to select the best driver",
-      "Allows user-space to wait on multiple file descriptors; drivers implement the poll file_operation to support this",
       "A mechanism to poll hardware registers",
-      "A voting mechanism for driver selection"
+      "Allows user-space to wait on multiple file descriptors; drivers implement the poll file_operation to support this",
+      "A voting mechanism for driver selection",
+      "A mechanism to select the best driver"
     ],
     "correct_answer": "Allows user-space to wait on multiple file descriptors; drivers implement the poll file_operation to support this",
     "topic": "Driver Mechanisms",
@@ -398,10 +398,10 @@
   {
     "question": "What is the purpose of 'MODULE_LICENSE' macro?",
     "options": [
-      "To display the license in 'about' dialogs",
+      "To register the module with a license server",
       "To declare the module's license; affects kernel symbol access (GPL modules get full kernel API access)",
       "To encrypt the module",
-      "To register the module with a license server"
+      "To display the license in 'about' dialogs"
     ],
     "correct_answer": "To declare the module's license; affects kernel symbol access (GPL modules get full kernel API access)",
     "topic": "Kernel Modules",
@@ -410,10 +410,10 @@
   {
     "question": "What is the GPIO subsystem in the kernel?",
     "options": [
-      "A graphics processing subsystem",
-      "A framework for requesting, configuring, and controlling General Purpose I/O pins from drivers",
+      "A general protocol operations subsystem",
       "A group policy object subsystem",
-      "A general protocol operations subsystem"
+      "A graphics processing subsystem",
+      "A framework for requesting, configuring, and controlling General Purpose I/O pins from drivers"
     ],
     "correct_answer": "A framework for requesting, configuring, and controlling General Purpose I/O pins from drivers",
     "topic": "GPIO",
@@ -422,9 +422,9 @@
   {
     "question": "What is a kernel oops vs. a kernel panic?",
     "options": [
-      "They are the same thing",
       "An oops is a non-fatal kernel error (system may continue); a panic is fatal and halts the system",
       "A panic is non-fatal; an oops is fatal",
+      "They are the same thing",
       "Oops occurs in user space; panic in kernel space"
     ],
     "correct_answer": "An oops is a non-fatal kernel error (system may continue); a panic is fatal and halts the system",
@@ -434,10 +434,10 @@
   {
     "question": "What is the 'regmap' API used for in device drivers?",
     "options": [
-      "To map kernel regions",
       "A generic API for accessing device registers over different buses (I2C, SPI, MMIO) with caching support",
+      "To manage regular expressions",
       "To register memory mappings",
-      "To manage regular expressions"
+      "To map kernel regions"
     ],
     "correct_answer": "A generic API for accessing device registers over different buses (I2C, SPI, MMIO) with caching support",
     "topic": "Driver APIs",
@@ -446,9 +446,9 @@
   {
     "question": "What is the purpose of the 'debugfs' filesystem?",
     "options": [
-      "To store debug logs permanently",
-      "A RAM-based filesystem for kernel developers to expose debugging information to user space",
       "To debug file system errors",
+      "A RAM-based filesystem for kernel developers to expose debugging information to user space",
+      "To store debug logs permanently",
       "To debug network connections"
     ],
     "correct_answer": "A RAM-based filesystem for kernel developers to expose debugging information to user space",
@@ -458,9 +458,9 @@
   {
     "question": "What is the input subsystem in the Linux kernel?",
     "options": [
-      "A subsystem for importing data",
-      "A framework for handling input devices (keyboard, mouse, touchscreen) with a unified event interface",
       "A subsystem for input validation",
+      "A framework for handling input devices (keyboard, mouse, touchscreen) with a unified event interface",
+      "A subsystem for importing data",
       "A subsystem for serial input processing"
     ],
     "correct_answer": "A framework for handling input devices (keyboard, mouse, touchscreen) with a unified event interface",
@@ -470,9 +470,9 @@
   {
     "question": "What is the purpose of the 'miscdevice' (misc driver) in Linux?",
     "options": [
+      "A driver for error handling",
       "A driver for miscellaneous file operations",
       "A simplified character device framework with a fixed major number (10), reducing boilerplate for simple drivers",
-      "A driver for error handling",
       "A driver for device misconfiguration detection"
     ],
     "correct_answer": "A simplified character device framework with a fixed major number (10), reducing boilerplate for simple drivers",
@@ -482,9 +482,9 @@
   {
     "question": "What is the purpose of 'module_param' macro?",
     "options": [
+      "To parametrize compilation",
       "To define function parameters",
       "To declare module parameters that can be set at load time (via insmod/modprobe) or via sysfs",
-      "To parametrize compilation",
       "To define kernel configuration options"
     ],
     "correct_answer": "To declare module parameters that can be set at load time (via insmod/modprobe) or via sysfs",
@@ -494,10 +494,10 @@
   {
     "question": "What is the USB subsystem's 'URB' (USB Request Block)?",
     "options": [
-      "A USB recovery backup",
+      "A USB reset buffer",
       "A data structure used to communicate with USB devices asynchronously, containing transfer information",
-      "A USB register block",
-      "A USB reset buffer"
+      "A USB recovery backup",
+      "A USB register block"
     ],
     "correct_answer": "A data structure used to communicate with USB devices asynchronously, containing transfer information",
     "topic": "USB Drivers",
@@ -506,10 +506,10 @@
   {
     "question": "What is the difference between user-space and kernel-space device drivers?",
     "options": [
-      "There is no such distinction in Linux",
       "Kernel-space drivers run with full hardware access; user-space drivers (e.g., UIO, VFIO) run in user mode with limited but safer access",
       "User-space drivers are faster",
-      "Kernel-space drivers are written in Python; user-space in C"
+      "Kernel-space drivers are written in Python; user-space in C",
+      "There is no such distinction in Linux"
     ],
     "correct_answer": "Kernel-space drivers run with full hardware access; user-space drivers (e.g., UIO, VFIO) run in user mode with limited but safer access",
     "topic": "Driver Architecture",
@@ -518,10 +518,10 @@
   {
     "question": "What is the 'bus_type' structure in the Linux driver model?",
     "options": [
-      "A data structure for bus scheduling",
-      "A structure representing a bus subsystem (PCI, USB, I2C, etc.) with match and probe logic",
       "A structure for network bus topology",
-      "A data type for bus addresses"
+      "A data type for bus addresses",
+      "A structure representing a bus subsystem (PCI, USB, I2C, etc.) with match and probe logic",
+      "A data structure for bus scheduling"
     ],
     "correct_answer": "A structure representing a bus subsystem (PCI, USB, I2C, etc.) with match and probe logic",
     "topic": "Driver Model",
@@ -531,9 +531,9 @@
     "question": "What is power management (PM) in device drivers?",
     "options": [
       "Managing power supply voltage",
-      "Implementing suspend/resume callbacks so devices can enter low-power states and recover properly",
       "Managing battery percentage",
-      "Controlling CPU frequency"
+      "Controlling CPU frequency",
+      "Implementing suspend/resume callbacks so devices can enter low-power states and recover properly"
     ],
     "correct_answer": "Implementing suspend/resume callbacks so devices can enter low-power states and recover properly",
     "topic": "Power Management",
@@ -542,9 +542,9 @@
   {
     "question": "What is the 'sysfs' interface used for in device drivers?",
     "options": [
-      "To store driver source files",
-      "To expose device attributes as files under /sys, allowing user-space to read/write device properties",
       "To manage system fonts",
+      "To expose device attributes as files under /sys, allowing user-space to read/write device properties",
+      "To store driver source files",
       "To configure system firewalls"
     ],
     "correct_answer": "To expose device attributes as files under /sys, allowing user-space to read/write device properties",
@@ -554,10 +554,10 @@
   {
     "question": "What is the purpose of 'EXPORT_SYMBOL' and 'EXPORT_SYMBOL_GPL'?",
     "options": [
-      "To export data to user space",
       "To make kernel symbols available to other kernel modules; _GPL restricts to GPL-licensed modules only",
+      "To export symbols to shared libraries",
       "To export debug symbols for gdb",
-      "To export symbols to shared libraries"
+      "To export data to user space"
     ],
     "correct_answer": "To make kernel symbols available to other kernel modules; _GPL restricts to GPL-licensed modules only",
     "topic": "Kernel Modules",
@@ -566,10 +566,10 @@
   {
     "question": "What is a network device driver's 'ndo_start_xmit' function?",
     "options": [
-      "A function to start the network daemon",
       "The function called by the kernel to transmit a packet through the network device",
       "A function to initialize the network stack",
-      "A function to start network monitoring"
+      "A function to start network monitoring",
+      "A function to start the network daemon"
     ],
     "correct_answer": "The function called by the kernel to transmit a packet through the network device",
     "topic": "Network Drivers",
@@ -578,20 +578,21 @@
   {
     "question": "What tool is commonly used for tracing and debugging device driver issues?",
     "options": [
-      "Visual Studio debugger",
-      "ftrace, strace, perf, or dynamic debug (dyndbg)",
       "gdb only (user-space debugger)",
+      "ftrace, strace, perf, or dynamic debug (dyndbg)",
+      "Visual Studio debugger",
       "Wireshark"
-    ],    "correct_answer": "ftrace, strace, perf, or dynamic debug (dyndbg)",
+    ],
+    "correct_answer": "ftrace, strace, perf, or dynamic debug (dyndbg)",
     "topic": "Debugging",
     "difficulty": "moderate"
   },
   {
     "question": "What is the purpose of the 'probe' function in a platform driver?",
     "options": [
+      "To send network packets to detect hardware",
       "To unload the driver from memory",
       "To initialize the driver when a matching device is detected by the kernel",
-      "To send network packets to detect hardware",
       "To test if the kernel version is compatible"
     ],
     "correct_answer": "To initialize the driver when a matching device is detected by the kernel",
