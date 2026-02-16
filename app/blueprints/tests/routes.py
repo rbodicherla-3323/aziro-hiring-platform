@@ -9,7 +9,6 @@ from app.utils.role_round_mapping import ROLE_ROUND_MAPPING
 from app.services.generated_tests_store import GENERATED_TESTS
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
-from app.services import db_service
 
 tests_bp = Blueprint("tests", __name__)
 
@@ -131,6 +130,7 @@ def create_test():
             # PERSIST to DB (survives server restarts)
             # -------------------------------------------
             try:
+                from app.services import db_service
                 candidate = db_service.get_or_create_candidate(name, email)
                 db_service.get_or_create_test_session(
                     candidate_id=candidate.id,

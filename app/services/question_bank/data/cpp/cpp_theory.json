@@ -1,0 +1,601 @@
+[
+  {
+    "question": "What is the difference between 'struct' and 'class' in C++?",
+    "options": [
+      "There is no difference",
+      "Members of struct are public by default; members of class are private by default",
+      "Struct cannot have member functions; class can",
+      "Class cannot be inherited; struct can"
+    ],
+    "correct_answer": "Members of struct are public by default; members of class are private by default",
+    "topic": "OOP Basics",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is RAII (Resource Acquisition Is Initialization) in C++?",
+    "options": [
+      "A design pattern for creating singletons",
+      "A principle where resource lifetime is tied to object lifetime – resources are acquired in the constructor and released in the destructor",
+      "A way to initialize arrays at runtime",
+      "An acronym for a C++ compiler optimization"
+    ],
+    "correct_answer": "A principle where resource lifetime is tied to object lifetime – resources are acquired in the constructor and released in the destructor",
+    "topic": "Modern C++",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between 'new' and 'malloc' in C++?",
+    "options": [
+      "They are identical",
+      "new calls the constructor and is type-safe; malloc only allocates raw memory without calling constructors",
+      "malloc is faster than new",
+      "new is only for arrays; malloc is for single objects"
+    ],
+    "correct_answer": "new calls the constructor and is type-safe; malloc only allocates raw memory without calling constructors",
+    "topic": "Memory Management",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What are smart pointers in C++?",
+    "options": [
+      "Pointers that can point to multiple objects",
+      "RAII-based wrapper classes (unique_ptr, shared_ptr, weak_ptr) that automatically manage dynamic memory lifetime",
+      "Pointers with built-in encryption",
+      "Pointers optimized for speed"
+    ],
+    "correct_answer": "RAII-based wrapper classes (unique_ptr, shared_ptr, weak_ptr) that automatically manage dynamic memory lifetime",
+    "topic": "Modern C++",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between 'unique_ptr' and 'shared_ptr'?",
+    "options": [
+      "They are the same",
+      "unique_ptr has exclusive ownership (non-copyable); shared_ptr uses reference counting for shared ownership",
+      "shared_ptr is faster than unique_ptr",
+      "unique_ptr can be copied; shared_ptr cannot"
+    ],
+    "correct_answer": "unique_ptr has exclusive ownership (non-copyable); shared_ptr uses reference counting for shared ownership",
+    "topic": "Modern C++",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is a virtual function in C++?",
+    "options": [
+      "A function that does not exist",
+      "A member function declared with 'virtual' that enables runtime polymorphism through dynamic dispatch",
+      "A function that can only be called from virtual machines",
+      "A function with no implementation"
+    ],
+    "correct_answer": "A member function declared with 'virtual' that enables runtime polymorphism through dynamic dispatch",
+    "topic": "OOP",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is a pure virtual function?",
+    "options": [
+      "A virtual function with no side effects",
+      "A virtual function declared with '= 0', making the class abstract and requiring derived classes to provide an implementation",
+      "A virtual function that is very efficient",
+      "A function that cannot be overridden"
+    ],
+    "correct_answer": "A virtual function declared with '= 0', making the class abstract and requiring derived classes to provide an implementation",
+    "topic": "OOP",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the 'vtable' (virtual table) in C++?",
+    "options": [
+      "A table of variable names",
+      "A compiler-generated table of function pointers used to resolve virtual function calls at runtime",
+      "A table of template parameters",
+      "A lookup table for variable types"
+    ],
+    "correct_answer": "A compiler-generated table of function pointers used to resolve virtual function calls at runtime",
+    "topic": "OOP Internals",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is move semantics in C++11?",
+    "options": [
+      "Moving files in the filesystem",
+      "A mechanism to transfer ownership of resources from one object to another without copying, using rvalue references (&&)",
+      "Moving objects between threads",
+      "A compiler optimization for loop unrolling"
+    ],
+    "correct_answer": "A mechanism to transfer ownership of resources from one object to another without copying, using rvalue references (&&)",
+    "topic": "Modern C++",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between an lvalue and an rvalue in C++?",
+    "options": [
+      "lvalue is a left-side value; rvalue is always a number",
+      "An lvalue has a persistent address (can appear on the left of =); an rvalue is a temporary with no persistent address",
+      "There is no difference in C++",
+      "lvalue is for local variables; rvalue is for remote values"
+    ],
+    "correct_answer": "An lvalue has a persistent address (can appear on the left of =); an rvalue is a temporary with no persistent address",
+    "topic": "Modern C++",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is 'std::move' used for in C++?",
+    "options": [
+      "To physically move data in memory",
+      "To cast an lvalue to an rvalue reference, enabling move semantics",
+      "To move a thread to another CPU core",
+      "To move files between directories"
+    ],
+    "correct_answer": "To cast an lvalue to an rvalue reference, enabling move semantics",
+    "topic": "Modern C++",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is a lambda expression in C++11?",
+    "options": [
+      "A Greek letter used in variable names",
+      "An anonymous function object that can capture variables from its enclosing scope",
+      "A special template syntax",
+      "A type of exception"
+    ],
+    "correct_answer": "An anonymous function object that can capture variables from its enclosing scope",
+    "topic": "Modern C++",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the Rule of Five in C++?",
+    "options": [
+      "A rule about maximum function parameters",
+      "If a class defines any of destructor, copy constructor, copy assignment, move constructor, or move assignment, it should define all five",
+      "A rule about maximum inheritance depth",
+      "A coding style guideline about five spaces of indentation"
+    ],
+    "correct_answer": "If a class defines any of destructor, copy constructor, copy assignment, move constructor, or move assignment, it should define all five",
+    "topic": "OOP",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is 'constexpr' in C++11?",
+    "options": [
+      "A keyword to make variables constant at runtime",
+      "A keyword indicating that a function or variable can be evaluated at compile time",
+      "A keyword for constant expressions in exceptions",
+      "A deprecated keyword"
+    ],
+    "correct_answer": "A keyword indicating that a function or variable can be evaluated at compile time",
+    "topic": "Modern C++",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between 'const' and 'constexpr'?",
+    "options": [
+      "They are identical",
+      "const means the value won't change after initialization; constexpr means the value must be computable at compile time",
+      "constexpr is for functions only; const is for variables only",
+      "const is C++11; constexpr is C++17"
+    ],
+    "correct_answer": "const means the value won't change after initialization; constexpr means the value must be computable at compile time",
+    "topic": "Modern C++",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is template metaprogramming in C++?",
+    "options": [
+      "Using templates to generate HTML",
+      "Using C++ templates to perform computation at compile time rather than runtime",
+      "Programming with metal templates",
+      "Using templates for dynamic typing"
+    ],
+    "correct_answer": "Using C++ templates to perform computation at compile time rather than runtime",
+    "topic": "Templates",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is SFINAE in C++?",
+    "options": [
+      "A compiler optimization technique",
+      "Substitution Failure Is Not An Error – when template argument substitution fails, the template is silently discarded",
+      "A standard library algorithm",
+      "A memory allocation strategy"
+    ],
+    "correct_answer": "Substitution Failure Is Not An Error – when template argument substitution fails, the template is silently discarded",
+    "topic": "Templates",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the purpose of 'std::forward' in C++?",
+    "options": [
+      "To forward function calls to another thread",
+      "To achieve perfect forwarding – preserving the value category (lvalue/rvalue) of a template argument",
+      "To forward network packets",
+      "To forward exceptions"
+    ],
+    "correct_answer": "To achieve perfect forwarding – preserving the value category (lvalue/rvalue) of a template argument",
+    "topic": "Modern C++",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is 'auto' keyword used for in C++11?",
+    "options": [
+      "To declare automatic storage class variables",
+      "To let the compiler deduce the type of a variable from its initializer",
+      "To automatically optimize code",
+      "To create automatic backups"
+    ],
+    "correct_answer": "To let the compiler deduce the type of a variable from its initializer",
+    "topic": "Modern C++",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the difference between 'override' and 'final' keywords in C++11?",
+    "options": [
+      "They are the same",
+      "override ensures a function overrides a virtual base method; final prevents further overriding or inheritance",
+      "final overrides; override finalizes",
+      "override is for variables; final is for functions"
+    ],
+    "correct_answer": "override ensures a function overrides a virtual base method; final prevents further overriding or inheritance",
+    "topic": "OOP",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the diamond problem in C++ inheritance?",
+    "options": [
+      "A problem with diamond-shaped data structures",
+      "Ambiguity when a class inherits from two classes that both inherit from the same base class, resolved with virtual inheritance",
+      "A performance issue with multiple inheritance",
+      "A memory leak pattern"
+    ],
+    "correct_answer": "Ambiguity when a class inherits from two classes that both inherit from the same base class, resolved with virtual inheritance",
+    "topic": "OOP",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the Standard Template Library (STL)?",
+    "options": [
+      "A library for string templates",
+      "A collection of generic containers, algorithms, iterators, and function objects in C++",
+      "A library for template emails",
+      "A library for SQL template queries"
+    ],
+    "correct_answer": "A collection of generic containers, algorithms, iterators, and function objects in C++",
+    "topic": "STL",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the difference between 'std::vector' and 'std::array'?",
+    "options": [
+      "They are identical",
+      "vector is dynamically sized (heap allocated); array has a fixed size known at compile time (stack allocated)",
+      "array is dynamic; vector is fixed",
+      "vector stores only integers; array stores any type"
+    ],
+    "correct_answer": "vector is dynamically sized (heap allocated); array has a fixed size known at compile time (stack allocated)",
+    "topic": "STL",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is 'std::unordered_map' and how does it differ from 'std::map'?",
+    "options": [
+      "They are the same container",
+      "unordered_map uses a hash table (O(1) average lookup); map uses a balanced BST (O(log n) lookup, ordered keys)",
+      "map is faster than unordered_map",
+      "unordered_map is sorted; map is unsorted"
+    ],
+    "correct_answer": "unordered_map uses a hash table (O(1) average lookup); map uses a balanced BST (O(log n) lookup, ordered keys)",
+    "topic": "STL",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is exception handling in C++ using try-catch?",
+    "options": [
+      "A way to handle syntax errors",
+      "A mechanism to handle runtime errors by throwing exceptions and catching them in catch blocks",
+      "A way to catch compiler warnings",
+      "A logging mechanism"
+    ],
+    "correct_answer": "A mechanism to handle runtime errors by throwing exceptions and catching them in catch blocks",
+    "topic": "Exception Handling",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the 'noexcept' specifier in C++?",
+    "options": [
+      "A way to suppress all exceptions",
+      "A specifier indicating a function is guaranteed not to throw exceptions, enabling compiler optimizations",
+      "A debugging flag",
+      "A keyword to catch exceptions silently"
+    ],
+    "correct_answer": "A specifier indicating a function is guaranteed not to throw exceptions, enabling compiler optimizations",
+    "topic": "Modern C++",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is 'static_cast' vs 'dynamic_cast' vs 'reinterpret_cast'?",
+    "options": [
+      "They all do the same thing",
+      "static_cast: compile-time, no runtime check; dynamic_cast: runtime-checked polymorphic cast; reinterpret_cast: low-level bit reinterpretation",
+      "dynamic_cast is for dynamic memory; static_cast is for static memory",
+      "reinterpret_cast is the safest"
+    ],
+    "correct_answer": "static_cast: compile-time, no runtime check; dynamic_cast: runtime-checked polymorphic cast; reinterpret_cast: low-level bit reinterpretation",
+    "topic": "Type System",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is a 'std::thread' in C++11?",
+    "options": [
+      "A string of text",
+      "A class representing a single thread of execution for concurrent programming",
+      "A threading needle metaphor",
+      "A deprecated C++ feature"
+    ],
+    "correct_answer": "A class representing a single thread of execution for concurrent programming",
+    "topic": "Concurrency",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is 'std::mutex' used for?",
+    "options": [
+      "To mute audio output",
+      "A mutual exclusion primitive to protect shared data from concurrent access by multiple threads",
+      "To manage memory usage tracking",
+      "To create mutable variables"
+    ],
+    "correct_answer": "A mutual exclusion primitive to protect shared data from concurrent access by multiple threads",
+    "topic": "Concurrency",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is 'std::lock_guard' in C++?",
+    "options": [
+      "A security guard for locks",
+      "An RAII wrapper that acquires a mutex in its constructor and releases it in its destructor, preventing lock leaks",
+      "A guard condition for loops",
+      "A file locking mechanism"
+    ],
+    "correct_answer": "An RAII wrapper that acquires a mutex in its constructor and releases it in its destructor, preventing lock leaks",
+    "topic": "Concurrency",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is 'std::atomic' used for in C++?",
+    "options": [
+      "To create very small variables",
+      "To provide lock-free, thread-safe operations on variables without requiring mutexes",
+      "To create atomic energy simulations",
+      "To create immutable variables"
+    ],
+    "correct_answer": "To provide lock-free, thread-safe operations on variables without requiring mutexes",
+    "topic": "Concurrency",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the copy-and-swap idiom in C++?",
+    "options": [
+      "A sorting algorithm",
+      "A technique for implementing exception-safe copy assignment by creating a temporary copy and swapping",
+      "A method to copy files and swap names",
+      "A technique for swapping pointers"
+    ],
+    "correct_answer": "A technique for implementing exception-safe copy assignment by creating a temporary copy and swapping",
+    "topic": "OOP",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the purpose of the 'explicit' keyword in C++?",
+    "options": [
+      "To explicitly allocate memory",
+      "To prevent implicit type conversions in constructors and conversion operators",
+      "To explicitly call destructors",
+      "To make variables explicitly typed"
+    ],
+    "correct_answer": "To prevent implicit type conversions in constructors and conversion operators",
+    "topic": "OOP",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What are variadic templates in C++11?",
+    "options": [
+      "Templates with variable types",
+      "Templates that accept a variable number of template arguments using parameter packs (...)",
+      "Templates that vary at runtime",
+      "Templates for variable declarations"
+    ],
+    "correct_answer": "Templates that accept a variable number of template arguments using parameter packs (...)",
+    "topic": "Templates",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is 'std::optional' (C++17)?",
+    "options": [
+      "A way to make parameters optional",
+      "A wrapper that may or may not contain a value, representing an optional value without using pointers or sentinel values",
+      "An optional compiler flag",
+      "A nullable reference type"
+    ],
+    "correct_answer": "A wrapper that may or may not contain a value, representing an optional value without using pointers or sentinel values",
+    "topic": "Modern C++",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is 'std::variant' (C++17)?",
+    "options": [
+      "A variable with multiple names",
+      "A type-safe union that can hold one of several specified types at a time",
+      "A variant of the string class",
+      "A variable-length array"
+    ],
+    "correct_answer": "A type-safe union that can hold one of several specified types at a time",
+    "topic": "Modern C++",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the pimpl (Pointer to Implementation) idiom?",
+    "options": [
+      "A simple pointer pattern",
+      "A technique to hide implementation details by storing them behind a pointer to a private class, reducing compilation dependencies",
+      "A performance improvement technique",
+      "A pattern for implementing polymorphism"
+    ],
+    "correct_answer": "A technique to hide implementation details by storing them behind a pointer to a private class, reducing compilation dependencies",
+    "topic": "Design Patterns",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the Curiously Recurring Template Pattern (CRTP)?",
+    "options": [
+      "A bug in recursive templates",
+      "A pattern where a class derives from a template base class using itself as a template parameter, enabling static polymorphism",
+      "A curious naming convention",
+      "A pattern for creating recursive data structures"
+    ],
+    "correct_answer": "A pattern where a class derives from a template base class using itself as a template parameter, enabling static polymorphism",
+    "topic": "Templates",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is 'decltype' used for in C++11?",
+    "options": [
+      "To declare types explicitly",
+      "To query the type of an expression at compile time",
+      "To decline type checking",
+      "To declare template parameters"
+    ],
+    "correct_answer": "To query the type of an expression at compile time",
+    "topic": "Modern C++",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is a 'std::function' in C++?",
+    "options": [
+      "A standard way to define functions",
+      "A general-purpose polymorphic function wrapper that can store any callable object (functions, lambdas, functors)",
+      "A function that follows the standard",
+      "A standard library function"
+    ],
+    "correct_answer": "A general-purpose polymorphic function wrapper that can store any callable object (functions, lambdas, functors)",
+    "topic": "Modern C++",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between deep copy and shallow copy in C++?",
+    "options": [
+      "They are identical",
+      "Deep copy duplicates the underlying data; shallow copy copies only the pointer/reference, sharing the same data",
+      "Shallow copy is safer than deep copy",
+      "Deep copy is only for primitive types"
+    ],
+    "correct_answer": "Deep copy duplicates the underlying data; shallow copy copies only the pointer/reference, sharing the same data",
+    "topic": "Memory Management",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What are namespaces in C++ used for?",
+    "options": [
+      "To name files",
+      "To organize code and prevent name collisions by grouping identifiers into named scopes",
+      "To create network addresses",
+      "To define variable types"
+    ],
+    "correct_answer": "To organize code and prevent name collisions by grouping identifiers into named scopes",
+    "topic": "Language Basics",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is 'std::condition_variable' used for?",
+    "options": [
+      "To check variable conditions at compile time",
+      "A synchronization primitive that allows threads to wait until notified by another thread that a condition is met",
+      "To define conditional compilation",
+      "To validate variable types"
+    ],
+    "correct_answer": "A synchronization primitive that allows threads to wait until notified by another thread that a condition is met",
+    "topic": "Concurrency",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is 'std::async' and 'std::future' in C++?",
+    "options": [
+      "Asynchronous file I/O functions",
+      "std::async launches a task asynchronously; std::future provides a mechanism to retrieve the result when ready",
+      "They are identical to std::thread",
+      "Async networking primitives"
+    ],
+    "correct_answer": "std::async launches a task asynchronously; std::future provides a mechanism to retrieve the result when ready",
+    "topic": "Concurrency",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is 'enum class' (scoped enum) in C++11?",
+    "options": [
+      "A class that contains only enums",
+      "A strongly-typed enum that doesn't implicitly convert to int and has its own scope, preventing name collisions",
+      "An enum stored in a class file",
+      "A deprecated way to define enums"
+    ],
+    "correct_answer": "A strongly-typed enum that doesn't implicitly convert to int and has its own scope, preventing name collisions",
+    "topic": "Modern C++",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is a dangling reference in C++?",
+    "options": [
+      "A reference to a global variable",
+      "A reference that refers to an object that has been destroyed or gone out of scope, leading to undefined behavior",
+      "A reference that is NULL",
+      "A reference to a constant value"
+    ],
+    "correct_answer": "A reference that refers to an object that has been destroyed or gone out of scope, leading to undefined behavior",
+    "topic": "Memory Safety",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is 'std::string_view' (C++17)?",
+    "options": [
+      "A mutable string class",
+      "A lightweight, non-owning reference to a string (or substring) that avoids copying",
+      "A string formatting view",
+      "A graphical view of string data"
+    ],    "correct_answer": "A lightweight, non-owning reference to a string (or substring) that avoids copying",
+    "topic": "Modern C++",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between 'static_cast' and 'reinterpret_cast' in C++?",
+    "options": [
+      "They are identical in behavior",
+      "static_cast performs type-safe conversions at compile time; reinterpret_cast performs low-level bit reinterpretation without type safety",
+      "reinterpret_cast is safer than static_cast",
+      "static_cast only works with pointers"
+    ],
+    "correct_answer": "static_cast performs type-safe conversions at compile time; reinterpret_cast performs low-level bit reinterpretation without type safety",
+    "topic": "Type Casting",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is CRTP (Curiously Recurring Template Pattern) in C++?",
+    "options": [
+      "A runtime polymorphism pattern using virtual functions",
+      "A pattern where a class derives from a template instantiation of itself, enabling static (compile-time) polymorphism",
+      "A pattern for creating recursive data structures",
+      "A method to cast templates at runtime"
+    ],
+    "correct_answer": "A pattern where a class derives from a template instantiation of itself, enabling static (compile-time) polymorphism",
+    "topic": "Templates",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What does the 'noexcept' specifier indicate in C++?",
+    "options": [
+      "The function will catch all exceptions internally",
+      "The function is guaranteed not to throw exceptions, allowing compiler optimizations",
+      "The function disables exception handling globally",
+      "The function will retry on exception"
+    ],
+    "correct_answer": "The function is guaranteed not to throw exceptions, allowing compiler optimizations",
+    "topic": "Exception Handling",
+    "difficulty": "moderate"
+  }
+]

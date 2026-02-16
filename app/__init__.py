@@ -1,17 +1,6 @@
-from flask import Flask
+﻿from flask import Flask
 from .config import Config
-from .extensions import oauth, db, migrate
-
-# ---------------------------
-# BLUEPRINT IMPORTS
-# ---------------------------
-from .blueprints.auth.routes import auth_bp
-from .blueprints.dashboard.routes import dashboard_bp
-from .blueprints.tests.routes import tests_bp
-from .blueprints.evaluation.routes import evaluation_bp
-from .blueprints.reports.routes import reports_bp
-from .blueprints.mcq import mcq_bp   # ✅ MCQ blueprint
-from .blueprints.coding import coding_bp   # ✅ L4 Coding blueprint
+from .extensions import oauth, db, migrate, DB_ENABLED
 
 
 def create_app():
@@ -21,11 +10,15 @@ def create_app():
     # ---------------------------
     # DATABASE INITIALIZATION
     # ---------------------------
-    db.init_app(app)
-    migrate.init_app(app, db)
-
-    # Import models so Alembic sees them
-    from . import models  # noqa: F401
+    if DB_ENABLED:
+        db.init_app(app)
+        migrate.init_app(app, db)
+        # Import models so Alembic sees them
+        from . import models  # noqa: F401
+    else:
+        app.logger.warning(
+            "Database dependencies are unavailable. Running in in-memory mode."
+        )
 
     # ---------------------------
     # OAUTH INITIALIZATION
@@ -43,13 +36,30 @@ def create_app():
     # ---------------------------
     # REGISTER BLUEPRINTS
     # ---------------------------
+    from .blueprints.auth.routes import auth_bp
+    from .blueprints.dashboard.routes import dashboard_bp
+    from .blueprints.tests.routes import tests_bp
+    from .blueprints.evaluation.routes import evaluation_bp
+    from .blueprints.reports.routes import reports_bp
+
     app.register_blueprint(auth_bp)
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(tests_bp)
     app.register_blueprint(evaluation_bp)
     app.register_blueprint(reports_bp)
-    app.register_blueprint(mcq_bp)   # ✅ MCQ ROUTES ENABLED
-    app.register_blueprint(coding_bp)   # ✅ L4 CODING ROUTES ENABLED
+
+    try:
+        from .blueprints.mcq import mcq_bp
+        app.register_blueprint(mcq_bp)
+    except ModuleNotFoundError as ex:
+        app.logger.warning("MCQ blueprint disabled due to missing dependency: %s", ex)
+
+    try:
+        from .blueprints.coding import coding_bp
+        app.register_blueprint(coding_bp)
+    except ModuleNotFoundError as ex:
+        app.logger.warning("Coding blueprint disabled due to missing dependency: %s", ex)
+
     # ---------------------------
     # DEV MODE: BYPASS LOGIN
     # ---------------------------

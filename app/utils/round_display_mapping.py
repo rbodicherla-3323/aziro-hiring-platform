@@ -1,3 +1,4 @@
+# app/utils/round_display_mapping.py
 ROUND_DISPLAY_MAPPING = {
 
     # ---------------- Python Entry ----------------
@@ -78,6 +79,35 @@ ROUND_DISPLAY_MAPPING = {
         "L2": "Java Theory",
         "L3": "QA & Testing (Advanced)",
         "L4": "Coding Challenge",
+        "L5": "Soft Skills",
+    },
+
+    # ---- Phase 3: New Roles ----
+
+    # ---------------- BMC Engineer ----------------
+    "bmc_engineer": {
+        "L1": "Aptitude",
+        "L2": "C Language Theory",
+        "L3": "BMC / Firmware",
+        "L4": "Coding Challenge (C)",
+        "L5": "Soft Skills",
+    },
+
+    # ---------------- Linux Kernel & Device Driver ----------------
+    "linux_kernel_dd": {
+        "L1": "C Theoretical",
+        "L2": "Linux Kernel Theory",
+        "L3": "Device Driver Basics & Theory",
+        "L4": "Coding Challenge (C)",
+        "L5": "Soft Skills (Leadership & Ownership)",
+    },
+
+    # ---------------- Systems Architect (C++) ----------------
+    "systems_architect_cpp": {
+        "L1": "Aptitude",
+        "L2": "C++ Theory",
+        "L3": "System Design & Architecture",
+        "L4": "Coding Challenge (C++)",
         "L5": "Soft Skills",
     },
 }

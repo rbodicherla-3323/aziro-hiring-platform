@@ -1,7 +1,24 @@
 from authlib.integrations.flask_client import OAuth
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 import os
+
+DB_ENABLED = True
+try:
+    from flask_sqlalchemy import SQLAlchemy
+    from flask_migrate import Migrate
+except ModuleNotFoundError:
+    DB_ENABLED = False
+
+    class SQLAlchemy:  # type: ignore[override]
+        def init_app(self, app):
+            app.logger.warning(
+                "Flask-SQLAlchemy is not installed. DB-backed features are disabled."
+            )
+
+    class Migrate:  # type: ignore[override]
+        def init_app(self, app, db):
+            app.logger.warning(
+                "Flask-Migrate is not installed. Migration features are disabled."
+            )
 
 oauth = OAuth()
 db = SQLAlchemy()
