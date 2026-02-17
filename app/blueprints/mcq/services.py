@@ -1,5 +1,6 @@
 import time
 import random
+from copy import deepcopy
 from flask import session
 
 from app.services.question_bank.loader import QuestionLoader
@@ -48,12 +49,59 @@ class MCQSessionService:
             min(QUESTION_COUNT, len(questions))
         )
 
+        selected_questions = MCQSessionService._prepare_selected_questions(selected_questions)
+
         session[session_key] = {
             "questions": selected_questions,
             "answers": {},
             "start_time": int(time.time()),
             "duration_seconds": DEFAULT_DURATION_MINUTES * 60
         }
+
+    @staticmethod
+    def _prepare_selected_questions(selected_questions):
+        """
+        Session-level option randomization and balancing:
+        - deep-copy questions to avoid mutating source data
+        - shuffle options per question while preserving correct_answer text
+        - rebalance correct-answer positions so a single option (e.g., all B)
+          does not dominate the selected question set
+        """
+        prepared = []
+        for question in selected_questions:
+            q = deepcopy(question)
+            options = q.get("options")
+            correct = q.get("correct_answer")
+            if isinstance(options, list) and len(options) > 1 and correct in options:
+                random.shuffle(options)
+            prepared.append(q)
+
+        # Group valid questions by option count (typically 4).
+        by_option_count = {}
+        for idx, q in enumerate(prepared):
+            options = q.get("options")
+            correct = q.get("correct_answer")
+            if isinstance(options, list) and len(options) > 1 and correct in options:
+                by_option_count.setdefault(len(options), []).append(idx)
+
+        # Rebalance correct-answer position distribution per option count bucket.
+        for option_count, indices in by_option_count.items():
+            if len(indices) < 2:
+                continue
+
+            start = random.randrange(option_count)
+            targets = [((start + i) % option_count) for i in range(len(indices))]
+            random.shuffle(targets)
+
+            for q_idx, target_pos in zip(indices, targets):
+                q = prepared[q_idx]
+                options = q["options"]
+                correct = q["correct_answer"]
+                current_pos = options.index(correct)
+                if current_pos != target_pos:
+                    options[current_pos], options[target_pos] = options[target_pos], options[current_pos]
+
+        return prepared
 
     @staticmethod
     def get_question(session_id, index):

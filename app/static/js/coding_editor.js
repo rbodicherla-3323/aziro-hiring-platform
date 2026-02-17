@@ -42,16 +42,73 @@
         if (l === "java")               return "text/x-java";
         if (l === "c")                  return "text/x-csrc";
         if (l === "cpp" || l === "c++") return "text/x-c++src";
+        if (l === "python" || l === "py") return "python";
+        if (l === "javascript" || l === "js") return "javascript";
         if (l === "csharp" || l === "c#") return "text/x-csharp";
         return "text/x-java"; // default
+    }
+
+    function isCMModeLoaded(modeName) {
+        return !!(window.CodeMirror && CodeMirror.modes && CodeMirror.modes[modeName]);
+    }
+
+    function loadScriptOnce(src) {
+        return new Promise(function (resolve, reject) {
+            const existing = document.querySelector(`script[src="${src}"]`);
+            if (existing) {
+                if (existing.dataset.loaded === "1") return resolve();
+                existing.addEventListener("load", function () { resolve(); }, { once: true });
+                existing.addEventListener("error", function () { reject(new Error("Script load failed")); }, { once: true });
+                return;
+            }
+
+            const script = document.createElement("script");
+            script.src = src;
+            script.async = true;
+            script.addEventListener("load", function () {
+                script.dataset.loaded = "1";
+                resolve();
+            }, { once: true });
+            script.addEventListener("error", function () {
+                reject(new Error("Script load failed"));
+            }, { once: true });
+            document.head.appendChild(script);
+        });
+    }
+
+    async function ensureDynamicMode(modeName) {
+        if (!(modeName === "python" || modeName === "javascript")) return;
+        if (isCMModeLoaded(modeName)) return;
+
+        const fallbackSources = {
+            python: [
+                "https://cdn.jsdelivr.net/npm/codemirror@5.65.18/mode/python/python.min.js",
+                "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/python/python.min.js",
+            ],
+            javascript: [
+                "https://cdn.jsdelivr.net/npm/codemirror@5.65.18/mode/javascript/javascript.min.js",
+                "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/javascript/javascript.min.js",
+            ],
+        };
+
+        const sources = fallbackSources[modeName] || [];
+        for (const src of sources) {
+            try {
+                await loadScriptOnce(src);
+                if (isCMModeLoaded(modeName)) return;
+            } catch (_) {
+                // Try next fallback source.
+            }
+        }
     }
 
     // â”€â”€ Initialize CodeMirror â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     let cmEditor = null;
 
     if (textarea && typeof CodeMirror !== "undefined") {
+        const cmMode = getCMMode(language);
         cmEditor = CodeMirror.fromTextArea(textarea, {
-            mode:              getCMMode(language),
+            mode:              cmMode,
             lineNumbers:       true,
             indentUnit:        4,
             tabSize:           4,
@@ -89,6 +146,14 @@
         cmEditor.on("change", function () {
             scheduleAutoSave();
             updateSaveIndicator("unsaved");
+        });
+
+        // Ensure Python/JavaScript mode scripts are available even if primary CDN failed.
+        ensureDynamicMode(cmMode).then(function () {
+            if (cmEditor && isCMModeLoaded(cmMode)) {
+                cmEditor.setOption("mode", cmMode);
+                cmEditor.refresh();
+            }
         });
 
         // Focus the editor

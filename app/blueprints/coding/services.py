@@ -27,6 +27,9 @@ class CodingSessionService:
             "c": "c",
             "cpp": "cpp",
             "java": "java",
+            "python": "python",
+            "javascript": "javascript",
+            "js": "javascript",
         }
         lang_dir = lang_map.get(language.lower())
         if not lang_dir:
@@ -142,6 +145,30 @@ class CodingSessionService:
                 return "    return 0.0;"
             return "    return 0;"
 
+        def extract_name_and_params(signature, default_name="solve"):
+            raw = str(signature or "").strip()
+            m = re.search(r"([A-Za-z_]\w*)\s*\((.*)\)", raw)
+            if not m:
+                return default_name, []
+
+            name = m.group(1).strip()
+            params_raw = m.group(2).strip()
+            if not params_raw:
+                return name, []
+
+            param_names = []
+            for decl in params_raw.split(","):
+                part = decl.strip()
+                if not part:
+                    continue
+                part = part.split("=")[0].strip()
+                token = re.search(r"([A-Za-z_]\w*)\s*(?:\[\s*\])?\s*$", part)
+                if token:
+                    param_names.append(token.group(1))
+                else:
+                    param_names.append(f"arg{len(param_names) + 1}")
+            return name, param_names
+
         if lang == "java":
             java_info = func_info if isinstance(func_info, dict) else {}
             class_name = java_info.get("class", "Solution")
@@ -197,6 +224,43 @@ class CodingSessionService:
                 f"    // TODO: Implement this function according to the problem statement.\n"
                 f"    // Keep the function signature unchanged.\n"
                 f"{ret_block}"
+                f"}}\n"
+            )
+
+        elif lang == "python":
+            py_info = func_info if isinstance(func_info, dict) else {}
+            signature = py_info.get(
+                "signature",
+                str(func_info) if isinstance(func_info, str) else "def solve(arg1):",
+            )
+            fn_name, params = extract_name_and_params(signature, "solve")
+            if not str(signature).strip().startswith("def "):
+                signature = f"def {fn_name}({', '.join(params)}):"
+            if not str(signature).rstrip().endswith(":"):
+                signature = str(signature).rstrip() + ":"
+
+            return (
+                f"{signature}\n"
+                f"    # TODO: Implement this function according to the problem statement.\n"
+                f"    # Keep the function name and parameters unchanged.\n"
+                f"    return None\n"
+            )
+
+        elif lang in ("javascript", "js"):
+            js_info = func_info if isinstance(func_info, dict) else {}
+            signature = js_info.get(
+                "signature",
+                str(func_info) if isinstance(func_info, str) else "function solve(arg1)",
+            )
+            fn_name, params = extract_name_and_params(signature, "solve")
+            if "function" not in str(signature):
+                signature = f"function {fn_name}({', '.join(params)})"
+
+            return (
+                f"{str(signature).rstrip()} {{\n"
+                f"    // TODO: Implement this function according to the problem statement.\n"
+                f"    // Keep the function name and parameters unchanged.\n"
+                f"    return null;\n"
                 f"}}\n"
             )
 

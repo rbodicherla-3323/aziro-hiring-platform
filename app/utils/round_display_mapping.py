@@ -6,7 +6,7 @@ ROUND_DISPLAY_MAPPING = {
         "L1": "Aptitude",
         "L2": "Python Theory",
         "L3": "Python Fundamentals",
-        "L4": "Coding Challenge",
+        "L4": "Coding Challenge (Python)",
         "L5": "Soft Skills",
     },
 
@@ -24,7 +24,7 @@ ROUND_DISPLAY_MAPPING = {
         "L1": "Aptitude",
         "L2": "JavaScript Theory",
         "L3": "JavaScript Fundamentals",
-        "L4": "Coding Challenge",
+        "L4": "Coding Challenge (JavaScript)",
         "L5": "Soft Skills",
     },
 
@@ -33,7 +33,7 @@ ROUND_DISPLAY_MAPPING = {
         "L1": "Aptitude",
         "L2": "Python Theory",
         "L3": "QA & Testing",
-        "L4": "Coding Challenge",
+        "L4": "Coding Challenge (Python)",
         "L5": "Soft Skills",
     },
 
@@ -42,7 +42,7 @@ ROUND_DISPLAY_MAPPING = {
         "L1": "Linux Fundamentals",
         "L2": "Python Theory",
         "L3": "QA & Testing (Advanced)",
-        "L4": "Coding Challenge",
+        "L4": "Coding Challenge (Python)",
         "L5": "Soft Skills",
     },
 
@@ -51,7 +51,7 @@ ROUND_DISPLAY_MAPPING = {
         "L1": "Aptitude",
         "L2": "Python Advanced Concepts",
         "L3": "Development Skills",
-        "L4": "Coding Challenge",
+        "L4": "Coding Challenge (Python)",
         "L5": "Soft Skills",
     },
 
@@ -60,7 +60,7 @@ ROUND_DISPLAY_MAPPING = {
         "L1": "Aptitude",
         "L2": "Python Advanced Concepts",
         "L3": "AI / ML Fundamentals",
-        "L4": "Coding Challenge",
+        "L4": "Coding Challenge (Python)",
         "L5": "Soft Skills",
     },
 

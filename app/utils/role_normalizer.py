@@ -1,4 +1,7 @@
 # app/utils/role_normalizer.py
+import html
+
+
 ROLE_NAME_TO_KEY = {
     "Python Entry Level (0–2 Years)": "python_entry",
     "Java Entry Level (0–2 Years)": "java_entry",
@@ -16,5 +19,23 @@ ROLE_NAME_TO_KEY = {
 }
 
 
+def _normalize_role_label(value: str) -> str:
+    text = html.unescape(str(value or ""))
+    text = text.replace("\u2013", "-").replace("\u2014", "-")
+    text = text.replace("â€“", "-").replace("â€”", "-")
+    text = " ".join(text.split())
+    return text.strip().lower()
+
+
+_NORMALIZED_ROLE_NAME_TO_KEY = {
+    _normalize_role_label(label): role_key
+    for label, role_key in ROLE_NAME_TO_KEY.items()
+}
+
+
 def normalize_role(role_label: str) -> str:
-    return ROLE_NAME_TO_KEY.get(role_label)
+    direct = ROLE_NAME_TO_KEY.get(role_label)
+    if direct:
+        return direct
+
+    return _NORMALIZED_ROLE_NAME_TO_KEY.get(_normalize_role_label(role_label))

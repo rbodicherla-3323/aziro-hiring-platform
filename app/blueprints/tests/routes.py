@@ -27,7 +27,15 @@ def create_test():
         domains = request.form.getlist("domain[]")
         batch_id = datetime.now(timezone.utc).strftime("batch_%Y%m%d_%H%M%S")
 
-        for name, email, role_label, domain in zip(names, emails, roles, domains):
+        total_rows = max(len(names), len(emails), len(roles), len(domains))
+        for idx in range(total_rows):
+            name = (names[idx] if idx < len(names) else "").strip()
+            email = (emails[idx] if idx < len(emails) else "").strip()
+            role_label = (roles[idx] if idx < len(roles) else "").strip()
+            domain = (domains[idx] if idx < len(domains) else "None").strip()
+
+            if not name or not email or not role_label:
+                continue
 
             role_key = normalize_role(role_label)
             if not role_key:
@@ -94,7 +102,7 @@ def create_test():
             # -------------------------------
             # DOMAIN ROUND (L6)
             # -------------------------------
-            if config["allow_domain"] and domain and domain != "None":
+            if domain and domain.lower() != "none":
 
                 session_id = str(uuid.uuid4())
 
