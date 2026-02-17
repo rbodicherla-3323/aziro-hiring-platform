@@ -67,6 +67,50 @@ def extract_resume_data(file):
         print(f"Error extracting resume data: {e}")
         return None
 
+def extract_jd_role(text):
+    """
+    Extract and match job role from JD text.
+    Returns the best matching role label from available roles.
+    """
+    from app.utils.role_normalizer import ROLE_NAME_TO_KEY
+    
+    text_lower = text.lower()
+    
+    # Define role matching keywords
+    role_keywords = {
+        "Python Entry Level (0–2 Years)": ["python", "entry level", "junior"],
+        "Java Entry Level (0–2 Years)": ["java", "entry level", "junior"],
+        "JavaScript Entry Level (0–2 Years)": ["javascript", " js ", "node.js", "entry level"],
+        "Python QA / System / Linux (4+ Years)": ["python", "qa", "linux", "system"],
+        "Python QA (4+ Years)": ["python", "qa"],
+        "Python Development (4+ Years)": ["python", "development", "developer", "engineer"],
+        "Python + AI/ML (4+ Years)": ["python", "ai", "machine learning", "ml"],
+        "Java + AWS Development (5+ Years)": ["java", "aws", "development"],
+        "Java QA (5+ Years)": ["java", "qa"],
+        "BMC Engineer (2–5 Years)": ["bmc", "firmware", "bios"],
+        "Staff Engineer – Linux Kernel & Device Driver (3–5 Years)": ["linux kernel", "device driver", "kernel"],
+        "Systems Architect – C++ (3–5 Years)": ["c++", "cpp", "systems architect"],
+    }
+    
+    # Score each role based on keyword matches
+    scores = {}
+    for role_label, keywords in role_keywords.items():
+        score = 0
+        for keyword in keywords:
+            if keyword in text_lower:
+                score += 1
+        scores[role_label] = score
+    
+    # Find the best match (highest score)
+    best_match = max(scores, key=scores.get)
+    
+    # Only return if there's a reasonable match (at least 1 keyword)
+    if scores[best_match] > 0:
+        return best_match
+    
+    return None
+
+
 def save_uploaded_file(file, candidate_name, file_type):
     """Save uploaded file and return the file path"""
     if not file or file.filename == "":
@@ -111,6 +155,50 @@ def extract_resume():
         return jsonify(data), 200
     else:
         return jsonify({"error": "Could not extract data from resume"}), 400
+
+
+@tests_bp.route("/api/extract-jd-role", methods=["POST"])
+def extract_jd_role_endpoint():
+    """API endpoint to extract and match role from JD file"""
+    if "jd" not in request.files:
+        return jsonify({"error": "No file provided"}), 400
+    
+    file = request.files["jd"]
+    
+    if file.filename == "":
+        return jsonify({"error": "No file selected"}), 400
+    
+    if not allowed_file(file.filename):
+        return jsonify({"error": "File type not allowed"}), 400
+    
+    try:
+        # Extract text from JD file
+        if file.filename.endswith('.pdf'):
+            try:
+                import io
+                pdf_file = io.BytesIO(file.read())
+                with pdfplumber.open(pdf_file) as pdf:
+                    text = ""
+                    for page in pdf.pages:
+                        text += page.extract_text() or ""
+            except Exception as e:
+                print(f"Error reading PDF: {e}")
+                return jsonify({"error": "Could not read PDF file"}), 400
+        else:
+            # For non-PDF files, read as text
+            text = file.read().decode('utf-8', errors='ignore')
+        
+        # Extract role from JD text
+        matched_role = extract_jd_role(text)
+        
+        if matched_role:
+            return jsonify({"role": matched_role}), 200
+        else:
+            return jsonify({"role": None, "message": "Could not determine role from JD"}), 200
+    
+    except Exception as e:
+        print(f"Error extracting JD role: {e}")
+        return jsonify({"error": "Error processing JD file"}), 400
 
 
 @tests_bp.route("/create-test", methods=["GET", "POST"])

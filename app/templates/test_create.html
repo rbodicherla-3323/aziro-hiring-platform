@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Generate Test{% endblock %}
 {% block breadcrumb %}Create Test{% endblock %}
-{% block breadcrumb %}Create Test{% endblock %}
 
 {% block content %}
 <h4 class="mb-2">Generate Candidate Test</h4>
@@ -218,6 +217,7 @@
         const jdInput = rowElement.querySelector(".jd-upload");
         const nameField = rowElement.querySelector(".candidate-name");
         const emailField = rowElement.querySelector(".candidate-email");
+        const roleField = rowElement.querySelector('select[name="role[]"]');
 
         if (resumeInput) {
             resumeInput.addEventListener("change", function () {
@@ -261,8 +261,32 @@
         if (jdInput) {
             jdInput.addEventListener("change", function () {
                 if (this.files.length > 0) {
-                    const filename = this.files[0].name;
+                    const file = this.files[0];
+                    const filename = file.name;
                     console.log("JD selected:", filename);
+                    
+                    // Try to extract role from JD file
+                    const formData = new FormData();
+                    formData.append("jd", file);
+                    
+                    fetch("/api/extract-jd-role", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.role && roleField && !roleField.value) {
+                            // Find and select the matching role option
+                            const options = roleField.querySelectorAll("option");
+                            for (let option of options) {
+                                if (option.textContent === data.role) {
+                                    roleField.value = data.role;
+                                    break;
+                                }
+                            }
+                        }
+                    })
+                    .catch(error => console.log("JD role extraction result:", error));
                 }
             });
         }
