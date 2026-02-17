@@ -1,0 +1,601 @@
+[
+  {
+    "question": "What is the primary goal of system design?",
+    "options": [
+      "To write the fastest code possible",
+      "To create a blueprint for a system's architecture that meets functional and non-functional requirements (scalability, reliability, etc.)",
+      "To design the user interface",
+      "To choose the programming language"
+    ],
+    "correct_answer": "To create a blueprint for a system's architecture that meets functional and non-functional requirements (scalability, reliability, etc.)",
+    "topic": "System Design Basics",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the difference between horizontal and vertical scaling?",
+    "options": [
+      "They are the same concept",
+      "Horizontal scaling adds more machines; vertical scaling adds more resources (CPU, RAM) to an existing machine",
+      "Vertical scaling adds machines; horizontal adds resources",
+      "Horizontal is for databases; vertical is for applications"
+    ],
+    "correct_answer": "Horizontal scaling adds more machines; vertical scaling adds more resources (CPU, RAM) to an existing machine",
+    "topic": "Scalability",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is a load balancer?",
+    "options": [
+      "A device that balances electrical load",
+      "A component that distributes incoming network traffic across multiple servers to ensure no single server is overwhelmed",
+      "A database optimization tool",
+      "A memory management utility"
+    ],
+    "correct_answer": "A component that distributes incoming network traffic across multiple servers to ensure no single server is overwhelmed",
+    "topic": "Load Balancing",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is a CDN (Content Delivery Network)?",
+    "options": [
+      "A centralized data node",
+      "A geographically distributed network of servers that cache and deliver content closer to users for lower latency",
+      "A code deployment network",
+      "A cloud database network"
+    ],
+    "correct_answer": "A geographically distributed network of servers that cache and deliver content closer to users for lower latency",
+    "topic": "Scalability",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the CAP theorem?",
+    "options": [
+      "A theorem about CPU, ALU, and Pipeline",
+      "A distributed system can guarantee at most two of: Consistency, Availability, and Partition Tolerance simultaneously",
+      "A theorem about cache performance",
+      "A security theorem about capabilities"
+    ],
+    "correct_answer": "A distributed system can guarantee at most two of: Consistency, Availability, and Partition Tolerance simultaneously",
+    "topic": "Distributed Systems",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between SQL and NoSQL databases?",
+    "options": [
+      "They are the same with different syntax",
+      "SQL databases are relational with structured schemas; NoSQL databases are non-relational (document, key-value, graph, columnar) with flexible schemas",
+      "NoSQL is always faster",
+      "SQL cannot scale horizontally"
+    ],
+    "correct_answer": "SQL databases are relational with structured schemas; NoSQL databases are non-relational (document, key-value, graph, columnar) with flexible schemas",
+    "topic": "Databases",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is database sharding?",
+    "options": [
+      "Deleting old database records",
+      "Splitting a database into smaller, independent shards distributed across multiple servers for horizontal scaling",
+      "Creating database backups",
+      "Encrypting database fields"
+    ],
+    "correct_answer": "Splitting a database into smaller, independent shards distributed across multiple servers for horizontal scaling",
+    "topic": "Databases",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is database replication?",
+    "options": [
+      "Duplicating database schema only",
+      "Copying data from a primary database to one or more replicas for redundancy, fault tolerance, and read scaling",
+      "Replacing one database with another",
+      "Replicating queries across databases"
+    ],
+    "correct_answer": "Copying data from a primary database to one or more replicas for redundancy, fault tolerance, and read scaling",
+    "topic": "Databases",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is caching and why is it important in system design?",
+    "options": [
+      "Storing data on disk for persistence",
+      "Storing frequently accessed data in a fast storage layer (e.g., Redis, Memcached) to reduce latency and database load",
+      "Compressing data for storage",
+      "Creating data checksums"
+    ],
+    "correct_answer": "Storing frequently accessed data in a fast storage layer (e.g., Redis, Memcached) to reduce latency and database load",
+    "topic": "Caching",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the difference between write-through and write-back cache?",
+    "options": [
+      "They are identical strategies",
+      "Write-through writes to cache and database simultaneously; write-back writes to cache first and database asynchronously",
+      "Write-back is always superior",
+      "Write-through only writes to the cache"
+    ],
+    "correct_answer": "Write-through writes to cache and database simultaneously; write-back writes to cache first and database asynchronously",
+    "topic": "Caching",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is a message queue and when would you use one?",
+    "options": [
+      "A queue for email messages only",
+      "An asynchronous communication mechanism (e.g., RabbitMQ, Kafka) for decoupling producers and consumers",
+      "A database query queue",
+      "A logging mechanism"
+    ],
+    "correct_answer": "An asynchronous communication mechanism (e.g., RabbitMQ, Kafka) for decoupling producers and consumers",
+    "topic": "Message Queues",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the microservices architecture pattern?",
+    "options": [
+      "Using very small functions",
+      "An architecture where an application is composed of small, independent, loosely coupled services that communicate via APIs",
+      "Using micro-controllers",
+      "A pattern for mobile app development"
+    ],
+    "correct_answer": "An architecture where an application is composed of small, independent, loosely coupled services that communicate via APIs",
+    "topic": "Architecture Patterns",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is a monolithic architecture?",
+    "options": [
+      "An architecture with a single large stone",
+      "An architecture where all components are built, deployed, and scaled as a single unit",
+      "An architecture using only one programming language",
+      "An architecture with only one server"
+    ],
+    "correct_answer": "An architecture where all components are built, deployed, and scaled as a single unit",
+    "topic": "Architecture Patterns",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What are the trade-offs between microservices and monolithic architectures?",
+    "options": [
+      "Microservices are always better",
+      "Microservices offer independent scaling and deployment but add complexity (networking, data consistency, debugging); monoliths are simpler but harder to scale independently",
+      "Monoliths are always better for large systems",
+      "There are no trade-offs"
+    ],
+    "correct_answer": "Microservices offer independent scaling and deployment but add complexity (networking, data consistency, debugging); monoliths are simpler but harder to scale independently",
+    "topic": "Architecture Patterns",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is an API Gateway?",
+    "options": [
+      "A gateway for accessing APIs only",
+      "A single entry point that routes client requests to appropriate microservices, handling authentication, rate limiting, and load balancing",
+      "A firewall for APIs",
+      "A database access layer"
+    ],
+    "correct_answer": "A single entry point that routes client requests to appropriate microservices, handling authentication, rate limiting, and load balancing",
+    "topic": "Architecture Patterns",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between REST and gRPC?",
+    "options": [
+      "They are the same protocol",
+      "REST uses HTTP/JSON and is resource-oriented; gRPC uses HTTP/2 with Protocol Buffers for efficient binary serialization and supports streaming",
+      "gRPC is slower than REST",
+      "REST supports streaming; gRPC does not"
+    ],
+    "correct_answer": "REST uses HTTP/JSON and is resource-oriented; gRPC uses HTTP/2 with Protocol Buffers for efficient binary serialization and supports streaming",
+    "topic": "API Design",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is eventual consistency?",
+    "options": [
+      "Data is always immediately consistent",
+      "A consistency model where updates to a distributed system will eventually propagate to all nodes, but reads may return stale data temporarily",
+      "A model where consistency is never achieved",
+      "A consistency model only for SQL databases"
+    ],
+    "correct_answer": "A consistency model where updates to a distributed system will eventually propagate to all nodes, but reads may return stale data temporarily",
+    "topic": "Distributed Systems",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is a reverse proxy?",
+    "options": [
+      "A proxy that reverses network traffic",
+      "A server that sits in front of backend servers, forwarding client requests to them and returning responses (e.g., Nginx)",
+      "A proxy for reverse engineering",
+      "A proxy used for outbound traffic"
+    ],
+    "correct_answer": "A server that sits in front of backend servers, forwarding client requests to them and returning responses (e.g., Nginx)",
+    "topic": "Networking",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the Singleton design pattern?",
+    "options": [
+      "A pattern for single-threaded applications",
+      "A creational pattern ensuring a class has only one instance and provides a global access point to it",
+      "A pattern for single-page applications",
+      "A pattern for single inheritance"
+    ],
+    "correct_answer": "A creational pattern ensuring a class has only one instance and provides a global access point to it",
+    "topic": "Design Patterns",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the Observer design pattern?",
+    "options": [
+      "A pattern for monitoring servers",
+      "A behavioral pattern where an object (subject) notifies a list of dependents (observers) when its state changes",
+      "A pattern for database observation",
+      "A pattern for code review"
+    ],
+    "correct_answer": "A behavioral pattern where an object (subject) notifies a list of dependents (observers) when its state changes",
+    "topic": "Design Patterns",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the Factory design pattern?",
+    "options": [
+      "A pattern for manufacturing software",
+      "A creational pattern that provides an interface for creating objects without specifying the exact class",
+      "A pattern for database factories",
+      "A pattern for building APIs"
+    ],
+    "correct_answer": "A creational pattern that provides an interface for creating objects without specifying the exact class",
+    "topic": "Design Patterns",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the Strategy design pattern?",
+    "options": [
+      "A pattern for game strategy",
+      "A behavioral pattern defining a family of algorithms, encapsulating each one, and making them interchangeable at runtime",
+      "A pattern for strategic planning",
+      "A pattern for error handling strategies"
+    ],
+    "correct_answer": "A behavioral pattern defining a family of algorithms, encapsulating each one, and making them interchangeable at runtime",
+    "topic": "Design Patterns",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What are the SOLID principles?",
+    "options": [
+      "Principles for building solid structures",
+      "Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion – five OOP design principles",
+      "Five principles for solid databases",
+      "Secure, Optimal, Lightweight, Independent, Durable"
+    ],
+    "correct_answer": "Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion – five OOP design principles",
+    "topic": "Design Principles",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the Single Responsibility Principle (SRP)?",
+    "options": [
+      "A class should have a single constructor",
+      "A class should have only one reason to change, meaning it should have only one responsibility",
+      "A function should only have one parameter",
+      "A file should contain only one class"
+    ],
+    "correct_answer": "A class should have only one reason to change, meaning it should have only one responsibility",
+    "topic": "Design Principles",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the Dependency Inversion Principle?",
+    "options": [
+      "Dependencies should be inverted in the call stack",
+      "High-level modules should not depend on low-level modules; both should depend on abstractions",
+      "Dependencies should be minimized",
+      "Dependencies should always be injected"
+    ],
+    "correct_answer": "High-level modules should not depend on low-level modules; both should depend on abstractions",
+    "topic": "Design Principles",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is rate limiting in system design?",
+    "options": [
+      "Limiting the data rate of network cables",
+      "Controlling the number of requests a user or client can make in a given time period to prevent abuse",
+      "Limiting database query rates",
+      "Limiting the CPU clock rate"
+    ],
+    "correct_answer": "Controlling the number of requests a user or client can make in a given time period to prevent abuse",
+    "topic": "System Design",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is a circuit breaker pattern?",
+    "options": [
+      "An electrical safety mechanism",
+      "A resilience pattern that prevents cascading failures by stopping calls to a failing service and returning fallback responses",
+      "A pattern for breaking circular dependencies",
+      "A pattern for breaking database connections"
+    ],
+    "correct_answer": "A resilience pattern that prevents cascading failures by stopping calls to a failing service and returning fallback responses",
+    "topic": "Resilience Patterns",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is a consistent hashing algorithm?",
+    "options": [
+      "A hashing algorithm that always produces the same hash",
+      "A distributed hashing scheme that minimizes key remapping when nodes are added or removed from a cluster",
+      "A secure hashing algorithm",
+      "A database indexing algorithm"
+    ],
+    "correct_answer": "A distributed hashing scheme that minimizes key remapping when nodes are added or removed from a cluster",
+    "topic": "Distributed Systems",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the difference between latency and throughput?",
+    "options": [
+      "They are the same metric",
+      "Latency is the time taken for a single request; throughput is the number of requests handled per unit time",
+      "Throughput is always proportional to latency",
+      "Latency measures bandwidth; throughput measures speed"
+    ],
+    "correct_answer": "Latency is the time taken for a single request; throughput is the number of requests handled per unit time",
+    "topic": "Performance",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is event-driven architecture?",
+    "options": [
+      "An architecture for event planning software",
+      "An architecture where components communicate by producing and consuming events asynchronously, promoting loose coupling",
+      "An architecture driven by calendar events",
+      "An architecture for GUI applications only"
+    ],
+    "correct_answer": "An architecture where components communicate by producing and consuming events asynchronously, promoting loose coupling",
+    "topic": "Architecture Patterns",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is CQRS (Command Query Responsibility Segregation)?",
+    "options": [
+      "A SQL query optimization technique",
+      "A pattern that separates read (query) and write (command) operations into different models, potentially with different databases",
+      "A distributed command system",
+      "A caching query retrieval system"
+    ],
+    "correct_answer": "A pattern that separates read (query) and write (command) operations into different models, potentially with different databases",
+    "topic": "Architecture Patterns",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the Saga pattern in distributed systems?",
+    "options": [
+      "A storytelling pattern for documentation",
+      "A pattern for managing distributed transactions as a sequence of local transactions with compensating actions for rollback",
+      "A logging pattern",
+      "A pattern for sequential API calls"
+    ],
+    "correct_answer": "A pattern for managing distributed transactions as a sequence of local transactions with compensating actions for rollback",
+    "topic": "Distributed Systems",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is a distributed cache?",
+    "options": [
+      "A cache stored on a single server",
+      "A cache spread across multiple nodes (e.g., Redis Cluster, Memcached) for shared high-speed data access in distributed systems",
+      "A CPU cache shared between cores",
+      "A browser cache"
+    ],
+    "correct_answer": "A cache spread across multiple nodes (e.g., Redis Cluster, Memcached) for shared high-speed data access in distributed systems",
+    "topic": "Caching",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is data partitioning and what strategies exist?",
+    "options": [
+      "Splitting data into files only",
+      "Dividing data across nodes using strategies like range-based, hash-based, or directory-based partitioning",
+      "Encrypting data into partitions",
+      "Creating database views"
+    ],
+    "correct_answer": "Dividing data across nodes using strategies like range-based, hash-based, or directory-based partitioning",
+    "topic": "Databases",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between synchronous and asynchronous communication?",
+    "options": [
+      "They are the same",
+      "Synchronous: caller waits for response before continuing; asynchronous: caller proceeds without waiting, response handled later",
+      "Asynchronous is always slower",
+      "Synchronous is only for databases"
+    ],
+    "correct_answer": "Synchronous: caller waits for response before continuing; asynchronous: caller proceeds without waiting, response handled later",
+    "topic": "Communication Patterns",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is service discovery in a microservices architecture?",
+    "options": [
+      "Discovering new services to use",
+      "A mechanism for services to find and communicate with each other dynamically (e.g., Consul, Eureka, DNS-based)",
+      "Discovering bugs in services",
+      "Discovering available APIs on the internet"
+    ],
+    "correct_answer": "A mechanism for services to find and communicate with each other dynamically (e.g., Consul, Eureka, DNS-based)",
+    "topic": "Microservices",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the Adapter design pattern?",
+    "options": [
+      "A pattern for adapting to new programming languages",
+      "A structural pattern that converts the interface of a class into another interface that clients expect, enabling incompatible classes to work together",
+      "A pattern for power adapters",
+      "A pattern for adapting databases"
+    ],
+    "correct_answer": "A structural pattern that converts the interface of a class into another interface that clients expect, enabling incompatible classes to work together",
+    "topic": "Design Patterns",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the Decorator design pattern?",
+    "options": [
+      "A pattern for decorating UIs",
+      "A structural pattern that dynamically adds behavior to objects without modifying their code, using wrapping",
+      "A pattern for code formatting",
+      "A Python-specific pattern"
+    ],
+    "correct_answer": "A structural pattern that dynamically adds behavior to objects without modifying their code, using wrapping",
+    "topic": "Design Patterns",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between a proxy and a decorator pattern?",
+    "options": [
+      "They are the same pattern",
+      "Proxy controls access to an object (security, caching, lazy loading); Decorator adds new behavior to an object",
+      "Proxy adds behavior; Decorator controls access",
+      "Proxy is structural; Decorator is behavioral"
+    ],
+    "correct_answer": "Proxy controls access to an object (security, caching, lazy loading); Decorator adds new behavior to an object",
+    "topic": "Design Patterns",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is idempotency in API design?",
+    "options": [
+      "An API that can only be called once",
+      "Making the same API call multiple times produces the same result without additional side effects",
+      "An API that returns identical data every time",
+      "An API design for identity verification"
+    ],
+    "correct_answer": "Making the same API call multiple times produces the same result without additional side effects",
+    "topic": "API Design",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is a bloom filter?",
+    "options": [
+      "A filter for image processing",
+      "A space-efficient probabilistic data structure for testing set membership – may have false positives but never false negatives",
+      "A database query filter",
+      "A network packet filter"
+    ],
+    "correct_answer": "A space-efficient probabilistic data structure for testing set membership – may have false positives but never false negatives",
+    "topic": "Data Structures",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is a write-ahead log (WAL)?",
+    "options": [
+      "A log written before compilation",
+      "A durability technique where changes are written to a log before being applied to the database, enabling crash recovery",
+      "A logging library",
+      "A pre-written log template"
+    ],
+    "correct_answer": "A durability technique where changes are written to a log before being applied to the database, enabling crash recovery",
+    "topic": "Databases",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the purpose of heartbeat mechanisms in distributed systems?",
+    "options": [
+      "To monitor CPU health",
+      "Periodic signals between nodes to detect failures and ensure liveness of distributed components",
+      "To synchronize clocks",
+      "To balance network load"
+    ],
+    "correct_answer": "Periodic signals between nodes to detect failures and ensure liveness of distributed components",
+    "topic": "Distributed Systems",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the fan-out pattern in system design?",
+    "options": [
+      "A cooling mechanism",
+      "Distributing a single request/event to multiple downstream services or operations for parallel processing",
+      "A network topology",
+      "A database indexing strategy"
+    ],
+    "correct_answer": "Distributing a single request/event to multiple downstream services or operations for parallel processing",
+    "topic": "Architecture Patterns",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is back-pressure in system design?",
+    "options": [
+      "Physical pressure on hardware",
+      "A flow-control mechanism where a system signals upstream to slow down when it cannot keep up with the rate of incoming data",
+      "Database compression",
+      "Network bandwidth limitation"
+    ],
+    "correct_answer": "A flow-control mechanism where a system signals upstream to slow down when it cannot keep up with the rate of incoming data",
+    "topic": "System Design",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between leader-based and leaderless replication?",
+    "options": [
+      "They are the same approach",
+      "Leader-based: one node accepts writes and replicates to followers; leaderless: any node accepts writes, using quorums for consistency",
+      "Leaderless is always faster",
+      "Leader-based is only for SQL databases"
+    ],
+    "correct_answer": "Leader-based: one node accepts writes and replicates to followers; leaderless: any node accepts writes, using quorums for consistency",
+    "topic": "Distributed Systems",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the Bulkhead pattern in resilience engineering?",
+    "options": [
+      "A pattern for building walls",
+      "Isolating system components so that a failure in one does not cascade to others, like compartments in a ship",
+      "A pattern for bulk data processing",
+      "A pattern for building databases"
+    ],
+    "correct_answer": "Isolating system components so that a failure in one does not cascade to others, like compartments in a ship",
+    "topic": "Resilience Patterns",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the purpose of a distributed consensus algorithm (e.g., Raft, Paxos)?",
+    "options": [
+      "To reach consensus on code style",
+      "To enable multiple nodes in a distributed system to agree on a single value or decision despite failures",
+      "To optimize database queries",
+      "To balance network traffic"
+    ],
+    "correct_answer": "To enable multiple nodes in a distributed system to agree on a single value or decision despite failures",
+    "topic": "Distributed Systems",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the difference between optimistic and pessimistic concurrency control?",
+    "options": [
+      "They are the same approach",
+      "Optimistic assumes conflicts are rare and checks at commit time; pessimistic locks resources upfront to prevent conflicts",
+      "Pessimistic is always better for performance",
+      "Optimistic uses locks; pessimistic does not"
+    ],    "correct_answer": "Optimistic assumes conflicts are rare and checks at commit time; pessimistic locks resources upfront to prevent conflicts",
+    "topic": "Concurrency",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the purpose of a reverse proxy in a system architecture?",
+    "options": [
+      "To directly serve database queries to clients",
+      "To sit in front of backend servers and forward client requests, providing load balancing, SSL termination, and caching",
+      "To replace the need for DNS resolution",
+      "To encrypt data at the application layer only"
+    ],
+    "correct_answer": "To sit in front of backend servers and forward client requests, providing load balancing, SSL termination, and caching",
+    "topic": "Infrastructure",
+    "difficulty": "moderate"
+  }
+]

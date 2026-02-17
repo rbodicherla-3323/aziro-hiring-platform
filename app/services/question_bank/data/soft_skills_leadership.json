@@ -1,0 +1,601 @@
+[
+  {
+    "question": "A critical production issue arises outside your area of expertise. As a senior engineer, what should you do?",
+    "options": [
+      "Wait for the responsible team to notice and fix it",
+      "Take ownership by triaging the issue, coordinating with the right people, and driving it to resolution",
+      "Ignore it since it's not your responsibility",
+      "Send an email and wait for a response"
+    ],
+    "correct_answer": "Take ownership by triaging the issue, coordinating with the right people, and driving it to resolution",
+    "topic": "Ownership",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Your team is falling behind on a project deadline. As the tech lead, what is the best approach?",
+    "options": [
+      "Blame the team for not working hard enough",
+      "Reassess priorities, communicate risks to stakeholders transparently, and work with the team to re-plan deliverables",
+      "Ask everyone to work overtime without discussion",
+      "Remove features without telling anyone"
+    ],
+    "correct_answer": "Reassess priorities, communicate risks to stakeholders transparently, and work with the team to re-plan deliverables",
+    "topic": "Leadership",
+    "difficulty": "easy"
+  },
+  {
+    "question": "A junior developer on your team makes a mistake that causes a minor outage. How do you handle it?",
+    "options": [
+      "Publicly reprimand them in the team meeting",
+      "Use it as a learning opportunity – conduct a blameless post-mortem and help them understand the root cause",
+      "Fix it yourself and never mention it",
+      "Report them to HR"
+    ],
+    "correct_answer": "Use it as a learning opportunity – conduct a blameless post-mortem and help them understand the root cause",
+    "topic": "Leadership",
+    "difficulty": "easy"
+  },
+  {
+    "question": "You disagree with a technical decision made by your manager. What is the best approach?",
+    "options": [
+      "Silently comply without voicing concerns",
+      "Present your perspective with data and reasoning, but commit to the final decision once made (disagree and commit)",
+      "Go over your manager's head immediately",
+      "Refuse to implement the decision"
+    ],
+    "correct_answer": "Present your perspective with data and reasoning, but commit to the final decision once made (disagree and commit)",
+    "topic": "Communication",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "You are leading a code review and notice a senior colleague's code has significant issues. What should you do?",
+    "options": [
+      "Approve it to avoid conflict",
+      "Provide constructive, specific, and respectful feedback focused on the code, not the person",
+      "Reject it without explanation",
+      "Complain to the manager instead"
+    ],
+    "correct_answer": "Provide constructive, specific, and respectful feedback focused on the code, not the person",
+    "topic": "Communication",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Two team members have conflicting approaches to solving a problem. As a lead, how do you resolve this?",
+    "options": [
+      "Pick the approach of the person you like more",
+      "Facilitate a discussion where both present their approaches with trade-offs, then make a decision based on technical merit",
+      "Let them argue it out",
+      "Avoid the conflict entirely"
+    ],
+    "correct_answer": "Facilitate a discussion where both present their approaches with trade-offs, then make a decision based on technical merit",
+    "topic": "Conflict Resolution",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "You realize your team's design approach has a fundamental flaw midway through development. What do you do?",
+    "options": [
+      "Continue anyway to avoid wasting the work done",
+      "Raise the concern immediately, assess the impact, and propose alternatives even if it means rework",
+      "Wait until someone else notices",
+      "Silently try to fix it without telling anyone"
+    ],
+    "correct_answer": "Raise the concern immediately, assess the impact, and propose alternatives even if it means rework",
+    "topic": "Ownership",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "A stakeholder requests a feature that conflicts with the team's architecture direction. How do you handle it?",
+    "options": [
+      "Agree immediately to keep them happy",
+      "Explain the technical trade-offs, offer alternatives that align with the architecture, and negotiate a solution",
+      "Refuse outright without explanation",
+      "Implement it but in a hacky way"
+    ],
+    "correct_answer": "Explain the technical trade-offs, offer alternatives that align with the architecture, and negotiate a solution",
+    "topic": "Stakeholder Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How do you ensure knowledge sharing within your team?",
+    "options": [
+      "Keep important information to yourself for job security",
+      "Encourage documentation, conduct tech talks, pair programming, and maintain a culture of open knowledge sharing",
+      "Only share knowledge when asked",
+      "Send long emails with all the information"
+    ],
+    "correct_answer": "Encourage documentation, conduct tech talks, pair programming, and maintain a culture of open knowledge sharing",
+    "topic": "Leadership",
+    "difficulty": "easy"
+  },
+  {
+    "question": "You are asked to mentor a new hire. What is the most effective approach?",
+    "options": [
+      "Give them a manual and let them figure it out",
+      "Set clear expectations, provide regular check-ins, give constructive feedback, and gradually increase responsibility",
+      "Do their work for them to help them",
+      "Assign them only simple tasks indefinitely"
+    ],
+    "correct_answer": "Set clear expectations, provide regular check-ins, give constructive feedback, and gradually increase responsibility",
+    "topic": "Mentoring",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Your team is experiencing low morale after a failed release. As a leader, what do you do?",
+    "options": [
+      "Ignore it and focus on the next release",
+      "Acknowledge the setback, conduct a retrospective to learn from it, celebrate small wins, and reinforce team confidence",
+      "Punish the team for the failure",
+      "Tell them to just work harder"
+    ],
+    "correct_answer": "Acknowledge the setback, conduct a retrospective to learn from it, celebrate small wins, and reinforce team confidence",
+    "topic": "Leadership",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "You notice technical debt is increasing in your codebase. How do you address it as a lead?",
+    "options": [
+      "Ignore it; feature delivery is more important",
+      "Quantify the debt, communicate the risk to management, and allocate time in sprints for systematic remediation",
+      "Rewrite everything from scratch",
+      "Blame the previous team"
+    ],
+    "correct_answer": "Quantify the debt, communicate the risk to management, and allocate time in sprints for systematic remediation",
+    "topic": "Ownership",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How would you handle a situation where you are given ownership of a legacy system you didn't build?",
+    "options": [
+      "Refuse the ownership",
+      "Learn the system, document your findings, identify critical risks, and create an improvement plan",
+      "Immediately start rewriting it",
+      "Complain about the previous team's code"
+    ],
+    "correct_answer": "Learn the system, document your findings, identify critical risks, and create an improvement plan",
+    "topic": "Ownership",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "A cross-team dependency is blocking your team's progress. What is the best approach?",
+    "options": [
+      "Wait passively for the other team to deliver",
+      "Proactively communicate with the other team, escalate if needed, and explore workarounds to unblock your team",
+      "Complain in public channels",
+      "Build the dependency yourself without coordination"
+    ],
+    "correct_answer": "Proactively communicate with the other team, escalate if needed, and explore workarounds to unblock your team",
+    "topic": "Collaboration",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How do you prioritize tasks when everything seems equally important?",
+    "options": [
+      "Work on whatever is easiest first",
+      "Assess impact and urgency, align with business goals, communicate trade-offs to stakeholders, and focus on high-impact items",
+      "Do everything at once",
+      "Ask your manager to decide everything"
+    ],
+    "correct_answer": "Assess impact and urgency, align with business goals, communicate trade-offs to stakeholders, and focus on high-impact items",
+    "topic": "Decision Making",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "You discover a security vulnerability in production. What is your first action?",
+    "options": [
+      "Wait for the next sprint to fix it",
+      "Immediately assess the severity, contain the exposure, notify the security team, and coordinate a fix",
+      "Post about it on social media",
+      "Ignore it if no one has exploited it yet"
+    ],
+    "correct_answer": "Immediately assess the severity, contain the exposure, notify the security team, and coordinate a fix",
+    "topic": "Ownership",
+    "difficulty": "easy"
+  },
+  {
+    "question": "How do you handle receiving critical feedback about your work?",
+    "options": [
+      "Get defensive and argue back",
+      "Listen actively, ask clarifying questions, reflect on the feedback, and incorporate valid points for improvement",
+      "Ignore the feedback completely",
+      "Agree with everything without thinking"
+    ],
+    "correct_answer": "Listen actively, ask clarifying questions, reflect on the feedback, and incorporate valid points for improvement",
+    "topic": "Self-Awareness",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Your team member consistently underperforms. How do you address it?",
+    "options": [
+      "Ignore the issue and hope it resolves itself",
+      "Have a private conversation to understand root causes, set clear improvement goals, provide support, and follow up regularly",
+      "Publicly call them out in meetings",
+      "Immediately escalate to HR"
+    ],
+    "correct_answer": "Have a private conversation to understand root causes, set clear improvement goals, provide support, and follow up regularly",
+    "topic": "People Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "You are asked to lead a project in a technology you are not familiar with. What do you do?",
+    "options": [
+      "Decline the opportunity",
+      "Accept the challenge, invest time in learning the basics, leverage team expertise, and seek mentorship from domain experts",
+      "Pretend you know the technology",
+      "Delegate everything and contribute nothing"
+    ],
+    "correct_answer": "Accept the challenge, invest time in learning the basics, leverage team expertise, and seek mentorship from domain experts",
+    "topic": "Growth Mindset",
+    "difficulty": "easy"
+  },
+  {
+    "question": "How do you make technical decisions when there is no clear right answer?",
+    "options": [
+      "Avoid making a decision",
+      "Gather relevant data, evaluate trade-offs, consult with the team, make a decision, document the rationale, and revisit if needed",
+      "Always go with the newest technology",
+      "Flip a coin"
+    ],
+    "correct_answer": "Gather relevant data, evaluate trade-offs, consult with the team, make a decision, document the rationale, and revisit if needed",
+    "topic": "Decision Making",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How do you balance delivering features quickly vs. maintaining code quality?",
+    "options": [
+      "Always prioritize speed over quality",
+      "Negotiate acceptable trade-offs, maintain minimum quality standards, and plan for refactoring cycles",
+      "Always prioritize quality, even if deadlines are missed",
+      "Let the manager decide without your input"
+    ],
+    "correct_answer": "Negotiate acceptable trade-offs, maintain minimum quality standards, and plan for refactoring cycles",
+    "topic": "Decision Making",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "A project you championed fails. How do you handle the aftermath?",
+    "options": [
+      "Blame external factors",
+      "Take accountability, analyze what went wrong, share learnings transparently, and apply them to future projects",
+      "Pretend it didn't happen",
+      "Quit the team"
+    ],
+    "correct_answer": "Take accountability, analyze what went wrong, share learnings transparently, and apply them to future projects",
+    "topic": "Accountability",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How do you delegate effectively as a tech lead?",
+    "options": [
+      "Do everything yourself to ensure quality",
+      "Match tasks to team members' strengths and growth areas, set clear expectations, and trust them while being available for support",
+      "Assign random tasks to random people",
+      "Delegate only the tasks you don't want to do"
+    ],
+    "correct_answer": "Match tasks to team members' strengths and growth areas, set clear expectations, and trust them while being available for support",
+    "topic": "Leadership",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "You notice a process in your team is inefficient. What do you do?",
+    "options": [
+      "Continue following it because 'that's how it's always been done'",
+      "Propose improvements, gather team input, pilot the change, measure results, and iterate",
+      "Unilaterally change the process without consulting anyone",
+      "Complain about it but take no action"
+    ],
+    "correct_answer": "Propose improvements, gather team input, pilot the change, measure results, and iterate",
+    "topic": "Ownership",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How do you communicate bad news to stakeholders?",
+    "options": [
+      "Avoid telling them as long as possible",
+      "Communicate early, be transparent about the situation, present the impact, and come with a proposed plan",
+      "Sugarcoat the situation",
+      "Let someone else deliver the message"
+    ],
+    "correct_answer": "Communicate early, be transparent about the situation, present the impact, and come with a proposed plan",
+    "topic": "Communication",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "You are leading a distributed team across time zones. How do you ensure effective collaboration?",
+    "options": [
+      "Only communicate via email",
+      "Establish overlapping hours for meetings, use async communication tools, document decisions, and respect different time zones",
+      "Force everyone to work the same hours",
+      "Avoid meetings entirely"
+    ],
+    "correct_answer": "Establish overlapping hours for meetings, use async communication tools, document decisions, and respect different time zones",
+    "topic": "Collaboration",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "A team member wants to introduce a new technology that you are skeptical about. What do you do?",
+    "options": [
+      "Shut down the idea immediately",
+      "Ask them to present a proof of concept with pros, cons, and comparison to alternatives before making a decision",
+      "Let them use it without evaluation",
+      "Ignore the suggestion"
+    ],
+    "correct_answer": "Ask them to present a proof of concept with pros, cons, and comparison to alternatives before making a decision",
+    "topic": "Decision Making",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How do you handle imposter syndrome as an engineer growing into a leadership role?",
+    "options": [
+      "Avoid challenging situations",
+      "Acknowledge the feeling, focus on continuous learning, celebrate progress, and seek feedback from trusted mentors",
+      "Pretend you know everything",
+      "Step down from the leadership role"
+    ],
+    "correct_answer": "Acknowledge the feeling, focus on continuous learning, celebrate progress, and seek feedback from trusted mentors",
+    "topic": "Self-Awareness",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Your team has competing priorities from multiple stakeholders. How do you manage this?",
+    "options": [
+      "Try to do everything simultaneously",
+      "Facilitate a prioritization discussion with stakeholders, align on business impact, and create a transparent roadmap",
+      "Pick the stakeholder who is most senior",
+      "Ignore all stakeholders and work on what you want"
+    ],
+    "correct_answer": "Facilitate a prioritization discussion with stakeholders, align on business impact, and create a transparent roadmap",
+    "topic": "Stakeholder Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "You need to make a decision quickly with incomplete information. What is the best approach?",
+    "options": [
+      "Wait until you have perfect information",
+      "Make the best decision with available data, document assumptions, plan for course correction, and communicate the risks",
+      "Let someone else decide",
+      "Guess randomly"
+    ],
+    "correct_answer": "Make the best decision with available data, document assumptions, plan for course correction, and communicate the risks",
+    "topic": "Decision Making",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How do you foster a culture of accountability in your team?",
+    "options": [
+      "Micromanage everything",
+      "Set clear expectations, empower ownership, celebrate successes, and address issues constructively without blame",
+      "Publicly shame failures",
+      "Create strict penalties for mistakes"
+    ],
+    "correct_answer": "Set clear expectations, empower ownership, celebrate successes, and address issues constructively without blame",
+    "topic": "Leadership",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "You have to choose between shipping a feature with known limitations vs. delaying for a perfect solution. What do you do?",
+    "options": [
+      "Always delay for perfection",
+      "Evaluate the severity of limitations, ship with documented known issues if acceptable, and plan follow-up improvements",
+      "Always ship regardless of limitations",
+      "Let the customer decide"
+    ],
+    "correct_answer": "Evaluate the severity of limitations, ship with documented known issues if acceptable, and plan follow-up improvements",
+    "topic": "Decision Making",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How do you build trust with a new team you are leading?",
+    "options": [
+      "Assert authority immediately",
+      "Listen first, understand the team's challenges, be transparent, deliver on promises, and lead by example",
+      "Try to be everyone's friend",
+      "Change everything on day one"
+    ],
+    "correct_answer": "Listen first, understand the team's challenges, be transparent, deliver on promises, and lead by example",
+    "topic": "Leadership",
+    "difficulty": "easy"
+  },
+  {
+    "question": "A high-performing team member is leaving. How do you handle the transition?",
+    "options": [
+      "Let them leave without a plan",
+      "Conduct thorough knowledge transfer, document critical systems, redistribute responsibilities, and maintain the relationship",
+      "Try to convince them to stay at all costs",
+      "Immediately hire a replacement without transition"
+    ],
+    "correct_answer": "Conduct thorough knowledge transfer, document critical systems, redistribute responsibilities, and maintain the relationship",
+    "topic": "People Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How do you ensure your architectural decisions are well-communicated to the team?",
+    "options": [
+      "Make decisions silently and expect compliance",
+      "Write Architecture Decision Records (ADRs), present the rationale in team discussions, and invite feedback",
+      "Only tell the senior members",
+      "Send a one-line Slack message"
+    ],
+    "correct_answer": "Write Architecture Decision Records (ADRs), present the rationale in team discussions, and invite feedback",
+    "topic": "Communication",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "You observe a pattern of silos forming in your team. What action do you take?",
+    "options": [
+      "Accept it as natural team behavior",
+      "Encourage cross-functional collaboration through rotation, shared ownership, joint reviews, and open communication channels",
+      "Force people to change teams",
+      "Ignore it unless it causes a problem"
+    ],
+    "correct_answer": "Encourage cross-functional collaboration through rotation, shared ownership, joint reviews, and open communication channels",
+    "topic": "Collaboration",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How do you stay technically relevant as you move into a leadership role?",
+    "options": [
+      "Stop coding entirely and focus on management",
+      "Stay hands-on through code reviews, prototyping, reading technical literature, and staying involved in key design decisions",
+      "Only rely on the team's technical input",
+      "Take online courses but never apply the knowledge"
+    ],
+    "correct_answer": "Stay hands-on through code reviews, prototyping, reading technical literature, and staying involved in key design decisions",
+    "topic": "Growth Mindset",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "Your organization is going through a restructuring that affects your team. How do you lead through this change?",
+    "options": [
+      "Keep the team in the dark until everything is decided",
+      "Communicate what you know transparently, acknowledge uncertainty, support the team emotionally, and focus on what you can control",
+      "Promise everything will be fine even if you're unsure",
+      "Encourage the team to look for other jobs"
+    ],
+    "correct_answer": "Communicate what you know transparently, acknowledge uncertainty, support the team emotionally, and focus on what you can control",
+    "topic": "Leadership",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How do you handle a situation where your team's work is not being recognized by upper management?",
+    "options": [
+      "Accept it and move on",
+      "Actively advocate for your team by presenting their achievements, quantifying impact, and ensuring visibility at the right levels",
+      "Tell your team to advocate for themselves",
+      "Complain about management privately"
+    ],
+    "correct_answer": "Actively advocate for your team by presenting their achievements, quantifying impact, and ensuring visibility at the right levels",
+    "topic": "Leadership",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "You need to give difficult feedback to a peer who is also a friend. How do you approach this?",
+    "options": [
+      "Avoid giving the feedback to preserve the friendship",
+      "Separate the professional feedback from the personal relationship, be specific and constructive, and show that you care about their growth",
+      "Give vague hints instead of direct feedback",
+      "Ask someone else to deliver the feedback"
+    ],
+    "correct_answer": "Separate the professional feedback from the personal relationship, be specific and constructive, and show that you care about their growth",
+    "topic": "Communication",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What does 'leading by example' mean in an engineering context?",
+    "options": [
+      "Being the first to arrive and last to leave",
+      "Demonstrating the technical practices, work ethic, communication standards, and values you expect from your team",
+      "Doing all the work yourself",
+      "Always having the right answer"
+    ],
+    "correct_answer": "Demonstrating the technical practices, work ethic, communication standards, and values you expect from your team",
+    "topic": "Leadership",
+    "difficulty": "easy"
+  },
+  {
+    "question": "How do you handle scope creep in a project you are leading?",
+    "options": [
+      "Accept all additional requests",
+      "Track changes against the original scope, evaluate impact on timeline and resources, and negotiate priorities with stakeholders",
+      "Refuse all changes",
+      "Add the scope silently and hope the team can absorb it"
+    ],
+    "correct_answer": "Track changes against the original scope, evaluate impact on timeline and resources, and negotiate priorities with stakeholders",
+    "topic": "Project Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "You have an innovative idea that could significantly improve the product. How do you champion it?",
+    "options": [
+      "Keep it to yourself until the right moment",
+      "Build a prototype or proof of concept, present data-backed benefits, address concerns, and rally support from stakeholders",
+      "Implement it without approval",
+      "Just mention it once in a meeting and hope someone notices"
+    ],
+    "correct_answer": "Build a prototype or proof of concept, present data-backed benefits, address concerns, and rally support from stakeholders",
+    "topic": "Innovation",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How do you approach continuous improvement as a leader?",
+    "options": [
+      "Only make changes when there's a crisis",
+      "Regular retrospectives, measuring outcomes, soliciting feedback, experimenting with improvements, and iterating on processes",
+      "Change things constantly without measuring results",
+      "Follow the same process forever"
+    ],
+    "correct_answer": "Regular retrospectives, measuring outcomes, soliciting feedback, experimenting with improvements, and iterating on processes",
+    "topic": "Leadership",
+    "difficulty": "easy"
+  },
+  {
+    "question": "A vendor delivers a component that doesn't meet the agreed specifications. What do you do?",
+    "options": [
+      "Accept it and work around the issues",
+      "Document the gaps, communicate concerns formally, negotiate corrections or alternatives, and escalate if necessary",
+      "Blame your team for the vendor's failure",
+      "Switch vendors immediately without communication"
+    ],
+    "correct_answer": "Document the gaps, communicate concerns formally, negotiate corrections or alternatives, and escalate if necessary",
+    "topic": "Stakeholder Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How do you promote psychological safety in your engineering team?",
+    "options": [
+      "Discourage questions to save time in meetings",
+      "Encourage open discussion, welcome diverse opinions, respond non-judgmentally to mistakes, and actively listen to all team members",
+      "Only allow senior members to speak in meetings",
+      "Penalize team members for admitting mistakes"
+    ],    "correct_answer": "Encourage open discussion, welcome diverse opinions, respond non-judgmentally to mistakes, and actively listen to all team members",
+    "topic": "Leadership",
+    "difficulty": "easy"
+  },
+  {
+    "question": "A critical production issue occurs during your vacation. What is the most appropriate response?",
+    "options": [
+      "Ignore it since you are on vacation",
+      "Acknowledge the issue, ensure the on-call team is handling it, offer guidance if needed, and follow up when you return",
+      "Immediately cancel your vacation and work 24/7",
+      "Blame the team for not preventing it"
+    ],
+    "correct_answer": "Acknowledge the issue, ensure the on-call team is handling it, offer guidance if needed, and follow up when you return",
+    "topic": "Ownership",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How should a technical lead handle a situation where two team members have a persistent interpersonal conflict?",
+    "options": [
+      "Ignore it and hope it resolves itself",
+      "Address it privately with each person, understand both perspectives, facilitate a constructive conversation, and set clear expectations for professional behavior",
+      "Take sides with the more senior team member",
+      "Immediately escalate to HR without any direct intervention"
+    ],
+    "correct_answer": "Address it privately with each person, understand both perspectives, facilitate a constructive conversation, and set clear expectations for professional behavior",
+    "topic": "Conflict Resolution",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the best approach when you realize your initial technical decision was wrong and the team has already invested significant effort?",
+    "options": [
+      "Continue with the wrong approach to avoid admitting a mistake",
+      "Transparently acknowledge the mistake, analyze the cost of continuing vs. pivoting, present data-driven alternatives, and make a corrective decision",
+      "Blame the team for not catching the issue earlier",
+      "Quietly change direction without explaining why"
+    ],
+    "correct_answer": "Transparently acknowledge the mistake, analyze the cost of continuing vs. pivoting, present data-driven alternatives, and make a corrective decision",
+    "topic": "Ownership",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "How do you effectively delegate tasks as a technical lead while maintaining accountability?",
+    "options": [
+      "Assign tasks randomly and check results only at the deadline",
+      "Match tasks to team members' strengths and growth areas, set clear expectations and milestones, provide support, and review progress regularly",
+      "Do all critical tasks yourself to ensure quality",
+      "Delegate everything and take no responsibility for outcomes"
+    ],
+    "correct_answer": "Match tasks to team members' strengths and growth areas, set clear expectations and milestones, provide support, and review progress regularly",
+    "topic": "Leadership",
+    "difficulty": "moderate"
+  }
+]
