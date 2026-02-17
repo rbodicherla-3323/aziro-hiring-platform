@@ -149,23 +149,19 @@
       </div>
 
       <button type="submit" class="btn">Sign In</button>
-    </form>
-
-    <!-- DIVIDER -->
+    </form>    <!-- DIVIDER -->
     <div class="divider">OR</div>
 
-    <!-- GOOGLE LOGIN -->
-    <form action="{{ url_for('auth.google_login') }}" method="GET">
-      <button type="submit" class="btn google-btn">
-        Continue with Google
+    <!-- MICROSOFT LOGIN -->
+    <form action="{{ url_for('auth.microsoft_login') }}" method="GET">
+      <button type="submit" class="btn" style="background: #0078d4; color: #fff;">
+        Continue with Microsoft
       </button>
     </form>
 
-    <!-- FORGOT PASSWORD -->
+    <!-- INFO -->
     <div class="links">
-      <a href="{{ url_for('auth.forgot_password_google') }}">
-        Forgot password?
-      </a>
+      <small style="color: #999;">Only @aziro.com accounts are allowed</small>
     </div>
 
   </div>

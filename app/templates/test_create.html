@@ -197,9 +197,7 @@
         .addEventListener("click", function () {
             this.closest(".candidate-row").remove();
             updateRemoveButtons();
-        });
-
-    const form = document.getElementById("generateForm");
+        });    const form = document.getElementById("generateForm");
     const overlay = document.getElementById("loadingOverlay");
     const button = document.getElementById("generateBtn");
 
@@ -218,24 +216,14 @@
         });
         
         if (!isValid) {
+            e.preventDefault();
             if (typeof showToast === 'function') showToast('Please fill all required fields', 'warning');
             return;
         }
         
         button.disabled = true;
         overlay.classList.remove("d-none");
-        
-        // Simulate test generation
-        setTimeout(() => {
-            overlay.classList.add("d-none");
-            button.disabled = false;
-            if (typeof showToast === 'function') showToast('Test generated successfully! Redirecting...', 'success');
-            
-            // Redirect to generated tests page after 1 second
-            setTimeout(() => {
-                window.location.href = '/generated-tests';
-            }, 1000);
-        }, 2000);
+        // Let the form submit naturally (POST)
     });
 </script>
 
