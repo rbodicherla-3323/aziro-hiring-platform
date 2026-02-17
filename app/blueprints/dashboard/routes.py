@@ -177,6 +177,10 @@ def create_test():
     roles = request.form.getlist("role[]")
     domains = request.form.getlist("domain[]")
 
+    # Get file uploads (resume & JD)
+    resume_files = request.files.getlist("resume[]")
+    jd_files = request.files.getlist("jd[]")
+
     user_email = _current_user_email()
     batch_id = f"batch_{uuid.uuid4().hex[:8]}"
 
@@ -185,6 +189,16 @@ def create_test():
         email = emails[i].strip()
         role_label = roles[i].strip()
         domain = domains[i].strip() if i < len(domains) else "None"
+
+        # Save uploaded files if present
+        resume_path = None
+        jd_path = None
+        if i < len(resume_files) and resume_files[i] and resume_files[i].filename:
+            from app.blueprints.tests.routes import save_uploaded_file
+            resume_path = save_uploaded_file(resume_files[i], name, "resume")
+        if i < len(jd_files) and jd_files[i] and jd_files[i].filename:
+            from app.blueprints.tests.routes import save_uploaded_file
+            jd_path = save_uploaded_file(jd_files[i], name, "jd")
 
         if not name or not email or not role_label:
             continue
@@ -280,9 +294,7 @@ def create_test():
                 "label": round_label,
                 "url": test_url,
                 "type": "mcq",
-            }
-
-        # Store in generated tests
+            }        # Store in generated tests
         add_generated_test({
             "name": name,
             "email": email,
@@ -290,6 +302,8 @@ def create_test():
             "role_key": role_key,
             "batch_id": batch_id,
             "tests": tests,
+            "resume_path": resume_path,
+            "jd_path": jd_path,
             "created_by": user_email,
             "created_at": datetime.now(timezone.utc).isoformat(),
         })

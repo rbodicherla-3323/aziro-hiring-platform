@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% block title %}Generate Test{% endblock %}
 {% block breadcrumb %}Create Test{% endblock %}
 
@@ -8,7 +8,7 @@
     Create assessment links for single or multiple candidates.
 </p>
 
-<form method="POST" id="generateForm">
+<form method="POST" id="generateForm" enctype="multipart/form-data">
 
 <!-- ================= CANDIDATE MODE ================= -->
 <div class="card shadow-sm mb-4">
@@ -51,18 +51,40 @@
                          width="14" height="14"
                          fill="#dc3545"
                          viewBox="0 0 16 16">
-                        <path d="M5.5 5.5A.5.5 0 0 1 6 5h4a.5.5 0 0 1 
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 5h4a.5.5 0 0 1
                         .5.5v7a.5.5 0 0 1-.5.5H6a.5.5 0 0 1-.5-.5v-7z"/>
                         <path fill-rule="evenodd"
-                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 
+                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2
                               2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1 0-2H5.5l.5-.5h4l.5.5h3.5a1 1 0 0 1 1 1z"/>
                     </svg>
                 </button>
 
+                <!-- RESUME AND JD UPLOAD SECTION -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Resume (PDF)</label>
+                        <input type="file" class="form-control resume-upload"
+                               name="resume[]" accept=".pdf,.doc,.docx"
+                               title="Filename"
+                               data-candidate-index="">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Job Description (JD)</label>
+                        <input type="file" class="form-control jd-upload"
+                               name="jd[]" accept=".pdf,.doc,.docx,.txt"
+                               title="Filename"
+                               data-candidate-index="">
+                    </div>
+                </div>
+
+                <!-- CANDIDATE DETAILS -->
                 <div class="row align-items-end">
                     <div class="col-md-3">
                         <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control"
+                        <input type="text" class="form-control candidate-name"
                                name="name[]"
                                placeholder="John Doe"
                                required>
@@ -70,24 +92,25 @@
 
                     <div class="col-md-3">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control"
+                        <input type="email" class="form-control candidate-email"
                                name="email[]"
-                               placeholder="john.doe@email.com"                               required>
+                               placeholder="john.doe@email.com"
+                               required>
                     </div>
 
                     <div class="col-md-3">
                         <label class="form-label">Role</label>
                         <select class="form-select" name="role[]" required>
                             <option value="">Select role</option>
-                            <optgroup label="Entry Level (0–2 Years)">
-                                <option>Python Entry Level (0–2 Years)</option>
-                                <option>Java Entry Level (0–2 Years)</option>
-                                <option>JavaScript Entry Level (0–2 Years)</option>
+                            <optgroup label="Entry Level (0-2 Years)">
+                                <option>Python Entry Level (0-2 Years)</option>
+                                <option>Java Entry Level (0-2 Years)</option>
+                                <option>JavaScript Entry Level (0-2 Years)</option>
                             </optgroup>
-                            <optgroup label="Mid / Senior Level (2–5 Years)">
-                                <option>BMC Engineer (2–5 Years)</option>
-                                <option>Staff Engineer – Linux Kernel &amp; Device Driver (3–5 Years)</option>
-                                <option>Systems Architect – C++ (3–5 Years)</option>
+                            <optgroup label="Mid / Senior Level (2-5 Years)">
+                                <option>BMC Engineer (2-5 Years)</option>
+                                <option>Staff Engineer - Linux Kernel &amp; Device Driver (3-5 Years)</option>
+                                <option>Systems Architect - C++ (3-5 Years)</option>
                             </optgroup>
                             <optgroup label="Experienced (4+ Years)">
                                 <option>Python QA / System / Linux (4+ Years)</option>
@@ -128,7 +151,7 @@
     <a href="/dashboard" class="btn btn-outline-secondary">
         Cancel
     </a>
-    <button class="btn btn-primary" id="generateBtn">
+    <button type="submit" class="btn btn-primary" id="generateBtn">
         <i class="bi bi-lightning-charge me-1"></i>Generate Test
     </button>
 </div>
@@ -147,7 +170,7 @@
 <div id="loadingOverlay" class="loading-overlay d-none">
     <div class="loading-card text-center">
         <div class="spinner-border text-primary mb-3" role="status"></div>
-        <h6 class="mb-1">Generating tests…</h6>
+        <h6 class="mb-1">Generating tests...</h6>
         <p class="text-muted small mb-0">
             Please do not refresh or click back
         </p>
@@ -183,8 +206,10 @@
 
     addCandidateBtn.addEventListener("click", () => {
         const newRow = candidateContainer.firstElementChild.cloneNode(true);
-        newRow.querySelectorAll("input").forEach(i => i.value = "");
+        newRow.querySelectorAll("input").forEach(i => { i.value = ""; });
         newRow.querySelectorAll("select").forEach(s => s.selectedIndex = 0);
+
+        setupFileInputListeners(newRow);
 
         newRow.querySelector(".removeCandidateBtn")
               .addEventListener("click", () => newRow.remove());
@@ -193,37 +218,109 @@
         updateRemoveButtons();
     });
 
-    document.querySelector(".removeCandidateBtn")
-        .addEventListener("click", function () {
-            this.closest(".candidate-row").remove();
-            updateRemoveButtons();
-        });    const form = document.getElementById("generateForm");
+    function setupFileInputListeners(rowElement) {
+        const resumeInput = rowElement.querySelector(".resume-upload");
+        const jdInput = rowElement.querySelector(".jd-upload");
+        const nameField = rowElement.querySelector(".candidate-name");
+        const emailField = rowElement.querySelector(".candidate-email");
+        const roleField = rowElement.querySelector('select[name="role[]"]');
+
+        if (resumeInput) {
+            resumeInput.addEventListener("change", function () {
+                if (this.files.length > 0) {
+                    const file = this.files[0];
+                    const filename = file.name;
+                    const nameFromFile = filename
+                        .replace(/\.[^/.]+$/, "")
+                        .replace(/[_-]/g, " ")
+                        .trim();
+                    if (nameField && !nameField.value.trim()) {
+                        nameField.value = nameFromFile;
+                    }
+                    const formData = new FormData();
+                    formData.append("resume", file);
+                    fetch("/api/extract-resume", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.email && emailField && !emailField.value.trim()) {
+                            emailField.value = data.email;
+                        }
+                        if (data.name && nameField && !nameField.value.trim()) {
+                            nameField.value = data.name;
+                        }
+                    })
+                    .catch(error => console.log("Resume parsing result:", error));
+                }
+            });
+        }
+
+        if (jdInput) {
+            jdInput.addEventListener("change", function () {
+                if (this.files.length > 0) {
+                    const file = this.files[0];
+                    const formData = new FormData();
+                    formData.append("jd", file);
+                    fetch("/api/extract-jd-role", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.role && roleField && !roleField.value) {
+                            const options = roleField.querySelectorAll("option");
+                            for (let option of options) {
+                                if (option.textContent === data.role) {
+                                    roleField.value = data.role;
+                                    break;
+                                }
+                            }
+                        }
+                    })
+                    .catch(error => console.log("JD role extraction result:", error));
+                }
+            });
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const firstRow = candidateContainer.querySelector(".candidate-row");
+        if (firstRow) {
+            setupFileInputListeners(firstRow);
+        }
+        const firstRemoveBtn = document.querySelector(".removeCandidateBtn");
+        if (firstRemoveBtn) {
+            firstRemoveBtn.addEventListener("click", function () {
+                this.closest(".candidate-row").remove();
+                updateRemoveButtons();
+            });
+        }
+    });
+
+    const form = document.getElementById("generateForm");
     const overlay = document.getElementById("loadingOverlay");
     const button = document.getElementById("generateBtn");
 
     form.addEventListener("submit", (e) => {
-        
-        // Validate form
+        e.preventDefault();
         const nameInputs = document.querySelectorAll('input[name="name[]"]');
         const emailInputs = document.querySelectorAll('input[name="email[]"]');
         const roleSelects = document.querySelectorAll('select[name="role[]"]');
-        
         let isValid = true;
         nameInputs.forEach((input, i) => {
             if (!input.value.trim() || !emailInputs[i].value.trim() || !roleSelects[i].value) {
                 isValid = false;
             }
         });
-        
         if (!isValid) {
-            e.preventDefault();
             if (typeof showToast === 'function') showToast('Please fill all required fields', 'warning');
             return;
         }
-        
         button.disabled = true;
         overlay.classList.remove("d-none");
-        // Let the form submit naturally (POST)
+        setTimeout(() => { form.submit(); }, 1000);
     });
 </script>
 
