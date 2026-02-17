@@ -1,4 +1,7 @@
 # app/utils/role_normalizer.py
+import html
+
+
 ROLE_NAME_TO_KEY = {
     "Python Entry Level (0–2 Years)": "python_entry",
     "Java Entry Level (0–2 Years)": "java_entry",
@@ -16,22 +19,23 @@ ROLE_NAME_TO_KEY = {
 }
 
 
+def _normalize_role_label(value: str) -> str:
+    text = html.unescape(str(value or ""))
+    text = text.replace("\u2013", "-").replace("\u2014", "-")
+    text = text.replace("â€“", "-").replace("â€”", "-")
+    text = " ".join(text.split())
+    return text.strip().lower()
+
+
+_NORMALIZED_ROLE_NAME_TO_KEY = {
+    _normalize_role_label(label): role_key
+    for label, role_key in ROLE_NAME_TO_KEY.items()
+}
+
+
 def normalize_role(role_label: str) -> str:
-    """Normalize a role label to its key, tolerant of hyphen/en-dash differences."""
-    if not role_label:
-        return None
-    # Direct match first
-    result = ROLE_NAME_TO_KEY.get(role_label)
-    if result:
-        return result
-    # Normalize dashes: replace regular hyphen with en-dash and try again
-    normalized = role_label.replace("-", "\u2013")
-    result = ROLE_NAME_TO_KEY.get(normalized)
-    if result:
-        return result
-    # Normalize dashes: replace en-dash with regular hyphen and try again
-    normalized = role_label.replace("\u2013", "-")
-    for key, value in ROLE_NAME_TO_KEY.items():
-        if key.replace("\u2013", "-") == normalized:
-            return value
-    return None
+    direct = ROLE_NAME_TO_KEY.get(role_label)
+    if direct:
+        return direct
+
+    return _NORMALIZED_ROLE_NAME_TO_KEY.get(_normalize_role_label(role_label))

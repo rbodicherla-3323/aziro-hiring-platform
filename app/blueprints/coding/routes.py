@@ -307,7 +307,7 @@ def _resolve_executable(cmd_name):
 
     # Environment-driven hints first.
     hinted_roots = []
-    for env_key in ("JAVA_HOME", "WINLIBS_HOME", "MINGW_HOME", "GCC_HOME"):
+    for env_key in ("JAVA_HOME", "WINLIBS_HOME", "MINGW_HOME", "GCC_HOME", "PYTHON_HOME", "NODE_HOME"):
         env_val = (os.environ.get(env_key) or "").strip().strip('"')
         if env_val:
             hinted_roots.append(env_val)
@@ -343,6 +343,16 @@ def _resolve_executable(cmd_name):
             r"D:\Downloads\winlibs*\mingw64\bin\g++.exe",
             r"C:\winlibs*\mingw64\bin\g++.exe",
         ],
+        "python": [
+            r"C:\Users\*\AppData\Local\Programs\Python\Python*\python.exe",
+            r"C:\Python*\python.exe",
+        ],
+        "node": [
+            r"C:\Program Files\nodejs\node.exe",
+        ],
+        "py": [
+            r"C:\Windows\py.exe",
+        ],
     }
     for pattern in patterns_by_cmd.get(cmd_name, []):
         matches = sorted(glob.glob(pattern))
@@ -355,11 +365,19 @@ def _resolve_executable(cmd_name):
 
 
 def _compiler_commands():
+    python_cmd = _resolve_executable("python")
+    if python_cmd == "python":
+        py_launcher = _resolve_executable("py")
+        if py_launcher != "py" or shutil.which("py"):
+            python_cmd = py_launcher
+
     return {
         "javac": _resolve_executable("javac"),
         "java": _resolve_executable("java"),
         "gcc": _resolve_executable("gcc"),
         "g++": _resolve_executable("g++"),
+        "python": python_cmd,
+        "node": _resolve_executable("node"),
     }
 
 
@@ -436,6 +454,22 @@ def _cpp_escape(value):
 
 def _c_escape(value):
     return _java_escape(value)
+
+
+def _resolve_callable_name(func_info, default_name="solve"):
+    if isinstance(func_info, dict):
+        name = str(func_info.get("name") or "").strip()
+        if name:
+            return name
+        signature = str(func_info.get("signature") or func_info.get("method") or "")
+    else:
+        signature = str(func_info or "")
+
+    match = re.search(r"([A-Za-z_]\w*)\s*\(", signature)
+    if match:
+        return match.group(1).strip()
+
+    return default_name
 
 
 def _java_object_literal(value):
@@ -828,15 +862,56 @@ def _build_c_driver(code, func_info, test_inputs, expected_output):
     )
 
 
+def _build_python_driver(code, func_info, test_inputs):
+    func_name = _resolve_callable_name(func_info, "solve")
+    args_json = json.dumps(test_inputs or [], ensure_ascii=False)
+
+    return (
+        f"{code}\n\n"
+        "import json\n\n"
+        "if __name__ == '__main__':\n"
+        f"    __args = json.loads({args_json!r})\n"
+        f"    __result = {func_name}(*__args)\n"
+        "    print(json.dumps(__result, ensure_ascii=False))\n"
+    )
+
+
+def _build_javascript_driver(code, func_info, test_inputs):
+    func_name = _resolve_callable_name(func_info, "solve")
+    args_json = json.dumps(test_inputs or [], ensure_ascii=False)
+    args_literal = json.dumps(args_json, ensure_ascii=False)
+
+    return (
+        f"{code}\n\n"
+        "(async () => {\n"
+        f"  const __args = JSON.parse({args_literal});\n"
+        f"  const __result = await Promise.resolve({func_name}(...__args));\n"
+        "  const __json = JSON.stringify(__result === undefined ? null : __result);\n"
+        "  process.stdout.write(__json);\n"
+        "})().catch((err) => {\n"
+        "  console.error(err && err.stack ? err.stack : String(err));\n"
+        "  process.exit(1);\n"
+        "});\n"
+    )
+
+
 def _build_driver_code(language, code, question, test_inputs, expected_output=None):
     """Build a strict typed driver around candidate code for one test case."""
-    func_info = question.get("function", {}).get(language, {})
-    if language == "java":
+    normalized_language = str(language or "").lower()
+    if normalized_language == "js":
+        normalized_language = "javascript"
+
+    func_info = question.get("function", {}).get(normalized_language, {})
+    if normalized_language == "java":
         return _build_java_driver(code, func_info, test_inputs or [])
-    if language == "cpp":
+    if normalized_language == "cpp":
         return _build_cpp_driver(code, func_info, test_inputs or [])
-    if language == "c":
+    if normalized_language == "c":
         return _build_c_driver(code, func_info, test_inputs or [], expected_output)
+    if normalized_language == "python":
+        return _build_python_driver(code, func_info, test_inputs or [])
+    if normalized_language == "javascript":
+        return _build_javascript_driver(code, func_info, test_inputs or [])
     return code
 
 
@@ -844,6 +919,9 @@ def _compile_and_run(language, code, stdin_input, work_dir):
     """Compile (if needed) and run the code, returning (success, stdout, stderr, exec_time_ms)."""
     start_t = _time.time()
     compilers = _compiler_commands()
+    language = str(language or "").lower()
+    if language == "js":
+        language = "javascript"
 
     if language == "java":
         src_file = os.path.join(work_dir, "Main.java")
@@ -915,6 +993,36 @@ def _compile_and_run(language, code, stdin_input, work_dir):
             return False, run.stdout, f"Runtime Error:\n{run.stderr}", elapsed
         return True, run.stdout, run.stderr, elapsed
 
+    elif language == "python":
+        src_file = os.path.join(work_dir, "solution.py")
+        with open(src_file, "w", encoding="utf-8") as f:
+            f.write(code)
+
+        run = subprocess.run(
+            [compilers["python"], src_file],
+            input=stdin_input, capture_output=True, text=True,
+            timeout=RUN_TIMEOUT, cwd=work_dir
+        )
+        elapsed = int((_time.time() - start_t) * 1000)
+        if run.returncode != 0:
+            return False, run.stdout, f"Runtime Error:\n{run.stderr}", elapsed
+        return True, run.stdout, run.stderr, elapsed
+
+    elif language == "javascript":
+        src_file = os.path.join(work_dir, "solution.js")
+        with open(src_file, "w", encoding="utf-8") as f:
+            f.write(code)
+
+        run = subprocess.run(
+            [compilers["node"], src_file],
+            input=stdin_input, capture_output=True, text=True,
+            timeout=RUN_TIMEOUT, cwd=work_dir
+        )
+        elapsed = int((_time.time() - start_t) * 1000)
+        if run.returncode != 0:
+            return False, run.stdout, f"Runtime Error:\n{run.stderr}", elapsed
+        return True, run.stdout, run.stderr, elapsed
+
     return False, "", "Unsupported language", 0
 
 
@@ -963,6 +1071,24 @@ def _parse_candidate_output(raw_output):
             return text
 
     return text
+
+
+def _is_dynamic_syntax_error(language, stderr_text):
+    lang = str(language or "").lower()
+    if lang == "js":
+        lang = "javascript"
+
+    text = str(stderr_text or "")
+    if not text:
+        return False
+
+    if lang == "python":
+        return any(marker in text for marker in ("SyntaxError", "IndentationError", "TabError"))
+
+    if lang == "javascript":
+        return "SyntaxError" in text
+
+    return False
 
 
 def _outputs_match(expected, actual, float_tol=1e-6):
@@ -1048,6 +1174,9 @@ def run_code(session_id):
     CodingSessionService.save_code(session_id, code)
 
     language = CodingSessionService.get_language(session_id)
+    normalized_language = str(language or "").lower()
+    if normalized_language == "js":
+        normalized_language = "javascript"
     question = CodingSessionService.get_question(session_id)
     public_tests = CodingSessionService.get_public_tests(session_id)
     hidden_tests = CodingSessionService.get_hidden_tests(session_id)
@@ -1108,7 +1237,14 @@ def run_code(session_id):
                     "test_results": [],
                 })
             except FileNotFoundError:
-                compiler_info = {"java": "JDK (javac + java)", "c": "GCC (gcc)", "cpp": "G++ (g++)"}
+                compiler_info = {
+                    "java": "JDK (javac + java)",
+                    "c": "GCC (gcc)",
+                    "cpp": "G++ (g++)",
+                    "python": "Python 3 runtime (python/py)",
+                    "javascript": "Node.js runtime (node)",
+                    "js": "Node.js runtime (node)",
+                }
                 return jsonify({
                     "status": "error",
                     "output": f"Warning: {language.upper()} compiler not found on this machine.\n\n"
@@ -1146,10 +1282,16 @@ def run_code(session_id):
                 )
                 total_time += elapsed
 
-                if not success and "Compilation Error" in stderr:
-                    # Compilation failed - report it and stop
-                    compilation_error = stderr
-                    break
+                if not success:
+                    # Static languages: stop at compilation errors.
+                    if "Compilation Error" in stderr:
+                        compilation_error = stderr
+                        break
+
+                    # Dynamic languages: treat syntax errors like compile-time errors.
+                    if _is_dynamic_syntax_error(normalized_language, stderr):
+                        compilation_error = stderr or "Syntax Error: Code execution failed."
+                        break
 
                 actual_obj = _parse_candidate_output(stdout)
                 passed = success and _outputs_match(tc_expected_obj, actual_obj)
@@ -1177,7 +1319,14 @@ def run_code(session_id):
                     "time_ms": RUN_TIMEOUT * 1000,
                 })
             except FileNotFoundError:
-                compiler_info = {"java": "JDK (javac + java)", "c": "GCC (gcc)", "cpp": "G++ (g++)"}
+                compiler_info = {
+                    "java": "JDK (javac + java)",
+                    "c": "GCC (gcc)",
+                    "cpp": "G++ (g++)",
+                    "python": "Python 3 runtime (python/py)",
+                    "javascript": "Node.js runtime (node)",
+                    "js": "Node.js runtime (node)",
+                }
                 return jsonify({
                     "status": "error",
                     "output": f"Warning: {language.upper()} compiler not found on this machine.\n\n"
