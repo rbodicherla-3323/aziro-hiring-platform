@@ -1,212 +1,261 @@
 {% extends "base.html" %}
-{% block title %}Dashboard{% endblock %}
-{% block breadcrumb %}Dashboard{% endblock %}
+
+{% block title %}Dashboard — Aziro Hiring Platform{% endblock %}
+
+{% block head %}
+<style>
+    .stat-card {
+        border: none;
+        border-radius: 14px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        transition: transform 0.2s;
+    }
+    .stat-card:hover { transform: translateY(-2px); }
+    .stat-icon {
+        width: 48px; height: 48px;
+        border-radius: 12px;
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto 12px;
+    }
+    .section-header {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #0d3b66;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #e8f4fd;
+    }
+    .filter-btn {
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        border: 1px solid #dee2e6;
+        background: #fff;
+        color: #495057;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+    }
+    .filter-btn:hover { border-color: #0d3b66; color: #0d3b66; }
+    .filter-btn.active {
+        background: #0d3b66;
+        color: #fff;
+        border-color: #0d3b66;
+    }
+    .overview-card {
+        background: linear-gradient(135deg, #0d3b66 0%, #1a5276 100%);
+        color: #fff;
+        border-radius: 14px;
+        padding: 20px 24px;
+    }
+    .overview-card .stat-value {
+        font-size: 1.8rem;
+        font-weight: 800;
+        line-height: 1;
+    }
+    .overview-card .stat-label {
+        font-size: 0.75rem;
+        opacity: 0.8;
+        margin-top: 4px;
+    }
+    .overview-mini {
+        display: flex;
+        gap: 24px;
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(255,255,255,0.15);
+    }
+    .overview-mini .mini-stat { text-align: center; flex: 1; }
+    .overview-mini .mini-value { font-size: 1.2rem; font-weight: 700; }
+    .overview-mini .mini-label { font-size: 0.7rem; opacity: 0.7; }
+</style>
+{% endblock %}
 
 {% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <h4 class="fw-bold text-dark mb-0"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h4>
+            <p class="text-muted mb-0" style="font-size:0.85rem;">Welcome back, {{ user_name }}</p>
+        </div>
+    </div>
 
-<!-- ================= BANNER IMAGE ================= -->
-<div class="dashboard-banner mb-4">
-    <img src="{{ url_for('static', filename='images/aziro_banner.jpg') }}"
-         alt="Aziro Hiring Banner"
-         class="img-fluid rounded shadow-sm w-100"
-         style="max-height: 200px; object-fit: cover;">
-</div>
-
-<!-- ================= WELCOME MESSAGE ================= -->
-<h4 class="mb-2">Welcome to Aziro Hiring Platform</h4>
-<p class="text-muted mb-2">
-    Manage candidate assessments, evaluations, and reports from a single place.
-</p>
-
-<!-- ================= SESSION SUMMARY ================= -->
-<div class="d-flex align-items-center mb-4">
-    <span class="badge bg-primary-subtle text-primary px-3 py-2">
-        <i class="bi bi-clock-history me-1"></i>Present Session
-    </span>
-</div>
-
-<!-- ================= KPI SUMMARY CARDS ================= -->
-<!-- Note: All values below will be dynamically populated from database -->
-<div class="row g-3 mb-4">
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm h-100 kpi-card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start">
+    <!-- Today's Overview (All Users) -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="overview-card">
+                <div style="font-size:0.8rem; opacity:0.8; margin-bottom:8px;">
+                    <i class="fas fa-globe me-1"></i> Today's Overview (All Users)
+                </div>
+                <div class="d-flex align-items-end gap-3">
                     <div>
-                        <div class="text-muted small mb-1">Total Candidates</div>
-                        <h3 class="mb-1 fw-bold" id="kpiTotalCandidates">{{ total_candidates | default(3) }}</h3>
-                        <small class="text-primary"><i class="bi bi-person-check me-1"></i><span id="kpiAttemptingTest">{{ attempting_test | default(1) }}</span> attempting test</small>
+                        <div class="stat-value">{{ today_stats.total_candidates }}</div>
+                        <div class="stat-label">Candidates Today</div>
                     </div>
-                    <div class="kpi-icon bg-primary-subtle text-primary">
-                        <i class="bi bi-people"></i>
+                </div>
+                <div class="overview-mini">
+                    <div class="mini-stat">
+                        <div class="mini-value">{{ today_stats.total_tests }}</div>
+                        <div class="mini-label">Total Tests</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-value">{{ today_stats.completed }}</div>
+                        <div class="mini-label">Completed</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-value">{{ today_stats.pending }}</div>
+                        <div class="mini-label">Pending</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="overview-card" style="background: linear-gradient(135deg, #1a5276 0%, #1e6f91 100%);">
+                <div style="font-size:0.8rem; opacity:0.8; margin-bottom:8px;">
+                    <i class="fas fa-user me-1"></i> My Activity Today
+                </div>
+                <div class="d-flex align-items-end gap-3">
+                    <div>
+                        <div class="stat-value">{{ my_today_stats.total_candidates }}</div>
+                        <div class="stat-label">My Candidates Today</div>
+                    </div>
+                </div>
+                <div class="overview-mini">
+                    <div class="mini-stat">
+                        <div class="mini-value">{{ my_today_stats.total_tests }}</div>
+                        <div class="mini-label">Tests Created</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-value">{{ my_today_stats.completed }}</div>
+                        <div class="mini-label">Completed</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-value">{{ my_today_stats.pending }}</div>
+                        <div class="mini-label">Pending</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm h-100 kpi-card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <div class="text-muted small mb-1">Tests Sent</div>
-                        <h3 class="mb-1 fw-bold" id="kpiTestsSent">{{ tests_sent | default(3) }}</h3>
-                        <small class="text-warning"><i class="bi bi-send me-1"></i>Links sent to <span id="kpiLinksSent">{{ links_sent | default(3) }}</span></small>
+
+    <!-- My Stats with Date Filter -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm" style="border-radius:14px;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="section-header mb-0" style="border:none; padding:0;">
+                            <i class="fas fa-chart-line me-1"></i> My Statistics
+                        </div>
+                        <div class="d-flex gap-2 align-items-center flex-wrap">
+                            <a href="{{ url_for('dashboard.dashboard', filter='today') }}"
+                               class="filter-btn {% if date_filter == 'today' %}active{% endif %}">Today</a>
+                            <a href="{{ url_for('dashboard.dashboard', filter='24h') }}"
+                               class="filter-btn {% if date_filter == '24h' %}active{% endif %}">Last 24h</a>
+                            <a href="{{ url_for('dashboard.dashboard', filter='2d') }}"
+                               class="filter-btn {% if date_filter == '2d' %}active{% endif %}">Last 2 Days</a>
+                            <a href="{{ url_for('dashboard.dashboard', filter='7d') }}"
+                               class="filter-btn {% if date_filter == '7d' %}active{% endif %}">Last 7 Days</a>
+                            <form class="d-flex gap-1 align-items-center" method="get" action="{{ url_for('dashboard.dashboard') }}" style="margin:0;">
+                                <input type="date" name="date" class="form-control form-control-sm"
+                                       style="border-radius:20px; font-size:0.78rem; width:150px; height:32px;"
+                                       value="{{ specific_date }}" onchange="this.form.submit()">
+                            </form>
+                        </div>
                     </div>
-                    <div class="kpi-icon bg-warning-subtle text-warning">
-                        <i class="bi bi-file-earmark-text"></i>
+
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <div class="card stat-card h-100">
+                                <div class="card-body text-center py-3">
+                                    <div class="stat-icon" style="background:#e8f4fd;">
+                                        <i class="fas fa-users" style="color:#0d3b66;font-size:20px;"></i>
+                                    </div>
+                                    <h3 class="fw-bold mb-1">{{ my_stats.total_candidates }}</h3>
+                                    <p class="text-muted mb-0" style="font-size:0.8rem;">Candidates</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stat-card h-100">
+                                <div class="card-body text-center py-3">
+                                    <div class="stat-icon" style="background:#e6ffed;">
+                                        <i class="fas fa-clipboard-check" style="color:#22863a;font-size:20px;"></i>
+                                    </div>
+                                    <h3 class="fw-bold mb-1">{{ my_stats.total_tests }}</h3>
+                                    <p class="text-muted mb-0" style="font-size:0.8rem;">Tests Created</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stat-card h-100">
+                                <div class="card-body text-center py-3">
+                                    <div class="stat-icon" style="background:#fff8e1;">
+                                        <i class="fas fa-hourglass-half" style="color:#e67e22;font-size:20px;"></i>
+                                    </div>
+                                    <h3 class="fw-bold mb-1">{{ my_stats.pending }}</h3>
+                                    <p class="text-muted mb-0" style="font-size:0.8rem;">Pending</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stat-card h-100">
+                                <div class="card-body text-center py-3">
+                                    <div class="stat-icon" style="background:#fde8e8;">
+                                        <i class="fas fa-check-double" style="color:#c53030;font-size:20px;"></i>
+                                    </div>
+                                    <h3 class="fw-bold mb-1">{{ my_stats.completed }}</h3>
+                                    <p class="text-muted mb-0" style="font-size:0.8rem;">Completed</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm h-100 kpi-card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <div class="text-muted small mb-1">Evaluations Done</div>
-                        <h3 class="mb-1 fw-bold" id="kpiEvaluationsDone">{{ evaluations_done | default(1) }}</h3>
-                        <small class="text-info"><i class="bi bi-hourglass-split me-1"></i><span id="kpiPendingEvaluation">{{ pending_evaluation | default(2) }}</span> pending evaluation</small>
-                    </div>
-                    <div class="kpi-icon bg-info-subtle text-info">
-                        <i class="bi bi-clipboard-check"></i>
+
+    <!-- Quick Actions -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm" style="border-radius:14px;">
+                <div class="card-body">
+                    <h6 class="fw-bold mb-3"><i class="fas fa-bolt me-2 text-warning"></i>Quick Actions</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="{{ url_for('dashboard.create_test') }}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus me-1"></i> Create Test
+                        </a>
+                        <a href="{{ url_for('tests.generated_tests') }}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-list me-1"></i> View Tests
+                        </a>
+                        <a href="{{ url_for('evaluation.evaluation') }}" class="btn btn-outline-success btn-sm">
+                            <i class="fas fa-chart-bar me-1"></i> Evaluate
+                        </a>
+                        <a href="{{ url_for('reports.reports') }}" class="btn btn-outline-info btn-sm">
+                            <i class="fas fa-file-alt me-1"></i> Reports
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm h-100 kpi-card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <div class="text-muted small mb-1">Reports Generated</div>
-                        <h3 class="mb-1 fw-bold" id="kpiReportsGenerated">{{ reports_generated | default(1) }}</h3>
-                        <small class="text-success"><i class="bi bi-file-earmark-check me-1"></i><span id="kpiReadyToDownload">{{ ready_to_download | default(1) }}</span> ready to download</small>
-                    </div>
-                    <div class="kpi-icon bg-success-subtle text-success">
-                        <i class="bi bi-bar-chart-line"></i>
-                    </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm" style="border-radius:14px;">
+                <div class="card-body">
+                    <h6 class="fw-bold mb-3"><i class="fas fa-info-circle me-2 text-info"></i>Session Info</h6>
+                    <p class="text-muted mb-1" style="font-size:0.85rem;">
+                        <i class="fas fa-user me-1"></i> <strong>{{ user_email }}</strong>
+                    </p>
+                    <p class="text-muted mb-1" style="font-size:0.85rem;">
+                        <i class="fas fa-server me-1"></i> Server: <strong>{{ request.host }}</strong>
+                    </p>
+                    <p class="text-muted mb-0" style="font-size:0.78rem; color:#6c757d;">
+                        <i class="fas fa-clock me-1"></i> Session scoped to today. Previous data available in Reports via search.
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- ================= INSTRUCTIONS ================= -->
-<div class="card shadow-sm mb-4">
-    <div class="card-body">
-        <h6 class="mb-3">Quick Start Guide</h6>
-
-        <div class="row g-3">
-            <div class="col-md-6">
-                <div class="d-flex align-items-start">
-                    <span class="badge bg-primary rounded-circle me-2" style="width: 24px; height: 24px; line-height: 18px;">1</span>
-                    <div class="small">
-                        <strong>Create Test</strong> – Generate assessment links for single or multiple candidates based on their role.
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="d-flex align-items-start">
-                    <span class="badge bg-primary rounded-circle me-2" style="width: 24px; height: 24px; line-height: 18px;">2</span>
-                    <div class="small">
-                        <strong>Track Progress</strong> – Monitor test completion status in Generated Tests section.
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="d-flex align-items-start">
-                    <span class="badge bg-primary rounded-circle me-2" style="width: 24px; height: 24px; line-height: 18px;">3</span>
-                    <div class="small">
-                        <strong>Evaluate</strong> – Review candidate performance across all rounds after test completion.
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="d-flex align-items-start">
-                    <span class="badge bg-primary rounded-circle me-2" style="width: 24px; height: 24px; line-height: 18px;">4</span>
-                    <div class="small">
-                        <strong>Generate Reports</strong> – Create comprehensive evaluation reports for stakeholders.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ================= QUICK ACTIONS ================= -->
-<div class="row g-4">
-
-    <div class="col-md-3">
-        <div class="card shadow-sm h-100 quick-action-card">
-            <div class="card-body text-center py-4">
-                <div class="quick-action-icon bg-primary-subtle text-primary mx-auto mb-3">
-                    <i class="bi bi-plus-circle fs-4"></i>
-                </div>
-                <h6>Create Test</h6>
-                <p class="text-muted small mb-3">
-                    Generate test links for candidates
-                </p>
-                <a href="/create-test" class="btn btn-primary btn-sm">
-                    Create Test
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="card shadow-sm h-100 quick-action-card">
-            <div class="card-body text-center py-4">
-                <div class="quick-action-icon bg-warning-subtle text-warning mx-auto mb-3">
-                    <i class="bi bi-file-earmark-text fs-4"></i>
-                </div>
-                <h6>Generated Tests</h6>
-                <p class="text-muted small mb-3">
-                    View and manage test links
-                </p>
-                <a href="/generated-tests" class="btn btn-outline-warning btn-sm">
-                    View Tests
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="card shadow-sm h-100 quick-action-card">
-            <div class="card-body text-center py-4">
-                <div class="quick-action-icon bg-info-subtle text-info mx-auto mb-3">
-                    <i class="bi bi-clipboard-check fs-4"></i>
-                </div>
-                <h6>Evaluation</h6>
-                <p class="text-muted small mb-3">
-                    Evaluate candidate performance
-                </p>
-                <a href="/evaluation" class="btn btn-outline-info btn-sm">
-                    Evaluate
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="card shadow-sm h-100 quick-action-card">
-            <div class="card-body text-center py-4">
-                <div class="quick-action-icon bg-success-subtle text-success mx-auto mb-3">
-                    <i class="bi bi-bar-chart-line fs-4"></i>
-                </div>
-                <h6>Reports</h6>
-                <p class="text-muted small mb-3">
-                    View and download reports
-                </p>
-                <a href="/reports" class="btn btn-outline-success btn-sm">
-                    View Reports
-                </a>
-            </div>
-        </div>
-    </div>
-
-</div>
-
 {% endblock %}
