@@ -61,8 +61,7 @@
     }
     .cand-info { flex: 1; }
     .cand-name { font-weight: 600; font-size: 0.9rem; color: #1a1a1a; }
-    .cand-meta { font-size: 0.78rem; color: #6c757d; }
-    .btn-generate {
+    .cand-meta { font-size: 0.78rem; color: #6c757d; }    .btn-generate {
         padding: 6px 16px;
         border-radius: 20px;
         font-size: 0.78rem;
@@ -79,6 +78,44 @@
         background: #1a5276;
         color: #fff;
         transform: translateY(-1px);
+    }
+    .btn-action-group {
+        display: inline-flex;
+        gap: 6px;
+        align-items: center;
+    }
+    .btn-action {
+        padding: 5px 12px;
+        border-radius: 16px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        border: 1.5px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+    }
+    .btn-view {
+        background: #e8f4fd;
+        color: #0d3b66;
+        border-color: #c8dff5;
+    }
+    .btn-view:hover { background: #d0e4f7; color: #0d3b66; }
+    .btn-download {
+        background: #e6f4ea;
+        color: #137333;
+        border-color: #b7dfbf;
+    }
+    .btn-download:hover { background: #ccebd4; color: #137333; }
+    .btn-regenerate {
+        background: #fff3e0;
+        color: #e65100;
+        border-color: #ffe0b2;
+    }
+    .btn-regenerate:hover { background: #ffe0b2; color: #e65100; }
+    .btn-generating {
+        background: #f0f0f0;
+        color: #999;
+        pointer-events: none;
     }
     .search-results {
         display: none;
@@ -219,12 +256,12 @@
                         </span>
                         {% endif %}
                     </div>
+                </div>                <div class="btn-action-group" id="actions-{{ loop.index }}">
+                    <button class="btn btn-generate btn-generate-pdf"
+                            onclick="generateReport('{{ cand.email }}', 'actions-{{ loop.index }}')">
+                        <i class="fas fa-file-pdf me-1"></i> Generate Report
+                    </button>
                 </div>
-                <a href="{{ url_for('reports.generate_report', email=cand.email) }}"
-                   class="btn btn-generate btn-generate-pdf"
-                   onclick="showLoading()">
-                    <i class="fas fa-download me-1"></i> Generate PDF
-                </a>
             </div>
             {% endfor %}
         {% else %}
@@ -268,8 +305,8 @@
             .then(res => res.json())
             .then(data => {
                 if (data.candidates && data.candidates.length > 0) {
-                    let html = '';
-                    data.candidates.forEach(c => {
+                    let html = '';                    data.candidates.forEach((c, idx) => {
+                        const actionsId = 'search-actions-' + idx;
                         html += `
                             <div class="candidate-row">
                                 <div class="cand-info">
@@ -282,11 +319,12 @@
                                         ${c.created_at ? '<span class="ms-2">•</span><span class="ms-2">' + c.created_at + '</span>' : ''}
                                     </div>
                                 </div>
-                                <a href="/reports/generate/${encodeURIComponent(c.email)}"
-                                   class="btn btn-generate btn-generate-pdf"
-                                   onclick="showLoading()">
-                                    <i class="fas fa-download me-1"></i> Generate PDF
-                                </a>
+                                <div class="btn-action-group" id="${actionsId}">
+                                    <button class="btn btn-generate btn-generate-pdf"
+                                            onclick="generateReport('${c.email}', '${actionsId}')">
+                                        <i class="fas fa-file-pdf me-1"></i> Generate Report
+                                    </button>
+                                </div>
                             </div>
                         `;
                     });
@@ -313,14 +351,56 @@
         searchInput.value = '';
         searchResults.classList.remove('active');
         searchResultsList.innerHTML = '';
-    }
-
-    function showLoading() {
+    }    function showLoading() {
         document.getElementById('loadingOverlay').classList.add('active');
-        // Auto-hide after 10 seconds (download should complete by then)
         setTimeout(() => {
             document.getElementById('loadingOverlay').classList.remove('active');
         }, 10000);
+    }
+
+    function generateReport(email, containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        // Show generating state
+        container.innerHTML = `
+            <button class="btn btn-generate btn-generating" disabled>
+                <span class="spinner-border spinner-border-sm me-1"></span> Generating…
+            </button>
+        `;
+
+        fetch('/reports/generate/' + encodeURIComponent(email))
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    container.innerHTML = `
+                        <a href="${data.view_url}" target="_blank" class="btn-action btn-view" title="View in browser">
+                            <i class="fas fa-eye me-1"></i> View
+                        </a>
+                        <a href="${data.download_url}" class="btn-action btn-download" title="Download PDF">
+                            <i class="fas fa-download me-1"></i> Download
+                        </a>
+                        <button class="btn-action btn-regenerate" onclick="generateReport('${email}', '${containerId}')" title="Regenerate report">
+                            <i class="fas fa-redo me-1"></i> Regenerate
+                        </button>
+                    `;
+                } else {
+                    container.innerHTML = `
+                        <span class="text-danger" style="font-size:0.78rem;"><i class="fas fa-exclamation-circle me-1"></i>${data.error || 'Failed'}</span>
+                        <button class="btn-action btn-regenerate ms-2" onclick="generateReport('${email}', '${containerId}')">
+                            <i class="fas fa-redo me-1"></i> Retry
+                        </button>
+                    `;
+                }
+            })
+            .catch(err => {
+                container.innerHTML = `
+                    <span class="text-danger" style="font-size:0.78rem;"><i class="fas fa-exclamation-circle me-1"></i>Error</span>
+                    <button class="btn-action btn-regenerate ms-2" onclick="generateReport('${email}', '${containerId}')">
+                        <i class="fas fa-redo me-1"></i> Retry
+                    </button>
+                `;
+            });
     }
 </script>
 {% endblock %}

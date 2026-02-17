@@ -69,7 +69,7 @@ def search_reports():
 @reports_bp.route("/reports/generate/<path:email>")
 @login_required
 def generate_report(email):
-    """Generate a PDF report for a candidate."""
+    """Generate a PDF report for a candidate and return JSON with action URLs."""
     # First try from evaluation aggregator (in-memory data)
     all_candidates = EvaluationAggregator.get_candidates()
     candidate_data = None
@@ -83,12 +83,11 @@ def generate_report(email):
         candidate_data = db_service.get_candidate_report_data(email)
 
     if not candidate_data:
-        abort(404, description=f"No data found for candidate: {email}")
+        return jsonify({"success": False, "error": f"No data found for candidate: {email}"}), 404
 
     # Generate PDF
     try:
         filename = generate_candidate_pdf(candidate_data)
-        filepath = REPORTS_DIR / filename
 
         # Save report record to DB
         user = session.get("user", {})
@@ -97,14 +96,47 @@ def generate_report(email):
         except Exception:
             pass
 
-        return send_file(
-            str(filepath),
-            as_attachment=True,
-            download_name=filename,
-            mimetype="application/pdf",
-        )
+        return jsonify({
+            "success": True,
+            "filename": filename,
+            "candidate": candidate_data.get("name", email),
+            "view_url": f"/reports/view/{filename}",
+            "download_url": f"/reports/download-file/{filename}",
+        })
     except Exception as e:
-        abort(500, description=f"Failed to generate report: {str(e)}")
+        return jsonify({"success": False, "error": f"Failed to generate report: {str(e)}"}), 500
+
+
+@reports_bp.route("/reports/view/<path:filename>")
+@login_required
+def view_report(filename):
+    """View a PDF report inline in the browser."""
+    filepath = REPORTS_DIR / filename
+    if not filepath.exists():
+        abort(404, description="Report file not found")
+
+    return send_file(
+        str(filepath),
+        as_attachment=False,
+        download_name=filename,
+        mimetype="application/pdf",
+    )
+
+
+@reports_bp.route("/reports/download-file/<path:filename>")
+@login_required
+def download_report_file(filename):
+    """Download a PDF report as attachment."""
+    filepath = REPORTS_DIR / filename
+    if not filepath.exists():
+        abort(404, description="Report file not found")
+
+    return send_file(
+        str(filepath),
+        as_attachment=True,
+        download_name=filename,
+        mimetype="application/pdf",
+    )
 
 
 @reports_bp.route("/reports/download/<int:report_id>")

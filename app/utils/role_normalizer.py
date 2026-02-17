@@ -17,4 +17,21 @@ ROLE_NAME_TO_KEY = {
 
 
 def normalize_role(role_label: str) -> str:
-    return ROLE_NAME_TO_KEY.get(role_label)
+    """Normalize a role label to its key, tolerant of hyphen/en-dash differences."""
+    if not role_label:
+        return None
+    # Direct match first
+    result = ROLE_NAME_TO_KEY.get(role_label)
+    if result:
+        return result
+    # Normalize dashes: replace regular hyphen with en-dash and try again
+    normalized = role_label.replace("-", "\u2013")
+    result = ROLE_NAME_TO_KEY.get(normalized)
+    if result:
+        return result
+    # Normalize dashes: replace en-dash with regular hyphen and try again
+    normalized = role_label.replace("\u2013", "-")
+    for key, value in ROLE_NAME_TO_KEY.items():
+        if key.replace("\u2013", "-") == normalized:
+            return value
+    return None

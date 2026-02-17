@@ -1,327 +1,147 @@
 ﻿{% extends "base.html" %}
-{% block title %}Generate Test{% endblock %}
+{% block title %}Generate Test  Aziro Hiring Platform{% endblock %}
 {% block breadcrumb %}Create Test{% endblock %}
 
+{% block head %}
+<style>
+    .page-header { margin-bottom: 24px; }
+    .page-header h4 { font-weight: 700; color: #0d3b66; margin-bottom: 4px; }
+    .page-header p { color: #6c757d; font-size: 0.88rem; }
+    .mode-card { border: none; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .mode-option { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 20px; border: 1.5px solid #dee2e6; background: #fff; cursor: pointer; transition: all 0.2s; font-size: 0.85rem; font-weight: 600; color: #495057; }
+    .mode-option:hover { border-color: #0d3b66; color: #0d3b66; }
+    .mode-option.active { background: #0d3b66; color: #fff; border-color: #0d3b66; }
+    .mode-option input[type="radio"] { display: none; }
+    .candidate-card { border: 1.5px solid #e9ecef; border-radius: 14px; padding: 24px; margin-bottom: 16px; position: relative; background: #fff; transition: box-shadow 0.2s, border-color 0.2s; }
+    .candidate-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); border-color: #c8d6e5; }
+    .upload-zone { border: 2px dashed #d1d5db; border-radius: 12px; padding: 16px 20px; text-align: center; cursor: pointer; transition: all 0.2s; background: #fafbfc; position: relative; }
+    .upload-zone:hover { border-color: #0d6efd; background: #f0f6ff; }
+    .upload-zone.has-file { border-color: #22863a; background: #f0fff4; border-style: solid; }
+    .upload-zone .upload-icon { font-size: 1.5rem; color: #9ca3af; margin-bottom: 4px; }
+    .upload-zone.has-file .upload-icon { color: #22863a; }
+    .upload-zone .upload-label { font-size: 0.82rem; font-weight: 600; color: #495057; }
+    .upload-zone .upload-hint { font-size: 0.72rem; color: #9ca3af; margin-top: 2px; }
+    .upload-zone .file-name { font-size: 0.78rem; color: #22863a; font-weight: 600; margin-top: 4px; word-break: break-all; }
+    .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .auto-fill-badge { font-size: 0.65rem; padding: 2px 8px; border-radius: 10px; background: #e6f4ea; color: #137333; font-weight: 600; margin-left: 6px; display: none; }
+    .auto-fill-badge.visible { display: inline; }
+    .section-label { font-size: 0.8rem; font-weight: 700; color: #0d3b66; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .section-label .section-line { flex: 1; height: 1px; background: #e8f4fd; }
+    .remove-btn { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; border-radius: 50%; border: none; background: #fde8e8; color: #c53030; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; font-size: 0.8rem; }
+    .remove-btn:hover { background: #c53030; color: #fff; }
+    .action-bar { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .extract-spinner { display: none; width: 14px; height: 14px; border: 2px solid #dee2e6; border-top-color: #0d6efd; border-radius: 50%; animation: spin 0.6s linear infinite; margin-left: 6px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .extract-spinner.active { display: inline-block; }
+</style>
+{% endblock %}
+
 {% block content %}
-<h4 class="mb-2">Generate Candidate Test</h4>
-<p class="text-muted mb-4">
-    Create assessment links for single or multiple candidates.
-</p>
-
-<form method="POST" id="generateForm" enctype="multipart/form-data">
-
-<!-- ================= CANDIDATE MODE ================= -->
-<div class="card shadow-sm mb-4">
-    <div class="card-body">
-        <h6 class="mb-3">Candidate Mode</h6>
-
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="candidate_mode"
-                   id="single_mode" checked>
-            <label class="form-check-label" for="single_mode">
-                Single Candidate
-            </label>
-        </div>
-
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="candidate_mode"
-                   id="multi_mode">
-            <label class="form-check-label" for="multi_mode">
-                Multiple Candidates
-            </label>
+<div class="container-fluid">
+    <div class="page-header">
+        <h4><i class="fas fa-plus-circle me-2"></i>Generate Candidate Test</h4>
+        <p>Create assessment links for candidates. Upload resume &amp; JD to auto-fill details and match roles.</p>
+    </div>
+    <form method="POST" id="generateForm" enctype="multipart/form-data">
+    <div class="mode-card card mb-4">
+        <div class="card-body py-3 px-4">
+            <div class="d-flex align-items-center gap-3">
+                <span class="text-muted" style="font-size:0.82rem; font-weight:600;"><i class="fas fa-users me-1"></i> Mode:</span>
+                <label class="mode-option active" id="singleModeLabel"><input type="radio" name="candidate_mode" id="single_mode" checked><i class="fas fa-user"></i> Single Candidate</label>
+                <label class="mode-option" id="multiModeLabel"><input type="radio" name="candidate_mode" id="multi_mode"><i class="fas fa-user-friends"></i> Multiple Candidates</label>
+            </div>
         </div>
     </div>
-</div>
-
-<!-- ================= CANDIDATE DETAILS ================= -->
-<div class="card shadow-sm mb-4">
-    <div class="card-body">
-        <h6 class="mb-3">Candidate Details</h6>
-
-        <div id="candidateContainer">
-
-            <div class="candidate-row position-relative mb-3">
-
-                <!-- REMOVE (TRASH BIN) BUTTON -->
-                <button type="button"
-                        class="btn position-absolute top-0 end-0 d-none removeCandidateBtn"
-                        title="Remove candidate"
-                        style="padding: 2px; background: transparent;">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         width="14" height="14"
-                         fill="#dc3545"
-                         viewBox="0 0 16 16">
-                        <path d="M5.5 5.5A.5.5 0 0 1 6 5h4a.5.5 0 0 1
-                        .5.5v7a.5.5 0 0 1-.5.5H6a.5.5 0 0 1-.5-.5v-7z"/>
-                        <path fill-rule="evenodd"
-                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2
-                              2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1 0-2H5.5l.5-.5h4l.5.5h3.5a1 1 0 0 1 1 1z"/>
-                    </svg>
-                </button>
-
-                <!-- RESUME AND JD UPLOAD SECTION -->
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label">Resume (PDF)</label>
-                        <input type="file" class="form-control resume-upload"
-                               name="resume[]" accept=".pdf,.doc,.docx"
-                               title="Filename"
-                               data-candidate-index="">
+    <div id="candidateContainer">
+        <div class="candidate-card candidate-row">
+            <button type="button" class="remove-btn d-none removeCandidateBtn" title="Remove candidate"><i class="fas fa-times"></i></button>
+            <div class="section-label"><i class="fas fa-cloud-upload-alt"></i> Step 1  Upload Documents <span class="section-line"></span></div>
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <div class="upload-zone">
+                        <input type="file" class="resume-upload" name="resume[]" accept=".pdf,.doc,.docx">
+                        <div class="upload-icon"><i class="fas fa-file-pdf"></i></div>
+                        <div class="upload-label">Resume</div>
+                        <div class="upload-hint">PDF, DOC, DOCX  Auto-extracts name &amp; email</div>
+                        <div class="file-name"></div>
                     </div>
                 </div>
-
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label">Job Description (JD)</label>
-                        <input type="file" class="form-control jd-upload"
-                               name="jd[]" accept=".pdf,.doc,.docx,.txt"
-                               title="Filename"
-                               data-candidate-index="">
-                    </div>
-                </div>
-
-                <!-- CANDIDATE DETAILS -->
-                <div class="row align-items-end">
-                    <div class="col-md-3">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control candidate-name"
-                               name="name[]"
-                               placeholder="John Doe"
-                               required>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control candidate-email"
-                               name="email[]"
-                               placeholder="john.doe@email.com"
-                               required>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label class="form-label">Role</label>
-                        <select class="form-select" name="role[]" required>
-                            <option value="">Select role</option>
-                            <optgroup label="Entry Level (0-2 Years)">
-                                <option>Python Entry Level (0-2 Years)</option>
-                                <option>Java Entry Level (0-2 Years)</option>
-                                <option>JavaScript Entry Level (0-2 Years)</option>
-                            </optgroup>
-                            <optgroup label="Mid / Senior Level (2-5 Years)">
-                                <option>BMC Engineer (2-5 Years)</option>
-                                <option>Staff Engineer - Linux Kernel &amp; Device Driver (3-5 Years)</option>
-                                <option>Systems Architect - C++ (3-5 Years)</option>
-                            </optgroup>
-                            <optgroup label="Experienced (4+ Years)">
-                                <option>Python QA / System / Linux (4+ Years)</option>
-                                <option>Python QA (4+ Years)</option>
-                                <option>Python Development (4+ Years)</option>
-                                <option>Python + AI/ML (4+ Years)</option>
-                                <option>Java + AWS Development (5+ Years)</option>
-                                <option>Java QA (5+ Years)</option>
-                            </optgroup>
-                        </select>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label class="form-label">Domain (Optional)</label>
-                        <select class="form-select" name="domain[]">
-                            <option selected>None</option>
-                            <option>Virtualization</option>
-                            <option>Networking</option>
-                            <option>Storage</option>
-                        </select>
+                <div class="col-md-6">
+                    <div class="upload-zone">
+                        <input type="file" class="jd-upload" name="jd[]" accept=".pdf,.doc,.docx,.txt">
+                        <div class="upload-icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="upload-label">Job Description (JD)</div>
+                        <div class="upload-hint">PDF, DOC, TXT  Auto-matches role from JD</div>
+                        <div class="file-name"></div>
                     </div>
                 </div>
             </div>
-
-        </div>
-
-        <div class="text-end mt-3 d-none" id="addCandidateWrapper">
-            <button type="button" class="btn btn-outline-primary btn-sm"
-                    id="addCandidateBtn">
-                <i class="bi bi-plus-circle me-1"></i>Add Candidate
-            </button>
+            <div class="section-label"><i class="fas fa-user-edit"></i> Step 2  Candidate Details <span class="extract-spinner"></span><span class="section-line"></span></div>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Full Name <span class="auto-fill-badge">Auto-filled</span></label>
+                    <input type="text" class="form-control candidate-name" name="name[]" placeholder="John Doe" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Email <span class="auto-fill-badge">Auto-filled</span></label>
+                    <input type="email" class="form-control candidate-email" name="email[]" placeholder="john.doe@email.com" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Role <span class="auto-fill-badge">Auto-matched</span></label>
+                    <select class="form-select candidate-role" name="role[]" required>
+                        <option value="">Select role</option>
+                        <optgroup label="Entry Level (0–2 Years)">
+                            <option>Python Entry Level (0–2 Years)</option>
+                            <option>Java Entry Level (0–2 Years)</option>
+                            <option>JavaScript Entry Level (0–2 Years)</option>
+                        </optgroup>
+                        <optgroup label="Mid / Senior Level (2–5 Years)">
+                            <option>BMC Engineer (2–5 Years)</option>
+                            <option>Staff Engineer – Linux Kernel &amp; Device Driver (3–5 Years)</option>
+                            <option>Systems Architect – C++ (3–5 Years)</option>
+                        </optgroup>
+                        <optgroup label="Experienced (4+ Years)">
+                            <option>Python QA / System / Linux (4+ Years)</option>
+                            <option>Python QA (4+ Years)</option>
+                            <option>Python Development (4+ Years)</option>
+                            <option>Python + AI/ML (4+ Years)</option>
+                            <option>Java + AWS Development (5+ Years)</option>
+                            <option>Java QA (5+ Years)</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Domain <small class="text-muted">(Optional)</small></label>
+                    <select class="form-select" name="domain[]">
+                        <option selected>None</option>
+                        <option>Virtualization</option>
+                        <option>Networking</option>
+                        <option>Storage</option>
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="text-center mt-2 mb-4 d-none" id="addCandidateWrapper">
+        <button type="button" class="btn btn-outline-primary btn-sm" id="addCandidateBtn" style="border-radius:20px; padding: 6px 20px; font-weight:600;"><i class="fas fa-plus me-1"></i> Add Another Candidate</button>
+    </div>
+    <div class="action-bar mt-3">
+        <a href="/dashboard" class="btn btn-outline-secondary" style="border-radius:10px;"><i class="fas fa-arrow-left me-1"></i> Cancel</a>
+        <div class="d-flex gap-2 align-items-center">
+            <a href="/generated-tests" class="btn btn-outline-primary" style="border-radius:10px;"><i class="fas fa-list me-1"></i> View Generated Tests</a>
+            <button type="submit" class="btn btn-primary" id="generateBtn" style="border-radius:10px; padding: 8px 24px;"><i class="fas fa-bolt me-1"></i> Generate Test</button>
+        </div>
+    </div>
+    </form>
 </div>
-
-<!-- ================= ACTION BUTTONS ================= -->
-<div class="d-flex justify-content-end gap-2">
-    <a href="/dashboard" class="btn btn-outline-secondary">
-        Cancel
-    </a>
-    <button type="submit" class="btn btn-primary" id="generateBtn">
-        <i class="bi bi-lightning-charge me-1"></i>Generate Test
-    </button>
-</div>
-
-<div class="text-center" style="margin-top: 3rem;">
-    <a href="/generated-tests"
-       class="btn"
-       style="background-color: #f57c00; color: #ffffff;">
-        <i class="bi bi-arrow-right-circle me-1"></i>Go to Generated Tests
-    </a>
-</div>
-
-</form>
-
-<!-- ================= LOADING OVERLAY ================= -->
 <div id="loadingOverlay" class="loading-overlay d-none">
     <div class="loading-card text-center">
         <div class="spinner-border text-primary mb-3" role="status"></div>
-        <h6 class="mb-1">Generating tests...</h6>
-        <p class="text-muted small mb-0">
-            Please do not refresh or click back
-        </p>
+        <h6 class="mb-1">Generating assessment links</h6>
+        <p class="text-muted small mb-0">Please do not refresh or click back</p>
     </div>
 </div>
-
-<!-- ================= JS ================= -->
 <script>
-    const singleMode = document.getElementById("single_mode");
-    const multiMode = document.getElementById("multi_mode");
-    const addCandidateWrapper = document.getElementById("addCandidateWrapper");
-    const addCandidateBtn = document.getElementById("addCandidateBtn");
-    const candidateContainer = document.getElementById("candidateContainer");
-
-    function updateRemoveButtons() {
-        const rows = document.querySelectorAll(".candidate-row");
-        rows.forEach((row, index) => {
-            const btn = row.querySelector(".removeCandidateBtn");
-            btn.classList.toggle("d-none", index === 0 || !multiMode.checked);
-        });
-    }
-
-    multiMode.addEventListener("change", () => {
-        addCandidateWrapper.classList.remove("d-none");
-        updateRemoveButtons();
-    });
-
-    singleMode.addEventListener("change", () => {
-        addCandidateWrapper.classList.add("d-none");
-        candidateContainer.innerHTML = candidateContainer.firstElementChild.outerHTML;
-        updateRemoveButtons();
-    });
-
-    addCandidateBtn.addEventListener("click", () => {
-        const newRow = candidateContainer.firstElementChild.cloneNode(true);
-        newRow.querySelectorAll("input").forEach(i => { i.value = ""; });
-        newRow.querySelectorAll("select").forEach(s => s.selectedIndex = 0);
-
-        setupFileInputListeners(newRow);
-
-        newRow.querySelector(".removeCandidateBtn")
-              .addEventListener("click", () => newRow.remove());
-
-        candidateContainer.appendChild(newRow);
-        updateRemoveButtons();
-    });
-
-    function setupFileInputListeners(rowElement) {
-        const resumeInput = rowElement.querySelector(".resume-upload");
-        const jdInput = rowElement.querySelector(".jd-upload");
-        const nameField = rowElement.querySelector(".candidate-name");
-        const emailField = rowElement.querySelector(".candidate-email");
-        const roleField = rowElement.querySelector('select[name="role[]"]');
-
-        if (resumeInput) {
-            resumeInput.addEventListener("change", function () {
-                if (this.files.length > 0) {
-                    const file = this.files[0];
-                    const filename = file.name;
-                    const nameFromFile = filename
-                        .replace(/\.[^/.]+$/, "")
-                        .replace(/[_-]/g, " ")
-                        .trim();
-                    if (nameField && !nameField.value.trim()) {
-                        nameField.value = nameFromFile;
-                    }
-                    const formData = new FormData();
-                    formData.append("resume", file);
-                    fetch("/api/extract-resume", {
-                        method: "POST",
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.email && emailField && !emailField.value.trim()) {
-                            emailField.value = data.email;
-                        }
-                        if (data.name && nameField && !nameField.value.trim()) {
-                            nameField.value = data.name;
-                        }
-                    })
-                    .catch(error => console.log("Resume parsing result:", error));
-                }
-            });
-        }
-
-        if (jdInput) {
-            jdInput.addEventListener("change", function () {
-                if (this.files.length > 0) {
-                    const file = this.files[0];
-                    const formData = new FormData();
-                    formData.append("jd", file);
-                    fetch("/api/extract-jd-role", {
-                        method: "POST",
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.role && roleField && !roleField.value) {
-                            const options = roleField.querySelectorAll("option");
-                            for (let option of options) {
-                                if (option.textContent === data.role) {
-                                    roleField.value = data.role;
-                                    break;
-                                }
-                            }
-                        }
-                    })
-                    .catch(error => console.log("JD role extraction result:", error));
-                }
-            });
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const firstRow = candidateContainer.querySelector(".candidate-row");
-        if (firstRow) {
-            setupFileInputListeners(firstRow);
-        }
-        const firstRemoveBtn = document.querySelector(".removeCandidateBtn");
-        if (firstRemoveBtn) {
-            firstRemoveBtn.addEventListener("click", function () {
-                this.closest(".candidate-row").remove();
-                updateRemoveButtons();
-            });
-        }
-    });
-
-    const form = document.getElementById("generateForm");
-    const overlay = document.getElementById("loadingOverlay");
-    const button = document.getElementById("generateBtn");
-
-    form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const nameInputs = document.querySelectorAll('input[name="name[]"]');
-        const emailInputs = document.querySelectorAll('input[name="email[]"]');
-        const roleSelects = document.querySelectorAll('select[name="role[]"]');
-        let isValid = true;
-        nameInputs.forEach((input, i) => {
-            if (!input.value.trim() || !emailInputs[i].value.trim() || !roleSelects[i].value) {
-                isValid = false;
-            }
-        });
-        if (!isValid) {
-            if (typeof showToast === 'function') showToast('Please fill all required fields', 'warning');
-            return;
-        }
-        button.disabled = true;
-        overlay.classList.remove("d-none");
-        setTimeout(() => { form.submit(); }, 1000);
-    });
+const singleMode=document.getElementById("single_mode"),multiMode=document.getElementById("multi_mode"),singleLabel=document.getElementById("singleModeLabel"),multiLabel=document.getElementById("multiModeLabel"),addCandidateWrapper=document.getElementById("addCandidateWrapper"),addCandidateBtn=document.getElementById("addCandidateBtn"),candidateContainer=document.getElementById("candidateContainer");function updateRemoveButtons(){document.querySelectorAll(".candidate-row").forEach((r,i)=>{const b=r.querySelector(".removeCandidateBtn");if(b)b.classList.toggle("d-none",i===0||!multiMode.checked)})}singleMode.addEventListener("change",()=>{singleLabel.classList.add("active");multiLabel.classList.remove("active");addCandidateWrapper.classList.add("d-none");const rows=candidateContainer.querySelectorAll(".candidate-row");rows.forEach((r,i)=>{if(i>0)r.remove()});updateRemoveButtons()});multiMode.addEventListener("change",()=>{multiLabel.classList.add("active");singleLabel.classList.remove("active");addCandidateWrapper.classList.remove("d-none");updateRemoveButtons()});addCandidateBtn.addEventListener("click",()=>{const n=candidateContainer.firstElementChild.cloneNode(true);n.querySelectorAll("input[type='text'],input[type='email']").forEach(i=>{i.value=""});n.querySelectorAll("input[type='file']").forEach(i=>{i.value=""});n.querySelectorAll("select").forEach(s=>s.selectedIndex=0);n.querySelectorAll(".upload-zone").forEach(z=>{z.classList.remove("has-file");z.querySelector(".file-name").textContent=""});n.querySelectorAll(".auto-fill-badge").forEach(b=>b.classList.remove("visible"));n.querySelectorAll(".extract-spinner").forEach(s=>s.classList.remove("active"));setupFileInputListeners(n);n.querySelector(".removeCandidateBtn").addEventListener("click",function(){this.closest(".candidate-row").remove();updateRemoveButtons()});candidateContainer.appendChild(n);updateRemoveButtons()});function setupFileInputListeners(row){const ri=row.querySelector(".resume-upload"),ji=row.querySelector(".jd-upload"),nf=row.querySelector(".candidate-name"),ef=row.querySelector(".candidate-email"),rf=row.querySelector(".candidate-role"),sp=row.querySelector(".extract-spinner"),bd=row.querySelectorAll(".auto-fill-badge");if(ri)ri.addEventListener("change",function(){const z=this.closest(".upload-zone");if(this.files.length>0){const f=this.files[0];z.classList.add("has-file");z.querySelector(".file-name").textContent=f.name;z.querySelector(".upload-icon").innerHTML='<i class="fas fa-check-circle"></i>';const nameFromFile=f.name.replace(/\.[^/.]+$/,"").replace(/[_-]/g," ").trim();if(nf&&!nf.value.trim())nf.value=nameFromFile;if(sp)sp.classList.add("active");const fd=new FormData();fd.append("resume",f);fetch("/api/extract-resume",{method:"POST",body:fd}).then(r=>r.json()).then(d=>{if(d.email&&ef&&!ef.value.trim()){ef.value=d.email;if(bd[1])bd[1].classList.add("visible")}if(d.name&&nf){if(!nf.value.trim()||nf.value===nameFromFile)nf.value=d.name;if(bd[0])bd[0].classList.add("visible")}}).catch(e=>console.log("Resume parse:",e)).finally(()=>{if(sp)sp.classList.remove("active")})}else{z.classList.remove("has-file");z.querySelector(".file-name").textContent="";z.querySelector(".upload-icon").innerHTML='<i class="fas fa-file-pdf"></i>'}});if(ji)ji.addEventListener("change",function(){const z=this.closest(".upload-zone");if(this.files.length>0){const f=this.files[0];z.classList.add("has-file");z.querySelector(".file-name").textContent=f.name;z.querySelector(".upload-icon").innerHTML='<i class="fas fa-check-circle"></i>';if(sp)sp.classList.add("active");const fd=new FormData();fd.append("jd",f);fetch("/api/extract-jd-role",{method:"POST",body:fd}).then(r=>r.json()).then(d=>{if(d.role&&rf){const opts=rf.querySelectorAll("option");for(let o of opts){if(o.textContent.trim()===d.role){rf.value=o.value;if(bd[2])bd[2].classList.add("visible");break}}}}).catch(e=>console.log("JD parse:",e)).finally(()=>{if(sp)sp.classList.remove("active")})}else{z.classList.remove("has-file");z.querySelector(".file-name").textContent="";z.querySelector(".upload-icon").innerHTML='<i class="fas fa-file-alt"></i>'}})}document.addEventListener("DOMContentLoaded",()=>{const fr=candidateContainer.querySelector(".candidate-row");if(fr)setupFileInputListeners(fr)});const form=document.getElementById("generateForm"),overlay=document.getElementById("loadingOverlay"),button=document.getElementById("generateBtn");form.addEventListener("submit",e=>{e.preventDefault();const ni=document.querySelectorAll('input[name="name[]"]'),ei=document.querySelectorAll('input[name="email[]"]'),rs=document.querySelectorAll('select[name="role[]"]');let v=true;ni.forEach((inp,i)=>{if(!inp.value.trim()||!ei[i].value.trim()||!rs[i].value){v=false;if(!inp.value.trim())inp.classList.add("is-invalid");if(!ei[i].value.trim())ei[i].classList.add("is-invalid");if(!rs[i].value)rs[i].classList.add("is-invalid")}});if(!v){if(typeof showToast==='function')showToast('Please fill all required fields','warning');return}button.disabled=true;button.innerHTML='<span class="spinner-border spinner-border-sm me-1"></span> Generating';overlay.classList.remove("d-none");setTimeout(()=>{form.submit()},800)});document.addEventListener("input",e=>{if(e.target.classList.contains("is-invalid"))e.target.classList.remove("is-invalid")});
 </script>
-
 {% endblock %}
