@@ -39,11 +39,10 @@ def create_app():
     app.register_blueprint(tests_bp)
     app.register_blueprint(evaluation_bp)
     app.register_blueprint(coding_bp)
-    app.register_blueprint(reports_bp)
-
-    # Create DB tables
+    app.register_blueprint(reports_bp)    # Create DB tables
     with app.app_context():
-        from . import models  # noqa: F401        db.create_all()
+        from . import models  # noqa: F401
+        db.create_all()
 
     # Dev mode: Bypass login for local testing
     # Activates when AUTH_DISABLED=true  **or**  when Azure AD creds are
