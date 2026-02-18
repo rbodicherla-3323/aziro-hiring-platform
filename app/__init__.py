@@ -43,14 +43,26 @@ def create_app():
 
     # Create DB tables
     with app.app_context():
-        from . import models  # noqa: F401
-        db.create_all()
+        from . import models  # noqa: F401        db.create_all()
 
     # Dev mode: Bypass login for local testing
-    if os.getenv("AUTH_DISABLED", "false").lower() == "true":
+    # Activates when AUTH_DISABLED=true  **or**  when Azure AD creds are
+    # still the placeholder values (i.e. .env was never customised / is missing).
+    auth_disabled_env = os.getenv("AUTH_DISABLED", "").lower() == "true"
+    azure_client_id = os.getenv("AZURE_CLIENT_ID", "")
+    azure_unconfigured = (
+        not azure_client_id
+        or azure_client_id == "your-azure-client-id"
+    )
+    dev_bypass = auth_disabled_env or azure_unconfigured
+
+    if dev_bypass:
         @app.before_request
         def auto_login_for_dev():
-            from flask import session
+            from flask import session, request as req
+            # Skip bypass for static files
+            if req.path.startswith("/static"):
+                return
             if not session.get("user"):
                 session["user"] = {
                     "name": "Dev User",
