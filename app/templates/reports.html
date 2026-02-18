@@ -1,229 +1,88 @@
 {% extends "base.html" %}
-
 {% block title %}Reports — Aziro Hiring Platform{% endblock %}
+{% block breadcrumb %}Reports{% endblock %}
 
 {% block head %}
 <style>
-    .reports-header {
-        background: linear-gradient(135deg, #0d3b66 0%, #1a5276 100%);
-        color: white;
-        border-radius: 12px;
-        padding: 20px 24px;
-        margin-bottom: 20px;
-    }
-    .search-section {
-        background: #fff;
-        border-radius: 12px;
-        padding: 20px 24px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-        margin-bottom: 20px;
-    }
-    .search-input {
-        border-radius: 24px;
-        padding: 10px 20px;
-        font-size: 0.9rem;
-        border: 2px solid #e0e6ed;
-        transition: border-color 0.2s;
-    }
-    .search-input:focus {
-        border-color: #0d3b66;
-        box-shadow: 0 0 0 3px rgba(13,59,102,0.1);
-    }
-    .session-section {
-        background: #fff;
-        border-radius: 12px;
-        padding: 20px 24px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-        margin-bottom: 20px;
-    }
-    .section-title {
-        font-size: 0.95rem;
-        font-weight: 700;
-        color: #0d3b66;
-        margin-bottom: 16px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    .candidate-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 12px 16px;
-        border-radius: 10px;
-        border: 1px solid #eef2f7;
-        margin-bottom: 8px;
-        transition: all 0.2s;
-    }
-    .candidate-row:hover {
-        background: #f8fafc;
-        border-color: #d0e4f7;
-    }
-    .cand-info { flex: 1; }
-    .cand-name { font-weight: 600; font-size: 0.9rem; color: #1a1a1a; }
-    .cand-meta { font-size: 0.78rem; color: #6c757d; }    .btn-generate {
-        padding: 6px 16px;
-        border-radius: 20px;
-        font-size: 0.78rem;
-        font-weight: 600;
-        border: none;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-    .btn-generate-pdf {
-        background: #0d3b66;
-        color: #fff;
-    }
-    .btn-generate-pdf:hover {
-        background: #1a5276;
-        color: #fff;
-        transform: translateY(-1px);
-    }
-    .btn-action-group {
-        display: inline-flex;
-        gap: 6px;
-        align-items: center;
-    }
-    .btn-action {
-        padding: 5px 12px;
-        border-radius: 16px;
-        font-size: 0.72rem;
-        font-weight: 600;
-        border: 1.5px solid transparent;
-        cursor: pointer;
-        transition: all 0.2s;
-        text-decoration: none;
-    }
-    .btn-view {
-        background: #e8f4fd;
-        color: #0d3b66;
-        border-color: #c8dff5;
-    }
-    .btn-view:hover { background: #d0e4f7; color: #0d3b66; }
-    .btn-download {
-        background: #e6f4ea;
-        color: #137333;
-        border-color: #b7dfbf;
-    }
-    .btn-download:hover { background: #ccebd4; color: #137333; }
-    .btn-regenerate {
-        background: #fff3e0;
-        color: #e65100;
-        border-color: #ffe0b2;
-    }
-    .btn-regenerate:hover { background: #ffe0b2; color: #e65100; }
-    .btn-generating {
-        background: #f0f0f0;
-        color: #999;
-        pointer-events: none;
-    }
-    .search-results {
-        display: none;
-        background: #fff;
-        border-radius: 12px;
-        padding: 20px 24px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-        margin-bottom: 20px;
-    }
-    .search-results.active { display: block; }
-    .empty-state {
-        text-align: center;
-        padding: 40px 20px;
-        color: #6c757d;
-    }
-    .empty-state i {
-        font-size: 2.5rem;
-        color: #dee2e6;
-        margin-bottom: 12px;
-    }
-    .badge-role {
-        padding: 3px 10px;
-        border-radius: 12px;
-        font-size: 0.7rem;
-        font-weight: 600;
-        background: #e8f4fd;
-        color: #0d3b66;
-    }
-    .rounds-summary {
-        display: flex;
-        gap: 6px;
-        margin-top: 4px;
-    }
-    .round-dot {
-        width: 8px; height: 8px;
-        border-radius: 50%;
-        display: inline-block;
-    }
-    .round-dot.pass { background: #22863a; }
-    .round-dot.fail { background: #c53030; }
-    .round-dot.pending { background: #dee2e6; }
-    .spinner-sm {
-        width: 14px; height: 14px;
-        border-width: 2px;
-    }
-    .loading-overlay {
-        display: none;
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0,0,0,0.3);
-        z-index: 9999;
-        align-items: center;
-        justify-content: center;
-    }
-    .loading-overlay.active {
-        display: flex;
-    }
+    .reports-header { background:linear-gradient(135deg,#0d3b66 0%,#1a5276 100%); color:#fff; border-radius:12px; padding:20px 24px; margin-bottom:20px; }
+    .search-section, .session-section { background:#fff; border-radius:12px; padding:20px 24px; box-shadow:0 2px 10px rgba(0,0,0,0.06); margin-bottom:20px; }
+    .search-input { border-radius:24px; padding:10px 20px; font-size:0.9rem; border:2px solid #e0e6ed; }
+    .search-input:focus { border-color:#0d3b66; box-shadow:0 0 0 3px rgba(13,59,102,0.1); }
+    .section-title { font-size:0.95rem; font-weight:700; color:#0d3b66; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+    .search-results { display:none; } .search-results.active { display:block; }
+    .empty-state { text-align:center; padding:40px 20px; color:#6c757d; }
+    .empty-state i { font-size:2.5rem; color:#dee2e6; margin-bottom:12px; }
+    .badge-role { padding:3px 10px; border-radius:12px; font-size:0.7rem; font-weight:600; background:#e8f4fd; color:#0d3b66; }
+
+    /* Candidate result card (same as evaluation) */
+    .report-card { border:1px solid #e2e8f0; border-radius:12px; overflow:hidden; margin-bottom:20px; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+    .report-card-header { padding:16px 20px; background:#f8f9fa; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+    .cand-name { font-weight:700; font-size:1rem; color:#0d3b66; }
+    .cand-meta { font-size:0.82rem; color:#555; margin-top:2px; }
+    .stat-pill { background:#f8f9fa; border:1px solid #e9ecef; border-radius:8px; padding:8px 14px; text-align:center; min-width:80px; }
+    .stat-pill .stat-value { font-size:1.1rem; font-weight:700; color:#0d3b66; }
+    .stat-pill .stat-label { font-size:0.7rem; color:#6c757d; text-transform:uppercase; letter-spacing:0.5px; }
+
+    /* Score table */
+    .score-table { margin:0; font-size:0.85rem; }
+    .score-table thead th { background:#0d3b66; color:#fff; font-weight:600; padding:10px 14px; border:none; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.5px; }
+    .score-table tbody td { padding:12px 14px; vertical-align:middle; border-bottom:1px solid #f0f0f0; }
+    .score-table tbody tr:hover { background:#f8f9ff; }
+    .score-progress { height:7px; border-radius:4px; background:#e9ecef; overflow:hidden; min-width:70px; }
+    .score-progress-bar { height:100%; border-radius:4px; }
+    .status-pill { padding:3px 12px; border-radius:16px; font-weight:600; font-size:0.72rem; display:inline-block; text-transform:uppercase; }
+    .status-pass { background:#d4edda; color:#155724; }
+    .status-fail { background:#f8d7da; color:#721c24; }
+    .status-pending { background:#e2e3e5; color:#383d41; }
+
+    /* Action icons */
+    .report-actions { display:inline-flex; gap:6px; align-items:center; }
+    .report-actions .icon-btn { width:30px; height:30px; border-radius:8px; border:1.5px solid transparent; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.2s; text-decoration:none; font-size:0.8rem; }
+    .icon-btn.btn-gen { background:#0d3b66; color:#fff; border-color:#0d3b66; }
+    .icon-btn.btn-gen:hover { background:#1a5276; }
+    .icon-btn.btn-view { background:#e8f4fd; color:#0d3b66; border-color:#c8dff5; }
+    .icon-btn.btn-view:hover { background:#d0e4f7; }
+    .icon-btn.btn-dl { background:#e6f4ea; color:#137333; border-color:#b7dfbf; }
+    .icon-btn.btn-dl:hover { background:#ccebd4; }
+    .icon-btn.btn-regen { background:#fff3e0; color:#e65100; border-color:#ffe0b2; }
+    .icon-btn.btn-regen:hover { background:#ffe0b2; }
+    .icon-btn.btn-loading { background:#f0f0f0; color:#999; pointer-events:none; }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid">
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="text-center text-white">
-            <div class="spinner-border mb-3" role="status"></div>
-            <div>Generating PDF Report...</div>
-        </div>
-    </div>
 
     <!-- Header -->
     <div class="reports-header">
         <h5 class="mb-1"><i class="fas fa-file-alt me-2"></i>Reports</h5>
-        <p class="mb-0" style="font-size:0.85rem; opacity:0.8;">
-            Generate and download candidate evaluation reports
-        </p>
+        <p class="mb-0" style="font-size:0.85rem; opacity:0.8;">Generate and download candidate evaluation reports</p>
     </div>
 
-    <!-- Search Historical Candidates -->
+    <!-- Search -->
     <div class="search-section">
-        <div class="section-title">
-            <i class="fas fa-search"></i> Search Previous Candidates
-        </div>
-        <p style="font-size:0.8rem; color:#6c757d; margin-bottom:12px;">
-            Search by name, email, or role to find candidates from previous sessions
-        </p>
+        <div class="section-title"><i class="fas fa-search"></i> Search Candidates</div>
         <div class="input-group">
             <input type="text" class="form-control search-input" id="searchInput"
                    placeholder="Search by name, email, or role..." autocomplete="off">
-            <button class="btn btn-outline-secondary" style="border-radius: 0 24px 24px 0; border-left:none;"
-                    onclick="searchCandidates()">
+            <button class="btn btn-outline-secondary" style="border-radius:0 24px 24px 0; border-left:none;" id="searchBtn">
                 <i class="fas fa-search"></i>
             </button>
         </div>
     </div>
 
-    <!-- Search Results (hidden by default) -->
-    <div class="search-results" id="searchResults">
+    <!-- Search Results -->
+    <div class="search-results session-section" id="searchResults">
         <div class="section-title">
             <i class="fas fa-history"></i> Search Results
-            <button class="btn btn-sm btn-link text-muted" onclick="clearSearch()" style="margin-left:auto; font-size:0.78rem;">
+            <button class="btn btn-sm btn-link text-muted" id="clearSearchBtn" style="margin-left:auto; font-size:0.78rem;">
                 <i class="fas fa-times me-1"></i>Clear
             </button>
         </div>
         <div id="searchResultsList"></div>
     </div>
 
-    <!-- Current Session Candidates -->
+    <!-- Today's Session Candidates -->
     <div class="session-section">
         <div class="section-title">
             <i class="fas fa-clock"></i> Today's Session
@@ -232,36 +91,98 @@
 
         {% if session_candidates %}
             {% for cand in session_candidates %}
-            <div class="candidate-row">
-                <div class="cand-info">
-                    <div class="cand-name">
-                        {{ cand.name }}
-                        <span class="badge-role ms-2">{{ cand.role }}</span>
+            <div class="report-card">
+                <div class="report-card-header">
+                    <div>
+                        <div class="cand-name">
+                            <i class="fas fa-user me-1"></i> {{ cand.name }}
+                            <span class="badge-role ms-2">{{ cand.role }}</span>
+                        </div>
+                        <div class="cand-meta">
+                            <i class="fas fa-envelope me-1"></i> {{ cand.email }}
+                            &nbsp;&middot;&nbsp;
+                            {{ cand.rounds|length }} rounds
+                        </div>
                     </div>
-                    <div class="cand-meta">
-                        {{ cand.email }}
-                        <span class="ms-2">•</span>
-                        <span class="ms-2">{{ cand.rounds|length }} rounds</span>
-                        {% if cand.results %}
-                        <span class="ms-1 rounds-summary">
-                            {% for r in cand.results %}
-                                {% if r.get('status') == 'PASS' %}
-                                    <span class="round-dot pass" title="{{ r.round_label }}: PASS"></span>
-                                {% elif r.get('status') == 'FAIL' %}
-                                    <span class="round-dot fail" title="{{ r.round_label }}: FAIL"></span>
-                                {% else %}
-                                    <span class="round-dot pending" title="{{ r.round_label }}: Pending"></span>
-                                {% endif %}
-                            {% endfor %}
-                        </span>
-                        {% endif %}
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="d-flex gap-2">
+                            <div class="stat-pill">
+                                <div class="stat-value text-success">{{ cand.summary.passed_rounds }}</div>
+                                <div class="stat-label">Passed</div>
+                            </div>
+                            <div class="stat-pill">
+                                <div class="stat-value text-danger">{{ cand.summary.failed_rounds }}</div>
+                                <div class="stat-label">Failed</div>
+                            </div>
+                            <div class="stat-pill">
+                                <div class="stat-value">{{ cand.summary.attempted_rounds }}/{{ cand.summary.total_rounds }}</div>
+                                <div class="stat-label">Attempted</div>
+                            </div>
+                        </div>
+                        <div class="report-actions" id="actions-{{ loop.index }}">
+                            <button class="icon-btn btn-gen" onclick="generateReport('{{ cand.email }}', 'actions-{{ loop.index }}')" title="Generate Report">
+                                <i class="fas fa-file-pdf"></i>
+                            </button>
+                        </div>
                     </div>
-                </div>                <div class="btn-action-group" id="actions-{{ loop.index }}">
-                    <button class="btn btn-generate btn-generate-pdf"
-                            onclick="generateReport('{{ cand.email }}', 'actions-{{ loop.index }}')">
-                        <i class="fas fa-file-pdf me-1"></i> Generate Report
-                    </button>
                 </div>
+
+                <!-- Round-by-round scores -->
+                {% if cand.rounds %}
+                <div class="table-responsive">
+                <table class="table score-table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th style="width:22%;">Round</th>
+                            <th style="width:10%;">Score</th>
+                            <th style="width:24%;">Percentage</th>
+                            <th style="width:12%;">Pass Mark</th>
+                            <th style="width:10%;">Attempted</th>
+                            <th style="width:12%;">Time</th>
+                            <th style="width:10%;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for rk, r in cand.rounds.items() %}
+                        {% if r.status == "Not Attempted" %}
+                        <tr>
+                            <td><span class="fw-semibold" style="color:#1d3557;">{{ r.round_label }}</span><div style="font-size:0.72rem;color:#aaa;">{{ rk }}</div></td>
+                            <td colspan="5" class="text-center text-muted" style="font-style:italic;"><i class="fas fa-minus-circle me-1"></i>Not Attempted</td>
+                            <td><span class="status-pill status-pending">Pending</span></td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td><span class="fw-semibold" style="color:#1d3557;">{{ r.round_label }}</span><div style="font-size:0.72rem;color:#aaa;">{{ rk }}</div></td>
+                            <td><span class="fw-bold" style="font-size:0.95rem;color:#0d3b66;">{{ r.correct }}</span><span class="text-muted"> / {{ r.total }}</span></td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="score-progress flex-grow-1">
+                                        <div class="score-progress-bar" style="width:{{ r.percentage }}%; background:{% if r.percentage >= r.pass_threshold %}linear-gradient(90deg,#2a9d8f,#52c7b8){% elif r.percentage >= (r.pass_threshold - 10) %}linear-gradient(90deg,#f4a261,#f7c99e){% else %}linear-gradient(90deg,#d62828,#e76f51){% endif %};"></div>
+                                    </div>
+                                    <span class="fw-bold" style="min-width:40px; color:{% if r.percentage >= r.pass_threshold %}#2a9d8f{% elif r.percentage >= (r.pass_threshold - 10) %}#e67e22{% else %}#d62828{% endif %};">{{ r.percentage }}%</span>
+                                </div>
+                            </td>
+                            <td><span class="text-muted fw-semibold">&ge; {{ r.pass_threshold }}%</span></td>
+                            <td>{{ r.attempted }} / {{ r.total }}</td>
+                            <td><span style="color:#e76f51;font-weight:600;"><i class="fas fa-clock me-1"></i>{{ (r.time_taken_seconds // 60) }}m {{ (r.time_taken_seconds % 60) }}s</span></td>
+                            <td>
+                                {% if r.status == 'PASS' %}
+                                    <span class="status-pill status-pass"><i class="fas fa-check me-1"></i>Pass</span>
+                                {% else %}
+                                    <span class="status-pill status-fail"><i class="fas fa-times me-1"></i>Fail</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+                {% else %}
+                <div class="text-center text-muted py-3" style="font-size:0.85rem;">
+                    <i class="fas fa-hourglass-half me-1"></i> No rounds attempted yet
+                </div>
+                {% endif %}
             </div>
             {% endfor %}
         {% else %}
@@ -277,130 +198,71 @@
 
 {% block scripts %}
 <script>
-    const searchInput = document.getElementById('searchInput');
-    const searchResults = document.getElementById('searchResults');
-    const searchResultsList = document.getElementById('searchResultsList');
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+const searchResultsList = document.getElementById('searchResultsList');
 
-    // Search on Enter key
-    searchInput.addEventListener('keyup', function(e) {
-        if (e.key === 'Enter') searchCandidates();
-    });
+document.getElementById('searchBtn').addEventListener('click', searchCandidates);
+searchInput.addEventListener('keyup', function(e) { if (e.key === 'Enter') searchCandidates(); });
+document.getElementById('clearSearchBtn').addEventListener('click', function() {
+    searchInput.value = '';
+    searchResults.classList.remove('active');
+    searchResultsList.innerHTML = '';
+});
 
-    function searchCandidates() {
-        const query = searchInput.value.trim();
-        if (query.length < 2) {
-            alert('Please enter at least 2 characters to search.');
-            return;
-        }
+function searchCandidates() {
+    const q = searchInput.value.trim();
+    if (q.length < 2) { if (typeof showToast === 'function') showToast('Enter at least 2 characters', 'warning'); return; }
 
-        searchResultsList.innerHTML = `
-            <div class="text-center py-3">
-                <div class="spinner-border spinner-sm text-primary" role="status"></div>
-                <span class="ms-2 text-muted" style="font-size:0.85rem;">Searching...</span>
-            </div>
-        `;
-        searchResults.classList.add('active');
+    searchResultsList.innerHTML = '<div class="text-center py-3"><div class="spinner-border spinner-border-sm text-primary"></div><span class="ms-2 text-muted">Searching...</span></div>';
+    searchResults.classList.add('active');
 
-        fetch(`/reports/search?q=${encodeURIComponent(query)}`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.candidates && data.candidates.length > 0) {
-                    let html = '';                    data.candidates.forEach((c, idx) => {
-                        const actionsId = 'search-actions-' + idx;
-                        html += `
-                            <div class="candidate-row">
-                                <div class="cand-info">
-                                    <div class="cand-name">
-                                        ${c.name}
-                                        <span class="badge-role ms-2">${c.role || 'N/A'}</span>
-                                    </div>
-                                    <div class="cand-meta">
-                                        ${c.email}
-                                        ${c.created_at ? '<span class="ms-2">•</span><span class="ms-2">' + c.created_at + '</span>' : ''}
-                                    </div>
-                                </div>
-                                <div class="btn-action-group" id="${actionsId}">
-                                    <button class="btn btn-generate btn-generate-pdf"
-                                            onclick="generateReport('${c.email}', '${actionsId}')">
-                                        <i class="fas fa-file-pdf me-1"></i> Generate Report
-                                    </button>
-                                </div>
-                            </div>
-                        `;
-                    });
-                    searchResultsList.innerHTML = html;
-                } else {
-                    searchResultsList.innerHTML = `
-                        <div class="empty-state" style="padding:20px;">
-                            <i class="fas fa-search d-block" style="font-size:1.5rem;"></i>
-                            <p class="mb-0" style="font-size:0.85rem;">No candidates found for "${query}"</p>
-                        </div>
-                    `;
-                }
-            })
-            .catch(err => {
-                searchResultsList.innerHTML = `
-                    <div class="text-center py-3 text-danger" style="font-size:0.85rem;">
-                        <i class="fas fa-exclamation-circle me-1"></i> Search failed. Please try again.
-                    </div>
-                `;
-            });
-    }
+    fetch('/reports/search?q=' + encodeURIComponent(q))
+        .then(r => r.json())
+        .then(data => {
+            if (data.candidates && data.candidates.length > 0) {
+                let h = '';
+                data.candidates.forEach((c, i) => {
+                    const aid = 'sr-' + i;
+                    h += '<div class="d-flex align-items-center justify-content-between p-2 border-bottom">'
+                       + '<div><span class="fw-semibold" style="color:#0d3b66;">' + c.name + '</span>'
+                       + ' <span class="badge-role ms-1">' + (c.role||'N/A') + '</span>'
+                       + '<div style="font-size:0.78rem;color:#6c757d;">' + c.email + '</div></div>'
+                       + '<div class="report-actions" id="' + aid + '">'
+                       + '<button class="icon-btn btn-gen" onclick="generateReport(\'' + c.email + '\',\'' + aid + '\')" title="Generate Report"><i class="fas fa-file-pdf"></i></button>'
+                       + '</div></div>';
+                });
+                searchResultsList.innerHTML = h;
+            } else {
+                searchResultsList.innerHTML = '<div class="text-center py-3 text-muted"><i class="fas fa-search me-1"></i>No candidates found</div>';
+            }
+        })
+        .catch(() => {
+            searchResultsList.innerHTML = '<div class="text-center py-3 text-danger"><i class="fas fa-exclamation-circle me-1"></i>Search failed</div>';
+        });
+}
 
-    function clearSearch() {
-        searchInput.value = '';
-        searchResults.classList.remove('active');
-        searchResultsList.innerHTML = '';
-    }    function showLoading() {
-        document.getElementById('loadingOverlay').classList.add('active');
-        setTimeout(() => {
-            document.getElementById('loadingOverlay').classList.remove('active');
-        }, 10000);
-    }
+function generateReport(email, containerId) {
+    const c = document.getElementById(containerId);
+    if (!c) return;
+    c.innerHTML = '<span class="icon-btn btn-loading"><i class="fas fa-spinner fa-spin"></i></span>';
 
-    function generateReport(email, containerId) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-
-        // Show generating state
-        container.innerHTML = `
-            <button class="btn btn-generate btn-generating" disabled>
-                <span class="spinner-border spinner-border-sm me-1"></span> Generating…
-            </button>
-        `;
-
-        fetch('/reports/generate/' + encodeURIComponent(email))
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    container.innerHTML = `
-                        <a href="${data.view_url}" target="_blank" class="btn-action btn-view" title="View in browser">
-                            <i class="fas fa-eye me-1"></i> View
-                        </a>
-                        <a href="${data.download_url}" class="btn-action btn-download" title="Download PDF">
-                            <i class="fas fa-download me-1"></i> Download
-                        </a>
-                        <button class="btn-action btn-regenerate" onclick="generateReport('${email}', '${containerId}')" title="Regenerate report">
-                            <i class="fas fa-redo me-1"></i> Regenerate
-                        </button>
-                    `;
-                } else {
-                    container.innerHTML = `
-                        <span class="text-danger" style="font-size:0.78rem;"><i class="fas fa-exclamation-circle me-1"></i>${data.error || 'Failed'}</span>
-                        <button class="btn-action btn-regenerate ms-2" onclick="generateReport('${email}', '${containerId}')">
-                            <i class="fas fa-redo me-1"></i> Retry
-                        </button>
-                    `;
-                }
-            })
-            .catch(err => {
-                container.innerHTML = `
-                    <span class="text-danger" style="font-size:0.78rem;"><i class="fas fa-exclamation-circle me-1"></i>Error</span>
-                    <button class="btn-action btn-regenerate ms-2" onclick="generateReport('${email}', '${containerId}')">
-                        <i class="fas fa-redo me-1"></i> Retry
-                    </button>
-                `;
-            });
-    }
+    fetch('/reports/generate/' + encodeURIComponent(email))
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                c.innerHTML = '<a href="' + data.view_url + '" target="_blank" class="icon-btn btn-view" title="View"><i class="fas fa-eye"></i></a>'
+                    + '<a href="' + data.download_url + '" class="icon-btn btn-dl" title="Download"><i class="fas fa-download"></i></a>'
+                    + '<button class="icon-btn btn-regen" onclick="generateReport(\'' + email + '\',\'' + containerId + '\')" title="Regenerate"><i class="fas fa-redo"></i></button>';
+            } else {
+                c.innerHTML = '<span class="text-danger" style="font-size:0.75rem;"><i class="fas fa-exclamation-circle"></i> ' + (data.error||'Failed') + '</span>'
+                    + ' <button class="icon-btn btn-regen" onclick="generateReport(\'' + email + '\',\'' + containerId + '\')"><i class="fas fa-redo"></i></button>';
+            }
+        })
+        .catch(() => {
+            c.innerHTML = '<span class="text-danger" style="font-size:0.75rem;"><i class="fas fa-exclamation-circle"></i> Error</span>'
+                + ' <button class="icon-btn btn-regen" onclick="generateReport(\'' + email + '\',\'' + containerId + '\')"><i class="fas fa-redo"></i></button>';
+        });
+}
 </script>
 {% endblock %}

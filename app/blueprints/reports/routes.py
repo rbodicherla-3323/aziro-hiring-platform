@@ -6,7 +6,7 @@ import os
 from flask import Blueprint, render_template, request, session, jsonify, send_file, abort
 
 from app.utils.auth_decorator import login_required
-from app.services.generated_tests_store import get_tests_for_user_today
+from app.services.generated_tests_store import get_tests_for_user_today, GENERATED_TESTS
 from app.services.evaluation_aggregator import EvaluationAggregator
 from app.services import db_service
 from app.services.pdf_service import generate_candidate_pdf, REPORTS_DIR
@@ -59,11 +59,54 @@ def search_reports():
     if len(query) < 2:
         return jsonify({"candidates": []})
 
+    results = []
+    query_lower = query.lower()
+
+    # 1. Search in-memory generated tests (via EvaluationAggregator)
+    all_candidates = EvaluationAggregator.get_candidates()
+    for c in all_candidates:
+        if (query_lower in c.get("name", "").lower()
+                or query_lower in c.get("email", "").lower()
+                or query_lower in c.get("role", "").lower()):
+            results.append({
+                "name": c["name"],
+                "email": c["email"],
+                "role": c.get("role", "N/A"),
+                "source": "session",
+            })
+
+    # Also search GENERATED_TESTS that may not have evaluation data yet
+    found_emails = {r["email"] for r in results}
+    for t in GENERATED_TESTS:
+        if t["email"] not in found_emails:
+            if (query_lower in t.get("name", "").lower()
+                    or query_lower in t.get("email", "").lower()
+                    or query_lower in t.get("role", "").lower()):
+                results.append({
+                    "name": t["name"],
+                    "email": t["email"],
+                    "role": t.get("role", "N/A"),
+                    "source": "session",
+                })
+                found_emails.add(t["email"])
+
+    # 2. Search DB (historical)
     try:
-        results = db_service.search_candidates(query)
-        return jsonify({"candidates": results})
-    except Exception as e:
-        return jsonify({"candidates": [], "error": str(e)})
+        db_results = db_service.search_candidates(query)
+        for r in db_results:
+            if r["email"] not in found_emails:
+                results.append({
+                    "name": r["name"],
+                    "email": r["email"],
+                    "role": r.get("role", "N/A"),
+                    "created_at": r.get("created_at", ""),
+                    "source": "database",
+                })
+                found_emails.add(r["email"])
+    except Exception:
+        pass
+
+    return jsonify({"candidates": results})
 
 
 @reports_bp.route("/reports/generate/<path:email>")
