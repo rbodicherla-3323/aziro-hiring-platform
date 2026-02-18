@@ -42,7 +42,7 @@
         <h4><i class="fas fa-plus-circle me-2"></i>Generate Candidate Test</h4>
         <p>Create assessment links for candidates. Upload resume &amp; JD to auto-fill details and match roles.</p>
     </div>
-    <form method="POST" id="generateForm" enctype="multipart/form-data">
+    <form method="POST" id="generateForm" enctype="multipart/form-data" data-persist="off">
     <div class="mode-card card mb-4">
         <div class="card-body py-3 px-4">
             <div class="d-flex align-items-center gap-3">
@@ -143,5 +143,187 @@
 </div>
 <script>
 const singleMode=document.getElementById("single_mode"),multiMode=document.getElementById("multi_mode"),singleLabel=document.getElementById("singleModeLabel"),multiLabel=document.getElementById("multiModeLabel"),addCandidateWrapper=document.getElementById("addCandidateWrapper"),addCandidateBtn=document.getElementById("addCandidateBtn"),candidateContainer=document.getElementById("candidateContainer");function updateRemoveButtons(){document.querySelectorAll(".candidate-row").forEach((r,i)=>{const b=r.querySelector(".removeCandidateBtn");if(b)b.classList.toggle("d-none",i===0||!multiMode.checked)})}singleMode.addEventListener("change",()=>{singleLabel.classList.add("active");multiLabel.classList.remove("active");addCandidateWrapper.classList.add("d-none");const rows=candidateContainer.querySelectorAll(".candidate-row");rows.forEach((r,i)=>{if(i>0)r.remove()});updateRemoveButtons()});multiMode.addEventListener("change",()=>{multiLabel.classList.add("active");singleLabel.classList.remove("active");addCandidateWrapper.classList.remove("d-none");updateRemoveButtons()});addCandidateBtn.addEventListener("click",()=>{const n=candidateContainer.firstElementChild.cloneNode(true);n.querySelectorAll("input[type='text'],input[type='email']").forEach(i=>{i.value=""});n.querySelectorAll("input[type='file']").forEach(i=>{i.value=""});n.querySelectorAll("select").forEach(s=>s.selectedIndex=0);n.querySelectorAll(".upload-zone").forEach(z=>{z.classList.remove("has-file");z.querySelector(".file-name").textContent=""});n.querySelectorAll(".auto-fill-badge").forEach(b=>b.classList.remove("visible"));n.querySelectorAll(".extract-spinner").forEach(s=>s.classList.remove("active"));setupFileInputListeners(n);n.querySelector(".removeCandidateBtn").addEventListener("click",function(){this.closest(".candidate-row").remove();updateRemoveButtons()});candidateContainer.appendChild(n);updateRemoveButtons()});function setupFileInputListeners(row){const ri=row.querySelector(".resume-upload"),ji=row.querySelector(".jd-upload"),nf=row.querySelector(".candidate-name"),ef=row.querySelector(".candidate-email"),rf=row.querySelector(".candidate-role"),sp=row.querySelector(".extract-spinner"),bd=row.querySelectorAll(".auto-fill-badge");if(ri)ri.addEventListener("change",function(){const z=this.closest(".upload-zone");if(this.files.length>0){const f=this.files[0];z.classList.add("has-file");z.querySelector(".file-name").textContent=f.name;z.querySelector(".upload-icon").innerHTML='<i class="fas fa-check-circle"></i>';const nameFromFile=f.name.replace(/\.[^/.]+$/,"").replace(/[_-]/g," ").trim();if(nf&&!nf.value.trim())nf.value=nameFromFile;if(sp)sp.classList.add("active");const fd=new FormData();fd.append("resume",f);fetch("/api/extract-resume",{method:"POST",body:fd}).then(r=>r.json()).then(d=>{if(d.email&&ef&&!ef.value.trim()){ef.value=d.email;if(bd[1])bd[1].classList.add("visible")}if(d.name&&nf){if(!nf.value.trim()||nf.value===nameFromFile)nf.value=d.name;if(bd[0])bd[0].classList.add("visible")}}).catch(e=>console.log("Resume parse:",e)).finally(()=>{if(sp)sp.classList.remove("active")})}else{z.classList.remove("has-file");z.querySelector(".file-name").textContent="";z.querySelector(".upload-icon").innerHTML='<i class="fas fa-file-pdf"></i>'}});if(ji)ji.addEventListener("change",function(){const z=this.closest(".upload-zone");if(this.files.length>0){const f=this.files[0];z.classList.add("has-file");z.querySelector(".file-name").textContent=f.name;z.querySelector(".upload-icon").innerHTML='<i class="fas fa-check-circle"></i>';if(sp)sp.classList.add("active");const fd=new FormData();fd.append("jd",f);fetch("/api/extract-jd-role",{method:"POST",body:fd}).then(r=>r.json()).then(d=>{if(d.role&&rf){const opts=rf.querySelectorAll("option");for(let o of opts){if(o.textContent.trim()===d.role){rf.value=o.value;if(bd[2])bd[2].classList.add("visible");break}}}}).catch(e=>console.log("JD parse:",e)).finally(()=>{if(sp)sp.classList.remove("active")})}else{z.classList.remove("has-file");z.querySelector(".file-name").textContent="";z.querySelector(".upload-icon").innerHTML='<i class="fas fa-file-alt"></i>'}})}document.addEventListener("DOMContentLoaded",()=>{const fr=candidateContainer.querySelector(".candidate-row");if(fr)setupFileInputListeners(fr)});const form=document.getElementById("generateForm"),overlay=document.getElementById("loadingOverlay"),button=document.getElementById("generateBtn");form.addEventListener("submit",e=>{e.preventDefault();const ni=document.querySelectorAll('input[name="name[]"]'),ei=document.querySelectorAll('input[name="email[]"]'),rs=document.querySelectorAll('select[name="role[]"]');let v=true;ni.forEach((inp,i)=>{if(!inp.value.trim()||!ei[i].value.trim()||!rs[i].value){v=false;if(!inp.value.trim())inp.classList.add("is-invalid");if(!ei[i].value.trim())ei[i].classList.add("is-invalid");if(!rs[i].value)rs[i].classList.add("is-invalid")}});if(!v){if(typeof showToast==='function')showToast('Please fill all required fields','warning');return}button.disabled=true;button.innerHTML='<span class="spinner-border spinner-border-sm me-1"></span> Generating';overlay.classList.remove("d-none");setTimeout(()=>{form.submit()},800)});document.addEventListener("input",e=>{if(e.target.classList.contains("is-invalid"))e.target.classList.remove("is-invalid")});
+</script>
+<script>
+(function () {
+    var form = document.getElementById("generateForm");
+    var container = document.getElementById("candidateContainer");
+    var singleModeInput = document.getElementById("single_mode");
+    var multiModeInput = document.getElementById("multi_mode");
+    var addCandidateButton = document.getElementById("addCandidateBtn");
+    var stateKey = "aziro:create-test-state:v1";
+
+    var hasSessionStorage = false;
+    try {
+        var probeKey = "__aziro_create_test_state_probe__";
+        sessionStorage.setItem(probeKey, "1");
+        sessionStorage.removeItem(probeKey);
+        hasSessionStorage = true;
+    } catch (e) {
+        hasSessionStorage = false;
+    }
+
+    if (!hasSessionStorage || !form || !container || !singleModeInput || !multiModeInput || !addCandidateButton) {
+        return;
+    }
+
+    function getRows() {
+        return Array.prototype.slice.call(container.querySelectorAll(".candidate-row"));
+    }
+
+    function getInputValue(row, selector) {
+        var field = row.querySelector(selector);
+        return field ? field.value : "";
+    }
+
+    function setInputValue(row, selector, value) {
+        var field = row.querySelector(selector);
+        if (!field || value === null || value === undefined) {
+            return;
+        }
+        field.value = String(value);
+        field.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+
+    function captureState() {
+        var rows = getRows().map(function (row) {
+            return {
+                name: getInputValue(row, 'input[name="name[]"]'),
+                email: getInputValue(row, 'input[name="email[]"]'),
+                role: getInputValue(row, 'select[name="role[]"]'),
+                domain: getInputValue(row, 'select[name="domain[]"]'),
+            };
+        });
+
+        var payload = {
+            version: 1,
+            ts: Date.now(),
+            mode: multiModeInput.checked ? "multi" : "single",
+            rows: rows,
+        };
+
+        sessionStorage.setItem(stateKey, JSON.stringify(payload));
+    }
+
+    function syncRemoveButtons() {
+        var rows = getRows();
+        rows.forEach(function (row, index) {
+            var removeButton = row.querySelector(".removeCandidateBtn");
+            if (!removeButton) {
+                return;
+            }
+            var hide = index === 0 || !multiModeInput.checked;
+            removeButton.classList.toggle("d-none", hide);
+        });
+    }
+
+    function ensureMode(mode) {
+        if (mode === "multi") {
+            multiModeInput.checked = true;
+            multiModeInput.dispatchEvent(new Event("change", { bubbles: true }));
+        } else {
+            singleModeInput.checked = true;
+            singleModeInput.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+    }
+
+    function ensureRowCount(targetCount) {
+        var desired = Math.max(1, targetCount || 1);
+        var current = getRows().length;
+
+        while (current < desired) {
+            addCandidateButton.click();
+            current = getRows().length;
+        }
+
+        while (current > desired) {
+            var rows = getRows();
+            if (rows.length <= 1) {
+                break;
+            }
+            rows[rows.length - 1].remove();
+            current = getRows().length;
+        }
+
+        syncRemoveButtons();
+    }
+
+    function restoreState() {
+        var raw = sessionStorage.getItem(stateKey);
+        if (!raw) {
+            return;
+        }
+
+        var payload;
+        try {
+            payload = JSON.parse(raw);
+        } catch (e) {
+            return;
+        }
+
+        if (!payload || !Array.isArray(payload.rows) || !payload.rows.length) {
+            return;
+        }
+
+        ensureMode(payload.mode === "multi" ? "multi" : "single");
+
+        var rowCount = payload.mode === "multi" ? payload.rows.length : 1;
+        ensureRowCount(rowCount);
+
+        getRows().forEach(function (row, index) {
+            var rowData = payload.rows[index] || {};
+            setInputValue(row, 'input[name="name[]"]', rowData.name || "");
+            setInputValue(row, 'input[name="email[]"]', rowData.email || "");
+            setInputValue(row, 'select[name="role[]"]', rowData.role || "");
+            setInputValue(row, 'select[name="domain[]"]', rowData.domain || "None");
+        });
+    }
+
+    var saveTimer = null;
+    function queueSave() {
+        window.clearTimeout(saveTimer);
+        saveTimer = window.setTimeout(captureState, 120);
+    }
+
+    restoreState();
+
+    document.addEventListener("input", function (event) {
+        if (!event.target.closest("#generateForm")) {
+            return;
+        }
+        if ((event.target.type || "").toLowerCase() === "file") {
+            return;
+        }
+        queueSave();
+    }, true);
+
+    document.addEventListener("change", function (event) {
+        if (!event.target.closest("#generateForm")) {
+            return;
+        }
+        if ((event.target.type || "").toLowerCase() === "file") {
+            return;
+        }
+        queueSave();
+    }, true);
+
+    addCandidateButton.addEventListener("click", function () {
+        window.setTimeout(queueSave, 0);
+    });
+
+    container.addEventListener("click", function (event) {
+        if (!event.target.closest(".removeCandidateBtn")) {
+            return;
+        }
+        window.setTimeout(queueSave, 0);
+    });
+
+    form.addEventListener("submit", function () {
+        sessionStorage.removeItem(stateKey);
+        if (window.AziroPageState && typeof window.AziroPageState.clear === "function") {
+            window.AziroPageState.clear();
+        }
+    });
+})();
 </script>
 {% endblock %}

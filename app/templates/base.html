@@ -146,6 +146,214 @@ function showToast(message, type = 'success') {
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script>
+(function () {
+    var hasSessionStorage = false;
+    try {
+        var probeKey = "__aziro_page_state_probe__";
+        sessionStorage.setItem(probeKey, "1");
+        sessionStorage.removeItem(probeKey);
+        hasSessionStorage = true;
+    } catch (e) {
+        hasSessionStorage = false;
+    }
+
+    if (!hasSessionStorage) {
+        return;
+    }
+
+    var storageKey = "aziro:page-state:v1:" + window.location.pathname + window.location.search;
+
+    function isPersistableField(element) {
+        if (!element || element.disabled) {
+            return false;
+        }
+        if (element.closest("[data-persist='off']")) {
+            return false;
+        }
+
+        var tag = (element.tagName || "").toLowerCase();
+        if (tag !== "input" && tag !== "select" && tag !== "textarea") {
+            return false;
+        }
+
+        var type = (element.type || "").toLowerCase();
+        if (
+            type === "password" ||
+            type === "file" ||
+            type === "hidden" ||
+            type === "submit" ||
+            type === "button" ||
+            type === "reset" ||
+            type === "image"
+        ) {
+            return false;
+        }
+        return true;
+    }
+
+    function getPersistableFields() {
+        var all = Array.prototype.slice.call(document.querySelectorAll("input, select, textarea"));
+        return all.filter(isPersistableField);
+    }
+
+    function buildFieldDescriptor(element, counters) {
+        var scope = "page";
+        if (element.form) {
+            if (element.form.id) {
+                scope = "form#" + element.form.id;
+            } else {
+                scope = "form@" + Array.prototype.indexOf.call(document.forms, element.form);
+            }
+        }
+
+        var baseKey = "";
+        if (element.id) {
+            baseKey = "id:" + element.id;
+        } else if (element.name) {
+            baseKey = "name:" + element.name;
+        } else {
+            return null;
+        }
+
+        var type = (element.type || element.tagName || "").toLowerCase();
+        var counterKey = scope + "|" + baseKey + "|" + type;
+        var index = counters[counterKey] || 0;
+        counters[counterKey] = index + 1;
+        return counterKey + "|idx:" + index;
+    }
+
+    function readFieldValue(element) {
+        var type = (element.type || "").toLowerCase();
+        if (type === "checkbox" || type === "radio") {
+            return element.checked;
+        }
+        if (element.tagName && element.tagName.toLowerCase() === "select" && element.multiple) {
+            return Array.prototype.map.call(element.selectedOptions, function (opt) {
+                return opt.value;
+            });
+        }
+        return element.value;
+    }
+
+    function writeFieldValue(element, value) {
+        var type = (element.type || "").toLowerCase();
+        if (type === "checkbox" || type === "radio") {
+            element.checked = !!value;
+            return;
+        }
+        if (element.tagName && element.tagName.toLowerCase() === "select" && element.multiple && Array.isArray(value)) {
+            Array.prototype.forEach.call(element.options, function (opt) {
+                opt.selected = value.indexOf(opt.value) !== -1;
+            });
+            return;
+        }
+        if (value === null || value === undefined) {
+            return;
+        }
+        element.value = String(value);
+    }
+
+    function savePageState() {
+        var fields = getPersistableFields();
+        var counters = {};
+        var state = [];
+
+        fields.forEach(function (field) {
+            var descriptor = buildFieldDescriptor(field, counters);
+            if (!descriptor) {
+                return;
+            }
+            state.push({
+                key: descriptor,
+                value: readFieldValue(field),
+            });
+        });
+
+        var payload = {
+            version: 1,
+            ts: Date.now(),
+            fields: state,
+        };
+
+        sessionStorage.setItem(storageKey, JSON.stringify(payload));
+    }
+
+    function restorePageState() {
+        var raw = sessionStorage.getItem(storageKey);
+        if (!raw) {
+            return;
+        }
+
+        var payload;
+        try {
+            payload = JSON.parse(raw);
+        } catch (e) {
+            return;
+        }
+
+        if (!payload || !Array.isArray(payload.fields)) {
+            return;
+        }
+
+        var fields = getPersistableFields();
+        var counters = {};
+        var index = {};
+
+        fields.forEach(function (field) {
+            var descriptor = buildFieldDescriptor(field, counters);
+            if (!descriptor) {
+                return;
+            }
+            index[descriptor] = field;
+        });
+
+        payload.fields.forEach(function (entry) {
+            if (!entry || !entry.key) {
+                return;
+            }
+
+            var field = index[entry.key];
+            if (!field) {
+                return;
+            }
+
+            writeFieldValue(field, entry.value);
+            field.dispatchEvent(new Event("change", { bubbles: true }));
+        });
+    }
+
+    var saveTimer = null;
+    function queueSave() {
+        window.clearTimeout(saveTimer);
+        saveTimer = window.setTimeout(savePageState, 120);
+    }
+
+    restorePageState();
+
+    document.addEventListener("input", function (event) {
+        if (!isPersistableField(event.target)) {
+            return;
+        }
+        queueSave();
+    }, true);
+
+    document.addEventListener("change", function (event) {
+        if (!isPersistableField(event.target)) {
+            return;
+        }
+        queueSave();
+    }, true);
+
+    window.addEventListener("beforeunload", savePageState);
+
+    window.AziroPageState = {
+        clear: function () {
+            sessionStorage.removeItem(storageKey);
+        }
+    };
+})();
+</script>
 {% block scripts %}{% endblock %}
 </body>
 
