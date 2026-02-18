@@ -1,5 +1,5 @@
 /* ================================================================
-   AZIRO CODING EDITOR — JavaScript Flow Controller v4
+   AZIRO CODING EDITOR â€” JavaScript Flow Controller v4
    CodeMirror 5 integration: syntax highlighting, line numbers,
    bracket matching, auto-indent, auto-close brackets.
    Auto-save, timer, run, submit.
@@ -8,7 +8,7 @@
 (function () {
     "use strict";
 
-    // ── Bootstrap ───────────────────────────────────────────
+    // â”€â”€ Bootstrap â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const view = document.getElementById("codingEditorView");
     if (!view) return;
 
@@ -17,6 +17,7 @@
     const saveUrl        = view.dataset.saveUrl;
     const runUrl         = view.dataset.runUrl;
     const submitUrl      = view.dataset.submitUrl;
+    const completedUrl   = `/coding/completed/${encodeURIComponent(sessionId)}`;
     let remainingSeconds = parseInt(view.dataset.remainingSeconds, 10) || 0;
 
     const textarea       = document.getElementById("codingEditor");
@@ -35,22 +36,79 @@
     let lastSavedCode = textarea ? textarea.value : "";
     let isRunning = false;
 
-    // ── CodeMirror Language Mode Mapping ─────────────────────
+    // â”€â”€ CodeMirror Language Mode Mapping â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     function getCMMode(lang) {
         const l = (lang || "").toLowerCase();
         if (l === "java")               return "text/x-java";
         if (l === "c")                  return "text/x-csrc";
         if (l === "cpp" || l === "c++") return "text/x-c++src";
+        if (l === "python" || l === "py") return "python";
+        if (l === "javascript" || l === "js") return "javascript";
         if (l === "csharp" || l === "c#") return "text/x-csharp";
         return "text/x-java"; // default
     }
 
-    // ── Initialize CodeMirror ───────────────────────────────
+    function isCMModeLoaded(modeName) {
+        return !!(window.CodeMirror && CodeMirror.modes && CodeMirror.modes[modeName]);
+    }
+
+    function loadScriptOnce(src) {
+        return new Promise(function (resolve, reject) {
+            const existing = document.querySelector(`script[src="${src}"]`);
+            if (existing) {
+                if (existing.dataset.loaded === "1") return resolve();
+                existing.addEventListener("load", function () { resolve(); }, { once: true });
+                existing.addEventListener("error", function () { reject(new Error("Script load failed")); }, { once: true });
+                return;
+            }
+
+            const script = document.createElement("script");
+            script.src = src;
+            script.async = true;
+            script.addEventListener("load", function () {
+                script.dataset.loaded = "1";
+                resolve();
+            }, { once: true });
+            script.addEventListener("error", function () {
+                reject(new Error("Script load failed"));
+            }, { once: true });
+            document.head.appendChild(script);
+        });
+    }
+
+    async function ensureDynamicMode(modeName) {
+        if (!(modeName === "python" || modeName === "javascript")) return;
+        if (isCMModeLoaded(modeName)) return;
+
+        const fallbackSources = {
+            python: [
+                "https://cdn.jsdelivr.net/npm/codemirror@5.65.18/mode/python/python.min.js",
+                "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/python/python.min.js",
+            ],
+            javascript: [
+                "https://cdn.jsdelivr.net/npm/codemirror@5.65.18/mode/javascript/javascript.min.js",
+                "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/javascript/javascript.min.js",
+            ],
+        };
+
+        const sources = fallbackSources[modeName] || [];
+        for (const src of sources) {
+            try {
+                await loadScriptOnce(src);
+                if (isCMModeLoaded(modeName)) return;
+            } catch (_) {
+                // Try next fallback source.
+            }
+        }
+    }
+
+    // â”€â”€ Initialize CodeMirror â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     let cmEditor = null;
 
     if (textarea && typeof CodeMirror !== "undefined") {
+        const cmMode = getCMMode(language);
         cmEditor = CodeMirror.fromTextArea(textarea, {
-            mode:              getCMMode(language),
+            mode:              cmMode,
             lineNumbers:       true,
             indentUnit:        4,
             tabSize:           4,
@@ -84,17 +142,25 @@
         // Sync size
         cmEditor.setSize("100%", "100%");
 
-        // Listen for changes → auto-save
+        // Listen for changes â†’ auto-save
         cmEditor.on("change", function () {
             scheduleAutoSave();
             updateSaveIndicator("unsaved");
+        });
+
+        // Ensure Python/JavaScript mode scripts are available even if primary CDN failed.
+        ensureDynamicMode(cmMode).then(function () {
+            if (cmEditor && isCMModeLoaded(cmMode)) {
+                cmEditor.setOption("mode", cmMode);
+                cmEditor.refresh();
+            }
         });
 
         // Focus the editor
         setTimeout(function () { cmEditor.focus(); cmEditor.refresh(); }, 100);
 
     } else if (textarea) {
-        // ── Fallback: plain textarea with manual key handling ──
+        // â”€â”€ Fallback: plain textarea with manual key handling â”€â”€
         textarea.addEventListener("keydown", function (e) {
             if (e.key === "Tab") {
                 e.preventDefault();
@@ -160,7 +226,7 @@
         });
     }
 
-    // ── Helper: get / set current code from editor ──────────
+    // â”€â”€ Helper: get / set current code from editor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     function getCode() {
         if (cmEditor) return cmEditor.getValue();
         if (textarea) return textarea.value;
@@ -172,7 +238,7 @@
         else if (textarea) { textarea.value = code; }
     }
 
-    // ── Auto-Save ───────────────────────────────────────────
+    // â”€â”€ Auto-Save â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     function scheduleAutoSave() {
         if (autoSaveTimer) clearTimeout(autoSaveTimer);
         autoSaveTimer = setTimeout(doAutoSave, 2000);
@@ -212,11 +278,90 @@
         if (!dot) return;
 
         dot.className = "coding-save-dot " + state;
-        const labels = { saved: "Saved", saving: "Saving…", unsaved: "Unsaved" };
+        const labels = { saved: "Saved", saving: "Savingâ€¦", unsaved: "Unsaved" };
         if (label) label.textContent = labels[state] || "";
     }
 
-    // ── Timer ───────────────────────────────────────────────
+    function showInlineConfirm(message, options) {
+        const opts = options || {};
+        const confirmText = opts.confirmText || "Confirm";
+        const cancelText = opts.cancelText || "Cancel";
+        const dangerClass = opts.danger ? " danger" : "";
+
+        return new Promise(function (resolve) {
+            const backdrop = document.createElement("div");
+            backdrop.className = "coding-confirm-backdrop";
+            backdrop.innerHTML = `
+                <div class="coding-confirm-modal${dangerClass}" role="dialog" aria-modal="true" aria-label="Confirmation">
+                    <div class="coding-confirm-message">${message}</div>
+                    <div class="coding-confirm-actions">
+                        <button type="button" class="btn coding-confirm-btn secondary">${cancelText}</button>
+                        <button type="button" class="btn coding-confirm-btn primary">${confirmText}</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(backdrop);
+
+            const cancelBtn = backdrop.querySelector(".coding-confirm-btn.secondary");
+            const confirmBtn = backdrop.querySelector(".coding-confirm-btn.primary");
+
+            function close(result) {
+                backdrop.remove();
+                resolve(result);
+            }
+
+            cancelBtn.addEventListener("click", function () { close(false); });
+            confirmBtn.addEventListener("click", function () { close(true); });
+            backdrop.addEventListener("click", function (e) {
+                if (e.target === backdrop) close(false);
+            });
+
+            function onKey(e) {
+                if (!document.body.contains(backdrop)) {
+                    document.removeEventListener("keydown", onKey);
+                    return;
+                }
+                if (e.key === "Escape") {
+                    e.preventDefault();
+                    close(false);
+                    document.removeEventListener("keydown", onKey);
+                }
+            }
+            document.addEventListener("keydown", onKey);
+
+            setTimeout(function () { confirmBtn.focus(); }, 0);
+        });
+    }
+    async function readJsonResponse(resp, fallbackPrefix) {
+        const raw = await resp.text();
+        if (!raw) {
+            return {
+                status: "error",
+                output: `${fallbackPrefix} (empty server response).`,
+                test_results: [],
+            };
+        }
+
+        try {
+            return JSON.parse(raw);
+        } catch (_) {
+            const compact = raw
+                .replace(/<[^>]+>/g, " ")
+                .replace(/\s+/g, " ")
+                .trim()
+                .slice(0, 220);
+
+            return {
+                status: "error",
+                output: compact
+                    ? `${fallbackPrefix}: ${compact}`
+                    : `${fallbackPrefix} (invalid server response).`,
+                test_results: [],
+            };
+        }
+    }
+
+    // â”€â”€ Timer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     function formatTime(seconds) {
         const safe = Math.max(0, seconds);
         const m = Math.floor(safe / 60);
@@ -252,23 +397,23 @@
     function checkTimerMilestones(secs) {
         if (secs <= 10 && !hasShownNotice("10s")) {
             markNoticeShown("10s");
-            showTimerNotice("⚠ Last 10 seconds!", "critical");
+            showTimerNotice("âš  Last 10 seconds!", "critical");
         } else if (secs <= 30 && !hasShownNotice("30s")) {
             markNoticeShown("30s");
-            showTimerNotice("⚠ Last 30 seconds!", "critical");
+            showTimerNotice("âš  Last 30 seconds!", "critical");
         } else if (secs <= 60 && !hasShownNotice("1m")) {
             markNoticeShown("1m");
-            showTimerNotice("⏱ Last 1 minute remaining", "danger");
+            showTimerNotice("â± Last 1 minute remaining", "danger");
         } else if (secs <= 120 && !hasShownNotice("2m")) {
             markNoticeShown("2m");
-            showTimerNotice("⏱ Last 2 minutes remaining", "danger");
+            showTimerNotice("â± Last 2 minutes remaining", "danger");
         } else if (secs <= 300 && !hasShownNotice("5m")) {
             markNoticeShown("5m");
-            showTimerNotice("🕐 5 minutes remaining", "warning");
+            showTimerNotice("ðŸ• 5 minutes remaining", "warning");
         }
     }
 
-    // -- Timer visual tiers: warning → danger → critical --
+    // -- Timer visual tiers: warning â†’ danger â†’ critical --
     function applyTimerVisual(secs) {
         if (!timerWrap) return;
         timerWrap.classList.remove("warning", "danger", "critical");
@@ -312,9 +457,18 @@
                 body: JSON.stringify({ code: getCode() }),
             });
 
-            const data = await resp.json();
+            if (resp.redirected && resp.url) {
+                window.location.href = resp.url;
+                return;
+            }
+
+            const data = await readJsonResponse(resp, "Could not submit test");
             if (data.redirect_url) {
                 window.location.href = data.redirect_url;
+            } else if (resp.ok) {
+                window.location.href = completedUrl;
+            } else {
+                window.location.href = submitUrl;
             }
         } catch (_) {
             window.location.href = submitUrl;
@@ -324,7 +478,7 @@
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // ── Run Hidden Tests ─────────────────────────────────────
+    // â”€â”€ Run Hidden Tests â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     if (runHiddenBtn) {
         runHiddenBtn.addEventListener("click", async function () {
             if (isRunning) return;
@@ -352,7 +506,7 @@
                     }),
                 });
 
-                const data = await resp.json();
+                const data = await readJsonResponse(resp, "Error: Could not execute hidden tests");
 
                 if (outputContent) {
                     if (data.status === "error") {
@@ -365,18 +519,21 @@
 
                         let html = `<div class="coding-run-summary ${allPassed ? 'all-passed' : 'has-failures'}">`;
                         html += `<span class="coding-run-score">${passed}/${total} hidden test cases passed</span>`;
-                        if (data.execution_time) html += `<span class="coding-run-time"> · ${data.execution_time}</span>`;
+                        if (data.execution_time) html += `<span class="coding-run-time"> Â· ${data.execution_time}</span>`;
                         html += `</div>`;
 
                         data.test_results.forEach(function(tr) {
-                            const icon = tr.passed ? '✅' : '❌';
+                            const icon = tr.passed ? 'âœ…' : 'âŒ';
                             const cls = tr.passed ? 'passed' : 'failed';
                             html += `<div class="coding-tc-result ${cls}">`;
                             html += `<div class="coding-tc-result-header">${icon} Test Case ${tr.index}</div>`;
+                            html += `<div class="coding-tc-result-row"><span class="label">Input:</span> <code>${JSON.stringify(tr.input)}</code></div>`;
+                            html += `<div class="coding-tc-result-row"><span class="label">Expected:</span> <code>${tr.expected}</code></div>`;
                             if (!tr.passed) {
-                                html += `<div class="coding-tc-result-row"><span class="label">Status:</span> <code>Failed</code></div>`;
+                                html += `<div class="coding-tc-result-row actual"><span class="label">Actual:</span> <code>${tr.actual}</code></div>`;
                                 if (tr.error) html += `<div class="coding-tc-result-row error"><span class="label">Error:</span> <code>${tr.error}</code></div>`;
                             }
+                            if (tr.time_ms) html += `<div class="coding-tc-result-row time"><span class="label">Time:</span> ${tr.time_ms}ms</div>`;
                             html += `</div>`;
                         });
 
@@ -402,7 +559,7 @@
         });
     }
 
-    // ── Run Code ────────────────────────────────────────────
+    // â”€â”€ Run Code â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     if (runBtn) {
         runBtn.addEventListener("click", async function () {
             if (isRunning) return;
@@ -432,7 +589,7 @@
                     }),
                 });
 
-                const data = await resp.json();
+                const data = await readJsonResponse(resp, "Error: Could not execute code");
 
                 if (outputContent) {
                     if (data.status === "error") {
@@ -445,11 +602,11 @@
 
                         let html = `<div class="coding-run-summary ${allPassed ? 'all-passed' : 'has-failures'}">`;
                         html += `<span class="coding-run-score">${passed}/${total} test cases passed</span>`;
-                        if (data.execution_time) html += `<span class="coding-run-time"> · ${data.execution_time}</span>`;
+                        if (data.execution_time) html += `<span class="coding-run-time"> Â· ${data.execution_time}</span>`;
                         html += `</div>`;
 
                         data.test_results.forEach(function(tr) {
-                            const icon = tr.passed ? '✅' : '❌';
+                            const icon = tr.passed ? 'âœ…' : 'âŒ';
                             const cls = tr.passed ? 'passed' : 'failed';
                             html += `<div class="coding-tc-result ${cls}">`;
                             html += `<div class="coding-tc-result-header">${icon} Test Case ${tr.index}</div>`;
@@ -485,10 +642,14 @@
         });
     }
 
-    // ── Reset Code ──────────────────────────────────────────
+    // â”€â”€ Reset Code â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     if (resetBtn) {
-        resetBtn.addEventListener("click", function () {
-            if (!confirm("Reset your code to the starter template? This cannot be undone.")) return;
+        resetBtn.addEventListener("click", async function () {
+            const confirmed = await showInlineConfirm(
+                "Reset your code to the starter template? This cannot be undone.",
+                { confirmText: "Reset", cancelText: "Cancel" }
+            );
+            if (!confirmed) return;
 
             setCode(starterCode);
             scheduleAutoSave();
@@ -501,10 +662,14 @@
         });
     }
 
-    // ── Submit ──────────────────────────────────────────────
+    // â”€â”€ Submit â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     if (submitBtn) {
-        submitBtn.addEventListener("click", function () {
-            if (!confirm("Submit your solution? You won't be able to edit after submission.")) return;
+        submitBtn.addEventListener("click", async function () {
+            const confirmed = await showInlineConfirm(
+                "Submit your solution? You won't be able to edit after submission.",
+                { confirmText: "Submit", cancelText: "Back", danger: true }
+            );
+            if (!confirmed) return;
 
             doAutoSave().then(function () {
                 autoSubmit();
@@ -512,7 +677,7 @@
         });
     }
 
-    // ── Expose CM editor for external access (proctoring) ───
+    // â”€â”€ Expose CM editor for external access (proctoring) â”€â”€â”€
     window.__codingCMEditor = cmEditor;
 
 })();

@@ -14,8 +14,10 @@ from reportlab.platypus import (
     SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, HRFlowable,
 )
 
-# Directory where PDFs are saved
-REPORTS_DIR = Path("app/runtime/reports")
+# Directory where PDFs are saved (use absolute path relative to this file)
+_SERVICE_DIR = Path(__file__).resolve().parent          # app/services/
+_APP_DIR = _SERVICE_DIR.parent                          # app/
+REPORTS_DIR = _APP_DIR / "runtime" / "reports"
 REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
 

@@ -1,4 +1,3 @@
-# filepath: d:\Projects\aziro-hiring-platform\app\utils\round_question_mapping.py
 # app/utils/round_question_mapping.py
 
 ROUND_QUESTION_MAPPING = {
@@ -104,7 +103,7 @@ ROUND_QUESTION_MAPPING = {
     },
 
     # -------------------------------------------------
-    # STAFF ENGINEER – LINUX KERNEL & DEVICE DRIVER  (Phase 3)
+    # STAFF ENGINEER - LINUX KERNEL & DEVICE DRIVER  (Phase 3)
     # -------------------------------------------------
     "linux_kernel_dd": {
         "L1": ["c/c_theory.json"],

@@ -1269,12 +1269,12 @@ body.coding-start-page .coding-submit-card::before,
    TEST CASE RESULTS (in output panel) — Modern Card Style
    ============================================================ */
 .coding-run-summary {
-    padding: 12px 18px;
+    padding: 9px 14px;
     border-radius: 10px;
     font-family: var(--code-ui-font);
     font-weight: 700;
-    font-size: 13px;
-    margin-bottom: 14px;
+    font-size: 12px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -1303,8 +1303,8 @@ body.coding-start-page .coding-submit-card::before,
 
 .coding-tc-result {
     border: 1px solid rgba(79, 112, 170, 0.15);
-    border-radius: 10px;
-    margin-bottom: 10px;
+    border-radius: 9px;
+    margin-bottom: 8px;
     overflow: hidden;
     font-family: var(--code-ui-font);
     background: rgba(17, 24, 39, 0.6);
@@ -1323,10 +1323,10 @@ body.coding-start-page .coding-submit-card::before,
 }
 
 .coding-tc-result-header {
-    padding: 10px 16px;
+    padding: 8px 12px;
     font-family: var(--code-ui-font);
     font-weight: 700;
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     background: rgba(255, 255, 255, 0.02);
@@ -1365,9 +1365,9 @@ body.coding-start-page .coding-submit-card::before,
 }
 
 .coding-tc-result-row {
-    padding: 6px 14px;
+    padding: 4px 12px;
     font-family: var(--code-ui-font);
-    font-size: 13px;
+    font-size: 12px;
     color: var(--code-text-secondary);
     display: flex;
     gap: 10px;
@@ -1378,10 +1378,10 @@ body.coding-start-page .coding-submit-card::before,
     color: var(--code-text-muted);
     font-family: var(--code-ui-font);
     font-weight: 700;
-    font-size: 11px;
+    font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    min-width: 75px;
+    min-width: 68px;
     flex-shrink: 0;
 }
 
@@ -1389,9 +1389,9 @@ body.coding-start-page .coding-submit-card::before,
     color: var(--code-text);
     font-family: var(--code-mono);
     background: rgba(79, 143, 247, 0.08);
-    padding: 4px 12px;
+    padding: 3px 8px;
     border-radius: 6px;
-    font-size: 12.5px;
+    font-size: 11.5px;
     border: 1px solid rgba(79, 143, 247, 0.12);
     letter-spacing: 0.01em;
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -1413,8 +1413,68 @@ body.coding-start-page .coding-submit-card::before,
 .coding-tc-result-row.time {
     color: var(--code-text-dim);
     opacity: 0.6;
-    font-size: 11px;
-    padding-bottom: 8px;
+    font-size: 10px;
+    padding-bottom: 6px;
+}
+
+/* Inline confirmation modal to avoid native browser dialogs that can break fullscreen */
+.coding-confirm-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 10050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(7, 11, 20, 0.78);
+    backdrop-filter: blur(4px);
+}
+
+.coding-confirm-modal {
+    width: min(460px, 92vw);
+    border-radius: 14px;
+    border: 1px solid rgba(79, 112, 170, 0.28);
+    background: linear-gradient(180deg, rgba(19, 26, 42, 0.98) 0%, rgba(14, 21, 36, 0.98) 100%);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+    padding: 18px;
+}
+
+.coding-confirm-modal.danger {
+    border-color: rgba(248, 113, 113, 0.35);
+}
+
+.coding-confirm-message {
+    color: var(--code-text);
+    font-family: var(--code-ui-font);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.coding-confirm-actions {
+    margin-top: 14px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.coding-confirm-btn {
+    min-width: 88px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.coding-confirm-btn.secondary {
+    border: 1px solid rgba(79, 112, 170, 0.35);
+    background: rgba(20, 27, 45, 0.85);
+    color: var(--code-text-secondary);
+}
+
+.coding-confirm-btn.primary {
+    border: none;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #1a1000;
 }
 
 /* ============================================================

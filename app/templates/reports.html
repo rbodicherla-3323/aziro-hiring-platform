@@ -1,368 +1,268 @@
 {% extends "base.html" %}
-{% block title %}Reports{% endblock %}
+{% block title %}Reports — Aziro Hiring Platform{% endblock %}
 {% block breadcrumb %}Reports{% endblock %}
 
-{% block content %}
-<div class="mb-2">
-    <h4 class="mb-1">Reports</h4>
-    <p class="text-muted mb-0 small">
-        Generate and download candidate evaluation reports.
-    </p>
-</div>
+{% block head %}
+<style>
+    .reports-header { background:linear-gradient(135deg,#0d3b66 0%,#1a5276 100%); color:#fff; border-radius:12px; padding:20px 24px; margin-bottom:20px; }
+    .search-section, .session-section { background:#fff; border-radius:12px; padding:20px 24px; box-shadow:0 2px 10px rgba(0,0,0,0.06); margin-bottom:20px; }
+    .search-input { border-radius:24px; padding:10px 20px; font-size:0.9rem; border:2px solid #e0e6ed; }
+    .search-input:focus { border-color:#0d3b66; box-shadow:0 0 0 3px rgba(13,59,102,0.1); }
+    .section-title { font-size:0.95rem; font-weight:700; color:#0d3b66; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+    .search-results { display:none; } .search-results.active { display:block; }
+    .empty-state { text-align:center; padding:40px 20px; color:#6c757d; }
+    .empty-state i { font-size:2.5rem; color:#dee2e6; margin-bottom:12px; }
+    .badge-role { padding:3px 10px; border-radius:12px; font-size:0.7rem; font-weight:600; background:#e8f4fd; color:#0d3b66; }
 
-<!-- ================= SEARCH + FILTERS ================= -->
-<form method="GET" action="/reports" id="filterForm">
-<div class="card shadow-sm mb-4">
-    <div class="card-body">
-        <div class="row gy-3 align-items-end">
-            <!-- Search -->
-            <div class="col-md-4">
-                <label class="form-label">Search</label>
-                <div class="input-group">
-                    <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
-                    <input type="text" class="form-control" name="q" id="candidateSearch"
-                           placeholder="Name or email" value="{{ search_q }}">
-                </div>
-            </div>
-            <!-- Role -->
-            <div class="col-md-4">
-                <label class="form-label">Role</label>
-                <select class="form-select" name="role" id="roleFilter">
-                    <option value="">All Roles</option>
-                    {% for r in roles %}
-                    <option value="{{ r }}" {% if role_filter == r %}selected{% endif %}>{{ r }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <!-- Buttons -->
-            <div class="col-md-auto d-flex gap-2">
-                <button type="submit" class="btn btn-primary btn-sm px-3">
-                    <i class="bi bi-funnel me-1"></i>Apply
-                </button>
-                <a href="/reports" class="btn btn-outline-secondary btn-sm px-3">Clear</a>
-            </div>
+    /* Candidate result card (same as evaluation) */
+    .report-card { border:1px solid #e2e8f0; border-radius:12px; overflow:hidden; margin-bottom:20px; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+    .report-card-header { padding:16px 20px; background:#f8f9fa; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+    .cand-name { font-weight:700; font-size:1rem; color:#0d3b66; }
+    .cand-meta { font-size:0.82rem; color:#555; margin-top:2px; }
+    .stat-pill { background:#f8f9fa; border:1px solid #e9ecef; border-radius:8px; padding:8px 14px; text-align:center; min-width:80px; }
+    .stat-pill .stat-value { font-size:1.1rem; font-weight:700; color:#0d3b66; }
+    .stat-pill .stat-label { font-size:0.7rem; color:#6c757d; text-transform:uppercase; letter-spacing:0.5px; }
+
+    /* Score table */
+    .score-table { margin:0; font-size:0.85rem; }
+    .score-table thead th { background:#0d3b66; color:#fff; font-weight:600; padding:10px 14px; border:none; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.5px; }
+    .score-table tbody td { padding:12px 14px; vertical-align:middle; border-bottom:1px solid #f0f0f0; }
+    .score-table tbody tr:hover { background:#f8f9ff; }
+    .score-progress { height:7px; border-radius:4px; background:#e9ecef; overflow:hidden; min-width:70px; }
+    .score-progress-bar { height:100%; border-radius:4px; }
+    .status-pill { padding:3px 12px; border-radius:16px; font-weight:600; font-size:0.72rem; display:inline-block; text-transform:uppercase; }
+    .status-pass { background:#d4edda; color:#155724; }
+    .status-fail { background:#f8d7da; color:#721c24; }
+    .status-pending { background:#e2e3e5; color:#383d41; }
+
+    /* Action icons */
+    .report-actions { display:inline-flex; gap:6px; align-items:center; }
+    .report-actions .icon-btn { width:30px; height:30px; border-radius:8px; border:1.5px solid transparent; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.2s; text-decoration:none; font-size:0.8rem; }
+    .icon-btn.btn-gen { background:#0d3b66; color:#fff; border-color:#0d3b66; }
+    .icon-btn.btn-gen:hover { background:#1a5276; }
+    .icon-btn.btn-view { background:#e8f4fd; color:#0d3b66; border-color:#c8dff5; }
+    .icon-btn.btn-view:hover { background:#d0e4f7; }
+    .icon-btn.btn-dl { background:#e6f4ea; color:#137333; border-color:#b7dfbf; }
+    .icon-btn.btn-dl:hover { background:#ccebd4; }
+    .icon-btn.btn-regen { background:#fff3e0; color:#e65100; border-color:#ffe0b2; }
+    .icon-btn.btn-regen:hover { background:#ffe0b2; }
+    .icon-btn.btn-loading { background:#f0f0f0; color:#999; pointer-events:none; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <!-- Header -->
+    <div class="reports-header">
+        <h5 class="mb-1"><i class="fas fa-file-alt me-2"></i>Reports</h5>
+        <p class="mb-0" style="font-size:0.85rem; opacity:0.8;">Generate and download candidate evaluation reports</p>
+    </div>
+
+    <!-- Search -->
+    <div class="search-section">
+        <div class="section-title"><i class="fas fa-search"></i> Search Candidates</div>
+        <div class="input-group">
+            <input type="text" class="form-control search-input" id="searchInput"
+                   placeholder="Search by name, email, or role..." autocomplete="off">
+            <button class="btn btn-outline-secondary" style="border-radius:0 24px 24px 0; border-left:none;" id="searchBtn">
+                <i class="fas fa-search"></i>
+            </button>
         </div>
     </div>
-</div>
-</form>
 
-<!-- ================= CANDIDATES TABLE ================= -->
-<div class="card shadow-sm mb-4">
-    <div class="card-body">
-        <div class="border rounded p-3">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="fw-semibold">
-                    Candidates
-                    <span class="badge bg-secondary ms-1">{{ candidates|length }}</span>
-                </span>
-                <div class="d-flex gap-3">
-                    <button type="button" class="btn btn-link btn-sm p-0" id="selectAllCandidates">Select All</button>
-                    <button type="button" class="btn btn-link btn-sm p-0 text-danger" id="clearAllCandidates">Clear</button>
+    <!-- Search Results -->
+    <div class="search-results session-section" id="searchResults">
+        <div class="section-title">
+            <i class="fas fa-history"></i> Search Results
+            <button class="btn btn-sm btn-link text-muted" id="clearSearchBtn" style="margin-left:auto; font-size:0.78rem;">
+                <i class="fas fa-times me-1"></i>Clear
+            </button>
+        </div>
+        <div id="searchResultsList"></div>
+    </div>
+
+    <!-- Today's Session Candidates -->
+    <div class="session-section">
+        <div class="section-title">
+            <i class="fas fa-clock"></i> Today's Session
+            <span class="badge bg-primary ms-2" style="font-size:0.7rem;">{{ session_candidates|length }} candidates</span>
+        </div>
+
+        {% if session_candidates %}
+            {% for cand in session_candidates %}
+            <div class="report-card">
+                <div class="report-card-header">
+                    <div>
+                        <div class="cand-name">
+                            <i class="fas fa-user me-1"></i> {{ cand.name }}
+                            <span class="badge-role ms-2">{{ cand.role }}</span>
+                        </div>
+                        <div class="cand-meta">
+                            <i class="fas fa-envelope me-1"></i> {{ cand.email }}
+                            &nbsp;&middot;&nbsp;
+                            {{ cand.rounds|length }} rounds
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="d-flex gap-2">
+                            <div class="stat-pill">
+                                <div class="stat-value text-success">{{ cand.summary.passed_rounds }}</div>
+                                <div class="stat-label">Passed</div>
+                            </div>
+                            <div class="stat-pill">
+                                <div class="stat-value text-danger">{{ cand.summary.failed_rounds }}</div>
+                                <div class="stat-label">Failed</div>
+                            </div>
+                            <div class="stat-pill">
+                                <div class="stat-value">{{ cand.summary.attempted_rounds }}/{{ cand.summary.total_rounds }}</div>
+                                <div class="stat-label">Attempted</div>
+                            </div>
+                        </div>
+                        <div class="report-actions" id="actions-{{ loop.index }}">
+                            <button class="icon-btn btn-gen" onclick="generateReport('{{ cand.email }}', 'actions-{{ loop.index }}')" title="Generate Report">
+                                <i class="fas fa-file-pdf"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            {% if candidates %}
-            <div class="table-responsive">
-                <table class="table table-bordered align-middle mb-0" id="candidatesTable">
-                    <thead class="table-light">
+                <!-- Round-by-round scores -->
+                {% if cand.rounds %}
+                <div class="table-responsive">
+                <table class="table score-table align-middle mb-0">
+                    <thead>
                         <tr>
-                            <th style="width:40px;"><input type="checkbox" id="selectAllHeader"></th>
-                            <th>Candidate</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Verdict</th>
-                            <th style="width:120px;">Report</th>
-                            <th style="width:220px;">Action</th>
+                            <th style="width:22%;">Round</th>
+                            <th style="width:10%;">Score</th>
+                            <th style="width:24%;">Percentage</th>
+                            <th style="width:12%;">Pass Mark</th>
+                            <th style="width:10%;">Attempted</th>
+                            <th style="width:12%;">Time</th>
+                            <th style="width:10%;">Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for c in candidates %}
-                        <tr class="candidate-row"
-                            data-ts-id="{{ c.test_session_id }}"
-                            data-has-report="{{ 'true' if c.has_report else 'false' }}"
-                            data-report-filename="{{ c.report_filename or '' }}">
-                            <td><input class="form-check-input candidate-checkbox" type="checkbox" value="{{ c.test_session_id }}"></td>
-                            <td>{{ c.name }}</td>
-                            <td class="small text-muted">{{ c.email }}</td>
-                            <td class="small">{{ c.role }}</td>
+                    {% for rk, r in cand.rounds.items() %}
+                        {% if r.status == "Not Attempted" %}
+                        <tr>
+                            <td><span class="fw-semibold" style="color:#1d3557;">{{ r.round_label }}</span><div style="font-size:0.72rem;color:#aaa;">{{ rk }}</div></td>
+                            <td colspan="5" class="text-center text-muted" style="font-style:italic;"><i class="fas fa-minus-circle me-1"></i>Not Attempted</td>
+                            <td><span class="status-pill status-pending">Pending</span></td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td><span class="fw-semibold" style="color:#1d3557;">{{ r.round_label }}</span><div style="font-size:0.72rem;color:#aaa;">{{ rk }}</div></td>
+                            <td><span class="fw-bold" style="font-size:0.95rem;color:#0d3b66;">{{ r.correct }}</span><span class="text-muted"> / {{ r.total }}</span></td>
                             <td>
-                                {% set v = c.summary.overall_verdict %}
-                                {% if v == 'Selected' %}
-                                <span class="badge bg-success">Selected</span>
-                                {% elif v == 'Rejected' %}
-                                <span class="badge bg-danger">Rejected</span>
-                                {% elif v == 'In Progress' %}
-                                <span class="badge bg-warning text-dark">In Progress</span>
-                                {% else %}
-                                <span class="badge bg-secondary">Pending</span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if c.has_report %}
-                                <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Generated</span>
-                                {% else %}
-                                <span class="badge bg-secondary">Not Generated</span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if c.has_report %}
-                                <div class="d-flex gap-1">
-                                    <button class="btn btn-outline-primary btn-sm btn-preview"
-                                            data-ts-id="{{ c.test_session_id }}" title="Preview">
-                                        <i class="bi bi-eye me-1"></i>View
-                                    </button>
-                                    <a class="btn btn-outline-success btn-sm"
-                                       href="/reports/download/{{ c.report_filename }}" title="Download PDF">
-                                        <i class="bi bi-download"></i>
-                                    </a>
-                                    <button class="btn btn-outline-warning btn-sm btn-regen"
-                                            data-ts-id="{{ c.test_session_id }}" title="Re-generate">
-                                        <i class="bi bi-arrow-repeat"></i>
-                                    </button>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="score-progress flex-grow-1">
+                                        <div class="score-progress-bar" style="width:{{ r.percentage }}%; background:{% if r.percentage >= r.pass_threshold %}linear-gradient(90deg,#2a9d8f,#52c7b8){% elif r.percentage >= (r.pass_threshold - 10) %}linear-gradient(90deg,#f4a261,#f7c99e){% else %}linear-gradient(90deg,#d62828,#e76f51){% endif %};"></div>
+                                    </div>
+                                    <span class="fw-bold" style="min-width:40px; color:{% if r.percentage >= r.pass_threshold %}#2a9d8f{% elif r.percentage >= (r.pass_threshold - 10) %}#e67e22{% else %}#d62828{% endif %};">{{ r.percentage }}%</span>
                                 </div>
+                            </td>
+                            <td><span class="text-muted fw-semibold">&ge; {{ r.pass_threshold }}%</span></td>
+                            <td>{{ r.attempted }} / {{ r.total }}</td>
+                            <td><span style="color:#e76f51;font-weight:600;"><i class="fas fa-clock me-1"></i>{{ (r.time_taken_seconds // 60) }}m {{ (r.time_taken_seconds % 60) }}s</span></td>
+                            <td>
+                                {% if r.status == 'PASS' %}
+                                    <span class="status-pill status-pass"><i class="fas fa-check me-1"></i>Pass</span>
                                 {% else %}
-                                <button class="btn btn-outline-primary btn-sm btn-generate"
-                                        data-ts-id="{{ c.test_session_id }}">
-                                    <i class="bi bi-file-earmark-plus me-1"></i>Generate
-                                </button>
+                                    <span class="status-pill status-fail"><i class="fas fa-times me-1"></i>Fail</span>
                                 {% endif %}
                             </td>
                         </tr>
-                        {% endfor %}
+                        {% endif %}
+                    {% endfor %}
                     </tbody>
                 </table>
-            </div>
-            {% else %}
-            <div class="text-center py-5 text-muted">
-                <i class="bi bi-inbox" style="font-size:2rem;"></i>
-                <p class="mt-2 mb-0">No candidates found. Create tests first to see candidates here.</p>
-            </div>
-            {% endif %}
-        </div>
-    </div>
-</div>
-
-<!-- ================= BULK ACTIONS ================= -->
-{% if candidates %}
-<div class="d-flex justify-content-end gap-2 mb-4">
-    <button class="btn btn-outline-success" id="bulkDownloadBtn">
-        <i class="bi bi-download me-1"></i>Download Selected
-    </button>
-    <button class="btn btn-primary" id="generateSelectedBtn">
-        <i class="bi bi-file-earmark-plus me-1"></i>Generate Reports for Selected
-    </button>
-</div>
-{% endif %}
-
-<!-- ================= REPORT PREVIEW MODAL ================= -->
-<div class="modal fade" id="reportPreviewModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header" style="background:linear-gradient(135deg,#1a73e8,#6c63ff);color:#fff;">
-                <h5 class="modal-title"><i class="bi bi-file-earmark-text me-2"></i>Report Preview</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body" id="previewBody">
-                <div class="text-center py-5 text-muted">
-                    <div class="spinner-border spinner-border-sm me-2"></div>Loading…
                 </div>
+                {% else %}
+                <div class="text-center text-muted py-3" style="font-size:0.85rem;">
+                    <i class="fas fa-hourglass-half me-1"></i> No rounds attempted yet
+                </div>
+                {% endif %}
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                <a id="previewDownloadBtn" href="#" class="btn btn-primary">
-                    <i class="bi bi-download me-1"></i>Download PDF
-                </a>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <i class="fas fa-inbox d-block"></i>
+                <p class="mb-1 fw-semibold">No candidates in today's session</p>
+                <p style="font-size:0.8rem;">Create tests from the <a href="{{ url_for('dashboard.create_test') }}">Create Test</a> page to see candidates here.</p>
             </div>
-        </div>
+        {% endif %}
     </div>
 </div>
+{% endblock %}
 
-<!-- ================= SCRIPTS ================= -->
+{% block scripts %}
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+const searchResultsList = document.getElementById('searchResultsList');
 
-    // ---- CHECKBOX LOGIC ----
-    const headerCb = document.getElementById('selectAllHeader');
-    const allCbs = () => document.querySelectorAll('.candidate-checkbox');
-
-    function syncHeader() {
-        const cbs = allCbs();
-        headerCb.checked = cbs.length > 0 && Array.from(cbs).every(c => c.checked);
-    }
-    headerCb?.addEventListener('change', () => allCbs().forEach(c => c.checked = headerCb.checked));
-    document.querySelectorAll('.candidate-checkbox').forEach(c => c.addEventListener('change', syncHeader));
-    document.getElementById('selectAllCandidates')?.addEventListener('click', () => {
-        const all = Array.from(allCbs()).every(c => c.checked);
-        allCbs().forEach(c => c.checked = !all);
-        syncHeader();
-    });
-    document.getElementById('clearAllCandidates')?.addEventListener('click', () => {
-        allCbs().forEach(c => c.checked = false);
-        syncHeader();
-    });
-
-    // ---- SINGLE GENERATE ----
-    document.querySelectorAll('.btn-generate, .btn-regen').forEach(btn => {
-        btn.addEventListener('click', async () => {
-            const tsId = btn.dataset.tsId;
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Generating…';
-            try {
-                const fd = new FormData();
-                fd.append('test_session_id', tsId);
-                const res = await fetch('/reports/generate', { method: 'POST', body: fd });
-                const data = await res.json();
-                if (data.status === 'ok') {
-                    showToast('Report generated successfully!', 'success');
-                    setTimeout(() => location.reload(), 800);
-                } else {
-                    showToast(data.error || 'Generation failed', 'danger');
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="bi bi-file-earmark-plus me-1"></i>Generate';
-                }
-            } catch (e) {
-                showToast('Network error', 'danger');
-                btn.disabled = false;
-                btn.innerHTML = '<i class="bi bi-file-earmark-plus me-1"></i>Generate';
-            }
-        });
-    });
-
-    // ---- BULK GENERATE ----
-    document.getElementById('generateSelectedBtn')?.addEventListener('click', async () => {
-        const selected = Array.from(allCbs()).filter(c => c.checked).map(c => c.value);
-        if (!selected.length) { showToast('Select candidates first', 'warning'); return; }
-        const btn = document.getElementById('generateSelectedBtn');
-        btn.disabled = true;
-        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Generating…';
-        try {
-            const fd = new FormData();
-            selected.forEach(id => fd.append('test_session_ids[]', id));
-            const res = await fetch('/reports/generate-bulk', { method: 'POST', body: fd });
-            const data = await res.json();
-            if (data.status === 'ok') {
-                showToast(`${data.count} report(s) generated!`, 'success');
-                setTimeout(() => location.reload(), 800);
-            } else {
-                showToast(data.error || 'Bulk generation failed', 'danger');
-            }
-        } catch (e) {
-            showToast('Network error', 'danger');
-        }
-        btn.disabled = false;
-        btn.innerHTML = '<i class="bi bi-file-earmark-plus me-1"></i>Generate Reports for Selected';
-    });
-
-    // ---- BULK DOWNLOAD ----
-    document.getElementById('bulkDownloadBtn')?.addEventListener('click', () => {
-        const selected = Array.from(allCbs()).filter(c => c.checked);
-        if (!selected.length) { showToast('Select candidates first', 'warning'); return; }
-
-        const filenames = [];
-        selected.forEach(cb => {
-            const row = cb.closest('tr');
-            const fn = row?.dataset.reportFilename;
-            if (fn) filenames.push(fn);
-        });
-
-        if (!filenames.length) {
-            showToast('No generated reports found among selected. Generate reports first.', 'warning');
-            return;
-        }
-
-        // Submit via hidden form for file download
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = '/reports/download-bulk';
-        filenames.forEach(fn => {
-            const inp = document.createElement('input');
-            inp.type = 'hidden'; inp.name = 'filenames[]'; inp.value = fn;
-            form.appendChild(inp);
-        });
-        document.body.appendChild(form);
-        form.submit();
-        form.remove();
-    });
-
-    // ---- PREVIEW MODAL ----
-    const previewModal = document.getElementById('reportPreviewModal');
-    const previewBody = document.getElementById('previewBody');
-    const previewDlBtn = document.getElementById('previewDownloadBtn');
-
-    document.querySelectorAll('.btn-preview').forEach(btn => {
-        btn.addEventListener('click', async () => {
-            const tsId = btn.dataset.tsId;
-            const modal = new bootstrap.Modal(previewModal);
-            previewBody.innerHTML = '<div class="text-center py-5 text-muted"><div class="spinner-border spinner-border-sm me-2"></div>Loading…</div>';
-            previewDlBtn.href = '#';
-            modal.show();
-
-            try {
-                const res = await fetch(`/reports/preview/${tsId}`);
-                const d = await res.json();
-                if (d.error) { previewBody.innerHTML = `<p class="text-danger">${d.error}</p>`; return; }
-
-                let roundsHtml = '';
-                for (const [rk, rd] of Object.entries(d.rounds)) {
-                    const statusCls = rd.status === 'PASS' ? 'text-success' : rd.status === 'FAIL' ? 'text-danger' : 'text-muted';
-                    roundsHtml += `<tr>
-                        <td class="small">${rk}</td>
-                        <td class="small">${rd.round_label}</td>
-                        <td class="small text-center">${rd.correct} / ${rd.total}</td>
-                        <td class="small text-center">${rd.percentage.toFixed(1)}%</td>
-                        <td class="small text-center">${rd.pass_threshold}%</td>
-                        <td class="small fw-bold ${statusCls}">${rd.status}</td>
-                    </tr>`;
-                }
-
-                const verdictCls = d.summary.overall_verdict === 'Selected' ? 'bg-success'
-                    : d.summary.overall_verdict === 'Rejected' ? 'bg-danger' : 'bg-secondary';
-
-                previewBody.innerHTML = `
-                    <div class="border rounded p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <h5 class="mb-1">${d.name}</h5>
-                                <p class="text-muted mb-0 small">${d.email} · ${d.role}</p>
-                                <p class="text-muted mb-0 small">Batch: ${d.batch_id}</p>
-                            </div>
-                            <span class="badge ${verdictCls}">${d.summary.overall_verdict}</span>
-                        </div>
-                        <hr>
-                        <h6 class="small fw-semibold text-muted mb-2">Round Performance</h6>
-                        <table class="table table-sm table-bordered mb-3">
-                            <thead class="table-light">
-                                <tr>
-                                    <th class="small">Round</th>
-                                    <th class="small">Label</th>
-                                    <th class="small text-center">Score</th>
-                                    <th class="small text-center">%</th>
-                                    <th class="small text-center">Threshold</th>
-                                    <th class="small">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>${roundsHtml}</tbody>
-                        </table>
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <div class="small"><strong>Passed:</strong> ${d.summary.passed_rounds} of ${d.summary.total_rounds} rounds</div>
-                                <div class="small"><strong>Overall %:</strong> ${d.summary.overall_percentage.toFixed(1)}%</div>
-                            </div>
-                        </div>
-                    </div>`;
-
-                if (d.report_filename) {
-                    previewDlBtn.href = '/reports/download/' + d.report_filename;
-                    previewDlBtn.style.display = '';
-                } else {
-                    previewDlBtn.style.display = 'none';
-                }
-
-            } catch (e) {
-                previewBody.innerHTML = '<p class="text-danger">Failed to load preview.</p>';
-            }
-        });
-    });
+document.getElementById('searchBtn').addEventListener('click', searchCandidates);
+searchInput.addEventListener('keyup', function(e) { if (e.key === 'Enter') searchCandidates(); });
+document.getElementById('clearSearchBtn').addEventListener('click', function() {
+    searchInput.value = '';
+    searchResults.classList.remove('active');
+    searchResultsList.innerHTML = '';
 });
+
+function searchCandidates() {
+    const q = searchInput.value.trim();
+    if (q.length < 2) { if (typeof showToast === 'function') showToast('Enter at least 2 characters', 'warning'); return; }
+
+    searchResultsList.innerHTML = '<div class="text-center py-3"><div class="spinner-border spinner-border-sm text-primary"></div><span class="ms-2 text-muted">Searching...</span></div>';
+    searchResults.classList.add('active');
+
+    fetch('/reports/search?q=' + encodeURIComponent(q))
+        .then(r => r.json())
+        .then(data => {
+            if (data.candidates && data.candidates.length > 0) {
+                let h = '';
+                data.candidates.forEach((c, i) => {
+                    const aid = 'sr-' + i;
+                    h += '<div class="d-flex align-items-center justify-content-between p-2 border-bottom">'
+                       + '<div><span class="fw-semibold" style="color:#0d3b66;">' + c.name + '</span>'
+                       + ' <span class="badge-role ms-1">' + (c.role||'N/A') + '</span>'
+                       + '<div style="font-size:0.78rem;color:#6c757d;">' + c.email + '</div></div>'
+                       + '<div class="report-actions" id="' + aid + '">'
+                       + '<button class="icon-btn btn-gen" onclick="generateReport(\'' + c.email + '\',\'' + aid + '\')" title="Generate Report"><i class="fas fa-file-pdf"></i></button>'
+                       + '</div></div>';
+                });
+                searchResultsList.innerHTML = h;
+            } else {
+                searchResultsList.innerHTML = '<div class="text-center py-3 text-muted"><i class="fas fa-search me-1"></i>No candidates found</div>';
+            }
+        })
+        .catch(() => {
+            searchResultsList.innerHTML = '<div class="text-center py-3 text-danger"><i class="fas fa-exclamation-circle me-1"></i>Search failed</div>';
+        });
+}
+
+function generateReport(email, containerId) {
+    const c = document.getElementById(containerId);
+    if (!c) return;
+    c.innerHTML = '<span class="icon-btn btn-loading"><i class="fas fa-spinner fa-spin"></i></span>';
+
+    fetch('/reports/generate/' + encodeURIComponent(email))
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                c.innerHTML = '<a href="' + data.view_url + '" target="_blank" class="icon-btn btn-view" title="View"><i class="fas fa-eye"></i></a>'
+                    + '<a href="' + data.download_url + '" class="icon-btn btn-dl" title="Download"><i class="fas fa-download"></i></a>'
+                    + '<button class="icon-btn btn-regen" onclick="generateReport(\'' + email + '\',\'' + containerId + '\')" title="Regenerate"><i class="fas fa-redo"></i></button>';
+            } else {
+                c.innerHTML = '<span class="text-danger" style="font-size:0.75rem;"><i class="fas fa-exclamation-circle"></i> ' + (data.error||'Failed') + '</span>'
+                    + ' <button class="icon-btn btn-regen" onclick="generateReport(\'' + email + '\',\'' + containerId + '\')"><i class="fas fa-redo"></i></button>';
+            }
+        })
+        .catch(() => {
+            c.innerHTML = '<span class="text-danger" style="font-size:0.75rem;"><i class="fas fa-exclamation-circle"></i> Error</span>'
+                + ' <button class="icon-btn btn-regen" onclick="generateReport(\'' + email + '\',\'' + containerId + '\')"><i class="fas fa-redo"></i></button>';
+        });
+}
 </script>
 {% endblock %}
