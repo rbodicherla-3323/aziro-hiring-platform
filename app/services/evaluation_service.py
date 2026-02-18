@@ -1,5 +1,6 @@
 from app.services.evaluation_store import EVALUATION_STORE
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
+from app.services.ai_generator import generate_evaluation_summary
 from flask import session
 import logging
 import time
@@ -108,6 +109,22 @@ class EvaluationService:
             "status": status,
             "time_taken_seconds": time_taken
         }
+
+        # -------------------------------------------------
+        # Generate AI summary for the evaluation result
+        # -------------------------------------------------
+        result_data["ai_summary"] = generate_evaluation_summary({
+            "candidate_name": session_meta["candidate_name"],
+            "round_label": session_meta["round_label"],
+            "total_questions": total_questions,
+            "attempted": attempted,
+            "correct": correct,
+            "percentage": percentage,
+            "pass_threshold": pass_threshold,
+            "status": status
+        })
+
+        EVALUATION_STORE[session_id] = result_data
 
         # -------------------------------------------------
         # PERSIST to DB (best-effort, non-blocking)
