@@ -9,6 +9,7 @@ from app.utils.auth_decorator import login_required
 from app.services.generated_tests_store import get_tests_for_user_today, GENERATED_TESTS
 from app.services.evaluation_aggregator import EvaluationAggregator
 from app.services import db_service
+from app.services.evaluation_service import EvaluationService
 from app.services.pdf_service import generate_candidate_pdf, REPORTS_DIR
 
 reports_bp = Blueprint("reports", __name__)
@@ -127,6 +128,21 @@ def generate_report(email):
 
     if not candidate_data:
         return jsonify({"success": False, "error": f"No data found for candidate: {email}"}), 404
+
+    # Attach AI summaries for PDF rendering.
+    try:
+        candidate_data["ai_overall_summary"] = EvaluationService.generate_candidate_overall_summary(email)
+    except Exception:
+        candidate_data["ai_overall_summary"] = None
+
+    try:
+        candidate_data["ai_coding_summary"] = EvaluationService.generate_candidate_coding_round_summary(email)
+    except Exception:
+        candidate_data["ai_coding_summary"] = None
+    try:
+        candidate_data["coding_round_data"] = EvaluationService.get_candidate_coding_round_data(email)
+    except Exception:
+        candidate_data["coding_round_data"] = None
 
     # Generate PDF
     try:
