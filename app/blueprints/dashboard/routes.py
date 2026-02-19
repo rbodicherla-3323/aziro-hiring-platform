@@ -24,6 +24,7 @@ from app.services.generated_tests_store import (
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 from app.services.evaluation_store import EVALUATION_STORE
+from app.services.email_service import send_candidate_test_links_email
 
 
 # ────────────────────────────────────────────
@@ -183,6 +184,8 @@ def create_test():
 
     user_email = _current_user_email()
     batch_id = f"batch_{uuid.uuid4().hex[:8]}"
+    email_success_count = 0
+    email_failures = []
 
     for i in range(len(names)):
         name = names[i].strip()
@@ -308,5 +311,27 @@ def create_test():
             "created_at": datetime.now(timezone.utc).isoformat(),
         })
 
+        email_sent, email_error = send_candidate_test_links_email(
+            candidate_name=name,
+            candidate_email=email,
+            role_label=role_label,
+            tests=tests,
+        )
+        if email_sent:
+            email_success_count += 1
+        else:
+            email_failures.append({"email": email, "reason": email_error})
+
     flash("Test links generated successfully!", "success")
+    if email_success_count:
+        flash(f"Test links emailed to {email_success_count} candidate(s).", "success")
+    if email_failures:
+        failed_preview = ", ".join(f["email"] for f in email_failures[:3])
+        suffix = "" if len(email_failures) <= 3 else ", ..."
+        failure_reason = email_failures[0].get("reason", "Unknown error")
+        flash(
+            f"Email sending failed for {len(email_failures)} candidate(s): "
+            f"{failed_preview}{suffix}. {failure_reason}",
+            "warning",
+        )
     return redirect(url_for("tests.generated_tests"))
