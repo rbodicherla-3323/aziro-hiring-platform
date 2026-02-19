@@ -3,8 +3,10 @@ Generate candidate evaluation PDF reports using ReportLab.
 """
 
 import os
+import re
 from datetime import datetime, timezone
 from pathlib import Path
+from xml.sax.saxutils import escape
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
@@ -13,6 +15,7 @@ from reportlab.lib.units import mm
 from reportlab.platypus import (
     SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, HRFlowable,
 )
+from app.services.ai_generator import generate_evaluation_summary
 
 # Directory where PDFs are saved (use absolute path relative to this file)
 _SERVICE_DIR = Path(__file__).resolve().parent          # app/services/
@@ -79,6 +82,140 @@ def _status_color(status: str):
     return PENDING_GREY
 
 
+def _to_inline_html(text: str) -> str:
+    """Convert markdown bold (**text**) into ReportLab-friendly inline HTML."""
+    parts = re.split(r"(\*\*.*?\*\*)", str(text))
+    rendered = []
+    for part in parts:
+        if part.startswith("**") and part.endswith("**") and len(part) >= 4:
+            rendered.append(f"<b>{escape(part[2:-2])}</b>")
+        else:
+            rendered.append(escape(part))
+    return "".join(rendered)
+
+
+def _markdown_to_reportlab_html(summary_text: str) -> str:
+    """Render basic markdown to HTML supported by ReportLab Paragraph."""
+    lines = str(summary_text or "").splitlines()
+    html_lines = []
+    for raw in lines:
+        line = raw.rstrip()
+        stripped = line.strip()
+        if not stripped:
+            html_lines.append("<br/>")
+            continue
+
+        if stripped.startswith("### "):
+            html_lines.append(f"<b>{_to_inline_html(stripped[4:])}</b>")
+            continue
+
+        if stripped.startswith("- "):
+            html_lines.append(f"&bull; {_to_inline_html(stripped[2:])}")
+            continue
+
+        if stripped.startswith("*   "):
+            html_lines.append(f"&bull; {_to_inline_html(stripped[4:])}")
+            continue
+
+        if stripped.startswith("* "):
+            html_lines.append(f"&bull; {_to_inline_html(stripped[2:])}")
+            continue
+
+        html_lines.append(_to_inline_html(stripped))
+
+    return "<br/>".join(html_lines)
+
+
+def _summary_html(summary_text: str) -> str:
+    """Convert markdown-ish summary into richer ReportLab HTML."""
+    lines = str(summary_text or "").splitlines()
+    html_lines = []
+    in_code_block = False
+
+    for raw in lines:
+        line = raw.rstrip("\n")
+        stripped = line.strip()
+
+        if stripped.startswith("```"):
+            in_code_block = not in_code_block
+            continue
+
+        if in_code_block:
+            html_lines.append(
+                f"<font face='Courier' size='8' color='#0f172a'>{escape(line)}</font>"
+            )
+            continue
+
+        if not stripped:
+            html_lines.append("<br/>")
+            continue
+
+        if stripped.startswith("### "):
+            html_lines.append(
+                "<font size='11' color='#1a73e8'><b>"
+                f"{_to_inline_html(stripped[4:])}"
+                "</b></font>"
+            )
+            continue
+
+        if stripped.rstrip(":").lower() == "key insights":
+            html_lines.append(
+                "<font size='10' color='#1e293b'><b>Key Insights:</b></font>"
+            )
+            continue
+
+        if stripped.startswith("**") and stripped.endswith(":**"):
+            html_lines.append(
+                "<font size='10' color='#1e293b'><b>"
+                f"{_to_inline_html(stripped[2:-3])}:</b></font>"
+            )
+            continue
+
+        if stripped.startswith("- "):
+            html_lines.append(f"&bull; {_to_inline_html(stripped[2:])}")
+            continue
+
+        if stripped.startswith("*   "):
+            html_lines.append(f"&bull; {_to_inline_html(stripped[4:])}")
+            continue
+
+        if stripped.startswith("* "):
+            html_lines.append(f"&bull; {_to_inline_html(stripped[2:])}")
+            continue
+
+        if stripped.startswith("• "):
+            html_lines.append(f"&bull; {_to_inline_html(stripped[2:])}")
+            continue
+
+        html_lines.append(_to_inline_html(stripped))
+
+    return "<br/>".join(html_lines)
+
+
+def _build_summary_card(title: str, summary_text: str, styles, width: float):
+    """Render summary into a bordered card with styled heading and body."""
+    title_para = Paragraph(
+        f"<font color='#1a73e8'><b>{escape(title)}</b></font>",
+        styles["CellTextBold"],
+    )
+    body_html = _summary_html(summary_text)
+    body_para = Paragraph(body_html, styles["CellText"])
+
+    card = Table([[title_para], [body_para]], colWidths=[width])
+    card.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (0, 0), colors.HexColor("#e8f0fe")),
+        ("BACKGROUND", (0, 1), (0, 1), colors.HexColor("#f8fafc")),
+        ("BOX", (0, 0), (-1, -1), 0.8, colors.HexColor("#cbd5e1")),
+        ("LINEBELOW", (0, 0), (0, 0), 0.6, colors.HexColor("#cbd5e1")),
+        ("TOPPADDING", (0, 0), (-1, -1), 6),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+        ("LEFTPADDING", (0, 0), (-1, -1), 8),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 8),
+        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+    ]))
+    return card
+
+
 def generate_candidate_pdf(candidate_data: dict) -> str:
     """
     Generate a PDF score card for a single candidate.
@@ -96,7 +233,10 @@ def generate_candidate_pdf(candidate_data: dict) -> str:
     email = candidate_data["email"]
     role = candidate_data["role"]
     rounds = candidate_data.get("rounds", {})
-    summary = candidate_data.get("summary", {})
+    ai_overall_summary = candidate_data.get("ai_overall_summary")
+    ai_coding_summary = candidate_data.get("ai_coding_summary")
+    if not ai_overall_summary:
+        ai_overall_summary = generate_evaluation_summary(candidate_data)
     ts_id = candidate_data.get("test_session_id", 0)
 
     safe_name = "".join(c if c.isalnum() or c in " _-" else "_" for c in name).strip()
@@ -151,11 +291,12 @@ def generate_candidate_pdf(candidate_data: dict) -> str:
     table_data = [header]
 
     for rk, rd in rounds.items():
-        status_text = rd["status"]
-        score_text = f'{rd["correct"]} / {rd["total"]}'
-        pct_text = f'{rd["percentage"]:.1f}%'
-        thresh_text = f'{rd["pass_threshold"]}%'
-        table_data.append([rk, rd["round_label"], score_text, pct_text, thresh_text, status_text])
+        status_text = rd.get("status", "Pending")
+        score_text = f'{rd.get("correct", 0)} / {rd.get("total", 0)}'
+        pct_text = f'{float(rd.get("percentage", 0) or 0):.1f}%'
+        pass_threshold = rd.get("pass_threshold")
+        thresh_text = f"{pass_threshold}%" if pass_threshold is not None else "-"
+        table_data.append([rk, rd.get("round_label", rk), score_text, pct_text, thresh_text, status_text])
 
     col_widths = [18 * mm, 52 * mm, 25 * mm, 25 * mm, 25 * mm, 25 * mm]
     score_table = Table(table_data, colWidths=col_widths)
@@ -188,34 +329,35 @@ def generate_candidate_pdf(candidate_data: dict) -> str:
     elements.append(score_table)
     elements.append(Spacer(1, 6 * mm))
 
-    # ---- Summary ----
-    elements.append(Paragraph("Summary", styles["SectionHead"]))
-    verdict = summary.get("overall_verdict", "Pending")
-    verdict_color = (
-        PASS_GREEN if verdict == "Selected"
-        else FAIL_RED if verdict == "Rejected"
-        else PENDING_GREY
-    )
+    # ---- Overall Key Insights ----
+    elements.append(Paragraph("Overall Evaluation Summary", styles["SectionHead"]))
+    if ai_overall_summary:
+        elements.append(
+            _build_summary_card(
+                "Overall Summary As Follows",
+                ai_overall_summary,
+                styles,
+                doc.width,
+            )
+        )
+    else:
+        elements.append(Paragraph("Overall summary is unavailable.", styles["CellText"]))
 
-    summary_data = [
-        ["Total Rounds", str(summary.get("total_rounds", 0))],
-        ["Attempted", str(summary.get("attempted_rounds", 0))],
-        ["Passed", str(summary.get("passed_rounds", 0))],
-        ["Failed", str(summary.get("failed_rounds", 0))],
-        ["Overall %", f'{summary.get("overall_percentage", 0):.1f}%'],
-        ["Verdict", verdict],
-    ]
-    sum_table = Table(summary_data, colWidths=[40 * mm, 50 * mm])
-    sum_cmds = [
-        ("FONTNAME", (0, 0), (0, -1), "Helvetica-Bold"),
-        ("FONTSIZE", (0, 0), (-1, -1), 10),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
-        ("TOPPADDING", (0, 0), (-1, -1), 4),
-        ("TEXTCOLOR", (1, -1), (1, -1), verdict_color),
-        ("FONTNAME", (1, -1), (1, -1), "Helvetica-Bold"),
-    ]
-    sum_table.setStyle(TableStyle(sum_cmds))
-    elements.append(sum_table)
+    # ---- Coding Round Insights ----
+    elements.append(Spacer(1, 5 * mm))
+    elements.append(Paragraph("Coding Round Summary", styles["SectionHead"]))
+    if ai_coding_summary:
+        elements.append(
+            _build_summary_card(
+                "Coding Summary As Follows",
+                ai_coding_summary,
+                styles,
+                doc.width,
+            )
+        )
+    else:
+        elements.append(Paragraph("Coding summary is unavailable.", styles["CellText"]))
+
 
     # ---- Footer ----
     elements.append(Spacer(1, 10 * mm))

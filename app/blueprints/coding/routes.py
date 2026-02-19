@@ -16,6 +16,7 @@ from flask import render_template, redirect, url_for, request, session, jsonify
 from . import coding_bp
 
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
+from app.services.coding_submission_store import save_coding_submission
 from app.services.evaluation_store import EVALUATION_STORE
 from app.services.evaluation_service import EvaluationService
 from .services import CodingSessionService
@@ -1436,6 +1437,7 @@ def _evaluate_and_store_coding_result(session_id):
 
     code = str(coding_data.get("code") or "")
     starter_code = str(coding_data.get("starter_code") or "")
+    language = str(coding_data.get("language") or session_meta.get("language") or "java").lower()
     attempted = 1 if code.strip() and code.strip() != starter_code.strip() else 0
 
     hidden_tests = question.get("hidden_tests") or []
@@ -1471,12 +1473,28 @@ def _evaluate_and_store_coding_result(session_id):
                 "pass_threshold": pass_threshold,
                 "status": status,
                 "time_taken_seconds": time_taken,
+                "submission_details": {
+                    "question_title": question.get("title", ""),
+                    "question_text": question.get("description") or question.get("problem_statement") or "",
+                    "language": language,
+                    "submitted_code": code,
+                },
             }
             EVALUATION_STORE[session_id] = result_data
             EvaluationService._persist_result_to_db(session_meta, result_data)
+            save_coding_submission(
+                session_id=session_id,
+                email=session_meta.get("email", ""),
+                round_key=round_key,
+                round_label=round_label,
+                role=session_meta.get("role_label", ""),
+                language=language,
+                question_title=question.get("title", ""),
+                question_text=question.get("description") or question.get("problem_statement") or "",
+                submitted_code=code,
+            )
             return
 
-    language = str(coding_data.get("language") or session_meta.get("language") or "java").lower()
     test_suite = hidden_tests or public_tests
 
     total_questions = len(test_suite) if test_suite else 1
@@ -1539,10 +1557,27 @@ def _evaluate_and_store_coding_result(session_id):
         "pass_threshold": pass_threshold,
         "status": status,
         "time_taken_seconds": time_taken,
+        "submission_details": {
+            "question_title": question.get("title", ""),
+            "question_text": question.get("description") or question.get("problem_statement") or "",
+            "language": language,
+            "submitted_code": code,
+        },
     }
 
     EVALUATION_STORE[session_id] = result_data
     EvaluationService._persist_result_to_db(session_meta, result_data)
+    save_coding_submission(
+        session_id=session_id,
+        email=session_meta.get("email", ""),
+        round_key=round_key,
+        round_label=round_label,
+        role=session_meta.get("role_label", ""),
+        language=language,
+        question_title=question.get("title", ""),
+        question_text=question.get("description") or question.get("problem_statement") or "",
+        submitted_code=code,
+    )
 
 
 @coding_bp.route("/submit/<session_id>", methods=["GET", "POST"])
