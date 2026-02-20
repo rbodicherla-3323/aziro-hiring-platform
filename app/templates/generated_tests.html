@@ -173,7 +173,8 @@
                         <input type="checkbox"
                                class="candidateCheck me-3 mt-1"
                                id="generated_candidate_{{ loop.index }}"
-                               name="generated_candidate_select">
+                               name="generated_candidate_select"
+                               value="{{ cand.email }}">
                         <div>
                             <div class="candidate-heading">
                                 <div class="candidate-name">{{ cand.name }}</div>
@@ -276,14 +277,58 @@
     });
 
     // Bulk Email Button
-    document.getElementById('bulkEmailBtn').addEventListener('click', () => {
-        const count = document.querySelectorAll('.candidateCheck:checked').length;
-        if (count > 0) {
-            if (typeof showToast === 'function') showToast(`Sending emails to ${count} candidate(s)...`, 'success');
-        } else {
-            if (typeof showToast === 'function') showToast('Please select candidates first', 'warning');
-        }
-    });
+    const bulkEmailBtn = document.getElementById('bulkEmailBtn');
+    if (bulkEmailBtn) {
+        bulkEmailBtn.addEventListener('click', async () => {
+            const selected = Array.from(document.querySelectorAll('.candidateCheck:checked'))
+                .map(cb => cb.value)
+                .filter(Boolean);
+
+            if (!selected.length) {
+                if (typeof showToast === 'function') showToast('Please select candidates first', 'warning');
+                return;
+            }
+
+            const originalHtml = bulkEmailBtn.innerHTML;
+            bulkEmailBtn.disabled = true;
+            bulkEmailBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Sending...';
+
+            try {
+                const response = await fetch('/generated-tests/send-emails', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ emails: selected })
+                });
+
+                const result = await response.json();
+                if (!response.ok || !result.success) {
+                    const message = (result && result.error) ? result.error : 'Failed to send selected emails.';
+                    if (typeof showToast === 'function') showToast(message, 'danger');
+                    return;
+                }
+
+                if (result.failed_count > 0) {
+                    if (typeof showToast === 'function') {
+                        showToast(
+                            `Sent ${result.sent_count}/${result.requested_count}. Failed: ${result.failed_count}.`,
+                            'warning'
+                        );
+                    }
+                } else {
+                    if (typeof showToast === 'function') {
+                        showToast(`Emails sent successfully to ${result.sent_count} candidate(s).`, 'success');
+                    }
+                }
+            } catch (error) {
+                if (typeof showToast === 'function') showToast('Failed to send selected emails.', 'danger');
+            } finally {
+                bulkEmailBtn.disabled = false;
+                bulkEmailBtn.innerHTML = originalHtml;
+            }
+        });
+    }
 </script>
 
 {% endblock %}

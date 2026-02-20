@@ -30,8 +30,14 @@ def _build_email_body(candidate_name: str, role_label: str, tests: dict) -> str:
     lines = [
         f"Hi {candidate_name},",
         "",
-        f"Your test links for the role \"{role_label}\" are ready.",
-        "Please complete all rounds using the links below:",
+        "Greetings from Aziro Technologies Pvt Ltd.",
+        "",
+        f"Your proctored test links for the role \"{role_label}\" are ready.",
+        "Please follow these instructions while attempting the tests:",
+        "1. Share your entire screen during the test.",
+        "2. Keep your web camera turned on throughout the test.",
+        "",
+        "Test Links:",
         "",
     ]
 
@@ -45,7 +51,7 @@ def _build_email_body(candidate_name: str, role_label: str, tests: dict) -> str:
     lines.extend([
         "",
         "Regards,",
-        "Aziro Hiring Team",
+        "Aziro Technologies Pvt Ltd",
     ])
     return "\n".join(lines)
 
