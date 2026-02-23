@@ -14,6 +14,7 @@ from datetime import datetime
 from . import tests_bp
 from app.utils.auth_decorator import login_required
 from app.services.generated_tests_store import get_tests_for_user_today
+from app.services.email_service import send_candidate_test_links_email
 
 
 # ────────────────────────────────────────────
@@ -191,3 +192,66 @@ def generated_tests():
         "generated_tests.html",
         candidates=candidates,
     )
+
+
+@tests_bp.route("/generated-tests/send-emails", methods=["POST"])
+@login_required
+def send_generated_tests_emails():
+    """Send generated test links to selected candidates for current logged-in user."""
+    payload = request.get_json(silent=True) or {}
+    raw_emails = payload.get("emails", [])
+
+    if not isinstance(raw_emails, list):
+        return jsonify({"success": False, "error": "Invalid email selection payload."}), 400
+
+    selected_emails = []
+    seen = set()
+    for item in raw_emails:
+        email = str(item or "").strip().lower()
+        if not email or email in seen:
+            continue
+        selected_emails.append(email)
+        seen.add(email)
+
+    if not selected_emails:
+        return jsonify({"success": False, "error": "No candidates selected."}), 400
+
+    user = session.get("user", {})
+    user_email = user.get("email", "dev@aziro.com")
+    candidates = get_tests_for_user_today(user_email)
+    candidates_by_email = {
+        str(c.get("email", "")).strip().lower(): c
+        for c in candidates
+        if c.get("email")
+    }
+
+    sent_count = 0
+    failures = []
+
+    for email in selected_emails:
+        candidate = candidates_by_email.get(email)
+        if not candidate:
+            failures.append({"email": email, "reason": "Candidate not found for this session."})
+            continue
+
+        sent, error = send_candidate_test_links_email(
+            candidate_name=candidate.get("name", "Candidate"),
+            candidate_email=candidate.get("email", email),
+            role_label=candidate.get("role", ""),
+            tests=candidate.get("tests", {}),
+        )
+        if sent:
+            sent_count += 1
+        else:
+            failures.append({
+                "email": candidate.get("email", email),
+                "reason": error or "SMTP send failed.",
+            })
+
+    return jsonify({
+        "success": True,
+        "requested_count": len(selected_emails),
+        "sent_count": sent_count,
+        "failed_count": len(failures),
+        "failures": failures,
+    })
