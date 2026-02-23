@@ -10,6 +10,11 @@ from app.services.generated_tests_store import get_tests_for_user_today, GENERAT
 from app.services.evaluation_aggregator import EvaluationAggregator
 from app.services import db_service
 from app.services.evaluation_service import EvaluationService
+from app.services.proctoring_summary import build_proctoring_summary_by_email, blank_proctoring_summary
+from app.services.plagiarism_service import (
+    build_plagiarism_summary_by_candidates,
+    blank_plagiarism_summary,
+)
 from app.services.pdf_service import generate_candidate_pdf, REPORTS_DIR
 
 reports_bp = Blueprint("reports", __name__)
@@ -37,6 +42,8 @@ def reports():
                 "name": t["name"],
                 "email": t["email"],
                 "role": t.get("role", ""),
+                "role_key": t.get("role_key", ""),
+                "batch_id": t.get("batch_id", ""),
                 "rounds": {},
                 "results": [],
                 "summary": {
@@ -46,6 +53,13 @@ def reports():
                     "failed_rounds": 0,
                 },
             })
+
+    summaries_by_email = build_proctoring_summary_by_email({c.get("email", "") for c in session_candidates})
+    plagiarism_by_email = build_plagiarism_summary_by_candidates(session_candidates)
+    for candidate in session_candidates:
+        email_key = str(candidate.get("email", "")).strip().lower()
+        candidate["proctoring_summary"] = summaries_by_email.get(email_key, blank_proctoring_summary())
+        candidate["plagiarism_summary"] = plagiarism_by_email.get(email_key, blank_plagiarism_summary())
 
     return render_template(
         "reports.html",
@@ -128,6 +142,11 @@ def generate_report(email):
 
     if not candidate_data:
         return jsonify({"success": False, "error": f"No data found for candidate: {email}"}), 404
+
+    proctoring_by_email = build_proctoring_summary_by_email({email})
+    candidate_data["proctoring_summary"] = proctoring_by_email.get(email.strip().lower(), blank_proctoring_summary())
+    plagiarism_by_email = build_plagiarism_summary_by_candidates([candidate_data])
+    candidate_data["plagiarism_summary"] = plagiarism_by_email.get(email.strip().lower(), blank_plagiarism_summary())
 
     # Attach AI summaries for PDF rendering.
     try:

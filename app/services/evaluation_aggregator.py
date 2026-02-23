@@ -21,6 +21,8 @@ class EvaluationAggregator:
                 "name": c["name"],
                 "email": c["email"],
                 "role": c["role"],
+                "role_key": c.get("role_key", ""),
+                "batch_id": c.get("batch_id", ""),
                 "rounds": {}
             }
 

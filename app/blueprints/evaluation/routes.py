@@ -9,6 +9,11 @@ from app.utils.auth_decorator import login_required
 from app.services.generated_tests_store import get_tests_for_user_today
 from app.services.evaluation_aggregator import EvaluationAggregator
 from app.services.evaluation_service import EvaluationService, ROUND_PASS_PERCENTAGE, DEFAULT_PASS_PERCENTAGE
+from app.services.proctoring_summary import build_proctoring_summary_by_email, blank_proctoring_summary
+from app.services.plagiarism_service import (
+    build_plagiarism_summary_by_candidates,
+    blank_plagiarism_summary,
+)
 
 
 @evaluation_bp.route("/evaluation", methods=["GET", "POST"])
@@ -34,6 +39,12 @@ def evaluation():
     if request.method == "POST":
         selected_emails = request.form.getlist("candidates")
         filtered_candidates = [c for c in candidates if c["email"] in selected_emails]
+        summaries_by_email = build_proctoring_summary_by_email({c.get("email", "") for c in filtered_candidates})
+        plagiarism_by_email = build_plagiarism_summary_by_candidates(filtered_candidates)
+        for candidate in filtered_candidates:
+            email_key = str(candidate.get("email", "")).strip().lower()
+            candidate["proctoring_summary"] = summaries_by_email.get(email_key, blank_proctoring_summary())
+            candidate["plagiarism_summary"] = plagiarism_by_email.get(email_key, blank_plagiarism_summary())
 
     return render_template(
         "evaluation.html",

@@ -185,7 +185,8 @@ def start_test(session_id):
         session_id=session_id,
         role_key=session_meta["role_key"],
         round_key=session_meta["round_key"],
-        domain=session_meta.get("domain")
+        domain=session_meta.get("domain"),
+        force_reset=True
     )
 
     return render_template(
@@ -534,7 +535,7 @@ def submit(session_id):
         EvaluationService.evaluate_mcq(session_id)
 
         # Free cookie space immediately after evaluation
-        session.pop(f"mcq_{session_id}", None)
+        MCQSessionService.clear_session(session_id)
 
         completed_url = url_for("mcq.completed", session_id=session_id)
         if _is_ajax_request():

@@ -5,6 +5,12 @@ from flask import session
 
 from app.services.question_bank.loader import QuestionLoader
 from app.services.question_bank.registry import QuestionRegistry
+from app.services.mcq_runtime_store import (
+    get_mcq_session_data,
+    set_mcq_session_data,
+    clear_mcq_session_data,
+    mcq_session_key,
+)
 
 QUESTION_COUNT = 15
 DEFAULT_DURATION_MINUTES = 20
@@ -20,11 +26,15 @@ class MCQSessionService:
     """
 
     @staticmethod
-    def init_session(session_id, role_key, round_key, domain=None):
-        session_key = f"mcq_{session_id}"
+    def init_session(session_id, role_key, round_key, domain=None, force_reset=False):
+        session_key = mcq_session_key(session_id)
 
-        # ✅ Do not recreate session
-        if session_key in session:
+        if force_reset:
+            clear_mcq_session_data(session_id)
+            session.pop(session_key, None)
+
+        # ✅ Do not recreate active runtime session
+        if get_mcq_session_data(session_id):
             return
 
         loader = QuestionLoader(
@@ -51,12 +61,17 @@ class MCQSessionService:
 
         selected_questions = MCQSessionService._prepare_selected_questions(selected_questions)
 
-        session[session_key] = {
+        data = {
             "questions": selected_questions,
             "answers": {},
             "start_time": int(time.time()),
             "duration_seconds": DEFAULT_DURATION_MINUTES * 60
         }
+        set_mcq_session_data(session_id, data)
+
+        # Keep a tiny session marker for compatibility without storing large payload.
+        session[session_key] = {"runtime_store": True}
+        session.modified = True
 
     @staticmethod
     def _prepare_selected_questions(selected_questions):
@@ -105,7 +120,7 @@ class MCQSessionService:
 
     @staticmethod
     def get_question(session_id, index):
-        data = session.get(f"mcq_{session_id}")
+        data = MCQSessionService.get_session_data(session_id)
         if not data:
             return None
 
@@ -116,16 +131,17 @@ class MCQSessionService:
 
     @staticmethod
     def save_answer(session_id, index, answer):
-        data = session.get(f"mcq_{session_id}")
+        data = MCQSessionService.get_session_data(session_id)
         if not data:
             return
 
         data["answers"][str(index)] = answer
+        set_mcq_session_data(session_id, data)
         session.modified = True
 
     @staticmethod
     def get_answer(session_id, index):
-        data = session.get(f"mcq_{session_id}")
+        data = MCQSessionService.get_session_data(session_id)
         if not data:
             return None
 
@@ -133,14 +149,34 @@ class MCQSessionService:
 
     @staticmethod
     def total_questions(session_id):
-        data = session.get(f"mcq_{session_id}")
+        data = MCQSessionService.get_session_data(session_id)
         return len(data["questions"]) if data else 0
 
     @staticmethod
     def remaining_time(session_id):
-        data = session.get(f"mcq_{session_id}")
+        data = MCQSessionService.get_session_data(session_id)
         if not data:
             return 0
 
         elapsed = int(time.time()) - data["start_time"]
         return max(0, data["duration_seconds"] - elapsed)
+
+    @staticmethod
+    def get_session_data(session_id):
+        session_key = mcq_session_key(session_id)
+        data = get_mcq_session_data(session_id)
+        if data:
+            return data
+
+        legacy = session.get(session_key)
+        if isinstance(legacy, dict) and "questions" in legacy and "answers" in legacy:
+            set_mcq_session_data(session_id, legacy)
+            return legacy
+        return None
+
+    @staticmethod
+    def clear_session(session_id):
+        session_key = mcq_session_key(session_id)
+        clear_mcq_session_data(session_id)
+        session.pop(session_key, None)
+        session.modified = True
