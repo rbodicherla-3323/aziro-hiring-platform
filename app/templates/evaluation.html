@@ -5,46 +5,68 @@
 {% block content %}
 
 <style>
+    .evaluation-page {
+        --ev-brand: #0d3b66;
+        --ev-brand-2: #1f6feb;
+        --ev-ink: #0f172a;
+        --ev-muted: #5f6f87;
+        --ev-border: #d8e5f5;
+        --ev-shadow: 0 14px 30px rgba(13, 59, 102, 0.10);
+        font-family: "Poppins", "Segoe UI", sans-serif;
+        background:
+            radial-gradient(1100px 520px at 94% -12%, rgba(31,111,235,0.12), transparent 60%),
+            radial-gradient(950px 460px at 4% -18%, rgba(13,59,102,0.09), transparent 58%);
+        border-radius: 20px;
+        padding: 8px 0 14px;
+    }
+
     /* ===== Evaluation Page Styles ===== */
     .eval-header {
-        background: linear-gradient(135deg, #0d3b66 0%, #1a5276 100%);
+        background: linear-gradient(135deg, #0d3b66 0%, #1f6feb 100%);
         color: white;
-        border-radius: 12px;
-        padding: 24px 28px;
+        border-radius: 16px;
+        padding: 26px 30px;
         margin-bottom: 24px;
+        box-shadow: 0 16px 30px rgba(13, 59, 102, 0.24);
     }
     .eval-header h4 {
         margin: 0;
-        font-weight: 700;
-        font-size: 1.3rem;
+        font-weight: 800;
+        font-size: 1.65rem;
+        letter-spacing: 0.2px;
     }
     .eval-header p {
-        margin: 6px 0 0 0;
-        opacity: 0.85;
-        font-size: 0.9rem;
+        margin: 8px 0 0 0;
+        opacity: 0.95;
+        font-size: 0.98rem;
     }
 
     /* Candidate selector */
     .candidate-selector {
-        border: 2px solid #e2e8f0;
-        border-radius: 10px;
-        transition: border-color 0.2s;
+        border: 1px solid var(--ev-border);
+        border-radius: 14px;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        transition: border-color 0.2s, box-shadow 0.2s;
+        box-shadow: var(--ev-shadow);
     }
     .candidate-selector:hover {
-        border-color: #0d6efd;
+        border-color: #1f6feb;
+        box-shadow: 0 18px 30px rgba(13, 59, 102, 0.14);
     }
     .candidate-selector .toggle-bar {
-        padding: 14px 18px;
+        padding: 16px 20px;
         cursor: pointer;
         user-select: none;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: #fafbfc;
-        border-radius: 8px;
+        background: #f7fbff;
+        border-radius: 13px;
+        font-weight: 700;
+        color: #183c68;
     }
     .candidate-selector .toggle-bar:hover {
-        background: #f0f4ff;
+        background: #eef5ff;
     }
     .candidate-selector .toggle-bar .arrow {
         transition: transform 0.3s;
@@ -60,8 +82,8 @@
         padding: 12px 18px;
     }
     .candidate-list .form-check {
-        padding: 10px 0 10px 28px;
-        border-bottom: 1px solid #f0f0f0;
+        padding: 12px 0 12px 30px;
+        border-bottom: 1px solid #eef3fb;
     }
     .candidate-list .form-check:last-child {
         border-bottom: none;
@@ -69,11 +91,12 @@
 
     /* Candidate result card */
     .candidate-result-card {
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
+        border: 1px solid var(--ev-border);
+        border-radius: 16px;
         overflow: hidden;
         margin-bottom: 28px;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        box-shadow: var(--ev-shadow);
+        background: linear-gradient(180deg, #ffffff 0%, #f9fcff 100%);
     }
     .candidate-result-header {
         padding: 20px 24px;
@@ -84,19 +107,20 @@
         gap: 12px;
     }
     .candidate-info .candidate-name {
-        font-size: 1.2rem;
-        font-weight: 700;
+        font-size: 1.25rem;
+        font-weight: 800;
         color: #0d3b66;
     }
     .candidate-info .candidate-meta {
-        font-size: 0.85rem;
-        color: #555;
+        font-size: 0.87rem;
+        color: #4b5563;
         margin-top: 2px;
-    }    /* Stat pills (header summary) */
+    }
+    /* Stat pills (header summary) */
     .stat-pill {
-        background: #f8f9fa;
-        border: 1px solid #e9ecef;
-        border-radius: 8px;
+        background: linear-gradient(180deg, #ffffff 0%, #f2f7ff 100%);
+        border: 1px solid #d8e5f5;
+        border-radius: 10px;
         padding: 10px 18px;
         text-align: center;
         flex: 1;
@@ -121,7 +145,7 @@
         font-size: 0.88rem;
     }
     .score-table thead th {
-        background: #0d3b66;
+        background: linear-gradient(135deg, #0d3b66 0%, #1f6feb 100%);
         color: white;
         font-weight: 600;
         padding: 12px 16px;
@@ -140,7 +164,7 @@
         border-bottom: none;
     }
     .score-table tbody tr:hover {
-        background: #f8f9ff;
+        background: #f3f8ff;
     }
 
     /* Progress bar for percentage */
@@ -183,8 +207,8 @@
     /* Threshold info */
     .threshold-info {
         padding: 16px 24px;
-        background: #fafbfc;
-        border-top: 1px solid #e9ecef;
+        background: #f5f9ff;
+        border-top: 1px solid #e2ecf9;
     }
     .threshold-item {
         display: inline-flex;
@@ -204,7 +228,11 @@
     /* Empty state */
     .eval-empty-state {
         text-align: center;
-        padding: 60px 20px;
+        padding: 64px 22px;
+        border: 1px dashed #c9d9ef;
+        border-radius: 16px;
+        background: linear-gradient(180deg, #ffffff 0%, #f5faff 100%);
+        box-shadow: var(--ev-shadow);
     }
     .eval-empty-state .empty-icon {
         font-size: 3rem;
@@ -223,11 +251,33 @@
     /* Select all */
     .select-all-bar {
         padding: 8px 0;
-        border-bottom: 2px solid #e9ecef;
+        border-bottom: 2px solid #e2ecf9;
         margin-bottom: 4px;
+    }
+
+    .evaluation-page .card {
+        border: 1px solid var(--ev-border);
+        border-radius: 16px;
+        box-shadow: var(--ev-shadow);
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    }
+
+    .evaluation-page .btn-primary {
+        border: 0;
+        border-radius: 12px;
+        font-weight: 700;
+        padding: 11px 24px;
+        background: linear-gradient(135deg, var(--ev-brand) 0%, var(--ev-brand-2) 100%);
+        box-shadow: 0 12px 22px rgba(31, 111, 235, 0.22);
+    }
+
+    .evaluation-page .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 14px 24px rgba(31, 111, 235, 0.28);
     }
 </style>
 
+<div class="evaluation-page">
 <!-- ===== PAGE HEADER ===== -->
 <div class="eval-header">
     <h4><i class="bi bi-clipboard-data me-2"></i>Candidate Evaluation</h4>
@@ -556,5 +606,5 @@ if (selectAll) {
     }
 }
 </script>
-
+</div>
 {% endblock %}

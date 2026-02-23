@@ -177,6 +177,10 @@ def create_test():
     emails = request.form.getlist("email[]")
     roles = request.form.getlist("role[]")
     domains = request.form.getlist("domain[]")
+    aptitude_enabled_values = request.form.getlist("aptitude_enabled[]")
+    if not aptitude_enabled_values:
+        # Backward compatibility with older form field name.
+        aptitude_enabled_values = request.form.getlist("aptitude_optional[]")
 
     # Get file uploads (resume & JD)
     resume_files = request.files.getlist("resume[]")
@@ -192,6 +196,12 @@ def create_test():
         email = emails[i].strip()
         role_label = roles[i].strip()
         domain = domains[i].strip() if i < len(domains) else "None"
+        aptitude_enabled_raw = (
+            aptitude_enabled_values[i].strip().lower()
+            if i < len(aptitude_enabled_values)
+            else "yes"
+        )
+        aptitude_enabled = aptitude_enabled_raw in ("yes", "true", "1")
 
         # Save uploaded files if present
         resume_path = None
@@ -214,7 +224,9 @@ def create_test():
         role_config = ROLE_ROUND_MAPPING.get(role_key, {})
         display_map = ROUND_DISPLAY_MAPPING.get(role_key, {})
 
-        mcq_rounds = role_config.get("rounds", [])
+        mcq_rounds = list(role_config.get("rounds", []))
+        if not aptitude_enabled:
+            mcq_rounds = [rk for rk in mcq_rounds if rk != "L1"]
         coding_rounds = role_config.get("coding_rounds", [])
         coding_language = role_config.get("coding_language", "java")
         allow_domain = role_config.get("allow_domain", False)
@@ -304,6 +316,7 @@ def create_test():
             "role": role_label,
             "role_key": role_key,
             "batch_id": batch_id,
+            "aptitude_enabled": aptitude_enabled,
             "tests": tests,
             "resume_path": resume_path,
             "jd_path": jd_path,
