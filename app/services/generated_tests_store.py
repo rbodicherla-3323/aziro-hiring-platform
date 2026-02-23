@@ -9,11 +9,59 @@ GENERATED_TESTS = []
 
 
 def add_generated_test(entry: dict):
-    """Add a generated test entry with user/timestamp tracking."""
+    """Add or replace a generated test entry with user/timestamp tracking.
+
+    For the same creator, email, role and calendar day, keep only the latest entry.
+    """
     if "created_at" not in entry:
         entry["created_at"] = datetime.now(timezone.utc).isoformat()
     if "created_by" not in entry:
         entry["created_by"] = ""
+
+    created = entry.get("created_at", "")
+    entry_dt = None
+    if isinstance(created, str):
+        try:
+            entry_dt = datetime.fromisoformat(created.replace("Z", "+00:00"))
+        except (ValueError, TypeError):
+            entry_dt = datetime.now(timezone.utc)
+    elif isinstance(created, datetime):
+        entry_dt = created
+    else:
+        entry_dt = datetime.now(timezone.utc)
+
+    entry_day = entry_dt.date()
+    entry_creator = str(entry.get("created_by", "")).lower()
+    entry_email = str(entry.get("email", "")).lower()
+    entry_role = str(entry.get("role", "")).strip().lower()
+
+    # Remove existing same-day duplicate records for same candidate+role by same creator.
+    duplicate_indexes = []
+    for idx, test in enumerate(GENERATED_TESTS):
+        if str(test.get("created_by", "")).lower() != entry_creator:
+            continue
+        if str(test.get("email", "")).lower() != entry_email:
+            continue
+        if str(test.get("role", "")).strip().lower() != entry_role:
+            continue
+
+        existing_created = test.get("created_at", "")
+        if isinstance(existing_created, str):
+            try:
+                existing_dt = datetime.fromisoformat(existing_created.replace("Z", "+00:00"))
+            except (ValueError, TypeError):
+                continue
+        elif isinstance(existing_created, datetime):
+            existing_dt = existing_created
+        else:
+            continue
+
+        if existing_dt.date() == entry_day:
+            duplicate_indexes.append(idx)
+
+    for idx in reversed(duplicate_indexes):
+        GENERATED_TESTS.pop(idx)
+
     GENERATED_TESTS.append(entry)
 
 

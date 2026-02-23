@@ -119,6 +119,13 @@
                         <option>Storage</option>
                     </select>
                 </div>
+                <div class="col-md-3">
+                    <label class="form-label">Aptitude Test <small class="text-muted">(Optional)</small></label>
+                    <select class="form-select" name="aptitude_enabled[]">
+                        <option value="yes" selected>Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
@@ -192,6 +199,7 @@ const singleMode=document.getElementById("single_mode"),multiMode=document.getEl
                 email: getInputValue(row, 'input[name="email[]"]'),
                 role: getInputValue(row, 'select[name="role[]"]'),
                 domain: getInputValue(row, 'select[name="domain[]"]'),
+                aptitude_enabled: getInputValue(row, 'select[name="aptitude_enabled[]"]'),
             };
         });
 
@@ -276,6 +284,7 @@ const singleMode=document.getElementById("single_mode"),multiMode=document.getEl
             setInputValue(row, 'input[name="email[]"]', rowData.email || "");
             setInputValue(row, 'select[name="role[]"]', rowData.role || "");
             setInputValue(row, 'select[name="domain[]"]', rowData.domain || "None");
+            setInputValue(row, 'select[name="aptitude_enabled[]"]', rowData.aptitude_enabled || "yes");
         });
     }
 
