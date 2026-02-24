@@ -3,7 +3,7 @@
 
 (function () {
     const PATH = window.location.pathname;
-    const IS_TEST_FLOW_PAGE = /^\/mcq\/(?:start|question|submit)\/[^/]+\/?$/.test(PATH);
+    const IS_TEST_FLOW_PAGE = /\/mcq\/(?:start|question|submit)\/[^/]+\/?$/.test(PATH);
     if (!IS_TEST_FLOW_PAGE) return;
 
     const PATH_PARTS = PATH.split("/").filter(Boolean);
@@ -126,8 +126,8 @@
     const aiViolationLastAt = new Map();
 
     function isActiveExamPath() {
-        return /^\/mcq\/question\/[^/]+\/?$/.test(window.location.pathname)
-            || /^\/mcq\/submit\/[^/]+\/?$/.test(window.location.pathname);
+        return /\/mcq\/question\/[^/]+\/?$/.test(window.location.pathname)
+            || /\/mcq\/submit\/[^/]+\/?$/.test(window.location.pathname);
     }
 
     function loadSuspicionScore() {

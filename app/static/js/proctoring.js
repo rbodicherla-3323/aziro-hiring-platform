@@ -3,10 +3,10 @@
 const PATH = window.location.pathname;
 const PATH_PARTS = PATH.split("/").filter(Boolean);
 const SESSION_ID = PATH_PARTS.length >= 3 ? PATH_PARTS[PATH_PARTS.length - 1] : "";
-const IS_START_PAGE = /^\/mcq\/start\/[^/]+\/?$/.test(PATH);
-const IS_QUESTION_PAGE = /^\/mcq\/question\/[^/]+\/?$/.test(PATH);
-const IS_COMPLETED_PAGE = /^\/mcq\/completed\/[^/]+\/?$/.test(PATH);
-const IS_TEST_FLOW_PAGE = /^\/mcq\/(?:start|question|submit)\/[^/]+\/?$/.test(PATH);
+const IS_START_PAGE = /\/mcq\/start\/[^/]+\/?$/.test(PATH);
+const IS_QUESTION_PAGE = /\/mcq\/question\/[^/]+\/?$/.test(PATH);
+const IS_COMPLETED_PAGE = /\/mcq\/completed\/[^/]+\/?$/.test(PATH);
+const IS_TEST_FLOW_PAGE = /\/mcq\/(?:start|question|submit)\/[^/]+\/?$/.test(PATH);
 
 const FULLSCREEN_REQUIRED_KEY = `mcq_fullscreen_required_${SESSION_ID}`;
 const NAV_IN_PROGRESS_KEY = `mcq_nav_in_progress_${SESSION_ID}`;
@@ -92,8 +92,8 @@ const VIOLATION_BANNER_TONES = Object.freeze({
 });
 
 function isExamPath() {
-    return /^\/mcq\/question\/[^/]+\/?$/.test(window.location.pathname) ||
-           /^\/mcq\/submit\/[^/]+\/?$/.test(window.location.pathname);
+    return /\/mcq\/question\/[^/]+\/?$/.test(window.location.pathname) ||
+           /\/mcq\/submit\/[^/]+\/?$/.test(window.location.pathname);
 }
 
 function applyPageClassNames() {
@@ -482,6 +482,7 @@ function normalizeViolationType(type) {
 }
 
 function shouldDisplayViolationBanner(normalizedType) {
+    if (normalizedType === "suspicion threshold exceeded") return false;
     return Object.prototype.hasOwnProperty.call(VIOLATION_LABELS, normalizedType);
 }
 

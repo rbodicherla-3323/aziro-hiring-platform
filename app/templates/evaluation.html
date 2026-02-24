@@ -257,6 +257,11 @@
         font-size: 0.76rem;
         font-weight: 600;
     }
+    .proctoring-chip.alert {
+        border-color: #f5c6cb;
+        background: #fdecef;
+        color: #a71d2a;
+    }
     .plagiarism-summary {
         padding: 12px 24px;
         background: #f5f9ff;
@@ -511,6 +516,9 @@
                 <span class="proctoring-chip">Copy/Paste Blocks: {{ ps.copy_paste_blocks or 0 }}</span>
                 <span class="proctoring-chip">Screenshots Captured: {{ ps.screenshot_captures or 0 }}</span>
                 <span class="proctoring-chip">Suspicion Score: {{ ps.suspicion_score or 0 }}</span>
+                <span class="proctoring-chip {% if ps.suspicion_threshold_exceeded %}alert{% endif %}">
+                    Suspicion Threshold Exceeded: {% if ps.suspicion_threshold_exceeded %}Yes{% else %}No{% endif %}{% if ps.suspicion_threshold_event_count %} ({{ ps.suspicion_threshold_event_count }}){% endif %}
+                </span>
             </div>
         </div>
 
