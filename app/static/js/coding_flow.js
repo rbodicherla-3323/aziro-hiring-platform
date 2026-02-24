@@ -89,6 +89,7 @@ window.__CODING_AJAX_FLOW = true;
                 proctoringReady = await window.ensureProctoringReady({
                     requireScreenShare: true,
                     requireFullscreen: true,
+                    requireWebcam: true,
                     withOverlay: false
                 });
             } else {
@@ -102,28 +103,12 @@ window.__CODING_AJAX_FLOW = true;
                 if (startButton) startButton.disabled = false;
                 return;
             }
-
-            // ── 2. Acquire webcam (works inside fullscreen) ─
-            if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === "function") {
-                try {
-                    var wStream = await navigator.mediaDevices.getUserMedia({
-                        video: { facingMode: "user", width: { ideal: 320 }, height: { ideal: 180 } },
-                        audio: false
-                    });
-                    if (typeof window.__proctoringSetWebcam === "function") {
-                        window.__proctoringSetWebcam(wStream);
-                    }
-                } catch (_) {
-                    // Webcam is optional — continue even if denied
-                }
-            }
-
-            // ── 3. Mark fullscreen required in sessionStorage
+            // ── 2. Mark fullscreen required in sessionStorage
             try {
                 sessionStorage.setItem("coding_fullscreen_required_" + sessionId, "1");
             } catch (_) {}
 
-            // ── 4. POST to begin endpoint (start session) ───
+            // ── 3. POST to begin endpoint (start session) ───
             var beginResp = await fetch("/coding/begin/" + encodeURIComponent(sessionId), {
                 method: "POST",
                 credentials: "same-origin",
@@ -133,7 +118,7 @@ window.__CODING_AJAX_FLOW = true;
                 console.warn("[CodingFlow] Begin POST returned:", beginResp.status);
             }
 
-            // ── 5. GET editor page HTML ─────────────────────
+            // ── 4. GET editor page HTML ─────────────────────
             var resp = await fetch("/coding/editor/" + encodeURIComponent(sessionId), {
                 credentials: "same-origin"
             });
@@ -141,7 +126,7 @@ window.__CODING_AJAX_FLOW = true;
             var html = await resp.text();
             if (!html || html.length < 100) throw new Error("Editor page returned empty/invalid HTML");
 
-            // ── 6. Parse and inject editor content ──────────
+            // ── 5. Parse and inject editor content ──────────
             // Suppress content-change screenshots during legitimate page transition
             if (typeof window.suppressContentChangeDetection === "function") {
                 window.suppressContentChangeDetection(3000);
@@ -175,14 +160,14 @@ window.__CODING_AJAX_FLOW = true;
                 }
             }
 
-            // ── 7. Update body class ────────────────────────
+            // ── 6. Update body class ────────────────────────
             document.body.classList.remove("coding-start-page");
             document.body.classList.add("coding-editor-page");
 
-            // ── 8. Update URL (no history entry — can't go back)
+            // ── 7. Update URL (no history entry — can't go back)
             history.replaceState({}, "", "/coding/editor/" + sessionId);
 
-            // ── 9. Load CodeMirror + coding_editor.js ─────────
+            // ── 8. Load CodeMirror + coding_editor.js ─────────
             // Load CM CSS in parallel
             await Promise.all(cmResources.css.map(loadCSS));
             // Load CM JS sequentially (core first, then addons/modes)
@@ -192,7 +177,7 @@ window.__CODING_AJAX_FLOW = true;
             // Now load the editor controller which initialises CodeMirror
             await loadScript("/static/js/coding_editor.js?" + Date.now());
 
-            // ── 10. Start exam proctoring ────────────────────
+            // ── 9. Start exam proctoring ────────────────────
             // All streams are still alive (no page reload),
             // so setupExamProctoring finds everything active
             // and never exits fullscreen.

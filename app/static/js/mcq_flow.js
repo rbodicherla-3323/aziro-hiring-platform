@@ -792,6 +792,7 @@ window.__MCQ_AJAX_FLOW = false;
                     proctoringReady = await window.ensureProctoringReady({
                         requireScreenShare: true,
                         requireFullscreen: true,
+                        requireWebcam: true,
                         withOverlay: false
                     });
                 } else {
@@ -805,25 +806,6 @@ window.__MCQ_AJAX_FLOW = false;
                     // Screen share was declined or failed — do NOT start the test.
                     if (startButton) startButton.disabled = false;
                     return;
-                }
-
-                // Acquire webcam NOW (inside fullscreen) so that
-                // setupExamProctoring() finds it already active and
-                // never needs to exit fullscreen for it.
-                if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === "function") {
-                    try {
-                        const wStream = await navigator.mediaDevices.getUserMedia({
-                            video: { facingMode: "user", width: { ideal: 320 }, height: { ideal: 180 } },
-                            audio: false
-                        });
-                        // Store on the proctoring module's global so
-                        // setupExamProctoring sees it as already active.
-                        if (typeof window.__proctoringSetWebcam === "function") {
-                            window.__proctoringSetWebcam(wStream);
-                        }
-                    } catch (_) {
-                        // Webcam is optional — continue even if denied
-                    }
                 }
 
                 try {
@@ -941,4 +923,3 @@ window.__MCQ_AJAX_FLOW = false;
         }
     })();
 })();
-
