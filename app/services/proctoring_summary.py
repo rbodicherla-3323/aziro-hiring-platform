@@ -21,6 +21,8 @@ def blank_proctoring_summary():
         "no_face_duration_seconds": 0.0,
         "attention_deviation_count": 0,
         "suspicion_score": 0,
+        "suspicion_threshold_exceeded": False,
+        "suspicion_threshold_event_count": 0,
     }
 
 
@@ -98,6 +100,10 @@ def build_proctoring_summary_by_email(emails, events_file=PROCTORING_EVENTS_JSON
                     summary["no_face_duration_seconds"] += _to_float(details.get("no_face_duration_seconds"), 0.0)
                 elif event_type == "attention deviation detected":
                     summary["attention_deviation_count"] += 1
+
+                if event_type == "suspicion threshold exceeded":
+                    summary["suspicion_threshold_exceeded"] = True
+                    summary["suspicion_threshold_event_count"] += 1
 
                 if event_type.startswith("screenshot:"):
                     summary["screenshot_captures"] += 1

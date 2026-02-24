@@ -301,6 +301,8 @@ def generate_candidate_pdf(candidate_data: dict) -> str:
         ["No Face Duration", f"{float(proctoring_summary.get('no_face_duration_seconds', 0) or 0):.1f}s"],
         ["Attention Deviations", str(proctoring_summary.get("attention_deviation_count", 0))],
         ["Suspicion Score", str(proctoring_summary.get("suspicion_score", 0))],
+        ["Suspicion Threshold Exceeded", "YES" if proctoring_summary.get("suspicion_threshold_exceeded") else "NO"],
+        ["Suspicion Threshold Events", str(proctoring_summary.get("suspicion_threshold_event_count", 0))],
     ]
     proctor_table = Table(proctor_rows, colWidths=[70 * mm, 90 * mm])
     proctor_table.setStyle(TableStyle([

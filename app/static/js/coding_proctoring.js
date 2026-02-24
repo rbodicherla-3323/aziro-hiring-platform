@@ -404,6 +404,7 @@ function normalizeViolationType(type) {
     return String(type || "").trim().toLowerCase();
 }
 function shouldDisplayViolationBanner(normalizedType) {
+    if (normalizedType === "suspicion threshold exceeded") return false;
     return Object.prototype.hasOwnProperty.call(VIOLATION_LABELS, normalizedType);
 }
 function resolveViolationDisplayCount(normalizedType, details = {}) {

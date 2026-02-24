@@ -39,6 +39,7 @@
     .proctoring-title { display:block; font-size:0.72rem; font-weight:700; color:#7a5a11; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:7px; }
     .proctoring-chips { display:flex; flex-wrap:wrap; gap:7px; }
     .proctoring-chip { display:inline-flex; align-items:center; padding:3px 9px; border-radius:999px; border:1px solid #e7dcbf; background:#fff8e8; color:#5f4a18; font-size:0.72rem; font-weight:600; }
+    .proctoring-chip.alert { border-color:#f5c6cb; background:#fdecef; color:#a71d2a; }
     .plagiarism-summary { padding:10px 20px; background:#f5f9ff; border-top:1px solid #d9e6fb; border-bottom:1px solid #d9e6fb; }
     .plagiarism-title { display:block; font-size:0.72rem; font-weight:700; color:#1b4f9b; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:7px; }
     .plagiarism-chips { display:flex; flex-wrap:wrap; gap:7px; }
@@ -155,6 +156,9 @@
                         <span class="proctoring-chip">No Face Duration: {{ '%.1f'|format(ps.no_face_duration_seconds or 0) }}s</span>
                         <span class="proctoring-chip">Attention Dev: {{ ps.attention_deviation_count or 0 }}</span>
                         <span class="proctoring-chip">Suspicion: {{ ps.suspicion_score or 0 }}</span>
+                        <span class="proctoring-chip {% if ps.suspicion_threshold_exceeded %}alert{% endif %}">
+                            Suspicion Threshold Exceeded: {% if ps.suspicion_threshold_exceeded %}Yes{% else %}No{% endif %}{% if ps.suspicion_threshold_event_count %} ({{ ps.suspicion_threshold_event_count }}){% endif %}
+                        </span>
                     </div>
                 </div>
 
