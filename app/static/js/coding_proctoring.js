@@ -538,36 +538,31 @@ async function startScreenCaptureMonitor() {
 async function ensureProctoringReady(options = {}) {
     const rss = options.requireScreenShare !== false;
     const rfs = options.requireFullscreen !== false;
-    const wo = options.withOverlay !== false;
 
-    // If we need screen share and don't have it, we MUST exit fullscreen first
-    // because the screen share picker dialog will break fullscreen anyway.
+    // Screen sharing is best-effort: try to start it, but never block the
+    // candidate from taking the test if their browser/OS doesn't support it.
     if (rss && !screenCaptureReady) {
-        if (isInFullscreen()) {
-            suppressWarnings = true;
-            try { await exitAppFullscreen(); } catch (_) {}
-            await new Promise(r => setTimeout(r, 300));
+        if (supportsDisplayCapture()) {
+            if (isInFullscreen()) {
+                suppressWarnings = true;
+                try { await exitAppFullscreen(); } catch (_) {}
+                await new Promise(r => setTimeout(r, 300));
+            }
+            try { await startScreenCaptureMonitor(); } catch (_) {}
         }
-        const ok = await startScreenCaptureMonitor();
-        if (!ok || !screenCaptureReady) {
-            suppressWarnings = false;
-            if (wo) { showLockOverlay(getProctoringRequirementMessage()); armFullscreenRecovery(); }
-            return false;
+        if (!screenCaptureReady) {
+            console.warn("[coding-proctoring] Screen sharing unavailable or declined – proceeding without it.");
         }
     }
 
-    // Now enter fullscreen (all dialogs are done)
+    // Fullscreen is also best-effort.
     if (rfs && !isInFullscreen()) {
         try { await requestAppFullscreen(); } catch (_) {
-            suppressWarnings = false;
-            if (wo) { showLockOverlay(getProctoringRequirementMessage()); armFullscreenRecovery(); }
-            return false;
+            console.warn("[coding-proctoring] Fullscreen request failed – proceeding without it.");
         }
     }
 
     suppressWarnings = false;
-    const ready = (!rss || screenCaptureReady) && (!rfs || isInFullscreen());
-    if (!ready) { if (wo) { showLockOverlay(getProctoringRequirementMessage()); armFullscreenRecovery(); } return false; }
     hideLockOverlay(); disarmFullscreenRecovery(); return true;
 }
 

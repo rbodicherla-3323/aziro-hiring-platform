@@ -801,14 +801,8 @@ window.__MCQ_AJAX_FLOW = false;
                         await document.documentElement.requestFullscreen();
                     }
                     proctoringReady = !!document.fullscreenElement;
-                }
-
-                if (!proctoringReady) {
-                    alert("Share Entire Screen and fullscreen are required to start the test.");
-                    if (startButton) {
-                        startButton.disabled = false;
-                    }
-                    return;
+                }                if (!proctoringReady) {
+                    console.warn("Proctoring not fully active — continuing anyway (best-effort).");
                 }
 
                 // Acquire webcam NOW (inside fullscreen) so that

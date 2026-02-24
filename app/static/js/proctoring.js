@@ -701,48 +701,48 @@ async function ensureProctoringReady(options = {}) {
     const requireFullscreen = options.requireFullscreen !== false;
     const withOverlay = options.withOverlay !== false;
 
-    // If we need screen share and don't have it, we MUST exit fullscreen first
-    // because the screen share picker dialog will break fullscreen anyway.
+    // Screen sharing is best-effort: try to start it, but never block the
+    // candidate from taking the test if their browser/OS doesn't support it
+    // or they decline.  Violations are still logged for the interviewer.
     if (requireScreenShare && !screenCaptureReady) {
-        if (isInFullscreen()) {
-            suppressWarnings = true;
-            try { await exitAppFullscreen(); } catch (_) {}
-            await new Promise(r => setTimeout(r, 300));
-        }
-        const started = await startScreenCaptureMonitor();
-        if (!started || !screenCaptureReady) {
-            suppressWarnings = false;
-            if (withOverlay) {
-                showLockOverlay(getProctoringRequirementMessage());
-                armFullscreenRecovery();
+        if (supportsDisplayCapture()) {
+            if (isInFullscreen()) {
+                suppressWarnings = true;
+                try { await exitAppFullscreen(); } catch (_) {}
+                await new Promise(r => setTimeout(r, 300));
             }
-            return false;
+            try {
+                await startScreenCaptureMonitor();
+            } catch (_) {
+                // Screen share failed — continue without it.
+            }
+        }
+        // If screen capture isn't ready at this point we proceed anyway.
+        // The violation ("Screen capture unavailable") is already logged
+        // inside startScreenCaptureMonitor().
+        if (!screenCaptureReady) {
+            console.warn("[proctoring] Screen sharing unavailable or declined – proceeding without it.");
         }
     }
 
-    // Now enter fullscreen (all dialogs are done)
+    // Fullscreen is also best-effort: required where the browser supports it,
+    // but the test must still work in environments without fullscreen (e.g.
+    // some VM remote-desktop sessions, certain Linux window managers).
     if (requireFullscreen && !isInFullscreen()) {
         try {
             await requestAppFullscreen();
         } catch (_) {
-            suppressWarnings = false;
-            if (withOverlay) {
-                showLockOverlay(getProctoringRequirementMessage());
-                armFullscreenRecovery();
-            }
-            return false;
+            console.warn("[proctoring] Fullscreen request failed – proceeding without it.");
         }
     }
 
     suppressWarnings = false;
-    const ready = (!requireScreenShare || screenCaptureReady) && (!requireFullscreen || isInFullscreen());
-    if (!ready) {
-        if (withOverlay) {
-            showLockOverlay(getProctoringRequirementMessage());
-            armFullscreenRecovery();
-        }
-        return false;
-    }
+
+    // Always return true so the test can start.  Proctoring still monitors
+    // and logs violations in the background.
+    hideLockOverlay();
+    disarmFullscreenRecovery();
+    return true;
 
     hideLockOverlay();
     disarmFullscreenRecovery();

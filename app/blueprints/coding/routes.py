@@ -294,15 +294,26 @@ RUN_TIMEOUT = 10       # seconds per test case
 
 def _resolve_executable(cmd_name):
     """
-    Resolve compiler/runtime command with Windows fallbacks.
-    This keeps execution working even when PATH isn't refreshed yet.
+    Resolve compiler/runtime command with Windows fallbacks
+    and Linux alias awareness (e.g. python3 instead of python).
     """
     direct = shutil.which(cmd_name)
     if direct:
         return direct
 
+    # ── Linux / macOS fallbacks ──────────────────────────
     if os.name != "nt":
+        linux_aliases = {
+            "python": ["python3"],
+            "node": ["nodejs"],
+        }
+        for alias in linux_aliases.get(cmd_name, []):
+            found = shutil.which(alias)
+            if found:
+                return found
         return cmd_name
+
+    # ── Windows-specific resolution below ────────────────
 
     exe_name = f"{cmd_name}.exe"
 
@@ -367,7 +378,14 @@ def _resolve_executable(cmd_name):
 
 def _compiler_commands():
     python_cmd = _resolve_executable("python")
-    if python_cmd == "python":
+    # On Linux "python" may not exist; _resolve_executable already tries
+    # python3.  But if it fell through, do a final explicit check here.
+    if python_cmd == "python" and os.name != "nt":
+        py3 = shutil.which("python3")
+        if py3:
+            python_cmd = py3
+    elif python_cmd == "python":
+        # Windows: try py launcher
         py_launcher = _resolve_executable("py")
         if py_launcher != "py" or shutil.which("py"):
             python_cmd = py_launcher

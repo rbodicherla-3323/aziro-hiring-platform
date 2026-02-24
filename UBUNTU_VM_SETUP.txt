@@ -15,6 +15,30 @@ Follow these steps on your Ubuntu VM BEFORE deploying the repo.
 
 
 ──────────────────────────────────────────────────────────────────────────────
+ STEP 1b: Install System Packages for Coding Round Execution
+──────────────────────────────────────────────────────────────────────────────
+
+  The coding test rounds execute candidate code server-side.  Install the
+  compilers/runtimes for every language you want to support:
+
+  sudo apt install -y python3 python3-venv nodejs npm default-jdk gcc g++
+
+  Verify each is available:
+
+    python3 --version       # Python 3.x
+    node    --version       # Node.js (v18+ recommended)
+    javac   -version        # Java compiler
+    java    -version        # Java runtime
+    gcc     --version       # C compiler
+    g++     --version       # C++ compiler
+
+  NOTE: On Ubuntu "python" may not exist — the app auto-detects "python3".
+  If you also want the "python" alias:
+
+    sudo apt install -y python-is-python3
+
+
+──────────────────────────────────────────────────────────────────────────────
  STEP 2: Start & Enable PostgreSQL Service
 ──────────────────────────────────────────────────────────────────────────────
 

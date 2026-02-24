@@ -61,6 +61,7 @@ class Report(db.Model):
     __tablename__ = "reports"
 
     id = db.Column(db.Integer, primary_key=True)
+    test_session_id = db.Column(db.Integer, db.ForeignKey("test_sessions.id"), nullable=True)
     candidate_email = db.Column(db.String(200), nullable=False)
     filename = db.Column(db.String(500), nullable=False)
     generated_by = db.Column(db.String(200), nullable=True, default="")

@@ -97,12 +97,8 @@ window.__CODING_AJAX_FLOW = true;
                     try { await document.documentElement.requestFullscreen(); } catch (_) {}
                 }
                 proctoringReady = !!document.fullscreenElement;
-            }
-
-            if (!proctoringReady) {
-                alert("Share Entire Screen and fullscreen are required to start the test.");
-                if (startButton) startButton.disabled = false;
-                return;
+            }            if (!proctoringReady) {
+                console.warn("Proctoring not fully active — continuing anyway (best-effort).");
             }
 
             // ── 2. Acquire webcam (works inside fullscreen) ─

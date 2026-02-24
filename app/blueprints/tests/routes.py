@@ -39,13 +39,66 @@ def extract_email_from_text(text):
 
 
 def extract_name_from_text(text):
-    """Extract likely name from text (usually first or second line)."""
-    lines = text.strip().split('\n')
-    for line in lines[:5]:
-        line = line.strip()
-        if line and 2 < len(line) < 100:
-            if '@' not in line and 'http' not in line.lower() and 'resume' not in line.lower():
-                return line
+    """
+    Extract the candidate's name from resume text using three strategies:
+      1. Label pattern  — looks for "Name: …" or "Full Name: …"
+      2. Heuristic scan — first short line that looks like a human name
+         (2-4 title-cased words, no digits/special chars, not a heading keyword)
+      3. Email-adjacent — derive name from the first email address found
+    """
+    if not text:
+        return None
+
+    lines = [ln.strip() for ln in text.strip().split('\n') if ln.strip()]
+
+    # ── Strategy 1: explicit label ──────────────────────
+    label_re = re.compile(
+        r'(?:full\s*)?name\s*[:\-–]\s*(.+)', re.IGNORECASE
+    )
+    for line in lines[:15]:
+        m = label_re.match(line)
+        if m:
+            candidate = m.group(1).strip().strip('.')
+            if 2 < len(candidate) < 60 and '@' not in candidate:
+                return candidate
+
+    # ── Strategy 2: heuristic first "name-looking" line ─
+    skip_words = {
+        'resume', 'curriculum', 'vitae', 'cv', 'objective', 'summary',
+        'experience', 'education', 'skills', 'address', 'phone',
+        'contact', 'profile', 'about', 'references', 'declaration',
+        'page', 'confidential',
+    }
+    name_word_re = re.compile(r"^[A-Z][a-zA-Z\u00C0-\u024F'-]+$")
+
+    for line in lines[:10]:
+        low = line.lower()
+        # skip lines with emails, urls, phone-like strings, or heading keywords
+        if '@' in line or 'http' in low:
+            continue
+        if re.search(r'\d{5,}', line):          # phone / zip
+            continue
+        if any(kw in low for kw in skip_words):
+            continue
+
+        words = line.split()
+        if len(words) < 2 or len(words) > 5:
+            continue
+        if all(name_word_re.match(w) for w in words):
+            return line
+
+    # ── Strategy 3: derive from email ───────────────────
+    email = extract_email_from_text(text)
+    if email:
+        local = email.split('@')[0]
+        # strip trailing digits (e.g. john.doe123 → john.doe)
+        local = re.sub(r'\d+$', '', local)
+        parts = re.split(r'[._\-]', local)
+        if 1 < len(parts) <= 4:
+            name = ' '.join(p.capitalize() for p in parts if p)
+            if len(name) > 3:
+                return name
+
     return None
 
 
