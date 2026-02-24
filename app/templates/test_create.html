@@ -4,40 +4,204 @@
 
 {% block head %}
 <style>
-    .page-header { margin-bottom: 24px; }
-    .page-header h4 { font-weight: 700; color: #0d3b66; margin-bottom: 4px; }
-    .page-header p { color: #6c757d; font-size: 0.88rem; }
-    .mode-card { border: none; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
-    .mode-option { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 20px; border: 1.5px solid #dee2e6; background: #fff; cursor: pointer; transition: all 0.2s; font-size: 0.85rem; font-weight: 600; color: #495057; }
-    .mode-option:hover { border-color: #0d3b66; color: #0d3b66; }
-    .mode-option.active { background: #0d3b66; color: #fff; border-color: #0d3b66; }
+    .create-test-page {
+        --az-brand: #0d3b66;
+        --az-brand-2: #1f6feb;
+        --az-soft: #e7f0ff;
+        --az-ink: #1f2937;
+        --az-muted: #64748b;
+        --az-card-shadow: 0 14px 34px rgba(13, 59, 102, 0.10);
+        --az-card-border: #dbe6f4;
+        font-family: "Poppins", "Segoe UI", sans-serif;
+        background:
+            radial-gradient(1100px 500px at 88% -8%, rgba(31,111,235,0.10), transparent 58%),
+            radial-gradient(900px 460px at 8% -14%, rgba(13,59,102,0.09), transparent 52%);
+        border-radius: 20px;
+        padding-top: 6px;
+        padding-bottom: 14px;
+    }
+    .page-header { margin-bottom: 20px; }
+    .page-header h4 {
+        font-weight: 800;
+        color: var(--az-brand);
+        margin-bottom: 6px;
+        letter-spacing: 0.2px;
+    }
+    .page-header p {
+        color: var(--az-muted);
+        font-size: 0.92rem;
+        margin-bottom: 0;
+    }
+    .mode-card {
+        border: 1px solid var(--az-card-border);
+        border-radius: 18px;
+        box-shadow: var(--az-card-shadow);
+        background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+    }
+    .mode-option {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border-radius: 999px;
+        border: 1.5px solid #cfddf2;
+        background: #fff;
+        cursor: pointer;
+        transition: all 0.24s ease;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #4b5563;
+    }
+    .mode-option:hover {
+        transform: translateY(-1px);
+        border-color: var(--az-brand-2);
+        color: var(--az-brand);
+        box-shadow: 0 8px 20px rgba(13, 59, 102, 0.14);
+    }
+    .mode-option.active {
+        background: linear-gradient(135deg, var(--az-brand) 0%, var(--az-brand-2) 100%);
+        color: #fff;
+        border-color: transparent;
+        box-shadow: 0 10px 22px rgba(20, 80, 140, 0.28);
+    }
     .mode-option input[type="radio"] { display: none; }
-    .candidate-card { border: 1.5px solid #e9ecef; border-radius: 14px; padding: 24px; margin-bottom: 16px; position: relative; background: #fff; transition: box-shadow 0.2s, border-color 0.2s; }
-    .candidate-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); border-color: #c8d6e5; }
-    .upload-zone { border: 2px dashed #d1d5db; border-radius: 12px; padding: 16px 20px; text-align: center; cursor: pointer; transition: all 0.2s; background: #fafbfc; position: relative; }
-    .upload-zone:hover { border-color: #0d6efd; background: #f0f6ff; }
-    .upload-zone.has-file { border-color: #22863a; background: #f0fff4; border-style: solid; }
-    .upload-zone .upload-icon { font-size: 1.5rem; color: #9ca3af; margin-bottom: 4px; }
-    .upload-zone.has-file .upload-icon { color: #22863a; }
-    .upload-zone .upload-label { font-size: 0.82rem; font-weight: 600; color: #495057; }
-    .upload-zone .upload-hint { font-size: 0.72rem; color: #9ca3af; margin-top: 2px; }
-    .upload-zone .file-name { font-size: 0.78rem; color: #22863a; font-weight: 600; margin-top: 4px; word-break: break-all; }
+    .candidate-card {
+        border: 1px solid var(--az-card-border);
+        border-radius: 18px;
+        padding: 24px;
+        margin-bottom: 16px;
+        position: relative;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+        box-shadow: var(--az-card-shadow);
+    }
+    .candidate-card:hover {
+        box-shadow: 0 18px 34px rgba(13, 59, 102, 0.16);
+        border-color: #b7cee9;
+        transform: translateY(-2px);
+    }
+    .upload-zone {
+        border: 2px dashed #bed0e7;
+        border-radius: 14px;
+        padding: 18px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.24s ease;
+        background: linear-gradient(180deg, #ffffff 0%, #f4f9ff 100%);
+        position: relative;
+    }
+    .upload-zone:hover {
+        border-color: var(--az-brand-2);
+        background: linear-gradient(180deg, #ffffff 0%, #edf5ff 100%);
+        box-shadow: 0 10px 22px rgba(31, 111, 235, 0.14);
+    }
+    .upload-zone.has-file {
+        border-color: #1e9e56;
+        background: linear-gradient(180deg, #f4fff7 0%, #ecfff2 100%);
+        border-style: solid;
+        box-shadow: 0 10px 18px rgba(30, 158, 86, 0.13);
+    }
+    .upload-zone .upload-icon { font-size: 1.7rem; color: #8ca3bf; margin-bottom: 6px; }
+    .upload-zone.has-file .upload-icon { color: #1e9e56; }
+    .upload-zone .upload-label { font-size: 0.88rem; font-weight: 700; color: var(--az-ink); }
+    .upload-zone .upload-hint { font-size: 0.76rem; color: #8091a7; margin-top: 2px; }
+    .upload-zone .file-name { font-size: 0.78rem; color: #1e9e56; font-weight: 700; margin-top: 6px; word-break: break-all; }
     .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
     .auto-fill-badge { font-size: 0.65rem; padding: 2px 8px; border-radius: 10px; background: #e6f4ea; color: #137333; font-weight: 600; margin-left: 6px; display: none; }
     .auto-fill-badge.visible { display: inline; }
-    .section-label { font-size: 0.8rem; font-weight: 700; color: #0d3b66; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-    .section-label .section-line { flex: 1; height: 1px; background: #e8f4fd; }
-    .remove-btn { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; border-radius: 50%; border: none; background: #fde8e8; color: #c53030; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; font-size: 0.8rem; }
+    .section-label {
+        font-size: 0.82rem;
+        font-weight: 800;
+        color: var(--az-brand);
+        text-transform: uppercase;
+        letter-spacing: 0.75px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .section-label .section-line {
+        flex: 1;
+        height: 2px;
+        background: linear-gradient(90deg, #cfe0f5 0%, #eaf2fb 80%);
+        border-radius: 999px;
+    }
+    .remove-btn {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: none;
+        background: #fde8e8;
+        color: #c53030;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 0.8rem;
+    }
     .remove-btn:hover { background: #c53030; color: #fff; }
-    .action-bar { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .action-bar {
+        background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+        border: 1px solid var(--az-card-border);
+        border-radius: 18px;
+        box-shadow: var(--az-card-shadow);
+        padding: 16px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .action-bar .btn {
+        border-radius: 12px;
+        font-weight: 700;
+        letter-spacing: 0.1px;
+        padding: 9px 20px;
+    }
+    .action-bar .btn-primary {
+        background: linear-gradient(135deg, var(--az-brand) 0%, var(--az-brand-2) 100%);
+        border: none;
+        box-shadow: 0 10px 20px rgba(31, 111, 235, 0.20);
+    }
+    .action-bar .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 22px rgba(31, 111, 235, 0.24);
+    }
+    .create-test-page .form-label { font-weight: 700; color: #27384c; }
+    .create-test-page .form-control,
+    .create-test-page .form-select {
+        border-radius: 12px;
+        border: 1.5px solid #cfddf2;
+        min-height: 46px;
+        font-size: 0.95rem;
+    }
+    .create-test-page .form-control:focus,
+    .create-test-page .form-select:focus {
+        border-color: var(--az-brand-2);
+        box-shadow: 0 0 0 0.2rem rgba(31, 111, 235, 0.14);
+    }
     .extract-spinner { display: none; width: 14px; height: 14px; border: 2px solid #dee2e6; border-top-color: #0d6efd; border-radius: 50%; animation: spin 0.6s linear infinite; margin-left: 6px; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .extract-spinner.active { display: inline-block; }
+    @media (max-width: 992px) {
+        .action-bar {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+        }
+        .action-bar > .d-flex {
+            width: 100%;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
+<div class="container-fluid create-test-page">
     <div class="page-header">
         <h4><i class="fas fa-plus-circle me-2"></i>Generate Candidate Test</h4>
         <p>Create assessment links for candidates. Upload resume &amp; JD to auto-fill details and match roles.</p>
@@ -119,6 +283,13 @@
                         <option>Storage</option>
                     </select>
                 </div>
+                <div class="col-md-3">
+                    <label class="form-label">Aptitude Test <small class="text-muted">(Optional)</small></label>
+                    <select class="form-select" name="aptitude_enabled[]">
+                        <option value="yes" selected>Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
@@ -192,6 +363,7 @@ const singleMode=document.getElementById("single_mode"),multiMode=document.getEl
                 email: getInputValue(row, 'input[name="email[]"]'),
                 role: getInputValue(row, 'select[name="role[]"]'),
                 domain: getInputValue(row, 'select[name="domain[]"]'),
+                aptitude_enabled: getInputValue(row, 'select[name="aptitude_enabled[]"]'),
             };
         });
 
@@ -276,6 +448,7 @@ const singleMode=document.getElementById("single_mode"),multiMode=document.getEl
             setInputValue(row, 'input[name="email[]"]', rowData.email || "");
             setInputValue(row, 'select[name="role[]"]', rowData.role || "");
             setInputValue(row, 'select[name="domain[]"]', rowData.domain || "None");
+            setInputValue(row, 'select[name="aptitude_enabled[]"]', rowData.aptitude_enabled || "yes");
         });
     }
 

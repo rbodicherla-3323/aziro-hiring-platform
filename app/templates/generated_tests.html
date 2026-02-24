@@ -3,14 +3,75 @@
 {% block breadcrumb %}Generated Tests{% endblock %}
 
 {% block content %}
+<div class="generated-tests-page">
 
 <style>
+    .generated-tests-page {
+        --gt-brand: #0d3b66;
+        --gt-brand-2: #1f6feb;
+        --gt-ink: #0f172a;
+        --gt-muted: #5b6b82;
+        --gt-border: #d6e2f1;
+        --gt-shadow: 0 14px 34px rgba(13, 59, 102, 0.10);
+        font-family: "Poppins", "Segoe UI", sans-serif;
+        background:
+            radial-gradient(1200px 540px at 95% -10%, rgba(31,111,235,0.10), transparent 60%),
+            radial-gradient(980px 470px at 5% -20%, rgba(13,59,102,0.08), transparent 55%);
+        border-radius: 20px;
+        padding-top: 6px;
+        padding-bottom: 14px;
+    }
+
+    .generated-tests-page .page-title {
+        font-weight: 800;
+        letter-spacing: 0.2px;
+        color: var(--gt-brand);
+        margin-bottom: 4px;
+    }
+
+    .generated-tests-page .page-subtitle {
+        color: var(--gt-muted);
+        font-size: 0.95rem;
+    }
+
+    .generated-tests-page .toolbar-card,
+    .generated-tests-page .list-card {
+        border: 1px solid var(--gt-border);
+        border-radius: 18px;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        box-shadow: var(--gt-shadow);
+    }
+
+    .generated-tests-page .btn-brand {
+        border-radius: 12px;
+        font-weight: 700;
+        border: 0;
+        background: linear-gradient(135deg, var(--gt-brand) 0%, var(--gt-brand-2) 100%);
+        box-shadow: 0 10px 20px rgba(31, 111, 235, 0.20);
+    }
+
+    .generated-tests-page .btn-brand:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 24px rgba(31, 111, 235, 0.25);
+    }
+
     /* Scoped refinement: compact, readable generated-links section only */
     .candidate-card {
-        padding: 0.65rem 0.75rem !important;
-        margin-bottom: 0.55rem !important;
+        padding: 0.9rem 1rem !important;
+        margin-bottom: 0.7rem !important;
         color: #111;
         font-size: calc(0.875rem + 1px);
+        border: 1px solid #d8e5f5 !important;
+        border-radius: 14px !important;
+        background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%) !important;
+        box-shadow: 0 10px 22px rgba(13, 59, 102, 0.08);
+        transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .candidate-card:hover {
+        transform: translateY(-2px);
+        border-color: #b9cde6 !important;
+        box-shadow: 0 16px 26px rgba(13, 59, 102, 0.12);
     }
 
     .candidate-card .candidate-heading {
@@ -22,14 +83,14 @@
 
     .candidate-card .candidate-name {
         color: #0d3b8e;
-        font-size: 1.02rem;
-        font-weight: 650;
+        font-size: 1.07rem;
+        font-weight: 750;
         line-height: 1;
     }
 
     .candidate-card .candidate-meta {
-        color: #111;
-        font-size: 0.82rem;
+        color: #334155;
+        font-size: 0.84rem;
     }
 
     .candidate-card .test-links-grid {
@@ -38,7 +99,7 @@
         margin-top: 0.38rem !important;
         margin-left: 1.35rem;
         padding-left: 0.45rem;
-        border-left: 1px solid var(--bs-border-color-translucent);
+        border-left: 2px solid #d6e2f1;
     }
 
     .candidate-card .test-link-item {
@@ -67,16 +128,16 @@
         min-width: 46px;
         padding: 0.08rem 0.35rem;
         border-radius: 999px;
-        background: var(--bs-primary-bg-subtle);
-        color: var(--bs-primary-text-emphasis);
-        font-weight: 600;
-        font-size: 0.66rem;
+        background: linear-gradient(135deg, #e8f0ff 0%, #dce9ff 100%);
+        color: #184c92;
+        font-weight: 700;
+        font-size: 0.67rem;
     }
 
     .candidate-card .test-link-label {
         color: #111;
-        font-size: 0.76rem;
-        font-weight: 500;
+        font-size: 0.79rem;
+        font-weight: 600;
         max-width: 260px;
         white-space: nowrap;
         overflow: hidden;
@@ -93,10 +154,10 @@
 
     .candidate-card .test-link-actions .btn-link {
         text-decoration: none;
-        font-weight: 600;
+        font-weight: 700;
         color: #111;
         padding: 0 !important;
-        font-size: 0.74rem;
+        font-size: 0.75rem;
         line-height: 1;
     }
 
@@ -105,6 +166,13 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .generated-tests-page .empty-state-card {
+        border: 1px dashed #c4d6ee;
+        border-radius: 16px;
+        background: linear-gradient(180deg, #ffffff 0%, #f4f9ff 100%);
+        padding: 2.5rem 1.25rem;
     }
 
     @media (max-width: 768px) {
@@ -129,8 +197,8 @@
 <!-- NEW BACK BUTTON (TOP) -->
 <div class="d-flex justify-content-between align-items-center mb-3">
     <div>
-        <h4 class="mb-1">Generated Tests</h4>
-        <p class="text-muted mb-0 small">
+        <h4 class="mb-1 page-title">Generated Tests</h4>
+        <p class="mb-0 page-subtitle">
             View and share test links generated in this session.
         </p>
     </div>
@@ -140,7 +208,7 @@
 </div>
 
 <!-- ================= BULK ACTIONS ================= -->
-<div class="card shadow-sm mb-4">
+<div class="card shadow-sm mb-4 toolbar-card">
     <div class="card-body d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center gap-3">
             <div>
@@ -153,7 +221,7 @@
         </div>
 
         <div class="d-flex gap-2">
-            <button class="btn btn-primary btn-sm" id="bulkEmailBtn">
+            <button class="btn btn-primary btn-sm btn-brand" id="bulkEmailBtn">
                 <i class="bi bi-envelope me-1"></i>Send Emails to Selected
             </button>
         </div>
@@ -161,7 +229,7 @@
 </div>
 
 <!-- ================= CANDIDATE TEST LIST ================= -->
-<div class="card shadow-sm mb-4">
+<div class="card shadow-sm mb-4 list-card">
     <div class="card-body">
 
         {% if candidates %}
@@ -173,7 +241,8 @@
                         <input type="checkbox"
                                class="candidateCheck me-3 mt-1"
                                id="generated_candidate_{{ loop.index }}"
-                               name="generated_candidate_select">
+                               name="generated_candidate_select"
+                               value="{{ cand.email }}">
                         <div>
                             <div class="candidate-heading">
                                 <div class="candidate-name">{{ cand.name }}</div>
@@ -221,13 +290,13 @@
             {% endfor %}
         {% else %}
             <!-- Empty State -->
-            <div class="text-center py-5">
+            <div class="text-center py-5 empty-state-card">
                 <div class="empty-state-icon mb-3">
                     <i class="bi bi-file-earmark-x fs-1 text-muted"></i>
                 </div>
                 <h6 class="text-muted">No tests generated yet</h6>
                 <p class="text-muted small mb-3">Create your first test to get started</p>
-                <a href="/create-test" class="btn btn-primary btn-sm">
+                <a href="/create-test" class="btn btn-primary btn-sm btn-brand">
                     <i class="bi bi-plus-circle me-1"></i>Create Test
                 </a>
             </div>
@@ -276,14 +345,59 @@
     });
 
     // Bulk Email Button
-    document.getElementById('bulkEmailBtn').addEventListener('click', () => {
-        const count = document.querySelectorAll('.candidateCheck:checked').length;
-        if (count > 0) {
-            if (typeof showToast === 'function') showToast(`Sending emails to ${count} candidate(s)...`, 'success');
-        } else {
-            if (typeof showToast === 'function') showToast('Please select candidates first', 'warning');
-        }
-    });
+    const bulkEmailBtn = document.getElementById('bulkEmailBtn');
+    if (bulkEmailBtn) {
+        bulkEmailBtn.addEventListener('click', async () => {
+            const selected = Array.from(document.querySelectorAll('.candidateCheck:checked'))
+                .map(cb => cb.value)
+                .filter(Boolean);
+
+            if (!selected.length) {
+                if (typeof showToast === 'function') showToast('Please select candidates first', 'warning');
+                return;
+            }
+
+            const originalHtml = bulkEmailBtn.innerHTML;
+            bulkEmailBtn.disabled = true;
+            bulkEmailBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Sending...';
+
+            try {
+                const response = await fetch('/generated-tests/send-emails', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ emails: selected })
+                });
+
+                const result = await response.json();
+                if (!response.ok || !result.success) {
+                    const message = (result && result.error) ? result.error : 'Failed to send selected emails.';
+                    if (typeof showToast === 'function') showToast(message, 'danger');
+                    return;
+                }
+
+                if (result.failed_count > 0) {
+                    if (typeof showToast === 'function') {
+                        showToast(
+                            `Sent ${result.sent_count}/${result.requested_count}. Failed: ${result.failed_count}.`,
+                            'warning'
+                        );
+                    }
+                } else {
+                    if (typeof showToast === 'function') {
+                        showToast(`Emails sent successfully to ${result.sent_count} candidate(s).`, 'success');
+                    }
+                }
+            } catch (error) {
+                if (typeof showToast === 'function') showToast('Failed to send selected emails.', 'danger');
+            } finally {
+                bulkEmailBtn.disabled = false;
+                bulkEmailBtn.innerHTML = originalHtml;
+            }
+        });
+    }
 </script>
+</div>
 
 {% endblock %}

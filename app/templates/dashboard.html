@@ -4,13 +4,34 @@
 
 {% block head %}
 <style>
-    .stat-card {
-        border: none;
-        border-radius: 14px;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-        transition: transform 0.2s;
+    .dashboard-page {
+        --db-brand: #0d3b66;
+        --db-brand-2: #1f6feb;
+        --db-border: #d8e5f5;
+        --db-shadow: 0 14px 30px rgba(13, 59, 102, 0.10);
+        font-family: "Poppins", "Segoe UI", sans-serif;
+        background:
+            radial-gradient(1100px 520px at 94% -12%, rgba(31,111,235,0.12), transparent 60%),
+            radial-gradient(950px 460px at 4% -18%, rgba(13,59,102,0.09), transparent 58%);
+        border-radius: 20px;
+        padding: 8px 0 14px;
     }
-    .stat-card:hover { transform: translateY(-2px); }
+
+    .dashboard-title {
+        font-size: 2.1rem;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+        color: #0f172a;
+    }
+
+    .stat-card {
+        border: 1px solid var(--db-border);
+        border-radius: 16px;
+        box-shadow: var(--db-shadow);
+        transition: transform 0.2s, box-shadow 0.2s;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    }
+    .stat-card:hover { transform: translateY(-2px); box-shadow: 0 18px 30px rgba(13,59,102,0.14); }
     .stat-icon {
         width: 48px; height: 48px;
         border-radius: 12px;
@@ -26,8 +47,8 @@
         border-bottom: 2px solid #e8f4fd;
     }
     .filter-btn {
-        padding: 6px 14px;
-        border-radius: 20px;
+        padding: 8px 16px;
+        border-radius: 999px;
         font-size: 0.78rem;
         font-weight: 600;
         border: 1px solid #dee2e6;
@@ -39,15 +60,17 @@
     }
     .filter-btn:hover { border-color: #0d3b66; color: #0d3b66; }
     .filter-btn.active {
-        background: #0d3b66;
+        background: linear-gradient(135deg, var(--db-brand) 0%, var(--db-brand-2) 100%);
         color: #fff;
-        border-color: #0d3b66;
+        border-color: transparent;
+        box-shadow: 0 10px 18px rgba(31,111,235,0.2);
     }
     .overview-card {
-        background: linear-gradient(135deg, #0d3b66 0%, #1a5276 100%);
+        background: linear-gradient(135deg, #0d3b66 0%, #1f6feb 100%);
         color: #fff;
-        border-radius: 14px;
-        padding: 20px 24px;
+        border-radius: 16px;
+        padding: 24px 26px;
+        box-shadow: 0 16px 30px rgba(13,59,102,0.24);
     }
     .overview-card .stat-value {
         font-size: 1.8rem;
@@ -69,15 +92,35 @@
     .overview-mini .mini-stat { text-align: center; flex: 1; }
     .overview-mini .mini-value { font-size: 1.2rem; font-weight: 700; }
     .overview-mini .mini-label { font-size: 0.7rem; opacity: 0.7; }
+
+    .dashboard-page .card {
+        border: 1px solid var(--db-border);
+        border-radius: 16px !important;
+        box-shadow: var(--db-shadow) !important;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    }
+
+    .dashboard-page .btn-primary {
+        border: 0;
+        border-radius: 12px;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--db-brand) 0%, var(--db-brand-2) 100%);
+        box-shadow: 0 10px 20px rgba(31, 111, 235, 0.22);
+    }
+
+    .dashboard-page .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 22px rgba(31,111,235,0.28);
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
+<div class="container-fluid dashboard-page">
     <!-- Page Header -->
     <div class="row mb-3">
         <div class="col-12">
-            <h4 class="fw-bold text-dark mb-0"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h4>
+            <h4 class="dashboard-title mb-0"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h4>
             <p class="text-muted mb-0" style="font-size:0.85rem;">Welcome back, {{ user_name }}</p>
         </div>
     </div>
@@ -112,7 +155,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="overview-card" style="background: linear-gradient(135deg, #1a5276 0%, #1e6f91 100%);">
+            <div class="overview-card" style="background: linear-gradient(135deg, #1a5276 0%, #2a7cb3 100%);">
                 <div style="font-size:0.8rem; opacity:0.8; margin-bottom:8px;">
                     <i class="fas fa-user me-1"></i> My Activity Today
                 </div>
