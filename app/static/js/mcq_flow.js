@@ -800,9 +800,11 @@ window.__MCQ_AJAX_FLOW = false;
                     } else if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
                         await document.documentElement.requestFullscreen();
                     }
-                    proctoringReady = !!document.fullscreenElement;
-                }                if (!proctoringReady) {
-                    console.warn("Proctoring not fully active — continuing anyway (best-effort).");
+                    proctoringReady = !!document.fullscreenElement;                }
+                if (!proctoringReady) {
+                    // Screen share was declined or failed — do NOT start the test.
+                    if (startButton) startButton.disabled = false;
+                    return;
                 }
 
                 // Acquire webcam NOW (inside fullscreen) so that

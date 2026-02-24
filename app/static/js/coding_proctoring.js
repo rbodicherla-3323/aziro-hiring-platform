@@ -538,9 +538,9 @@ async function startScreenCaptureMonitor() {
 async function ensureProctoringReady(options = {}) {
     const rss = options.requireScreenShare !== false;
     const rfs = options.requireFullscreen !== false;
+    const maxScreenShareAttempts = 3;
 
-    // Screen sharing is best-effort: try to start it, but never block the
-    // candidate from taking the test if their browser/OS doesn't support it.
+    // ── Step 1: Acquire screen share (entire screen required) ────────
     if (rss && !screenCaptureReady) {
         if (supportsDisplayCapture()) {
             if (isInFullscreen()) {
@@ -548,22 +548,43 @@ async function ensureProctoringReady(options = {}) {
                 try { await exitAppFullscreen(); } catch (_) {}
                 await new Promise(r => setTimeout(r, 300));
             }
-            try { await startScreenCaptureMonitor(); } catch (_) {}
-        }
-        if (!screenCaptureReady) {
-            console.warn("[coding-proctoring] Screen sharing unavailable or declined – proceeding without it.");
+
+            for (let attempt = 1; attempt <= maxScreenShareAttempts; attempt++) {
+                try {
+                    const ok = await startScreenCaptureMonitor();
+                    if (ok && screenCaptureReady) break;
+                } catch (_) {}
+
+                if (screenCaptureReady) break;
+
+                if (attempt < maxScreenShareAttempts) {
+                    showBanner("Please select your Entire Screen (not a tab or window) to continue.", "danger");
+                    await new Promise(r => setTimeout(r, 600));
+                }
+            }
+
+            if (!screenCaptureReady) {
+                suppressWarnings = false;
+                showBanner("You must share your Entire Screen to start the test.", "danger");
+                return false;
+            }
         }
     }
 
-    // Fullscreen is also best-effort.
+    // ── Step 2: Enter fullscreen ─────────────────────────────────────
     if (rfs && !isInFullscreen()) {
-        try { await requestAppFullscreen(); } catch (_) {
-            console.warn("[coding-proctoring] Fullscreen request failed – proceeding without it.");
+        try {
+            await requestAppFullscreen();
+            await new Promise(r => setTimeout(r, 300));
+        } catch (_) {
+            console.warn("[coding-proctoring] Fullscreen request failed — will be enforced on editor page.");
         }
     }
 
     suppressWarnings = false;
-    hideLockOverlay(); disarmFullscreenRecovery(); return true;
+    hideLockOverlay();
+    disarmFullscreenRecovery();
+    return true;
 }
 
 /* ── Screenshots ───────────────────────────────────── */

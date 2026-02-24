@@ -96,9 +96,11 @@ window.__CODING_AJAX_FLOW = true;
                 if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
                     try { await document.documentElement.requestFullscreen(); } catch (_) {}
                 }
-                proctoringReady = !!document.fullscreenElement;
-            }            if (!proctoringReady) {
-                console.warn("Proctoring not fully active — continuing anyway (best-effort).");
+                proctoringReady = !!document.fullscreenElement;            }
+            if (!proctoringReady) {
+                // Screen share was declined or failed — do NOT start the test.
+                if (startButton) startButton.disabled = false;
+                return;
             }
 
             // ── 2. Acquire webcam (works inside fullscreen) ─

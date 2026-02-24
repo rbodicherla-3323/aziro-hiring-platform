@@ -699,11 +699,11 @@ async function startScreenCaptureMonitor() {
 async function ensureProctoringReady(options = {}) {
     const requireScreenShare = options.requireScreenShare !== false;
     const requireFullscreen = options.requireFullscreen !== false;
-    const withOverlay = options.withOverlay !== false;
+    const maxScreenShareAttempts = 3;
 
-    // Screen sharing is best-effort: try to start it, but never block the
-    // candidate from taking the test if their browser/OS doesn't support it
-    // or they decline.  Violations are still logged for the interviewer.
+    // ── Step 1: Acquire screen share (entire screen required) ────────
+    // getDisplayMedia shows a system-level picker that forces the browser
+    // out of fullscreen, so we must exit fullscreen first if needed.
     if (requireScreenShare && !screenCaptureReady) {
         if (supportsDisplayCapture()) {
             if (isInFullscreen()) {
@@ -711,39 +711,51 @@ async function ensureProctoringReady(options = {}) {
                 try { await exitAppFullscreen(); } catch (_) {}
                 await new Promise(r => setTimeout(r, 300));
             }
-            try {
-                await startScreenCaptureMonitor();
-            } catch (_) {
-                // Screen share failed — continue without it.
+
+            // Give the candidate up to maxScreenShareAttempts tries.
+            // They may accidentally pick a tab/window instead of entire
+            // screen on the first try.
+            for (let attempt = 1; attempt <= maxScreenShareAttempts; attempt++) {
+                try {
+                    const ok = await startScreenCaptureMonitor();
+                    if (ok && screenCaptureReady) break;
+                } catch (_) {
+                    // startScreenCaptureMonitor logs the violation internally.
+                }
+
+                if (screenCaptureReady) break;
+
+                // If not the last attempt, show a helpful message and retry
+                if (attempt < maxScreenShareAttempts) {
+                    showBanner("Please select your Entire Screen (not a tab or window) to continue.", "danger");
+                    await new Promise(r => setTimeout(r, 600));
+                }
+            }
+
+            if (!screenCaptureReady) {
+                suppressWarnings = false;
+                showBanner("You must share your Entire Screen to start the test.", "danger");
+                return false;
             }
         }
-        // If screen capture isn't ready at this point we proceed anyway.
-        // The violation ("Screen capture unavailable") is already logged
-        // inside startScreenCaptureMonitor().
-        if (!screenCaptureReady) {
-            console.warn("[proctoring] Screen sharing unavailable or declined – proceeding without it.");
-        }
+        // If the browser doesn't support getDisplayMedia at all, we let
+        // the test proceed — there's nothing the candidate can do.
     }
 
-    // Fullscreen is also best-effort: required where the browser supports it,
-    // but the test must still work in environments without fullscreen (e.g.
-    // some VM remote-desktop sessions, certain Linux window managers).
+    // ── Step 2: Enter fullscreen ─────────────────────────────────────
     if (requireFullscreen && !isInFullscreen()) {
         try {
             await requestAppFullscreen();
+            await new Promise(r => setTimeout(r, 300));
         } catch (_) {
-            console.warn("[proctoring] Fullscreen request failed – proceeding without it.");
+            // Fullscreen may fail if the user gesture expired during the
+            // screen-share dialog chain.  The question page's lock overlay
+            // will enforce it on the next interaction.
+            console.warn("[proctoring] Fullscreen request failed — will be enforced on question page.");
         }
     }
 
     suppressWarnings = false;
-
-    // Always return true so the test can start.  Proctoring still monitors
-    // and logs violations in the background.
-    hideLockOverlay();
-    disarmFullscreenRecovery();
-    return true;
-
     hideLockOverlay();
     disarmFullscreenRecovery();
     return true;
