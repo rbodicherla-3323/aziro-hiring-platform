@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from dotenv import load_dotenv
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 load_dotenv()
 
@@ -16,6 +17,9 @@ from .blueprints.auth import auth_bp
 
 def create_app():
     app = Flask(__name__)
+    # Trust reverse-proxy headers (Nginx) so request.scheme/request.host
+    # reflect the external URL (e.g. https://<vm-ip>) instead of upstream HTTP.
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1)
     app.secret_key = os.getenv("SECRET_KEY", "default-secret-key")
 
     # Database configuration

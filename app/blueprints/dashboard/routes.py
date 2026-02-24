@@ -41,6 +41,19 @@ def _current_user_name():
     return user.get("name", "Dev User")
 
 
+def _build_test_url(endpoint, **values):
+    """
+    Build an absolute test URL that respects reverse-proxy headers.
+    This prevents generating http:// links when the app is externally served over HTTPS.
+    """
+    forwarded_proto = (request.headers.get("X-Forwarded-Proto") or "").split(",")[0].strip()
+    forwarded_host = (request.headers.get("X-Forwarded-Host") or "").split(",")[0].strip()
+    scheme = forwarded_proto or request.scheme
+    host = forwarded_host or request.host
+    path = url_for(endpoint, **values)
+    return f"{scheme}://{host}{path}"
+
+
 def _compute_stats(test_list):
     """Compute stats dict from a list of generated test entries."""
     emails = set()
@@ -238,8 +251,8 @@ def create_test():
             session_id = uuid.uuid4().hex
             round_label = display_map.get(round_key, f"Round {round_key}")
 
-            # Build dynamic URL using request host
-            test_url = f"{request.scheme}://{request.host}/mcq/start/{session_id}"
+            # Build dynamic URL using forwarded scheme/host when behind proxy.
+            test_url = _build_test_url("mcq.start_test", session_id=session_id)
 
             MCQ_SESSION_REGISTRY[session_id] = {
                 "candidate_name": name,
@@ -264,7 +277,7 @@ def create_test():
             session_id = uuid.uuid4().hex
             round_label = display_map.get(round_key, f"Coding Round {round_key}")
 
-            test_url = f"{request.scheme}://{request.host}/coding/start/{session_id}"
+            test_url = _build_test_url("coding.start_test", session_id=session_id)
 
             CODING_SESSION_REGISTRY[session_id] = {
                 "candidate_name": name,
@@ -291,7 +304,7 @@ def create_test():
             session_id = uuid.uuid4().hex
             round_label = f"Domain: {domain}"
 
-            test_url = f"{request.scheme}://{request.host}/mcq/start/{session_id}"
+            test_url = _build_test_url("mcq.start_test", session_id=session_id)
 
             MCQ_SESSION_REGISTRY[session_id] = {
                 "candidate_name": name,
