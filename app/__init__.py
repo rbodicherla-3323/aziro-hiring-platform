@@ -39,7 +39,31 @@ def create_app():
     app.register_blueprint(tests_bp)
     app.register_blueprint(evaluation_bp)
     app.register_blueprint(coding_bp)
-    app.register_blueprint(reports_bp)    # Create DB tables
+    app.register_blueprint(reports_bp)
+
+    # ── Permissions-Policy & Security Headers ─────────────────────────
+    # Browsers block getDisplayMedia() (screen sharing), getUserMedia()
+    # (webcam), and requestFullscreen() unless the correct Permissions-Policy
+    # headers are present.  This is especially critical when the app is
+    # served over plain HTTP on a LAN IP (not localhost / not HTTPS).
+    @app.after_request
+    def set_permissions_headers(response):
+        response.headers["Permissions-Policy"] = (
+            "display-capture=(self), "
+            "camera=(self), "
+            "microphone=(self), "
+            "fullscreen=(self)"
+        )
+        # Feature-Policy is the older name — some browsers still check it
+        response.headers["Feature-Policy"] = (
+            "display-capture 'self'; "
+            "camera 'self'; "
+            "microphone 'self'; "
+            "fullscreen 'self'"
+        )
+        return response
+
+    # Create DB tables
     with app.app_context():
         from . import models  # noqa: F401
         db.create_all()

@@ -1009,7 +1009,8 @@ function formatTabSwitchSource(source) {
 }
 
 function getProctoringRequirementMessage() {
-    if (!screenCaptureReady) {
+    // Only demand screen share if the browser actually supports it
+    if (!screenCaptureReady && supportsDisplayCapture()) {
         return "Share Entire Screen permission is required to continue the test.";
     }
     if (!isInFullscreen()) {
@@ -1019,7 +1020,10 @@ function getProctoringRequirementMessage() {
 }
 
 function hasProctoringRequirements() {
-    return screenCaptureReady && isInFullscreen();
+    // If the browser doesn't support getDisplayMedia (e.g. non-HTTPS origin),
+    // don't require screen capture — there's nothing the candidate can do.
+    const screenOk = screenCaptureReady || !supportsDisplayCapture();
+    return screenOk && isInFullscreen();
 }
 
 function getOrCreateLockOverlay() {
@@ -1895,12 +1899,12 @@ function setupExamProctoring() {
     suppressWarnings = true;
 
     setTimeout(async () => {
-        try {
-            // Only exit fullscreen when screen share (getDisplayMedia) needs
+        try {            // Only exit fullscreen when screen share (getDisplayMedia) needs
             // to be acquired — it shows a system-level picker dialog that the
             // browser will force-exit fullscreen for.  getUserMedia (webcam)
             // works fine INSIDE fullscreen so we never need to leave for it.
-            const needScreenShare = !screenCaptureReady;
+            // If getDisplayMedia is not available (e.g. non-HTTPS), skip entirely.
+            const needScreenShare = !screenCaptureReady && supportsDisplayCapture();
             const needWebcam = !webcamStream || !webcamStream.active;
 
             if (needScreenShare && isInFullscreen()) {
