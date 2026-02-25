@@ -4,7 +4,9 @@
 <div class="coding-start-shell">
     <div class="card coding-start-card">
         <div class="coding-status-row">
-            <span class="coding-status-pill">Secure Proctoring Active</span>
+            <span class="coding-status-pill">
+                {% if proctoring_enabled %}Secure Proctoring Active{% else %}Standard Assessment Mode{% endif %}
+            </span>
             <span class="coding-status-pill">Timed Assessment</span>
         </div>
 
@@ -33,7 +35,7 @@
             </div>
             <div class="coding-overview-item">
                 <span class="coding-overview-label">Mode</span>
-                <span class="coding-overview-value">Proctored</span>
+                <span class="coding-overview-value">{% if proctoring_enabled %}Proctored{% else %}Standard{% endif %}</span>
             </div>
         </div>
 
@@ -45,7 +47,9 @@
                 <li>You can run your code against sample test cases at any time.</li>
                 <li>Your code is auto-saved periodically.</li>
                 <li>Do not refresh or close the browser during the test.</li>
+                {% if proctoring_enabled %}
                 <li>Switching tabs and leaving fullscreen are monitored.</li>
+                {% endif %}
             </ul>
         </div>
 
@@ -58,7 +62,8 @@
         </div>
 
         <p class="coding-start-footer">
-            Once started, your timer begins immediately and full-screen mode will stay enforced.
+            Once started, your timer begins immediately.
+            {% if proctoring_enabled %}Full-screen mode will stay enforced.{% endif %}
         </p>
     </div>
 </div>

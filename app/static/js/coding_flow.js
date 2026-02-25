@@ -18,6 +18,7 @@ window.__CODING_AJAX_FLOW = true;
 
     const page = document.querySelector(".page");
     if (!page) return;
+    const proctoringEnabled = window.__AZIRO_PROCTORING_ENABLED === true;
 
     const startForm = document.getElementById("codingStartForm");
     if (!startForm) return;
@@ -84,29 +85,35 @@ window.__CODING_AJAX_FLOW = true;
 
         try {
             // ── 1. Acquire screen share + fullscreen ────────
-            var proctoringReady = false;
-            if (typeof window.ensureProctoringReady === "function") {
-                proctoringReady = await window.ensureProctoringReady({
-                    requireScreenShare: true,
-                    requireFullscreen: true,
-                    requireWebcam: true,
-                    withOverlay: false
-                });
-            } else {
-                // Fallback: just try fullscreen
-                if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
-                    try { await document.documentElement.requestFullscreen(); } catch (_) {}
+            var proctoringReady = true;
+            if (proctoringEnabled) {
+                proctoringReady = false;
+                if (typeof window.ensureProctoringReady === "function") {
+                    proctoringReady = await window.ensureProctoringReady({
+                        requireScreenShare: true,
+                        requireFullscreen: true,
+                        requireWebcam: true,
+                        withOverlay: false
+                    });
+                } else {
+                    // Fallback: just try fullscreen
+                    if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+                        try { await document.documentElement.requestFullscreen(); } catch (_) {}
+                    }
+                    proctoringReady = !!document.fullscreenElement;
                 }
-                proctoringReady = !!document.fullscreenElement;            }
+            }
             if (!proctoringReady) {
                 // Screen share was declined or failed — do NOT start the test.
                 if (startButton) startButton.disabled = false;
                 return;
             }
             // ── 2. Mark fullscreen required in sessionStorage
-            try {
-                sessionStorage.setItem("coding_fullscreen_required_" + sessionId, "1");
-            } catch (_) {}
+            if (proctoringEnabled) {
+                try {
+                    sessionStorage.setItem("coding_fullscreen_required_" + sessionId, "1");
+                } catch (_) {}
+            }
 
             // ── 3. POST to begin endpoint (start session) ───
             var beginResp = await fetch("/coding/begin/" + encodeURIComponent(sessionId), {
@@ -181,7 +188,7 @@ window.__CODING_AJAX_FLOW = true;
             // All streams are still alive (no page reload),
             // so setupExamProctoring finds everything active
             // and never exits fullscreen.
-            if (typeof window.setupExamProctoring === "function") {
+            if (proctoringEnabled && typeof window.setupExamProctoring === "function") {
                 window.setupExamProctoring();
             }
 

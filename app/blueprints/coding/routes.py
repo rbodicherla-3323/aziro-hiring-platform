@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
 
-from flask import render_template, redirect, url_for, request, session, jsonify
+from flask import render_template, redirect, url_for, request, session, jsonify, current_app
 from . import coding_bp
 
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
@@ -169,6 +169,10 @@ def _record_proctoring_event(session_id, event_type, details=None, ts=None, scre
 
 def _is_ajax_request():
     return request.headers.get("X-Requested-With") == "XMLHttpRequest"
+
+
+def _proctoring_enabled():
+    return bool(current_app.config.get("PROCTORING_ENABLED", False))
 
 
 # -------------------------------------------------
@@ -1655,6 +1659,9 @@ def completed(session_id):
 # -------------------------------------------------
 @coding_bp.route("/proctoring/violation", methods=["POST"])
 def proctoring_violation():
+    if not _proctoring_enabled():
+        return jsonify({"status": "disabled"})
+
     payload = request.get_json(silent=True) or {}
     session_id = _extract_session_id_from_context(payload)
     if not session_id:
@@ -1680,6 +1687,9 @@ def proctoring_violation():
 
 @coding_bp.route("/proctoring/screenshot", methods=["POST"])
 def proctoring_screenshot():
+    if not _proctoring_enabled():
+        return jsonify({"status": "disabled"})
+
     payload = request.get_json(silent=True) or {}
     session_id = _extract_session_id_from_context(payload)
     if not session_id:
@@ -1748,6 +1758,9 @@ def proctoring_screenshot():
 @coding_bp.route("/proctoring/webcam", methods=["POST"])
 def proctoring_webcam():
     """Handle webcam video chunk uploads and finalization."""
+    if not _proctoring_enabled():
+        return jsonify({"status": "disabled"})
+
     session_id = request.form.get("session_id", "").strip()
     if not session_id:
         return jsonify({"status": "ignored", "reason": "missing_session_id"})

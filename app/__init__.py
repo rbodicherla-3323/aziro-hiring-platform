@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, request
 from dotenv import load_dotenv
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -13,6 +13,13 @@ from .blueprints.evaluation import evaluation_bp
 from .blueprints.coding import coding_bp
 from .blueprints.reports import reports_bp
 from .blueprints.auth import auth_bp
+
+
+def _env_bool(name: str, default: bool = False) -> bool:
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() in {"1", "true", "yes", "on"}
 
 
 def create_app():
@@ -31,6 +38,8 @@ def create_app():
     )
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SESSION_PERMANENT"] = True
+    # Keep proctoring optional while migration/deployment stabilizes.
+    app.config["PROCTORING_ENABLED"] = _env_bool("PROCTORING_ENABLED", default=False)
 
     # Initialize extensions
     db.init_app(app)
@@ -65,7 +74,18 @@ def create_app():
             "microphone 'self'; "
             "fullscreen 'self'"
         )
+        # Prevent stale exam screens and bfcache artifacts on manual refresh.
+        if request.path.startswith("/mcq/") or request.path.startswith("/coding/"):
+            response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Expires"] = "0"
         return response
+
+    @app.context_processor
+    def inject_runtime_flags():
+        return {
+            "proctoring_enabled": bool(app.config.get("PROCTORING_ENABLED", False)),
+        }
 
     # Create DB tables
     with app.app_context():

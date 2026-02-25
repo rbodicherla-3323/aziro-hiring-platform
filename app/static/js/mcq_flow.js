@@ -48,6 +48,7 @@ window.__MCQ_AJAX_FLOW = false;
     if (!page) {
         return;
     }
+    const proctoringEnabled = window.__AZIRO_PROCTORING_ENABLED === true;
 
     window.__MCQ_AJAX_FLOW = true;
 
@@ -521,7 +522,7 @@ window.__MCQ_AJAX_FLOW = false;
         bindPaletteEvents();
         updateReviewButtonLabel();
 
-        if (typeof window.setupExamProctoring === "function") {
+        if (proctoringEnabled && typeof window.setupExamProctoring === "function") {
             window.setupExamProctoring();
         }
     }
@@ -623,7 +624,7 @@ window.__MCQ_AJAX_FLOW = false;
             }
         });
 
-        if (typeof window.setupExamProctoring === "function") {
+        if (proctoringEnabled && typeof window.setupExamProctoring === "function") {
             window.setupExamProctoring();
         }
     }
@@ -787,31 +788,37 @@ window.__MCQ_AJAX_FLOW = false;
             }
 
             try {
-                let proctoringReady = false;
-                if (typeof window.ensureProctoringReady === "function") {
-                    proctoringReady = await window.ensureProctoringReady({
-                        requireScreenShare: true,
-                        requireFullscreen: true,
-                        requireWebcam: true,
-                        withOverlay: false
-                    });
-                } else {
-                    if (typeof window.requestAppFullscreen === "function" && !document.fullscreenElement) {
-                        await window.requestAppFullscreen();
-                    } else if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
-                        await document.documentElement.requestFullscreen();
+                let proctoringReady = true;
+                if (proctoringEnabled) {
+                    proctoringReady = false;
+                    if (typeof window.ensureProctoringReady === "function") {
+                        proctoringReady = await window.ensureProctoringReady({
+                            requireScreenShare: true,
+                            requireFullscreen: true,
+                            requireWebcam: true,
+                            withOverlay: false
+                        });
+                    } else {
+                        if (typeof window.requestAppFullscreen === "function" && !document.fullscreenElement) {
+                            await window.requestAppFullscreen();
+                        } else if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+                            await document.documentElement.requestFullscreen();
+                        }
+                        proctoringReady = !!document.fullscreenElement;
                     }
-                    proctoringReady = !!document.fullscreenElement;                }
+                }
                 if (!proctoringReady) {
                     // Screen share was declined or failed — do NOT start the test.
                     if (startButton) startButton.disabled = false;
                     return;
                 }
 
-                try {
-                    sessionStorage.setItem(`mcq_fullscreen_required_${sessionId}`, "1");
-                } catch (_) {
-                    // Ignore storage failures.
+                if (proctoringEnabled) {
+                    try {
+                        sessionStorage.setItem(`mcq_fullscreen_required_${sessionId}`, "1");
+                    } catch (_) {
+                        // Ignore storage failures.
+                    }
                 }
 
                 const data = await fetchJson(

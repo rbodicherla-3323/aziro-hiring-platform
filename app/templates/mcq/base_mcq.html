@@ -105,9 +105,14 @@
     {% block content %}{% endblock %}
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+window.__AZIRO_PROCTORING_ENABLED = {{ "true" if proctoring_enabled else "false" }};
+</script>
 {% block extra_js %}{% endblock %}
+{% if proctoring_enabled %}
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script src="{{ url_for('static', filename='js/proctoring.js') }}"></script>
 <script src="{{ url_for('static', filename='js/proctoring_ai.js') }}"></script>
+{% endif %}
 </body>
 </html>
