@@ -4,18 +4,23 @@ Generated Tests listing — scoped to current user's today session.
 Also provides API endpoints for resume/JD extraction (from nikitha_local).
 """
 import os
-import re
-import io
-import importlib
 
-from flask import render_template, session, request, jsonify
+from flask import render_template, session, request, jsonify, current_app
 from werkzeug.utils import secure_filename
 from datetime import datetime
 
 from . import tests_bp
 from app.utils.auth_decorator import login_required
+from app.utils.role_normalizer import ROLE_NAME_TO_KEY
 from app.services.generated_tests_store import get_tests_for_user_today
 from app.services.email_service import send_candidate_test_links_email
+from app.services.document_intelligence import (
+    allowed_file_extension,
+    extract_text_from_file,
+    extract_resume_identity,
+    match_role_from_jd,
+    get_mime_type_for_filename,
+)
 
 
 # ────────────────────────────────────────────
@@ -28,87 +33,7 @@ ALLOWED_EXTENSIONS = {"pdf", "doc", "docx", "txt"}
 
 
 def allowed_file(filename):
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-def extract_email_from_text(text):
-    """Extract email from text using regex."""
-    email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
-    matches = re.findall(email_pattern, text)
-    return matches[0] if matches else None
-
-
-def extract_name_from_text(text):
-    """Extract likely name from text (usually first or second line)."""
-    lines = text.strip().split('\n')
-    for line in lines[:5]:
-        line = line.strip()
-        if line and 2 < len(line) < 100:
-            if '@' not in line and 'http' not in line.lower() and 'resume' not in line.lower():
-                return line
-    return None
-
-
-def _extract_text_from_pdf(file):
-    """Extract text from uploaded PDF using pdfplumber if available."""
-    pdfplumber = importlib.import_module("pdfplumber")
-    pdf_file = io.BytesIO(file.read())
-    with pdfplumber.open(pdf_file) as pdf:
-        text = ""
-        for page in pdf.pages:
-            text += page.extract_text() or ""
-    return text
-
-
-def extract_resume_data(file):
-    """Extract email and name from resume file."""
-    try:
-        if file.filename.endswith('.pdf'):
-            try:
-                text = _extract_text_from_pdf(file)
-            except Exception:
-                return None
-        else:
-            text = file.read().decode('utf-8', errors='ignore')
-
-        return {
-            "email": extract_email_from_text(text),
-            "name": extract_name_from_text(text),
-        }
-    except Exception as e:
-        print(f"Error extracting resume data: {e}")
-        return None
-
-
-def extract_jd_role(text):
-    """
-    Extract and match job role from JD text.
-    Returns the best matching role label from available roles.
-    """
-    text_lower = text.lower()
-
-    role_keywords = {
-        "Python Entry Level (0\u20132 Years)": ["python", "entry level", "junior"],
-        "Java Entry Level (0\u20132 Years)": ["java", "entry level", "junior"],
-        "JavaScript Entry Level (0\u20132 Years)": ["javascript", " js ", "node.js", "entry level"],
-        "Python QA / System / Linux (4+ Years)": ["python", "qa", "linux", "system"],
-        "Python QA (4+ Years)": ["python", "qa"],
-        "Python Development (4+ Years)": ["python", "development", "developer", "engineer"],
-        "Python + AI/ML (4+ Years)": ["python", "ai", "machine learning", "ml"],
-        "Java + AWS Development (5+ Years)": ["java", "aws", "development"],
-        "Java QA (5+ Years)": ["java", "qa"],
-        "BMC Engineer (2\u20135 Years)": ["bmc", "firmware", "bios"],
-        "Staff Engineer \u2013 Linux Kernel & Device Driver (3\u20135 Years)": ["linux kernel", "device driver", "kernel"],
-        "Systems Architect \u2013 C++ (3\u20135 Years)": ["c++", "cpp", "systems architect"],
-    }
-
-    scores = {}
-    for role_label, keywords in role_keywords.items():
-        score = sum(1 for kw in keywords if kw in text_lower)
-        scores[role_label] = score
-
-    best_match = max(scores, key=scores.get)
-    return best_match if scores[best_match] > 0 else None
+    return bool(filename and allowed_file_extension(filename))
 
 
 def save_uploaded_file(file, candidate_name, file_type):
@@ -145,10 +70,74 @@ def extract_resume():
     if not allowed_file(file.filename):
         return jsonify({"error": "File type not allowed"}), 400
 
-    data = extract_resume_data(file)
-    if data:
-        return jsonify(data), 200
-    return jsonify({"error": "Could not extract data from resume"}), 400
+    file_bytes = file.read()
+    if not file_bytes:
+        return jsonify({"error": "Uploaded file is empty"}), 400
+
+    try:
+        extraction = extract_text_from_file(file.filename, file_bytes)
+        if extraction.get("error"):
+            return jsonify({"error": extraction["error"]}), 400
+
+        parsed = extract_resume_identity(
+            extraction.get("text", ""),
+            file.filename,
+            use_ai_fallback=True,
+            source_file_bytes=file_bytes,
+            source_mime_type=get_mime_type_for_filename(file.filename),
+            text_quality=extraction.get("text_quality", 0.0),
+        )
+        warnings = []
+        warnings.extend(extraction.get("warnings", []))
+        warnings.extend(parsed.get("warnings", []))
+
+        response = {
+            "name": parsed.get("name"),
+            "email": parsed.get("email"),
+            "name_found": parsed.get("name_found", False),
+            "email_found": parsed.get("email_found", False),
+            "messages": parsed.get("messages", {}),
+            "confidence": parsed.get("confidence", {}),
+            "warnings": warnings,
+            "used_ai": parsed.get("used_ai", False),
+            "file_type": extraction.get("file_type"),
+            "extraction_method": extraction.get("extraction_method"),
+            "text_length": extraction.get("text_length", 0),
+            "text_quality": extraction.get("text_quality", 0.0),
+        }
+        if response["text_length"] == 0 or float(response.get("text_quality", 0.0) or 0.0) < 0.14:
+            warnings_joined = " | ".join((response.get("warnings") or [])).lower()
+            if "image-only" in warnings_joined or "image-heavy" in warnings_joined:
+                unreadable_msg = "Resume PDF appears image-based. Upload a machine-readable PDF or fill details manually."
+            else:
+                unreadable_msg = "Unable to read resume text from this file. Upload a machine-readable PDF or fill details manually."
+            messages = dict(response.get("messages") or {})
+            if not response.get("name_found"):
+                messages["name"] = unreadable_msg
+            if not response.get("email_found"):
+                messages["email"] = unreadable_msg
+            response["messages"] = messages
+        return jsonify(response), 200
+    except Exception as exc:
+        current_app.logger.exception("Resume extraction endpoint failed: %s", exc)
+        fallback_msg = "Unable to process resume right now. Please fill details manually."
+        return jsonify({
+            "name": None,
+            "email": None,
+            "name_found": False,
+            "email_found": False,
+            "messages": {
+                "name": fallback_msg,
+                "email": fallback_msg,
+            },
+            "confidence": {"name": 0.0, "email": 0.0, "overall": 0.0},
+            "warnings": [str(exc)],
+            "used_ai": False,
+            "file_type": "unknown",
+            "extraction_method": "internal_error",
+            "text_length": 0,
+            "text_quality": 0.0,
+        }), 200
 
 
 @tests_bp.route("/api/extract-jd-role", methods=["POST"])
@@ -163,20 +152,67 @@ def extract_jd_role_endpoint():
     if not allowed_file(file.filename):
         return jsonify({"error": "File type not allowed"}), 400
 
+    file_bytes = file.read()
+    if not file_bytes:
+        return jsonify({"error": "Uploaded file is empty"}), 400
+
     try:
-        if file.filename.endswith('.pdf'):
-            text = _extract_text_from_pdf(file)
-        else:
-            text = file.read().decode('utf-8', errors='ignore')
+        extraction = extract_text_from_file(file.filename, file_bytes)
+        if extraction.get("error"):
+            return jsonify({"error": extraction["error"]}), 400
 
-        matched_role = extract_jd_role(text)
-        if matched_role:
-            return jsonify({"role": matched_role}), 200
-        return jsonify({"role": None, "message": "Could not determine role from JD"}), 200
+        matched = match_role_from_jd(
+            extraction.get("text", ""),
+            list(ROLE_NAME_TO_KEY.keys()),
+            use_ai_fallback=True,
+            source_file_bytes=file_bytes,
+            source_mime_type=get_mime_type_for_filename(file.filename),
+            text_quality=extraction.get("text_quality", 0.0),
+            source_filename=file.filename,
+        )
 
-    except Exception as e:
-        print(f"Error extracting JD role: {e}")
-        return jsonify({"error": "Error processing JD file"}), 400
+        warnings = []
+        warnings.extend(extraction.get("warnings", []))
+        warnings.extend(matched.get("warnings", []))
+
+        response = {
+            "role": matched.get("role"),
+            "role_found": matched.get("role_found", False),
+            "message": matched.get("message", ""),
+            "confidence": matched.get("confidence", {}),
+            "top_matches": matched.get("top_matches", []),
+            "warnings": warnings,
+            "used_ai": matched.get("used_ai", False),
+            "file_type": extraction.get("file_type"),
+            "extraction_method": extraction.get("extraction_method"),
+            "text_length": extraction.get("text_length", 0),
+            "text_quality": extraction.get("text_quality", 0.0),
+        }
+        if (
+            (response["text_length"] == 0 or float(response.get("text_quality", 0.0) or 0.0) < 0.14)
+            and not response.get("role_found")
+        ):
+            warnings_joined = " | ".join((response.get("warnings") or [])).lower()
+            if "image-only" in warnings_joined or "image-heavy" in warnings_joined:
+                response["message"] = "JD PDF appears image-based. Upload a machine-readable PDF or select role manually."
+            else:
+                response["message"] = "Unable to read JD text from this file. Upload a machine-readable PDF or select role manually."
+        return jsonify(response), 200
+    except Exception as exc:
+        current_app.logger.exception("JD extraction endpoint failed: %s", exc)
+        return jsonify({
+            "role": None,
+            "role_found": False,
+            "message": "Unable to process JD right now. Please select role manually.",
+            "confidence": {"score": 0, "normalized": 0.0, "margin": 0.0},
+            "top_matches": [],
+            "warnings": [str(exc)],
+            "used_ai": False,
+            "file_type": "unknown",
+            "extraction_method": "internal_error",
+            "text_length": 0,
+            "text_quality": 0.0,
+        }), 200
 
 
 # ────────────────────────────────────────────
