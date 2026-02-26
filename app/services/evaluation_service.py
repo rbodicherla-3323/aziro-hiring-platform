@@ -2,6 +2,7 @@ from app.services.evaluation_store import EVALUATION_STORE
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
 from app.services.coding_submission_store import get_latest_coding_submission
 from app.services.ai_generator import generate_evaluation_summary, generate_coding_round_summary
+from app.services.mcq_runtime_store import get_mcq_session_data, mcq_session_key
 from flask import session
 import logging
 import time
@@ -353,8 +354,11 @@ class EvaluationService:
     @staticmethod
     def evaluate_mcq(session_id: str):
 
-        mcq_key = f"mcq_{session_id}"
-        mcq_data = session.get(mcq_key)
+        mcq_data = get_mcq_session_data(session_id)
+        if not mcq_data:
+            legacy = session.get(mcq_session_key(session_id))
+            if isinstance(legacy, dict) and "questions" in legacy and "answers" in legacy:
+                mcq_data = legacy
         session_meta = MCQ_SESSION_REGISTRY.get(session_id)
 
         if not session_meta:

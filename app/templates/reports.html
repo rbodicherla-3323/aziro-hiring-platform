@@ -100,6 +100,19 @@
     .status-fail { background:#f8d7da; color:#721c24; }
     .status-pending { background:#e2e3e5; color:#383d41; }
 
+    .proctoring-summary { padding:10px 20px; background:#fffdf6; border-top:1px solid #f4ead0; border-bottom:1px solid #f4ead0; }
+    .proctoring-title { display:block; font-size:0.72rem; font-weight:700; color:#7a5a11; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:7px; }
+    .proctoring-chips { display:flex; flex-wrap:wrap; gap:7px; }
+    .proctoring-chip { display:inline-flex; align-items:center; padding:3px 9px; border-radius:999px; border:1px solid #e7dcbf; background:#fff8e8; color:#5f4a18; font-size:0.72rem; font-weight:600; }
+    .proctoring-chip.alert { border-color:#f5c6cb; background:#fdecef; color:#a71d2a; }
+    .plagiarism-summary { padding:10px 20px; background:#f5f9ff; border-top:1px solid #d9e6fb; border-bottom:1px solid #d9e6fb; }
+    .plagiarism-title { display:block; font-size:0.72rem; font-weight:700; color:#1b4f9b; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:7px; }
+    .plagiarism-chips { display:flex; flex-wrap:wrap; gap:7px; }
+    .plagiarism-chip { display:inline-flex; align-items:center; padding:3px 9px; border-radius:999px; border:1px solid #cfe0fb; background:#eef5ff; color:#17407e; font-size:0.72rem; font-weight:600; }
+    .plagiarism-chip.risk-high { border-color:#f5c6cb; background:#fdecef; color:#a71d2a; }
+    .plagiarism-chip.risk-medium { border-color:#ffe2b5; background:#fff4df; color:#8a4c00; }
+    .plagiarism-chip.risk-low { border-color:#c5e8d0; background:#eaf8ef; color:#1f6b3a; }
+
     /* Action icons */
     .report-actions { display:inline-flex; gap:6px; align-items:center; }
     .report-actions .icon-btn { width:32px; height:32px; border-radius:10px; border:1.5px solid transparent; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.2s; text-decoration:none; font-size:0.82rem; }
@@ -194,6 +207,45 @@
                                 <i class="fas fa-file-pdf"></i>
                             </button>
                         </div>
+                    </div>
+                </div>
+
+                {% set ps = cand.proctoring_summary or {} %}
+                <div class="proctoring-summary">
+                    <span class="proctoring-title">Proctoring Summary</span>
+                    <div class="proctoring-chips">
+                        <span class="proctoring-chip">Tab: {{ ps.tab_switches or 0 }}</span>
+                        <span class="proctoring-chip">Fullscreen Exits: {{ ps.fullscreen_exits or 0 }}</span>
+                        <span class="proctoring-chip">Multi-Monitor: {{ ps.multi_monitor_events or 0 }}</span>
+                        <span class="proctoring-chip">Shortcuts: {{ ps.keyboard_shortcuts_blocked or 0 }}</span>
+                        <span class="proctoring-chip">Copy/Paste: {{ ps.copy_paste_blocks or 0 }}</span>
+                        <span class="proctoring-chip">Right Click: {{ ps.right_click_blocks or 0 }}</span>
+                        <span class="proctoring-chip">Screenshots: {{ ps.screenshot_captures or 0 }}</span>
+                        <span class="proctoring-chip">Multi-Face: {{ ps.multi_face_events or 0 }}</span>
+                        <span class="proctoring-chip">No Face: {{ ps.no_face_events or 0 }}</span>
+                        <span class="proctoring-chip">No Face Duration: {{ '%.1f'|format(ps.no_face_duration_seconds or 0) }}s</span>
+                        <span class="proctoring-chip">Attention Dev: {{ ps.attention_deviation_count or 0 }}</span>
+                        <span class="proctoring-chip">Suspicion: {{ ps.suspicion_score or 0 }}</span>
+                        <span class="proctoring-chip {% if ps.suspicion_threshold_exceeded %}alert{% endif %}">
+                            Suspicion Threshold Exceeded: {% if ps.suspicion_threshold_exceeded %}Yes{% else %}No{% endif %}{% if ps.suspicion_threshold_event_count %} ({{ ps.suspicion_threshold_event_count }}){% endif %}
+                        </span>
+                    </div>
+                </div>
+
+                {% set pl = cand.plagiarism_summary or {} %}
+                {% set top_match = pl.top_matches|default([])|first %}
+                <div class="plagiarism-summary">
+                    <span class="plagiarism-title">Code Similarity Summary</span>
+                    <div class="plagiarism-chips">
+                        <span class="plagiarism-chip {% if (pl.risk_level or 'LOW') == 'HIGH' %}risk-high{% elif (pl.risk_level or 'LOW') == 'MEDIUM' %}risk-medium{% else %}risk-low{% endif %}">
+                            Risk: {{ pl.risk_level or 'LOW' }}
+                        </span>
+                        <span class="plagiarism-chip">Risk Score: {{ '%.2f'|format(pl.risk_score or 0) }}</span>
+                        <span class="plagiarism-chip">Max Similarity: {{ '%.2f'|format(pl.max_similarity or 0) }}%</span>
+                        <span class="plagiarism-chip">Matches: {{ pl.matched_submissions or 0 }}/{{ pl.compared_submissions or 0 }}</span>
+                        {% if top_match %}
+                        <span class="plagiarism-chip">Top Match: {{ top_match.email }} ({{ '%.2f'|format(top_match.similarity or 0) }}%)</span>
+                        {% endif %}
                     </div>
                 </div>
 

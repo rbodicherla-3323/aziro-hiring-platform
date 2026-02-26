@@ -1492,6 +1492,9 @@ def _evaluate_and_store_coding_result(session_id):
                 question_title=question.get("title", ""),
                 question_text=question.get("description") or question.get("problem_statement") or "",
                 submitted_code=code,
+                starter_code=starter_code,
+                role_key=session_meta.get("role_key", ""),
+                batch_id=session_meta.get("batch_id", ""),
             )
             return
 
@@ -1577,6 +1580,9 @@ def _evaluate_and_store_coding_result(session_id):
         question_title=question.get("title", ""),
         question_text=question.get("description") or question.get("problem_statement") or "",
         submitted_code=code,
+        starter_code=starter_code,
+        role_key=session_meta.get("role_key", ""),
+        batch_id=session_meta.get("batch_id", ""),
     )
 
 

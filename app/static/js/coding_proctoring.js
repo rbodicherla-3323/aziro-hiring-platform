@@ -17,6 +17,7 @@ const SESSION_START_LOG_KEY = `coding_session_start_logged_${SESSION_ID}`;
 
 const MAX_WARNINGS = 3;
 const TAB_SWITCH_DEBOUNCE_MS = 1200;
+const TAB_SWITCH_VISIBILITY_CONFIRM_MS = 260;
 const SCREENSHOT_THROTTLE_MS = 4000;
 const PERIODIC_SCREENSHOT_INTERVAL_MS = 60 * 1000;
 const TAB_SWITCH_CAPTURE_BURST_DELAYS_MS = [0, 500, 1500, 3000, 5000, 8000, 12000];
@@ -29,11 +30,68 @@ const CONTENT_CHANGE_SAMPLE_H = 36;
 const MULTI_MONITOR_CHECK_INTERVAL_MS = 4000;
 const MULTI_MONITOR_DEBOUNCE_MS = 6000;
 const MOUSE_OFF_PRIMARY_THRESHOLD_PX = 12;
+const MOUSE_OFF_PRIMARY_CONFIRMATION_WINDOW_MS = 900;
+const MOUSE_OFF_PRIMARY_CONFIRMATION_COUNT = 3;
 const WEBCAM_DOCK_ID = "proctoringWebcamDock";
 const WEBCAM_VIDEO_ID = "proctoringWebcamPreview";
 const WEBCAM_RECORDING_TIMESLICE_MS = 5000;
 const WEBCAM_RECORDING_TARGET_BPS = 250000;
 const SCREEN_CAPTURE_VIDEO_ID = "proctoringScreenCaptureVideo";
+const VIOLATION_BANNER_DURATION_MS = 6000;
+const VIOLATION_DEDUPE_WINDOW_MS = 700;
+const TELEMETRY_MAX_QUEUE = 250;
+const TELEMETRY_MAX_RETRY_ATTEMPTS = 3;
+const TELEMETRY_RETRY_BASE_MS = 1500;
+const TELEMETRY_RETRY_MAX_DELAY_MS = 12000;
+const VIOLATION_AUTO_EVIDENCE_MIN_GAP_MS = 450;
+const VIOLATION_LABELS = Object.freeze({
+    "fullscreen exited": "Full screen exited",
+    "fullscreen re-entry attempt": "Full screen resume attempt",
+    "tab switching detected": "Tab switching detected",
+    "keyboard shortcut blocked": "Keyboard shortcut blocked",
+    "copy blocked": "Copy action blocked",
+    "paste blocked": "Paste action blocked",
+    "right click blocked": "Right click blocked",
+    "multi-monitor activity detected": "Multi-monitor activity detected",
+    "no face detected": "No face detected",
+    "multiple faces detected": "Multiple faces detected",
+    "attention deviation detected": "Attention deviation detected",
+    "webcam stream interrupted": "Webcam stream interrupted",
+    "webcam stream muted": "Webcam stream muted",
+    "webcam recording error": "Webcam recording error",
+    "screen capture ended": "Screen sharing stopped",
+    "screen capture rejected": "Invalid screen sharing selection",
+    "screen capture unavailable": "Screen sharing unavailable",
+    "suspicion threshold exceeded": "Suspicion threshold exceeded"
+});
+const VIOLATION_COUNT_FIELDS = Object.freeze({
+    "fullscreen exited": "fullscreen_exit_count",
+    "fullscreen re-entry attempt": "forced_reentry_attempts",
+    "tab switching detected": "tab_switch_count",
+    "keyboard shortcut blocked": "shortcut_block_count",
+    "copy blocked": "copy_block_count",
+    "paste blocked": "paste_block_count",
+    "right click blocked": "right_click_block_count",
+    "multi-monitor activity detected": "multi_monitor_event_count",
+    "no face detected": "no_face_event_count",
+    "multiple faces detected": "multiple_face_event_count",
+    "attention deviation detected": "attention_deviation_count",
+    "webcam stream interrupted": "webcam_stream_interruptions",
+    "webcam stream muted": "webcam_stream_mute_event_count",
+    "webcam recording error": "webcam_recording_error_count",
+    "suspicion threshold exceeded": "suspicion_threshold_event_count"
+});
+const VIOLATION_BANNER_TONES = Object.freeze({
+    "fullscreen exited": "danger",
+    "fullscreen re-entry attempt": "danger",
+    "multiple faces detected": "danger",
+    "webcam stream interrupted": "danger",
+    "webcam recording error": "danger",
+    "screen capture ended": "danger",
+    "screen capture rejected": "danger",
+    "screen capture unavailable": "danger",
+    "suspicion threshold exceeded": "danger"
+});
 
 function isExamPath() {
     return /^\/coding\/editor\/[^/]+\/?$/.test(window.location.pathname) ||
@@ -100,6 +158,20 @@ let multiMonitorCheckTimer = null;
 let multiMonitorEventCount = 0;
 let lastMouseOutsideDetectAt = 0;
 let lastMultiMonitorDetectAt = 0;
+let tabVisibilityTimer = null;
+let mouseOutsidePrimaryStreak = 0;
+let mouseOutsidePrimaryWindowStartedAt = 0;
+let lastFullscreenState = isInFullscreen();
+let hasEnteredFullscreenAtLeastOnce = lastFullscreenState;
+const violationDisplayCounts = Object.create(null);
+let proctoringBannerHideTimer = null;
+const recentViolationFingerprints = new Map();
+const pendingTelemetryQueue = [];
+let telemetryFlushTimer = null;
+let telemetryFlushInProgress = false;
+let webcamTrackRecoveryInProgress = false;
+let webcamRecorderRecoveryInProgress = false;
+const lastViolationEvidenceCaptureAt = Object.create(null);
 
 console.log("CODING PROCTORING ACTIVE");
 
@@ -122,27 +194,198 @@ function shouldIgnoreProctoringEvent() { return suppressWarnings || isNavInProgr
 
 /* ── Fullscreen ────────────────────────────────────── */
 function isInFullscreen() { return !!document.fullscreenElement; }
-function requestAppFullscreen() { return document.documentElement.requestFullscreen(); }
-function exitAppFullscreen() { return document.fullscreenElement ? document.exitFullscreen() : Promise.resolve(); }
+function syncFullscreenStateTracking() {
+    const currentFullscreenState = isInFullscreen();
+    lastFullscreenState = currentFullscreenState;
+    if (currentFullscreenState) hasEnteredFullscreenAtLeastOnce = true;
+}
+function requestAppFullscreen() {
+    return document.documentElement.requestFullscreen().then(() => {
+        syncFullscreenStateTracking();
+    });
+}
+function exitAppFullscreen() {
+    if (document.fullscreenElement) {
+        return document.exitFullscreen().finally(() => {
+            syncFullscreenStateTracking();
+        });
+    }
+    syncFullscreenStateTracking();
+    return Promise.resolve();
+}
 
 /* ── Network helpers ───────────────────────────────── */
 function sendJSON(url, payload, useBeacon = false) {
+    const safePayload = (payload && typeof payload === "object") ? payload : {};
+    postTelemetry(url, safePayload, useBeacon).then((success) => {
+        if (success) return;
+        enqueueTelemetry(url, safePayload, 1);
+    });
+}
+
+function stableStringify(value) {
+    if (Array.isArray(value)) {
+        return `[${value.map((item) => stableStringify(item)).join(",")}]`;
+    }
+    if (value && typeof value === "object") {
+        const keys = Object.keys(value).sort();
+        return `{${keys.map((key) => `${JSON.stringify(key)}:${stableStringify(value[key])}`).join(",")}}`;
+    }
+    return JSON.stringify(value);
+}
+
+function buildViolationFingerprint(type, details = {}) {
+    const normalizedType = normalizeViolationType(type);
+    const safeDetails = (details && typeof details === "object") ? details : {};
+    return stableStringify({
+        type: normalizedType,
+        source: safeDetails.source || "",
+        reason: safeDetails.reason || "",
+        shortcut: safeDetails.shortcut || "",
+        key: safeDetails.key || "",
+        display_surface: safeDetails.display_surface || "",
+        event_type: safeDetails.event_type || ""
+    });
+}
+
+function shouldSkipDuplicateViolation(type, details = {}) {
+    const now = Date.now();
+    const fingerprint = buildViolationFingerprint(type, details);
+    const lastSeenAt = Number(recentViolationFingerprints.get(fingerprint) || 0);
+
+    if ((now - lastSeenAt) < VIOLATION_DEDUPE_WINDOW_MS) {
+        return true;
+    }
+    recentViolationFingerprints.set(fingerprint, now);
+
+    if (recentViolationFingerprints.size > 400) {
+        for (const [key, ts] of recentViolationFingerprints.entries()) {
+            if ((now - Number(ts || 0)) > (VIOLATION_DEDUPE_WINDOW_MS * 8)) {
+                recentViolationFingerprints.delete(key);
+            }
+        }
+    }
+    return false;
+}
+
+function enqueueTelemetry(url, payload, attempt = 1) {
+    if (!url || !payload || typeof payload !== "object") return;
+    if (pendingTelemetryQueue.length >= TELEMETRY_MAX_QUEUE) {
+        pendingTelemetryQueue.shift();
+    }
+    pendingTelemetryQueue.push({ url, payload, attempt, nextAttemptAt: Date.now() });
+    scheduleTelemetryFlush(250);
+}
+
+function scheduleTelemetryFlush(delayMs = 0) {
+    if (telemetryFlushTimer) return;
+    telemetryFlushTimer = setTimeout(() => {
+        telemetryFlushTimer = null;
+        flushPendingTelemetry();
+    }, Math.max(0, Number(delayMs) || 0));
+}
+
+function postTelemetry(url, payload, useBeacon = false) {
     const body = JSON.stringify(payload);
     if (useBeacon && navigator.sendBeacon) {
-        const blob = new Blob([body], { type: "application/json" });
-        navigator.sendBeacon(url, blob);
-        return;
+        try {
+            const blob = new Blob([body], { type: "application/json" });
+            const sent = navigator.sendBeacon(url, blob);
+            return Promise.resolve(!!sent);
+        } catch (_) {}
     }
-    fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body, keepalive: useBeacon }).catch(() => {});
+    return fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body, keepalive: useBeacon })
+        .then((response) => !!(response && response.ok))
+        .catch(() => false);
+}
+
+function flushPendingTelemetryWithBeacon(maxItems = 20) {
+    if (!navigator.sendBeacon || pendingTelemetryQueue.length === 0) return;
+    let sentCount = 0;
+    while (pendingTelemetryQueue.length > 0 && sentCount < maxItems) {
+        const item = pendingTelemetryQueue.shift();
+        try {
+            const blob = new Blob([JSON.stringify(item.payload)], { type: "application/json" });
+            navigator.sendBeacon(item.url, blob);
+        } catch (_) {}
+        sentCount += 1;
+    }
+}
+
+async function flushPendingTelemetry() {
+    if (telemetryFlushInProgress || pendingTelemetryQueue.length === 0) return;
+    telemetryFlushInProgress = true;
+    try {
+        const now = Date.now();
+        const retryQueue = [];
+        while (pendingTelemetryQueue.length > 0) {
+            const item = pendingTelemetryQueue.shift();
+            if (!item || !item.url || !item.payload) continue;
+            if (Number(item.nextAttemptAt || 0) > now) {
+                retryQueue.push(item);
+                continue;
+            }
+            const success = await postTelemetry(item.url, item.payload, false);
+            if (success) continue;
+            const nextAttempt = Number(item.attempt || 1) + 1;
+            if (nextAttempt > TELEMETRY_MAX_RETRY_ATTEMPTS) continue;
+            const backoffMs = Math.min(
+                TELEMETRY_RETRY_MAX_DELAY_MS,
+                TELEMETRY_RETRY_BASE_MS * Math.pow(2, nextAttempt - 2)
+            );
+            retryQueue.push({
+                url: item.url,
+                payload: item.payload,
+                attempt: nextAttempt,
+                nextAttemptAt: Date.now() + backoffMs
+            });
+        }
+        for (const retryItem of retryQueue) {
+            if (pendingTelemetryQueue.length >= TELEMETRY_MAX_QUEUE) break;
+            pendingTelemetryQueue.push(retryItem);
+        }
+    } finally {
+        telemetryFlushInProgress = false;
+        if (pendingTelemetryQueue.length > 0) {
+            scheduleTelemetryFlush(800);
+        }
+    }
+}
+
+function setupTelemetryReliabilityHooks() {
+    window.addEventListener("online", () => { scheduleTelemetryFlush(200); });
+    document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) scheduleTelemetryFlush(250);
+    });
+    window.addEventListener("pagehide", () => { flushPendingTelemetryWithBeacon(20); });
 }
 
 function sendViolation(type, details = {}, useBeacon = false) {
     if (!SESSION_ID) return;
+    const safeDetails = (details && typeof details === "object") ? details : {};
+    if (shouldSkipDuplicateViolation(type, safeDetails)) return;
+    const violationTs = new Date().toISOString();
+    try {
+        window.dispatchEvent(new CustomEvent("proctoring:violation", {
+            detail: {
+                session_id: SESSION_ID,
+                violation_type: type,
+                details: safeDetails,
+                ts: violationTs
+            }
+        }));
+    } catch (_) {
+        // Ignore custom event dispatch failures.
+    }
+    if (!useBeacon && !shouldIgnoreProctoringEvent()) {
+        showViolationCountBanner(type, safeDetails);
+    }
+    maybeCaptureViolationEvidence(type, safeDetails);
     sendJSON("/coding/proctoring/violation", {
         session_id: SESSION_ID,
         violation_type: type,
-        details,
-        ts: new Date().toISOString()
+        details: safeDetails,
+        ts: violationTs
     }, useBeacon);
 }
 
@@ -155,6 +398,66 @@ function sendScreenshot(eventType, imageData, details = {}) {
         details,
         ts: new Date().toISOString()
     });
+}
+
+function normalizeViolationType(type) {
+    return String(type || "").trim().toLowerCase();
+}
+function shouldDisplayViolationBanner(normalizedType) {
+    if (normalizedType === "suspicion threshold exceeded") return false;
+    return Object.prototype.hasOwnProperty.call(VIOLATION_LABELS, normalizedType);
+}
+function resolveViolationDisplayCount(normalizedType, details = {}) {
+    const previous = Number(violationDisplayCounts[normalizedType] || 0);
+    let next = previous + 1;
+    const countField = VIOLATION_COUNT_FIELDS[normalizedType];
+    if (countField) {
+        const explicit = Number(details[countField]);
+        if (Number.isFinite(explicit) && explicit > 0) {
+            next = Math.max(next, Math.floor(explicit));
+        }
+    }
+    violationDisplayCounts[normalizedType] = next;
+    return next;
+}
+function showViolationCountBanner(type, details = {}) {
+    const normalizedType = normalizeViolationType(type);
+    if (!shouldDisplayViolationBanner(normalizedType)) return;
+    const count = resolveViolationDisplayCount(normalizedType, details);
+    const label = VIOLATION_LABELS[normalizedType];
+    const tone = VIOLATION_BANNER_TONES[normalizedType] || "warning";
+    showBanner(`Warning: ${label} (${formatCount(count, "time", "times")}).`, tone);
+}
+
+function shouldAutoCaptureViolationEvidence(normalizedType) {
+    if (!normalizedType) return false;
+    if (normalizedType.startsWith("screenshot:")) return false;
+    return [
+        "fullscreen re-entry attempt",
+        "screen capture ended",
+        "screen capture rejected",
+        "screen capture unavailable",
+        "webcam stream interrupted",
+        "webcam stream muted",
+        "webcam recording error"
+    ].includes(normalizedType);
+}
+
+function maybeCaptureViolationEvidence(type, details = {}) {
+    const normalizedType = normalizeViolationType(type);
+    if (!shouldAutoCaptureViolationEvidence(normalizedType)) return;
+    const now = Date.now();
+    const lastCapturedAt = Number(lastViolationEvidenceCaptureAt[normalizedType] || 0);
+    if ((now - lastCapturedAt) < VIOLATION_AUTO_EVIDENCE_MIN_GAP_MS) return;
+    lastViolationEvidenceCaptureAt[normalizedType] = now;
+
+    const evidenceEventType = `violation_${normalizedType.replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "") || "event"}`;
+    setTimeout(() => {
+        captureEvidence(evidenceEventType, {
+            violation_type: normalizedType,
+            ...details
+        }, true);
+    }, 0);
 }
 
 /* ── Screen capture ────────────────────────────────── */
@@ -411,8 +714,8 @@ function showBanner(message, tone = "warning") {
     banner.className = "coding-banner " + tone;
     banner.innerText = message;
     banner.style.display = "block";
-    clearTimeout(banner._hideTimer);
-    banner._hideTimer = setTimeout(() => { banner.style.display = "none"; }, 5000);
+    if (proctoringBannerHideTimer) clearTimeout(proctoringBannerHideTimer);
+    proctoringBannerHideTimer = setTimeout(() => { banner.style.display = "none"; }, VIOLATION_BANNER_DURATION_MS);
 }
 
 function formatCount(v, s, p) { return `${v} ${v === 1 ? s : p}`; }
@@ -505,6 +808,60 @@ function getOrCreateWebcamDock() {
     return dock;
 }
 
+function attemptWebcamRecovery(source = "unknown") {
+    if (webcamTrackRecoveryInProgress) return;
+    if (!isExamPath() || !proctoringActive || shouldIgnoreProctoringEvent()) return;
+
+    webcamTrackRecoveryInProgress = true;
+    showBanner("Webcam stream interrupted. Reconnecting...", "danger");
+
+    setTimeout(async () => {
+        try {
+            await startWebcamPreview();
+            if (webcamStream && webcamStream.active) {
+                sendViolation("Webcam stream restored", {
+                    source,
+                    video_track_count: webcamStream.getVideoTracks().length
+                });
+            }
+        } finally {
+            webcamTrackRecoveryInProgress = false;
+        }
+    }, 500);
+}
+
+function attachWebcamTrackMonitoring(stream, source = "unknown") {
+    if (!stream || typeof stream.getVideoTracks !== "function") return;
+    const tracks = stream.getVideoTracks();
+    for (const track of tracks) {
+        if (!track || track.__aziroProctoringMonitored) continue;
+        track.__aziroProctoringMonitored = true;
+
+        track.addEventListener("ended", () => {
+            sendViolation("Webcam stream interrupted", {
+                source,
+                reason: "track_ended",
+                ready_state: track.readyState || "ended"
+            });
+            attemptWebcamRecovery(source);
+        });
+
+        track.addEventListener("mute", () => {
+            sendViolation("Webcam stream muted", {
+                source,
+                ready_state: track.readyState || "unknown"
+            });
+        });
+
+        track.addEventListener("unmute", () => {
+            sendViolation("Webcam stream unmuted", {
+                source,
+                ready_state: track.readyState || "unknown"
+            });
+        });
+    }
+}
+
 function buildWebcamRecordingId() { return `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`; }
 
 function getSupportedWebcamRecordingMimeType() {
@@ -540,6 +897,7 @@ function finalizeWebcamRecordingUpload() {
 
 async function startWebcamRecording() {
     if (!isExamPath() || !webcamStream || !webcamStream.active) return;
+    attachWebcamTrackMonitoring(webcamStream, "recording");
     if (typeof MediaRecorder === "undefined") { sendViolation("Webcam recording unavailable", { reason: "media_recorder_unsupported" }); return; }
     if (webcamRecorder && webcamRecorder.state !== "inactive") return;
     webcamRecordingMimeType = getSupportedWebcamRecordingMimeType() || "video/webm";
@@ -555,6 +913,24 @@ async function startWebcamRecording() {
     }
     webcamRecorder.addEventListener("dataavailable", e => { if (e.data && e.data.size) enqueueWebcamChunkUpload(e.data); });
     webcamRecorder.addEventListener("error", () => { sendViolation("Webcam recording error", { state: webcamRecorder ? webcamRecorder.state : "unknown" }); });
+    webcamRecorder.addEventListener("stop", () => {
+        if (webcamRecordingStopPromise || webcamRecorderRecoveryInProgress) return;
+        if (!proctoringActive || !isExamPath()) return;
+
+        webcamRecorderRecoveryInProgress = true;
+        sendViolation("Webcam recording error", {
+            reason: "unexpected_stop",
+            state: webcamRecorder ? webcamRecorder.state : "stopped"
+        });
+
+        setTimeout(async () => {
+            try {
+                await startWebcamRecording();
+            } finally {
+                webcamRecorderRecoveryInProgress = false;
+            }
+        }, 350);
+    });
     try { webcamRecorder.start(WEBCAM_RECORDING_TIMESLICE_MS); sendViolation("Webcam recording started", { recording_id: webcamRecordingId, mime_type: webcamRecordingMimeType, chunk_timeslice_ms: WEBCAM_RECORDING_TIMESLICE_MS }); }
     catch (_) { webcamRecorder = null; sendViolation("Webcam recording unavailable", { reason: "media_recorder_start_failed" }); }
 }
@@ -591,12 +967,14 @@ async function startWebcamPreview() {
     const dock = getOrCreateWebcamDock();
     dock.style.display = "block";
     if (webcamStream && webcamStream.active) {
+        attachWebcamTrackMonitoring(webcamStream, "existing_stream");
         const ev = document.getElementById(WEBCAM_VIDEO_ID);
         if (ev && ev.srcObject !== webcamStream) { ev.srcObject = webcamStream; try { await ev.play(); } catch (_) {} }
         await startWebcamRecording(); return;
     }
     try {
         webcamStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 320 }, height: { ideal: 180 } }, audio: false });
+        attachWebcamTrackMonitoring(webcamStream, "get_user_media");
         const video = document.getElementById(WEBCAM_VIDEO_ID);
         if (video) { video.srcObject = webcamStream; try { await video.play(); } catch (_) {} }
         if (!webcamEnabledLogged) { webcamEnabledLogged = true; sendViolation("Webcam preview enabled", { video_track_count: webcamStream.getVideoTracks().length }); }
@@ -632,9 +1010,7 @@ function issueWarning(reason, details = {}, options = {}) {
     const inc = options.incrementWarning !== false;
     if (inc) warningCount += 1;
     updateFocusChip();
-    showBanner(options.bannerMessage || `Warning ${warningCount}/${MAX_WARNINGS}: ${reason}`, options.bannerTone || "warning");
     sendViolation(reason, { warning_count: warningCount, ...details });
-    if (inc && warningCount >= MAX_WARNINGS) { window.location.href = `/coding/submit/${SESSION_ID}`; return; }
     setTimeout(() => { isHandlingWarning = false; }, 800);
 }
 
@@ -647,14 +1023,13 @@ function recordFullscreenRestored() {
 }
 
 function handleFullscreenExit() {
+    if (!hasEnteredFullscreenAtLeastOnce) return;
+    if (outsideFullscreenStartedAt) return;
     fullscreenExitCount += 1;
-    if (!outsideFullscreenStartedAt) outsideFullscreenStartedAt = Date.now();
+    outsideFullscreenStartedAt = Date.now();
     showLockOverlay("You must remain in full screen to continue the test.");
     armFullscreenRecovery();
-    issueWarning("Fullscreen exited", { fullscreen_exit_count: fullscreenExitCount, forced_reentry_attempts: forcedReentryAttempts }, {
-        bannerMessage: `Fullscreen exited (${formatCount(fullscreenExitCount, "time", "times")}). You must remain in full screen to continue the test.`,
-        bannerTone: "danger"
-    });
+    issueWarning("Fullscreen exited", { fullscreen_exit_count: fullscreenExitCount, forced_reentry_attempts: forcedReentryAttempts });
     captureScreenshot("fullscreen_exit", { fullscreen_exit_count: fullscreenExitCount });
 }
 
@@ -803,6 +1178,7 @@ function setupStartFullscreenGate() {
                         video: { facingMode: "user", width: { ideal: 320 }, height: { ideal: 180 } },
                         audio: false
                     });
+                    attachWebcamTrackMonitoring(webcamStream, "start_page");
                     if (!webcamEnabledLogged) {
                         webcamEnabledLogged = true;
                         sendViolation("Webcam preview enabled", { video_track_count: webcamStream.getVideoTracks().length });
@@ -841,6 +1217,7 @@ function setupExamProctoring() {
     if (!isExamPath()) return;
     proctoringActive = true;
     setNavInProgress(false); setFullscreenRequired(true);
+    syncFullscreenStateTracking();
     logSessionStartIfNeeded();
     startPeriodicScreenshotCapture(); startContentChangeDetection(); startMultiMonitorDetection();
 
@@ -881,6 +1258,7 @@ function setupExamProctoring() {
 
             // Step 3: Acquire webcam (system dialog — must happen BEFORE fullscreen)
             if (webcamStream && webcamStream.active) {
+                attachWebcamTrackMonitoring(webcamStream, "exam_setup_existing_stream");
                 const dock = getOrCreateWebcamDock();
                 dock.style.display = "block";
                 const video = document.getElementById(WEBCAM_VIDEO_ID);
@@ -895,6 +1273,7 @@ function setupExamProctoring() {
                         video: { facingMode: "user", width: { ideal: 320 }, height: { ideal: 180 } },
                         audio: false
                     });
+                    attachWebcamTrackMonitoring(webcamStream, "exam_setup_get_user_media");
                     const dock = getOrCreateWebcamDock();
                     dock.style.display = "block";
                     const video = document.getElementById(WEBCAM_VIDEO_ID);
@@ -946,6 +1325,7 @@ function setupExamProctoring() {
         sendViolation("Session page unload", { path: window.location.pathname, warning_count: warningCount, tab_switch_count: tabSwitchCount, fullscreen_exit_count: fullscreenExitCount, multi_monitor_event_count: multiMonitorEventCount,
             total_outside_fullscreen_ms: outsideFullscreenTotalMs + (outsideFullscreenStartedAt ? (Date.now() - outsideFullscreenStartedAt) : 0)
         }, true);
+        flushPendingTelemetryWithBeacon(25);
     });
 
     // Block copy — all copy actions blocked exactly like MCQ rounds
@@ -964,6 +1344,7 @@ function setupExamProctoring() {
     document.addEventListener("contextmenu", (e) => {
         e.preventDefault(); rightClickBlockedCount += 1;
         issueWarning("Right click blocked", { right_click_block_count: rightClickBlockedCount }, { incrementWarning: false, bannerMessage: `Right click blocked (${formatCount(rightClickBlockedCount, "time", "times")}). Activity logged.`, bannerTone: "warning" });
+        captureEvidence("right_click_block", { right_click_block_count: rightClickBlockedCount }, true);
     });
 
     // Block text selection — exactly like MCQ rounds
@@ -975,8 +1356,21 @@ function setupExamProctoring() {
 
     document.addEventListener("visibilitychange", () => {
         if (shouldIgnoreProctoringEvent()) return;
-        if (document.hidden) handleTabSwitch("visibility_hidden");
-        else {
+        if (document.hidden) {
+            if (tabVisibilityTimer) {
+                clearTimeout(tabVisibilityTimer);
+            }
+            tabVisibilityTimer = setTimeout(() => {
+                tabVisibilityTimer = null;
+                if (!document.hidden) return;
+                if (shouldIgnoreProctoringEvent()) return;
+                handleTabSwitch("visibility_hidden");
+            }, TAB_SWITCH_VISIBILITY_CONFIRM_MS);
+        } else {
+            if (tabVisibilityTimer) {
+                clearTimeout(tabVisibilityTimer);
+                tabVisibilityTimer = null;
+            }
             document.body.classList.remove("proctoring-warning");
             captureTabReturnEvidence();
         }
@@ -993,6 +1387,10 @@ function setupExamProctoring() {
         }, 350);
     });
     window.addEventListener("focus", () => {
+        if (tabVisibilityTimer) {
+            clearTimeout(tabVisibilityTimer);
+            tabVisibilityTimer = null;
+        }
         if (deferredBlurTimer) { clearTimeout(deferredBlurTimer); deferredBlurTimer = null; }
         document.body.classList.remove("proctoring-warning");
         captureTabReturnEvidence();
@@ -1000,17 +1398,41 @@ function setupExamProctoring() {
     window.addEventListener("resize", () => { checkExtendedDisplay("resize"); });
 
     document.addEventListener("mousemove", (e) => {
-        if (!proctoringActive || shouldIgnoreProctoringEvent() || !isMouseOutsidePrimaryScreen(e)) return;
+        if (!proctoringActive || shouldIgnoreProctoringEvent()) {
+            mouseOutsidePrimaryStreak = 0;
+            mouseOutsidePrimaryWindowStartedAt = 0;
+            return;
+        }
+        if (!isMouseOutsidePrimaryScreen(e)) {
+            mouseOutsidePrimaryStreak = 0;
+            mouseOutsidePrimaryWindowStartedAt = 0;
+            return;
+        }
         const now = Date.now();
+        if ((now - mouseOutsidePrimaryWindowStartedAt) > MOUSE_OFF_PRIMARY_CONFIRMATION_WINDOW_MS) {
+            mouseOutsidePrimaryWindowStartedAt = now;
+            mouseOutsidePrimaryStreak = 1;
+            return;
+        }
+        mouseOutsidePrimaryStreak += 1;
+        if (mouseOutsidePrimaryStreak < MOUSE_OFF_PRIMARY_CONFIRMATION_COUNT) return;
+        mouseOutsidePrimaryStreak = 0;
+        mouseOutsidePrimaryWindowStartedAt = 0;
         if ((now - lastMouseOutsideDetectAt) < TAB_SWITCH_DEBOUNCE_MS) return;
         lastMouseOutsideDetectAt = now;
         handleMultiMonitorDetected("mouse_outside_primary", { screen_x: e.screenX, screen_y: e.screenY });
     }, { passive: true });
 
     document.addEventListener("fullscreenchange", () => {
+        const currentFullscreenState = isInFullscreen();
+        const wasFullscreen = lastFullscreenState;
+        if (currentFullscreenState) hasEnteredFullscreenAtLeastOnce = true;
+        if (currentFullscreenState === wasFullscreen) return;
+        lastFullscreenState = currentFullscreenState;
+
         if (!isFullscreenRequired() || shouldIgnoreProctoringEvent()) return;
-        if (!isInFullscreen()) handleFullscreenExit();
-        else { recordFullscreenRestored(); hideLockOverlay(); }
+        if (!currentFullscreenState && wasFullscreen) handleFullscreenExit();
+        else if (currentFullscreenState && !wasFullscreen) { recordFullscreenRestored(); hideLockOverlay(); }
     });
 }
 
@@ -1018,6 +1440,7 @@ function finalizeFullscreenOnCompletion() {
     if (!IS_COMPLETED_PAGE) return;
     if (outsideFullscreenStartedAt) recordFullscreenRestored();
     sendViolation("Session completed", { warning_count: warningCount, tab_switch_count: tabSwitchCount, fullscreen_exit_count: fullscreenExitCount, total_outside_fullscreen_ms: outsideFullscreenTotalMs }, true);
+    flushPendingTelemetryWithBeacon(25);
     setFullscreenRequired(false); setNavInProgress(false); setSessionFlag(SESSION_START_LOG_KEY, false);
     hideLockOverlay(); disarmFullscreenRecovery();
     stopWebcamPreview({ final: true }); stopScreenCaptureMonitor(); stopPeriodicScreenshotCapture(); stopContentChangeDetection(); stopMultiMonitorDetection();
@@ -1026,6 +1449,7 @@ function finalizeFullscreenOnCompletion() {
 
 /* ── Init ──────────────────────────────────────────── */
 applyPageClassNames();
+setupTelemetryReliabilityHooks();
 setupKeyboardShortcutBlocking();
 setupStartFullscreenGate();
 setupExamProctoring();
@@ -1034,12 +1458,20 @@ finalizeFullscreenOnCompletion();
 window.setupExamProctoring = setupExamProctoring;
 window.requestAppFullscreen = requestAppFullscreen;
 window.ensureProctoringReady = ensureProctoringReady;
+window.__proctoringCaptureEvidence = captureEvidence;
+window.__proctoringSendViolation = sendViolation;
+window.__proctoringShowBanner = showBanner;
+window.__proctoringShouldIgnoreProctoringEvent = shouldIgnoreProctoringEvent;
+window.__proctoringGetWebcamVideo = function () {
+    return document.getElementById(WEBCAM_VIDEO_ID);
+};
 
 // Allow coding_flow.js to hand the webcam stream acquired on the start page
 // to the proctoring module so setupExamProctoring() finds it already active.
 window.__proctoringSetWebcam = function (stream) {
     if (!stream || !stream.active) return;
     webcamStream = stream;
+    attachWebcamTrackMonitoring(webcamStream, "start_page_handoff");
     if (!webcamEnabledLogged) {
         webcamEnabledLogged = true;
         sendViolation("Webcam preview enabled", {

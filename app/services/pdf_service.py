@@ -233,6 +233,8 @@ def generate_candidate_pdf(candidate_data: dict) -> str:
     email = candidate_data["email"]
     role = candidate_data["role"]
     rounds = candidate_data.get("rounds", {})
+    proctoring_summary = candidate_data.get("proctoring_summary") or {}
+    plagiarism_summary = candidate_data.get("plagiarism_summary") or {}
     ai_overall_summary = candidate_data.get("ai_overall_summary")
     ai_coding_summary = candidate_data.get("ai_coding_summary")
     if not ai_overall_summary:
@@ -283,6 +285,76 @@ def generate_candidate_pdf(candidate_data: dict) -> str:
     ]))
     elements.append(info_table)
     elements.append(Spacer(1, 4 * mm))
+
+    # ---- Proctoring summary ----
+    elements.append(Paragraph("Proctoring Summary", styles["SectionHead"]))
+    proctor_rows = [
+        ["Tab Switches", str(proctoring_summary.get("tab_switches", 0))],
+        ["Fullscreen Exits", str(proctoring_summary.get("fullscreen_exits", 0))],
+        ["Multi-Monitor Events", str(proctoring_summary.get("multi_monitor_events", 0))],
+        ["Keyboard Shortcuts Blocked", str(proctoring_summary.get("keyboard_shortcuts_blocked", 0))],
+        ["Copy/Paste Blocks", str(proctoring_summary.get("copy_paste_blocks", 0))],
+        ["Right Click Blocks", str(proctoring_summary.get("right_click_blocks", 0))],
+        ["Screenshots Captured", str(proctoring_summary.get("screenshot_captures", 0))],
+        ["Multiple Face Events", str(proctoring_summary.get("multi_face_events", 0))],
+        ["No Face Events", str(proctoring_summary.get("no_face_events", 0))],
+        ["No Face Duration", f"{float(proctoring_summary.get('no_face_duration_seconds', 0) or 0):.1f}s"],
+        ["Attention Deviations", str(proctoring_summary.get("attention_deviation_count", 0))],
+        ["Suspicion Score", str(proctoring_summary.get("suspicion_score", 0))],
+        ["Suspicion Threshold Exceeded", "YES" if proctoring_summary.get("suspicion_threshold_exceeded") else "NO"],
+        ["Suspicion Threshold Events", str(proctoring_summary.get("suspicion_threshold_event_count", 0))],
+    ]
+    proctor_table = Table(proctor_rows, colWidths=[70 * mm, 90 * mm])
+    proctor_table.setStyle(TableStyle([
+        ("FONTNAME", (0, 0), (0, -1), "Helvetica-Bold"),
+        ("FONTSIZE", (0, 0), (-1, -1), 9),
+        ("TEXTCOLOR", (0, 0), (-1, -1), AZIRO_DARK),
+        ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#fffdf6")),
+        ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#e7dcbf")),
+        ("TOPPADDING", (0, 0), (-1, -1), 4),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+    ]))
+    elements.append(proctor_table)
+    elements.append(Spacer(1, 6 * mm))
+
+    # ---- Plagiarism summary ----
+    elements.append(Paragraph("Code Similarity Summary", styles["SectionHead"]))
+    plagiarism_rows = [
+        ["Risk Level", str(plagiarism_summary.get("risk_level", "LOW"))],
+        ["Risk Score", f"{float(plagiarism_summary.get('risk_score', 0) or 0):.2f}"],
+        ["Max Similarity", f"{float(plagiarism_summary.get('max_similarity', 0) or 0):.2f}%"],
+        ["Matched Submissions", str(plagiarism_summary.get("matched_submissions", 0))],
+        ["Compared Submissions", str(plagiarism_summary.get("compared_submissions", 0))],
+    ]
+    plagiarism_table = Table(plagiarism_rows, colWidths=[70 * mm, 90 * mm])
+    plagiarism_table.setStyle(TableStyle([
+        ("FONTNAME", (0, 0), (0, -1), "Helvetica-Bold"),
+        ("FONTSIZE", (0, 0), (-1, -1), 9),
+        ("TEXTCOLOR", (0, 0), (-1, -1), AZIRO_DARK),
+        ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#f5f9ff")),
+        ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#d4e1f5")),
+        ("TOPPADDING", (0, 0), (-1, -1), 4),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+    ]))
+    elements.append(plagiarism_table)
+
+    top_matches = plagiarism_summary.get("top_matches") or []
+    if top_matches:
+        elements.append(Spacer(1, 3 * mm))
+        top_text = []
+        for idx, match in enumerate(top_matches[:3], start=1):
+            match_email = str(match.get("email", "unknown"))
+            similarity = float(match.get("similarity", 0) or 0)
+            top_text.append(f"{idx}. {match_email} ({similarity:.2f}%)")
+        elements.append(
+            Paragraph(
+                "Top Similar Matches: " + "; ".join(top_text),
+                styles["CellText"],
+            )
+        )
+    elements.append(Spacer(1, 6 * mm))
 
     # ---- Round scores table ----
     elements.append(Paragraph("Round-wise Performance", styles["SectionHead"]))

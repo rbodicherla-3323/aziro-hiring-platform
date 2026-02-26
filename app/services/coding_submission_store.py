@@ -21,6 +21,9 @@ def save_coding_submission(
     question_title: str,
     question_text: str,
     submitted_code: str,
+    starter_code: str = "",
+    role_key: str = "",
+    batch_id: str = "",
 ):
     STORE_FILE.parent.mkdir(parents=True, exist_ok=True)
     record = {
@@ -34,6 +37,9 @@ def save_coding_submission(
         "question_title": question_title,
         "question_text": question_text,
         "submitted_code": submitted_code,
+        "starter_code": starter_code,
+        "role_key": role_key,
+        "batch_id": batch_id,
     }
     with STORE_FILE.open("a", encoding="utf-8") as f:
         f.write(json.dumps(record, ensure_ascii=False) + "\n")

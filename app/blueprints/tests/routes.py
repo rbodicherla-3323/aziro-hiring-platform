@@ -6,6 +6,7 @@ Also provides API endpoints for resume/JD extraction (from nikitha_local).
 import os
 import re
 import io
+import importlib
 
 from flask import render_template, session, request, jsonify
 from werkzeug.utils import secure_filename
@@ -48,17 +49,23 @@ def extract_name_from_text(text):
     return None
 
 
+def _extract_text_from_pdf(file):
+    """Extract text from uploaded PDF using pdfplumber if available."""
+    pdfplumber = importlib.import_module("pdfplumber")
+    pdf_file = io.BytesIO(file.read())
+    with pdfplumber.open(pdf_file) as pdf:
+        text = ""
+        for page in pdf.pages:
+            text += page.extract_text() or ""
+    return text
+
+
 def extract_resume_data(file):
     """Extract email and name from resume file."""
     try:
         if file.filename.endswith('.pdf'):
             try:
-                import pdfplumber
-                pdf_file = io.BytesIO(file.read())
-                with pdfplumber.open(pdf_file) as pdf:
-                    text = ""
-                    for page in pdf.pages:
-                        text += page.extract_text() or ""
+                text = _extract_text_from_pdf(file)
             except Exception:
                 return None
         else:
@@ -158,12 +165,7 @@ def extract_jd_role_endpoint():
 
     try:
         if file.filename.endswith('.pdf'):
-            import pdfplumber
-            pdf_file = io.BytesIO(file.read())
-            with pdfplumber.open(pdf_file) as pdf:
-                text = ""
-                for page in pdf.pages:
-                    text += page.extract_text() or ""
+            text = _extract_text_from_pdf(file)
         else:
             text = file.read().decode('utf-8', errors='ignore')
 

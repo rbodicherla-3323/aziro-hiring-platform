@@ -1,10 +1,11 @@
-window.__MCQ_AJAX_FLOW = true;
+window.__MCQ_AJAX_FLOW = false;
 
 (function () {
     function getSessionIdFromPath() {
         const parts = window.location.pathname.split("/").filter(Boolean);
-        if (parts.length >= 3 && parts[0] === "mcq") {
-            return parts[2];
+        const mcqIndex = parts.indexOf("mcq");
+        if (mcqIndex >= 0 && parts.length >= (mcqIndex + 3)) {
+            return parts[mcqIndex + 2];
         }
         return "";
     }
@@ -47,6 +48,8 @@ window.__MCQ_AJAX_FLOW = true;
     if (!page) {
         return;
     }
+
+    window.__MCQ_AJAX_FLOW = true;
 
     const state = {
         sessionId,
