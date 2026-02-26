@@ -378,9 +378,13 @@
                 }
 
                 if (result.failed_count > 0) {
+                    const firstFailure = (result.failures && result.failures.length)
+                        ? (result.failures[0].reason || '')
+                        : '';
+                    const detail = firstFailure ? ` ${firstFailure}` : '';
                     if (typeof showToast === 'function') {
                         showToast(
-                            `Sent ${result.sent_count}/${result.requested_count}. Failed: ${result.failed_count}.`,
+                            `Sent ${result.sent_count}/${result.requested_count}. Failed: ${result.failed_count}.${detail}`,
                             'warning'
                         );
                     }
