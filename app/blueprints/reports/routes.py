@@ -87,7 +87,6 @@ def reports():
             dc.setdefault("plagiarism_summary", blank_plagiarism_summary())
             session_candidates.append(dc)
             session_emails.add(dc.get("email", ""))
-
     return render_template(
         "reports.html",
         session_candidates=session_candidates,
