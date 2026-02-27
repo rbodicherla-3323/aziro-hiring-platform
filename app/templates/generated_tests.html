@@ -168,6 +168,12 @@
         justify-content: center;
     }
 
+    .candidate-card .copy-all-btn {
+        border-radius: 10px;
+        font-size: 0.75rem;
+        font-weight: 700;
+    }
+
     .generated-tests-page .empty-state-card {
         border: 1px dashed #c4d6ee;
         border-radius: 16px;
@@ -254,6 +260,9 @@
                         </div>
                     </div>
                     <div class="d-flex gap-2">
+                        <button class="btn btn-outline-primary btn-sm copyAllBtn copy-all-btn" title="Copy all test links">
+                            <i class="bi bi-clipboard2 me-1"></i>Copy Links
+                        </button>
                         <button class="btn btn-outline-warning btn-sm resendBtn" title="Resend Email">
                             <i class="bi bi-arrow-clockwise"></i>
                         </button>
@@ -261,11 +270,13 @@
                 </div>
 
                 <div class="test-links-grid mt-3">
+                    {% set test_seq = namespace(value=0) %}
                     {% for level in ["L1","L2","L3","L4","L5","L6"] if level in cand.tests %}
                     {% set test = cand.tests[level] %}
-                    <div class="test-link-item">
+                    {% set test_seq.value = test_seq.value + 1 %}
+                    <div class="test-link-item" data-test-label="{{ test.label }}" data-test-url="{{ test.url }}">
                         <div class="test-link-meta">
-                            <span class="test-level-pill">{{ level }}</span>
+                            <span class="test-level-pill">{{ test_seq.value }}</span>
                             <span class="test-link-label" title="{{ test.label }}">{{ test.label }}</span>
                         </div>
                         <div class="test-link-actions">
@@ -311,6 +322,118 @@
     const candidateChecks = document.querySelectorAll(".candidateCheck");
     const selectedCountEl = document.getElementById("selectedCount");
 
+    function copyTextToClipboard(text) {
+        const value = String(text || "");
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            return navigator.clipboard.writeText(value);
+        }
+        return new Promise((resolve, reject) => {
+            try {
+                const ta = document.createElement("textarea");
+                ta.value = value;
+                ta.setAttribute("readonly", "");
+                ta.style.position = "fixed";
+                ta.style.opacity = "0";
+                document.body.appendChild(ta);
+                ta.focus();
+                ta.select();
+                const ok = document.execCommand("copy");
+                document.body.removeChild(ta);
+                if (ok) resolve();
+                else reject(new Error("Copy command failed"));
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    function escapeHtml(value) {
+        return String(value || "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+    }
+
+    function buildCandidateLinksTable(card) {
+        const rows = Array.from(card.querySelectorAll(".test-link-item"))
+            .map((node, idx) => {
+                const label = (node.getAttribute("data-test-label") || "").trim();
+                const url = (node.getAttribute("data-test-url") || "").trim();
+                if (!label || !url) return null;
+                return {
+                    index: String(idx + 1),
+                    label,
+                    url,
+                };
+            })
+            .filter(Boolean);
+
+        const noHeader = "No";
+        const nameHeader = "Test Name";
+        const urlHeader = "Test Link";
+
+        const noWidth = Math.max(noHeader.length, ...rows.map(r => r.index.length));
+        const nameWidth = Math.max(nameHeader.length, ...rows.map(r => r.label.length));
+        const lineHeader = `${noHeader.padEnd(noWidth)} | ${nameHeader.padEnd(nameWidth)} | ${urlHeader}`;
+        const lineSep = `${"-".repeat(noWidth)}-+-${"-".repeat(nameWidth)}-+-${"-".repeat(urlHeader.length)}`;
+
+        const textLines = [];
+        textLines.push(lineHeader);
+        textLines.push(lineSep);
+        rows.forEach(row => {
+            textLines.push(`${row.index.padEnd(noWidth)} | ${row.label.padEnd(nameWidth)} | ${row.url}`);
+        });
+
+        const htmlRows = rows.map(row => (
+            `<tr>` +
+            `<td style="border:1px solid #d8e5f5;padding:7px 10px;text-align:center;background:#ffffff;">${escapeHtml(row.index)}</td>` +
+            `<td style="border:1px solid #d8e5f5;padding:7px 10px;background:#ffffff;">${escapeHtml(row.label)}</td>` +
+            `<td style="border:1px solid #d8e5f5;padding:7px 10px;background:#ffffff;">` +
+            `<a href="${escapeHtml(row.url)}" style="color:#0d3b66;text-decoration:none;">${escapeHtml(row.url)}</a>` +
+            `</td>` +
+            `</tr>`
+        )).join("");
+
+        const html = (
+            `<div style="font-family:Segoe UI,Arial,sans-serif;font-size:13px;color:#0f172a;">` +
+            `<table style="border-collapse:separate;border-spacing:0 6px;width:100%;font-size:13px;">` +
+            `<thead>` +
+            `<tr style="background:#f1f6fd;">` +
+            `<th style="border:1px solid #d8e5f5;padding:6px 8px;text-align:center;">No</th>` +
+            `<th style="border:1px solid #d8e5f5;padding:6px 8px;text-align:left;">Test Name</th>` +
+            `<th style="border:1px solid #d8e5f5;padding:6px 8px;text-align:left;">Test Link</th>` +
+            `</tr>` +
+            `</thead>` +
+            `<tbody>${htmlRows}</tbody>` +
+            `</table>` +
+            `</div>`
+        );
+
+        return {
+            rows,
+            text: textLines.join("\n"),
+            html,
+        };
+    }
+
+    async function copyTableToClipboard(text, html) {
+        if (
+            navigator.clipboard &&
+            navigator.clipboard.write &&
+            typeof ClipboardItem !== "undefined"
+        ) {
+            const item = new ClipboardItem({
+                "text/plain": new Blob([String(text || "")], { type: "text/plain" }),
+                "text/html": new Blob([String(html || "")], { type: "text/html" }),
+            });
+            await navigator.clipboard.write([item]);
+            return;
+        }
+        await copyTextToClipboard(text);
+    }
+
     function updateSelectedCount() {
         const count = document.querySelectorAll(".candidateCheck:checked").length;
         selectedCountEl.textContent = `(${count} selected)`;
@@ -329,11 +452,42 @@
     });
 
     document.querySelectorAll(".copyBtn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            navigator.clipboard.writeText(btn.dataset.link);
+        btn.addEventListener("click", async () => {
+            try {
+                await copyTextToClipboard(btn.dataset.link);
+            } catch (error) {
+                if (typeof showToast === 'function') showToast('Failed to copy link', 'danger');
+                return;
+            }
             btn.innerHTML = '<i class="bi bi-check"></i>';
             if (typeof showToast === 'function') showToast('Link copied to clipboard!', 'success');
             setTimeout(() => btn.innerHTML = '<i class="bi bi-clipboard"></i>', 1500);
+        });
+    });
+
+    document.querySelectorAll(".copyAllBtn").forEach(btn => {
+        btn.addEventListener("click", async () => {
+            const card = btn.closest(".candidate-card");
+            if (!card) return;
+            const payload = buildCandidateLinksTable(card);
+
+            if (!payload.rows.length) {
+                if (typeof showToast === 'function') showToast('No test links to copy.', 'warning');
+                return;
+            }
+
+            const originalHtml = btn.innerHTML;
+            try {
+                await copyTableToClipboard(payload.text, payload.html);
+                btn.innerHTML = '<i class="bi bi-check2 me-1"></i>Copied';
+                if (typeof showToast === 'function') showToast('Test links copied in table format!', 'success');
+            } catch (error) {
+                if (typeof showToast === 'function') showToast('Failed to copy test links.', 'danger');
+            } finally {
+                setTimeout(() => {
+                    btn.innerHTML = originalHtml;
+                }, 1600);
+            }
         });
     });
 

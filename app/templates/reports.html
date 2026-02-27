@@ -88,31 +88,6 @@
     .stat-pill .stat-value { font-size:1.1rem; font-weight:700; color:#0d3b66; }
     .stat-pill .stat-label { font-size:0.7rem; color:#6c757d; text-transform:uppercase; letter-spacing:0.5px; }
 
-    /* Score table */
-    .score-table { margin:0; font-size:0.85rem; }
-    .score-table thead th { background:linear-gradient(135deg,#0d3b66 0%,#1f6feb 100%); color:#fff; font-weight:600; padding:10px 14px; border:none; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.5px; }
-    .score-table tbody td { padding:12px 14px; vertical-align:middle; border-bottom:1px solid #f0f0f0; }
-    .score-table tbody tr:hover { background:#f3f8ff; }
-    .score-progress { height:7px; border-radius:4px; background:#e9ecef; overflow:hidden; min-width:70px; }
-    .score-progress-bar { height:100%; border-radius:4px; }
-    .status-pill { padding:3px 12px; border-radius:16px; font-weight:600; font-size:0.72rem; display:inline-block; text-transform:uppercase; }
-    .status-pass { background:#d4edda; color:#155724; }
-    .status-fail { background:#f8d7da; color:#721c24; }
-    .status-pending { background:#e2e3e5; color:#383d41; }
-
-    .proctoring-summary { padding:10px 20px; background:#fffdf6; border-top:1px solid #f4ead0; border-bottom:1px solid #f4ead0; }
-    .proctoring-title { display:block; font-size:0.72rem; font-weight:700; color:#7a5a11; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:7px; }
-    .proctoring-chips { display:flex; flex-wrap:wrap; gap:7px; }
-    .proctoring-chip { display:inline-flex; align-items:center; padding:3px 9px; border-radius:999px; border:1px solid #e7dcbf; background:#fff8e8; color:#5f4a18; font-size:0.72rem; font-weight:600; }
-    .proctoring-chip.alert { border-color:#f5c6cb; background:#fdecef; color:#a71d2a; }
-    .plagiarism-summary { padding:10px 20px; background:#f5f9ff; border-top:1px solid #d9e6fb; border-bottom:1px solid #d9e6fb; }
-    .plagiarism-title { display:block; font-size:0.72rem; font-weight:700; color:#1b4f9b; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:7px; }
-    .plagiarism-chips { display:flex; flex-wrap:wrap; gap:7px; }
-    .plagiarism-chip { display:inline-flex; align-items:center; padding:3px 9px; border-radius:999px; border:1px solid #cfe0fb; background:#eef5ff; color:#17407e; font-size:0.72rem; font-weight:600; }
-    .plagiarism-chip.risk-high { border-color:#f5c6cb; background:#fdecef; color:#a71d2a; }
-    .plagiarism-chip.risk-medium { border-color:#ffe2b5; background:#fff4df; color:#8a4c00; }
-    .plagiarism-chip.risk-low { border-color:#c5e8d0; background:#eaf8ef; color:#1f6b3a; }
-
     /* Action icons */
     .report-actions { display:inline-flex; gap:6px; align-items:center; }
     .report-actions .icon-btn { width:32px; height:32px; border-radius:10px; border:1.5px solid transparent; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.2s; text-decoration:none; font-size:0.82rem; }
@@ -210,101 +185,6 @@
                     </div>
                 </div>
 
-                {% set ps = cand.proctoring_summary or {} %}
-                <div class="proctoring-summary">
-                    <span class="proctoring-title">Proctoring Summary</span>
-                    <div class="proctoring-chips">
-                        <span class="proctoring-chip">Tab: {{ ps.tab_switches or 0 }}</span>
-                        <span class="proctoring-chip">Fullscreen Exits: {{ ps.fullscreen_exits or 0 }}</span>
-                        <span class="proctoring-chip">Multi-Monitor: {{ ps.multi_monitor_events or 0 }}</span>
-                        <span class="proctoring-chip">Shortcuts: {{ ps.keyboard_shortcuts_blocked or 0 }}</span>
-                        <span class="proctoring-chip">Copy/Paste: {{ ps.copy_paste_blocks or 0 }}</span>
-                        <span class="proctoring-chip">Right Click: {{ ps.right_click_blocks or 0 }}</span>
-                        <span class="proctoring-chip">Screenshots: {{ ps.screenshot_captures or 0 }}</span>
-                        <span class="proctoring-chip">Multi-Face: {{ ps.multi_face_events or 0 }}</span>
-                        <span class="proctoring-chip">No Face: {{ ps.no_face_events or 0 }}</span>
-                        <span class="proctoring-chip">No Face Duration: {{ '%.1f'|format(ps.no_face_duration_seconds or 0) }}s</span>
-                        <span class="proctoring-chip">Attention Dev: {{ ps.attention_deviation_count or 0 }}</span>
-                        <span class="proctoring-chip">Suspicion: {{ ps.suspicion_score or 0 }}</span>
-                        <span class="proctoring-chip {% if ps.suspicion_threshold_exceeded %}alert{% endif %}">
-                            Suspicion Threshold Exceeded: {% if ps.suspicion_threshold_exceeded %}Yes{% else %}No{% endif %}{% if ps.suspicion_threshold_event_count %} ({{ ps.suspicion_threshold_event_count }}){% endif %}
-                        </span>
-                    </div>
-                </div>
-
-                {% set pl = cand.plagiarism_summary or {} %}
-                {% set top_match = pl.top_matches|default([])|first %}
-                <div class="plagiarism-summary">
-                    <span class="plagiarism-title">Code Similarity Summary</span>
-                    <div class="plagiarism-chips">
-                        <span class="plagiarism-chip {% if (pl.risk_level or 'LOW') == 'HIGH' %}risk-high{% elif (pl.risk_level or 'LOW') == 'MEDIUM' %}risk-medium{% else %}risk-low{% endif %}">
-                            Risk: {{ pl.risk_level or 'LOW' }}
-                        </span>
-                        <span class="plagiarism-chip">Risk Score: {{ '%.2f'|format(pl.risk_score or 0) }}</span>
-                        <span class="plagiarism-chip">Max Similarity: {{ '%.2f'|format(pl.max_similarity or 0) }}%</span>
-                        <span class="plagiarism-chip">Matches: {{ pl.matched_submissions or 0 }}/{{ pl.compared_submissions or 0 }}</span>
-                        {% if top_match %}
-                        <span class="plagiarism-chip">Top Match: {{ top_match.email }} ({{ '%.2f'|format(top_match.similarity or 0) }}%)</span>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <!-- Round-by-round scores -->
-                {% if cand.rounds %}
-                <div class="table-responsive">
-                <table class="table score-table align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th style="width:22%;">Round</th>
-                            <th style="width:10%;">Score</th>
-                            <th style="width:24%;">Percentage</th>
-                            <th style="width:12%;">Pass Mark</th>
-                            <th style="width:10%;">Attempted</th>
-                            <th style="width:12%;">Time</th>
-                            <th style="width:10%;">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for rk, r in cand.rounds.items() %}
-                        {% if r.status == "Not Attempted" %}
-                        <tr>
-                            <td><span class="fw-semibold" style="color:#1d3557;">{{ r.round_label }}</span><div style="font-size:0.72rem;color:#aaa;">{{ rk }}</div></td>
-                            <td colspan="5" class="text-center text-muted" style="font-style:italic;"><i class="fas fa-minus-circle me-1"></i>Not Attempted</td>
-                            <td><span class="status-pill status-pending">Pending</span></td>
-                        </tr>
-                        {% else %}
-                        <tr>
-                            <td><span class="fw-semibold" style="color:#1d3557;">{{ r.round_label }}</span><div style="font-size:0.72rem;color:#aaa;">{{ rk }}</div></td>
-                            <td><span class="fw-bold" style="font-size:0.95rem;color:#0d3b66;">{{ r.correct }}</span><span class="text-muted"> / {{ r.total }}</span></td>
-                            <td>
-                                <div class="d-flex align-items-center gap-2">
-                                    <div class="score-progress flex-grow-1">
-                                        <div class="score-progress-bar" style="width:{{ r.percentage }}%; background:{% if r.percentage >= r.pass_threshold %}linear-gradient(90deg,#2a9d8f,#52c7b8){% elif r.percentage >= (r.pass_threshold - 10) %}linear-gradient(90deg,#f4a261,#f7c99e){% else %}linear-gradient(90deg,#d62828,#e76f51){% endif %};"></div>
-                                    </div>
-                                    <span class="fw-bold" style="min-width:40px; color:{% if r.percentage >= r.pass_threshold %}#2a9d8f{% elif r.percentage >= (r.pass_threshold - 10) %}#e67e22{% else %}#d62828{% endif %};">{{ r.percentage }}%</span>
-                                </div>
-                            </td>
-                            <td><span class="text-muted fw-semibold">&ge; {{ r.pass_threshold }}%</span></td>
-                            <td>{{ r.attempted }} / {{ r.total }}</td>
-                            <td><span style="color:#e76f51;font-weight:600;"><i class="fas fa-clock me-1"></i>{{ (r.time_taken_seconds // 60) }}m {{ (r.time_taken_seconds % 60) }}s</span></td>
-                            <td>
-                                {% if r.status == 'PASS' %}
-                                    <span class="status-pill status-pass"><i class="fas fa-check me-1"></i>Pass</span>
-                                {% else %}
-                                    <span class="status-pill status-fail"><i class="fas fa-times me-1"></i>Fail</span>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                    </tbody>
-                </table>
-                </div>
-                {% else %}
-                <div class="text-center text-muted py-3" style="font-size:0.85rem;">
-                    <i class="fas fa-hourglass-half me-1"></i> No rounds attempted yet
-                </div>
-                {% endif %}
             </div>
             {% endfor %}
         {% else %}
