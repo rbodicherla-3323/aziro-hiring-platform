@@ -30,6 +30,8 @@ from app.services.user_token_store import (
     get_valid_graph_delegated_token_from_session,
 )
 
+APTITUDE_ENABLED_ROLE_KEYS = {"python_entry", "java_entry", "js_entry"}
+
 
 # ────────────────────────────────────────────
 # Helpers
@@ -194,10 +196,6 @@ def create_test():
     emails = request.form.getlist("email[]")
     roles = request.form.getlist("role[]")
     domains = request.form.getlist("domain[]")
-    aptitude_enabled_values = request.form.getlist("aptitude_enabled[]")
-    if not aptitude_enabled_values:
-        # Backward compatibility with older form field name.
-        aptitude_enabled_values = request.form.getlist("aptitude_optional[]")
 
     # Get file uploads (resume & JD)
     resume_files = request.files.getlist("resume[]")
@@ -218,12 +216,6 @@ def create_test():
         email = emails[i].strip()
         role_label = roles[i].strip()
         domain = domains[i].strip() if i < len(domains) else "None"
-        aptitude_enabled_raw = (
-            aptitude_enabled_values[i].strip().lower()
-            if i < len(aptitude_enabled_values)
-            else "yes"
-        )
-        aptitude_enabled = aptitude_enabled_raw in ("yes", "true", "1")
 
         # Save uploaded files if present
         resume_path = None
@@ -243,6 +235,7 @@ def create_test():
             flash(f"Unknown role: {role_label}", "warning")
             continue
 
+        aptitude_enabled = role_key in APTITUDE_ENABLED_ROLE_KEYS
         role_config = ROLE_ROUND_MAPPING.get(role_key, {})
         display_map = ROUND_DISPLAY_MAPPING.get(role_key, {})
 
