@@ -54,13 +54,6 @@ def reports():
                 },
             })
 
-    summaries_by_email = build_proctoring_summary_by_email({c.get("email", "") for c in session_candidates})
-    plagiarism_by_email = build_plagiarism_summary_by_candidates(session_candidates)
-    for candidate in session_candidates:
-        email_key = str(candidate.get("email", "")).strip().lower()
-        candidate["proctoring_summary"] = summaries_by_email.get(email_key, blank_proctoring_summary())
-        candidate["plagiarism_summary"] = plagiarism_by_email.get(email_key, blank_plagiarism_summary())
-
     return render_template(
         "reports.html",
         session_candidates=session_candidates,
