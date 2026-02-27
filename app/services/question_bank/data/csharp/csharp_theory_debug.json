@@ -1,0 +1,842 @@
+[
+  {
+    "question": "In C#, what is the key difference between 'var' and 'dynamic'?",
+    "options": [
+      "'var' is resolved at compile time, while 'dynamic' is resolved at runtime",
+      "Both are resolved only at runtime",
+      "'dynamic' is strongly typed, while 'var' is not",
+      "'var' can store any type changes at runtime automatically"
+    ],
+    "correct_answer": "'var' is resolved at compile time, while 'dynamic' is resolved at runtime",
+    "topic": "C# Fundamentals",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Why is String considered immutable in C#?",
+    "options": [
+      "Because strings cannot contain numbers",
+      "Because every modification creates a new string object",
+      "Because string size is fixed by CLR metadata",
+      "Because strings are stored only on stack memory"
+    ],
+    "correct_answer": "Because every modification creates a new string object",
+    "topic": "C# Fundamentals",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which statement about value types and reference types is correct?",
+    "options": [
+      "Structs are reference types and classes are value types",
+      "Both structs and classes are value types",
+      "Structs are value types and classes are reference types",
+      "Both structs and classes are reference types"
+    ],
+    "correct_answer": "Structs are value types and classes are reference types",
+    "topic": "C# Fundamentals",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does the nullable operator '?' on a value type indicate (for example, int?)?",
+    "options": [
+      "The value is always required",
+      "The value can hold null in addition to normal value-type values",
+      "The value is read-only",
+      "The value is dynamically typed"
+    ],
+    "correct_answer": "The value can hold null in addition to normal value-type values",
+    "topic": "C# Fundamentals",
+    "difficulty": "easy"
+  },
+  {
+    "question": "When should you choose an interface over an abstract class?",
+    "options": [
+      "When you need multiple inheritance of behavior contracts",
+      "When you need shared state fields",
+      "When you need constructors",
+      "When you must block implementation in derived classes"
+    ],
+    "correct_answer": "When you need multiple inheritance of behavior contracts",
+    "topic": "OOP",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the main purpose of the 'sealed' keyword on a class?",
+    "options": [
+      "To allow only internal access",
+      "To prevent inheritance from that class",
+      "To force constructor injection",
+      "To make methods static automatically"
+    ],
+    "correct_answer": "To prevent inheritance from that class",
+    "topic": "OOP",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which keyword is required in the base class to allow overriding in derived classes?",
+    "options": [
+      "new",
+      "override",
+      "virtual",
+      "sealed"
+    ],
+    "correct_answer": "virtual",
+    "topic": "OOP",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the difference between 'override' and 'new' when redefining a member?",
+    "options": [
+      "'override' participates in polymorphism; 'new' hides the base member",
+      "'new' participates in polymorphism; 'override' hides the base member",
+      "Both are identical in behavior",
+      "Both require the base method to be sealed"
+    ],
+    "correct_answer": "'override' participates in polymorphism; 'new' hides the base member",
+    "topic": "OOP",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "In a class constructor, what does 'base(...)' do?",
+    "options": [
+      "Calls a static constructor",
+      "Calls a method named base",
+      "Invokes the base class constructor",
+      "Initializes all properties automatically"
+    ],
+    "correct_answer": "Invokes the base class constructor",
+    "topic": "OOP",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is a practical benefit of using 'record' types in modern C#?",
+    "options": [
+      "They always allocate on stack",
+      "They provide value-based equality by default",
+      "They remove the need for constructors",
+      "They cannot be immutable"
+    ],
+    "correct_answer": "They provide value-based equality by default",
+    "topic": "C# Features",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the key difference between IEnumerable<T> and IQueryable<T>?",
+    "options": [
+      "IEnumerable always executes in database; IQueryable always executes in memory",
+      "IQueryable can translate expressions to data source queries; IEnumerable works in-memory",
+      "IEnumerable supports async; IQueryable does not",
+      "There is no difference"
+    ],
+    "correct_answer": "IQueryable can translate expressions to data source queries; IEnumerable works in-memory",
+    "topic": "LINQ",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "LINQ queries are generally executed when:",
+    "options": [
+      "They are defined",
+      "The application starts",
+      "They are enumerated",
+      "The class is loaded"
+    ],
+    "correct_answer": "They are enumerated",
+    "topic": "LINQ",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which operation forces immediate execution of a LINQ query?",
+    "options": [
+      "Where(...)",
+      "Select(...)",
+      "OrderBy(...)",
+      "ToList()"
+    ],
+    "correct_answer": "ToList()",
+    "topic": "LINQ",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the difference between First() and FirstOrDefault()?",
+    "options": [
+      "FirstOrDefault throws if no element exists, First returns null",
+      "First throws if no element exists, FirstOrDefault returns default value",
+      "Both throw on empty sequence",
+      "Both always return null on empty sequence"
+    ],
+    "correct_answer": "First throws if no element exists, FirstOrDefault returns default value",
+    "topic": "LINQ",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Use of SelectMany in LINQ is mainly for:",
+    "options": [
+      "Sorting multiple lists",
+      "Flattening nested collections into a single sequence",
+      "Grouping records by key",
+      "Removing duplicate records only"
+    ],
+    "correct_answer": "Flattening nested collections into a single sequence",
+    "topic": "LINQ",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "For checking whether any element exists in a collection, which is usually more efficient?",
+    "options": [
+      "Count() > 0",
+      "Any()",
+      "First() != null",
+      "Select(x => x).Count() > 0"
+    ],
+    "correct_answer": "Any()",
+    "topic": "Collections",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which method safely reads a value from Dictionary<TKey, TValue> without throwing if key is missing?",
+    "options": [
+      "GetValue()",
+      "TryGetValue(...)",
+      "ReadOrDefault(...)",
+      "ContainsValue(...)"
+    ],
+    "correct_answer": "TryGetValue(...)",
+    "topic": "Collections",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the difference between List<T>.Count and List<T>.Capacity?",
+    "options": [
+      "Count is allocated size; Capacity is number of elements currently stored",
+      "Count is current elements; Capacity is allocated internal storage",
+      "Both always have same value",
+      "Capacity is only available for arrays"
+    ],
+    "correct_answer": "Count is current elements; Capacity is allocated internal storage",
+    "topic": "Collections",
+    "difficulty": "easy"
+  },
+  {
+    "question": "In C#, what does the 'using' statement (or 'using var') primarily ensure?",
+    "options": [
+      "Automatic garbage collection immediately",
+      "Object is pinned in memory",
+      "IDisposable resources are disposed deterministically",
+      "Code runs asynchronously"
+    ],
+    "correct_answer": "IDisposable resources are disposed deterministically",
+    "topic": "Resource Management",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Given: using var stream = File.OpenRead(path); When is stream disposed?",
+    "options": [
+      "Immediately after declaration",
+      "At end of the current scope",
+      "Only on GC finalization",
+      "When the method starts"
+    ],
+    "correct_answer": "At end of the current scope",
+    "topic": "Resource Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "Which statement about finally block is correct?",
+    "options": [
+      "It runs only if no exception occurs",
+      "It runs only when an exception occurs",
+      "It generally runs whether or not exception occurs",
+      "It runs only for checked exceptions"
+    ],
+    "correct_answer": "It generally runs whether or not exception occurs",
+    "topic": "Exceptions",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Why is catching System.Exception everywhere usually discouraged?",
+    "options": [
+      "It improves performance too much",
+      "It can hide real bugs and make handling too broad",
+      "It is invalid C# syntax",
+      "It prevents logging"
+    ],
+    "correct_answer": "It can hide real bugs and make handling too broad",
+    "topic": "Exceptions",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does the 'throw;' statement (without exception variable) inside a catch block do?",
+    "options": [
+      "Throws a new exception and resets stack trace",
+      "Rethrows original exception preserving stack trace",
+      "Suppresses the exception",
+      "Throws only in debug mode"
+    ],
+    "correct_answer": "Rethrows original exception preserving stack trace",
+    "topic": "Exceptions",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the behavior of int division in C# for 5 / 2?",
+    "options": [
+      "2.5",
+      "2",
+      "3",
+      "Compilation error"
+    ],
+    "correct_answer": "2",
+    "topic": "Debugging",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Debug this: int result = total / count; sometimes crashes. Most likely issue?",
+    "options": [
+      "Overflow on all divisions",
+      "NullReferenceException always",
+      "DivideByZeroException when count is 0",
+      "InvalidCastException always"
+    ],
+    "correct_answer": "DivideByZeroException when count is 0",
+    "topic": "Debugging",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Debug this code: List<int> nums = null; nums.Add(1); Which exception occurs?",
+    "options": [
+      "InvalidOperationException",
+      "IndexOutOfRangeException",
+      "NullReferenceException",
+      "FormatException"
+    ],
+    "correct_answer": "NullReferenceException",
+    "topic": "Debugging",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Debug this: for (int i = 0; i <= arr.Length; i++) sum += arr[i]; What is wrong?",
+    "options": [
+      "The loop must start at 1",
+      "It should use i < arr.Length to avoid IndexOutOfRangeException",
+      "arr.Length cannot be used in loops",
+      "sum must be double"
+    ],
+    "correct_answer": "It should use i < arr.Length to avoid IndexOutOfRangeException",
+    "topic": "Debugging",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What happens if you modify a List<T> during foreach iteration over the same list?",
+    "options": [
+      "It is always safe",
+      "It silently skips modified items",
+      "It throws InvalidOperationException",
+      "It duplicates the list automatically"
+    ],
+    "correct_answer": "It throws InvalidOperationException",
+    "topic": "Debugging",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "Which is the correct return type for an async method that returns a value?",
+    "options": [
+      "void",
+      "Task<T>",
+      "T only",
+      "IAsyncResult"
+    ],
+    "correct_answer": "Task<T>",
+    "topic": "Async/Await",
+    "difficulty": "easy"
+  },
+  {
+    "question": "When is 'async void' generally acceptable?",
+    "options": [
+      "For repository methods",
+      "For controller actions returning data",
+      "For event handlers",
+      "For all async methods"
+    ],
+    "correct_answer": "For event handlers",
+    "topic": "Async/Await",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What does Task.WhenAll(tasks) do?",
+    "options": [
+      "Runs tasks one by one",
+      "Waits for all tasks to complete",
+      "Cancels all tasks automatically",
+      "Runs only the first task"
+    ],
+    "correct_answer": "Waits for all tasks to complete",
+    "topic": "Async/Await",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Why is using .Result or .Wait() on async tasks risky in UI/request contexts?",
+    "options": [
+      "It can cause deadlocks and thread blocking",
+      "It makes execution always faster",
+      "It converts Task to ValueTask",
+      "It automatically retries failed tasks"
+    ],
+    "correct_answer": "It can cause deadlocks and thread blocking",
+    "topic": "Async/Await",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the purpose of ConfigureAwait(false) in library code?",
+    "options": [
+      "Forces code to resume on original context",
+      "Avoids capturing synchronization context for continuation",
+      "Disables exceptions in async methods",
+      "Makes task run synchronously"
+    ],
+    "correct_answer": "Avoids capturing synchronization context for continuation",
+    "topic": "Async/Await",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "In C#, what does the null-coalescing operator '??' do?",
+    "options": [
+      "Checks for type compatibility",
+      "Returns left operand if not null, otherwise right operand",
+      "Throws if left operand is null",
+      "Converts null to empty string always"
+    ],
+    "correct_answer": "Returns left operand if not null, otherwise right operand",
+    "topic": "C# Fundamentals",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does 'x ??= value' mean?",
+    "options": [
+      "Always assign value to x",
+      "Assign value to x only when x is null",
+      "Compare x and value for equality",
+      "Assign null to x if value is null"
+    ],
+    "correct_answer": "Assign value to x only when x is null",
+    "topic": "C# Fundamentals",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does the null-conditional operator '?.' do?",
+    "options": [
+      "Throws NullReferenceException immediately",
+      "Skips member access and returns null if left side is null",
+      "Converts null into default(T)",
+      "Works only on strings"
+    ],
+    "correct_answer": "Skips member access and returns null if left side is null",
+    "topic": "C# Fundamentals",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which is true about 'const' and 'readonly'?",
+    "options": [
+      "Both can be assigned at runtime anywhere",
+      "const is compile-time constant; readonly is assigned at declaration or constructor",
+      "readonly is compile-time and const is runtime",
+      "They are interchangeable"
+    ],
+    "correct_answer": "const is compile-time constant; readonly is assigned at declaration or constructor",
+    "topic": "C# Fundamentals",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is boxing in C#?",
+    "options": [
+      "Converting reference type to value type",
+      "Wrapping a value type inside an object/reference",
+      "Creating arrays of objects",
+      "Encrypting values for heap storage"
+    ],
+    "correct_answer": "Wrapping a value type inside an object/reference",
+    "topic": ".NET Runtime",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is unboxing in C#?",
+    "options": [
+      "Converting object/reference back to original value type",
+      "Converting int to string",
+      "Moving object from heap to stack",
+      "Disposing a boxed object"
+    ],
+    "correct_answer": "Converting object/reference back to original value type",
+    "topic": ".NET Runtime",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the difference between casting '(T)obj' and 'obj as T'?",
+    "options": [
+      "'as' throws InvalidCastException on failure",
+      "Explicit cast returns null on failure",
+      "Explicit cast throws on failure; 'as' returns null for reference/nullable types",
+      "Both always return null on failure"
+    ],
+    "correct_answer": "Explicit cast throws on failure; 'as' returns null for reference/nullable types",
+    "topic": "C# Fundamentals",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "Which statement about delegates and events is correct?",
+    "options": [
+      "Events are just aliases with no restrictions",
+      "Events expose add/remove subscription and can only be raised by declaring type",
+      "Delegates cannot reference methods",
+      "Events are faster because they run on separate threads"
+    ],
+    "correct_answer": "Events expose add/remove subscription and can only be raised by declaring type",
+    "topic": "OOP",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is an extension method in C#?",
+    "options": [
+      "A method added by inheriting from System.Object",
+      "A static method that appears like an instance method via 'this' on first parameter",
+      "A virtual method with default implementation",
+      "A runtime-generated method by CLR only"
+    ],
+    "correct_answer": "A static method that appears like an instance method via 'this' on first parameter",
+    "topic": "C# Features",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the purpose of 'partial' class?",
+    "options": [
+      "Load only part of class in memory",
+      "Split class definition across multiple files",
+      "Create optional inheritance sections",
+      "Define private-only members"
+    ],
+    "correct_answer": "Split class definition across multiple files",
+    "topic": "C# Features",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does 'internal' access modifier mean?",
+    "options": [
+      "Accessible only within the same class",
+      "Accessible only in derived classes",
+      "Accessible within the same assembly",
+      "Accessible from everywhere"
+    ],
+    "correct_answer": "Accessible within the same assembly",
+    "topic": "C# Fundamentals",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output?\nstring s = \"abc\";\ns += \"d\";\nConsole.WriteLine(s);",
+    "options": [
+      "abc",
+      "abcd",
+      "Compilation error",
+      "Runtime exception"
+    ],
+    "correct_answer": "abcd",
+    "topic": "Debugging",
+    "difficulty": "easy"
+  },
+  {
+    "question": "For many concatenations in a loop, what is usually preferred over '+' with strings?",
+    "options": [
+      "char[] only",
+      "StringBuilder",
+      "Tuple<string>",
+      "dynamic"
+    ],
+    "correct_answer": "StringBuilder",
+    "topic": "Performance",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the likely issue in this code?\npublic int Factorial(int n) => n * Factorial(n - 1);",
+    "options": [
+      "Invalid multiplication on int",
+      "Missing base condition causes StackOverflowException",
+      "Recursion is not supported in C#",
+      "Method must be static"
+    ],
+    "correct_answer": "Missing base condition causes StackOverflowException",
+    "topic": "Debugging",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the common fix when a LINQ query is executed multiple times unexpectedly?",
+    "options": [
+      "Replace Where with Select",
+      "Materialize results once using ToList/ToArray when needed",
+      "Use dynamic instead of var",
+      "Disable deferred execution globally"
+    ],
+    "correct_answer": "Materialize results once using ToList/ToArray when needed",
+    "topic": "LINQ",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "In ASP.NET Core middleware pipeline, order matters mainly because:",
+    "options": [
+      "Middleware runs alphabetically",
+      "Each middleware can short-circuit or modify request/response before next one",
+      "Only first middleware is executed",
+      "Middleware executes in parallel by default"
+    ],
+    "correct_answer": "Each middleware can short-circuit or modify request/response before next one",
+    "topic": "ASP.NET Core",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "Which DI lifetime creates one instance per HTTP request in ASP.NET Core?",
+    "options": [
+      "Singleton",
+      "Transient",
+      "Scoped",
+      "Static"
+    ],
+    "correct_answer": "Scoped",
+    "topic": "ASP.NET Core",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "Which DI lifetime creates exactly one instance for entire application lifetime?",
+    "options": [
+      "Transient",
+      "Scoped",
+      "Singleton",
+      "PerThread"
+    ],
+    "correct_answer": "Singleton",
+    "topic": "ASP.NET Core",
+    "difficulty": "easy"
+  },
+  {
+    "question": "In Entity Framework Core, what does AsNoTracking() primarily do?",
+    "options": [
+      "Disables SQL generation",
+      "Returns entities without change tracking overhead",
+      "Tracks only primary keys",
+      "Automatically saves changes"
+    ],
+    "correct_answer": "Returns entities without change tracking overhead",
+    "topic": "Entity Framework",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "After modifying tracked entities in EF Core, which call persists changes to database?",
+    "options": [
+      "CommitChanges()",
+      "ApplyUpdates()",
+      "SaveChanges() or SaveChangesAsync()",
+      "Flush()"
+    ],
+    "correct_answer": "SaveChanges() or SaveChangesAsync()",
+    "topic": "Entity Framework",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the primary role of the garbage collector in .NET?",
+    "options": [
+      "Compiles C# code to IL",
+      "Automatically reclaims memory of unreachable managed objects",
+      "Disposes unmanaged handles deterministically",
+      "Prevents all memory leaks"
+    ],
+    "correct_answer": "Automatically reclaims memory of unreachable managed objects",
+    "topic": ".NET Runtime",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which statement is accurate about IDisposable and finalizers?",
+    "options": [
+      "Finalizers run deterministically at scope end",
+      "IDisposable is for deterministic cleanup; finalizer is nondeterministic fallback",
+      "Finalizers are preferred for database connections",
+      "IDisposable is only for value types"
+    ],
+    "correct_answer": "IDisposable is for deterministic cleanup; finalizer is nondeterministic fallback",
+    "topic": "Resource Management",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "Given:\nint x = 10;\nvoid Increment(ref int n) { n++; }\nIncrement(ref x);\nWhat is x?",
+    "options": [
+      "10",
+      "11",
+      "Compilation error",
+      "0"
+    ],
+    "correct_answer": "11",
+    "topic": "C# Fundamentals",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the key difference between 'ref' and 'out' parameters?",
+    "options": [
+      "'out' requires caller variable to be initialized before call",
+      "'ref' does not pass by reference",
+      "'out' must be assigned in callee; 'ref' requires prior initialization",
+      "There is no difference"
+    ],
+    "correct_answer": "'out' must be assigned in callee; 'ref' requires prior initialization",
+    "topic": "C# Fundamentals",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What does the 'params' keyword allow?",
+    "options": [
+      "Passing parameters only by name",
+      "Passing a variable number of arguments",
+      "Defining optional generic constraints",
+      "Creating readonly arrays only"
+    ],
+    "correct_answer": "Passing a variable number of arguments",
+    "topic": "C# Fundamentals",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which code is null-safe and concise for nested properties?",
+    "options": [
+      "customer.Address.City.Length",
+      "customer?.Address?.City",
+      "customer.Address?.City!",
+      "customer!Address!City"
+    ],
+    "correct_answer": "customer?.Address?.City",
+    "topic": "C# Features",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Debug this loop with lambdas:\nvar actions = new List<Action>();\nfor (int i = 0; i < 3; i++) actions.Add(() => Console.WriteLine(i));\nAll actions print 3. Why?",
+    "options": [
+      "Because list is mutable",
+      "Because loop variable is captured by reference-like closure semantics",
+      "Because Action cannot capture local variables",
+      "Because Console.WriteLine always prints last value"
+    ],
+    "correct_answer": "Because loop variable is captured by reference-like closure semantics",
+    "topic": "Debugging",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is a common fix for closure issue in for-loop lambdas?",
+    "options": [
+      "Use dynamic i",
+      "Create a local copy inside loop, then capture that copy",
+      "Use goto labels",
+      "Convert loop to while without changes"
+    ],
+    "correct_answer": "Create a local copy inside loop, then capture that copy",
+    "topic": "Debugging",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "Which statement about pattern matching with 'is' is correct?",
+    "options": [
+      "It only checks exact runtime type and cannot extract variable",
+      "It can both test type and introduce a typed variable",
+      "It works only for primitive types",
+      "It is deprecated"
+    ],
+    "correct_answer": "It can both test type and introduce a typed variable",
+    "topic": "C# Features",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "Why might 'is null' be preferred over '== null' in some cases?",
+    "options": [
+      "It is always faster by 10x",
+      "'is null' is not affected by overloaded == operators",
+      "'== null' is invalid for reference types",
+      "'is null' works only in .NET Framework"
+    ],
+    "correct_answer": "'is null' is not affected by overloaded == operators",
+    "topic": "C# Features",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "Which statement about switch expressions is true?",
+    "options": [
+      "They cannot return values",
+      "They are expression-based and typically include a default arm '_'",
+      "They replace all if statements automatically",
+      "They work only with enums"
+    ],
+    "correct_answer": "They are expression-based and typically include a default arm '_'",
+    "topic": "C# Features",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "In code reviews for C# backend services, why avoid synchronous blocking calls in async flows?",
+    "options": [
+      "Because synchronous calls are not supported in CLR",
+      "They can reduce scalability and tie up request threads",
+      "Because async methods cannot throw exceptions",
+      "Because Task type cannot represent results"
+    ],
+    "correct_answer": "They can reduce scalability and tie up request threads",
+    "topic": "Async/Await",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the best way to check if a string is null or empty?",
+    "options": [
+      "s == null || s == \"\"",
+      "string.IsNullOrEmpty(s)",
+      "s.Length == 0",
+      "s.Equals(\"\")"
+    ],
+    "correct_answer": "string.IsNullOrEmpty(s)",
+    "topic": "C# Fundamentals",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the best way to check if a string is null, empty, or whitespace only?",
+    "options": [
+      "string.IsNullOrWhiteSpace(s)",
+      "string.IsNullOrEmpty(s)",
+      "s.Trim() == \"\"",
+      "s == \" \""
+    ],
+    "correct_answer": "string.IsNullOrWhiteSpace(s)",
+    "topic": "C# Fundamentals",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which collection is ideal for key-value lookups with average O(1) access?",
+    "options": [
+      "List<T>",
+      "Dictionary<TKey, TValue>",
+      "Queue<T>",
+      "LinkedList<T>"
+    ],
+    "correct_answer": "Dictionary<TKey, TValue>",
+    "topic": "Collections",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does this output?\nvar nums = new List<int> {1,2,3};\nvar q = nums.Where(x => x > 1);\nnums.Add(4);\nConsole.WriteLine(q.Count());",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "Throws exception"
+    ],
+    "correct_answer": "3",
+    "topic": "LINQ",
+    "difficulty": "moderate"
+  },
+  {
+    "question": "What is the issue in this code?\nif (obj != null && obj.ToString().Length > 0) { ... }\nWhen obj is null it is safe because:",
+    "options": [
+      "C# short-circuits && and skips second condition",
+      "ToString never throws",
+      "Length on null returns 0",
+      "Compiler rewrites it with try/catch"
+    ],
+    "correct_answer": "C# short-circuits && and skips second condition",
+    "topic": "Debugging",
+    "difficulty": "easy"
+  }
+]

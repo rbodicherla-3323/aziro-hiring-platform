@@ -16,6 +16,8 @@ ROLE_NAME_TO_KEY = {
     "BMC Engineer (2–5 Years)": "bmc_engineer",
     "Staff Engineer – Linux Kernel & Device Driver (3–5 Years)": "linux_kernel_dd",
     "Systems Architect – C++ (3–5 Years)": "systems_architect_cpp",
+    "C# Developer (3–6 Years)": "csharp_dev",
+    "C# Developer (3-6 Years)": "csharp_dev",
 }
 
 

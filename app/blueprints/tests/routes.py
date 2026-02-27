@@ -157,6 +157,16 @@ def extract_jd_role(text):
         "BMC Engineer (2\u20135 Years)": ["bmc", "firmware", "bios"],
         "Staff Engineer \u2013 Linux Kernel & Device Driver (3\u20135 Years)": ["linux kernel", "device driver", "kernel"],
         "Systems Architect \u2013 C++ (3\u20135 Years)": ["c++", "cpp", "systems architect"],
+        "C# Developer (3\u20136 Years)": [
+            "c#",
+            "csharp",
+            ".net",
+            "asp.net",
+            "dotnet",
+            "linq",
+            "entity framework",
+            "debugging",
+        ],
     }
 
     scores = {}
