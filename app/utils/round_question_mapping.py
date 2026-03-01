@@ -126,8 +126,8 @@ ROUND_QUESTION_MAPPING = {
     # C# DEVELOPER (3-6 YEARS)
     # -------------------------------------------------
     "csharp_dev": {
-        "L1": ["csharp/csharp_theory_debug.json"],
-        "L2": ["dev/dev_basics.json"],
+        "L2": ["csharp/csharp_theory_debug.json"],
+        "L3": ["dev/dev_basics.json"],
         "L5": ["soft_skills.json"]
     },
 }
