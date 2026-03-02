@@ -15,30 +15,6 @@ Follow these steps on your Ubuntu VM BEFORE deploying the repo.
 
 
 ──────────────────────────────────────────────────────────────────────────────
- STEP 1b: Install System Packages for Coding Round Execution
-──────────────────────────────────────────────────────────────────────────────
-
-  The coding test rounds execute candidate code server-side.  Install the
-  compilers/runtimes for every language you want to support:
-
-  sudo apt install -y python3 python3-venv nodejs npm default-jdk gcc g++
-
-  Verify each is available:
-
-    python3 --version       # Python 3.x
-    node    --version       # Node.js (v18+ recommended)
-    javac   -version        # Java compiler
-    java    -version        # Java runtime
-    gcc     --version       # C compiler
-    g++     --version       # C++ compiler
-
-  NOTE: On Ubuntu "python" may not exist — the app auto-detects "python3".
-  If you also want the "python" alias:
-
-    sudo apt install -y python-is-python3
-
-
-──────────────────────────────────────────────────────────────────────────────
  STEP 2: Start & Enable PostgreSQL Service
 ──────────────────────────────────────────────────────────────────────────────
 
@@ -164,103 +140,10 @@ Follow these steps on your Ubuntu VM BEFORE deploying the repo.
     export FLASK_APP=run.py
     flask run --host=0.0.0.0 --port=5000
 
-  Production mode (with Supervisor — IMPORTANT: use --no-debug):
+  Production mode (with gunicorn):
 
-    Supervisor config (/supervisor/conf.d/aziro.conf):
-
-      [program:app1]
-      directory=/home/aziro/app/aziro-hiring-platform
-      command=/home/aziro/app/aziro-hiring-platform/venv/bin/python run.py --host=0.0.0.0 --port=9001 --no-debug
-      autostart=true
-      autorestart=true
-      stderr_logfile=/var/log/app1.err.log
-      stdout_logfile=/var/log/app1.out.log
-      user=aziro
-      environment=FLASK_APP="run.py",FLASK_DEBUG="0"
-
-    Repeat for app2 (port 9002), app3 (port 9003), etc.
-    CRITICAL: Always use --no-debug in production.  debug=True causes the
-    Flask reloader to spawn child processes that fight over ports and
-    restart mid-test, breaking proctoring and fullscreen.
-
-
-──────────────────────────────────────────────────────────────────────────────
- STEP 12: Setup Nginx with HTTPS (REQUIRED for Screen Sharing)
-──────────────────────────────────────────────────────────────────────────────
-
-  Browsers BLOCK screen sharing (getDisplayMedia) on plain HTTP unless the
-  origin is localhost.  You MUST serve the app over HTTPS for proctoring
-  to work when candidates connect via LAN IP.
-
-  Option A: Self-signed certificate (for internal/LAN use):
-
-    sudo apt install -y nginx
-    sudo mkdir -p /etc/nginx/ssl
-
-    # Generate self-signed cert (valid 365 days)
-    sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-      -keyout /etc/nginx/ssl/aziro.key \
-      -out /etc/nginx/ssl/aziro.crt \
-      -subj "/CN=ai-hiring-vm"
-
-    # Create Nginx config
-    sudo nano /etc/nginx/sites-available/aziro
-
-    Paste this config:
-
-      upstream aziro_app {
-          server 127.0.0.1:9001;
-          server 127.0.0.1:9002;
-          server 127.0.0.1:9003;
-      }
-
-      server {
-          listen 80;
-          server_name _;
-          return 301 https://$host$request_uri;
-      }
-
-      server {
-          listen 443 ssl;
-          server_name _;
-
-          ssl_certificate     /etc/nginx/ssl/aziro.crt;
-          ssl_certificate_key /etc/nginx/ssl/aziro.key;
-
-          client_max_body_size 50M;
-
-          location / {
-              proxy_pass http://aziro_app;
-              proxy_set_header Host $host;
-              proxy_set_header X-Real-IP $remote_addr;
-              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-              proxy_set_header X-Forwarded-Proto $scheme;
-              proxy_read_timeout 300s;
-          }
-
-          location /static/ {
-              alias /home/aziro/app/aziro-hiring-platform/app/static/;
-              expires 1h;
-          }
-      }
-
-    Enable and restart:
-
-      sudo ln -sf /etc/nginx/sites-available/aziro /etc/nginx/sites-enabled/aziro
-      sudo rm -f /etc/nginx/sites-enabled/default
-      sudo nginx -t
-      sudo systemctl restart nginx
-
-    Candidates access via:  https://<VM-IP>/
-    (They will see a browser warning for the self-signed cert — click
-    "Advanced" → "Proceed" once.  This is fine for internal use.)
-
-  Option B: If HTTPS is not possible, candidates must launch Chrome with
-  a flag to treat the VM IP as a secure origin:
-
-    chrome.exe --unsafely-treat-insecure-origin-as-secure="http://<VM-IP>:9001"
-
-  This is a per-browser workaround and not recommended for production.
+    pip install gunicorn
+    gunicorn -w 4 -b 0.0.0.0:5000 "app:create_app()"
 
 
 ================================================================================
