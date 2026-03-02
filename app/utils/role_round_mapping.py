@@ -19,37 +19,37 @@ ROLE_ROUND_MAPPING = {
         "allow_domain": False
     },
     "python_qa": {
-        "rounds": ["L2", "L3", "L5"],
+        "rounds": ["L1", "L2", "L3", "L5"],
         "coding_rounds": ["L4"],
         "coding_language": "python",
         "allow_domain": True
     },
     "python_qa_linux": {
-        "rounds": ["L2", "L3", "L5"],
+        "rounds": ["L1", "L2", "L3", "L5"],
         "coding_rounds": ["L4"],
         "coding_language": "python",
         "allow_domain": True
     },
     "python_dev": {
-        "rounds": ["L2", "L3", "L5"],
+        "rounds": ["L1", "L2", "L3", "L5"],
         "coding_rounds": ["L4"],
         "coding_language": "python",
         "allow_domain": True
     },
     "python_ai_ml": {
-        "rounds": ["L2", "L3", "L5"],
+        "rounds": ["L1", "L2", "L3", "L5"],
         "coding_rounds": ["L4"],
         "coding_language": "python",
         "allow_domain": True
     },
     "java_aws": {
-        "rounds": ["L2", "L3", "L5"],
+        "rounds": ["L1", "L2", "L3", "L5"],
         "coding_rounds": ["L4"],
         "coding_language": "java",
         "allow_domain": True
     },
     "java_qa": {
-        "rounds": ["L2", "L3", "L5"],
+        "rounds": ["L1", "L2", "L3", "L5"],
         "coding_rounds": ["L4"],
         "coding_language": "java",
         "allow_domain": True
@@ -57,9 +57,9 @@ ROLE_ROUND_MAPPING = {
 
     # ---- Phase 3: New Roles ----
 
-    # BMC Engineer: C Theory -> BMC/Firmware -> Coding (C) -> Soft Skills
+    # BMC Engineer: Aptitude -> C Theory -> BMC/Firmware -> Coding (C) -> Soft Skills
     "bmc_engineer": {
-        "rounds": ["L2", "L3", "L5"],
+        "rounds": ["L1", "L2", "L3", "L5"],
         "coding_rounds": ["L4"],
         "coding_language": "c",
         "allow_domain": True
@@ -68,29 +68,28 @@ ROLE_ROUND_MAPPING = {
     # Staff Engineer - Linux Kernel & Device Driver:
     # C Theory -> Linux Kernel -> Device Driver -> Coding (C) -> Soft Skills (Leadership)
     "linux_kernel_dd": {
-        "rounds": ["L2", "L3", "L5"],
+        "rounds": ["L1", "L2", "L3", "L5"],
         "coding_rounds": ["L4"],
         "coding_language": "c",
         "allow_domain": True
     },
 
     # Systems Architect (C++ Based):
-    # C++ Theory -> System Design -> Coding (C++) -> Soft Skills
+    # Aptitude -> C++ Theory -> System Design -> Coding (C++) -> Soft Skills
     "systems_architect_cpp": {
-        "rounds": ["L2", "L3", "L5"],
+        "rounds": ["L1", "L2", "L3", "L5"],
         "coding_rounds": ["L4"],
         "coding_language": "cpp",
         "allow_domain": True
     },
 
     # C# Developer (3-6 Years):
-    # C# Theory + Debugging -> Developer Foundations -> Soft Skills
-    # Coding round intentionally disabled for now.
+    # C# Theory + Debugging -> Developer Foundations -> Coding (C#) -> Soft Skills
     "csharp_dev": {
-        "rounds": ["L1", "L2", "L5"],
-        "coding_rounds": [],
+        "rounds": ["L2", "L3", "L5"],
+        "coding_rounds": ["L4"],
         "coding_language": "csharp",
-        "allow_domain": False
+        "allow_domain": True
     },
 }
 
@@ -104,8 +103,7 @@ ROLE_CODING_LANGUAGE = {
     "python_dev": "python",
     "python_ai_ml": "python",
     "java_aws": "java",
-    "java_qa": "java",
-    "bmc_engineer": "c",
+    "java_qa": "java",    "bmc_engineer": "c",
     "linux_kernel_dd": "c",
     "systems_architect_cpp": "cpp",
     "csharp_dev": "csharp",

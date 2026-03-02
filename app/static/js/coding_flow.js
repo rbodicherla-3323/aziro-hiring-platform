@@ -168,8 +168,13 @@ window.__CODING_AJAX_FLOW = true;
             }
 
             // ── 6. Update body class ────────────────────────
-            document.body.classList.remove("coding-start-page");
+            document.body.classList.remove("coding-start-page", "mcq-start-page");
             document.body.classList.add("coding-editor-page");
+
+            var startTheme = document.getElementById("codingStartMcqTheme");
+            if (startTheme) {
+                startTheme.remove();
+            }
 
             // ── 7. Update URL (no history entry — can't go back)
             history.replaceState({}, "", "/coding/editor/" + sessionId);

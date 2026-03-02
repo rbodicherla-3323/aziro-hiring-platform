@@ -68,8 +68,6 @@ def save_round_result(test_session_id: int, round_key: str, round_label: str,
             existing.round_type = round_type
         if test_link:
             existing.test_link = test_link
-        db.session.commit()
-        return existing
     else:
         rr = RoundResult(
             test_session_id=test_session_id,
@@ -84,18 +82,22 @@ def save_round_result(test_session_id: int, round_key: str, round_label: str,
             time_taken_seconds=time_taken_seconds,
             session_uuid=session_uuid,
             round_type=round_type,
-            test_link=test_link,
-        )
+            test_link=test_link,        )
         db.session.add(rr)
-        db.session.commit()
-        return rr
+        existing = rr
+
+    db.session.commit()
+    return existing
 
 
 def search_candidates(query: str, role_filter: str = ""):
     """Search candidates by name, email, or role."""
+    like_query = f"%{query}%"
+
+    base = Candidate.query.join(TestSession)
+
     filters = []
     if query:
-        like_query = f"%{query}%"
         filters.append(
             db.or_(
                 Candidate.name.ilike(like_query),
@@ -111,12 +113,12 @@ def search_candidates(query: str, role_filter: str = ""):
                 TestSession.role_label.ilike(like_role),
                 TestSession.role_key.ilike(like_role),
             )
-                )
+        )
 
-    base = Candidate.query.join(TestSession)
     if filters:
-        base = base.filter(db.and_(*filters))
-    candidates = base.order_by(Candidate.created_at.desc()).distinct().limit(50).all()
+        base = base.filter(*filters)
+
+    candidates = base.distinct().limit(50).all()
 
     results = []
     for c in candidates:
@@ -214,38 +216,29 @@ def get_candidate_report_data(email: str) -> dict:
 def save_report(identifier, filename: str, generated_by: str = "") -> Report:
     """Save a report record to DB.
 
-    ``identifier`` can be either a test_session_id (int) or a candidate_email (str).
+    ``identifier`` can be:
+      - an int  → treated as test_session_id
+      - a str   → treated as candidate_email (legacy callers)
     """
     if isinstance(identifier, int):
+        # Resolve email from test_session → candidate
         ts = TestSession.query.get(identifier)
+        candidate_email = ""
         if ts:
-            candidate = Candidate.query.get(ts.candidate_id)
-            candidate_email = candidate.email if candidate else ""
-            test_session_id = identifier
-        else:
-            candidate_email = ""
-            test_session_id = identifier
+            cand = Candidate.query.get(ts.candidate_id)
+            candidate_email = cand.email if cand else ""
+        report = Report(
+            test_session_id=identifier,
+            candidate_email=candidate_email,
+            filename=filename,
+            generated_by=generated_by,
+        )
     else:
-        candidate_email = identifier
-        # Try to resolve test_session_id from email
-        candidate = Candidate.query.filter_by(email=candidate_email).first()
-        if candidate:
-            ts = (
-                TestSession.query
-                .filter_by(candidate_id=candidate.id)
-                .order_by(TestSession.created_at.desc())
-                .first()
-            )
-            test_session_id = ts.id if ts else None
-        else:
-            test_session_id = None
-
-    report = Report(
-        candidate_email=candidate_email,
-        test_session_id=test_session_id,
-        filename=filename,
-        generated_by=generated_by,
-    )
+        report = Report(
+            candidate_email=identifier,
+            filename=filename,
+            generated_by=generated_by,
+        )
     db.session.add(report)
     db.session.commit()
     return report
@@ -256,8 +249,19 @@ def get_report_by_id(report_id: int) -> Report:
     return Report.query.get(report_id)
 
 
+def get_all_roles():
+    """Return a sorted list of unique role labels across all test sessions."""
+    rows = (
+        db.session.query(TestSession.role_label)
+        .distinct()
+        .order_by(TestSession.role_label)
+        .all()
+    )
+    return [r[0] for r in rows if r[0]]
+
+
 def get_all_candidates_with_results():
-    """Get all candidates with their test session results."""
+    """Get all candidates with their test session results, including report info."""
     candidates = Candidate.query.all()
     results = []
     for c in candidates:
@@ -268,29 +272,11 @@ def get_all_candidates_with_results():
                 # Attach report info
                 report = (
                     Report.query
-                    .filter(
-                        db.or_(
-                            Report.test_session_id == ts.id,
-                            Report.candidate_email == c.email,
-                        )
-                    )
+                    .filter_by(test_session_id=ts.id)
                     .order_by(Report.created_at.desc())
                     .first()
                 )
                 data["has_report"] = report is not None
-                data["report_filename"] = report.filename if report else None
+                data["report_filename"] = report.filename if report else ""
                 results.append(data)
     return results
-
-
-def get_all_roles():
-    """Return distinct role labels/keys from all test sessions."""
-    rows = (
-        db.session.query(TestSession.role_key, TestSession.role_label)
-        .distinct()
-        .all()
-    )
-    return [
-        {"role_key": r.role_key, "role_label": r.role_label or r.role_key}
-        for r in rows
-    ]

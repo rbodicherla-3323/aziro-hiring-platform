@@ -25,6 +25,7 @@ reports_bp = Blueprint("reports", __name__)
 def reports():
     user = session.get("user", {})
     user_email = user.get("email", "dev@aziro.com")
+    q = request.args.get("q", "").strip()
 
     # Today's session candidates for this user
     user_tests = get_tests_for_user_today(user_email)
@@ -54,39 +55,34 @@ def reports():
                 },
             })
 
+    # Also include DB candidates (historical)
+    try:
+        db_candidates = db_service.get_all_candidates_with_results()
+        seen_emails = {c.get("email", "") for c in session_candidates}
+        for dc in db_candidates:
+            if dc["email"] not in seen_emails:
+                session_candidates.append(dc)
+                seen_emails.add(dc["email"])
+    except Exception:
+        pass
+
+    # Apply search filter if q= is present
+    if q:
+        q_lower = q.lower()
+        session_candidates = [
+            c for c in session_candidates
+            if q_lower in c.get("name", "").lower()
+            or q_lower in c.get("email", "").lower()
+            or q_lower in c.get("role", "").lower()
+        ]
+
     summaries_by_email = build_proctoring_summary_by_email({c.get("email", "") for c in session_candidates})
     plagiarism_by_email = build_plagiarism_summary_by_candidates(session_candidates)
     for candidate in session_candidates:
         email_key = str(candidate.get("email", "")).strip().lower()
         candidate["proctoring_summary"] = summaries_by_email.get(email_key, blank_proctoring_summary())
-        candidate["plagiarism_summary"] = plagiarism_by_email.get(email_key, blank_plagiarism_summary())    # Also pull DB-stored candidates (historical)
-    db_candidates = []
-    try:
-        q = request.args.get("q", "").strip()
-        if q:
-            # search_candidates returns flat dicts; resolve to full report data
-            search_hits = db_service.search_candidates(q)
-            seen = set()
-            for hit in search_hits:
-                email = hit.get("email", "")
-                if email not in seen:
-                    full = db_service.get_candidate_report_data(email)
-                    if full:
-                        db_candidates.append(full)
-                    seen.add(email)
-        else:
-            db_candidates = db_service.get_all_candidates_with_results()
-    except Exception:
-        pass
+        candidate["plagiarism_summary"] = plagiarism_by_email.get(email_key, blank_plagiarism_summary())
 
-    # Merge: DB candidates that aren't already in session_candidates
-    session_emails = {c.get("email", "") for c in session_candidates}
-    for dc in db_candidates:
-        if dc.get("email", "") not in session_emails:
-            dc.setdefault("proctoring_summary", blank_proctoring_summary())
-            dc.setdefault("plagiarism_summary", blank_plagiarism_summary())
-            session_candidates.append(dc)
-            session_emails.add(dc.get("email", ""))
     return render_template(
         "reports.html",
         session_candidates=session_candidates,
@@ -243,84 +239,10 @@ def download_report_file(filename):
     )
 
 
-@reports_bp.route("/reports/preview/<int:test_session_id>")
+@reports_bp.route("/reports/download/<int:report_id>")
 @login_required
-def preview_report(test_session_id):
-    """Return JSON preview data for a candidate by test_session_id."""
-    from app.models import TestSession, Candidate
-    ts = TestSession.query.get(test_session_id)
-    if not ts:
-        return jsonify({"error": "Test session not found"}), 404
-    candidate = Candidate.query.get(ts.candidate_id)
-    if not candidate:
-        return jsonify({"error": "Candidate not found"}), 404
-
-    data = db_service.get_candidate_report_data(candidate.email)
-    if not data:
-        return jsonify({"error": "No report data available"}), 404
-    return jsonify(data)
-
-
-@reports_bp.route("/reports/download/<path:filename>")
-@login_required
-def download_report_by_filename(filename):
-    """Download a PDF report by filename."""
-    filepath = REPORTS_DIR / filename
-    if not filepath.exists():
-        abort(404, description="Report file not found")
-    return send_file(
-        str(filepath),
-        as_attachment=True,
-        download_name=filename,
-        mimetype="application/pdf",
-    )
-
-
-@reports_bp.route("/reports/generate", methods=["POST"])
-@login_required
-def generate_report_by_session():
-    """Generate a PDF report for a candidate by test_session_id (POST)."""
-    from app.models import TestSession, Candidate
-    test_session_id = request.form.get("test_session_id")
-    if not test_session_id and request.is_json:
-        test_session_id = request.json.get("test_session_id")
-    if not test_session_id:
-        return jsonify({"status": "error", "error": "test_session_id required"}), 400
-
-    ts = TestSession.query.get(int(test_session_id))
-    if not ts:
-        return jsonify({"status": "error", "error": "Test session not found"}), 404
-    candidate = Candidate.query.get(ts.candidate_id)
-    if not candidate:
-        return jsonify({"status": "error", "error": "Candidate not found"}), 404
-
-    candidate_data = db_service.get_candidate_report_data(candidate.email)
-    if not candidate_data:
-        return jsonify({"status": "error", "error": "No data for candidate"}), 404
-
-    # Attach proctoring + plagiarism summaries
-    email = candidate.email
-    proctoring_by_email = build_proctoring_summary_by_email({email})
-    candidate_data["proctoring_summary"] = proctoring_by_email.get(email.strip().lower(), blank_proctoring_summary())
-    plagiarism_by_email = build_plagiarism_summary_by_candidates([candidate_data])
-    candidate_data["plagiarism_summary"] = plagiarism_by_email.get(email.strip().lower(), blank_plagiarism_summary())
-
-    try:
-        filename = generate_candidate_pdf(candidate_data)
-        user = session.get("user", {})
-        try:
-            db_service.save_report(int(test_session_id), filename, user.get("email", ""))
-        except Exception:
-            pass
-        return jsonify({"status": "ok", "filename": filename})
-    except Exception as e:
-        return jsonify({"status": "error", "error": str(e)}), 500
-
-
-@reports_bp.route("/reports/download-by-id/<int:report_id>")
-@login_required
-def download_report_by_id(report_id):
-    """Download a previously generated report by DB id."""
+def download_report(report_id):
+    """Download a previously generated report."""
     report = db_service.get_report_by_id(report_id)
     if not report:
         abort(404, description="Report not found")
@@ -335,3 +257,71 @@ def download_report_by_id(report_id):
         download_name=report.filename,
         mimetype="application/pdf",
     )
+
+
+@reports_bp.route("/reports/preview/<int:test_session_id>")
+@login_required
+def preview_report(test_session_id):
+    """Return candidate report data as JSON for preview."""
+    from app.models import TestSession as TS, Candidate as C
+    ts = TS.query.get(test_session_id)
+    if not ts:
+        return jsonify({"error": "Test session not found"}), 404
+    cand = C.query.get(ts.candidate_id)
+    if not cand:
+        return jsonify({"error": "Candidate not found"}), 404
+
+    data = db_service.get_candidate_report_data(cand.email)
+    if not data:
+        return jsonify({"error": "No report data available"}), 404
+
+    return jsonify(data)
+
+
+@reports_bp.route("/reports/download/<path:filename>")
+@login_required
+def download_report_by_filename(filename):
+    """Download a PDF report by filename."""
+    filepath = REPORTS_DIR / filename
+    if not filepath.exists():
+        abort(404, description="Report file not found")
+
+    return send_file(
+        str(filepath),
+        as_attachment=True,
+        download_name=filename,
+        mimetype="application/pdf",
+    )
+
+
+@reports_bp.route("/reports/generate", methods=["POST"])
+@login_required
+def generate_report_by_session():
+    """Generate a PDF report for a candidate given test_session_id (form/JSON)."""
+    test_session_id = request.form.get("test_session_id") or (
+        request.get_json(silent=True) or {}
+    ).get("test_session_id")
+
+    if not test_session_id:
+        return jsonify({"status": "error", "error": "test_session_id required"}), 400
+
+    test_session_id = int(test_session_id)
+    from app.models import TestSession as TS, Candidate as C
+    ts = TS.query.get(test_session_id)
+    if not ts:
+        return jsonify({"status": "error", "error": "Test session not found"}), 404
+    cand = C.query.get(ts.candidate_id)
+    if not cand:
+        return jsonify({"status": "error", "error": "Candidate not found"}), 404
+
+    candidate_data = db_service.get_candidate_report_data(cand.email)
+    if not candidate_data:
+        return jsonify({"status": "error", "error": "No data for candidate"}), 404
+
+    try:
+        pdf_filename = generate_candidate_pdf(candidate_data)
+        user = session.get("user", {})
+        db_service.save_report(test_session_id, pdf_filename, user.get("email", ""))
+        return jsonify({"status": "ok", "filename": pdf_filename})
+    except Exception as e:
+        return jsonify({"status": "error", "error": str(e)}), 500

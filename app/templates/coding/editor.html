@@ -16,7 +16,7 @@
 {% block header_center %}
 <div class="coding-header-chips">
     <span class="coding-chip">
-        {{ language | upper }} ▾
+        {% if language == 'csharp' %}C#{% elif language == 'cpp' %}C++{% elif language == 'javascript' %}JavaScript{% else %}{{ language | upper }}{% endif %} ▾
     </span>
     <span class="coding-chip timer" id="codingTimer">
         <span id="codingTimerValue">--:--</span>

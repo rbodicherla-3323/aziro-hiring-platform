@@ -201,18 +201,29 @@ def start_test(session_id):
     )
 
     question = CodingSessionService.get_question(session_id)
+    language_display = {
+        "java": "Java",
+        "python": "Python",
+        "javascript": "JavaScript",
+        "js": "JavaScript",
+        "c": "C",
+        "cpp": "C++",
+        "csharp": "C#",
+        "c#": "C#",
+    }.get(str(language or "").lower(), str(language or "java").upper())
 
     return render_template(
         "coding/start.html",
         test={
             "session_id": session_id,
             "round_name": session_meta["round_label"],
-            "language": language.upper(),
+            "language": language_display,
             "time_minutes": 20,
             "question_title": question["title"] if question else "Coding Challenge",
             "difficulty": question.get("difficulty", "MEDIUM") if question else "MEDIUM",
         },
         candidate_name=session_meta["candidate_name"],
+        body_class="mcq-start-page",
     )
 
 
@@ -266,6 +277,7 @@ def editor(session_id):
         remaining_seconds=remaining,
         candidate_name=session_meta["candidate_name"],
         submit_url=url_for("coding.submit", session_id=session_id),
+        body_class="coding-editor-page",
     )
 
 
@@ -369,6 +381,21 @@ def _resolve_executable(cmd_name):
         "py": [
             r"C:\Windows\py.exe",
         ],
+        "dotnet": [
+            r"C:\Program Files\dotnet\dotnet.exe",
+        ],
+        "csc": [
+            r"C:\Program Files\dotnet\sdk\*\Roslyn\bincore\csc.exe",
+            r"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe",
+            r"C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe",
+        ],
+        "mcs": [
+            r"C:\Program Files\Mono\bin\mcs.exe",
+            r"C:\Program Files\Mono\bin\mcs.bat",
+        ],
+        "mono": [
+            r"C:\Program Files\Mono\bin\mono.exe",
+        ],
     }
     for pattern in patterns_by_cmd.get(cmd_name, []):
         matches = sorted(glob.glob(pattern))
@@ -401,7 +428,19 @@ def _compiler_commands():
         "g++": _resolve_executable("g++"),
         "python": python_cmd,
         "node": _resolve_executable("node"),
+        "dotnet": _resolve_executable("dotnet"),
+        "csc": _resolve_executable("csc"),
+        "mcs": _resolve_executable("mcs"),
+        "mono": _resolve_executable("mono"),
     }
+
+
+def _command_available(command):
+    if not command:
+        return False
+    if os.path.isfile(command):
+        return True
+    return shutil.which(command) is not None
 
 
 def _split_top_level_csv(raw_text):
@@ -476,6 +515,10 @@ def _cpp_escape(value):
 
 
 def _c_escape(value):
+    return _java_escape(value)
+
+
+def _csharp_escape(value):
     return _java_escape(value)
 
 
@@ -574,6 +617,68 @@ def _cpp_literal_for_param(value, param_type):
         return "vector<string>{" + ", ".join(f"\"{_cpp_escape(v)}\"" for v in value) + "}"
 
     return f"\"{_cpp_escape(value)}\""
+
+
+def _csharp_object_literal(value):
+    if value is None:
+        return "null"
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    if isinstance(value, (int, float)):
+        return str(value)
+    if isinstance(value, str):
+        return f"\"{_csharp_escape(value)}\""
+    if isinstance(value, list):
+        return "new object[]{" + ", ".join(_csharp_object_literal(v) for v in value) + "}"
+    if isinstance(value, dict):
+        entries = []
+        for k, v in value.items():
+            key = f"\"{_csharp_escape(k)}\""
+            entries.append("{" + key + ", " + _csharp_object_literal(v) + "}")
+        return "new Dictionary<string, object>{" + ", ".join(entries) + "}"
+    return f"\"{_csharp_escape(value)}\""
+
+
+def _csharp_literal_for_param(value, param_type):
+    t = _normalize_type_name(param_type)
+
+    if t in ("int", "long", "short", "byte"):
+        return str(int(value))
+    if t in ("double", "float", "decimal"):
+        return str(float(value))
+    if t == "bool":
+        return "true" if bool(value) else "false"
+    if t == "string":
+        return f"\"{_csharp_escape(value)}\""
+    if t == "object":
+        return _csharp_object_literal(value)
+    if t == "int[]":
+        if not isinstance(value, list):
+            raise ValueError(f"Expected list for type int[] but got: {type(value).__name__}")
+        return "new int[]{" + ", ".join(str(int(v)) for v in value) + "}"
+    if t == "string[]":
+        if not isinstance(value, list):
+            raise ValueError(f"Expected list for type string[] but got: {type(value).__name__}")
+        return "new string[]{" + ", ".join(f"\"{_csharp_escape(v)}\"" for v in value) + "}"
+    if t == "object[]":
+        if not isinstance(value, list):
+            raise ValueError(f"Expected list for type object[] but got: {type(value).__name__}")
+        return "new object[]{" + ", ".join(_csharp_object_literal(v) for v in value) + "}"
+    if t.startswith("List<") and t.endswith(">"):
+        if not isinstance(value, list):
+            raise ValueError(f"Expected list for type {param_type} but got: {type(value).__name__}")
+        inner = t[5:-1]
+        if inner in ("int", "long", "short", "byte"):
+            return f"new List<{inner}>{{" + ", ".join(str(int(v)) for v in value) + "}"
+        if inner in ("double", "float", "decimal"):
+            return f"new List<{inner}>{{" + ", ".join(str(float(v)) for v in value) + "}"
+        if inner == "string":
+            return "new List<string>{" + ", ".join(f"\"{_csharp_escape(v)}\"" for v in value) + "}"
+        if inner == "object":
+            return "new List<object>{" + ", ".join(_csharp_object_literal(v) for v in value) + "}"
+        return f"new List<{inner}>{{" + ", ".join(_csharp_object_literal(v) for v in value) + "}"
+
+    return _csharp_object_literal(value)
 
 
 def _build_java_driver(code, func_info, test_inputs):
@@ -918,13 +1023,89 @@ def _build_javascript_driver(code, func_info, test_inputs):
     )
 
 
+def _build_csharp_driver(code, func_info, test_inputs):
+    signature = ""
+    class_name = "Solution"
+    if isinstance(func_info, dict):
+        signature = str(func_info.get("signature") or func_info.get("method") or "")
+        class_name = str(func_info.get("class") or "Solution")
+    else:
+        signature = str(func_info or "")
+
+    if not signature:
+        signature = "public static int solve(int n)"
+
+    _, method_name, params = _parse_function_signature(signature)
+    if len(params) != len(test_inputs):
+        raise ValueError(
+            f"C# test input mismatch for {method_name}: expected {len(params)} args, got {len(test_inputs)}"
+        )
+
+    args = [
+        _csharp_literal_for_param(test_inputs[i], params[i][0])
+        for i in range(len(params))
+    ]
+
+    return (
+        "using System;\n"
+        "using System.Collections;\n"
+        "using System.Collections.Generic;\n"
+        "using System.Globalization;\n"
+        "using System.Linq;\n\n"
+        f"{code}\n\n"
+        "public class Program {\n"
+        "    static string __esc(string s) {\n"
+        "        if (s == null) return \"\";\n"
+        "        return s.Replace(\"\\\\\", \"\\\\\\\\\")\n"
+        "                .Replace(\"\\\"\", \"\\\\\\\"\")\n"
+        "                .Replace(\"\\n\", \"\\\\n\")\n"
+        "                .Replace(\"\\r\", \"\\\\r\")\n"
+        "                .Replace(\"\\t\", \"\\\\t\");\n"
+        "    }\n\n"
+        "    static string __toJson(object obj) {\n"
+        "        if (obj == null) return \"null\";\n"
+        "        if (obj is string s) return \"\\\"\" + __esc(s) + \"\\\"\";\n"
+        "        if (obj is bool b) return b ? \"true\" : \"false\";\n"
+        "        if (obj is char c) return \"\\\"\" + __esc(c.ToString()) + \"\\\"\";\n"
+        "        if (obj is byte || obj is sbyte || obj is short || obj is ushort || obj is int || obj is uint || obj is long || obj is ulong || obj is float || obj is double || obj is decimal)\n"
+        "            return Convert.ToString(obj, CultureInfo.InvariantCulture);\n"
+        "        if (obj is IDictionary dict) {\n"
+        "            var parts = new List<string>();\n"
+        "            foreach (DictionaryEntry entry in dict) {\n"
+        "                parts.Add(\"\\\"\" + __esc(Convert.ToString(entry.Key, CultureInfo.InvariantCulture)) + \"\\\":\" + __toJson(entry.Value));\n"
+        "            }\n"
+        "            return \"{\" + string.Join(\",\", parts) + \"}\";\n"
+        "        }\n"
+        "        if (obj is IEnumerable en && obj is not string) {\n"
+        "            var parts = new List<string>();\n"
+        "            foreach (var item in en) {\n"
+        "                parts.Add(__toJson(item));\n"
+        "            }\n"
+        "            return \"[\" + string.Join(\",\", parts) + \"]\";\n"
+        "        }\n"
+        "        return \"\\\"\" + __esc(Convert.ToString(obj, CultureInfo.InvariantCulture)) + \"\\\"\";\n"
+        "    }\n\n"
+        "    public static void Main(string[] args) {\n"
+        f"        object result = {class_name}.{method_name}({', '.join(args)});\n"
+        "        Console.Write(__toJson(result));\n"
+        "    }\n"
+        "}\n"
+    )
+
+
 def _build_driver_code(language, code, question, test_inputs, expected_output=None):
     """Build a strict typed driver around candidate code for one test case."""
     normalized_language = str(language or "").lower()
     if normalized_language == "js":
         normalized_language = "javascript"
+    if normalized_language in ("c#", "cs"):
+        normalized_language = "csharp"
 
-    func_info = question.get("function", {}).get(normalized_language, {})
+    func_map = question.get("function", {}) or {}
+    func_info = func_map.get(normalized_language, {})
+    if not func_info and normalized_language == "csharp":
+        # C# sessions may reuse Java coding bank and carry converted signatures.
+        func_info = func_map.get("java", {})
     if normalized_language == "java":
         return _build_java_driver(code, func_info, test_inputs or [])
     if normalized_language == "cpp":
@@ -935,6 +1116,8 @@ def _build_driver_code(language, code, question, test_inputs, expected_output=No
         return _build_python_driver(code, func_info, test_inputs or [])
     if normalized_language == "javascript":
         return _build_javascript_driver(code, func_info, test_inputs or [])
+    if normalized_language == "csharp":
+        return _build_csharp_driver(code, func_info, test_inputs or [])
     return code
 
 
@@ -945,6 +1128,8 @@ def _compile_and_run(language, code, stdin_input, work_dir):
     language = str(language or "").lower()
     if language == "js":
         language = "javascript"
+    if language in ("c#", "cs"):
+        language = "csharp"
 
     if language == "java":
         src_file = os.path.join(work_dir, "Main.java")
@@ -1045,6 +1230,127 @@ def _compile_and_run(language, code, stdin_input, work_dir):
         if run.returncode != 0:
             return False, run.stdout, f"Runtime Error:\n{run.stderr}", elapsed
         return True, run.stdout, run.stderr, elapsed
+
+    elif language == "csharp":
+        src_file = os.path.join(work_dir, "Program.cs")
+        with open(src_file, "w", encoding="utf-8") as f:
+            f.write(code)
+
+        # Keep dotnet CLI state inside execution workspace to avoid profile permission issues.
+        dotnet_env = os.environ.copy()
+        dotnet_cli_home = os.path.join(work_dir, ".dotnet_cli_home")
+        nuget_packages = os.path.join(work_dir, ".nuget", "packages")
+        os.makedirs(dotnet_cli_home, exist_ok=True)
+        os.makedirs(nuget_packages, exist_ok=True)
+        dotnet_env["DOTNET_CLI_HOME"] = dotnet_cli_home
+        dotnet_env.setdefault("DOTNET_SKIP_FIRST_TIME_EXPERIENCE", "1")
+        dotnet_env.setdefault("DOTNET_CLI_TELEMETRY_OPTOUT", "1")
+        dotnet_env.setdefault("NUGET_PACKAGES", nuget_packages)
+        dotnet_build_error = ""
+
+        # Preferred path: dotnet SDK build/run (cross-platform, LTS-first targets).
+        if _command_available(compilers.get("dotnet")):
+            project_file = os.path.join(work_dir, "AziroSolution.csproj")
+            frameworks = ["net10.0", "net8.0"]
+            compile_error = "dotnet build failed for all supported target frameworks."
+            for framework in frameworks:
+                with open(project_file, "w", encoding="utf-8") as f:
+                    f.write(
+                        "<Project Sdk=\"Microsoft.NET.Sdk\">\n"
+                        "  <PropertyGroup>\n"
+                        "    <OutputType>Exe</OutputType>\n"
+                        f"    <TargetFramework>{framework}</TargetFramework>\n"
+                        "    <ImplicitUsings>disable</ImplicitUsings>\n"
+                        "    <Nullable>disable</Nullable>\n"
+                        "  </PropertyGroup>\n"
+                        "</Project>\n"
+                    )
+
+                comp = subprocess.run(
+                    [compilers["dotnet"], "build", project_file, "-nologo", "-v", "q", "-c", "Release"],
+                    capture_output=True, text=True, timeout=max(COMPILE_TIMEOUT * 12, 180), cwd=work_dir, env=dotnet_env
+                )
+                if comp.returncode != 0:
+                    compile_error = comp.stderr or comp.stdout
+                    continue
+
+                dll_path = os.path.join(work_dir, "bin", "Release", framework, "AziroSolution.dll")
+                if not os.path.exists(dll_path):
+                    compile_error = "Unable to locate built C# assembly."
+                    continue
+
+                run = subprocess.run(
+                    [compilers["dotnet"], dll_path],
+                    input=stdin_input, capture_output=True, text=True,
+                    timeout=RUN_TIMEOUT, cwd=work_dir, env=dotnet_env
+                )
+                elapsed = int((_time.time() - start_t) * 1000)
+                if run.returncode != 0:
+                    return False, run.stdout, f"Runtime Error:\n{run.stderr}", elapsed
+                return True, run.stdout, run.stderr, elapsed
+
+            # If dotnet build fails (e.g., NuGet/proxy/env constraints), continue to compiler fallbacks.
+            dotnet_build_error = compile_error
+
+        # Fallback path: Mono compiler/runtime if present.
+        if _command_available(compilers.get("mcs")):
+            exe_file = os.path.join(work_dir, "solution.exe")
+            comp = subprocess.run(
+                [compilers["mcs"], "-out:" + exe_file, src_file],
+                capture_output=True, text=True, timeout=COMPILE_TIMEOUT, cwd=work_dir
+            )
+            if comp.returncode != 0:
+                return False, "", f"Compilation Error:\n{comp.stderr or comp.stdout}", 0
+
+            run_cmd = [exe_file]
+            if os.name != "nt" and _command_available(compilers.get("mono")):
+                run_cmd = [compilers["mono"], exe_file]
+
+            run = subprocess.run(
+                run_cmd,
+                input=stdin_input, capture_output=True, text=True,
+                timeout=RUN_TIMEOUT, cwd=work_dir
+            )
+            elapsed = int((_time.time() - start_t) * 1000)
+            if run.returncode != 0:
+                return False, run.stdout, f"Runtime Error:\n{run.stderr}", elapsed
+            return True, run.stdout, run.stderr, elapsed
+
+        # Final fallback: Roslyn csc (primarily Windows environments).
+        if _command_available(compilers.get("csc")):
+            exe_file = os.path.join(work_dir, "solution.exe")
+            comp = subprocess.run(
+                [compilers["csc"], "/nologo", "/t:exe", f"/out:{exe_file}", src_file],
+                capture_output=True, text=True, timeout=COMPILE_TIMEOUT, cwd=work_dir
+            )
+            if comp.returncode != 0:
+                return False, "", f"Compilation Error:\n{comp.stderr or comp.stdout}", 0
+
+            run_cmd = [exe_file]
+            if os.name != "nt" and _command_available(compilers.get("mono")):
+                run_cmd = [compilers["mono"], exe_file]
+
+            run = subprocess.run(
+                run_cmd,
+                input=stdin_input, capture_output=True, text=True,
+                timeout=RUN_TIMEOUT, cwd=work_dir
+            )
+            elapsed = int((_time.time() - start_t) * 1000)
+            if run.returncode != 0:
+                return False, run.stdout, f"Runtime Error:\n{run.stderr}", elapsed
+            return True, run.stdout, run.stderr, elapsed
+
+        if dotnet_build_error:
+            return (
+                False,
+                "",
+                "Compilation Error:\n"
+                + str(dotnet_build_error)
+                + "\n\nDotnet build failed and fallback C# compilers were unavailable.",
+                0,
+            )
+
+        raise FileNotFoundError("No C# compiler/runtime found (dotnet, mcs, csc).")
 
     return False, "", "Unsupported language", 0
 
@@ -1200,6 +1506,8 @@ def run_code(session_id):
     normalized_language = str(language or "").lower()
     if normalized_language == "js":
         normalized_language = "javascript"
+    if normalized_language in ("c#", "cs"):
+        normalized_language = "csharp"
     question = CodingSessionService.get_question(session_id)
     public_tests = CodingSessionService.get_public_tests(session_id)
     hidden_tests = CodingSessionService.get_hidden_tests(session_id)
@@ -1260,6 +1568,17 @@ def run_code(session_id):
                     "test_results": [],
                 })
             except FileNotFoundError:
+                lang_key = str(language or "").lower()
+                lang_label = {
+                    "java": "Java",
+                    "c": "C",
+                    "cpp": "C++",
+                    "python": "Python",
+                    "javascript": "JavaScript",
+                    "js": "JavaScript",
+                    "csharp": "C#",
+                    "c#": "C#",
+                }.get(lang_key, str(language).upper())
                 compiler_info = {
                     "java": "JDK (javac + java)",
                     "c": "GCC (gcc)",
@@ -1267,11 +1586,13 @@ def run_code(session_id):
                     "python": "Python 3 runtime (python/py)",
                     "javascript": "Node.js runtime (node)",
                     "js": "Node.js runtime (node)",
+                    "csharp": "dotnet SDK 10.x (LTS, preferred) or dotnet SDK 8.x (LTS)",
+                    "c#": "dotnet SDK 10.x (LTS, preferred) or dotnet SDK 8.x (LTS)",
                 }
                 return jsonify({
                     "status": "error",
-                    "output": f"Warning: {language.upper()} compiler not found on this machine.\n\n"
-                              f"Required: {compiler_info.get(language, language.upper() + ' compiler')}\n"
+                    "output": f"Warning: {lang_label} compiler not found on this machine.\n\n"
+                              f"Required: {compiler_info.get(lang_key, lang_label + ' compiler')}\n"
                               f"Your code has been saved and will be evaluated after submission.",
                     "test_results": [],
                 })
@@ -1342,6 +1663,17 @@ def run_code(session_id):
                     "time_ms": RUN_TIMEOUT * 1000,
                 })
             except FileNotFoundError:
+                lang_key = str(language or "").lower()
+                lang_label = {
+                    "java": "Java",
+                    "c": "C",
+                    "cpp": "C++",
+                    "python": "Python",
+                    "javascript": "JavaScript",
+                    "js": "JavaScript",
+                    "csharp": "C#",
+                    "c#": "C#",
+                }.get(lang_key, str(language).upper())
                 compiler_info = {
                     "java": "JDK (javac + java)",
                     "c": "GCC (gcc)",
@@ -1349,11 +1681,13 @@ def run_code(session_id):
                     "python": "Python 3 runtime (python/py)",
                     "javascript": "Node.js runtime (node)",
                     "js": "Node.js runtime (node)",
+                    "csharp": "dotnet SDK 10.x (LTS, preferred) or dotnet SDK 8.x (LTS)",
+                    "c#": "dotnet SDK 10.x (LTS, preferred) or dotnet SDK 8.x (LTS)",
                 }
                 return jsonify({
                     "status": "error",
-                    "output": f"Warning: {language.upper()} compiler not found on this machine.\n\n"
-                              f"Required: {compiler_info.get(language, language.upper() + ' compiler')}\n"
+                    "output": f"Warning: {lang_label} compiler not found on this machine.\n\n"
+                              f"Required: {compiler_info.get(lang_key, lang_label + ' compiler')}\n"
                               f"Your code has been saved and will be evaluated after submission.",
                     "test_results": [],
                 })
@@ -1640,6 +1974,7 @@ def submit(session_id):
         "coding/submit.html",
         session_id=session_id,
         candidate_name=session_meta.get("candidate_name", "Candidate"),
+        body_class="coding-start-page",
     )
 
 
@@ -1651,6 +1986,7 @@ def completed(session_id):
     return render_template(
         "coding/completed.html",
         candidate_name=CODING_SESSION_REGISTRY.get(session_id, {}).get("candidate_name", "Candidate"),
+        body_class="coding-start-page",
     )
 
 

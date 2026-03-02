@@ -100,7 +100,8 @@ function isExamPath() {
 
 function applyPageClassNames() {
     if (!document.body) return;
-    if (IS_START_PAGE || IS_SUBMIT_PAGE || IS_COMPLETED_PAGE) document.body.classList.add("coding-start-page");
+    if (IS_START_PAGE) document.body.classList.add("mcq-start-page");
+    if (IS_SUBMIT_PAGE || IS_COMPLETED_PAGE) document.body.classList.add("coding-start-page");
     if (IS_EDITOR_PAGE) document.body.classList.add("coding-editor-page");
 }
 

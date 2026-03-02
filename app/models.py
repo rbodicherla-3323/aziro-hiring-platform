@@ -61,11 +61,13 @@ class Report(db.Model):
     __tablename__ = "reports"
 
     id = db.Column(db.Integer, primary_key=True)
+    candidate_email = db.Column(db.String(200), nullable=False, default="")
     test_session_id = db.Column(db.Integer, db.ForeignKey("test_sessions.id"), nullable=True)
-    candidate_email = db.Column(db.String(200), nullable=False)
     filename = db.Column(db.String(500), nullable=False)
     generated_by = db.Column(db.String(200), nullable=True, default="")
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+
+    test_session = db.relationship("TestSession", backref="reports", lazy=True)
 
     def __repr__(self):
         return f"<Report {self.filename}>"
