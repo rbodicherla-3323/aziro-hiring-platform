@@ -113,8 +113,9 @@ ROUND_DISPLAY_MAPPING = {
 
     # ---------------- C# Developer ----------------
     "csharp_dev": {
-        "L1": "C# Theory + Debugging",
-        "L2": "Developer Foundations",
+        "L2": "C# Theory + Debugging",
+        "L3": "Developer Foundations",
+        "L4": "Coding Challenge (C#)",
         "L5": "Soft Skills",
     },
 }

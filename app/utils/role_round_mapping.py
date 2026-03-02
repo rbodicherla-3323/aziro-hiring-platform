@@ -82,6 +82,15 @@ ROLE_ROUND_MAPPING = {
         "coding_language": "cpp",
         "allow_domain": True
     },
+
+    # C# Developer (3-6 Years):
+    # C# Theory + Debugging -> Developer Foundations -> Coding (C#) -> Soft Skills
+    "csharp_dev": {
+        "rounds": ["L2", "L3", "L5"],
+        "coding_rounds": ["L4"],
+        "coding_language": "csharp",
+        "allow_domain": True
+    },
 }
 
 # Map role_key -> coding language for L4

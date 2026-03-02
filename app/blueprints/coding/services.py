@@ -3,11 +3,160 @@ import random
 import yaml
 import os
 import re
+import copy
 from flask import session
 
 
 QUESTION_COUNT = 1
 DEFAULT_DURATION_MINUTES = 20
+
+
+_JAVA_MODIFIERS = {
+    "public", "private", "protected", "internal",
+    "static", "final", "abstract", "synchronized",
+    "virtual", "override", "async",
+}
+
+
+def _split_top_level_csv(raw_text):
+    parts = []
+    current = []
+    angle_depth = 0
+    paren_depth = 0
+    for ch in str(raw_text or ""):
+        if ch == "<":
+            angle_depth += 1
+        elif ch == ">" and angle_depth > 0:
+            angle_depth -= 1
+        elif ch == "(":
+            paren_depth += 1
+        elif ch == ")" and paren_depth > 0:
+            paren_depth -= 1
+
+        if ch == "," and angle_depth == 0 and paren_depth == 0:
+            part = "".join(current).strip()
+            if part:
+                parts.append(part)
+            current = []
+            continue
+
+        current.append(ch)
+
+    tail = "".join(current).strip()
+    if tail:
+        parts.append(tail)
+    return parts
+
+
+def _strip_leading_modifiers(text):
+    tokens = str(text or "").strip().split()
+    while tokens and tokens[0] in _JAVA_MODIFIERS:
+        tokens.pop(0)
+    return " ".join(tokens).strip()
+
+
+def _java_type_to_csharp(type_name):
+    raw = _strip_leading_modifiers(type_name).replace("...", "[]")
+    raw = re.sub(r"\s+", "", raw)
+    if not raw:
+        return "object"
+
+    array_suffix = ""
+    while raw.endswith("[]"):
+        array_suffix += "[]"
+        raw = raw[:-2]
+
+    if "<" in raw and raw.endswith(">"):
+        base = raw[:raw.index("<")]
+        inner = raw[raw.index("<") + 1:-1]
+        args = _split_top_level_csv(inner)
+        converted_args = [_java_type_to_csharp(arg) for arg in args]
+        base_map = {
+            "Map": "Dictionary",
+            "HashMap": "Dictionary",
+            "LinkedHashMap": "Dictionary",
+            "TreeMap": "SortedDictionary",
+            "List": "List",
+            "ArrayList": "List",
+            "LinkedList": "List",
+            "Set": "HashSet",
+            "HashSet": "HashSet",
+            "Queue": "Queue",
+            "Deque": "Queue",
+        }
+        mapped_base = base_map.get(base, base)
+        return f"{mapped_base}<{', '.join(converted_args)}>{array_suffix}"
+
+    scalar_map = {
+        "Integer": "int",
+        "Long": "long",
+        "Double": "double",
+        "Float": "float",
+        "Boolean": "bool",
+        "Byte": "byte",
+        "Short": "short",
+        "String": "string",
+        "Object": "object",
+        "Character": "char",
+    }
+    return f"{scalar_map.get(raw, raw)}{array_suffix}"
+
+
+def _convert_java_method_to_csharp(method_sig):
+    fallback = {
+        "signature": "public static int solve(int n)",
+        "name": "solve",
+        "class": "Solution",
+    }
+    sig = str(method_sig or "").strip()
+    match = re.match(r"\s*(.+?)\s+([A-Za-z_]\w*)\s*\((.*)\)\s*$", sig)
+    if not match:
+        return fallback
+
+    return_type = _java_type_to_csharp(match.group(1))
+    method_name = match.group(2).strip() or "solve"
+    params_raw = match.group(3).strip()
+
+    converted_params = []
+    if params_raw:
+        for idx, decl in enumerate(_split_top_level_csv(params_raw), start=1):
+            cleaned = _strip_leading_modifiers(decl)
+            cleaned = re.sub(r"\s+", " ", cleaned).strip()
+            if not cleaned:
+                continue
+            if " " in cleaned:
+                ptype, pname = cleaned.rsplit(" ", 1)
+            else:
+                ptype, pname = "object", f"arg{idx}"
+            pname = re.sub(r"[^\w]", "", pname) or f"arg{idx}"
+            converted_params.append(f"{_java_type_to_csharp(ptype)} {pname}")
+
+    signature = f"public static {return_type} {method_name}({', '.join(converted_params)})"
+    return {
+        "signature": signature,
+        "name": method_name,
+        "class": "Solution",
+    }
+
+
+def _ensure_csharp_function(question):
+    function_block = question.get("function")
+    if not isinstance(function_block, dict):
+        function_block = {}
+        question["function"] = function_block
+
+    existing = function_block.get("csharp")
+    if isinstance(existing, dict) and existing.get("signature"):
+        return
+
+    java_info = function_block.get("java")
+    if isinstance(java_info, dict):
+        converted = _convert_java_method_to_csharp(java_info.get("method"))
+        converted["class"] = str(java_info.get("class") or converted.get("class") or "Solution")
+    else:
+        converted = _convert_java_method_to_csharp(java_info)
+
+    function_block["csharp"] = converted
 
 
 class CodingSessionService:
@@ -22,6 +171,10 @@ class CodingSessionService:
     @staticmethod
     def _load_yaml_questions(language):
         """Load coding questions from YAML file for the given language."""
+        normalized_language = str(language or "").lower()
+        if normalized_language in ("c#", "cs"):
+            normalized_language = "csharp"
+
         base = os.path.join("app", "services", "question_bank", "data", "l4_coding")
         lang_map = {
             "c": "c",
@@ -30,8 +183,10 @@ class CodingSessionService:
             "python": "python",
             "javascript": "javascript",
             "js": "javascript",
+            # Reuse Java coding bank and convert signatures for C# runtime.
+            "csharp": "java",
         }
-        lang_dir = lang_map.get(language.lower())
+        lang_dir = lang_map.get(normalized_language)
         if not lang_dir:
             return []
 
@@ -43,39 +198,55 @@ class CodingSessionService:
             data = yaml.safe_load(f)
 
         if isinstance(data, list):
-            return data
-        if isinstance(data, dict) and "questions" in data:
-            return data["questions"]
-        return []
+            questions = data
+        elif isinstance(data, dict) and "questions" in data:
+            questions = data["questions"]
+        else:
+            return []
+
+        if normalized_language == "csharp":
+            converted_questions = []
+            for item in questions:
+                q = copy.deepcopy(item)
+                _ensure_csharp_function(q)
+                converted_questions.append(q)
+            return converted_questions
+
+        return questions
 
     @staticmethod
     def init_session(session_id, role_key, round_key, language="java", domain=None):
         """Initialize a coding session: load 1 random question for the candidate."""
         session_key = f"coding_{session_id}"
+        normalized_language = str(language or "java").lower()
+        if normalized_language in ("c#", "cs"):
+            normalized_language = "csharp"
 
         if session_key in session:
             return
 
-        questions = CodingSessionService._load_yaml_questions(language)
+        questions = CodingSessionService._load_yaml_questions(normalized_language)
         if not questions:
             raise ValueError(
-                f"No coding questions found for language={language}"
+                f"No coding questions found for language={normalized_language}"
             )
 
         selected = random.sample(questions, min(QUESTION_COUNT, len(questions)))
 
         # Prepare the question with language-specific function template
         question = selected[0]
-        func_info = question.get("function", {}).get(language.lower(), {})
+        func_info = question.get("function", {}).get(normalized_language, {})
+        if not func_info and normalized_language == "csharp":
+            func_info = question.get("function", {}).get("java", {})
 
         # Build the starter code template
         starter_code = CodingSessionService._build_starter_code(
-            language, func_info, question
+            normalized_language, func_info, question
         )
 
         session[session_key] = {
             "question": question,
-            "language": language.lower(),
+            "language": normalized_language,
             "starter_code": starter_code,
             "code": starter_code,
             "submitted": False,
@@ -86,17 +257,24 @@ class CodingSessionService:
     @staticmethod
     def _build_starter_code(language, func_info, question):
         """Generate the starter code template for the given language."""
-        lang = language.lower()
+        lang = str(language or "").lower()
+        if lang in ("c#", "cs"):
+            lang = "csharp"
 
         def extract_return_type(signature, default_type="int"):
             m = re.match(r"\s*(.+?)\s+[A-Za-z_]\w*\s*\(.*\)\s*$", str(signature or ""))
             if not m:
                 return default_type
             ret = m.group(1).strip()
-            # Java signatures may include modifiers in the return-type capture.
-            ret = re.sub(r"^(public|private|protected)\s+", "", ret)
-            ret = re.sub(r"^static\s+", "", ret)
-            ret = re.sub(r"^final\s+", "", ret)
+            while True:
+                updated = re.sub(
+                    r"^(public|private|protected|internal|static|final|virtual|override|async)\s+",
+                    "",
+                    ret,
+                )
+                if updated == ret:
+                    break
+                ret = updated
             return ret.strip() or default_type
 
         def java_default_return(ret_type):
@@ -144,6 +322,24 @@ class CodingSessionService:
             if t in ("double", "float"):
                 return "    return 0.0;"
             return "    return 0;"
+
+        def csharp_default_return(ret_type):
+            t = re.sub(r"\s+", "", str(ret_type or ""))
+            if t == "void":
+                return ""
+            if t in ("int", "short", "long", "byte", "decimal"):
+                return "        return 0;"
+            if t in ("double", "float"):
+                return "        return 0.0;"
+            if t == "bool":
+                return "        return false;"
+            if t == "string":
+                return "        return string.Empty;"
+            if t.endswith("[]"):
+                return f"        return Array.Empty<{t[:-2]}>();"
+            if t.startswith("List<") or t.startswith("Dictionary<") or t.startswith("HashSet<"):
+                return f"        return new {t}();"
+            return "        return null;"
 
         def extract_name_and_params(signature, default_name="solve"):
             raw = str(signature or "").strip()
@@ -261,6 +457,30 @@ class CodingSessionService:
                 f"    // TODO: Implement this function according to the problem statement.\n"
                 f"    // Keep the function name and parameters unchanged.\n"
                 f"    return null;\n"
+                f"}}\n"
+            )
+
+        elif lang == "csharp":
+            cs_info = func_info if isinstance(func_info, dict) else {}
+            signature = cs_info.get(
+                "signature",
+                str(func_info) if isinstance(func_info, str) else "public static int solve(int n)",
+            )
+            class_name = cs_info.get("class", "Solution")
+            ret_type = extract_return_type(signature, "int")
+            ret_stmt = csharp_default_return(ret_type)
+            ret_block = f"{ret_stmt}\n" if ret_stmt else ""
+
+            return (
+                "using System;\n"
+                "using System.Collections.Generic;\n"
+                "using System.Linq;\n\n"
+                f"public class {class_name} {{\n"
+                f"    {signature} {{\n"
+                f"        // TODO: Implement this method according to the problem statement.\n"
+                f"        // Keep the method signature unchanged.\n"
+                f"{ret_block}"
+                f"    }}\n"
                 f"}}\n"
             )
 
