@@ -84,13 +84,12 @@ ROLE_ROUND_MAPPING = {
     },
 
     # C# Developer (3-6 Years):
-    # C# Theory + Debugging -> Developer Foundations -> Soft Skills
-    # Coding round intentionally disabled for now.
+    # C# Theory + Debugging -> Developer Foundations -> Coding (C#) -> Soft Skills
     "csharp_dev": {
-        "rounds": ["L1", "L2", "L5"],
-        "coding_rounds": [],
+        "rounds": ["L2", "L3", "L5"],
+        "coding_rounds": ["L4"],
         "coding_language": "csharp",
-        "allow_domain": False
+        "allow_domain": True
     },
 }
 
