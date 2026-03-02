@@ -615,7 +615,6 @@ def _extract_pdf_text(file_bytes: bytes):
         raw_text = "\n".join(unique).strip()
         return _repair_fragmented_pdf_text(raw_text)
 
-    warnings = []
     profile = _pdf_binary_profile(file_bytes)
 
     attempts = []
@@ -632,14 +631,17 @@ def _extract_pdf_text(file_bytes: bytes):
     best_text = ""
     best_method = "pdf_unknown"
     best_score = 0.0
+    best_warnings = []
 
     for text, method, warn in attempts:
-        warnings.extend(warn)
         score = _text_quality_score(text)
         if score > best_score:
             best_score = score
             best_text = text
             best_method = method
+            best_warnings = list(warn or [])
+
+    warnings = list(best_warnings)
 
     if best_text and best_score >= 0.14:
         log.info(
