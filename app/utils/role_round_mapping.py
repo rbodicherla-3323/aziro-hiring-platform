@@ -103,8 +103,8 @@ ROLE_CODING_LANGUAGE = {
     "python_dev": "python",
     "python_ai_ml": "python",
     "java_aws": "java",
-    "java_qa": "java",
-    "bmc_engineer": "c",
+    "java_qa": "java",    "bmc_engineer": "c",
     "linux_kernel_dd": "c",
     "systems_architect_cpp": "cpp",
+    "csharp_dev": "csharp",
 }

@@ -82,20 +82,23 @@ def save_round_result(test_session_id: int, round_key: str, round_label: str,
             time_taken_seconds=time_taken_seconds,
             session_uuid=session_uuid,
             round_type=round_type,
-            test_link=test_link,
-        )
+            test_link=test_link,        )
         db.session.add(rr)
+        existing = rr
 
     db.session.commit()
+    return existing
 
 
-def search_candidates(query: str):
+def search_candidates(query: str, role_filter: str = ""):
     """Search candidates by name, email, or role."""
     like_query = f"%{query}%"
-    candidates = (
-        Candidate.query
-        .join(TestSession)
-        .filter(
+
+    base = Candidate.query.join(TestSession)
+
+    filters = []
+    if query:
+        filters.append(
             db.or_(
                 Candidate.name.ilike(like_query),
                 Candidate.email.ilike(like_query),
@@ -103,10 +106,19 @@ def search_candidates(query: str):
                 TestSession.role_key.ilike(like_query),
             )
         )
-        .distinct()
-        .limit(50)
-        .all()
-    )
+    if role_filter:
+        like_role = f"%{role_filter}%"
+        filters.append(
+            db.or_(
+                TestSession.role_label.ilike(like_role),
+                TestSession.role_key.ilike(like_role),
+            )
+        )
+
+    if filters:
+        base = base.filter(*filters)
+
+    candidates = base.distinct().limit(50).all()
 
     results = []
     for c in candidates:
@@ -201,13 +213,32 @@ def get_candidate_report_data(email: str) -> dict:
     }
 
 
-def save_report(candidate_email: str, filename: str, generated_by: str = "") -> Report:
-    """Save a report record to DB."""
-    report = Report(
-        candidate_email=candidate_email,
-        filename=filename,
-        generated_by=generated_by,
-    )
+def save_report(identifier, filename: str, generated_by: str = "") -> Report:
+    """Save a report record to DB.
+
+    ``identifier`` can be:
+      - an int  → treated as test_session_id
+      - a str   → treated as candidate_email (legacy callers)
+    """
+    if isinstance(identifier, int):
+        # Resolve email from test_session → candidate
+        ts = TestSession.query.get(identifier)
+        candidate_email = ""
+        if ts:
+            cand = Candidate.query.get(ts.candidate_id)
+            candidate_email = cand.email if cand else ""
+        report = Report(
+            test_session_id=identifier,
+            candidate_email=candidate_email,
+            filename=filename,
+            generated_by=generated_by,
+        )
+    else:
+        report = Report(
+            candidate_email=identifier,
+            filename=filename,
+            generated_by=generated_by,
+        )
     db.session.add(report)
     db.session.commit()
     return report
@@ -218,8 +249,19 @@ def get_report_by_id(report_id: int) -> Report:
     return Report.query.get(report_id)
 
 
+def get_all_roles():
+    """Return a sorted list of unique role labels across all test sessions."""
+    rows = (
+        db.session.query(TestSession.role_label)
+        .distinct()
+        .order_by(TestSession.role_label)
+        .all()
+    )
+    return [r[0] for r in rows if r[0]]
+
+
 def get_all_candidates_with_results():
-    """Get all candidates with their test session results."""
+    """Get all candidates with their test session results, including report info."""
     candidates = Candidate.query.all()
     results = []
     for c in candidates:
@@ -227,5 +269,14 @@ def get_all_candidates_with_results():
         for ts in sessions:
             data = get_candidate_report_data(c.email)
             if data:
+                # Attach report info
+                report = (
+                    Report.query
+                    .filter_by(test_session_id=ts.id)
+                    .order_by(Report.created_at.desc())
+                    .first()
+                )
+                data["has_report"] = report is not None
+                data["report_filename"] = report.filename if report else ""
                 results.append(data)
     return results

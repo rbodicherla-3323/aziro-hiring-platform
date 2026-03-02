@@ -39,7 +39,20 @@ def create_app():
     app.register_blueprint(tests_bp)
     app.register_blueprint(evaluation_bp)
     app.register_blueprint(coding_bp)
-    app.register_blueprint(reports_bp)    # Create DB tables
+    app.register_blueprint(reports_bp)
+
+    # ── Permissions-Policy / Feature-Policy headers ──
+    @app.after_request
+    def set_permissions_policy(response):
+        response.headers["Permissions-Policy"] = (
+            "display-capture=(self), camera=(self), microphone=(self), fullscreen=(self)"
+        )
+        response.headers["Feature-Policy"] = (
+            "display-capture 'self'; camera 'self'; microphone 'self'; fullscreen 'self'"
+        )
+        return response
+
+    # Create DB tables
     with app.app_context():
         from . import models  # noqa: F401
         db.create_all()
