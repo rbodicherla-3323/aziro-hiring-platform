@@ -4,6 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}AI Hiring Platform{% endblock %}</title>
 
+    <!-- Anti-FOUC: hide page until styles + fonts load -->
+    <style>html{visibility:hidden}html.az-ready{visibility:visible}</style>
+
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,6 +23,16 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
     {% block head %}{% endblock %}
+
+    <!-- Anti-FOUC: reveal page once DOM is ready (with 400ms fallback) -->
+    <script>
+      (function(){
+        var reveal = function(){ document.documentElement.classList.add('az-ready'); };
+        if (document.readyState !== 'loading') { reveal(); }
+        else { document.addEventListener('DOMContentLoaded', reveal); }
+        setTimeout(reveal, 400);
+      })();
+    </script>
 </head>
 <body>
 

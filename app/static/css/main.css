@@ -47,6 +47,10 @@
     --text-dark: var(--az-slate-900);
 }
 
+/* ================= ANTI-FOUC ================= */
+html { visibility: hidden; }
+html.az-ready { visibility: visible; }
+
 /* ================= BASE ================= */
 body {
     font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;

@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aziro Hiring Management</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    html { visibility: hidden; }
+    html.az-ready { visibility: visible; }
     body {
       font-family: "Inter", "Segoe UI", system-ui, sans-serif;
       background: #f8fafc; margin: 0;
@@ -52,8 +53,15 @@
     .error {
       background: #fef2f2; color: #991b1b; border: 1px solid #fecaca;
       border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 0.82rem; text-align: left;
-    }
-  </style>
+    }  </style>
+  <script>
+    (function(){
+      var reveal = function(){ document.documentElement.classList.add('az-ready'); };
+      if (document.readyState !== 'loading') { reveal(); }
+      else { document.addEventListener('DOMContentLoaded', reveal); }
+      setTimeout(reveal, 400);
+    })();
+  </script>
 </head>
 <body>
   <div class="login-container">

@@ -19,8 +19,7 @@ instance/
 app/uploads/*.pdf
 
 # Runtime data
-app/runtime/reports/*.pdf
-app/runtime/coding_exec_tmp/
+app/runtime/
 
 # Utility scripts (not part of the app)
 _apply_ui.py
