@@ -234,7 +234,7 @@ body::before {
     padding: 7px 16px;
     border-radius: 999px;
     font-size: 13px;
-    font-weight: 800;
+    font-weight: 600;
     letter-spacing: 0.03em;
     border: 1px solid rgba(79, 143, 247, 0.25);
     background: rgba(15, 21, 39, 0.85);
@@ -247,7 +247,7 @@ body::before {
 .coding-chip.timer {
     font-family: var(--code-ui-font);
     font-size: 15px;
-    font-weight: 800;
+    font-weight: 600;
     color: var(--code-text);
     min-width: 90px;
     justify-content: center;
@@ -306,7 +306,7 @@ body::before {
     border-radius: 12px;
     font-family: var(--code-ui-font);
     font-size: 14px;
-    font-weight: 800;
+    font-weight: 600;
     letter-spacing: 0.02em;
     text-align: center;
     pointer-events: none;
@@ -550,7 +550,7 @@ body.coding-start-page .btn-primary:hover {
 .coding-instruction-title {
     margin: 0;
     font-size: 15px;
-    font-weight: 800;
+    font-weight: 600;
     color: #1f3364;
 }
 
@@ -722,7 +722,7 @@ body.coding-start-page .coding-submit-card::before,
     margin: 0 0 16px;
     font-family: var(--code-ui-font);
     font-size: 23px;
-    font-weight: 800;
+    font-weight: 600;
     color: #fff;
     line-height: 1.25;
     letter-spacing: -0.025em;
@@ -765,7 +765,7 @@ body.coding-start-page .coding-submit-card::before,
 .coding-section-title {
     font-family: var(--code-ui-font);
     font-size: 12px;
-    font-weight: 800;
+    font-weight: 600;
     color: var(--code-primary);
     margin: 0 0 12px;
     text-transform: uppercase;
@@ -792,7 +792,7 @@ body.coding-start-page .coding-submit-card::before,
 .coding-example-label {
     font-family: var(--code-ui-font);
     font-size: 12px;
-    font-weight: 800;
+    font-weight: 600;
     color: var(--code-primary);
     margin-bottom: 8px;
     text-transform: uppercase;
@@ -1134,7 +1134,7 @@ body.coding-start-page .coding-submit-card::before,
     color: #1a1000 !important;
     border: none !important;
     font-family: var(--code-ui-font);
-    font-weight: 800;
+    font-weight: 600;
     padding: 9px 24px;
     font-size: 14px;
     border-radius: 10px;
