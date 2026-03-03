@@ -1,186 +1,74 @@
 {% extends "base.html" %}
 {% block title %}Reports — Aziro Hiring Platform{% endblock %}
 {% block breadcrumb %}Reports{% endblock %}
-
 {% block head %}
 <style>
-    .reports-page {
-        --rp-brand: #0d3b66;
-        --rp-brand-2: #1f6feb;
-        --rp-ink: #0f172a;
-        --rp-muted: #5f6f87;
-        --rp-border: #d8e5f5;
-        --rp-shadow: 0 14px 30px rgba(13, 59, 102, 0.10);
-        font-family: "Poppins", "Segoe UI", sans-serif;
-        background:
-            radial-gradient(1100px 520px at 94% -12%, rgba(31,111,235,0.12), transparent 60%),
-            radial-gradient(950px 460px at 4% -18%, rgba(13,59,102,0.09), transparent 58%);
-        border-radius: 20px;
-        padding: 8px 0 14px;
-    }
-    .reports-header {
-        background: linear-gradient(135deg, var(--rp-brand) 0%, var(--rp-brand-2) 100%);
-        color: #fff;
-        border-radius: 16px;
-        padding: 24px 28px;
-        margin-bottom: 22px;
-        box-shadow: 0 16px 30px rgba(13, 59, 102, 0.24);
-    }
-    .reports-header h5 { font-weight: 800; font-size: 1.65rem; letter-spacing: 0.2px; }
+    .reports-page { padding: 4px 0 14px; }
     .search-section, .session-section {
-        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-        border-radius: 16px;
-        border: 1px solid var(--rp-border);
-        padding: 22px 26px;
-        box-shadow: var(--rp-shadow);
-        margin-bottom: 22px;
+        background: var(--az-surface); border-radius: 10px; border: 1px solid var(--az-border);
+        padding: 20px 22px; box-shadow: var(--az-shadow-sm); margin-bottom: 20px;
     }
-    .search-input {
-        border-radius: 999px;
-        padding: 13px 22px;
-        font-size: 1rem;
-        border: 2px solid #d6e3f3;
-    }
-    .search-input:focus { border-color: var(--rp-brand-2); box-shadow: 0 0 0 3px rgba(31,111,235,0.13); }
-    .section-title {
-        font-size: 1.08rem;
-        font-weight: 800;
-        color: var(--rp-brand);
-        margin-bottom: 16px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
+    .search-input { border-radius: 8px; padding: 10px 16px; font-size: 0.875rem; border: 1px solid var(--az-slate-300); }
+    .search-input:focus { border-color: var(--az-primary); box-shadow: 0 0 0 3px rgba(15,118,110,0.1); }
+    .section-title { font-size: 0.92rem; font-weight: 600; color: var(--az-slate-800); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
     .search-results { display:none; } .search-results.active { display:block; }
-    .empty-state {
-        text-align: center;
-        padding: 56px 24px;
-        color: #6c757d;
-        border: 1px dashed #c9d9ef;
-        border-radius: 16px;
-        background: linear-gradient(180deg, #ffffff 0%, #f5faff 100%);
-    }
-    .empty-state i { font-size: 2.8rem; color: #ced8e5; margin-bottom: 14px; }
-    .badge-role {
-        padding: 4px 11px;
-        border-radius: 999px;
-        font-size: 0.72rem;
-        font-weight: 700;
-        background: linear-gradient(135deg, #e8f0ff 0%, #dce9ff 100%);
-        color: #184c92;
-    }
-
-    /* Candidate result card (same as evaluation) */
-    .report-card {
-        border: 1px solid var(--rp-border);
-        border-radius: 16px;
-        overflow: hidden;
-        margin-bottom: 20px;
-        box-shadow: var(--rp-shadow);
-        background: linear-gradient(180deg, #ffffff 0%, #f9fcff 100%);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .report-card:hover { transform: translateY(-2px); box-shadow: 0 18px 30px rgba(13,59,102,0.13); }
-    .report-card-header { padding:18px 22px; background:#f5f9ff; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
-    .cand-name { font-weight:800; font-size:1.08rem; color:#0d3b66; }
-    .cand-meta { font-size:0.84rem; color:#4b5563; margin-top:2px; }
-    .stat-pill { background:linear-gradient(180deg,#ffffff 0%,#f2f7ff 100%); border:1px solid #d8e5f5; border-radius:10px; padding:8px 14px; text-align:center; min-width:80px; }
-    .stat-pill .stat-value { font-size:1.1rem; font-weight:700; color:#0d3b66; }    .stat-pill .stat-label { font-size:0.7rem; color:#6c757d; text-transform:uppercase; letter-spacing:0.5px; }
-
-    /* Status pills */
-    .status-pill { padding:3px 12px; border-radius:16px; font-weight:600; font-size:0.72rem; display:inline-block; text-transform:uppercase; }
-    .status-pass { background:#d4edda; color:#155724; }
-    .status-fail { background:#f8d7da; color:#721c24; }    .status-pending { background:#e2e3e5; color:#383d41; }
-
-    /* Action icons */
+    .empty-state { text-align: center; padding: 48px 20px; color: var(--az-slate-500); border: 1px dashed var(--az-slate-300); border-radius: 10px; background: var(--az-slate-50); }
+    .empty-state i { font-size: 2.4rem; color: var(--az-slate-300); margin-bottom: 12px; }
+    .badge-role { padding: 3px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 500; background: var(--az-primary-bg); color: var(--az-primary); border: 1px solid var(--az-primary-subtle); }
+    .report-card { border: 1px solid var(--az-border); border-radius: 10px; overflow: hidden; margin-bottom: 16px; box-shadow: var(--az-shadow-sm); background: var(--az-surface); transition: box-shadow 0.15s ease; }
+    .report-card:hover { box-shadow: var(--az-shadow); }
+    .report-card-header { padding:16px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+    .cand-name { font-weight:600; font-size:0.95rem; color:var(--az-slate-900); }
+    .cand-meta { font-size:0.82rem; color:var(--az-slate-500); margin-top:2px; }
     .report-actions { display:inline-flex; gap:6px; align-items:center; }
-    .report-actions .icon-btn { width:32px; height:32px; border-radius:10px; border:1.5px solid transparent; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.2s; text-decoration:none; font-size:0.82rem; }
-    .icon-btn.btn-gen { background:linear-gradient(135deg,#0d3b66 0%,#1f6feb 100%); color:#fff; border-color:transparent; box-shadow:0 10px 18px rgba(31,111,235,0.2); }
-    .icon-btn.btn-gen:hover { transform: translateY(-1px); }
-    .icon-btn.btn-view { background:#e8f4fd; color:#0d3b66; border-color:#c8dff5; }
-    .icon-btn.btn-view:hover { background:#d0e4f7; }
-    .icon-btn.btn-dl { background:#e6f4ea; color:#137333; border-color:#b7dfbf; }
-    .icon-btn.btn-dl:hover { background:#ccebd4; }
-    .icon-btn.btn-regen { background:#fff3e0; color:#e65100; border-color:#ffe0b2; }
-    .icon-btn.btn-regen:hover { background:#ffe0b2; }
-    .icon-btn.btn-loading { background:#f0f0f0; color:#999; pointer-events:none; }
-
-    @media (max-width: 992px) {
-        .search-section, .session-section { padding: 18px 16px; }
-        .report-card-header { padding: 14px 16px; }
-    }
+    .report-actions .icon-btn { width:32px; height:32px; border-radius:8px; border:1px solid transparent; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.15s; text-decoration:none; font-size:0.82rem; }
+    .icon-btn.btn-gen { background:var(--az-primary); color:#fff; }
+    .icon-btn.btn-gen:hover { background:#0d6963; }
+    .icon-btn.btn-view { background:var(--az-primary-bg); color:var(--az-primary); border-color:var(--az-primary-subtle); }
+    .icon-btn.btn-view:hover { background:var(--az-primary-subtle); }
+    .icon-btn.btn-dl { background:#ecfdf5; color:#16a34a; border-color:#bbf7d0; }
+    .icon-btn.btn-dl:hover { background:#dcfce7; }
+    .icon-btn.btn-regen { background:#fffbeb; color:#d97706; border-color:#fde68a; }
+    .icon-btn.btn-regen:hover { background:#fef3c7; }
+    .icon-btn.btn-loading { background:var(--az-slate-100); color:var(--az-slate-400); pointer-events:none; }
 </style>
 {% endblock %}
-
 {% block content %}
 <div class="container-fluid reports-page">
-
-    <!-- Header -->
-    <div class="reports-header">
-        <h5 class="mb-1"><i class="fas fa-file-alt me-2"></i>Reports</h5>
-        <p class="mb-0" style="font-size:0.85rem; opacity:0.8;">Generate and download candidate evaluation reports</p>
+    <div class="mb-4">
+        <h4 style="font-weight:600; color:var(--az-slate-900); font-size:1.3rem;"><i class="fas fa-file-alt me-2" style="color:var(--az-primary);"></i>Reports</h4>
+        <p class="text-muted mb-0" style="font-size:0.82rem;">Generate and download candidate evaluation reports</p>
     </div>
-
-    <!-- Search -->
     <div class="search-section">
-        <div class="section-title"><i class="fas fa-search"></i> Search Candidates</div>
+        <div class="section-title"><i class="fas fa-search" style="color:var(--az-primary);"></i> Search Candidates</div>
         <div class="input-group">
-            <input type="text" class="form-control search-input" id="searchInput"
-                   placeholder="Search by name, email, or role..." autocomplete="off">
-            <button class="btn btn-outline-secondary" style="border-radius:0 24px 24px 0; border-left:none;" id="searchBtn">
-                <i class="fas fa-search"></i>
-            </button>
+            <input type="text" class="form-control search-input" id="searchInput" placeholder="Search by name, email, or role..." autocomplete="off">
+            <button class="btn btn-outline-secondary" style="border-radius:0 8px 8px 0; border-left:none;" id="searchBtn"><i class="fas fa-search"></i></button>
         </div>
     </div>
-
-    <!-- Search Results -->
     <div class="search-results session-section" id="searchResults">
         <div class="section-title">
-            <i class="fas fa-history"></i> Search Results
-            <button class="btn btn-sm btn-link text-muted" id="clearSearchBtn" style="margin-left:auto; font-size:0.78rem;">
-                <i class="fas fa-times me-1"></i>Clear
-            </button>
+            <i class="fas fa-history" style="color:var(--az-primary);"></i> Search Results
+            <button class="btn btn-sm btn-link text-muted" id="clearSearchBtn" style="margin-left:auto; font-size:0.78rem;"><i class="fas fa-times me-1"></i>Clear</button>
         </div>
         <div id="searchResultsList"></div>
     </div>
-
-    <!-- Today's Session Candidates -->
     <div class="session-section">
         <div class="section-title">
-            <i class="fas fa-clock"></i> Today's Session
-            <span class="badge bg-primary ms-2" style="font-size:0.7rem;">{{ session_candidates|length }} candidates</span>
+            <i class="fas fa-clock" style="color:var(--az-primary);"></i> Today's Session
+            <span class="badge bg-primary ms-2" style="font-size:0.7rem; background:var(--az-primary) !important;">{{ session_candidates|length }} candidates</span>
         </div>
-
         {% if session_candidates %}
             {% for cand in session_candidates %}
             <div class="report-card">
                 <div class="report-card-header">
                     <div>
-                        <div class="cand-name">
-                            <i class="fas fa-user me-1"></i> {{ cand.name }}
-                            <span class="badge-role ms-2">{{ cand.role }}</span>
-                        </div>
-                        <div class="cand-meta">
-                            <i class="fas fa-envelope me-1"></i> {{ cand.email }}
-                            &nbsp;&middot;&nbsp;
-                            {{ cand.rounds|length }} rounds
-                        </div>
-                    </div>                    <div class="d-flex align-items-center gap-3">
-                        <!-- Verdict badge -->
-                        {% set verdict = cand.summary.overall_verdict|default('Pending') if cand.summary is defined else 'Pending' %}
-                        <span class="status-pill {% if verdict == 'Selected' %}status-pass{% elif verdict == 'Rejected' %}status-fail{% else %}status-pending{% endif %}" style="font-size:0.78rem; padding:5px 14px;">
-                            {% if verdict == 'Selected' %}<i class="fas fa-check-circle me-1"></i>
-                            {% elif verdict == 'Rejected' %}<i class="fas fa-times-circle me-1"></i>
-                            {% else %}<i class="fas fa-hourglass-half me-1"></i>{% endif %}
-                            {{ verdict }}
-                        </span>
-                        <span class="text-muted" style="font-size:0.78rem;">
-                            {{ cand.summary.attempted_rounds|default(0) }}/{{ cand.summary.total_rounds|default(0) }} rounds
-                        </span>
+                        <div class="cand-name"><i class="fas fa-user me-1" style="color:var(--az-slate-400);"></i> {{ cand.name }} <span class="badge-role ms-2">{{ cand.role }}</span></div>
+                        <div class="cand-meta"><i class="fas fa-envelope me-1"></i> {{ cand.email }}</div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
                         <div class="report-actions" id="actions-{{ loop.index }}">
-                            <button class="icon-btn btn-gen" onclick="generateReport('{{ cand.email }}', 'actions-{{ loop.index }}')" title="Generate Report">
-                                <i class="fas fa-file-pdf"></i>
-                            </button>
+                            <button class="icon-btn btn-gen" onclick="generateReport('{{ cand.email }}', 'actions-{{ loop.index }}')" title="Generate Report"><i class="fas fa-file-pdf"></i></button>
                         </div>
                     </div>
                 </div>
@@ -189,35 +77,27 @@
         {% else %}
             <div class="empty-state">
                 <i class="fas fa-inbox d-block"></i>
-                <p class="mb-1 fw-semibold">No candidates in today's session</p>
-                <p style="font-size:0.8rem;">Create tests from the <a href="{{ url_for('dashboard.create_test') }}">Create Test</a> page to see candidates here.</p>
+                <p class="mb-1" style="font-weight:500;">No candidates in today's session</p>
+                <p style="font-size:0.8rem;">Create tests from the <a href="{{ url_for('dashboard.create_test') }}" style="color:var(--az-primary);">Create Test</a> page to see candidates here.</p>
             </div>
         {% endif %}
     </div>
 </div>
 {% endblock %}
-
 {% block scripts %}
 <script>
 const searchInput = document.getElementById('searchInput');
 const searchResults = document.getElementById('searchResults');
 const searchResultsList = document.getElementById('searchResultsList');
-
 document.getElementById('searchBtn').addEventListener('click', searchCandidates);
 searchInput.addEventListener('keyup', function(e) { if (e.key === 'Enter') searchCandidates(); });
-document.getElementById('clearSearchBtn').addEventListener('click', function() {
-    searchInput.value = '';
-    searchResults.classList.remove('active');
-    searchResultsList.innerHTML = '';
-});
+document.getElementById('clearSearchBtn').addEventListener('click', function() { searchInput.value = ''; searchResults.classList.remove('active'); searchResultsList.innerHTML = ''; });
 
 function searchCandidates() {
     const q = searchInput.value.trim();
     if (q.length < 2) { if (typeof showToast === 'function') showToast('Enter at least 2 characters', 'warning'); return; }
-
-    searchResultsList.innerHTML = '<div class="text-center py-3"><div class="spinner-border spinner-border-sm text-primary"></div><span class="ms-2 text-muted">Searching...</span></div>';
+    searchResultsList.innerHTML = '<div class="text-center py-3"><div class="spinner-border spinner-border-sm" style="color:var(--az-primary);"></div><span class="ms-2 text-muted">Searching...</span></div>';
     searchResults.classList.add('active');
-
     fetch('/reports/search?q=' + encodeURIComponent(q))
         .then(r => r.json())
         .then(data => {
@@ -226,28 +106,23 @@ function searchCandidates() {
                 data.candidates.forEach((c, i) => {
                     const aid = 'sr-' + i;
                     h += '<div class="d-flex align-items-center justify-content-between p-2 border-bottom">'
-                       + '<div><span class="fw-semibold" style="color:#0d3b66;">' + c.name + '</span>'
+                       + '<div><span style="font-weight:500; color:var(--az-slate-900);">' + c.name + '</span>'
                        + ' <span class="badge-role ms-1">' + (c.role||'N/A') + '</span>'
-                       + '<div style="font-size:0.78rem;color:#6c757d;">' + c.email + '</div></div>'
+                       + '<div style="font-size:0.78rem;color:var(--az-slate-500);">' + c.email + '</div></div>'
                        + '<div class="report-actions" id="' + aid + '">'
                        + '<button class="icon-btn btn-gen" onclick="generateReport(\'' + c.email + '\',\'' + aid + '\')" title="Generate Report"><i class="fas fa-file-pdf"></i></button>'
                        + '</div></div>';
                 });
                 searchResultsList.innerHTML = h;
-            } else {
-                searchResultsList.innerHTML = '<div class="text-center py-3 text-muted"><i class="fas fa-search me-1"></i>No candidates found</div>';
-            }
+            } else { searchResultsList.innerHTML = '<div class="text-center py-3 text-muted"><i class="fas fa-search me-1"></i>No candidates found</div>'; }
         })
-        .catch(() => {
-            searchResultsList.innerHTML = '<div class="text-center py-3 text-danger"><i class="fas fa-exclamation-circle me-1"></i>Search failed</div>';
-        });
+        .catch(() => { searchResultsList.innerHTML = '<div class="text-center py-3 text-danger"><i class="fas fa-exclamation-circle me-1"></i>Search failed</div>'; });
 }
 
 function generateReport(email, containerId) {
     const c = document.getElementById(containerId);
     if (!c) return;
     c.innerHTML = '<span class="icon-btn btn-loading"><i class="fas fa-spinner fa-spin"></i></span>';
-
     fetch('/reports/generate/' + encodeURIComponent(email))
         .then(r => r.json())
         .then(data => {
