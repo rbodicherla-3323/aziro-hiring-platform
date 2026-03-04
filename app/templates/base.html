@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>{% block title %}AI Hiring Platform{% endblock %}</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI Hiring Platform{% endblock %}</title>
+
     <!-- Anti-FOUC: hide until CSS parsed — instant reveal, no transition flicker -->
-    <style>html:not(.az-ready){visibility:hidden!important}</style>    <!-- Google Fonts: Inter -->
+    <style>html:not(.az-ready){visibility:hidden!important}</style>
+
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet">
@@ -18,16 +23,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
-    {% block head %}{% endblock %}    <!-- Anti-FOUC reveal: fires once CSS is parsed, instant show -->
-    <script>
-      (function(){
-        function reveal(){ document.documentElement.classList.add('az-ready'); }
-        if(document.readyState === 'loading'){
-          document.addEventListener('DOMContentLoaded', reveal);
-        } else { reveal(); }
-        setTimeout(reveal, 300);
-      })();
-    </script>
+    {% block head %}{% endblock %}
+
+    <!-- Anti-FOUC reveal is at the end of <body> -->
 </head>
 <body>
 
@@ -41,7 +39,8 @@
     </div>
 </div>
 
-<div class="d-flex">    <!-- SIDEBAR -->
+<div class="d-flex">
+    <!-- SIDEBAR -->
     <aside class="sidebar text-white">
         <!-- User Profile -->
         <div class="sidebar-user px-3 py-3 mb-2">
@@ -107,7 +106,8 @@
     </aside>
 
     <!-- MAIN CONTENT -->
-    <main class="content-area">        <!-- TOP NAVBAR -->
+    <main class="content-area">
+        <!-- TOP NAVBAR -->
         <nav class="navbar navbar-light px-4">
             <div class="d-flex align-items-center">
                 <img src="{{ url_for('static', filename='images/azirotech_logo.jpg') }}"
@@ -365,6 +365,19 @@ function showToast(message, type = 'success') {
 })();
 </script>
 {% block scripts %}{% endblock %}
+
+<!-- Anti-FOUC reveal: runs after all DOM + stylesheets are parsed -->
+<script>
+(function(){
+    function reveal(){
+        document.documentElement.classList.add('az-ready');
+    }
+    // Double-rAF ensures the browser has applied all stylesheets before showing
+    requestAnimationFrame(function(){ requestAnimationFrame(reveal); });
+    // Safety net: never stay hidden longer than 800ms even if something stalls
+    setTimeout(reveal, 800);
+})();
+</script>
 </body>
 
 </html>

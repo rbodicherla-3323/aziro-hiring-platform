@@ -322,9 +322,10 @@ def create_test():
             tests[round_key] = {
                 "session_id": session_id,
                 "label": round_label,
-                "url": test_url,
-                "type": "mcq",
-            }        # Store in generated tests
+                "url": test_url,                "type": "mcq",
+            }
+
+        # Store in generated tests
         add_generated_test({
             "name": name,
             "email": email,
