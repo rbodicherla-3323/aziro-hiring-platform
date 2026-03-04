@@ -26,8 +26,8 @@
   {
     "question": "What does len([1, 2, 3]) return?",
     "options": [
-      "1",
       "3",
+      "1",
       "4",
       "2"
     ],
@@ -50,8 +50,8 @@
   {
     "question": "What is the output of: print(10 % 3)",
     "options": [
-      "0",
       "1",
+      "0",
       "10",
       "3"
     ],
@@ -63,8 +63,8 @@
     "question": "Which method adds an element to the end of a list?",
     "options": [
       "add()",
-      "append()",
       "extend()",
+      "append()",
       "insert()"
     ],
     "correct_answer": "append()",
@@ -74,9 +74,9 @@
   {
     "question": "What does the 'pass' statement do?",
     "options": [
-      "Exits the loop",
-      "Skips iteration",
       "Does nothing",
+      "Skips iteration",
+      "Exits the loop",
       "Returns None"
     ],
     "correct_answer": "Does nothing",
@@ -86,9 +86,9 @@
   {
     "question": "What is the output of: print(bool(0))",
     "options": [
-      "True",
-      "None",
       "False",
+      "None",
+      "True",
       "0"
     ],
     "correct_answer": "False",
@@ -99,9 +99,9 @@
     "question": "Which of these creates a dictionary?",
     "options": [
       "{1, 2, 3}",
-      "{'a': 1}",
+      "(1, 2, 3)",
       "[1, 2, 3]",
-      "(1, 2, 3)"
+      "{'a': 1}"
     ],
     "correct_answer": "{'a': 1}",
     "topic": "Data Types",
@@ -1592,210 +1592,6 @@
       "module"
     ],
     "correct_answer": "dict",
-    "topic": "Built-in Functions",
-    "difficulty": "hard"
-  },
-  {
-    "question": "What is the output of:\nx = [1, 2, 3]\ny = x[:]\ny.append(4)\nprint(len(x))",
-    "options": [
-      "Error",
-      "4",
-      "None",
-      "3"
-    ],
-    "correct_answer": "3",
-    "topic": "Lists",
-    "difficulty": "medium"
-  },
-  {
-    "question": "Which statement about Python sets is correct?",
-    "options": [
-      "Sets are ordered",
-      "Sets allow duplicates",
-      "Sets are indexed",
-      "Sets are mutable"
-    ],
-    "correct_answer": "Sets are mutable",
-    "topic": "Sets",
-    "difficulty": "medium"
-  },
-  {
-    "question": "What is the output of:\ndef f(a, b=[]): b.append(a); return b\nprint(len(f(1)), len(f(2)))",
-    "options": [
-      "1 2",
-      "1 1",
-      "2 2",
-      "Error"
-    ],
-    "correct_answer": "1 2",
-    "topic": "Functions",
-    "difficulty": "medium"
-  },
-  {
-    "question": "What does the walrus operator := do?",
-    "options": [
-      "Compares values",
-      "Assigns and returns",
-      "Checks identity",
-      "Floor divides"
-    ],
-    "correct_answer": "Assigns and returns",
-    "topic": "Operators",
-    "difficulty": "medium"
-  },
-  {
-    "question": "What is the output of:\nprint({1, 2, 3} & {2, 3, 4})",
-    "options": [
-      "Error",
-      "{1, 2, 3, 4}",
-      "{2, 3}",
-      "{1, 4}"
-    ],
-    "correct_answer": "{2, 3}",
-    "topic": "Sets",
-    "difficulty": "medium"
-  },
-  {
-    "question": "What is the output of:\nprint('hello'[::-1])",
-    "options": [
-      "olleh",
-      "Error",
-      "h",
-      "hello"
-    ],
-    "correct_answer": "olleh",
-    "topic": "Strings",
-    "difficulty": "medium"
-  },
-  {
-    "question": "What is the output of:\nx = {'a': 1, 'b': 2}\nprint(list(x.values()))",
-    "options": [
-      "Error",
-      "['a', 'b']",
-      "[1, 2]",
-      "[('a',1),('b',2)]"
-    ],
-    "correct_answer": "[1, 2]",
-    "topic": "Dictionaries",
-    "difficulty": "medium"
-  },
-  {
-    "question": "What is the output of:\ntry:\n    1/0\nexcept ArithmeticError:\n    print('caught')",
-    "options": [
-      "caught",
-      "ZeroDivisionError",
-      "None",
-      "Error"
-    ],
-    "correct_answer": "caught",
-    "topic": "Exception Handling",
-    "difficulty": "medium"
-  },
-  {
-    "question": "What is the output of:\nprint(isinstance(True, int))",
-    "options": [
-      "None",
-      "False",
-      "Error",
-      "True"
-    ],
-    "correct_answer": "True",
-    "topic": "Data Types",
-    "difficulty": "medium"
-  },
-  {
-    "question": "What is the output of:\nprint(sorted([3,1,2], reverse=True))",
-    "options": [
-      "[1, 2, 3]",
-      "[3, 2, 1]",
-      "Error",
-      "[3, 1, 2]"
-    ],
-    "correct_answer": "[3, 2, 1]",
-    "topic": "Built-in Functions",
-    "difficulty": "medium"
-  },
-  {
-    "question": "Which method removes and returns the last item from a list?",
-    "options": [
-      "remove()",
-      "discard()",
-      "pop()",
-      "del()"
-    ],
-    "correct_answer": "pop()",
-    "topic": "Lists",
-    "difficulty": "medium"
-  },
-  {
-    "question": "What is the output of:\nprint(type(lambda: None).__name__)",
-    "options": [
-      "callable",
-      "NoneType",
-      "lambda",
-      "function"
-    ],
-    "correct_answer": "function",
-    "topic": "Functions",
-    "difficulty": "medium"
-  },
-  {
-    "question": "What is the output of:\nclass A:\n    x = []\n    def add(self, v): self.x.append(v)\na, b = A(), A()\na.add(1)\nprint(b.x)",
-    "options": [
-      "[1]",
-      "[]",
-      "Error",
-      "None"
-    ],
-    "correct_answer": "[1]",
-    "topic": "OOP",
-    "difficulty": "hard"
-  },
-  {
-    "question": "What is the output of:\ndef gen():\n    yield 1\n    yield 2\ng = gen()\nprint(next(g) + next(g))",
-    "options": [
-      "Error",
-      "1",
-      "2",
-      "3"
-    ],
-    "correct_answer": "3",
-    "topic": "Generators",
-    "difficulty": "hard"
-  },
-  {
-    "question": "What is the output of:\nprint({True: 'a', 1: 'b', 1.0: 'c'})",
-    "options": [
-      "Error",
-      "{True: 'a', 1: 'b', 1.0: 'c'}",
-      "{True: 'c'}",
-      "{1: 'c'}"
-    ],
-    "correct_answer": "{True: 'c'}",
-    "topic": "Dictionaries",
-    "difficulty": "hard"
-  },
-  {
-    "question": "What is the output of:\nx = [1, [2, 3]]\nimport copy\ny = copy.copy(x)\ny[1].append(4)\nprint(x)",
-    "options": [
-      "[1, [2, 3]]",
-      "[1, [2, 3, 4]]",
-      "Error",
-      "[1, [2, 3], 4]"
-    ],
-    "correct_answer": "[1, [2, 3, 4]]",
-    "topic": "Deep vs Shallow Copy",
-    "difficulty": "hard"
-  },
-  {
-    "question": "What is the output of:\nprint(all([]) and any([]))",
-    "options": [
-      "True",
-      "None",
-      "False",
-      "Error"
-    ],
-    "correct_answer": "False",
     "topic": "Built-in Functions",
     "difficulty": "hard"
   }
