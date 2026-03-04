@@ -2,9 +2,7 @@
 {% block title %}Generated Tests{% endblock %}
 {% block breadcrumb %}Generated Tests{% endblock %}
 
-{% block content %}
-<div class="generated-tests-page">
-
+{% block head %}
 <style>
     .generated-tests-page {
         --gt-brand: #0f766e;
@@ -193,9 +191,12 @@
         .candidate-card .test-link-actions {
             width: 100%;
             justify-content: flex-start;
-        }
-    }
+        }    }
 </style>
+{% endblock %}
+
+{% block content %}
+<div class="generated-tests-page">
 
 <!-- NEW BACK BUTTON (TOP) -->
 <div class="d-flex justify-content-between align-items-center mb-3">

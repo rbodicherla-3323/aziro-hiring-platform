@@ -48,8 +48,7 @@
 }
 
 /* ================= ANTI-FOUC ================= */
-html { visibility: hidden; }
-html.az-ready { visibility: visible; }
+html:not(.az-ready) { visibility: hidden !important; }
 
 /* ================= BASE ================= */
 body {

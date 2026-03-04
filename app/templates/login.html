@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aziro Hiring Management</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    html { visibility: hidden; }
-    html.az-ready { visibility: visible; }
+  <title>Aziro Hiring Management</title>  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>
+    html:not(.az-ready) { visibility: hidden !important; }
     body {
       font-family: "Inter", "Segoe UI", system-ui, sans-serif;
       background: #f8fafc; margin: 0;
@@ -52,14 +50,13 @@
     .links { margin-top: 16px; font-size: 0.78rem; color: #94a3b8; }
     .error {
       background: #fef2f2; color: #991b1b; border: 1px solid #fecaca;
-      border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 0.82rem; text-align: left;
-    }  </style>
-  <script>
+      border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 0.82rem; text-align: left;    }  </style>  <script>
     (function(){
-      var reveal = function(){ document.documentElement.classList.add('az-ready'); };
-      if (document.readyState !== 'loading') { reveal(); }
-      else { document.addEventListener('DOMContentLoaded', reveal); }
-      setTimeout(reveal, 400);
+      function reveal(){ document.documentElement.classList.add('az-ready'); }
+      if(document.readyState === 'loading'){
+        document.addEventListener('DOMContentLoaded', reveal);
+      } else { reveal(); }
+      setTimeout(reveal, 300);
     })();
   </script>
 </head>

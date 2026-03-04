@@ -2,8 +2,7 @@
 {% block title %}Evaluation{% endblock %}
 {% block breadcrumb %}Evaluation{% endblock %}
 
-{% block content %}
-
+{% block head %}
 <style>
     .evaluation-page {
         --ev-brand: #0f766e;
@@ -354,10 +353,11 @@
     .evaluation-page .btn-primary:hover {
         background: #0d6963;
         transform: translateY(-1px);
-        box-shadow: 0 2px 6px rgba(15,118,110,0.20);
-    }
+        box-shadow: 0 2px 6px rgba(15,118,110,0.20);    }
 </style>
+{% endblock %}
 
+{% block content %}
 <div class="evaluation-page">
 <!-- ===== PAGE HEADER ===== -->
 <div class="eval-header">
