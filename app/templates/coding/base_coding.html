@@ -7,10 +7,8 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='coding/coding.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v={{ ASSET_VERSION }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='coding/coding.css') }}?v={{ ASSET_VERSION }}">
 
     <style>
         {% if body_class and "mcq-start-page" in body_class %}
