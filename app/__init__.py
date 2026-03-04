@@ -50,7 +50,9 @@ def create_app():
         response.headers["Feature-Policy"] = (
             "display-capture 'self'; camera 'self'; microphone 'self'; fullscreen 'self'"
         )
-        return response    # Create DB tables
+        return response
+
+    # Create DB tables
     with app.app_context():
         from . import models  # noqa: F401
         db.create_all()
