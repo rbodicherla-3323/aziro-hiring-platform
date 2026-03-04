@@ -1,1886 +1,1802 @@
 [
   {
-    "question": "Which Python data type is immutable and can contain elements of different types?",
+    "question": "What is the output of: print(type(3.14).__name__)",
     "options": [
-      "Set",
-      "Dictionary",
-      "List",
-      "Tuple"
+      "double",
+      "float",
+      "number",
+      "int"
     ],
-    "correct_answer": "Tuple",
+    "correct_answer": "float",
     "topic": "Data Types",
     "difficulty": "easy"
   },
   {
-    "question": "What is the result of using the modulo operator with negative numbers in Python?",
+    "question": "Which keyword is used to define a function in Python?",
     "options": [
-      "Always returns negative",
-      "Always returns positive",
-      "The sign follows the dividend",
-      "The sign follows the divisor"
+      "function",
+      "def",
+      "func",
+      "define"
     ],
-    "correct_answer": "The sign follows the divisor",
-    "topic": "Operators",
+    "correct_answer": "def",
+    "topic": "Functions",
     "difficulty": "easy"
   },
   {
-    "question": "Which conditional construct allows multiple conditions to be checked sequentially?",
+    "question": "What does len([1, 2, 3]) return?",
     "options": [
-      "if-else",
-      "nested if",
-      "switch-case",
-      "if-elif-else"
+      "1",
+      "3",
+      "4",
+      "2"
     ],
-    "correct_answer": "if-elif-else",
-    "topic": "Conditionals",
+    "correct_answer": "3",
+    "topic": "Built-in Functions",
     "difficulty": "easy"
   },
   {
-    "question": "What happens when you use 'break' inside a loop?",
+    "question": "Which data type is mutable in Python?",
     "options": [
-      "Skips to the next iteration",
-      "Exits the entire loop",
-      "Restarts the loop",
-      "Exits the current iteration"
-    ],
-    "correct_answer": "Exits the entire loop",
-    "topic": "Loops",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Which string method returns a copy with all characters in uppercase?",
-    "options": [
-      "swapcase()",
-      "capitalize()",
-      "title()",
-      "upper()"
-    ],
-    "correct_answer": "upper()",
-    "topic": "Strings",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does the 'append()' method do to a list?",
-    "options": [
-      "Inserts at a specific index",
-      "Adds an element at the end",
-      "Removes an element",
-      "Adds multiple elements"
-    ],
-    "correct_answer": "Adds an element at the end",
-    "topic": "Lists",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Why are tuples preferred over lists for representing fixed collections?",
-    "options": [
-      "They use less memory and are immutable",
-      "They allow modifications",
-      "They support more methods",
-      "They are faster to create"
-    ],
-    "correct_answer": "They use less memory and are immutable",
-    "topic": "Tuples",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What method retrieves a value from a dictionary without raising an error if the key doesn't exist?",
-    "options": [
-      "fetch()",
-      "get()",
-      "find()",
-      "retrieve()"
-    ],
-    "correct_answer": "get()",
-    "topic": "Dictionaries",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Which OOP principle allows a child class to inherit properties from a parent class?",
-    "options": [
-      "Encapsulation",
-      "Polymorphism",
-      "Abstraction",
-      "Inheritance"
-    ],
-    "correct_answer": "Inheritance",
-    "topic": "OOP Basics",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What Git command is used to save changes to the local repository?",
-    "options": [
-      "git save",
-      "git push",
-      "git commit",
-      "git add"
-    ],
-    "correct_answer": "git commit",
-    "topic": "Git",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Which Linux command displays the current working directory?",
-    "options": [
-      "pwd",
-      "dir",
-      "ls",
-      "cd"
-    ],
-    "correct_answer": "pwd",
-    "topic": "Linux",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Which data type is ordered, mutable, and allows duplicate elements?",
-    "options": [
-      "List",
-      "Set",
-      "Dictionary",
-      "Frozenset"
-    ],
-    "correct_answer": "List",
-    "topic": "Data Types",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What do comparison operators return in Python?",
-    "options": [
-      "Boolean values",
-      "None",
-      "Strings",
-      "Integers"
-    ],
-    "correct_answer": "Boolean values",
-    "topic": "Operators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does the 'pass' statement do in Python?",
-    "options": [
-      "Exits the program",
-      "Raises an error",
-      "Skips the next line",
-      "Does nothing, acts as placeholder"
-    ],
-    "correct_answer": "Does nothing, acts as placeholder",
-    "topic": "Conditionals",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the difference between 'break' and 'continue' in loops?",
-    "options": [
-      "break exits loop, continue skips to next iteration",
-      "continue exits, break skips",
-      "Both are identical",
-      "Both exit the loop"
-    ],
-    "correct_answer": "break exits loop, continue skips to next iteration",
-    "topic": "Loops",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Are strings mutable or immutable in Python?",
-    "options": [
-      "Depends on the string length",
-      "Depends on the content",
-      "Mutable",
-      "Immutable"
-    ],
-    "correct_answer": "Immutable",
-    "topic": "Strings",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does list slicing with negative indices represent?",
-    "options": [
-      "Reverses the list",
-      "Raises an error",
-      "Removes elements",
-      "Counts from the end"
-    ],
-    "correct_answer": "Counts from the end",
-    "topic": "Lists",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Can tuples contain mutable objects like lists?",
-    "options": [
-      "Yes, the tuple itself remains immutable",
-      "No, only immutable objects",
-      "Only if explicitly defined",
-      "Only in Python 3"
-    ],
-    "correct_answer": "Yes, the tuple itself remains immutable",
-    "topic": "Tuples",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What happens when you try to access a non-existent key in a dictionary?",
-    "options": [
-      "Returns empty string",
-      "Raises KeyError",
-      "Returns None",
-      "Creates the key"
-    ],
-    "correct_answer": "Raises KeyError",
-    "topic": "Dictionaries",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does the '__init__' method do in a class?",
-    "options": [
-      "Initializes object attributes",
-      "Creates a class",
-      "Deletes an object",
-      "Defines class methods"
-    ],
-    "correct_answer": "Initializes object attributes",
-    "topic": "OOP Basics",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does 'git clone' do?",
-    "options": [
-      "Copies a remote repository locally",
-      "Creates a branch",
-      "Deletes a repository",
-      "Merges branches"
-    ],
-    "correct_answer": "Copies a remote repository locally",
-    "topic": "Git",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Which Linux command lists files and directories?",
-    "options": [
-      "ls",
+      "str",
       "list",
-      "dir",
-      "show"
+      "tuple",
+      "int"
     ],
-    "correct_answer": "ls",
-    "topic": "Linux",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Which Python data type is unordered and contains only unique elements?",
-    "options": [
-      "Tuple",
-      "Set",
-      "List",
-      "Dictionary"
-    ],
-    "correct_answer": "Set",
+    "correct_answer": "list",
     "topic": "Data Types",
     "difficulty": "easy"
   },
   {
-    "question": "What does the 'is' operator check in Python?",
+    "question": "What is the output of: print(10 % 3)",
     "options": [
-      "Type equality",
-      "Value equality",
-      "String comparison",
-      "Identity (same object)"
+      "0",
+      "1",
+      "10",
+      "3"
     ],
-    "correct_answer": "Identity (same object)",
+    "correct_answer": "1",
     "topic": "Operators",
     "difficulty": "easy"
   },
   {
-    "question": "Can you nest if statements inside other if statements?",
+    "question": "Which method adds an element to the end of a list?",
     "options": [
-      "Yes, creating nested conditionals",
-      "Only with elif",
-      "Only in Python 3.8+",
-      "No, not allowed"
+      "add()",
+      "append()",
+      "extend()",
+      "insert()"
     ],
-    "correct_answer": "Yes, creating nested conditionals",
-    "topic": "Conditionals",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is a 'while' loop used for in Python?",
-    "options": [
-      "Only infinite loops",
-      "Iterating over sequences",
-      "Condition-based iterations",
-      "Fixed iterations"
-    ],
-    "correct_answer": "Condition-based iterations",
-    "topic": "Loops",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is string concatenation in Python?",
-    "options": [
-      "Joining strings together",
-      "Converting to uppercase",
-      "Removing spaces",
-      "Splitting strings"
-    ],
-    "correct_answer": "Joining strings together",
-    "topic": "Strings",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does the 'extend()' method do to a list?",
-    "options": [
-      "Adds multiple elements from iterable",
-      "Adds single element",
-      "Removes elements",
-      "Sorts the list"
-    ],
-    "correct_answer": "Adds multiple elements from iterable",
+    "correct_answer": "append()",
     "topic": "Lists",
     "difficulty": "easy"
   },
   {
-    "question": "How do you access the first element of a tuple?",
+    "question": "What does the 'pass' statement do?",
     "options": [
-      "tuple.get(0)",
-      "tuple(0)",
-      "tuple[0]",
-      "tuple.first()"
+      "Exits the loop",
+      "Skips iteration",
+      "Does nothing",
+      "Returns None"
     ],
-    "correct_answer": "tuple[0]",
-    "topic": "Tuples",
+    "correct_answer": "Does nothing",
+    "topic": "Control Flow",
     "difficulty": "easy"
   },
   {
-    "question": "Can dictionary keys be of any data type?",
+    "question": "What is the output of: print(bool(0))",
     "options": [
-      "Only numbers",
-      "Only strings",
-      "Only immutable types",
-      "Yes, any type"
+      "True",
+      "None",
+      "False",
+      "0"
     ],
-    "correct_answer": "Only immutable types",
-    "topic": "Dictionaries",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does inheritance allow in object-oriented programming?",
-    "options": [
-      "Hiding data",
-      "Defining methods",
-      "Deriving classes from parent classes",
-      "Creating objects"
-    ],
-    "correct_answer": "Deriving classes from parent classes",
-    "topic": "OOP Basics",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does 'git pull' do?",
-    "options": [
-      "Deletes files",
-      "Creates a branch",
-      "Fetches and merges remote changes",
-      "Pushes changes"
-    ],
-    "correct_answer": "Fetches and merges remote changes",
-    "topic": "Git",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Which Linux command changes the current directory?",
-    "options": [
-      "cd",
-      "goto",
-      "move",
-      "chdir"
-    ],
-    "correct_answer": "cd",
-    "topic": "Linux",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Which built-in function returns the type of an object?",
-    "options": [
-      "gettype()",
-      "type()",
-      "typeof()",
-      "class()"
-    ],
-    "correct_answer": "type()",
+    "correct_answer": "False",
     "topic": "Data Types",
     "difficulty": "easy"
   },
   {
-    "question": "What is the difference between '==' and 'is' operators?",
+    "question": "Which of these creates a dictionary?",
     "options": [
-      "== checks value, is checks identity",
-      "No difference",
-      "is checks value, == checks identity",
-      "Both check type"
+      "{1, 2, 3}",
+      "{'a': 1}",
+      "[1, 2, 3]",
+      "(1, 2, 3)"
     ],
-    "correct_answer": "== checks value, is checks identity",
+    "correct_answer": "{'a': 1}",
+    "topic": "Data Types",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of: print('hello'[1])",
+    "options": [
+      "l",
+      "o",
+      "h",
+      "e"
+    ],
+    "correct_answer": "e",
+    "topic": "Strings",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which loop is used for iterating over a sequence?",
+    "options": [
+      "do-while",
+      "for",
+      "foreach",
+      "while"
+    ],
+    "correct_answer": "for",
+    "topic": "Control Flow",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does range(5) generate?",
+    "options": [
+      "1 to 4",
+      "0 to 4",
+      "0 to 5",
+      "1 to 5"
+    ],
+    "correct_answer": "0 to 4",
+    "topic": "Built-in Functions",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which operator is used for exponentiation?",
+    "options": [
+      "%%",
+      "**",
+      "^",
+      "//"
+    ],
+    "correct_answer": "**",
     "topic": "Operators",
     "difficulty": "easy"
   },
   {
-    "question": "What is a ternary operator in Python?",
+    "question": "What is the output of: print(type([])).__name__?",
     "options": [
-      "Three operands",
-      "Triple comparison",
-      "Conditional expression in one line",
-      "Three variables"
+      "list",
+      "set",
+      "dict",
+      "tuple"
     ],
-    "correct_answer": "Conditional expression in one line",
-    "topic": "Conditionals",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does the 'range()' function do in for loops?",
-    "options": [
-      "Returns a list",
-      "Generates sequence of numbers",
-      "Creates variables",
-      "Counts iterations"
-    ],
-    "correct_answer": "Generates sequence of numbers",
-    "topic": "Loops",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does the 'split()' method do on strings?",
-    "options": [
-      "Removes characters",
-      "Converts to list of characters",
-      "Divides string into list",
-      "Joins strings"
-    ],
-    "correct_answer": "Divides string into list",
-    "topic": "Strings",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is list comprehension?",
-    "options": [
-      "Reading lists",
-      "Sorting method",
-      "List concatenation",
-      "Concise way to create lists"
-    ],
-    "correct_answer": "Concise way to create lists",
-    "topic": "Lists",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is tuple packing?",
-    "options": [
-      "Compressing tuples",
-      "Removing elements",
-      "Assigning multiple values to tuple",
-      "Converting to list"
-    ],
-    "correct_answer": "Assigning multiple values to tuple",
-    "topic": "Tuples",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What method returns all keys in a dictionary?",
-    "options": [
-      "keylist()",
-      "keys()",
-      "getkeys()",
-      "allkeys()"
-    ],
-    "correct_answer": "keys()",
-    "topic": "Dictionaries",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does polymorphism mean in OOP?",
-    "options": [
-      "Creating objects",
-      "Multiple forms of methods",
-      "Data hiding",
-      "Variable declaration"
-    ],
-    "correct_answer": "Multiple forms of methods",
-    "topic": "OOP Basics",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does 'git status' show?",
-    "options": [
-      "Working directory status",
-      "Commit history",
-      "User information",
-      "Remote branches"
-    ],
-    "correct_answer": "Working directory status",
-    "topic": "Git",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Which Linux command creates a new directory?",
-    "options": [
-      "createdir",
-      "makedir",
-      "newdir",
-      "mkdir"
-    ],
-    "correct_answer": "mkdir",
-    "topic": "Linux",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is type conversion in Python?",
-    "options": [
-      "Converting one data type to another",
-      "Deleting types",
-      "Changing variable names",
-      "Creating new types"
-    ],
-    "correct_answer": "Converting one data type to another",
+    "correct_answer": "list",
     "topic": "Data Types",
     "difficulty": "easy"
   },
   {
-    "question": "What are logical operators used for?",
+    "question": "How do you start a comment in Python?",
     "options": [
+      "//",
+      "#",
+      "--",
+      "/*"
+    ],
+    "correct_answer": "#",
+    "topic": "Syntax",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does str(123) return?",
+    "options": [
+      "error",
+      "123",
+      "int",
+      "'123'"
+    ],
+    "correct_answer": "'123'",
+    "topic": "Type Conversion",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does a function return if there is no return statement?",
+    "options": [
+      "False",
+      "empty string",
+      "None",
+      "0"
+    ],
+    "correct_answer": "None",
+    "topic": "Functions",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which method removes the last element from a list?",
+    "options": [
+      "pop()",
+      "discard()",
+      "remove()",
+      "delete()"
+    ],
+    "correct_answer": "pop()",
+    "topic": "Lists",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of: print(2 ** 3)",
+    "options": [
+      "9",
+      "5",
+      "8",
+      "6"
+    ],
+    "correct_answer": "8",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which keyword is used to handle exceptions?",
+    "options": [
+      "catch",
+      "except",
+      "handle",
+      "error"
+    ],
+    "correct_answer": "except",
+    "topic": "Exception Handling",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of: print('py' * 3)",
+    "options": [
+      "py3",
+      "py py py",
+      "error",
+      "pypypy"
+    ],
+    "correct_answer": "pypypy",
+    "topic": "Strings",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does the 'in' keyword check?",
+    "options": [
+      "data type",
+      "equality",
+      "identity",
+      "membership"
+    ],
+    "correct_answer": "membership",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which function converts a string to an integer?",
+    "options": [
+      "int()",
+      "chr()",
+      "float()",
+      "str()"
+    ],
+    "correct_answer": "int()",
+    "topic": "Type Conversion",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of: print(10 // 3)",
+    "options": [
+      "4",
+      "1",
+      "3.33",
+      "3"
+    ],
+    "correct_answer": "3",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which of the following is an immutable type?",
+    "options": [
+      "set",
+      "list",
+      "dict",
+      "tuple"
+    ],
+    "correct_answer": "tuple",
+    "topic": "Data Types",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does .strip() do to a string?",
+    "options": [
+      "Reverses it",
+      "Lowercases it",
+      "Splits it",
+      "Removes whitespace"
+    ],
+    "correct_answer": "Removes whitespace",
+    "topic": "Strings",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of: print(not True)",
+    "options": [
+      "Error",
+      "None",
+      "False",
+      "True"
+    ],
+    "correct_answer": "False",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which built-in function returns the largest item?",
+    "options": [
+      "max()",
+      "len()",
+      "min()",
+      "sum()"
+    ],
+    "correct_answer": "max()",
+    "topic": "Built-in Functions",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does break do inside a loop?",
+    "options": [
+      "Does nothing",
+      "Exits the loop",
+      "Skips one cycle",
+      "Restarts loop"
+    ],
+    "correct_answer": "Exits the loop",
+    "topic": "Control Flow",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of: print([1,2,3][-1])",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "Error"
+    ],
+    "correct_answer": "3",
+    "topic": "Lists",
+    "difficulty": "easy"
+  },
+  {
+    "question": "How do you create an empty set in Python?",
+    "options": [
+      "[]",
+      "{}",
+      "()",
+      "set()"
+    ],
+    "correct_answer": "set()",
+    "topic": "Data Types",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of: print('Hello'.lower())",
+    "options": [
+      "Hello",
+      "hELLO",
+      "hello",
+      "HELLO"
+    ],
+    "correct_answer": "hello",
+    "topic": "Strings",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which statement is used to skip the current iteration?",
+    "options": [
+      "break",
+      "pass",
+      "continue",
+      "return"
+    ],
+    "correct_answer": "continue",
+    "topic": "Control Flow",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does input() return by default?",
+    "options": [
+      "float",
+      "bool",
+      "int",
+      "str"
+    ],
+    "correct_answer": "str",
+    "topic": "Built-in Functions",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of: print(5 == 5.0)",
+    "options": [
+      "False",
+      "Error",
+      "True",
+      "None"
+    ],
+    "correct_answer": "True",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which keyword creates a class in Python?",
+    "options": [
+      "class",
+      "object",
+      "define",
+      "struct"
+    ],
+    "correct_answer": "class",
+    "topic": "OOP",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of: print(list('abc'))",
+    "options": [
+      "['abc']",
+      "abc",
+      "['a','b','c']",
+      "('a','b','c')"
+    ],
+    "correct_answer": "['a','b','c']",
+    "topic": "Type Conversion",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which method returns all dictionary keys?",
+    "options": [
+      ".values()",
+      ".items()",
+      ".keys()",
+      ".get()"
+    ],
+    "correct_answer": ".keys()",
+    "topic": "Dictionaries",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the index of the first element in a list?",
+    "options": [
+      "0",
+      "1",
+      "None",
+      "-1"
+    ],
+    "correct_answer": "0",
+    "topic": "Lists",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of: print(bool(''))",
+    "options": [
+      "Error",
+      "False",
+      "None",
+      "True"
+    ],
+    "correct_answer": "False",
+    "topic": "Data Types",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which module provides mathematical functions?",
+    "options": [
+      "random",
+      "os",
+      "sys",
+      "math"
+    ],
+    "correct_answer": "math",
+    "topic": "Modules",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does .split() do with no arguments?",
+    "options": [
+      "Returns original",
+      "Splits on spaces",
+      "Splits on commas",
+      "Raises error"
+    ],
+    "correct_answer": "Splits on spaces",
+    "topic": "Strings",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of: print(abs(-7))",
+    "options": [
+      "Error",
+      "7",
+      "0",
+      "-7"
+    ],
+    "correct_answer": "7",
+    "topic": "Built-in Functions",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which of these is a valid variable name?",
+    "options": [
+      "class",
+      "2name",
+      "_count",
+      "my-var"
+    ],
+    "correct_answer": "_count",
+    "topic": "Syntax",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of: print(type(None).__name__)",
+    "options": [
+      "NoneType",
+      "None",
+      "void",
+      "null"
+    ],
+    "correct_answer": "NoneType",
+    "topic": "Data Types",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Which method joins list elements into a string?",
+    "options": [
+      ".join()",
+      ".merge()",
+      ".combine()",
+      ".concat()"
+    ],
+    "correct_answer": ".join()",
+    "topic": "Strings",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of: print(3 in [1, 2, 3])",
+    "options": [
+      "Error",
+      "False",
+      "3",
+      "True"
+    ],
+    "correct_answer": "True",
+    "topic": "Operators",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What does the elif keyword mean?",
+    "options": [
+      "else if",
+      "end if",
+      "else loop",
+      "element if"
+    ],
+    "correct_answer": "else if",
+    "topic": "Control Flow",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of: print([1,2] + [3,4])",
+    "options": [
+      "[[1,2],[3,4]]",
+      "[4, 6]",
+      "[1,2,3,4]",
+      "Error"
+    ],
+    "correct_answer": "[1,2,3,4]",
+    "topic": "Lists",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of: print(round(3.7))",
+    "options": [
+      "4",
+      "3.7",
+      "Error",
+      "3"
+    ],
+    "correct_answer": "4",
+    "topic": "Built-in Functions",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the output of:\nx = [1, 2, 3]\nx.append([4, 5])\nprint(len(x))",
+    "options": [
+      "Error",
+      "4",
+      "5",
+      "3"
+    ],
+    "correct_answer": "4",
+    "topic": "Lists",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\na = [1, 2, 3]\nb = a\nb.append(4)\nprint(a)",
+    "options": [
+      "[1, 2, 3, 4]",
+      "Error",
+      "[4]",
+      "[1, 2, 3]"
+    ],
+    "correct_answer": "[1, 2, 3, 4]",
+    "topic": "Debugging",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint({1, 2, 3} & {2, 3, 4})",
+    "options": [
+      "{2, 3}",
+      "Error",
+      "{1,2,3,4}",
+      "{1, 4}"
+    ],
+    "correct_answer": "{2, 3}",
+    "topic": "Sets",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What does *args allow in a function definition?",
+    "options": [
+      "Keyword arguments",
+      "Default parameters",
+      "Type annotations",
+      "Variable positional args"
+    ],
+    "correct_answer": "Variable positional args",
+    "topic": "Functions",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint([x**2 for x in range(4)])",
+    "options": [
+      "[1, 2, 3, 4]",
+      "[1, 4, 9, 16]",
+      "[0, 2, 4, 6]",
+      "[0, 1, 4, 9]"
+    ],
+    "correct_answer": "[0, 1, 4, 9]",
+    "topic": "List Comprehension",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\ndef f(a, b=[]):\n    b.append(a)\n    return b\nprint(f(1)); print(f(2))",
+    "options": [
+      "[1] then [2]",
+      "[1, 2] then [1, 2]",
+      "[1] then [1, 2]",
+      "Error both times"
+    ],
+    "correct_answer": "[1] then [1, 2]",
+    "topic": "Debugging",
+    "difficulty": "medium"
+  },
+  {
+    "question": "Which method returns a shallow copy of a list?",
+    "options": [
+      ".clone()",
+      ".copy()",
+      ".duplicate()",
+      ".replica()"
+    ],
+    "correct_answer": ".copy()",
+    "topic": "Lists",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint('abcdef'[1:4])",
+    "options": [
+      "bcd",
+      "bcde",
+      "abcd",
+      "abc"
+    ],
+    "correct_answer": "bcd",
+    "topic": "Strings",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nx = {'a': 1, 'b': 2}\nprint(x.get('c', 0))",
+    "options": [
+      "Error",
+      "''",
+      "0",
+      "None"
+    ],
+    "correct_answer": "0",
+    "topic": "Dictionaries",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\ntry:\n    print(1/0)\nexcept ZeroDivisionError:\n    print('caught')\nfinally:\n    print('done')",
+    "options": [
+      "Error then done",
+      "caught",
+      "caught then done",
+      "done"
+    ],
+    "correct_answer": "caught then done",
+    "topic": "Exception Handling",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is a lambda function?",
+    "options": [
+      "An anonymous function",
+      "A class method only",
+      "A built-in module",
+      "A named function"
+    ],
+    "correct_answer": "An anonymous function",
+    "topic": "Functions",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint(sorted([3,1,2], reverse=True))",
+    "options": [
+      "Error",
+      "[3, 1, 2]",
+      "[1, 2, 3]",
+      "[3, 2, 1]"
+    ],
+    "correct_answer": "[3, 2, 1]",
+    "topic": "Built-in Functions",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nx = (1,)\nprint(type(x).__name__)",
+    "options": [
+      "tuple",
+      "set",
+      "int",
+      "list"
+    ],
+    "correct_answer": "tuple",
+    "topic": "Data Types",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What does __init__ method do in a class?",
+    "options": [
+      "Deletes object",
+      "Initializes object",
+      "Compares objects",
+      "Copies object"
+    ],
+    "correct_answer": "Initializes object",
+    "topic": "OOP",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint({}.fromkeys(['a','b'], 0))",
+    "options": [
+      "Error",
+      "{'a': 0, 'b': 0}",
+      "[0, 0]",
+      "{'a': 'b'}"
+    ],
+    "correct_answer": "{'a': 0, 'b': 0}",
+    "topic": "Dictionaries",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint('hello world'.title())",
+    "options": [
+      "Hello World",
+      "HELLO WORLD",
+      "Hello world",
+      "hello World"
+    ],
+    "correct_answer": "Hello World",
+    "topic": "Strings",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nx = [1, 2, 3]\nprint(x[::-1])",
+    "options": [
+      "[3, 2, 1]",
+      "[3]",
+      "[1, 2, 3]",
+      "Error"
+    ],
+    "correct_answer": "[3, 2, 1]",
+    "topic": "Lists",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What does the 'with' statement ensure?",
+    "options": [
+      "Error logging",
+      "Resource cleanup",
       "Type checking",
-      "String operations",
-      "Combining boolean expressions",
-      "Arithmetic operations"
+      "Loop iteration"
     ],
-    "correct_answer": "Combining boolean expressions",
-    "topic": "Operators",
-    "difficulty": "easy"
+    "correct_answer": "Resource cleanup",
+    "topic": "Context Managers",
+    "difficulty": "medium"
   },
   {
-    "question": "Can you use multiple elif statements in a single conditional?",
+    "question": "What is the output of:\nprint(list(map(str, [1,2,3])))",
     "options": [
-      "Only in Python 3",
-      "Yes, as many as needed",
-      "No, only one",
-      "Maximum of three"
+      "[1, 2, 3]",
+      "Error",
+      "['1','2','3']",
+      "['str','str']"
     ],
-    "correct_answer": "Yes, as many as needed",
-    "topic": "Conditionals",
-    "difficulty": "easy"
+    "correct_answer": "['1','2','3']",
+    "topic": "Functional Programming",
+    "difficulty": "medium"
   },
   {
-    "question": "What is an infinite loop?",
+    "question": "What is the output of:\nprint(isinstance(True, int))",
     "options": [
-      "Loop with errors",
-      "Loop with no body",
-      "Loop that never terminates",
-      "Loop with break"
+      "False",
+      "True",
+      "Error",
+      "None"
     ],
-    "correct_answer": "Loop that never terminates",
-    "topic": "Loops",
-    "difficulty": "easy"
+    "correct_answer": "True",
+    "topic": "Debugging",
+    "difficulty": "medium"
   },
   {
-    "question": "What does the 'replace()' method do on strings?",
+    "question": "What does @staticmethod decorator indicate?",
     "options": [
-      "Reverses string",
-      "Converts case",
-      "Substitutes substring with another",
-      "Deletes characters"
+      "No implicit param",
+      "Requires self param",
+      "Private method only",
+      "Requires cls param"
     ],
-    "correct_answer": "Substitutes substring with another",
+    "correct_answer": "No implicit param",
+    "topic": "OOP",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint('abc'.replace('b', 'x'))",
+    "options": [
+      "axc",
+      "xbc",
+      "abc",
+      "abx"
+    ],
+    "correct_answer": "axc",
     "topic": "Strings",
-    "difficulty": "easy"
+    "difficulty": "medium"
   },
   {
-    "question": "What does the 'pop()' method do on lists?",
+    "question": "What is the output of:\nprint(list(filter(lambda x: x>2, [1,2,3,4])))",
     "options": [
-      "Adds element",
-      "Sorts list",
-      "Clears list",
-      "Removes and returns last element"
+      "[2, 3, 4]",
+      "[1, 2, 3]",
+      "[1, 2]",
+      "[3, 4]"
     ],
-    "correct_answer": "Removes and returns last element",
-    "topic": "Lists",
-    "difficulty": "easy"
+    "correct_answer": "[3, 4]",
+    "topic": "Functional Programming",
+    "difficulty": "medium"
   },
   {
-    "question": "What is tuple unpacking?",
+    "question": "What is the output of:\nprint(dict(zip(['a','b'], [1,2])))",
     "options": [
-      "Creating tuples",
-      "Extracting values from tuple",
-      "Deleting tuples",
-      "Sorting tuples"
+      "{1:'a',2:'b'}",
+      "[('a',1),('b',2)]",
+      "Error",
+      "{'a':1,'b':2}"
     ],
-    "correct_answer": "Extracting values from tuple",
-    "topic": "Tuples",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does the 'update()' method do on dictionaries?",
-    "options": [
-      "Clears dictionary",
-      "Reverses keys",
-      "Sorts dictionary",
-      "Merges another dictionary"
-    ],
-    "correct_answer": "Merges another dictionary",
+    "correct_answer": "{'a':1,'b':2}",
     "topic": "Dictionaries",
-    "difficulty": "easy"
+    "difficulty": "medium"
   },
   {
-    "question": "What is the 'self' parameter in class methods?",
+    "question": "What is the output of:\nx = 'hello'\nprint(x[::2])",
     "options": [
-      "Class name",
-      "Return value",
-      "Method name",
-      "Instance reference"
+      "hl",
+      "hlo",
+      "hel",
+      "elo"
     ],
-    "correct_answer": "Instance reference",
-    "topic": "OOP Basics",
-    "difficulty": "easy"
+    "correct_answer": "hlo",
+    "topic": "Strings",
+    "difficulty": "medium"
   },
   {
-    "question": "What does 'git add' do?",
+    "question": "Which of the following raises TypeError?",
     "options": [
-      "Creates files",
-      "Pushes to remote",
-      "Commits changes",
-      "Stages files for commit"
+      "'3' + 4",
+      "3.0 + 4",
+      "3 + 4",
+      "'3' + '4'"
     ],
-    "correct_answer": "Stages files for commit",
-    "topic": "Git",
-    "difficulty": "easy"
+    "correct_answer": "'3' + 4",
+    "topic": "Debugging",
+    "difficulty": "medium"
   },
   {
-    "question": "Which Linux command removes a file?",
+    "question": "What is the output of:\nprint(all([True, True, False]))",
     "options": [
-      "del",
-      "delete",
-      "rm",
-      "remove"
+      "False",
+      "Error",
+      "None",
+      "True"
     ],
-    "correct_answer": "rm",
-    "topic": "Linux",
-    "difficulty": "easy"
+    "correct_answer": "False",
+    "topic": "Built-in Functions",
+    "difficulty": "medium"
   },
   {
-    "question": "What is the Boolean data type used for?",
+    "question": "What is the output of:\nprint(any([False, 0, '', 1]))",
     "options": [
-      "Storing numbers",
-      "Representing True or False",
-      "Storing text",
-      "Storing collections"
+      "False",
+      "1",
+      "None",
+      "True"
     ],
-    "correct_answer": "Representing True or False",
+    "correct_answer": "True",
+    "topic": "Built-in Functions",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nclass A:\n    x = 5\na = A()\na.x = 10\nprint(A.x)",
+    "options": [
+      "5",
+      "Error",
+      "10",
+      "None"
+    ],
+    "correct_answer": "5",
+    "topic": "OOP",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What does **kwargs allow in a function?",
+    "options": [
+      "Default values only",
+      "Positional arguments",
+      "Return types",
+      "Keyword arguments"
+    ],
+    "correct_answer": "Keyword arguments",
+    "topic": "Functions",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint({1:1, 1.0:2})",
+    "options": [
+      "{1.0: 1}",
+      "{1: 1, 1.0: 2}",
+      "Error",
+      "{1: 2}"
+    ],
+    "correct_answer": "{1: 2}",
+    "topic": "Debugging",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\ndef func(x=[]):\n    x.append(1)\n    return len(x)\nprint(func(), func())",
+    "options": [
+      "1 1",
+      "2 2",
+      "1 2",
+      "Error"
+    ],
+    "correct_answer": "1 2",
+    "topic": "Debugging",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint(type(lambda: None).__name__)",
+    "options": [
+      "lambda",
+      "NoneType",
+      "function",
+      "method"
+    ],
+    "correct_answer": "function",
+    "topic": "Functions",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint('A' > 'a')",
+    "options": [
+      "Error",
+      "None",
+      "True",
+      "False"
+    ],
+    "correct_answer": "False",
+    "topic": "Debugging",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nx = [1, [2, 3]]\ny = x.copy()\ny[1].append(4)\nprint(x)",
+    "options": [
+      "Error",
+      "[1, [2, 3], 4]",
+      "[1, [2, 3]]",
+      "[1, [2, 3, 4]]"
+    ],
+    "correct_answer": "[1, [2, 3, 4]]",
+    "topic": "Debugging",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint('hello'.find('xyz'))",
+    "options": [
+      "-1",
+      "Error",
+      "0",
+      "None"
+    ],
+    "correct_answer": "-1",
+    "topic": "Strings",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint(sum([1,2,3], 10))",
+    "options": [
+      "16",
+      "6",
+      "10",
+      "Error"
+    ],
+    "correct_answer": "16",
+    "topic": "Built-in Functions",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\ntry:\n    x = int('abc')\nexcept:\n    x = -1\nprint(x)",
+    "options": [
+      "0",
+      "Error",
+      "-1",
+      "abc"
+    ],
+    "correct_answer": "-1",
+    "topic": "Exception Handling",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint([i for i in range(10) if i%3==0])",
+    "options": [
+      "[1, 4, 7]",
+      "[0, 3, 6]",
+      "[3, 6, 9]",
+      "[0, 3, 6, 9]"
+    ],
+    "correct_answer": "[0, 3, 6, 9]",
+    "topic": "List Comprehension",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nd = {'a':1}\nd.setdefault('b', 2)\nprint(d)",
+    "options": [
+      "{'a':1,'b':2}",
+      "{'a': 1}",
+      "Error",
+      "{'b': 2}"
+    ],
+    "correct_answer": "{'a':1,'b':2}",
+    "topic": "Dictionaries",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint(divmod(17, 5))",
+    "options": [
+      "Error",
+      "(3, 2)",
+      "3.4",
+      "(2, 3)"
+    ],
+    "correct_answer": "(3, 2)",
+    "topic": "Built-in Functions",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nfor i in range(3):\n    pass\nprint(i)",
+    "options": [
+      "Error",
+      "3",
+      "2",
+      "0"
+    ],
+    "correct_answer": "2",
+    "topic": "Debugging",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint(' '.join(['a','b','c']))",
+    "options": [
+      "'a' 'b' 'c'",
+      "a b c",
+      "abc",
+      "a,b,c"
+    ],
+    "correct_answer": "a b c",
+    "topic": "Strings",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nx = [1, 2, 3]\nx[1:2] = [4, 5]\nprint(x)",
+    "options": [
+      "[1, 4, 5, 3]",
+      "[4, 5, 3]",
+      "Error",
+      "[1, [4,5], 3]"
+    ],
+    "correct_answer": "[1, 4, 5, 3]",
+    "topic": "Lists",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint(bin(10))",
+    "options": [
+      "1010",
+      "10",
+      "0x10",
+      "0b1010"
+    ],
+    "correct_answer": "0b1010",
+    "topic": "Built-in Functions",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint(bool([]))",
+    "options": [
+      "None",
+      "True",
+      "False",
+      "[]"
+    ],
+    "correct_answer": "False",
+    "topic": "Debugging",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint('abcabc'.count('ab'))",
+    "options": [
+      "3",
+      "0",
+      "2",
+      "1"
+    ],
+    "correct_answer": "2",
+    "topic": "Strings",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\nprint(type(1+2j).__name__)",
+    "options": [
+      "float",
+      "number",
+      "complex",
+      "int"
+    ],
+    "correct_answer": "complex",
     "topic": "Data Types",
-    "difficulty": "easy"
+    "difficulty": "medium"
   },
   {
-    "question": "What does the 'not' operator do?",
+    "question": "What is the output of:\ndef outer():\n    x = 10\n    def inner():\n        return x\n    return inner\nprint(outer()())",
+    "options": [
+      "inner",
+      "10",
+      "None",
+      "Error"
+    ],
+    "correct_answer": "10",
+    "topic": "Closures",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nclass A:\n    def __repr__(self):\n        return 'A()'\na = A()\nprint([a])",
+    "options": [
+      "A()",
+      "[<A object>]",
+      "Error",
+      "[A()]"
+    ],
+    "correct_answer": "[A()]",
+    "topic": "OOP",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nprint([x*y for x in [1,2] for y in [3,4]])",
+    "options": [
+      "[4,6]",
+      "[3,8]",
+      "[3,4,6,8]",
+      "[[3,4],[6,8]]"
+    ],
+    "correct_answer": "[3,4,6,8]",
+    "topic": "List Comprehension",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\ndef gen():\n    yield 1\n    yield 2\ng = gen()\nprint(next(g), next(g))",
+    "options": [
+      "1 2",
+      "1 1",
+      "Error",
+      "2 1"
+    ],
+    "correct_answer": "1 2",
+    "topic": "Generators",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nprint((lambda x, y: x+y)(3, 4))",
+    "options": [
+      "7",
+      "34",
+      "None",
+      "Error"
+    ],
+    "correct_answer": "7",
+    "topic": "Functions",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nfrom collections import Counter\nprint(Counter('aabbbcc').most_common(1))",
+    "options": [
+      "{'b': 3}",
+      "[('b', 3)]",
+      "Error",
+      "[('a', 2)]"
+    ],
+    "correct_answer": "[('b', 3)]",
+    "topic": "Collections",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nprint({k:v for k,v in zip('abc',[1,2,3])})",
+    "options": [
+      "[('a',1)]",
+      "Error",
+      "{1:'a'}",
+      "{'a':1,'b':2,'c':3}"
+    ],
+    "correct_answer": "{'a':1,'b':2,'c':3}",
+    "topic": "Dict Comprehension",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nclass B(Exception): pass\ntry:\n    raise B('oops')\nexcept Exception as e:\n    print(type(e).__name__)",
+    "options": [
+      "oops",
+      "Exception",
+      "B",
+      "Error"
+    ],
+    "correct_answer": "B",
+    "topic": "Exception Handling",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\ndef deco(f):\n    def wrap():\n        return f() + 1\n    return wrap\n@deco\ndef five():\n    return 5\nprint(five())",
+    "options": [
+      "None",
+      "6",
+      "5",
+      "Error"
+    ],
+    "correct_answer": "6",
+    "topic": "Decorators",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nprint(list(zip([1,2,3],[4,5])))",
+    "options": [
+      "Error",
+      "[(1,4),(2,5),(3,None)]",
+      "[(1,4),(2,5)]",
+      "[(1,2),(3,4)]"
+    ],
+    "correct_answer": "[(1,4),(2,5)]",
+    "topic": "Built-in Functions",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nx = [1, 2, 3]\ny = x\nx = x + [4]\nprint(y)",
+    "options": [
+      "Error",
+      "[1, 2, 3, 4]",
+      "[4]",
+      "[1, 2, 3]"
+    ],
+    "correct_answer": "[1, 2, 3]",
+    "topic": "Debugging",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nprint(0.1 + 0.2 == 0.3)",
+    "options": [
+      "False",
+      "Error",
+      "True",
+      "0.3"
+    ],
+    "correct_answer": "False",
+    "topic": "Debugging",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nclass M(type):\n    pass\nclass A(metaclass=M):\n    pass\nprint(type(A).__name__)",
+    "options": [
+      "object",
+      "M",
+      "type",
+      "A"
+    ],
+    "correct_answer": "M",
+    "topic": "Metaclasses",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nfrom functools import reduce\nprint(reduce(lambda a,b: a*b, [1,2,3,4]))",
+    "options": [
+      "10",
+      "Error",
+      "4",
+      "24"
+    ],
+    "correct_answer": "24",
+    "topic": "Functional Programming",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nimport copy\na = [[1,2],[3,4]]\nb = copy.deepcopy(a)\nb[0].append(5)\nprint(a)",
+    "options": [
+      "[[1,2,5],[3,4]]",
+      "[[1,2],[3,4]]",
+      "[[1,2],[3,4,5]]",
+      "Error"
+    ],
+    "correct_answer": "[[1,2],[3,4]]",
+    "topic": "Deep vs Shallow Copy",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\ndef f():\n    try:\n        return 1\n    finally:\n        return 2\nprint(f())",
+    "options": [
+      "2",
+      "Error",
+      "None",
+      "1"
+    ],
+    "correct_answer": "2",
+    "topic": "Debugging",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nx = {i: i**2 for i in range(3)}\nprint(x)",
+    "options": [
+      "[0, 1, 4]",
+      "Error",
+      "{0:0,1:1,2:4}",
+      "{1:1, 2:4}"
+    ],
+    "correct_answer": "{0:0,1:1,2:4}",
+    "topic": "Dict Comprehension",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nprint(sorted('dcba'))",
+    "options": [
+      "abcd",
+      "['a','b','c','d']",
+      "dcba",
+      "['d','c','b','a']"
+    ],
+    "correct_answer": "['a','b','c','d']",
+    "topic": "Built-in Functions",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\ndef gen():\n    return (x**2 for x in range(3))\nprint(list(gen()))",
+    "options": [
+      "Error",
+      "[0, 1, 4]",
+      "[1, 4, 9]",
+      "(0, 1, 4)"
+    ],
+    "correct_answer": "[0, 1, 4]",
+    "topic": "Generators",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nclass A:\n    def __len__(self):\n        return 5\nprint(len(A()))",
+    "options": [
+      "5",
+      "None",
+      "0",
+      "Error"
+    ],
+    "correct_answer": "5",
+    "topic": "Dunder Methods",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nprint(hasattr([], '__iter__'))",
+    "options": [
+      "None",
+      "Error",
+      "False",
+      "True"
+    ],
+    "correct_answer": "True",
+    "topic": "Built-in Functions",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\ntry:\n    raise ValueError('test')\nexcept ValueError as e:\n    print(str(e))",
+    "options": [
+      "None",
+      "Error",
+      "ValueError",
+      "test"
+    ],
+    "correct_answer": "test",
+    "topic": "Exception Handling",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nprint(frozenset([1,2,3]) == {1,2,3})",
+    "options": [
+      "Error",
+      "True",
+      "None",
+      "False"
+    ],
+    "correct_answer": "True",
+    "topic": "Data Types",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nclass A:\n    pass\nclass B(A):\n    pass\nprint(issubclass(B, A))",
+    "options": [
+      "True",
+      "None",
+      "Error",
+      "False"
+    ],
+    "correct_answer": "True",
+    "topic": "OOP",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nprint({True: 'a', 1: 'b', 1.0: 'c'})",
+    "options": [
+      "{True: 'c'}",
+      "{True:'a',1:'b',1.0:'c'}",
+      "{1: 'b'}",
+      "Error"
+    ],
+    "correct_answer": "{True: 'c'}",
+    "topic": "Debugging",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\ndef f(*a, **k):\n    print(len(a), len(k))\nf(1,2,x=3,y=4)",
+    "options": [
+      "4 0",
+      "Error",
+      "2 2",
+      "0 4"
+    ],
+    "correct_answer": "2 2",
+    "topic": "Functions",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nprint(list(range(10, 0, -3)))",
+    "options": [
+      "[7, 4, 1]",
+      "[10, 7, 4]",
+      "[10, 7, 4, 1]",
+      "[10, 8, 5, 2]"
+    ],
+    "correct_answer": "[10, 7, 4, 1]",
+    "topic": "Built-in Functions",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nx = [1, 2, 3]\nx *= 2\nprint(x)",
+    "options": [
+      "Error",
+      "[[1,2,3],[1,2,3]]",
+      "[2, 4, 6]",
+      "[1,2,3,1,2,3]"
+    ],
+    "correct_answer": "[1,2,3,1,2,3]",
+    "topic": "Lists",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nclass A:\n    def __add__(self, o):\n        return 42\nprint(A() + A())",
+    "options": [
+      "None",
+      "Error",
+      "A()",
+      "42"
+    ],
+    "correct_answer": "42",
+    "topic": "Dunder Methods",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\na = [1, 2, 3]\nb = a[:]\nb.append(4)\nprint(a)",
+    "options": [
+      "[4]",
+      "Error",
+      "[1, 2, 3]",
+      "[1, 2, 3, 4]"
+    ],
+    "correct_answer": "[1, 2, 3]",
+    "topic": "Lists",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nprint(type(iter([])).__name__)",
+    "options": [
+      "list",
+      "list_iterator",
+      "iterator",
+      "generator"
+    ],
+    "correct_answer": "list_iterator",
+    "topic": "Iterators",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nprint('abc'.__class__.__name__)",
+    "options": [
+      "text",
+      "String",
+      "str",
+      "string"
+    ],
+    "correct_answer": "str",
+    "topic": "OOP",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nfrom collections import defaultdict\nd = defaultdict(list)\nd['x'].append(1)\nprint(dict(d))",
+    "options": [
+      "{'x': 1}",
+      "{'x': [1]}",
+      "Error",
+      "defaultdict(1)"
+    ],
+    "correct_answer": "{'x': [1]}",
+    "topic": "Collections",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nprint([None] * 3)",
+    "options": [
+      "None",
+      "[3]",
+      "Error",
+      "[None, None, None]"
+    ],
+    "correct_answer": "[None, None, None]",
+    "topic": "Lists",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nprint(globals().__class__.__name__)",
+    "options": [
+      "dict",
+      "frame",
+      "globals",
+      "module"
+    ],
+    "correct_answer": "dict",
+    "topic": "Built-in Functions",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the output of:\nx = [1, 2, 3]\ny = x[:]\ny.append(4)\nprint(len(x))",
+    "options": [
+      "Error",
+      "4",
+      "None",
+      "3"
+    ],
+    "correct_answer": "3",
+    "topic": "Lists",
+    "difficulty": "medium"
+  },
+  {
+    "question": "Which statement about Python sets is correct?",
+    "options": [
+      "Sets are ordered",
+      "Sets allow duplicates",
+      "Sets are indexed",
+      "Sets are mutable"
+    ],
+    "correct_answer": "Sets are mutable",
+    "topic": "Sets",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the output of:\ndef f(a, b=[]): b.append(a); return b\nprint(len(f(1)), len(f(2)))",
+    "options": [
+      "1 2",
+      "1 1",
+      "2 2",
+      "Error"
+    ],
+    "correct_answer": "1 2",
+    "topic": "Functions",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What does the walrus operator := do?",
     "options": [
       "Compares values",
-      "Inverts boolean value",
+      "Assigns and returns",
       "Checks identity",
-      "Performs arithmetic"
+      "Floor divides"
     ],
-    "correct_answer": "Inverts boolean value",
+    "correct_answer": "Assigns and returns",
     "topic": "Operators",
-    "difficulty": "easy"
+    "difficulty": "medium"
   },
   {
-    "question": "What is short-circuit evaluation in conditionals?",
+    "question": "What is the output of:\nprint({1, 2, 3} & {2, 3, 4})",
     "options": [
-      "Loop termination",
-      "Quick execution",
-      "Error handling",
-      "Stops evaluation when result is determined"
+      "Error",
+      "{1, 2, 3, 4}",
+      "{2, 3}",
+      "{1, 4}"
     ],
-    "correct_answer": "Stops evaluation when result is determined",
-    "topic": "Conditionals",
-    "difficulty": "easy"
+    "correct_answer": "{2, 3}",
+    "topic": "Sets",
+    "difficulty": "medium"
   },
   {
-    "question": "When does the 'else' clause execute in a for loop?",
+    "question": "What is the output of:\nprint('hello'[::-1])",
     "options": [
-      "Always after loop",
-      "If loop completes without break",
-      "Never executes",
-      "Only on errors"
+      "olleh",
+      "Error",
+      "h",
+      "hello"
     ],
-    "correct_answer": "If loop completes without break",
-    "topic": "Loops",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What are f-strings in Python?",
-    "options": [
-      "Function strings",
-      "Foreign strings",
-      "Fixed strings",
-      "Formatted string literals"
-    ],
-    "correct_answer": "Formatted string literals",
+    "correct_answer": "olleh",
     "topic": "Strings",
-    "difficulty": "easy"
+    "difficulty": "medium"
   },
   {
-    "question": "What does the 'reverse()' method do on lists?",
+    "question": "What is the output of:\nx = {'a': 1, 'b': 2}\nprint(list(x.values()))",
     "options": [
-      "Shuffles elements",
-      "Reverses in-place",
-      "Returns reversed copy",
-      "Sorts descending"
+      "Error",
+      "['a', 'b']",
+      "[1, 2]",
+      "[('a',1),('b',2)]"
     ],
-    "correct_answer": "Reverses in-place",
-    "topic": "Lists",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Can tuples be used as dictionary keys?",
-    "options": [
-      "Only if empty",
-      "Yes, because they are immutable",
-      "No, never",
-      "Only with strings"
-    ],
-    "correct_answer": "Yes, because they are immutable",
-    "topic": "Tuples",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does the 'items()' method return for dictionaries?",
-    "options": [
-      "Values only",
-      "Keys only",
-      "Dictionary copy",
-      "Key-value pairs"
-    ],
-    "correct_answer": "Key-value pairs",
+    "correct_answer": "[1, 2]",
     "topic": "Dictionaries",
-    "difficulty": "easy"
+    "difficulty": "medium"
   },
   {
-    "question": "What is a class attribute?",
+    "question": "What is the output of:\ntry:\n    1/0\nexcept ArithmeticError:\n    print('caught')",
     "options": [
-      "Attribute of an instance",
-      "Method parameter",
-      "Local variable",
-      "Shared by all instances"
+      "caught",
+      "ZeroDivisionError",
+      "None",
+      "Error"
     ],
-    "correct_answer": "Shared by all instances",
-    "topic": "OOP Basics",
-    "difficulty": "easy"
+    "correct_answer": "caught",
+    "topic": "Exception Handling",
+    "difficulty": "medium"
   },
   {
-    "question": "What does 'git branch' do?",
+    "question": "What is the output of:\nprint(isinstance(True, int))",
     "options": [
-      "Lists or creates branches",
-      "Merges branches",
-      "Switches branches",
-      "Deletes branches"
+      "None",
+      "False",
+      "Error",
+      "True"
     ],
-    "correct_answer": "Lists or creates branches",
-    "topic": "Git",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Which Linux command displays file contents?",
-    "options": [
-      "show",
-      "read",
-      "cat",
-      "display"
-    ],
-    "correct_answer": "cat",
-    "topic": "Linux",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the None type in Python?",
-    "options": [
-      "Empty string",
-      "Zero value",
-      "Boolean false",
-      "Null or absence of value"
-    ],
-    "correct_answer": "Null or absence of value",
+    "correct_answer": "True",
     "topic": "Data Types",
-    "difficulty": "easy"
+    "difficulty": "medium"
   },
   {
-    "question": "What does the '//' operator do?",
+    "question": "What is the output of:\nprint(sorted([3,1,2], reverse=True))",
     "options": [
-      "Regular division",
-      "Modulo",
-      "Floor division",
-      "Exponentiation"
+      "[1, 2, 3]",
+      "[3, 2, 1]",
+      "Error",
+      "[3, 1, 2]"
     ],
-    "correct_answer": "Floor division",
-    "topic": "Operators",
-    "difficulty": "easy"
+    "correct_answer": "[3, 2, 1]",
+    "topic": "Built-in Functions",
+    "difficulty": "medium"
   },
   {
-    "question": "Why would you use nested conditionals?",
+    "question": "Which method removes and returns the last item from a list?",
     "options": [
-      "Check conditions within conditions",
-      "Faster execution",
-      "Loop control",
-      "Error handling"
+      "remove()",
+      "discard()",
+      "pop()",
+      "del()"
     ],
-    "correct_answer": "Check conditions within conditions",
-    "topic": "Conditionals",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does 'enumerate()' provide in loops?",
-    "options": [
-      "Index and value pairs",
-      "Element count",
-      "Reversed iteration",
-      "Filtered elements"
-    ],
-    "correct_answer": "Index and value pairs",
-    "topic": "Loops",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is string indexing?",
-    "options": [
-      "Counting characters",
-      "Accessing characters by position",
-      "Searching strings",
-      "Sorting characters"
-    ],
-    "correct_answer": "Accessing characters by position",
-    "topic": "Strings",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does the 'sort()' method do on lists?",
-    "options": [
-      "Reverses list",
-      "Sorts in-place",
-      "Returns sorted copy",
-      "Removes duplicates"
-    ],
-    "correct_answer": "Sorts in-place",
+    "correct_answer": "pop()",
     "topic": "Lists",
-    "difficulty": "easy"
+    "difficulty": "medium"
   },
   {
-    "question": "What is the main advantage of tuples over lists?",
+    "question": "What is the output of:\nprint(type(lambda: None).__name__)",
     "options": [
-      "More methods",
-      "Can be modified",
-      "Immutability and performance",
-      "Larger size"
+      "callable",
+      "NoneType",
+      "lambda",
+      "function"
     ],
-    "correct_answer": "Immutability and performance",
-    "topic": "Tuples",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Can dictionary values be mutable objects?",
-    "options": [
-      "Only lists",
-      "No, only immutable",
-      "Only tuples",
-      "Yes, any object"
-    ],
-    "correct_answer": "Yes, any object",
-    "topic": "Dictionaries",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is method overriding in OOP?",
-    "options": [
-      "Hiding methods",
-      "Deleting methods",
-      "Creating new methods",
-      "Redefining parent class method"
-    ],
-    "correct_answer": "Redefining parent class method",
-    "topic": "OOP Basics",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does 'git merge' do?",
-    "options": [
-      "Creates branch",
-      "Lists branches",
-      "Combines branches",
-      "Deletes branch"
-    ],
-    "correct_answer": "Combines branches",
-    "topic": "Git",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Which Linux command copies files?",
-    "options": [
-      "cp",
-      "duplicate",
-      "copy",
-      "cpy"
-    ],
-    "correct_answer": "cp",
-    "topic": "Linux",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the recommended way to check if a key exists in a dictionary before accessing its value to avoid exceptions?",
-    "options": [
-      "Always use square brackets",
-      "Use the in operator or get() method",
-      "Convert dictionary to list first",
-      "Use try-except block only"
-    ],
-    "correct_answer": "Use the in operator or get() method",
-    "topic": "Dictionaries",
-    "difficulty": "easy"
-  },
-  {
-    "question": "When you need to merge two dictionaries in Python 3.9+, which operator provides the cleanest syntax?",
-    "options": [
-      "The * operator",
-      "The | operator",
-      "The & operator",
-      "The + operator"
-    ],
-    "correct_answer": "The | operator",
-    "topic": "Dictionaries",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the key difference between dict.copy() and simply assigning a dictionary to a new variable?",
-    "options": [
-      "copy() creates a shallow copy while assignment creates a reference to the same object",
-      "There is no difference",
-      "copy() is slower",
-      "Assignment creates a deep copy"
-    ],
-    "correct_answer": "copy() creates a shallow copy while assignment creates a reference to the same object",
-    "topic": "Dictionaries",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Why would you choose to use dict.get() instead of direct key access with square brackets?",
-    "options": [
-      "get() works with any data type",
-      "get() is faster",
-      "get() returns a default value instead of raising KeyError for missing keys",
-      "Square brackets are deprecated"
-    ],
-    "correct_answer": "get() returns a default value instead of raising KeyError for missing keys",
-    "topic": "Dictionaries",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What happens when you iterate over a dictionary directly in a for loop?",
-    "options": [
-      "It iterates over values",
-      "It raises an error",
-      "It iterates over keys",
-      "It iterates over key-value pairs"
-    ],
-    "correct_answer": "It iterates over keys",
-    "topic": "Dictionaries",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Which method would you use to get all key-value pairs from a dictionary as a sequence of tuples?",
-    "options": [
-      "dict.values()",
-      "dict.keys()",
-      "dict.items()",
-      "dict.pairs()"
-    ],
-    "correct_answer": "dict.items()",
-    "topic": "Dictionaries",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the behavior of dict.setdefault() when the key already exists in the dictionary?",
-    "options": [
-      "It overwrites the existing value",
-      "It returns the existing value without modifying the dictionary",
-      "It appends the new value to the existing one",
-      "It raises a KeyError"
-    ],
-    "correct_answer": "It returns the existing value without modifying the dictionary",
-    "topic": "Dictionaries",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Why are tuples often preferred over lists when you need an immutable sequence?",
-    "options": [
-      "Tuples support more operations",
-      "Tuples can store more elements",
-      "There is no practical difference",
-      "Tuples are faster to create and access, and their immutability prevents accidental modifications"
-    ],
-    "correct_answer": "Tuples are faster to create and access, and their immutability prevents accidental modifications",
-    "topic": "Tuples",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is tuple unpacking and why is it useful in Python?",
-    "options": [
-      "Removing elements from a tuple",
-      "Converting a tuple to a list",
-      "Assigning tuple elements to multiple variables in a single statement for cleaner code",
-      "Compressing tuple data"
-    ],
-    "correct_answer": "Assigning tuple elements to multiple variables in a single statement for cleaner code",
-    "topic": "Tuples",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Why can tuples be used as dictionary keys while lists cannot?",
-    "options": [
-      "Tuples are immutable and therefore hashable, while lists are mutable and unhashable",
-      "Tuples are smaller in size",
-      "Lists are too slow",
-      "It is a Python version limitation"
-    ],
-    "correct_answer": "Tuples are immutable and therefore hashable, while lists are mutable and unhashable",
-    "topic": "Tuples",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the correct way to create a tuple with a single element?",
-    "options": [
-      "(element)",
-      "[element]",
-      "(element,)",
-      "tuple(element)"
-    ],
-    "correct_answer": "(element,)",
-    "topic": "Tuples",
-    "difficulty": "easy"
-  },
-  {
-    "question": "When a function returns multiple values, what data structure does Python automatically use to wrap them?",
-    "options": [
-      "Tuple",
-      "Set",
-      "Dictionary",
-      "List"
-    ],
-    "correct_answer": "Tuple",
-    "topic": "Tuples",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the purpose of named tuples compared to regular tuples?",
-    "options": [
-      "Named tuples are faster",
-      "Named tuples allow accessing elements by name instead of just index, improving code readability",
-      "Named tuples can store more elements",
-      "Named tuples are mutable"
-    ],
-    "correct_answer": "Named tuples allow accessing elements by name instead of just index, improving code readability",
-    "topic": "Tuples",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Can you modify the contents of a list that is inside a tuple?",
-    "options": [
-      "Yes, because the list itself is mutable even though the tuple reference to it cannot change",
-      "Only if the tuple has one element",
-      "Only using special methods",
-      "No, everything inside a tuple is immutable"
-    ],
-    "correct_answer": "Yes, because the list itself is mutable even though the tuple reference to it cannot change",
-    "topic": "Tuples",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the main advantage of using a set over a list when you need to check if an item exists in a collection?",
-    "options": [
-      "Sets use less memory",
-      "Sets provide much faster membership testing due to hash-based lookup",
-      "Sets can store any data type",
-      "Sets maintain order"
-    ],
-    "correct_answer": "Sets provide much faster membership testing due to hash-based lookup",
-    "topic": "Sets",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What happens when you add a duplicate element to a set?",
-    "options": [
-      "It overwrites the existing element",
-      "It raises an error",
-      "The duplicate is silently ignored and the set remains unchanged",
-      "It adds the element twice"
-    ],
-    "correct_answer": "The duplicate is silently ignored and the set remains unchanged",
-    "topic": "Sets",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Which set operation would you use to find elements that are common to two sets?",
-    "options": [
-      "symmetric_difference()",
-      "difference()",
-      "intersection()",
-      "union()"
-    ],
-    "correct_answer": "intersection()",
-    "topic": "Sets",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Why can you not add a list as an element to a set?",
-    "options": [
-      "Lists are too large",
-      "Lists are mutable and therefore not hashable, which is required for set elements",
-      "It is a Python limitation",
-      "Sets only accept numbers"
-    ],
-    "correct_answer": "Lists are mutable and therefore not hashable, which is required for set elements",
-    "topic": "Sets",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the difference between a set and a frozenset?",
-    "options": [
-      "Set can only contain numbers",
-      "Frozenset is faster",
-      "There is no difference",
-      "Frozenset is immutable and can be used as a dictionary key, while set is mutable"
-    ],
-    "correct_answer": "Frozenset is immutable and can be used as a dictionary key, while set is mutable",
-    "topic": "Sets",
-    "difficulty": "easy"
-  },
-  {
-    "question": "How would you remove duplicates from a list while preserving the unique elements?",
-    "options": [
-      "Use a for loop only",
-      "Duplicates cannot be removed from lists",
-      "Use the unique() method",
-      "Convert to set and back to list, though order may not be preserved in older Python versions"
-    ],
-    "correct_answer": "Convert to set and back to list, though order may not be preserved in older Python versions",
-    "topic": "Sets",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does the symmetric_difference() method return when applied to two sets?",
-    "options": [
-      "Elements common to both sets",
-      "Elements that are in either set but not in both",
-      "The difference in size between sets",
-      "All elements from both sets"
-    ],
-    "correct_answer": "Elements that are in either set but not in both",
-    "topic": "Sets",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the purpose of the __init__ method in a Python class?",
-    "options": [
-      "To import modules",
-      "To initialize object attributes when a new instance is created",
-      "To define class-level variables",
-      "To delete the object"
-    ],
-    "correct_answer": "To initialize object attributes when a new instance is created",
-    "topic": "OOP Concepts",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the difference between a class attribute and an instance attribute?",
-    "options": [
-      "There is no difference",
-      "Class attributes are shared by all instances while instance attributes are unique to each object",
-      "Instance attributes are faster to access",
-      "Class attributes can only be strings"
-    ],
-    "correct_answer": "Class attributes are shared by all instances while instance attributes are unique to each object",
-    "topic": "OOP Concepts",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does the self parameter represent in instance methods?",
-    "options": [
-      "The class itself",
-      "The parent class",
-      "A reference to the current instance of the class",
-      "A global variable"
-    ],
-    "correct_answer": "A reference to the current instance of the class",
-    "topic": "OOP Concepts",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is inheritance in object-oriented programming and why is it useful?",
-    "options": [
-      "A method to create private variables",
-      "A mechanism where a new class can inherit attributes and methods from an existing class, promoting code reuse",
-      "A way to delete classes",
-      "A way to speed up code execution"
-    ],
-    "correct_answer": "A mechanism where a new class can inherit attributes and methods from an existing class, promoting code reuse",
-    "topic": "OOP Concepts",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the purpose of the super() function in Python?",
-    "options": [
-      "To create super variables",
-      "To check if a class is superior",
-      "To make a class faster",
-      "To call methods from the parent class, especially useful in inheritance"
-    ],
-    "correct_answer": "To call methods from the parent class, especially useful in inheritance",
-    "topic": "OOP Concepts",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the difference between @staticmethod and @classmethod decorators?",
-    "options": [
-      "classmethod can only be used with inheritance",
-      "staticmethod is faster",
-      "staticmethod does not receive any automatic first argument, while classmethod receives the class as the first argument",
-      "They are identical"
-    ],
-    "correct_answer": "staticmethod does not receive any automatic first argument, while classmethod receives the class as the first argument",
-    "topic": "OOP Concepts",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does encapsulation mean in object-oriented programming?",
-    "options": [
-      "Inheriting from multiple parents",
-      "Making code run faster",
-      "Bundling data and methods that operate on that data within a single unit and controlling access to them",
-      "Creating multiple classes"
-    ],
-    "correct_answer": "Bundling data and methods that operate on that data within a single unit and controlling access to them",
-    "topic": "OOP Concepts",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is a common issue when using mutable objects like lists as default function arguments?",
-    "options": [
-      "The default mutable object is shared across all calls, leading to unexpected behavior when modified",
-      "Mutable defaults are not allowed",
-      "The function runs slower",
-      "The function cannot accept other arguments"
-    ],
-    "correct_answer": "The default mutable object is shared across all calls, leading to unexpected behavior when modified",
+    "correct_answer": "function",
     "topic": "Functions",
-    "difficulty": "easy"
+    "difficulty": "medium"
   },
   {
-    "question": "What is the purpose of *args in a function definition?",
+    "question": "What is the output of:\nclass A:\n    x = []\n    def add(self, v): self.x.append(v)\na, b = A(), A()\na.add(1)\nprint(b.x)",
     "options": [
-      "To create keyword arguments",
-      "To define required arguments",
-      "To make arguments optional",
-      "To accept a variable number of positional arguments as a tuple"
+      "[1]",
+      "[]",
+      "Error",
+      "None"
     ],
-    "correct_answer": "To accept a variable number of positional arguments as a tuple",
-    "topic": "Functions",
-    "difficulty": "easy"
+    "correct_answer": "[1]",
+    "topic": "OOP",
+    "difficulty": "hard"
   },
   {
-    "question": "What is the purpose of **kwargs in a function definition?",
+    "question": "What is the output of:\ndef gen():\n    yield 1\n    yield 2\ng = gen()\nprint(next(g) + next(g))",
     "options": [
-      "To define required arguments",
-      "To speed up the function",
-      "To create positional arguments",
-      "To accept a variable number of keyword arguments as a dictionary"
+      "Error",
+      "1",
+      "2",
+      "3"
     ],
-    "correct_answer": "To accept a variable number of keyword arguments as a dictionary",
-    "topic": "Functions",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is a lambda function and when would you typically use it?",
-    "options": [
-      "A function that cannot return values",
-      "A function that runs automatically",
-      "A function that only works with numbers",
-      "A small anonymous function defined in a single line, often used for short operations in map, filter, or sort"
-    ],
-    "correct_answer": "A small anonymous function defined in a single line, often used for short operations in map, filter, or sort",
-    "topic": "Functions",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is variable scope in Python and what does the LEGB rule stand for?",
-    "options": [
-      "Scope only applies to classes",
-      "LEGB stands for Local, Enclosing, Global, Built-in - the order Python searches for variable names",
-      "LEGB is a Python library",
-      "LEGB stands for List, Element, Global, Built-in"
-    ],
-    "correct_answer": "LEGB stands for Local, Enclosing, Global, Built-in - the order Python searches for variable names",
-    "topic": "Functions",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the difference between return and print in a function?",
-    "options": [
-      "return sends a value back to the caller and exits the function, while print only displays output to the console",
-      "They are the same",
-      "return can only be used once",
-      "print is faster"
-    ],
-    "correct_answer": "return sends a value back to the caller and exits the function, while print only displays output to the console",
-    "topic": "Functions",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What happens when a function does not have a return statement?",
-    "options": [
-      "It keeps running indefinitely",
-      "It raises an error",
-      "It implicitly returns None",
-      "It returns an empty string"
-    ],
-    "correct_answer": "It implicitly returns None",
-    "topic": "Functions",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is a decorator in Python?",
-    "options": [
-      "A type of variable",
-      "A function that modifies the behavior of another function without changing its source code",
-      "A method to delete functions",
-      "A way to add comments to code"
-    ],
-    "correct_answer": "A function that modifies the behavior of another function without changing its source code",
-    "topic": "Decorators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does the @property decorator allow you to do?",
-    "options": [
-      "Speed up attribute access",
-      "Define a method that can be accessed like an attribute, enabling getter functionality",
-      "Create private variables",
-      "Make a variable global"
-    ],
-    "correct_answer": "Define a method that can be accessed like an attribute, enabling getter functionality",
-    "topic": "Decorators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "When would you use the @classmethod decorator?",
-    "options": [
-      "To prevent method overriding",
-      "When you need a method that operates on the class itself rather than instances, often used for alternative constructors",
-      "To make a method private",
-      "To make a method faster"
-    ],
-    "correct_answer": "When you need a method that operates on the class itself rather than instances, often used for alternative constructors",
-    "topic": "Decorators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the main benefit of using decorators for cross-cutting concerns like logging or timing?",
-    "options": [
-      "Decorators allow you to add functionality to multiple functions without duplicating code in each one",
-      "Decorators reduce memory usage",
-      "Decorators are required for all functions",
-      "Decorators make code run faster"
-    ],
-    "correct_answer": "Decorators allow you to add functionality to multiple functions without duplicating code in each one",
-    "topic": "Decorators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What happens when multiple decorators are applied to a single function?",
-    "options": [
-      "Only the first decorator is applied",
-      "Multiple decorators cause an error",
-      "They are applied alphabetically",
-      "They are applied from bottom to top, with the topmost decorator wrapping all others"
-    ],
-    "correct_answer": "They are applied from bottom to top, with the topmost decorator wrapping all others",
-    "topic": "Decorators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is functools.wraps used for when writing decorators?",
-    "options": [
-      "To enable multiple decorators",
-      "To create class decorators",
-      "To make decorators faster",
-      "To preserve the original function's metadata like name and docstring in the wrapper function"
-    ],
-    "correct_answer": "To preserve the original function's metadata like name and docstring in the wrapper function",
-    "topic": "Decorators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the difference between @staticmethod and a regular function defined outside the class?",
-    "options": [
-      "Regular functions cannot be called from classes",
-      "staticmethod is faster",
-      "There is no difference in functionality",
-      "staticmethod is logically grouped within the class for organization but does not access class or instance data"
-    ],
-    "correct_answer": "staticmethod is logically grouped within the class for organization but does not access class or instance data",
-    "topic": "Decorators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is an iterator in Python?",
-    "options": [
-      "A type of list",
-      "An object that implements __iter__ and __next__ methods, allowing sequential access to elements",
-      "A function that runs in a loop",
-      "A way to sort data"
-    ],
-    "correct_answer": "An object that implements __iter__ and __next__ methods, allowing sequential access to elements",
-    "topic": "Iterators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the difference between an iterable and an iterator?",
-    "options": [
-      "Iterators can only contain numbers",
-      "They are the same thing",
-      "An iterable can produce an iterator via iter(), while an iterator maintains state and returns elements via next()",
-      "Iterables are faster"
-    ],
-    "correct_answer": "An iterable can produce an iterator via iter(), while an iterator maintains state and returns elements via next()",
-    "topic": "Iterators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What exception is raised when an iterator has no more elements to return?",
-    "options": [
-      "NoMoreElements",
-      "EndOfIteration",
-      "StopIteration",
-      "IteratorError"
-    ],
-    "correct_answer": "StopIteration",
-    "topic": "Iterators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Why are iterators considered memory-efficient for large datasets?",
-    "options": [
-      "Iterators delete data after use",
-      "Iterators use a special memory format",
-      "Iterators generate elements one at a time on demand instead of loading everything into memory at once",
-      "Iterators compress data"
-    ],
-    "correct_answer": "Iterators generate elements one at a time on demand instead of loading everything into memory at once",
-    "topic": "Iterators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What built-in functions work with iterators to process sequences?",
-    "options": [
-      "Only print()",
-      "map(), filter(), and zip() among others",
-      "Iterators do not work with built-in functions",
-      "Only len()"
-    ],
-    "correct_answer": "map(), filter(), and zip() among others",
-    "topic": "Iterators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Can you iterate over an iterator multiple times?",
-    "options": [
-      "Yes, unlimited times",
-      "Only twice",
-      "No, iterators are exhausted after one complete iteration and must be recreated",
-      "Only if it contains numbers"
-    ],
-    "correct_answer": "No, iterators are exhausted after one complete iteration and must be recreated",
-    "topic": "Iterators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is a generator in Python and how does it differ from a regular function?",
-    "options": [
-      "A generator uses yield to produce a sequence of values lazily, pausing and resuming execution between yields",
-      "Generators cannot accept parameters",
-      "Generators are the same as regular functions",
-      "Generators are faster functions"
-    ],
-    "correct_answer": "A generator uses yield to produce a sequence of values lazily, pausing and resuming execution between yields",
+    "correct_answer": "3",
     "topic": "Generators",
-    "difficulty": "easy"
+    "difficulty": "hard"
   },
   {
-    "question": "What is the main advantage of using generators over lists for large sequences?",
+    "question": "What is the output of:\nprint({True: 'a', 1: 'b', 1.0: 'c'})",
     "options": [
-      "Generators can store more elements",
-      "Generators support more operations",
-      "Generators are faster to create",
-      "Generators produce values on-demand without storing the entire sequence in memory"
+      "Error",
+      "{True: 'a', 1: 'b', 1.0: 'c'}",
+      "{True: 'c'}",
+      "{1: 'c'}"
     ],
-    "correct_answer": "Generators produce values on-demand without storing the entire sequence in memory",
-    "topic": "Generators",
-    "difficulty": "easy"
+    "correct_answer": "{True: 'c'}",
+    "topic": "Dictionaries",
+    "difficulty": "hard"
   },
   {
-    "question": "What is a generator expression and how does its syntax differ from a list comprehension?",
+    "question": "What is the output of:\nx = [1, [2, 3]]\nimport copy\ny = copy.copy(x)\ny[1].append(4)\nprint(x)",
     "options": [
-      "Generator expressions use parentheses instead of square brackets and create a generator object",
-      "Generator expressions use curly braces",
-      "They have identical syntax",
-      "Generator expressions cannot have conditions"
+      "[1, [2, 3]]",
+      "[1, [2, 3, 4]]",
+      "Error",
+      "[1, [2, 3], 4]"
     ],
-    "correct_answer": "Generator expressions use parentheses instead of square brackets and create a generator object",
-    "topic": "Generators",
-    "difficulty": "easy"
+    "correct_answer": "[1, [2, 3, 4]]",
+    "topic": "Deep vs Shallow Copy",
+    "difficulty": "hard"
   },
   {
-    "question": "What happens when a generator function reaches a yield statement?",
+    "question": "What is the output of:\nprint(all([]) and any([]))",
     "options": [
-      "The function terminates",
-      "The function restarts",
-      "The function pauses, returns the yielded value, and resumes from that point on the next call",
-      "An error is raised"
+      "True",
+      "None",
+      "False",
+      "Error"
     ],
-    "correct_answer": "The function pauses, returns the yielded value, and resumes from that point on the next call",
-    "topic": "Generators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "When would you choose to use a generator instead of returning a list from a function?",
-    "options": [
-      "When processing large datasets or infinite sequences where loading all data into memory is impractical",
-      "Generators should always be used",
-      "When you need random access to elements",
-      "When you need to modify elements"
-    ],
-    "correct_answer": "When processing large datasets or infinite sequences where loading all data into memory is impractical",
-    "topic": "Generators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the yield keyword used for in Python?",
-    "options": [
-      "To produce a value and suspend the generator function's state until the next value is requested",
-      "To return a value and end the function",
-      "To create global variables",
-      "To import modules"
-    ],
-    "correct_answer": "To produce a value and suspend the generator function's state until the next value is requested",
-    "topic": "Generators",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the purpose of the try-except block in Python?",
-    "options": [
-      "To create loops",
-      "To define functions",
-      "To catch and handle exceptions that might occur during code execution",
-      "To make code run faster"
-    ],
-    "correct_answer": "To catch and handle exceptions that might occur during code execution",
-    "topic": "Exceptions",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the role of the finally block in exception handling?",
-    "options": [
-      "To execute cleanup code that runs regardless of whether an exception occurred or not",
-      "To end the program",
-      "To catch specific exceptions",
-      "To raise new exceptions"
-    ],
-    "correct_answer": "To execute cleanup code that runs regardless of whether an exception occurred or not",
-    "topic": "Exceptions",
-    "difficulty": "easy"
-  },
-  {
-    "question": "When would you use the else clause in a try-except block?",
-    "options": [
-      "To catch additional exceptions",
-      "The else clause is not valid in exception handling",
-      "To replace the finally block",
-      "To execute code only when no exception was raised in the try block"
-    ],
-    "correct_answer": "To execute code only when no exception was raised in the try block",
-    "topic": "Exceptions",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the difference between raising an exception and handling an exception?",
-    "options": [
-      "Handling always terminates the program",
-      "They are the same",
-      "Raising is faster",
-      "Raising creates an exception to signal an error, while handling catches and responds to exceptions"
-    ],
-    "correct_answer": "Raising creates an exception to signal an error, while handling catches and responds to exceptions",
-    "topic": "Exceptions",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Why is it generally bad practice to use a bare except clause that catches all exceptions?",
-    "options": [
-      "It can hide bugs and catch exceptions you did not intend to handle, making debugging difficult",
-      "It makes code slower",
-      "It uses more memory",
-      "Bare except is not valid Python syntax"
-    ],
-    "correct_answer": "It can hide bugs and catch exceptions you did not intend to handle, making debugging difficult",
-    "topic": "Exceptions",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the purpose of creating custom exception classes in Python?",
-    "options": [
-      "Custom exceptions are required for all errors",
-      "To create meaningful, domain-specific exceptions that clearly communicate what went wrong in your application",
-      "To replace built-in exceptions",
-      "To make code run faster"
-    ],
-    "correct_answer": "To create meaningful, domain-specific exceptions that clearly communicate what went wrong in your application",
-    "topic": "Exceptions",
-    "difficulty": "easy"
-  },
-  {
-    "question": "In Python, why are strings considered immutable, and what is a key implication of this immutability?",
-    "options": [
-      "Strings can only be stored in read-only memory locations",
-      "Any operation that appears to change a string actually creates a new string object",
-      "String methods always modify the original object in place for performance",
-      "Strings cannot be passed as function arguments due to immutability"
-    ],
-    "correct_answer": "Any operation that appears to change a string actually creates a new string object",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the primary reason Python provides both raw strings and normal strings when working with regular expressions?",
-    "options": [
-      "Raw strings automatically compile regex patterns for faster execution",
-      "Raw strings prevent Python from interpreting backslashes as escape characters",
-      "Raw strings enforce Unicode-only matching rules",
-      "Normal strings cannot be used inside the re module"
-    ],
-    "correct_answer": "Raw strings prevent Python from interpreting backslashes as escape characters",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Which regex quantifier best represents a 'non-greedy' match in Python regular expressions?",
-    "options": [
-      "??+",
-      "+*",
-      "*?",
-      "{1,}?+"
-    ],
-    "correct_answer": "*?",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "In the context of Python regex, what does the term 'greedy matching' mean?",
-    "options": [
-      "The pattern matches the shortest possible substring",
-      "The pattern matches as much text as possible while still allowing the overall match",
-      "The pattern matches only at the start of a string",
-      "The pattern ignores whitespace automatically"
-    ],
-    "correct_answer": "The pattern matches as much text as possible while still allowing the overall match",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the main conceptual difference between re.match() and re.search() in Python?",
-    "options": [
-      "re.match() attempts a match only at the start, while re.search() scans for a match anywhere",
-      "re.match() scans the entire string, while re.search() checks only the beginning",
-      "re.search() is deprecated in favor of re.match()",
-      "re.match() supports groups but re.search() does not"
-    ],
-    "correct_answer": "re.match() attempts a match only at the start, while re.search() scans for a match anywhere",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Why is using re.compile() beneficial in Python when working with regular expressions repeatedly?",
-    "options": [
-      "It makes regex patterns immutable",
-      "It avoids recompiling the same pattern multiple times, improving efficiency",
-      "It converts regex into pure Python code for debugging",
-      "It automatically validates input strings before matching"
-    ],
-    "correct_answer": "It avoids recompiling the same pattern multiple times, improving efficiency",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "In Python regex, what is the purpose of capturing groups?",
-    "options": [
-      "To enforce case-insensitive matching",
-      "To make patterns match only numeric values",
-      "To disable greedy behavior globally",
-      "To store portions of the matched text for later retrieval"
-    ],
-    "correct_answer": "To store portions of the matched text for later retrieval",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the main conceptual difference between a capturing group and a non-capturing group in regex?",
-    "options": [
-      "Capturing groups are only supported in Python 3.10+",
-      "Non-capturing groups allow only numeric matching",
-      "Capturing groups are faster than non-capturing groups",
-      "Non-capturing groups do not create backreferences or stored matches"
-    ],
-    "correct_answer": "Non-capturing groups do not create backreferences or stored matches",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does the regex anchor ^ represent in Python regular expressions?",
-    "options": [
-      "Any whitespace character",
-      "End of the string",
-      "Beginning of the string",
-      "A literal caret character only"
-    ],
-    "correct_answer": "Beginning of the string",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the significance of the $ anchor in Python regex patterns?",
-    "options": [
-      "It matches only numeric characters",
-      "It matches the end of the string (or before a final newline)",
-      "It matches the beginning of a word boundary",
-      "It enables multiline matching automatically"
-    ],
-    "correct_answer": "It matches the end of the string (or before a final newline)",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "In Python, what is the most important difference between str.find() and regex searching?",
-    "options": [
-      "str.find() supports pattern matching with wildcards",
-      "Regex searching supports complex pattern rules beyond literal substring search",
-      "Regex searching is always faster than str.find() for short strings",
-      "str.find() can only work on ASCII characters"
-    ],
-    "correct_answer": "Regex searching supports complex pattern rules beyond literal substring search",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the conceptual role of character classes like [a-z] in regex?",
-    "options": [
-      "They enforce full-string matching only",
-      "They define optional groups of patterns",
-      "They automatically capture all matches into a list",
-      "They match one character from a specified set or range"
-    ],
-    "correct_answer": "They match one character from a specified set or range",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Why can using backtracking-heavy regex patterns become a performance concern in Python?",
-    "options": [
-      "Python regex does not support Unicode backtracking",
-      "Complex patterns may lead to exponential time in worst-case matches",
-      "Regex patterns are always executed in interpreted mode only",
-      "Backtracking prevents groups from being captured properly"
-    ],
-    "correct_answer": "Complex patterns may lead to exponential time in worst-case matches",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the purpose of the re.MULTILINE flag in Python regex?",
-    "options": [
-      "It allows '.' to match newline characters",
-      "It makes ^ and $ match the start and end of each line, not just the whole string",
-      "It disables case sensitivity",
-      "It forces all matches to be non-greedy"
-    ],
-    "correct_answer": "It makes ^ and $ match the start and end of each line, not just the whole string",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What does the re.DOTALL flag change in Python regex behavior?",
-    "options": [
-      "It enables global substitution automatically",
-      "It makes regex match only digits",
-      "It allows '.' to match newline characters as well",
-      "It disables grouping in patterns"
-    ],
-    "correct_answer": "It allows '.' to match newline characters as well",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the key difference between re.sub() and str.replace() in Python?",
-    "options": [
-      "re.sub() always modifies the original string in place",
-      "str.replace() works only for numeric substrings",
-      "str.replace() supports regex patterns but re.sub() does not",
-      "re.sub() can replace based on patterns, while str.replace() works only with literal text"
-    ],
-    "correct_answer": "re.sub() can replace based on patterns, while str.replace() works only with literal text",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "Why are lookaheads useful in Python regular expressions?",
-    "options": [
-      "They convert regex matches into tuples automatically",
-      "They allow matching text without consuming it in the final match",
-      "They make regex patterns ignore whitespace",
-      "They force patterns to always match greedily"
-    ],
-    "correct_answer": "They allow matching text without consuming it in the final match",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is a common conceptual pitfall when using the split() method versus regex splitting?",
-    "options": [
-      "split() cannot handle Unicode strings at all",
-      "Regex splitting always produces fewer results than split()",
-      "Regex splitting allows pattern-based separators, which can behave differently than literal splitting",
-      "split() automatically compiles patterns internally"
-    ],
-    "correct_answer": "Regex splitting allows pattern-based separators, which can behave differently than literal splitting",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "In Python, what is the primary role of the re.fullmatch() function?",
-    "options": [
-      "It replaces all pattern occurrences globally",
-      "It checks whether the entire string matches the given pattern",
-      "It finds all possible matches inside a string",
-      "It matches a pattern only at the beginning of the string"
-    ],
-    "correct_answer": "It checks whether the entire string matches the given pattern",
-    "topic": "Python",
-    "difficulty": "easy"
-  },
-  {
-    "question": "What is the main conceptual purpose of escaping special characters in regex patterns?",
-    "options": [
-      "To automatically enable Unicode matching",
-      "To convert a regex pattern into a capturing group",
-      "To treat metacharacters as literal characters instead of special operators",
-      "To make regex patterns run faster"
-    ],
-    "correct_answer": "To treat metacharacters as literal characters instead of special operators",
-    "topic": "Python",
-    "difficulty": "easy"
+    "correct_answer": "False",
+    "topic": "Built-in Functions",
+    "difficulty": "hard"
   }
 ]
