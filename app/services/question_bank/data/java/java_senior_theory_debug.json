@@ -1,0 +1,2336 @@
+[
+  {
+    "id": "java-shared-senior-l2-001",
+    "question": "During A Java review of checked exception handling, what is required?\n\nFileInputStream fis = new FileInputStream(\"file.txt\"); // FileNotFoundException is checked",
+    "options": [
+      "Automatically handled",
+      "Compilation error not needed",
+      "Optional to handle for that production scenario",
+      "Must handle with try-catch or throws"
+    ],
+    "correct_answer": "Must handle with try-catch or throws",
+    "topic": "Exceptions and Resource Handling",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-002",
+    "question": "During A Java review of deadlock scenario, what happens?\n\n// Thread 1: Lock A -> Lock B\n// Thread 2: Lock B -> Lock A",
+    "options": [
+      "Deadlock occurs, threads wait indefinitely",
+      "One thread is killed",
+      "Exception is thrown for that production scenario",
+      "Both threads execute normally"
+    ],
+    "correct_answer": "Deadlock occurs, threads wait indefinitely",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-003",
+    "question": "In A Java review of Future interface, what does it represent?\n\nExecutorService executor = Executors.newSingleThreadExecutor();\nFuture<Integer> future = executor.submit(() -> 42);",
+    "options": [
+      "Thread object for that production scenario",
+      "Placeholder for result that may not yet be available",
+      "Result of immediate computation",
+      "Current execution state for that production scenario"
+    ],
+    "correct_answer": "Placeholder for result that may not yet be available",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "executors",
+      "future",
+      "threads"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-004",
+    "question": "During A Java review of ExecutorService, what is its advantage?\n\nExecutorService executor = Executors.newFixedThreadPool(5);\nexecutor.execute(() -> System.out.println(\"Task\"));",
+    "options": [
+      "Prevents multithreading for that production scenario",
+      "Slower than manual threading",
+      "Cannot execute Runnable",
+      "Manages thread pool efficiently"
+    ],
+    "correct_answer": "Manages thread pool efficiently",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "executors",
+      "threads"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-005",
+    "question": "During A Java review of multiple catch blocks, which executes?\n\ntry {\n Object obj = \"string\";\n int num = (Integer) obj; // ClassCastException\n} catch(NumberFormatException e) {\n System.out.println(\"NumberFormat\");\n} catch(ClassCastException e) {\n System.out.println(\"ClassCast\");\n}",
+    "options": [
+      "Both",
+      "NumberFormat",
+      "Neither",
+      "ClassCast"
+    ],
+    "correct_answer": "ClassCast",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-006",
+    "question": "A Java review uses suppressed exceptions (Java 7 feature). What is the purpose?\n\ntry(BufferedReader reader = new BufferedReader(new FileReader(\"file.txt\"))) {\n // code\n} catch(IOException e) {\n e.printStackTrace();\n // Suppressed exceptions can be accessed\n}",
+    "options": [
+      "Requires manual tracking",
+      "Prevents resource leak for that production scenario",
+      "Hides exceptions for that production scenario",
+      "Tracks exceptions suppressed when closing resources"
+    ],
+    "correct_answer": "Tracks exceptions suppressed when closing resources",
+    "topic": "Exceptions and Resource Handling",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-007",
+    "question": "During A Java review of custom exceptions, what is valid?\n\nclass ValidationException extends Exception {\n public ValidationException(String message) {\n super(message);\n }\n}\n\nthrow new ValidationException(\"Invalid input\");",
+    "options": [
+      "Requires catch block",
+      "Invalid syntax",
+      "Cannot extend Exception",
+      "Valid custom exception"
+    ],
+    "correct_answer": "Valid custom exception",
+    "topic": "Exceptions and Resource Handling",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-008",
+    "question": "A Java review checks try-with-resources. What is the advantage?\n\ntry(BufferedReader reader = new BufferedReader(new FileReader(\"file.txt\"))) {\n // read file\n} catch(IOException e) {\n e.printStackTrace();\n}",
+    "options": [
+      "Requires less memory",
+      "No difference from regular try-catch",
+      "Automatically closes resources",
+      "Prevents exceptions"
+    ],
+    "correct_answer": "Automatically closes resources",
+    "topic": "Exceptions and Resource Handling",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-009",
+    "question": "During A Java review of try-catch, what is the behavior?\n\ntry {\n int result = 10 / 0;\n System.out.println(\"After division\");\n} catch(ArithmeticException e) {\n System.out.println(\"Caught\");\n}",
+    "options": [
+      "Prints: Caught",
+      "No output",
+      "Prints: After division",
+      "Throws exception"
+    ],
+    "correct_answer": "Prints: Caught",
+    "topic": "Exceptions and Resource Handling",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-010",
+    "question": "During A Java review of throws keyword, what is its purpose?\n\npublic void method() throws IOException {\n // Can throw IOException\n}",
+    "options": [
+      "Prevents exception",
+      "Handles exception for that production scenario",
+      "Declares that method can throw exception",
+      "Catches exception"
+    ],
+    "correct_answer": "Declares that method can throw exception",
+    "topic": "Exceptions and Resource Handling",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-011",
+    "question": "In A Java review of ArrayIndexOutOfBoundsException, what triggers it?\n\nint[] arr = {1, 2, 3};\nint value = arr[5]; // What happens?",
+    "options": [
+      "Returns 0 for that production scenario",
+      "Throws ArrayIndexOutOfBoundsException",
+      "Returns null",
+      "Returns -1"
+    ],
+    "correct_answer": "Throws ArrayIndexOutOfBoundsException",
+    "topic": "Exceptions and Resource Handling",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-012",
+    "question": "A Java review checks ClassCastException. When is it thrown?\n\nObject obj = \"string\";\nInteger num = (Integer) obj; // What happens?",
+    "options": [
+      "Compiles and executes",
+      "Returns null for that production scenario",
+      "Throws ClassCastException at runtime",
+      "Compilation error"
+    ],
+    "correct_answer": "Throws ClassCastException at runtime",
+    "topic": "Exceptions and Resource Handling",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-013",
+    "question": "A Java review examines NullPointerException. When is it thrown?\n\nString str = null;\nint length = str.length(); // What happens?",
+    "options": [
+      "Returns 0 for that production scenario",
+      "Returns -1",
+      "Returns null",
+      "Throws NullPointerException"
+    ],
+    "correct_answer": "Throws NullPointerException",
+    "topic": "Exceptions and Resource Handling",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-014",
+    "question": "A Java review examines exception hierarchy. What is the relationship?\n\nclass CustomException extends Exception { }",
+    "options": [
+      "CustomException is Error",
+      "CustomException is unchecked exception",
+      "No inheritance relationship",
+      "CustomException is checked exception"
+    ],
+    "correct_answer": "CustomException is checked exception",
+    "topic": "Exceptions and Resource Handling",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-015",
+    "question": "A Java review examines RuntimeException. What type is it?\n\nclass CustomRuntime extends RuntimeException { }",
+    "options": [
+      "Unchecked exception",
+      "Interface",
+      "Error for that production scenario",
+      "Checked exception"
+    ],
+    "correct_answer": "Unchecked exception",
+    "topic": "Exceptions and Resource Handling",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-016",
+    "question": "In A Java review of Exception vs Error, what is the difference?\n\nclass OutOfMemoryError extends Error { }",
+    "options": [
+      "Error is for system-level issues, recoverable exceptions are Exception",
+      "Error is for simple mistakes for that production scenario",
+      "No difference in behavior for that production scenario",
+      "Both are same for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Error is for system-level issues, recoverable exceptions are Exception",
+    "topic": "Exceptions and Resource Handling",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-017",
+    "question": "A Java review uses Reflection API to access private field. What is the approach?\n\nclass MyClass { private int value = 10; }\nMyClass obj = new MyClass();\nField field = MyClass.class.getDeclaredField(\"value\");\nfield.setAccessible(true);\nint value = field.getInt(obj);",
+    "options": [
+      "Compilation error for that production scenario",
+      "Invalid, cannot access private",
+      "Runtime exception",
+      "Valid, Reflection allows private access"
+    ],
+    "correct_answer": "Valid, Reflection allows private access",
+    "topic": "JVM Memory and GC",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-018",
+    "question": "During A Java review of Stream intermediate operations, what is returned?\n\nStream<Integer> stream = Arrays.asList(1, 2, 3).stream();\nStream<Integer> filtered = stream.filter(n -> n > 1);\n// filtered is a what?",
+    "options": [
+      "Stream",
+      "Iterator",
+      "Integer",
+      "List"
+    ],
+    "correct_answer": "Stream",
+    "topic": "Streams Lambdas and Method References",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-019",
+    "question": "In A Java review of Stream.map(), what is the operation?\n\nList<Integer> numbers = Arrays.asList(1, 2, 3);\nList<Integer> doubled = numbers.stream()\n .map(n -> n * 2)\n .collect(Collectors.toList());",
+    "options": [
+      "Finds maximum for that production scenario",
+      "Counts elements",
+      "Filters the stream",
+      "Transforms each element"
+    ],
+    "correct_answer": "Transforms each element",
+    "topic": "Collections and Contracts",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-020",
+    "question": "In A Java review of Thread creation, which approach is correct?\n\nclass MyThread extends Thread {\n public void run() { System.out.println(\"Thread\"); }\n}\n\nMyThread t = new MyThread();\nt.start();",
+    "options": [
+      "Cannot call start() on custom Thread",
+      "Incorrect, must use ExecutorService",
+      "Incorrect, must use Runnable for that production scenario",
+      "Correct, thread executes in that implementation"
+    ],
+    "correct_answer": "Correct, thread executes in that implementation",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-021",
+    "question": "A Java review examines InputStream and OutputStream behavior. What is the correct usage?\n\nFileOutputStream fos = new FileOutputStream(\"output.txt\");\nfos.write(\"Hello\".getBytes());\nfos.close();",
+    "options": [
+      "Compilation error",
+      "Requires flush() call",
+      "Valid, writes bytes to file",
+      "Invalid, must use BufferedOutputStream"
+    ],
+    "correct_answer": "Valid, writes bytes to file",
+    "topic": "Exceptions and Resource Handling",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-022",
+    "question": "In A Java review of ReentrantLock, what is the advantage over synchronized?\n\nReentrantLock lock = new ReentrantLock();\nlock.lock();\ntry {\n // Critical section\n} finally {\n lock.unlock();\n}",
+    "options": [
+      "Automatic unlocking",
+      "No advantage for that production scenario",
+      "Provides more control and flexibility",
+      "Prevents deadlock"
+    ],
+    "correct_answer": "Provides more control and flexibility",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-023",
+    "question": "A Java review examines WeakReference behavior. When is it garbage collected?\n\nWeakReference<String> weakRef = new WeakReference<>(new String(\"value\"));\n// When can weakRef be collected?",
+    "options": [
+      "When no strong references exist",
+      "Never until explicitly cleared",
+      "When program ends for that production scenario",
+      "On next GC if needed"
+    ],
+    "correct_answer": "When no strong references exist",
+    "topic": "JVM Memory and GC",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-024",
+    "question": "A Java review uses Runnable interface. What is the benefit over Thread class?\n\nclass MyRunnable implements Runnable {\n public void run() { }\n}\nThread t = new Thread(new MyRunnable());",
+    "options": [
+      "Simpler implementation",
+      "No benefit for that production scenario",
+      "Faster execution",
+      "Allows multiple inheritance in Java"
+    ],
+    "correct_answer": "Allows multiple inheritance in Java",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-025",
+    "question": "A Java review examines ConcurrentHashMap behavior in multi-threaded scenarios. What is an advantage over HashMap?\n\nConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();",
+    "options": [
+      "Segment-based locking for better concurrency",
+      "Faster single-threaded access",
+      "Thread-safe without any locking",
+      "Automatic sorting for that production scenario"
+    ],
+    "correct_answer": "Segment-based locking for better concurrency",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "hashmap",
+      "threads"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-026",
+    "question": "In A Java review of Stream.sorted(), what is the default behavior?\n\nList<Integer> numbers = Arrays.asList(3, 1, 4, 1, 5);\nnumbers.stream()\n .sorted()\n .forEach(System.out::print);",
+    "options": [
+      "11345",
+      "34115",
+      "54311",
+      "Random order"
+    ],
+    "correct_answer": "11345",
+    "topic": "Streams Lambdas and Method References",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-027",
+    "question": "During A Java review of CopyOnWriteArrayList, when is copying done?\n\nCopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();\nlist.add(\"item\"); // When does copy happen?",
+    "options": [
+      "On read operations",
+      "Never for that production scenario",
+      "On iteration",
+      "On write operations"
+    ],
+    "correct_answer": "On write operations",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-028",
+    "question": "A Java review checks Stream terminal operations. What is the difference?\n\nList<Integer> list = Arrays.asList(1, 2, 3);\nlong count = list.stream().filter(n -> n > 1).count();",
+    "options": [
+      "count is an intermediate operation",
+      "count modifies the original list",
+      "count returns a Stream for that production scenario",
+      "count is a terminal operation that returns a value"
+    ],
+    "correct_answer": "count is a terminal operation that returns a value",
+    "topic": "Streams Lambdas and Method References",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-029",
+    "question": "A Java review uses Method.invoke() for reflection. What is the syntax?\n\nMethod method = MyClass.class.getMethod(\"myMethod\");\nObject result = method.invoke(obj, args);",
+    "options": [
+      "Must be static method",
+      "Incorrect syntax for that production scenario",
+      "Valid, invokes method dynamically",
+      "Cannot pass arguments"
+    ],
+    "correct_answer": "Valid, invokes method dynamically",
+    "topic": "JVM Memory and GC",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-030",
+    "question": "A Java review uses CountDownLatch for synchronization. What is its purpose?\n\nCountDownLatch latch = new CountDownLatch(3);\n// Multiple threads countdown",
+    "options": [
+      "Prevents thread creation for that production scenario",
+      "Starts threads for that production scenario",
+      "Counts up to limit for that production scenario",
+      "Allows threads to wait until countdown reaches zero"
+    ],
+    "correct_answer": "Allows threads to wait until countdown reaches zero",
+    "topic": "Concurrency and Executors",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-031",
+    "question": "During A Java review of Stack memory, what is stored?\n\nint x = 10; // Where is x stored?\nString str = new String(\"value\"); // Where is reference stored?",
+    "options": [
+      "Both in Stack",
+      "int in Stack, reference in Stack",
+      "int in Method Area, reference in Heap",
+      "Both in Heap"
+    ],
+    "correct_answer": "int in Stack, reference in Stack",
+    "topic": "JVM Memory and GC",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-032",
+    "question": "During A Java review of memory leak in Java, what causes it?\n\nList<String> list = new ArrayList<>();\nwhile(true) {\n list.add(new String(\"item\"));\n}",
+    "options": [
+      "Memory leak due to unbounded list growth",
+      "No memory leak, GC handles it",
+      "GC automatically prevents it",
+      "Impossible in Java for that production scenario"
+    ],
+    "correct_answer": "Memory leak due to unbounded list growth",
+    "topic": "JVM Memory and GC",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-033",
+    "question": "During A Java review of Java module system (Java 9+), what is a module?\n\nmodule com.example {\n requires java.base;\n exports com.example.api;\n}",
+    "options": [
+      "Deprecated feature for that production scenario",
+      "Required only for large projects for that production scenario",
+      "Same as package for that production scenario",
+      "A named collection of packages with access control"
+    ],
+    "correct_answer": "A named collection of packages with access control",
+    "topic": "JVM Memory and GC",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-034",
+    "question": "A Java review compares java.io vs java.nio. What is the key difference?\n\n// java.io - Stream-based\n// java.nio - Channel and Buffer-based",
+    "options": [
+      "NIO provides better performance for large files",
+      "No difference for that production scenario",
+      "IO is faster for that production scenario",
+      "NIO doesn't support files for that production scenario"
+    ],
+    "correct_answer": "NIO provides better performance for large files",
+    "topic": "Exceptions and Resource Handling",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-035",
+    "question": "A Java review examines Thread states. What are the main states?\n\nThread t = new Thread(() -> { });\n// Different states during execution",
+    "options": [
+      "New, Runnable, Running, Blocked, Terminated",
+      "Active and Inactive",
+      "Running and Waiting",
+      "Start and Stop for that production scenario"
+    ],
+    "correct_answer": "New, Runnable, Running, Blocked, Terminated",
+    "topic": "Concurrency and Executors",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-036",
+    "question": "A Java review checks garbage collection. When is an object eligible for GC?\n\nObject obj = new Object();\nobj = null; // Eligible for GC?",
+    "options": [
+      "When program ends",
+      "When no references exist",
+      "Never for that production scenario",
+      "When explicitly deleted"
+    ],
+    "correct_answer": "When no references exist",
+    "topic": "JVM Memory and GC",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "gc"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-037",
+    "question": "During A Java review of synchronized keyword, what does it do?\n\nsynchronized void criticalSection() {\n // Only one thread at a time\n}",
+    "options": [
+      "Provides mutual exclusion for shared resources",
+      "Speeds up execution",
+      "Prevents exceptions",
+      "Stops all threads for that production scenario"
+    ],
+    "correct_answer": "Provides mutual exclusion for shared resources",
+    "topic": "Concurrency and Executors",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-038",
+    "question": "A Java review examines JVM memory areas. What is stored in Heap?\n\nString str = new String(\"Hello\"); // Where is the object stored?",
+    "options": [
+      "Native Method Stack",
+      "Heap in that implementation",
+      "Stack for that production scenario",
+      "Method Area"
+    ],
+    "correct_answer": "Heap in that implementation",
+    "topic": "JVM Memory and GC",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "heap"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-039",
+    "question": "A Java review uses Stream.reduce(). What does it do?\n\nint sum = Arrays.asList(1, 2, 3, 4).stream()\n .reduce(0, (a, b) -> a + b);",
+    "options": [
+      "Combines all elements into single value",
+      "Removes duplicates",
+      "Filters elements",
+      "Sorts elements for that production scenario"
+    ],
+    "correct_answer": "Combines all elements into single value",
+    "topic": "Streams Lambdas and Method References",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-040",
+    "question": "A Java review checks volatile keyword behavior. What is its purpose?\n\nvolatile int flag = 0; // Shared between threads",
+    "options": [
+      "Ensures visibility of changes across threads",
+      "Speeds up access for that production scenario",
+      "Prevents modifications",
+      "Synchronizes access"
+    ],
+    "correct_answer": "Ensures visibility of changes across threads",
+    "topic": "Concurrency and Executors",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-041",
+    "question": "A Java review uses Callable vs Runnable. What is the difference?\n\nCallable<Integer> task = () -> 42; // Returns value",
+    "options": [
+      "Callable is deprecated",
+      "Runnable returns value",
+      "Callable returns value, Runnable doesn't",
+      "No difference for that production scenario"
+    ],
+    "correct_answer": "Callable returns value, Runnable doesn't",
+    "topic": "Concurrency and Executors",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-042",
+    "question": "During A Java review of getDeclaredFields(), what is returned?\n\nField[] fields = MyClass.class.getDeclaredFields();",
+    "options": [
+      "No fields for that production scenario",
+      "All fields including private",
+      "Only public fields",
+      "Only inherited fields"
+    ],
+    "correct_answer": "All fields including private",
+    "topic": "JVM Memory and GC",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-043",
+    "question": "During A Java review of ClassLoader, what are the types?\n\nClassLoader loader = String.class.getClassLoader();",
+    "options": [
+      "No types for that production scenario",
+      "One type of ClassLoader for that production scenario",
+      "Bootstrap, Extension, Application ClassLoaders",
+      "Only Application ClassLoader"
+    ],
+    "correct_answer": "Bootstrap, Extension, Application ClassLoaders",
+    "topic": "JVM Memory and GC",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-044",
+    "question": "During A Java review of Class.forName(), what happens?\n\nClass<?> clazz = Class.forName(\"java.lang.String\");",
+    "options": [
+      "Creates String instance",
+      "Loads the class dynamically",
+      "Throws ClassNotFoundException if not found",
+      "Returns class object"
+    ],
+    "correct_answer": "Loads the class dynamically",
+    "topic": "JVM Memory and GC",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-045",
+    "question": "A Java review checks Thread.sleep(). What does it do?\n\nThread.sleep(1000); // Sleeps for 1 second",
+    "options": [
+      "Pauses the thread",
+      "Throws InterruptedException only if interrupted",
+      "Resumes the thread",
+      "Kills the thread"
+    ],
+    "correct_answer": "Pauses the thread",
+    "topic": "Concurrency and Executors",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-046",
+    "question": "In A Java review of custom annotation with retention, what is the default?\n\n@Retention(RetentionPolicy.RUNTIME)\npublic @interface MyAnnotation { }",
+    "options": [
+      "Available in source code only",
+      "Not available at runtime for that production scenario",
+      "Available at runtime via Reflection",
+      "Available only at compile time"
+    ],
+    "correct_answer": "Available at runtime via Reflection",
+    "topic": "Java Language and Type System",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-047",
+    "question": "A Java review checks exception chaining. What is the output?\n\ntry {\n throw new IOException(\"Original\");\n} catch(IOException e) {\n throw new RuntimeException(\"Wrapped\", e);\n}",
+    "options": [
+      "Prints IOException message for that production scenario",
+      "Compilation error for that production scenario",
+      "Throws RuntimeException with IOException as cause",
+      "No exception thrown for that production scenario"
+    ],
+    "correct_answer": "Throws RuntimeException with IOException as cause",
+    "topic": "Exceptions and Resource Handling",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-048",
+    "question": "In A Java review of Iterator, what is the correct way to remove elements?\n\nList<String> list = new ArrayList<>(Arrays.asList(\"a\", \"b\", \"c\"));\nIterator<String> iter = list.iterator();\nwhile(iter.hasNext()) {\n String item = iter.next();\n if(item.equals(\"b\")) iter.remove(); // Using iterator's remove\n}",
+    "options": [
+      "Skips the element",
+      "Throws exception for that production scenario",
+      "Compilation error",
+      "Removes b successfully"
+    ],
+    "correct_answer": "Removes b successfully",
+    "topic": "Collections and Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "equals-hashcode"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-049",
+    "question": "During A Java review of Collectors.groupingBy(), what is the output?\n\nList<String> items = Arrays.asList(\"apple\", \"apricot\", \"banana\");\nMap<Character, Long> grouped = items.stream()\n .collect(Collectors.groupingBy(s -> s.charAt(0), Collectors.counting()));\n\nSystem.out.println(grouped.get('a'));",
+    "options": [
+      "1",
+      "2",
+      "null",
+      "3"
+    ],
+    "correct_answer": "2",
+    "topic": "Collections and Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-050",
+    "question": "In A Java review of Comparator, what is the difference from Comparable?\n\nComparator<String> comp = (s1, s2) -> s2.compareTo(s1); // Reverse order\nList<String> list = Arrays.asList(\"c\", \"a\", \"b\");\nCollections.sort(list, comp);\nfor(String s : list) System.out.print(s + \" \");",
+    "options": [
+      "a b c",
+      "No output",
+      "c b a",
+      "Compilation error"
+    ],
+    "correct_answer": "c b a",
+    "topic": "Collections and Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-051",
+    "question": "A Java review checks method overloading behavior. Which method will be called?\n\nclass Calculator {\n void add(int a, int b) { System.out.print(\"Int \"); }\n void add(double a, double b) { System.out.print(\"Double \"); }\n}\n\nCalculator c = new Calculator();\nc.add(5, 10);",
+    "options": [
+      "Int in that implementation",
+      "Both Int and Double",
+      "Compilation error",
+      "Double for that production scenario"
+    ],
+    "correct_answer": "Int in that implementation",
+    "topic": "Java Language and Type System",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-052",
+    "question": "In A Java review of Collections.unmodifiableList, what happens?\n\nList<String> originalList = new ArrayList<>();\noriginalList.add(\"item1\");\nList<String> unmodifiableList = Collections.unmodifiableList(originalList);\nunmodifiableList.add(\"item2\"); // What happens?",
+    "options": [
+      "Silently ignores",
+      "Throws UnsupportedOperationException",
+      "Adds successfully",
+      "Returns false for that production scenario"
+    ],
+    "correct_answer": "Throws UnsupportedOperationException",
+    "topic": "Collections and Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-053",
+    "question": "A Java review examines LinkedHashMap behavior. What is the order of iteration?\n\nLinkedHashMap<String, Integer> map = new LinkedHashMap<>();\nmap.put(\"c\", 3);\nmap.put(\"a\", 1);\nmap.put(\"b\", 2);\nfor(String key : map.keySet()) System.out.print(key + \" \");",
+    "options": [
+      "c a b",
+      "Random order",
+      "a b c",
+      "1 2 3"
+    ],
+    "correct_answer": "c a b",
+    "topic": "Collections and Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "hashmap"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-054",
+    "question": "A Java review checks the behavior of remove() in iteration. What happens?\n\nList<String> list = new ArrayList<>(Arrays.asList(\"a\", \"b\", \"c\"));\nfor(String item : list) {\n if(item.equals(\"b\")) list.remove(item); // Modifying during iteration\n}",
+    "options": [
+      "Throws ConcurrentModificationException",
+      "Removes successfully",
+      "Compilation error for that production scenario",
+      "Silently skips the item"
+    ],
+    "correct_answer": "Throws ConcurrentModificationException",
+    "topic": "Collections and Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "equals-hashcode"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-055",
+    "question": "In A Java review of LinkedList operations, what is the time complexity of removing an element from the middle?\n\nLinkedList<String> list = new LinkedList<>();\n// After adding elements\nlist.remove(500); // Remove element at index 500",
+    "options": [
+      "O(1)",
+      "O(n)",
+      "O(log n)",
+      "O(n log n)"
+    ],
+    "correct_answer": "O(n)",
+    "topic": "Collections and Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-056",
+    "question": "In a Java code path of multiple inheritance via interfaces, what happens?\n\ninterface A { void test(); }\ninterface B { void test(); }\n\nclass C implements A, B {\n public void test() { System.out.println(\"Test\"); }\n}\n\nnew C().test();",
+    "options": [
+      "Ambiguity runtime error",
+      "Only A's test is called",
+      "Compilation error due to diamond problem",
+      "Prints: Test in that implementation"
+    ],
+    "correct_answer": "Prints: Test in that implementation",
+    "topic": "Java Language and Type System",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-057",
+    "question": "During A Java review, HashMap collision handling is examined. What happens in case of hash collision?\n\nHashMap<String, String> map = new HashMap<>();\nmap.put(\"key1\", \"value1\");\nmap.put(\"key2\", \"value2\"); // Assuming hash collision",
+    "options": [
+      "Throws exception for that production scenario",
+      "Second entry is ignored",
+      "Both entries are stored separately",
+      "Overrides first entry"
+    ],
+    "correct_answer": "Both entries are stored separately",
+    "topic": "Collections and Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "hashmap"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-058",
+    "question": "A Java review examines access modifiers. What will compile successfully?\n\nclass Outer { private int x = 10; }\nclass Test { \n public static void main(String[] args) {\n System.out.println(new Outer().x); // Will this work?\n }\n}",
+    "options": [
+      "x is automatically public",
+      "Runtime exception for that production scenario",
+      "Compilation error: x has private access",
+      "Compiles and prints 10"
+    ],
+    "correct_answer": "Compilation error: x has private access",
+    "topic": "Strings and Immutability",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-059",
+    "question": "During A Java review of TreeMap, what is the sorting behavior?\n\nTreeMap<String, Integer> map = new TreeMap<>();\nmap.put(\"c\", 3);\nmap.put(\"a\", 1);\nmap.put(\"b\", 2);\nfor(String key : map.keySet()) System.out.print(key + \" \");",
+    "options": [
+      "Random order",
+      "c a b",
+      "3 1 2",
+      "a b c"
+    ],
+    "correct_answer": "a b c",
+    "topic": "Collections and Contracts",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-060",
+    "question": "In a performance review, An engineer compares String concatenation methods. Which approach is most efficient in a loop?\n\n// Using String concatenation\nString result = \"\";\nfor(int i = 0; i < 1000; i++) {\n result += \"x\";\n}",
+    "options": [
+      "Most efficient due to compiler optimization for that production scenario",
+      "Creates 1000 String objects for that production scenario",
+      "Uses StringBuilder internally in modern Java",
+      "Least efficient as it creates many intermediate String objects"
+    ],
+    "correct_answer": "Least efficient as it creates many intermediate String objects",
+    "topic": "Strings and Immutability",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-061",
+    "question": "In A Java review of constructor behavior, what is the execution order?\n\nclass Parent {\n Parent() { System.out.print(\"P \"); }\n}\n\nclass Child extends Parent {\n Child() {\n super();\n System.out.print(\"C\");\n }\n}\n\nnew Child();",
+    "options": [
+      "C P",
+      "C",
+      "P",
+      "P C"
+    ],
+    "correct_answer": "P C",
+    "topic": "Java Language and Type System",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-062",
+    "question": "During A Java review of PriorityQueue, what is the behavior?\n\nPriorityQueue<Integer> queue = new PriorityQueue<>();\nqueue.add(5);\nqueue.add(2);\nqueue.add(8);\nwhile(!queue.isEmpty()) System.out.print(queue.poll() + \" \");",
+    "options": [
+      "8 5 2",
+      "2 5 8",
+      "Random order",
+      "5 2 8"
+    ],
+    "correct_answer": "2 5 8",
+    "topic": "Collections and Contracts",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-063",
+    "question": "A Java review checks Comparable interface usage. What is the purpose?\n\nclass Student implements Comparable<Student> {\n int marks;\n public int compareTo(Student other) {\n return this.marks - other.marks;\n }\n}",
+    "options": [
+      "Enables comparison with equals()",
+      "Enables custom sorting",
+      "Enables cloning",
+      "Enables serialization"
+    ],
+    "correct_answer": "Enables custom sorting",
+    "topic": "Collections and Contracts",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-064",
+    "question": "During A Java review of CopyOnWriteArrayList, when does the copy happen?\n\nCopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();\nlist.add(\"item1\");\nlist.add(\"item2\"); // When is copying triggered?",
+    "options": [
+      "Never for that production scenario",
+      "During write operations",
+      "During iteration",
+      "During read operations"
+    ],
+    "correct_answer": "During write operations",
+    "topic": "Collections and Contracts",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-065",
+    "question": "A Java review compares ArrayList and LinkedList performance. Which statement is correct?\n\nArrayList<Integer> list = new ArrayList<>();\nfor(int i = 0; i < 1000; i++) {\n list.add(i); // Adding at the end\n}",
+    "options": [
+      "Performance depends on data size",
+      "ArrayList is faster for this operation",
+      "LinkedList is faster for this operation",
+      "Both have same performance"
+    ],
+    "correct_answer": "ArrayList is faster for this operation",
+    "topic": "Collections and Contracts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-066",
+    "question": "During A Java review of Optional.flatMap(), what is the behavior?\n\nOptional<Optional<String>> nested = Optional.of(Optional.of(\"value\"));\nOptional<String> flattened = nested.flatMap(Function.identity());",
+    "options": [
+      "Returns empty Optional",
+      "Returns the nested Optional as is",
+      "Throws exception",
+      "Flattens nested Optionals"
+    ],
+    "correct_answer": "Flattens nested Optionals",
+    "topic": "Collections and Contracts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "optional"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-067",
+    "question": "In A Java review of static methods in interfaces, what is allowed?\n\ninterface MyInterface {\n static void staticMethod() { System.out.println(\"Static\"); }\n}\n\nMyInterface.staticMethod(); // Is this valid?",
+    "options": [
+      "Compilation error",
+      "Valid, can call static method from interface",
+      "Invalid, interfaces cannot have static methods",
+      "Throws exception"
+    ],
+    "correct_answer": "Valid, can call static method from interface",
+    "topic": "Streams Lambdas and Method References",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-068",
+    "question": "During A Java review, the String pool behavior is examined. How many String objects are created?\n\nString s1 = \"Hello\";\nString s2 = \"Hello\";\nString s3 = new String(\"Hello\");\nString s4 = \"He\" + \"llo\";",
+    "options": [
+      "1",
+      "2",
+      "4",
+      "3"
+    ],
+    "correct_answer": "2",
+    "topic": "Strings and Immutability",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-069",
+    "question": "A Java review uses lambda expressions with streams. What is the output?\n\nList<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);\nnumbers.stream()\n .filter(n -> n > 2)\n .forEach(System.out::print);",
+    "options": [
+      "Compilation error",
+      "345",
+      "234",
+      "12345"
+    ],
+    "correct_answer": "345",
+    "topic": "Streams Lambdas and Method References",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "lambdas",
+      "streams"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-070",
+    "question": "A Java review examines method overriding rules. Which statement is correct?\n\nclass Parent {\n public void test() { }\n}\n\nclass Child extends Parent {\n private void test() { } // Is this valid?\n}",
+    "options": [
+      "Invalid, access modifier cannot be more restrictive in child class",
+      "Throws runtime exception for that production scenario",
+      "Valid, method overriding allows access modifier reduction",
+      "Valid, method is overloaded not overridden for that production scenario"
+    ],
+    "correct_answer": "Invalid, access modifier cannot be more restrictive in child class",
+    "topic": "Java Language and Type System",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-071",
+    "question": "In A Java review of encapsulation, what is the proper pattern?\n\nprivate int age;\n\npublic void setAge(int age) {\n if(age > 0 && age < 120) this.age = age;\n}\n\npublic int getAge() { return age; }",
+    "options": [
+      "Proper encapsulation with validation",
+      "Not related to encapsulation",
+      "Violates encapsulation by using private",
+      "Violates encapsulation by having public methods"
+    ],
+    "correct_answer": "Proper encapsulation with validation",
+    "topic": "Collections and Contracts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-072",
+    "question": "A Java review involves string immutability. What is the length of str after these operations?\n\nString str = \"Hello\";\nstr.concat(\" World\");\nstr = str + \"!\";\nSystem.out.println(str.length());",
+    "options": [
+      "6",
+      "12",
+      "5",
+      "11"
+    ],
+    "correct_answer": "6",
+    "topic": "Strings and Immutability",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-073",
+    "question": "A Java review checks Supplier functional interface. What does it return?\n\nSupplier<Integer> randomSupplier = () -> new Random().nextInt(100);\nInteger value = randomSupplier.get();",
+    "options": [
+      "Returns value without taking parameter",
+      "Modifies existing value",
+      "Throws exception for that production scenario",
+      "Takes parameter and returns value"
+    ],
+    "correct_answer": "Returns value without taking parameter",
+    "topic": "Streams Lambdas and Method References",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-074",
+    "question": "An engineer is testing an application where narrowing conversion is required. Which casting approach will compile successfully?\n\nlong value = 1000000L;\nint result = (int) value;",
+    "options": [
+      "Compiles but result becomes negative",
+      "Compiles and executes successfully",
+      "Will not compile due to narrowing",
+      "Compiles but throws runtime exception"
+    ],
+    "correct_answer": "Compiles and executes successfully",
+    "topic": "Java Language and Type System",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-075",
+    "question": "In a Java code path, a multi-dimensional array is created and accessed. What is the value at arr[1][2]?\n\nint[][] arr = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};\nint value = arr[1][2];",
+    "options": [
+      "6",
+      "5",
+      "2",
+      "8"
+    ],
+    "correct_answer": "6",
+    "topic": "Java Language and Type System",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-076",
+    "question": "A Java review examines the internal structure of HashMap. How many buckets are created initially?\n\nHashMap<String, Integer> map = new HashMap<>();\n// Default initial capacity?",
+    "options": [
+      "64",
+      "16",
+      "32",
+      "8"
+    ],
+    "correct_answer": "16",
+    "topic": "Collections and Contracts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "hashmap"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-077",
+    "question": "A Java review examines Generics type safety. What happens?\n\nList<String> strings = new ArrayList<>();\nstrings.add(\"hello\");\nString str = strings.get(0); // Is this type-safe?",
+    "options": [
+      "Compilation error",
+      "Type-safe, no casting needed",
+      "Requires explicit casting",
+      "No type safety for that production scenario"
+    ],
+    "correct_answer": "Type-safe, no casting needed",
+    "topic": "Generics and Type Safety",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-078",
+    "question": "During A Java review of bounded type parameters, what is allowed?\n\nclass Box<T extends Number> {\n void process(T value) { }\n}\nBox<String> box = new Box<>(); // Is this valid?",
+    "options": [
+      "Invalid, String doesn't extend Number",
+      "Runtime exception for that production scenario",
+      "Valid for that production scenario",
+      "Compilation error"
+    ],
+    "correct_answer": "Invalid, String doesn't extend Number",
+    "topic": "Generics and Type Safety",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-079",
+    "question": "A Java review checks Class hierarchy with Reflection. What is the output?\n\nClass<?> superClass = String.class.getSuperclass();\nSystem.out.println(superClass.getName());",
+    "options": [
+      "Comparable",
+      "String",
+      "Object",
+      "Serializable"
+    ],
+    "correct_answer": "Object",
+    "topic": "JVM Memory and GC",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-080",
+    "question": "During A Java review of HashSet null handling, what is allowed?\n\nHashSet<String> set = new HashSet<>();\nset.add(null);\nset.add(\"item\");\nSystem.out.println(set.size());",
+    "options": [
+      "1",
+      "2",
+      "0",
+      "Throws exception"
+    ],
+    "correct_answer": "2",
+    "topic": "Collections and Contracts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-081",
+    "question": "During A Java review of method references, which is equivalent?\n\nlist.forEach(System.out::println);\n// is equivalent to\nlist.forEach(item -> System.out.println(item));",
+    "options": [
+      "Not equivalent for that production scenario",
+      "Different behavior",
+      "Equivalent in that implementation",
+      "Method reference doesn't compile"
+    ],
+    "correct_answer": "Equivalent in that implementation",
+    "topic": "Streams Lambdas and Method References",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-082",
+    "question": "A Java review checks Stream.distinct(). What is the output?\n\nList<Integer> numbers = Arrays.asList(1, 2, 2, 3, 3, 3);\nlong count = numbers.stream().distinct().count();",
+    "options": [
+      "3",
+      "1",
+      "6",
+      "2"
+    ],
+    "correct_answer": "3",
+    "topic": "Streams Lambdas and Method References",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-083",
+    "question": "A Java review checks default methods in interfaces. What is the advantage?\n\ninterface MyInterface {\n default void defaultMethod() { System.out.println(\"Default\"); }\n}",
+    "options": [
+      "Must be implemented",
+      "Backwards compatibility",
+      "Interface becomes abstract class",
+      "No advantage"
+    ],
+    "correct_answer": "Backwards compatibility",
+    "topic": "Streams Lambdas and Method References",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-084",
+    "question": "A service trims customer names with name.trim(); before logging, but the log still contains leading spaces. What explains the bug?",
+    "options": [
+      "String is immutable, so trim() returns a new value that must be assigned back.",
+      "trim() changes the String only after the next garbage-collection cycle.",
+      "trim() works only on text coming from a BufferedReader. for that production scenario",
+      "The JVM skips trim() when the String came from an HTTP request."
+    ],
+    "correct_answer": "String is immutable, so trim() returns a new value that must be assigned back.",
+    "topic": "Strings and Immutability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "immutability",
+      "strings"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-085",
+    "question": "Which change is the best fit when a service builds an audit line inside a tight loop and currently uses repeated String concatenation?",
+    "options": [
+      "Use a local StringBuilder and append fragments before converting once at the end.",
+      "Keep String concatenation and call System.gc() after every hundred iterations.",
+      "Wrap the String in Optional so the JVM can optimize every append. for that production scenario",
+      "Mark the String variable final so concatenation happens in place."
+    ],
+    "correct_answer": "Use a local StringBuilder and append fragments before converting once at the end.",
+    "topic": "Strings and Immutability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "performance",
+      "stringbuilder",
+      "strings"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-086",
+    "question": "A helper method reference fails to compile after a teammate overloads parse() with two signatures. What is the most likely reason?",
+    "options": [
+      "The target functional interface no longer resolves to one unambiguous overload.",
+      "Method references stop working whenever the method becomes static.",
+      "Overloaded methods can be used only with lambdas, never with method references.",
+      "The compiler rejects method references when return types are boxed."
+    ],
+    "correct_answer": "The target functional interface no longer resolves to one unambiguous overload.",
+    "topic": "Streams Lambdas and Method References",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "method-references",
+      "overloading"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-087",
+    "question": "Which review comment is the strongest when a team is replacing x -> service.parse(x) with Service::parse everywhere?",
+    "options": [
+      "Confirm that the referenced method still matches the functional interface after overloads and generics are applied.",
+      "Avoid method references because they always allocate more objects than lambdas. for that production scenario",
+      "Prefer anonymous classes because the JIT cannot inline method references. for that production scenario for that production scenario",
+      "Require method references only for private methods to avoid reflection overhead. for that production scenario"
+    ],
+    "correct_answer": "Confirm that the referenced method still matches the functional interface after overloads and generics are applied.",
+    "topic": "Streams Lambdas and Method References",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "functional-interfaces",
+      "method-references"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-088",
+    "question": "A service catches Exception around file parsing and logs only e.getMessage();. Later, operations cannot tell whether the failure was validation, I/O, or configuration. What is the main problem?",
+    "options": [
+      "The broad catch removes useful exception type and stack-context information needed for diagnosis.",
+      "The bug happens because checked exceptions can never be logged safely. for that production scenario",
+      "The parser should return null on all failures so callers can inspect it.",
+      "Logging only the message forces the JVM to wrap every exception twice."
+    ],
+    "correct_answer": "The broad catch removes useful exception type and stack-context information needed for diagnosis.",
+    "topic": "Practical Debugging",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "diagnostics",
+      "exceptions",
+      "logging"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-089",
+    "question": "A cache uses Customer objects as HashMap keys and later updates the email field that equals() and hashCode() depend on. Why do lookups start failing?",
+    "options": [
+      "Changing a field used in equals() and hashCode() after insertion makes the key unstable in the map.",
+      "HashMap disallows mutable values whenever the key type is custom. for that production scenario",
+      "The update turns the entry into a weak reference, so the key disappears. for that production scenario",
+      "The map silently switches to identity comparison after any field mutation."
+    ],
+    "correct_answer": "Changing a field used in equals() and hashCode() after insertion makes the key unstable in the map.",
+    "topic": "Collections and Contracts",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "equals-hashcode",
+      "hashmap",
+      "immutability"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-090",
+    "question": "Which fix best addresses a HashMap bug caused by mutable business keys?",
+    "options": [
+      "Use immutable key fields or map by a stable surrogate key instead of mutating the existing key object.",
+      "Switch to TreeMap because it ignores hashCode() once the first insert succeeds.",
+      "Call map.rehash() after every business update so bucket positions refresh. for that production scenario",
+      "Mark the map synchronized so mutated keys become visible again. for that production scenario"
+    ],
+    "correct_answer": "Use immutable key fields or map by a stable surrogate key instead of mutating the existing key object.",
+    "topic": "Collections and Contracts",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "design",
+      "hashmap",
+      "immutability"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-091",
+    "question": "A generic helper accepts List items and later inserts a String into a list that the caller passed as List<Integer>. Where is the design fault?",
+    "options": [
+      "Using a raw type bypassed compile-time checks and allowed an invalid element to enter the list.",
+      "Generics are enforced only at runtime, so the caller must cast each insert. for that production scenario",
+      "List<Integer> is covariant, so adding String is legal until iteration starts.",
+      "The compiler erases Integer to Object, so all list inserts are equally valid."
+    ],
+    "correct_answer": "Using a raw type bypassed compile-time checks and allowed an invalid element to enter the list.",
+    "topic": "Generics and Type Safety",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "generics",
+      "raw-types",
+      "type-safety"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-092",
+    "question": "Which API shape is safer for a utility that only reads from a list of Number subtypes?",
+    "options": [
+      "Accept List<? extends Number> so callers can pass Integer, Long, or BigDecimal lists safely for reading.",
+      "Accept raw List so every numeric subtype is handled without generic syntax. for that production scenario",
+      "Accept List<Object> because every Number list widens automatically to Object.",
+      "Accept List<? super Number> because upper-bounded wildcards are only for writing."
+    ],
+    "correct_answer": "Accept List<? extends Number> so callers can pass Integer, Long, or BigDecimal lists safely for reading.",
+    "topic": "Generics and Type Safety",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "api-design",
+      "generics",
+      "wildcards"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-093",
+    "question": "A scheduled executor keeps launching work, but the application never shuts down cleanly after the workload finishes. Which omission is the most likely cause?",
+    "options": [
+      "The executor was never shut down, so its worker threads keep the JVM alive.",
+      "Scheduled executors stop automatically once the last Future is garbage-collected.",
+      "Only virtual threads need shutdown(); platform-thread pools exit on their own.",
+      "The bug exists because scheduleAtFixedRate must be wrapped in synchronized."
+    ],
+    "correct_answer": "The executor was never shut down, so its worker threads keep the JVM alive.",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "executors",
+      "lifecycle",
+      "shutdown"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-094",
+    "question": "Which executor choice is safer when an internal tool submits bursty I/O-bound jobs but must avoid unbounded thread growth?",
+    "options": [
+      "Use a bounded ThreadPoolExecutor so queue size and thread count stay under explicit control.",
+      "Use Executors.newCachedThreadPool() because cached pools cap themselves at CPU count.",
+      "Create one new Thread per task so each request owns its own lifecycle. for that production scenario",
+      "Use parallelStream() for all jobs because it replaces manual backpressure design."
+    ],
+    "correct_answer": "Use a bounded ThreadPoolExecutor so queue size and thread count stay under explicit control.",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "backpressure",
+      "executors",
+      "threadpool"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-095",
+    "question": "A service moves request handling to virtual threads but still wraps a blocking JDBC call inside synchronized(this). Why can throughput remain poor?",
+    "options": [
+      "The synchronized block can pin the virtual thread to its carrier while the blocking call runs.",
+      "Virtual threads never work with JDBC, even when the driver is modern.",
+      "synchronized forces every virtual thread to become a daemon thread. for that production scenario",
+      "Carrier threads ignore synchronized blocks and schedule around them automatically."
+    ],
+    "correct_answer": "The synchronized block can pin the virtual thread to its carrier while the blocking call runs.",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "jdbc",
+      "pinning",
+      "virtual-threads"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-096",
+    "question": "Which refactor is most appropriate when a virtual-thread endpoint still serializes around a slow remote call?",
+    "options": [
+      "Reduce synchronized scope or replace it with finer-grained concurrency control around only truly shared state.",
+      "Increase the platform-thread pool so pinned virtual threads become invisible. for that production scenario",
+      "Replace the remote call with parallelStream() to bypass carrier-thread scheduling.",
+      "Move the synchronized block to a static initializer so it runs only once per JVM. for that production scenario"
+    ],
+    "correct_answer": "Reduce synchronized scope or replace it with finer-grained concurrency control around only truly shared state.",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "design",
+      "locking",
+      "virtual-threads"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-097",
+    "question": "Heap usage climbs after every batch import, and a singleton bean keeps all processed rows in a List for 'future troubleshooting'. What is the most likely explanation?",
+    "options": [
+      "The singleton is retaining objects that should have become unreachable, so the heap keeps growing between runs.",
+      "The JVM refuses to collect lists stored inside Spring-managed beans. for that production scenario",
+      "GC in Java 17 does not reclaim objects created inside streams. for that production scenario",
+      "A singleton bean always stores its fields in native memory instead of heap memory. for that production scenario"
+    ],
+    "correct_answer": "The singleton is retaining objects that should have become unreachable, so the heap keeps growing between runs.",
+    "topic": "JVM Memory and GC",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "gc",
+      "heap",
+      "memory-leak"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-098",
+    "question": "Which review recommendation is best when a batch service stores every processed payload in a singleton cache for convenience?",
+    "options": [
+      "Retain only bounded summaries or identifiers and let the heavy payloads fall out of scope once processing finishes.",
+      "Mark the cache final so the GC can compact it more aggressively. for that production scenario for that production scenario",
+      "Replace the List with a LinkedList so heap growth stops after the first expansion. for that production scenario",
+      "Call System.gc() at the end of each batch to guarantee reclamation. for that production scenario"
+    ],
+    "correct_answer": "Retain only bounded summaries or identifiers and let the heavy payloads fall out of scope once processing finishes.",
+    "topic": "JVM Memory and GC",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "design",
+      "gc",
+      "heap"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-099",
+    "question": "A fixed thread pool accepts blocking tasks faster than they complete, and queue length keeps growing during incidents. What production issue is emerging?",
+    "options": [
+      "The executor has no effective backpressure, so latency and memory usage rise as work piles up.",
+      "A fixed pool automatically scales once the queue crosses the CPU-count threshold.",
+      "Blocking tasks are harmless in fixed pools because each worker owns its own queue.",
+      "Queue growth matters only for scheduled executors, not standard thread pools. for that production scenario"
+    ],
+    "correct_answer": "The executor has no effective backpressure, so latency and memory usage rise as work piles up.",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "backpressure",
+      "executors",
+      "queues"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-shared-senior-l2-100",
+    "question": "Which executor design is safer when tasks may block on remote dependencies for unpredictable durations?",
+    "options": [
+      "Use bounded queues, explicit rejection or throttling, and metrics so the service applies backpressure before saturation.",
+      "Use an unbounded queue because it prevents task rejection and therefore guarantees stability. for that production scenario",
+      "Use a single-thread executor so requests line up fairly and never overload the dependency. for that production scenario",
+      "Move blocking work into synchronized blocks so workers do not compete for CPU. for that production scenario"
+    ],
+    "correct_answer": "Use bounded queues, explicit rejection or throttling, and metrics so the service applies backpressure before saturation.",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "backpressure",
+      "capacity-planning",
+      "executors"
+    ],
+    "role_target": "java_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  }
+]
