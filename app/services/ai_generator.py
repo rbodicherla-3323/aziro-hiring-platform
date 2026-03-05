@@ -14,6 +14,13 @@ AI_CLIENT = None
 log = logging.getLogger(__name__)
 
 
+def _round_sort_key(round_key: str) -> tuple[int, str]:
+    value = str(round_key or "").upper()
+    if value.startswith("L") and value[1:].isdigit():
+        return int(value[1:]), value
+    return 999, value
+
+
 class _GeminiRestResponse:
     def __init__(self, text: str):
         self.text = text or ""
@@ -277,8 +284,7 @@ def _build_fallback_summary(candidate_data):
         "",
         "**Round-wise Detailed Insights:**",
     ]
-    ordered_rounds = ["L1", "L2", "L3", "L4", "L5"]
-    for rk in ordered_rounds:
+    for rk in sorted(rounds.keys(), key=_round_sort_key):
         rv = rounds.get(rk)
         if not rv:
             continue
@@ -401,10 +407,11 @@ def generate_evaluation_summary(candidate_data):
     1) Intro paragraph with candidate name and role.
     2) One concise paragraph with overall performance snapshot (no heading for this paragraph).
     3) Section heading: "Round-wise Detailed Insights"
-    4) Bullet points for every available round (L1 to L5), each bullet must include:
+    4) Bullet points for every available round present in candidate_data["rounds"] in the exact given order/labels, each bullet must include:
        - One short narrative insight sentence about performance in that round.
 
     Constraints:
+    - Use round labels exactly as provided; do not rename any round.
     - Do not provide verdicts or pass/fail labels in the bullet points; keep bullets narrative and factual.
     - Do not mention AI-generated content.
     - Do not include submitted code or submitted responses in this overall summary.
