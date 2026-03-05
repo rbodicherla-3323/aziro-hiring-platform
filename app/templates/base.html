@@ -321,7 +321,11 @@ function showToast(message, type = 'success') {
             }
 
             writeFieldValue(field, entry.value);
-            field.dispatchEvent(new Event("change", { bubbles: true }));
+            // Prevent synthetic restore events from triggering submit/navigation loops.
+            // Pages that truly need restore-time change handlers can opt in explicitly.
+            if (field.hasAttribute("data-persist-trigger-change")) {
+                field.dispatchEvent(new Event("change", { bubbles: true }));
+            }
         });
     }
 
