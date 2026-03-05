@@ -108,8 +108,9 @@ def microsoft_login():
 
 
 @auth_bp.route("/auth/callback")
+@auth_bp.route("/login/azure/callback")
 def auth_callback():
-    """Handle Microsoft OAuth2 callback."""
+    """Handle Microsoft OAuth2 callback (supports legacy and Azure-style paths)."""
     code = request.args.get("code")
     if not code:
         flash("Authentication failed — no authorization code received.", "danger")
