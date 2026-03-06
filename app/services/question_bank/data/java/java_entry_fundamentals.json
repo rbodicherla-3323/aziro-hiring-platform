@@ -1,0 +1,2323 @@
+[
+  {
+    "id": "java-entry-l3-001",
+    "question": "During a QA test of checked exception handling, what is required?\n\nFileInputStream fis = new FileInputStream(\"file.txt\");  // FileNotFoundException is checked",
+    "options": [
+      "Automatically handled",
+      "Compilation error not needed",
+      "Optional to handle for that production scenario",
+      "Must handle with try-catch or throws"
+    ],
+    "correct_answer": "Must handle with try-catch or throws",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-002",
+    "question": "During a QA test of deadlock scenario, what happens?\n\n// Thread 1: Lock A -> Lock B\n// Thread 2: Lock B -> Lock A",
+    "options": [
+      "Deadlock occurs, threads wait indefinitely",
+      "One thread is killed",
+      "Exception is thrown for that production scenario",
+      "Both threads execute normally"
+    ],
+    "correct_answer": "Deadlock occurs, threads wait indefinitely",
+    "topic": "Concurrency Basics",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-003",
+    "question": "In a QA test of Future interface, what does it represent?\n\nExecutorService executor = Executors.newSingleThreadExecutor();\nFuture<Integer> future = executor.submit(() -> 42);",
+    "options": [
+      "Thread object for that production scenario",
+      "Placeholder for result that may not yet be available",
+      "Result of immediate computation",
+      "Current execution state for that production scenario"
+    ],
+    "correct_answer": "Placeholder for result that may not yet be available",
+    "topic": "Executor Patterns",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "executors",
+      "future",
+      "threads"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-004",
+    "question": "During a QA test of ExecutorService, what is its advantage?\n\nExecutorService executor = Executors.newFixedThreadPool(5);\nexecutor.execute(() -> System.out.println(\"Task\"));",
+    "options": [
+      "Prevents multithreading for that production scenario",
+      "Slower than manual threading",
+      "Cannot execute Runnable",
+      "Manages thread pool efficiently"
+    ],
+    "correct_answer": "Manages thread pool efficiently",
+    "topic": "Executor Patterns",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "executors",
+      "threads"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-005",
+    "question": "During a QA test of multiple catch blocks, which executes?\n\ntry {\n  Object obj = \"string\";\n  int num = (Integer) obj;  // ClassCastException\n} catch(NumberFormatException e) {\n  System.out.println(\"NumberFormat\");\n} catch(ClassCastException e) {\n  System.out.println(\"ClassCast\");\n}",
+    "options": [
+      "Both",
+      "NumberFormat",
+      "Neither",
+      "ClassCast"
+    ],
+    "correct_answer": "ClassCast",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-006",
+    "question": "A QA test uses suppressed exceptions (Java 7 feature). What is the purpose?\n\ntry(BufferedReader reader = new BufferedReader(new FileReader(\"file.txt\"))) {\n  // code\n} catch(IOException e) {\n  e.printStackTrace();\n  // Suppressed exceptions can be accessed\n}",
+    "options": [
+      "Requires manual tracking",
+      "Prevents resource leak for that production scenario",
+      "Hides exceptions for that production scenario",
+      "Tracks exceptions suppressed when closing resources"
+    ],
+    "correct_answer": "Tracks exceptions suppressed when closing resources",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-007",
+    "question": "During a QA test of custom exceptions, what is valid?\n\nclass ValidationException extends Exception {\n  public ValidationException(String message) {\n    super(message);\n  }\n}\n\nthrow new ValidationException(\"Invalid input\");",
+    "options": [
+      "Requires catch block",
+      "Invalid syntax",
+      "Cannot extend Exception",
+      "Valid custom exception"
+    ],
+    "correct_answer": "Valid custom exception",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-008",
+    "question": "A QA test checks try-with-resources. What is the advantage?\n\ntry(BufferedReader reader = new BufferedReader(new FileReader(\"file.txt\"))) {\n  // read file\n} catch(IOException e) {\n  e.printStackTrace();\n}",
+    "options": [
+      "Requires less memory",
+      "No difference from regular try-catch",
+      "Automatically closes resources",
+      "Prevents exceptions"
+    ],
+    "correct_answer": "Automatically closes resources",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-009",
+    "question": "During a QA test of try-catch, what is the behavior?\n\ntry {\n  int result = 10 / 0;\n  System.out.println(\"After division\");\n} catch(ArithmeticException e) {\n  System.out.println(\"Caught\");\n}",
+    "options": [
+      "Prints: Caught",
+      "No output",
+      "Prints: After division",
+      "Throws exception"
+    ],
+    "correct_answer": "Prints: Caught",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-010",
+    "question": "During a QA test of throws keyword, what is its purpose?\n\npublic void method() throws IOException {\n  // Can throw IOException\n}",
+    "options": [
+      "Prevents exception",
+      "Handles exception for that production scenario",
+      "Declares that method can throw exception",
+      "Catches exception"
+    ],
+    "correct_answer": "Declares that method can throw exception",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-011",
+    "question": "In a QA test of ArrayIndexOutOfBoundsException, what triggers it?\n\nint[] arr = {1, 2, 3};\nint value = arr[5];  // What happens?",
+    "options": [
+      "Returns 0 for that production scenario",
+      "Throws ArrayIndexOutOfBoundsException",
+      "Returns null",
+      "Returns -1"
+    ],
+    "correct_answer": "Throws ArrayIndexOutOfBoundsException",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-012",
+    "question": "A QA test checks ClassCastException. When is it thrown?\n\nObject obj = \"string\";\nInteger num = (Integer) obj;  // What happens?",
+    "options": [
+      "Compiles and executes",
+      "Returns null for that production scenario",
+      "Throws ClassCastException at runtime",
+      "Compilation error"
+    ],
+    "correct_answer": "Throws ClassCastException at runtime",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-013",
+    "question": "A QA test examines NullPointerException. When is it thrown?\n\nString str = null;\nint length = str.length();  // What happens?",
+    "options": [
+      "Returns 0 for that production scenario",
+      "Returns -1",
+      "Returns null",
+      "Throws NullPointerException"
+    ],
+    "correct_answer": "Throws NullPointerException",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-014",
+    "question": "A QA test examines exception hierarchy. What is the relationship?\n\nclass CustomException extends Exception { }",
+    "options": [
+      "CustomException is Error",
+      "CustomException is unchecked exception",
+      "No inheritance relationship",
+      "CustomException is checked exception"
+    ],
+    "correct_answer": "CustomException is checked exception",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-015",
+    "question": "A QA test examines RuntimeException. What type is it?\n\nclass CustomRuntime extends RuntimeException { }",
+    "options": [
+      "Unchecked exception",
+      "Interface",
+      "Error for that production scenario",
+      "Checked exception"
+    ],
+    "correct_answer": "Unchecked exception",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-016",
+    "question": "In a QA test of Exception vs Error, what is the difference?\n\nclass OutOfMemoryError extends Error { }",
+    "options": [
+      "Error is for system-level issues, recoverable exceptions are Exception",
+      "Error is for simple mistakes for that production scenario",
+      "No difference in behavior for that production scenario",
+      "Both are same for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Error is for system-level issues, recoverable exceptions are Exception",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-017",
+    "question": "A QA test uses Reflection API to access private field. What is the approach?\n\nclass MyClass { private int value = 10; }\nMyClass obj = new MyClass();\nField field = MyClass.class.getDeclaredField(\"value\");\nfield.setAccessible(true);\nint value = field.getInt(obj);",
+    "options": [
+      "Compilation error for that production scenario",
+      "Invalid, cannot access private",
+      "Runtime exception",
+      "Valid, Reflection allows private access"
+    ],
+    "correct_answer": "Valid, Reflection allows private access",
+    "topic": "Test Utility Design",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-018",
+    "question": "During a QA test of Stream intermediate operations, what is returned?\n\nStream<Integer> stream = Arrays.asList(1, 2, 3).stream();\nStream<Integer> filtered = stream.filter(n -> n > 1);\n// filtered is a what?",
+    "options": [
+      "Stream",
+      "Iterator",
+      "Integer",
+      "List"
+    ],
+    "correct_answer": "Stream",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-019",
+    "question": "In a QA test of Stream.map(), what is the operation?\n\nList<Integer> numbers = Arrays.asList(1, 2, 3);\nList<Integer> doubled = numbers.stream()\n  .map(n -> n * 2)\n  .collect(Collectors.toList());",
+    "options": [
+      "Finds maximum for that production scenario",
+      "Counts elements",
+      "Filters the stream",
+      "Transforms each element"
+    ],
+    "correct_answer": "Transforms each element",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-020",
+    "question": "In a QA test of Thread creation, which approach is correct?\n\nclass MyThread extends Thread {\n  public void run() { System.out.println(\"Thread\"); }\n}\n\nMyThread t = new MyThread();\nt.start();",
+    "options": [
+      "Cannot call start() on custom Thread",
+      "Incorrect, must use ExecutorService",
+      "Incorrect, must use Runnable for that production scenario",
+      "Correct, thread executes in that implementation"
+    ],
+    "correct_answer": "Correct, thread executes in that implementation",
+    "topic": "Concurrency Basics",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-021",
+    "question": "A QA test examines InputStream and OutputStream behavior. What is the correct usage?\n\nFileOutputStream fos = new FileOutputStream(\"output.txt\");\nfos.write(\"Hello\".getBytes());\nfos.close();",
+    "options": [
+      "Compilation error",
+      "Requires flush() call",
+      "Valid, writes bytes to file",
+      "Invalid, must use BufferedOutputStream"
+    ],
+    "correct_answer": "Valid, writes bytes to file",
+    "topic": "NIO and Files",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-022",
+    "question": "In a QA test of ReentrantLock, what is the advantage over synchronized?\n\nReentrantLock lock = new ReentrantLock();\nlock.lock();\ntry {\n  // Critical section\n} finally {\n  lock.unlock();\n}",
+    "options": [
+      "Automatic unlocking",
+      "No advantage for that production scenario",
+      "Provides more control and flexibility",
+      "Prevents deadlock"
+    ],
+    "correct_answer": "Provides more control and flexibility",
+    "topic": "Concurrency Basics",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-023",
+    "question": "A QA test examines WeakReference behavior. When is it garbage collected?\n\nWeakReference<String> weakRef = new WeakReference<>(new String(\"value\"));\n// When can weakRef be collected?",
+    "options": [
+      "When no strong references exist",
+      "Never until explicitly cleared",
+      "When program ends for that production scenario",
+      "On next GC if needed"
+    ],
+    "correct_answer": "When no strong references exist",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-024",
+    "question": "A QA test uses Runnable interface. What is the benefit over Thread class?\n\nclass MyRunnable implements Runnable {\n  public void run() { }\n}\nThread t = new Thread(new MyRunnable());",
+    "options": [
+      "Simpler implementation",
+      "No benefit for that production scenario",
+      "Faster execution",
+      "Allows multiple inheritance in Java"
+    ],
+    "correct_answer": "Allows multiple inheritance in Java",
+    "topic": "Concurrency Basics",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-025",
+    "question": "A QA test examines ConcurrentHashMap behavior in multi-threaded scenarios. What is an advantage over HashMap?\n\nConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();",
+    "options": [
+      "Segment-based locking for better concurrency",
+      "Faster single-threaded access",
+      "Thread-safe without any locking",
+      "Automatic sorting for that production scenario"
+    ],
+    "correct_answer": "Segment-based locking for better concurrency",
+    "topic": "Collections Contracts",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "hashmap",
+      "threads"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-026",
+    "question": "In a QA test of Stream.sorted(), what is the default behavior?\n\nList<Integer> numbers = Arrays.asList(3, 1, 4, 1, 5);\nnumbers.stream()\n  .sorted()\n  .forEach(System.out::print);",
+    "options": [
+      "11345",
+      "34115",
+      "54311",
+      "Random order"
+    ],
+    "correct_answer": "11345",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-027",
+    "question": "During a QA test of CopyOnWriteArrayList, when is copying done?\n\nCopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();\nlist.add(\"item\");  // When does copy happen?",
+    "options": [
+      "On read operations",
+      "Never for that production scenario",
+      "On iteration",
+      "On write operations"
+    ],
+    "correct_answer": "On write operations",
+    "topic": "Concurrency Basics",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-028",
+    "question": "A QA test checks Stream terminal operations. What is the difference?\n\nList<Integer> list = Arrays.asList(1, 2, 3);\nlong count = list.stream().filter(n -> n > 1).count();",
+    "options": [
+      "count is an intermediate operation",
+      "count modifies the original list",
+      "count returns a Stream for that production scenario",
+      "count is a terminal operation that returns a value"
+    ],
+    "correct_answer": "count is a terminal operation that returns a value",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-029",
+    "question": "A QA test uses Method.invoke() for reflection. What is the syntax?\n\nMethod method = MyClass.class.getMethod(\"myMethod\");\nObject result = method.invoke(obj, args);",
+    "options": [
+      "Must be static method",
+      "Incorrect syntax for that production scenario",
+      "Valid, invokes method dynamically",
+      "Cannot pass arguments"
+    ],
+    "correct_answer": "Valid, invokes method dynamically",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-030",
+    "question": "During a QA test of Stack memory, what is stored?\n\nint x = 10;  // Where is x stored?\nString str = new String(\"value\");  // Where is reference stored?",
+    "options": [
+      "Both in Stack",
+      "int in Stack, reference in Stack",
+      "int in Method Area, reference in Heap",
+      "Both in Heap"
+    ],
+    "correct_answer": "int in Stack, reference in Stack",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-031",
+    "question": "A QA test uses CountDownLatch for synchronization. What is its purpose?\n\nCountDownLatch latch = new CountDownLatch(3);\n// Multiple threads countdown",
+    "options": [
+      "Prevents thread creation for that production scenario",
+      "Starts threads for that production scenario",
+      "Counts up to limit for that production scenario",
+      "Allows threads to wait until countdown reaches zero"
+    ],
+    "correct_answer": "Allows threads to wait until countdown reaches zero",
+    "topic": "Concurrency Basics",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-032",
+    "question": "During a QA test of memory leak in Java, what causes it?\n\nList<String> list = new ArrayList<>();\nwhile(true) {\n  list.add(new String(\"item\"));\n}",
+    "options": [
+      "Memory leak due to unbounded list growth",
+      "No memory leak, GC handles it",
+      "GC automatically prevents it",
+      "Impossible in Java for that production scenario"
+    ],
+    "correct_answer": "Memory leak due to unbounded list growth",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-033",
+    "question": "During a QA test of Java module system (Java 9+), what is a module?\n\nmodule com.example {\n  requires java.base;\n  exports com.example.api;\n}",
+    "options": [
+      "Deprecated feature for that production scenario",
+      "Required only for large projects for that production scenario",
+      "Same as package for that production scenario",
+      "A named collection of packages with access control"
+    ],
+    "correct_answer": "A named collection of packages with access control",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-034",
+    "question": "A QA test compares java.io vs java.nio. What is the key difference?\n\n// java.io - Stream-based\n// java.nio - Channel and Buffer-based",
+    "options": [
+      "NIO provides better performance for large files",
+      "No difference for that production scenario",
+      "IO is faster for that production scenario",
+      "NIO doesn't support files for that production scenario"
+    ],
+    "correct_answer": "NIO provides better performance for large files",
+    "topic": "NIO and Files",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-035",
+    "question": "A QA test checks garbage collection. When is an object eligible for GC?\n\nObject obj = new Object();\nobj = null;  // Eligible for GC?",
+    "options": [
+      "When program ends",
+      "When no references exist",
+      "Never for that production scenario",
+      "When explicitly deleted"
+    ],
+    "correct_answer": "When no references exist",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "gc"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-036",
+    "question": "A QA test examines Thread states. What are the main states?\n\nThread t = new Thread(() -> { });\n// Different states during execution",
+    "options": [
+      "New, Runnable, Running, Blocked, Terminated",
+      "Active and Inactive",
+      "Running and Waiting",
+      "Start and Stop for that production scenario"
+    ],
+    "correct_answer": "New, Runnable, Running, Blocked, Terminated",
+    "topic": "Concurrency Basics",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-037",
+    "question": "During a QA test of synchronized keyword, what does it do?\n\nsynchronized void criticalSection() {\n  // Only one thread at a time\n}",
+    "options": [
+      "Provides mutual exclusion for shared resources",
+      "Speeds up execution",
+      "Prevents exceptions",
+      "Stops all threads for that production scenario"
+    ],
+    "correct_answer": "Provides mutual exclusion for shared resources",
+    "topic": "Concurrency Basics",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-038",
+    "question": "A QA test examines JVM memory areas. What is stored in Heap?\n\nString str = new String(\"Hello\");  // Where is the object stored?",
+    "options": [
+      "Native Method Stack",
+      "Heap in that implementation",
+      "Stack for that production scenario",
+      "Method Area"
+    ],
+    "correct_answer": "Heap in that implementation",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "heap"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-039",
+    "question": "A QA test uses Stream.reduce(). What does it do?\n\nint sum = Arrays.asList(1, 2, 3, 4).stream()\n  .reduce(0, (a, b) -> a + b);",
+    "options": [
+      "Combines all elements into single value",
+      "Removes duplicates",
+      "Filters elements",
+      "Sorts elements for that production scenario"
+    ],
+    "correct_answer": "Combines all elements into single value",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-040",
+    "question": "A QA test checks volatile keyword behavior. What is its purpose?\n\nvolatile int flag = 0;  // Shared between threads",
+    "options": [
+      "Ensures visibility of changes across threads",
+      "Speeds up access for that production scenario",
+      "Prevents modifications",
+      "Synchronizes access"
+    ],
+    "correct_answer": "Ensures visibility of changes across threads",
+    "topic": "Concurrency Basics",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-041",
+    "question": "A QA test uses Callable vs Runnable. What is the difference?\n\nCallable<Integer> task = () -> 42;  // Returns value",
+    "options": [
+      "Callable is deprecated",
+      "Runnable returns value",
+      "Callable returns value, Runnable doesn't",
+      "No difference for that production scenario"
+    ],
+    "correct_answer": "Callable returns value, Runnable doesn't",
+    "topic": "Concurrency Basics",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-042",
+    "question": "During a QA test of getDeclaredFields(), what is returned?\n\nField[] fields = MyClass.class.getDeclaredFields();",
+    "options": [
+      "No fields for that production scenario",
+      "All fields including private",
+      "Only public fields",
+      "Only inherited fields"
+    ],
+    "correct_answer": "All fields including private",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-043",
+    "question": "During a QA test of ClassLoader, what are the types?\n\nClassLoader loader = String.class.getClassLoader();",
+    "options": [
+      "No types for that production scenario",
+      "One type of ClassLoader for that production scenario",
+      "Bootstrap, Extension, Application ClassLoaders",
+      "Only Application ClassLoader"
+    ],
+    "correct_answer": "Bootstrap, Extension, Application ClassLoaders",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-044",
+    "question": "During a QA test of Class.forName(), what happens?\n\nClass<?> clazz = Class.forName(\"java.lang.String\");",
+    "options": [
+      "Creates String instance",
+      "Loads the class dynamically",
+      "Throws ClassNotFoundException if not found",
+      "Returns class object"
+    ],
+    "correct_answer": "Loads the class dynamically",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-045",
+    "question": "A QA test checks Thread.sleep(). What does it do?\n\nThread.sleep(1000);  // Sleeps for 1 second",
+    "options": [
+      "Pauses the thread",
+      "Throws InterruptedException only if interrupted",
+      "Resumes the thread",
+      "Kills the thread"
+    ],
+    "correct_answer": "Pauses the thread",
+    "topic": "Concurrency Basics",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-046",
+    "question": "In a QA test of custom annotation with retention, what is the default?\n\n@Retention(RetentionPolicy.RUNTIME)\npublic @interface MyAnnotation { }",
+    "options": [
+      "Available in source code only",
+      "Not available at runtime for that production scenario",
+      "Available at runtime via Reflection",
+      "Available only at compile time"
+    ],
+    "correct_answer": "Available at runtime via Reflection",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-047",
+    "question": "A QA test checks exception chaining. What is the output?\n\ntry {\n  throw new IOException(\"Original\");\n} catch(IOException e) {\n  throw new RuntimeException(\"Wrapped\", e);\n}",
+    "options": [
+      "Prints IOException message for that production scenario",
+      "Compilation error for that production scenario",
+      "Throws RuntimeException with IOException as cause",
+      "No exception thrown for that production scenario"
+    ],
+    "correct_answer": "Throws RuntimeException with IOException as cause",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-048",
+    "question": "In a QA test of Iterator, what is the correct way to remove elements?\n\nList<String> list = new ArrayList<>(Arrays.asList(\"a\", \"b\", \"c\"));\nIterator<String> iter = list.iterator();\nwhile(iter.hasNext()) {\n  String item = iter.next();\n  if(item.equals(\"b\")) iter.remove();  // Using iterator's remove\n}",
+    "options": [
+      "Skips the element",
+      "Throws exception for that production scenario",
+      "Compilation error",
+      "Removes b successfully"
+    ],
+    "correct_answer": "Removes b successfully",
+    "topic": "Collections Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "equals-hashcode"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-049",
+    "question": "During a QA test of Collectors.groupingBy(), what is the output?\n\nList<String> items = Arrays.asList(\"apple\", \"apricot\", \"banana\");\nMap<Character, Long> grouped = items.stream()\n  .collect(Collectors.groupingBy(s -> s.charAt(0), Collectors.counting()));\n\nSystem.out.println(grouped.get('a'));",
+    "options": [
+      "1",
+      "2",
+      "null",
+      "3"
+    ],
+    "correct_answer": "2",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-050",
+    "question": "In a QA test of Comparator, what is the difference from Comparable?\n\nComparator<String> comp = (s1, s2) -> s2.compareTo(s1);  // Reverse order\nList<String> list = Arrays.asList(\"c\", \"a\", \"b\");\nCollections.sort(list, comp);\nfor(String s : list) System.out.print(s + \" \");",
+    "options": [
+      "a b c",
+      "No output",
+      "c b a",
+      "Compilation error"
+    ],
+    "correct_answer": "c b a",
+    "topic": "Collections Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-051",
+    "question": "A QA test checks method overloading behavior. Which method will be called?\n\nclass Calculator {\n  void add(int a, int b) { System.out.print(\"Int \"); }\n  void add(double a, double b) { System.out.print(\"Double \"); }\n}\n\nCalculator c = new Calculator();\nc.add(5, 10);",
+    "options": [
+      "Int in that implementation",
+      "Both Int and Double",
+      "Compilation error",
+      "Double for that production scenario"
+    ],
+    "correct_answer": "Int in that implementation",
+    "topic": "Test Utility Design",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-052",
+    "question": "In a QA test of Collections.unmodifiableList, what happens?\n\nList<String> originalList = new ArrayList<>();\noriginalList.add(\"item1\");\nList<String> unmodifiableList = Collections.unmodifiableList(originalList);\nunmodifiableList.add(\"item2\");  // What happens?",
+    "options": [
+      "Silently ignores",
+      "Throws UnsupportedOperationException",
+      "Adds successfully",
+      "Returns false for that production scenario"
+    ],
+    "correct_answer": "Throws UnsupportedOperationException",
+    "topic": "Collections Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-053",
+    "question": "A QA test examines LinkedHashMap behavior. What is the order of iteration?\n\nLinkedHashMap<String, Integer> map = new LinkedHashMap<>();\nmap.put(\"c\", 3);\nmap.put(\"a\", 1);\nmap.put(\"b\", 2);\nfor(String key : map.keySet()) System.out.print(key + \" \");",
+    "options": [
+      "c a b",
+      "Random order",
+      "a b c",
+      "1 2 3"
+    ],
+    "correct_answer": "c a b",
+    "topic": "Collections Contracts",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "hashmap"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-054",
+    "question": "A QA test checks the behavior of remove() in iteration. What happens?\n\nList<String> list = new ArrayList<>(Arrays.asList(\"a\", \"b\", \"c\"));\nfor(String item : list) {\n  if(item.equals(\"b\")) list.remove(item);  // Modifying during iteration\n}",
+    "options": [
+      "Throws ConcurrentModificationException",
+      "Removes successfully",
+      "Compilation error for that production scenario",
+      "Silently skips the item"
+    ],
+    "correct_answer": "Throws ConcurrentModificationException",
+    "topic": "Collections Contracts",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "equals-hashcode"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-055",
+    "question": "In a QA test of LinkedList operations, what is the time complexity of removing an element from the middle?\n\nLinkedList<String> list = new LinkedList<>();\n// After adding elements\nlist.remove(500);  // Remove element at index 500",
+    "options": [
+      "O(1)",
+      "O(n)",
+      "O(log n)",
+      "O(n log n)"
+    ],
+    "correct_answer": "O(n)",
+    "topic": "Collections Contracts",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-056",
+    "question": "A QA test examines access modifiers. What will compile successfully?\n\nclass Outer { private int x = 10; }\nclass Test { \n  public static void main(String[] args) {\n    System.out.println(new Outer().x);  // Will this work?\n  }\n}",
+    "options": [
+      "x is automatically public",
+      "Runtime exception for that production scenario",
+      "Compilation error: x has private access",
+      "Compiles and prints 10"
+    ],
+    "correct_answer": "Compilation error: x has private access",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-057",
+    "question": "During a QA test, HashMap collision handling is examined. What happens in case of hash collision?\n\nHashMap<String, String> map = new HashMap<>();\nmap.put(\"key1\", \"value1\");\nmap.put(\"key2\", \"value2\");  // Assuming hash collision",
+    "options": [
+      "Throws exception for that production scenario",
+      "Second entry is ignored",
+      "Both entries are stored separately",
+      "Overrides first entry"
+    ],
+    "correct_answer": "Both entries are stored separately",
+    "topic": "Collections Contracts",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "hashmap"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-058",
+    "question": "In a QA test of constructor behavior, what is the execution order?\n\nclass Parent {\n  Parent() { System.out.print(\"P \"); }\n}\n\nclass Child extends Parent {\n  Child() {\n    super();\n    System.out.print(\"C\");\n  }\n}\n\nnew Child();",
+    "options": [
+      "C P",
+      "C",
+      "P",
+      "P C"
+    ],
+    "correct_answer": "P C",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-059",
+    "question": "In a performance test, a QA engineer compares String concatenation methods. Which approach is most efficient in a loop?\n\n// Using String concatenation\nString result = \"\";\nfor(int i = 0; i < 1000; i++) {\n  result += \"x\";\n}",
+    "options": [
+      "Most efficient due to compiler optimization for that production scenario",
+      "Creates 1000 String objects for that production scenario",
+      "Uses StringBuilder internally in modern Java",
+      "Least efficient as it creates many intermediate String objects"
+    ],
+    "correct_answer": "Least efficient as it creates many intermediate String objects",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-060",
+    "question": "In a test of multiple inheritance via interfaces, what happens?\n\ninterface A { void test(); }\ninterface B { void test(); }\n\nclass C implements A, B {\n  public void test() { System.out.println(\"Test\"); }\n}\n\nnew C().test();",
+    "options": [
+      "Ambiguity runtime error",
+      "Only A's test is called",
+      "Compilation error due to diamond problem",
+      "Prints: Test in that implementation"
+    ],
+    "correct_answer": "Prints: Test in that implementation",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-061",
+    "question": "During a QA test of TreeMap, what is the sorting behavior?\n\nTreeMap<String, Integer> map = new TreeMap<>();\nmap.put(\"c\", 3);\nmap.put(\"a\", 1);\nmap.put(\"b\", 2);\nfor(String key : map.keySet()) System.out.print(key + \" \");",
+    "options": [
+      "Random order",
+      "c a b",
+      "3 1 2",
+      "a b c"
+    ],
+    "correct_answer": "a b c",
+    "topic": "Collections Contracts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-062",
+    "question": "During a QA test of PriorityQueue, what is the behavior?\n\nPriorityQueue<Integer> queue = new PriorityQueue<>();\nqueue.add(5);\nqueue.add(2);\nqueue.add(8);\nwhile(!queue.isEmpty()) System.out.print(queue.poll() + \" \");",
+    "options": [
+      "8 5 2",
+      "2 5 8",
+      "Random order",
+      "5 2 8"
+    ],
+    "correct_answer": "2 5 8",
+    "topic": "Collections Contracts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-063",
+    "question": "A QA test checks Comparable interface usage. What is the purpose?\n\nclass Student implements Comparable<Student> {\n  int marks;\n  public int compareTo(Student other) {\n    return this.marks - other.marks;\n  }\n}",
+    "options": [
+      "Enables comparison with equals()",
+      "Enables custom sorting",
+      "Enables cloning",
+      "Enables serialization"
+    ],
+    "correct_answer": "Enables custom sorting",
+    "topic": "Collections Contracts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-064",
+    "question": "During a QA test of CopyOnWriteArrayList, when does the copy happen?\n\nCopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();\nlist.add(\"item1\");\nlist.add(\"item2\");  // When is copying triggered?",
+    "options": [
+      "Never for that production scenario",
+      "During write operations",
+      "During iteration",
+      "During read operations"
+    ],
+    "correct_answer": "During write operations",
+    "topic": "Collections Contracts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-065",
+    "question": "A QA test compares ArrayList and LinkedList performance. Which statement is correct?\n\nArrayList<Integer> list = new ArrayList<>();\nfor(int i = 0; i < 1000; i++) {\n  list.add(i);  // Adding at the end\n}",
+    "options": [
+      "Performance depends on data size",
+      "ArrayList is faster for this operation",
+      "LinkedList is faster for this operation",
+      "Both have same performance"
+    ],
+    "correct_answer": "ArrayList is faster for this operation",
+    "topic": "Collections Contracts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-066",
+    "question": "In a QA test of static methods in interfaces, what is allowed?\n\ninterface MyInterface {\n  static void staticMethod() { System.out.println(\"Static\"); }\n}\n\nMyInterface.staticMethod();  // Is this valid?",
+    "options": [
+      "Compilation error",
+      "Valid, can call static method from interface",
+      "Invalid, interfaces cannot have static methods",
+      "Throws exception"
+    ],
+    "correct_answer": "Valid, can call static method from interface",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-067",
+    "question": "During a QA test of Optional.flatMap(), what is the behavior?\n\nOptional<Optional<String>> nested = Optional.of(Optional.of(\"value\"));\nOptional<String> flattened = nested.flatMap(Function.identity());",
+    "options": [
+      "Returns empty Optional",
+      "Returns the nested Optional as is",
+      "Throws exception",
+      "Flattens nested Optionals"
+    ],
+    "correct_answer": "Flattens nested Optionals",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "optional"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-068",
+    "question": "During a QA test, the String pool behavior is examined. How many String objects are created?\n\nString s1 = \"Hello\";\nString s2 = \"Hello\";\nString s3 = new String(\"Hello\");\nString s4 = \"He\" + \"llo\";",
+    "options": [
+      "1",
+      "2",
+      "4",
+      "3"
+    ],
+    "correct_answer": "2",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-069",
+    "question": "A QA test uses lambda expressions with streams. What is the output?\n\nList<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);\nnumbers.stream()\n  .filter(n -> n > 2)\n  .forEach(System.out::print);",
+    "options": [
+      "Compilation error",
+      "345",
+      "234",
+      "12345"
+    ],
+    "correct_answer": "345",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "lambdas",
+      "streams"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-070",
+    "question": "A QA test examines method overriding rules. Which statement is correct?\n\nclass Parent {\n  public void test() { }\n}\n\nclass Child extends Parent {\n  private void test() { }  // Is this valid?\n}",
+    "options": [
+      "Invalid, access modifier cannot be more restrictive in child class",
+      "Throws runtime exception for that production scenario",
+      "Valid, method overriding allows access modifier reduction",
+      "Valid, method is overloaded not overridden for that production scenario"
+    ],
+    "correct_answer": "Invalid, access modifier cannot be more restrictive in child class",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-071",
+    "question": "In a QA test of encapsulation, what is the proper pattern?\n\nprivate int age;\n\npublic void setAge(int age) {\n  if(age > 0 && age < 120) this.age = age;\n}\n\npublic int getAge() { return age; }",
+    "options": [
+      "Proper encapsulation with validation",
+      "Not related to encapsulation",
+      "Violates encapsulation by using private",
+      "Violates encapsulation by having public methods"
+    ],
+    "correct_answer": "Proper encapsulation with validation",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-072",
+    "question": "A QA test involves string immutability. What is the length of str after these operations?\n\nString str = \"Hello\";\nstr.concat(\" World\");\nstr = str + \"!\";\nSystem.out.println(str.length());",
+    "options": [
+      "6",
+      "12",
+      "5",
+      "11"
+    ],
+    "correct_answer": "6",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-073",
+    "question": "A QA engineer is testing an application where narrowing conversion is required. Which casting approach will compile successfully?\n\nlong value = 1000000L;\nint result = (int) value;",
+    "options": [
+      "Compiles but result becomes negative",
+      "Compiles and executes successfully",
+      "Will not compile due to narrowing",
+      "Compiles but throws runtime exception"
+    ],
+    "correct_answer": "Compiles and executes successfully",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-074",
+    "question": "A QA test checks Supplier functional interface. What does it return?\n\nSupplier<Integer> randomSupplier = () -> new Random().nextInt(100);\nInteger value = randomSupplier.get();",
+    "options": [
+      "Returns value without taking parameter",
+      "Modifies existing value",
+      "Throws exception for that production scenario",
+      "Takes parameter and returns value"
+    ],
+    "correct_answer": "Returns value without taking parameter",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-075",
+    "question": "During a QA test of bounded type parameters, what is allowed?\n\nclass Box<T extends Number> {\n  void process(T value) { }\n}\nBox<String> box = new Box<>();  // Is this valid?",
+    "options": [
+      "Invalid, String doesn't extend Number",
+      "Runtime exception for that production scenario",
+      "Valid for that production scenario",
+      "Compilation error"
+    ],
+    "correct_answer": "Invalid, String doesn't extend Number",
+    "topic": "Generics and Type Safety",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-076",
+    "question": "A QA test examines the internal structure of HashMap. How many buckets are created initially?\n\nHashMap<String, Integer> map = new HashMap<>();\n// Default initial capacity?",
+    "options": [
+      "64",
+      "16",
+      "32",
+      "8"
+    ],
+    "correct_answer": "16",
+    "topic": "Collections Contracts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "hashmap"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-077",
+    "question": "A QA test examines Generics type safety. What happens?\n\nList<String> strings = new ArrayList<>();\nstrings.add(\"hello\");\nString str = strings.get(0);  // Is this type-safe?",
+    "options": [
+      "Compilation error",
+      "Type-safe, no casting needed",
+      "Requires explicit casting",
+      "No type safety for that production scenario"
+    ],
+    "correct_answer": "Type-safe, no casting needed",
+    "topic": "Generics and Type Safety",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-078",
+    "question": "In a test, a multi-dimensional array is created and accessed. What is the value at arr[1][2]?\n\nint[][] arr = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};\nint value = arr[1][2];",
+    "options": [
+      "6",
+      "5",
+      "2",
+      "8"
+    ],
+    "correct_answer": "6",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-079",
+    "question": "A QA test checks Class hierarchy with Reflection. What is the output?\n\nClass<?> superClass = String.class.getSuperclass();\nSystem.out.println(superClass.getName());",
+    "options": [
+      "Comparable",
+      "String",
+      "Object",
+      "Serializable"
+    ],
+    "correct_answer": "Object",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-080",
+    "question": "During a QA test of HashSet null handling, what is allowed?\n\nHashSet<String> set = new HashSet<>();\nset.add(null);\nset.add(\"item\");\nSystem.out.println(set.size());",
+    "options": [
+      "1",
+      "2",
+      "0",
+      "Throws exception"
+    ],
+    "correct_answer": "2",
+    "topic": "Collections Contracts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-081",
+    "question": "During a QA test of method references, which is equivalent?\n\nlist.forEach(System.out::println);\n// is equivalent to\nlist.forEach(item -> System.out.println(item));",
+    "options": [
+      "Not equivalent for that production scenario",
+      "Different behavior",
+      "Equivalent in that implementation",
+      "Method reference doesn't compile"
+    ],
+    "correct_answer": "Equivalent in that implementation",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-082",
+    "question": "A QA test checks default methods in interfaces. What is the advantage?\n\ninterface MyInterface {\n  default void defaultMethod() { System.out.println(\"Default\"); }\n}",
+    "options": [
+      "Must be implemented",
+      "Backwards compatibility",
+      "Interface becomes abstract class",
+      "No advantage"
+    ],
+    "correct_answer": "Backwards compatibility",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-083",
+    "question": "A QA test checks Stream.distinct(). What is the output?\n\nList<Integer> numbers = Arrays.asList(1, 2, 2, 3, 3, 3);\nlong count = numbers.stream().distinct().count();",
+    "options": [
+      "3",
+      "1",
+      "6",
+      "2"
+    ],
+    "correct_answer": "3",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-084",
+    "question": "In a QA test of Optional, what is the purpose?\n\nOptional<String> optional = Optional.of(\"value\");\nif(optional.isPresent()) System.out.println(optional.get());",
+    "options": [
+      "Provides null safety and alternative handling",
+      "Used only for Streams for that production scenario",
+      "Throws exception if empty",
+      "Same as regular if-else"
+    ],
+    "correct_answer": "Provides null safety and alternative handling",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "optional"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-085",
+    "question": "A QA test checks finally block execution. When does finally execute?\n\ntry {\n  return 10;\n} finally {\n  System.out.println(\"Finally\");  // Does this execute?\n}",
+    "options": [
+      "Only if exception occurs",
+      "Depends on catch block",
+      "Never, due to return statement",
+      "Always executes before return"
+    ],
+    "correct_answer": "Always executes before return",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-086",
+    "question": "During a QA test of abstraction, which statement is valid?\n\nclass Test extends AbstractClass { }\n\nabstract class AbstractClass {\n  abstract void test();\n}",
+    "options": [
+      "Valid, abstract methods are implemented by subclass",
+      "Valid, abstract methods are optional for that production scenario",
+      "Invalid, abstract method test() is not implemented in Test class",
+      "Invalid, abstract class cannot be extended"
+    ],
+    "correct_answer": "Invalid, abstract method test() is not implemented in Test class",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-087",
+    "question": "During a QA test of Consumer functional interface, what is the purpose?\n\nConsumer<String> printer = s -> System.out.println(s);\nprinter.accept(\"Hello\");",
+    "options": [
+      "Throws exception for that production scenario",
+      "Returns a value for that production scenario for that production scenario",
+      "Returns boolean for that production scenario",
+      "Accepts input and performs action without returning"
+    ],
+    "correct_answer": "Accepts input and performs action without returning",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-088",
+    "question": "In a QA test of File I/O with java.io, what is the advantage of BufferedReader?\n\nBufferedReader reader = new BufferedReader(new FileReader(\"file.txt\"));",
+    "options": [
+      "Direct file access",
+      "Prevents exceptions",
+      "Less memory usage for that production scenario",
+      "Buffering improves performance"
+    ],
+    "correct_answer": "Buffering improves performance",
+    "topic": "NIO and Files",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-089",
+    "question": "A QA test checks array memory allocation. What will happen?\n\nint[] arr = new int[5];\nfor(int i = 0; i < 5; i++) {\n  System.out.print(arr[i] + \" \");\n}",
+    "options": [
+      "Throws ArrayIndexOutOfBoundsException",
+      "Compilation error",
+      "Prints: 0 0 0 0 0",
+      "Prints 5 uninitialized values"
+    ],
+    "correct_answer": "Prints: 0 0 0 0 0",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-090",
+    "question": "During a QA test of final keyword behavior, which statement is correct?\n\nfinal class Parent { }\nclass Child extends Parent { }  // Is this valid?",
+    "options": [
+      "Invalid, cannot extend a final class",
+      "Throws runtime exception",
+      "Valid, final keyword has no impact on inheritance",
+      "Valid, final is only for methods"
+    ],
+    "correct_answer": "Invalid, cannot extend a final class",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-091",
+    "question": "In a QA test of EnumSet, what is the advantage?\n\nEnumSet<Season> set = EnumSet.allOf(Season.class);\nenum Season { SPRING, SUMMER, FALL, WINTER }",
+    "options": [
+      "More memory efficient than regular Set",
+      "Cannot be used for enums",
+      "No difference in performance",
+      "Slower than regular Set for that production scenario"
+    ],
+    "correct_answer": "More memory efficient than regular Set",
+    "topic": "Collections Contracts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "spring-boot"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-092",
+    "question": "In a QA test of built-in functional interfaces, which is used for transformation?\n\nFunction<Integer, String> transform = n -> \"Number: \" + n;",
+    "options": [
+      "Consumer",
+      "Supplier",
+      "Function",
+      "Predicate"
+    ],
+    "correct_answer": "Function",
+    "topic": "Test Utility Design",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-093",
+    "question": "A cache uses Customer objects as HashMap keys and later updates the email field that equals() and hashCode() depend on. Why do lookups start failing?",
+    "options": [
+      "Changing a field used in equals() and hashCode() after insertion makes the key unstable in the map.",
+      "HashMap disallows mutable values whenever the key type is custom. for that production scenario",
+      "The update turns the entry into a weak reference, so the key disappears. for that production scenario",
+      "The map silently switches to identity comparison after any field mutation."
+    ],
+    "correct_answer": "Changing a field used in equals() and hashCode() after insertion makes the key unstable in the map.",
+    "topic": "Collections Contracts",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "equals-hashcode",
+      "hashmap",
+      "immutability"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-094",
+    "question": "Which fix best addresses a HashMap bug caused by mutable business keys?",
+    "options": [
+      "Use immutable key fields or map by a stable surrogate key instead of mutating the existing key object.",
+      "Switch to TreeMap because it ignores hashCode() once the first insert succeeds.",
+      "Call map.rehash() after every business update so bucket positions refresh. for that production scenario",
+      "Mark the map synchronized so mutated keys become visible again. for that production scenario"
+    ],
+    "correct_answer": "Use immutable key fields or map by a stable surrogate key instead of mutating the existing key object.",
+    "topic": "Collections Contracts",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "design",
+      "hashmap",
+      "immutability"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-095",
+    "question": "A generic helper accepts List items and later inserts a String into a list that the caller passed as List<Integer>. Where is the design fault?",
+    "options": [
+      "Using a raw type bypassed compile-time checks and allowed an invalid element to enter the list.",
+      "Generics are enforced only at runtime, so the caller must cast each insert. for that production scenario",
+      "List<Integer> is covariant, so adding String is legal until iteration starts.",
+      "The compiler erases Integer to Object, so all list inserts are equally valid."
+    ],
+    "correct_answer": "Using a raw type bypassed compile-time checks and allowed an invalid element to enter the list.",
+    "topic": "Generics and Type Safety",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "generics",
+      "raw-types",
+      "type-safety"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-096",
+    "question": "Which API shape is safer for a utility that only reads from a list of Number subtypes?",
+    "options": [
+      "Accept List<? extends Number> so callers can pass Integer, Long, or BigDecimal lists safely for reading.",
+      "Accept raw List so every numeric subtype is handled without generic syntax. for that production scenario",
+      "Accept List<Object> because every Number list widens automatically to Object.",
+      "Accept List<? super Number> because upper-bounded wildcards are only for writing."
+    ],
+    "correct_answer": "Accept List<? extends Number> so callers can pass Integer, Long, or BigDecimal lists safely for reading.",
+    "topic": "Generics and Type Safety",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "api-design",
+      "generics",
+      "wildcards"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-097",
+    "question": "A file-import tool reads a 6 GB CSV with Files.readAllLines(path) and the JVM runs out of memory. What is the most likely reason?",
+    "options": [
+      "readAllLines loads the complete file into memory, which is a poor fit for very large inputs.",
+      "Path objects pin native buffers, so large files always exhaust direct memory first.",
+      "The JVM disables streaming I/O when the file extension is .csv. for that production scenario",
+      "Files.readAllLines stores every line twice whenever UTF-8 is detected."
+    ],
+    "correct_answer": "readAllLines loads the complete file into memory, which is a poor fit for very large inputs.",
+    "topic": "NIO and Files",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "files",
+      "memory",
+      "nio"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-098",
+    "question": "Which refactor is best when a batch reader must process a huge text file without holding all lines in heap memory?",
+    "options": [
+      "Stream the file with Files.lines or a buffered reader and process records incrementally.",
+      "Call readAllLines twice so the second read hits the operating-system cache.",
+      "Wrap the file in Optional<Path> so the runtime can free lines eagerly. for that production scenario",
+      "Convert the file to a String first and split it on line endings after loading."
+    ],
+    "correct_answer": "Stream the file with Files.lines or a buffered reader and process records incrementally.",
+    "topic": "NIO and Files",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "nio",
+      "performance",
+      "streaming"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-099",
+    "question": "A scheduled executor keeps launching work, but the application never shuts down cleanly after tests finish. Which omission is the most likely cause?",
+    "options": [
+      "The executor was never shut down, so its worker threads keep the JVM alive.",
+      "Scheduled executors stop automatically once the last Future is garbage-collected.",
+      "Only virtual threads need shutdown(); platform-thread pools exit on their own.",
+      "The bug exists because scheduleAtFixedRate must be wrapped in synchronized."
+    ],
+    "correct_answer": "The executor was never shut down, so its worker threads keep the JVM alive.",
+    "topic": "Executor Patterns",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "executors",
+      "lifecycle",
+      "shutdown"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-entry-l3-100",
+    "question": "Which executor choice is safer when an internal tool submits bursty I/O-bound jobs but must avoid unbounded thread growth?",
+    "options": [
+      "Use a bounded ThreadPoolExecutor so queue size and thread count stay under explicit control.",
+      "Use Executors.newCachedThreadPool() because cached pools cap themselves at CPU count.",
+      "Create one new Thread per task so each request owns its own lifecycle. for that production scenario",
+      "Use parallelStream() for all jobs because it replaces manual backpressure design."
+    ],
+    "correct_answer": "Use a bounded ThreadPoolExecutor so queue size and thread count stay under explicit control.",
+    "topic": "Executor Patterns",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "backpressure",
+      "executors",
+      "threadpool"
+    ],
+    "role_target": "java_entry",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  }
+]
