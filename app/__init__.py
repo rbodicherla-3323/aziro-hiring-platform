@@ -1,8 +1,11 @@
 import os
+from pathlib import Path
 from flask import Flask
 from dotenv import load_dotenv
 
-load_dotenv()
+# Always load project-level .env regardless of launch working directory.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+load_dotenv(PROJECT_ROOT / ".env")
 
 from .extensions import db, migrate
 from .blueprints.dashboard import dashboard_bp
@@ -39,21 +42,31 @@ def create_app():
     app.register_blueprint(tests_bp)
     app.register_blueprint(evaluation_bp)
     app.register_blueprint(coding_bp)
-    app.register_blueprint(reports_bp)    # Create DB tables
+    app.register_blueprint(reports_bp)
+
+    # ── Permissions-Policy / Feature-Policy headers ──
+    @app.after_request
+    def set_permissions_policy(response):
+        response.headers["Permissions-Policy"] = (
+            "display-capture=(self), camera=(self), microphone=(self), fullscreen=(self)"
+        )
+        response.headers["Feature-Policy"] = (
+            "display-capture 'self'; camera 'self'; microphone 'self'; fullscreen 'self'"
+        )
+        return response
+
+    # Create DB tables
     with app.app_context():
         from . import models  # noqa: F401
         db.create_all()
 
-    # Dev mode: Bypass login for local testing
-    # Activates when AUTH_DISABLED=true  **or**  when Azure AD creds are
-    # still the placeholder values (i.e. .env was never customised / is missing).
-    auth_disabled_env = os.getenv("AUTH_DISABLED", "").lower() == "true"
-    azure_client_id = os.getenv("AZURE_CLIENT_ID", "")
-    azure_unconfigured = (
-        not azure_client_id
-        or azure_client_id == "your-azure-client-id"
-    )
-    dev_bypass = auth_disabled_env or azure_unconfigured
+    # Inject asset version into all templates for cache busting
+    from .config import Config
+    app.jinja_env.globals["ASSET_VERSION"] = Config.ASSET_VERSION
+
+    # Dev mode: Bypass login only when explicitly enabled.
+    auth_disabled_env = os.getenv("AUTH_DISABLED", "").strip().lower() == "true"
+    dev_bypass = auth_disabled_env
 
     if dev_bypass:
         @app.before_request
@@ -68,5 +81,18 @@ def create_app():
                     "email": "dev@aziro.com",
                     "authenticated": True
                 }
+    else:
+        @app.before_request
+        def clear_stale_dev_bypass_session():
+            from flask import session
+            user = session.get("user")
+            if not isinstance(user, dict):
+                return
+            if (
+                user.get("email") == "dev@aziro.com"
+                and user.get("name") == "Dev User"
+                and "oauth" not in session
+            ):
+                session.clear()
 
     return app

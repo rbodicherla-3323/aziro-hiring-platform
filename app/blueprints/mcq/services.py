@@ -1,15 +1,22 @@
-import time
 import random
+import time
 from copy import deepcopy
+
 from flask import session
 
+from app.services.mcq_runtime_store import (
+    clear_mcq_session_data,
+    get_mcq_session_data,
+    mcq_session_key,
+    set_mcq_session_data,
+)
+from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
+from app.services.question_bank.helpers import prepare_question_options
 from app.services.question_bank.loader import QuestionLoader
 from app.services.question_bank.registry import QuestionRegistry
-from app.services.mcq_runtime_store import (
-    get_mcq_session_data,
-    set_mcq_session_data,
-    clear_mcq_session_data,
-    mcq_session_key,
+from app.services.question_bank.selector import (
+    build_frozen_mcq_round_payload,
+    should_use_enterprise_selection,
 )
 
 QUESTION_COUNT = 15
@@ -33,31 +40,36 @@ class MCQSessionService:
             clear_mcq_session_data(session_id)
             session.pop(session_key, None)
 
-        # ✅ Do not recreate active runtime session
         if get_mcq_session_data(session_id):
             return
 
-        loader = QuestionLoader(
-            base_path="app/services/question_bank/data"
-        )
+        loader = QuestionLoader(base_path="app/services/question_bank/data")
         registry = QuestionRegistry(loader)
+        session_meta = MCQ_SESSION_REGISTRY.get(session_id, {})
 
-        # ✅ THIS IS THE ONLY SOURCE OF QUESTIONS
-        questions = registry.get_questions(
-            role_key=role_key,
-            round_key=round_key,
-            domain=domain
-        )
+        selected_questions = session_meta.get("selected_questions")
+        if selected_questions:
+            selected_questions = deepcopy(selected_questions)
+        else:
+            question_files = registry.get_question_files(role_key=role_key, round_key=round_key, domain=domain)
+            questions = registry.get_questions(role_key=role_key, round_key=round_key, domain=domain)
 
-        if not questions:
-            raise ValueError(
-                f"No questions found for role={role_key}, round={round_key}, domain={domain}"
-            )
+            if not questions:
+                raise ValueError(f"No questions found for role={role_key}, round={round_key}, domain={domain}")
 
-        selected_questions = random.sample(
-            questions,
-            min(QUESTION_COUNT, len(questions))
-        )
+            if should_use_enterprise_selection(role_key, round_key, question_files):
+                frozen_payload = build_frozen_mcq_round_payload(
+                    role_key=role_key,
+                    round_key=round_key,
+                    question_files=question_files,
+                    questions=questions,
+                    rng=random.Random(),
+                )
+                session_meta.update(frozen_payload)
+                MCQ_SESSION_REGISTRY[session_id] = session_meta
+                selected_questions = deepcopy(frozen_payload["selected_questions"])
+            else:
+                selected_questions = random.sample(questions, min(QUESTION_COUNT, len(questions)))
 
         selected_questions = MCQSessionService._prepare_selected_questions(selected_questions)
 
@@ -65,58 +77,16 @@ class MCQSessionService:
             "questions": selected_questions,
             "answers": {},
             "start_time": int(time.time()),
-            "duration_seconds": DEFAULT_DURATION_MINUTES * 60
+            "duration_seconds": DEFAULT_DURATION_MINUTES * 60,
         }
         set_mcq_session_data(session_id, data)
 
-        # Keep a tiny session marker for compatibility without storing large payload.
         session[session_key] = {"runtime_store": True}
         session.modified = True
 
     @staticmethod
     def _prepare_selected_questions(selected_questions):
-        """
-        Session-level option randomization and balancing:
-        - deep-copy questions to avoid mutating source data
-        - shuffle options per question while preserving correct_answer text
-        - rebalance correct-answer positions so a single option (e.g., all B)
-          does not dominate the selected question set
-        """
-        prepared = []
-        for question in selected_questions:
-            q = deepcopy(question)
-            options = q.get("options")
-            correct = q.get("correct_answer")
-            if isinstance(options, list) and len(options) > 1 and correct in options:
-                random.shuffle(options)
-            prepared.append(q)
-
-        # Group valid questions by option count (typically 4).
-        by_option_count = {}
-        for idx, q in enumerate(prepared):
-            options = q.get("options")
-            correct = q.get("correct_answer")
-            if isinstance(options, list) and len(options) > 1 and correct in options:
-                by_option_count.setdefault(len(options), []).append(idx)
-
-        # Rebalance correct-answer position distribution per option count bucket.
-        for option_count, indices in by_option_count.items():
-            if len(indices) < 2:
-                continue
-
-            start = random.randrange(option_count)
-            targets = [((start + i) % option_count) for i in range(len(indices))]
-            random.shuffle(targets)
-
-            for q_idx, target_pos in zip(indices, targets):
-                q = prepared[q_idx]
-                options = q["options"]
-                correct = q["correct_answer"]
-                current_pos = options.index(correct)
-                if current_pos != target_pos:
-                    options[current_pos], options[target_pos] = options[target_pos], options[current_pos]
-
-        return prepared
+        return prepare_question_options(selected_questions, rng=random)
 
     @staticmethod
     def get_question(session_id, index):

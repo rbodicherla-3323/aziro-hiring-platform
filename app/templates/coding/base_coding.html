@@ -7,12 +7,85 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='coding/coding.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v={{ ASSET_VERSION }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='coding/coding.css') }}?v={{ ASSET_VERSION }}">
 
     <style>
+        {% if body_class and "mcq-start-page" in body_class %}
+        :root {
+            --aziro-primary: #1f4fd8;
+            --aziro-bg: #f5f7fb;
+            --aziro-card: #ffffff;
+            --aziro-border: #e3e6ef;
+            --aziro-text: #1f2937;
+            --aziro-muted: #6b7280;
+            --aziro-success: #198754;
+            --aziro-danger: #dc3545;
+            --aziro-warning: #ff9800;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--aziro-bg);
+            color: var(--aziro-text);
+        }
+
+        .page {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 20px;
+            position: static;
+            z-index: auto;
+        }
+
+        .card {
+            background: var(--aziro-card);
+            border-radius: 10px;
+            padding: 35px;
+            border: none;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+        }
+
+        .btn {
+            padding: 12px 26px;
+            border-radius: 6px;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-weight: 400;
+            letter-spacing: normal;
+            transition: none;
+        }
+
+        .btn:hover,
+        .btn:active {
+            transform: none;
+        }
+
+        .btn-primary {
+            background: var(--aziro-primary);
+            color: white;
+            box-shadow: none;
+        }
+
+        .btn-primary:hover {
+            background: #163db5;
+        }
+
+        .btn-danger {
+            background: var(--aziro-danger);
+            color: white;
+            box-shadow: none;
+        }
+
+        .btn-success {
+            background: var(--aziro-success);
+            color: white;
+            box-shadow: none;
+        }
+        {% else %}
         :root {
             --aziro-primary: #1f4fd8;
             --aziro-bg: #0c1120;
@@ -89,6 +162,7 @@
             color: white;
             box-shadow: 0 10px 18px rgba(34, 197, 94, 0.22);
         }
+        {% endif %}
 
         .actions {
             margin-top: 30px;
@@ -98,7 +172,7 @@
 
     {% block extra_css %}{% endblock %}
 </head>
-<body>
+<body{% if body_class %} class="{{ body_class }}"{% endif %}>
 
 <div class="header">
     <div class="logo">
@@ -117,9 +191,14 @@
     {% block content %}{% endblock %}
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+window.__AZIRO_PROCTORING_ENABLED = {{ "true" if proctoring_enabled else "false" }};
+</script>
 {% block extra_js %}{% endblock %}
+{% if proctoring_enabled %}
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script src="{{ url_for('static', filename='js/coding_proctoring.js') }}"></script>
 <script src="{{ url_for('static', filename='js/coding_proctoring_ai.js') }}"></script>
+{% endif %}
 </body>
 </html>

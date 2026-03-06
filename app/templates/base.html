@@ -2,20 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}AI Hiring Platform{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>{% block title %}AI Hiring Platform{% endblock %}</title>
+
+    <!-- Google Fonts: Inter (display=optional prevents font-swap flash) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&display=optional" rel="stylesheet">
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-      <!-- Bootstrap Icons -->
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-
-    {% block head %}{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v={{ ASSET_VERSION }}">    {% block head %}{% endblock %}
 </head>
 <body>
 
@@ -30,24 +32,24 @@
 </div>
 
 <div class="d-flex">
-
     <!-- SIDEBAR -->
-    <aside class="sidebar bg-dark text-white">
-        <!-- User Profile Section -->
-        <div class="sidebar-user px-3 py-3 mb-2 border-bottom border-secondary">
+    <aside class="sidebar text-white">
+        <!-- User Profile -->
+        <div class="sidebar-user px-3 py-3 mb-2">
             <div class="d-flex align-items-center">
                 <div class="user-avatar me-2">
-                    <i class="bi bi-person-circle fs-4"></i>                </div>
+                    <i class="bi bi-person-circle" style="font-size:1.4rem; opacity:0.7;"></i>
+                </div>
                 <div>
-                    <div class="fw-semibold small text-white">{{ session.get('user', {}).get('name', 'HR Admin') }}</div>
-                    <small class="text-muted" style="font-size: 11px;">{{ session.get('user', {}).get('email', '') }}</small>
+                    <div class="small text-white" style="font-weight:500;">{{ session.get('user', {}).get('name', 'HR Admin') }}</div>
+                    <small style="font-size:11px; color:var(--az-slate-400);">{{ session.get('user', {}).get('email', '') }}</small>
                 </div>
             </div>
         </div>
 
         <div class="sidebar-header px-3">
-            <h6 class="mb-0">AI Hiring</h6>
-            <small class="text-muted">Admin Panel</small>
+            <h6 class="mb-0">Aziro Hiring</h6>
+            <small>Admin Panel</small>
         </div>
 
         <ul class="nav flex-column mt-3">
@@ -97,15 +99,15 @@
 
     <!-- MAIN CONTENT -->
     <main class="content-area">
-
         <!-- TOP NAVBAR -->
-        <nav class="navbar navbar-light bg-white shadow-sm px-4">
+        <nav class="navbar navbar-light px-4">
             <div class="d-flex align-items-center">
                 <img src="{{ url_for('static', filename='images/azirotech_logo.jpg') }}"
                      alt="Aziro Logo"
-                     height="36"
-                     class="me-2">
-                <span class="navbar-text fw-semibold">
+                     height="32"
+                     class="me-2"
+                     style="border-radius:4px;">
+                <span class="navbar-text">
                     Aziro Hiring Platform
                 </span>
             </div>
@@ -319,7 +321,11 @@ function showToast(message, type = 'success') {
             }
 
             writeFieldValue(field, entry.value);
-            field.dispatchEvent(new Event("change", { bubbles: true }));
+            // Prevent synthetic restore events from triggering submit/navigation loops.
+            // Pages that truly need restore-time change handlers can opt in explicitly.
+            if (field.hasAttribute("data-persist-trigger-change")) {
+                field.dispatchEvent(new Event("change", { bubbles: true }));
+            }
         });
     }
 

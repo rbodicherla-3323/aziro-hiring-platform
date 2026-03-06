@@ -59,7 +59,7 @@ ROUND_DISPLAY_MAPPING = {
     "python_ai_ml": {
         "L1": "Aptitude",
         "L2": "Python Advanced Concepts",
-        "L3": "AI / ML Fundamentals",
+        "L3": "AI / ML Engineering & MLOps",
         "L4": "Coding Challenge (Python)",
         "L5": "Soft Skills",
     },
@@ -67,7 +67,7 @@ ROUND_DISPLAY_MAPPING = {
     # ---------------- Java AWS ----------------
     "java_aws": {
         "L1": "Aptitude",
-        "L2": "Java Advanced Concepts",
+        "L2": "Java Theory + Debugging",
         "L3": "AWS & Cloud Development",
         "L4": "Coding Challenge",
         "L5": "Soft Skills",
@@ -76,7 +76,7 @@ ROUND_DISPLAY_MAPPING = {
     # ---------------- Java QA ----------------
     "java_qa": {
         "L1": "Aptitude",
-        "L2": "Java Theory",
+        "L2": "Java Theory + Debugging",
         "L3": "QA & Testing (Advanced)",
         "L4": "Coding Challenge",
         "L5": "Soft Skills",
@@ -108,6 +108,14 @@ ROUND_DISPLAY_MAPPING = {
         "L2": "C++ Theory",
         "L3": "System Design & Architecture",
         "L4": "Coding Challenge (C++)",
+        "L5": "Soft Skills",
+    },
+
+    # ---------------- C# Developer ----------------
+    "csharp_dev": {
+        "L2": "C# Theory + Debugging",
+        "L3": "Developer Foundations",
+        "L4": "Coding Challenge (C#)",
         "L5": "Soft Skills",
     },
 }

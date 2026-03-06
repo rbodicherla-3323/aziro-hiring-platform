@@ -100,7 +100,8 @@ function isExamPath() {
 
 function applyPageClassNames() {
     if (!document.body) return;
-    if (IS_START_PAGE || IS_SUBMIT_PAGE || IS_COMPLETED_PAGE) document.body.classList.add("coding-start-page");
+    if (IS_START_PAGE) document.body.classList.add("mcq-start-page");
+    if (IS_SUBMIT_PAGE || IS_COMPLETED_PAGE) document.body.classList.add("coding-start-page");
     if (IS_EDITOR_PAGE) document.body.classList.add("coding-editor-page");
 }
 
@@ -111,6 +112,7 @@ let suppressWarnings = false;
 let tabSwitchCount = 0;
 let lastTabSwitchAt = 0;
 let examListenersAttached = false;
+let examSetupInitialized = false;
 let periodicScreenshotTimer = null;
 let fullscreenExitCount = 0;
 let outsideFullscreenStartedAt = null;
@@ -536,39 +538,113 @@ async function startScreenCaptureMonitor() {
 }
 
 async function ensureProctoringReady(options = {}) {
-    const rss = options.requireScreenShare !== false;
-    const rfs = options.requireFullscreen !== false;
-    const wo = options.withOverlay !== false;
+    const requireScreenShare = options.requireScreenShare !== false;
+    const requireFullscreen = options.requireFullscreen !== false;
+    const requireWebcam = options.requireWebcam === true;
+    const maxScreenShareAttempts = 3;
 
-    // If we need screen share and don't have it, we MUST exit fullscreen first
-    // because the screen share picker dialog will break fullscreen anyway.
-    if (rss && !screenCaptureReady) {
-        if (isInFullscreen()) {
-            suppressWarnings = true;
-            try { await exitAppFullscreen(); } catch (_) {}
-            await new Promise(r => setTimeout(r, 300));
+    suppressWarnings = true;
+    try {
+        // Step 1: Acquire screen share first (system dialog).
+        if (requireScreenShare && !screenCaptureReady) {
+            if (!supportsDisplayCapture()) {
+                if (!screenCaptureUnavailableLogged) {
+                    screenCaptureUnavailableLogged = true;
+                    sendViolation("Screen capture unavailable", {
+                        reason: "display_media_unsupported_or_insecure_context"
+                    });
+                }
+                showBanner("Screen sharing is unavailable. Open the test over HTTPS (or localhost) and try again.", "danger");
+                return false;
+            }
+
+            if (isInFullscreen()) {
+                try { await exitAppFullscreen(); } catch (_) {}
+                await new Promise((resolve) => setTimeout(resolve, 300));
+            }
+
+            for (let attempt = 1; attempt <= maxScreenShareAttempts; attempt++) {
+                try {
+                    const ok = await startScreenCaptureMonitor();
+                    if (ok && screenCaptureReady) break;
+                } catch (_) {
+                    // startScreenCaptureMonitor() reports telemetry.
+                }
+
+                if (screenCaptureReady) break;
+                if (attempt < maxScreenShareAttempts) {
+                    showBanner("Please select your Entire Screen (not a tab or window) to continue.", "danger");
+                    await new Promise((resolve) => setTimeout(resolve, 600));
+                }
+            }
+
+            if (!screenCaptureReady) {
+                showBanner("You must share your Entire Screen to start the test.", "danger");
+                return false;
+            }
         }
-        const ok = await startScreenCaptureMonitor();
-        if (!ok || !screenCaptureReady) {
-            suppressWarnings = false;
-            if (wo) { showLockOverlay(getProctoringRequirementMessage()); armFullscreenRecovery(); }
-            return false;
+
+        // Step 2: Acquire webcam before fullscreen to avoid forced exits.
+        if (requireWebcam) {
+            if (!navigator.mediaDevices || typeof navigator.mediaDevices.getUserMedia !== "function") {
+                sendViolation("Webcam unavailable", { reason: "media_devices_unsupported" });
+                showBanner("Webcam access is required to start the test.", "danger");
+                return false;
+            }
+
+            if (!webcamStream || !webcamStream.active) {
+                try {
+                    webcamStream = await navigator.mediaDevices.getUserMedia({
+                        video: { facingMode: "user", width: { ideal: 320 }, height: { ideal: 180 } },
+                        audio: false
+                    });
+                } catch (_) {
+                    sendViolation("Webcam access denied", { page: "start" });
+                    showBanner("Allow webcam access to continue.", "danger");
+                    return false;
+                }
+            }
+
+            if (webcamStream && webcamStream.active) {
+                attachWebcamTrackMonitoring(webcamStream, "ensure_ready");
+                const dock = getOrCreateWebcamDock();
+                dock.style.display = "block";
+                const video = document.getElementById(WEBCAM_VIDEO_ID);
+                if (video && video.srcObject !== webcamStream) {
+                    video.srcObject = webcamStream;
+                    try {
+                        await video.play();
+                    } catch (_) {
+                        // Ignore autoplay failures.
+                    }
+                }
+
+                if (!webcamEnabledLogged) {
+                    webcamEnabledLogged = true;
+                    sendViolation("Webcam preview enabled", {
+                        video_track_count: webcamStream.getVideoTracks().length,
+                        source: "ensure_ready"
+                    });
+                }
+            }
         }
+
+        // Step 3: Enter fullscreen after all permission prompts are done.
+        if (requireFullscreen && !isInFullscreen()) {
+            try {
+                await requestAppFullscreen();
+                await new Promise((resolve) => setTimeout(resolve, 300));
+            } catch (_) {
+                console.warn("[coding-proctoring] Fullscreen request failed; lock overlay will enforce it on the editor page.");
+            }
+        }
+
+        hideLockOverlay();
+        disarmFullscreenRecovery();
+        return true;
+    } finally {
+        suppressWarnings = false;
     }
-
-    // Now enter fullscreen (all dialogs are done)
-    if (rfs && !isInFullscreen()) {
-        try { await requestAppFullscreen(); } catch (_) {
-            suppressWarnings = false;
-            if (wo) { showLockOverlay(getProctoringRequirementMessage()); armFullscreenRecovery(); }
-            return false;
-        }
-    }
-
-    suppressWarnings = false;
-    const ready = (!rss || screenCaptureReady) && (!rfs || isInFullscreen());
-    if (!ready) { if (wo) { showLockOverlay(getProctoringRequirementMessage()); armFullscreenRecovery(); } return false; }
-    hideLockOverlay(); disarmFullscreenRecovery(); return true;
 }
 
 /* ── Screenshots ───────────────────────────────────── */
@@ -728,11 +804,14 @@ function formatShortcut(e) {
 }
 function formatTabSwitchSource(s) { return s === "visibility_hidden" ? "tab hidden" : s === "window_blur" ? "window blur" : s; }
 function getProctoringRequirementMessage() {
-    if (!screenCaptureReady) return "Share Entire Screen permission is required to continue the test.";
+    if (!screenCaptureReady && supportsDisplayCapture()) return "Share Entire Screen permission is required to continue the test.";
     if (!isInFullscreen()) return "You must remain in full screen to continue the test.";
     return "";
 }
-function hasProctoringRequirements() { return screenCaptureReady && isInFullscreen(); }
+function hasProctoringRequirements() {
+    const screenOk = screenCaptureReady || !supportsDisplayCapture();
+    return screenOk && isInFullscreen();
+}
 
 /* ── Lock Overlay ──────────────────────────────────── */
 function getOrCreateLockOverlay() {
@@ -1179,13 +1258,26 @@ function setupStartFullscreenGate() {
                         audio: false
                     });
                     attachWebcamTrackMonitoring(webcamStream, "start_page");
+                    const dock = getOrCreateWebcamDock();
+                    dock.style.display = "block";
+                    const video = document.getElementById(WEBCAM_VIDEO_ID);
+                    if (video && video.srcObject !== webcamStream) {
+                        video.srcObject = webcamStream;
+                        try {
+                            await video.play();
+                        } catch (_) {
+                            // Ignore autoplay failures.
+                        }
+                    }
                     if (!webcamEnabledLogged) {
                         webcamEnabledLogged = true;
                         sendViolation("Webcam preview enabled", { video_track_count: webcamStream.getVideoTracks().length });
                     }
                 } catch (_) {
-                    // Webcam is optional — continue even if denied
                     sendViolation("Webcam access denied", { page: "start" });
+                    suppressWarnings = false;
+                    alert("Webcam access is required to start the test.");
+                    return;
                 }
             }
 
@@ -1216,6 +1308,8 @@ function setupStartFullscreenGate() {
 function setupExamProctoring() {
     if (!isExamPath()) return;
     proctoringActive = true;
+    if (examSetupInitialized) return;
+    examSetupInitialized = true;
     setNavInProgress(false); setFullscreenRequired(true);
     syncFullscreenStateTracking();
     logSessionStartIfNeeded();
@@ -1233,12 +1327,12 @@ function setupExamProctoring() {
     suppressWarnings = true;
 
     setTimeout(async () => {
-        try {
-            // Only exit fullscreen when screen share (getDisplayMedia) needs
+        try {            // Only exit fullscreen when screen share (getDisplayMedia) needs
             // to be acquired — it shows a system-level picker dialog that the
             // browser will force-exit fullscreen for.  getUserMedia (webcam)
             // works fine INSIDE fullscreen so we never need to leave for it.
-            const needScreenShare = !screenCaptureReady;
+            // If getDisplayMedia is not available (e.g. non-HTTPS), skip entirely.
+            const needScreenShare = !screenCaptureReady && supportsDisplayCapture();
             const needWebcam = !webcamStream || !webcamStream.active;
 
             if (needScreenShare && isInFullscreen()) {

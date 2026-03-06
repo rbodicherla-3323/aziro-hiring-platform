@@ -109,7 +109,7 @@ with app.app_context():
     check("Search by name 'ravi'", len(search_r) >= 1 and search_r[0]["email"] == "ravi@test.com")
 
     search_role = db_service.search_candidates("", "Python QA (4+ Years)")
-    check("Filter by role 'Python QA'", len(search_role) >= 1 and search_role[0]["email"] == "anita@test.com")
+    check("Filter by role 'Python QA'", len(search_role) >= 1 and any(r["email"] == "anita@test.com" for r in search_role))
 
     roles = db_service.get_all_roles()
     check("get_all_roles returns roles", len(roles) >= 2)

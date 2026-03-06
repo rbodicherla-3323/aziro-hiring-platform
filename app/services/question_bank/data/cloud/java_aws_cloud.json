@@ -1,0 +1,2377 @@
+[
+  {
+    "id": "java-aws-l3-001",
+    "question": "You need to implement distributed tracing across Lambda functions, ECS services, and API Gateway to debug latency issues in a microservices architecture. What should you use?",
+    "options": [
+      "Implement custom logging with timestamps for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "CloudWatch Logs are sufficient for tracing for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use tcpdump on all containers for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use AWS X-Ray - instrument Lambda functions (enable active tracing), ECS tasks (X-Ray daemon sidecar), and API Gateway (enable tracing); X-Ray creates a service map showing request flow, latency per service, error rates, and bottleneck identification across the distributed system"
+    ],
+    "correct_answer": "Use AWS X-Ray - instrument Lambda functions (enable active tracing), ECS tasks (X-Ray daemon sidecar), and API Gateway (enable tracing); X-Ray creates a service map showing request flow, latency per service, error rates, and bottleneck identification across the distributed system",
+    "topic": "Lambda and SnapStart",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-testing",
+      "lambda-runtime",
+      "lambdas"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-002",
+    "question": "You need to troubleshoot a Lambda function that processes API Gateway requests. Some requests return 504 (timeout) but the Lambda function logs show execution completed in 2 seconds. Where is the bottleneck?",
+    "options": [
+      "Increase the API Gateway throttling limits for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Lambda is too slow; increase memory to 10GB for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "API Gateway has a hard 29-second integration timeout, but the issue might be elsewhere - check API Gateway access logs for timeout details, verify the Lambda function's response format matches API Gateway expectations (status code, headers, body format), and check if the Lambda is in a VPC with slow ENI attachment causing cold start delays exceeding the API Gateway timeout",
+      "The 504 is coming from CloudFront, not API Gateway for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "API Gateway has a hard 29-second integration timeout, but the issue might be elsewhere - check API Gateway access logs for timeout details, verify the Lambda function's response format matches API Gateway expectations (status code, headers, body format), and check if the Lambda is in a VPC with slow ENI attachment causing cold start delays exceeding the API Gateway timeout",
+    "topic": "IAM and STS",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-testing",
+      "lambda-runtime",
+      "lambdas"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-003",
+    "question": "Your Lambda function triggered by API Gateway needs to access secrets stored in AWS Secrets Manager. What is the most efficient way to retrieve secrets without adding latency to every request?",
+    "options": [
+      "Retrieve secrets during Lambda initialization (outside the handler function) so they're cached across warm invocations, use the AWS Parameters and Secrets Lambda Extension (caches and auto-refreshes), or implement in-memory caching with a TTL - avoid calling Secrets Manager on every invocation",
+      "Hardcode the secrets in environment variables for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use S3 to store secrets as text files for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Store secrets in a DynamoDB table for faster access for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Retrieve secrets during Lambda initialization (outside the handler function) so they're cached across warm invocations, use the AWS Parameters and Secrets Lambda Extension (caches and auto-refreshes), or implement in-memory caching with a TTL - avoid calling Secrets Manager on every invocation",
+    "topic": "Lambda and SnapStart",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-testing",
+      "lambda-runtime",
+      "lambdas"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-004",
+    "question": "A production Lambda function that processes payment webhooks is hitting the default concurrency limit. Some webhook events are being throttled and lost. How do you handle this properly?",
+    "options": [
+      "Switch to EC2 instances for webhook processing for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Request a limit increase and remove all concurrency controls for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Set up an SQS queue in front of Lambda as a buffer (SQS triggers Lambda with batching), configure reserved concurrency for the payment function to guarantee capacity, implement a Dead Letter Queue for failed events, use Lambda Destinations for success/failure routing, and request a concurrency limit increase",
+      "Add CloudFront in front of the webhook endpoint for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Set up an SQS queue in front of Lambda as a buffer (SQS triggers Lambda with batching), configure reserved concurrency for the payment function to guarantee capacity, implement a Dead Letter Queue for failed events, use Lambda Destinations for success/failure routing, and request a concurrency limit increase",
+    "topic": "Lambda and SnapStart",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "lambda-runtime",
+      "lambdas"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-005",
+    "question": "Your Lambda function connects to an RDS database inside a VPC. Cold starts take 8-12 seconds due to ENI attachment. What are the best approaches to reduce cold start latency?",
+    "options": [
+      "Use longer function timeouts for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use RDS Proxy (eliminates per-function DB connections), enable Provisioned Concurrency for critical functions, use Lambda SnapStart (for Java), minimize deployment package size, and keep functions warm with scheduled invocations",
+      "Increase Lambda memory to 10GB for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Move the database outside the VPC for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use RDS Proxy (eliminates per-function DB connections), enable Provisioned Concurrency for critical functions, use Lambda SnapStart (for Java), minimize deployment package size, and keep functions warm with scheduled invocations",
+    "topic": "Lambda and SnapStart",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "lambda-runtime",
+      "lambdas"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-006",
+    "question": "You're designing an API that must handle 50,000 requests per second with sub-10ms latency. The data is read-heavy (95% reads) with simple key-value lookups. Which AWS database service is most appropriate?",
+    "options": [
+      "ElastiCache Redis standalone for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Aurora Serverless v2 for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "RDS PostgreSQL with read replicas for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "DynamoDB with DynamoDB Accelerator (DAX) - DAX provides a fully managed in-memory cache with microsecond read latency for DynamoDB; DynamoDB handles the throughput with on-demand or provisioned capacity, and DAX caches hot reads for sub-millisecond response times"
+    ],
+    "correct_answer": "DynamoDB with DynamoDB Accelerator (DAX) - DAX provides a fully managed in-memory cache with microsecond read latency for DynamoDB; DynamoDB handles the throughput with on-demand or provisioned capacity, and DAX caches hot reads for sub-millisecond response times",
+    "topic": "IAM and STS",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-007",
+    "question": "You have a global application serving users from North America, Europe, and Asia. Each region needs low-latency database access. What is the most appropriate multi-region database architecture?",
+    "options": [
+      "Replicate data manually using cron jobs between regions for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use S3 Cross-Region Replication as the database for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use DynamoDB Global Tables for automatic multi-region replication with local read/write in each region, or Aurora Global Database (one primary write region with read-only secondary regions that can be promoted) - DynamoDB Global Tables for multi-master writes, Aurora Global Database for single-master with read scaling",
+      "Use a single RDS instance in us-east-1 for all regions for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use DynamoDB Global Tables for automatic multi-region replication with local read/write in each region, or Aurora Global Database (one primary write region with read-only secondary regions that can be promoted) - DynamoDB Global Tables for multi-master writes, Aurora Global Database for single-master with read scaling",
+    "topic": "Cloud Runtime Debugging",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-008",
+    "question": "Your production application suddenly started returning 500 errors. CloudWatch shows the RDS instance has reached its maximum storage capacity. The auto-scaling storage feature was not enabled. What is the immediate fix and long-term prevention?",
+    "options": [
+      "Switch to DynamoDB which has unlimited storage for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Immediately modify the RDS instance to increase allocated storage (can be done without downtime for most engines); long-term: enable RDS Storage Autoscaling with a maximum storage threshold, set CloudWatch alarms on FreeStorageSpace metric, implement log rotation, and review data retention policies",
+      "Restore from the latest snapshot to a new instance for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Delete the database and create a new one with more storage for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Immediately modify the RDS instance to increase allocated storage (can be done without downtime for most engines); long-term: enable RDS Storage Autoscaling with a maximum storage threshold, set CloudWatch alarms on FreeStorageSpace metric, implement log rotation, and review data retention policies",
+    "topic": "Observability",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "observability"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-009",
+    "question": "You're implementing a CI/CD pipeline with CodePipeline. The pipeline needs to deploy the same artifact to staging first, run integration tests, and only proceed to production if tests pass. How do you structure this?",
+    "options": [
+      "Deploy directly to production and run tests there for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use CodePipeline stages: Source \u2192 Build (CodeBuild) \u2192 Deploy to Staging (CodeDeploy/ECS) \u2192 Manual Approval + Automated Test stage (CodeBuild running integration tests) \u2192 Deploy to Production; use CodePipeline artifact passing to ensure the exact same build artifact reaches production",
+      "Create two separate pipelines - one for staging and one for production for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use cron jobs to trigger deployments after tests for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use CodePipeline stages: Source \u2192 Build (CodeBuild) \u2192 Deploy to Staging (CodeDeploy/ECS) \u2192 Manual Approval + Automated Test stage (CodeBuild running integration tests) \u2192 Deploy to Production; use CodePipeline artifact passing to ensure the exact same build artifact reaches production",
+    "topic": "IAM and STS",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-010",
+    "question": "Your team uses separate AWS accounts for dev, staging, and production. A CloudFormation template works in dev but fails in production with 'Access Denied'. The IAM roles appear identical. What should you check?",
+    "options": [
+      "Check for Service Control Policies (SCPs) in AWS Organizations that may restrict actions in the production OU, verify the CloudFormation service role has all required permissions, check for resource-based policies (S3 bucket policies, KMS key policies) that reference specific account IDs, and verify regional service availability",
+      "CloudFormation templates are account-specific and cannot be reused for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "The production account has a different AWS region for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Recreate the IAM roles in production by copying from dev for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Check for Service Control Policies (SCPs) in AWS Organizations that may restrict actions in the production OU, verify the CloudFormation service role has all required permissions, check for resource-based policies (S3 bucket policies, KMS key policies) that reference specific account IDs, and verify regional service availability",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-011",
+    "question": "Your DynamoDB table is experiencing throttling on a specific partition key ('hot partition'). The table has 10,000 WCU provisioned but certain items receive 80% of writes. What strategies can help?",
+    "options": [
+      "Add a GSI to absorb the extra writes for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Implement write sharding by appending a random suffix to the partition key (e.g., customer_id#shard_N), use DynamoDB Adaptive Capacity, consider switching to on-demand capacity mode, or redesign the key to distribute writes more evenly",
+      "Enable DynamoDB Streams to buffer writes for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Increase the provisioned WCU to 100,000 for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Implement write sharding by appending a random suffix to the partition key (e.g., customer_id#shard_N), use DynamoDB Adaptive Capacity, consider switching to on-demand capacity mode, or redesign the key to distribute writes more evenly",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-012",
+    "question": "Your Terraform state file for production infrastructure is stored in a local file on a developer's laptop. What are the risks and what is the recommended approach?",
+    "options": [
+      "Risks: state loss if laptop fails, no locking (concurrent modifications corrupt state), no team collaboration, secrets in state are unprotected; use S3 backend with DynamoDB locking table, enable versioning on the S3 bucket, encrypt with KMS, and restrict access via IAM policies",
+      "Store the state file in the Git repository for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Local state is the recommended default for all environments for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Email the state file to the team after each change for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Risks: state loss if laptop fails, no locking (concurrent modifications corrupt state), no team collaboration, secrets in state are unprotected; use S3 backend with DynamoDB locking table, enable versioning on the S3 bucket, encrypt with KMS, and restrict access via IAM policies",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-013",
+    "question": "Your AWS account has been compromised through a phishing attack. GuardDuty shows unusual API activity from an unknown IP. What is the incident response procedure?",
+    "options": [
+      "Only change the root account password for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Delete the AWS account and create a new one for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Isolate: revoke compromised credentials, apply restrictive SCP/IAM policies; Investigate: analyze CloudTrail logs to scope the blast radius, check for persistence mechanisms (new IAM users/roles/keys, EC2 instances, Lambda functions); Remediate: rotate all credentials, remove unauthorized resources, patch the vulnerability; Recover: restore from known-good backups if needed; Document and improve controls",
+      "Wait 24 hours to see if the activity stops for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Isolate: revoke compromised credentials, apply restrictive SCP/IAM policies; Investigate: analyze CloudTrail logs to scope the blast radius, check for persistence mechanisms (new IAM users/roles/keys, EC2 instances, Lambda functions); Remediate: rotate all credentials, remove unauthorized resources, patch the vulnerability; Recover: restore from known-good backups if needed; Document and improve controls",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-014",
+    "question": "What is the difference between Route 53 routing policies: Simple, Weighted, Latency-based, Failover, and Geolocation?",
+    "options": [
+      "Simple: single resource, no health checks; Weighted: distribute traffic by percentage (A/B testing); Latency-based: route to region with lowest latency for the user; Failover: active-passive with health checks; Geolocation: route based on user's geographic location (compliance, localization) - choose based on availability, performance, or compliance requirements",
+      "They only differ in DNS TTL values for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Weighted is the only policy that supports health checks for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "They all route traffic identically for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Simple: single resource, no health checks; Weighted: distribute traffic by percentage (A/B testing); Latency-based: route to region with lowest latency for the user; Failover: active-passive with health checks; Geolocation: route based on user's geographic location (compliance, localization) - choose based on availability, performance, or compliance requirements",
+    "topic": "Cloud Runtime Debugging",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-015",
+    "question": "Your application needs to handle a 'flash sale' event where traffic is expected to spike from 1,000 to 100,000 concurrent users within minutes. The architecture uses ALB \u2192 ECS Fargate \u2192 Aurora. What pre-scaling measures should you take?",
+    "options": [
+      "Hope that auto-scaling handles it in time for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use only CloudFront caching with no dynamic content for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Switch to a static HTML page during the sale for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Pre-warm the ALB (contact AWS or gradually increase traffic), pre-provision Fargate tasks by temporarily increasing minimum task count, pre-scale Aurora with provisioned reader instances, warm ElastiCache with expected hot data, enable Aurora Serverless v2 for auto-scaling, and set aggressive step scaling policies with short cooldowns"
+    ],
+    "correct_answer": "Pre-warm the ALB (contact AWS or gradually increase traffic), pre-provision Fargate tasks by temporarily increasing minimum task count, pre-scale Aurora with provisioned reader instances, warm ElastiCache with expected hot data, enable Aurora Serverless v2 for auto-scaling, and set aggressive step scaling policies with short cooldowns",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-016",
+    "question": "Your application uses an RDS PostgreSQL Multi-AZ deployment. During a failover event, your application experienced 3 minutes of downtime because DNS propagation was slow and connection pools held stale connections. How can you minimize failover impact?",
+    "options": [
+      "Use RDS Proxy for connection pooling (handles failover transparently), reduce DNS TTL, implement connection retry logic with exponential backoff, and use the RDS endpoint (not IP) - RDS Proxy pins connections and redirects to the new primary automatically",
+      "Manually update the application configuration with the new IP after failover for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use a read replica instead of Multi-AZ for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Switch to a Single-AZ deployment to avoid failover issues for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use RDS Proxy for connection pooling (handles failover transparently), reduce DNS TTL, implement connection retry logic with exponential backoff, and use the RDS endpoint (not IP) - RDS Proxy pins connections and redirects to the new primary automatically",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-017",
+    "question": "You're using EventBridge to route events from multiple SaaS integrations to different Lambda functions. An event rule stopped matching events after a source application updated its event schema. How can you prevent this?",
+    "options": [
+      "Use EventBridge Schema Registry with schema discovery to detect schema changes automatically, implement schema versioning, create CloudWatch alarms on matched event counts (drop detection), use EventBridge Archive and Replay to reprocess missed events, and implement input transformation to normalize event formats",
+      "EventBridge rules never stop working for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Manually check event schemas weekly for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use SQS instead of EventBridge for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use EventBridge Schema Registry with schema discovery to detect schema changes automatically, implement schema versioning, create CloudWatch alarms on matched event counts (drop detection), use EventBridge Archive and Replay to reprocess missed events, and implement input transformation to normalize event formats",
+    "topic": "Lambda and SnapStart",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "lambda-runtime",
+      "lambdas"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-018",
+    "question": "A Lambda function processes S3 events but occasionally executes twice for the same event, causing duplicate records in the database. Why does this happen and how do you fix it?",
+    "options": [
+      "Lambda guarantees exactly-once execution; this is impossible for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use S3 versioning to prevent duplicate events for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "S3 event notifications provide at-least-once delivery, and Lambda may retry on transient failures - implement idempotency using a unique event ID stored in DynamoDB with a conditional write (PutItem with condition_expression) to detect and skip duplicates",
+      "Increase Lambda timeout to prevent retries for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "S3 event notifications provide at-least-once delivery, and Lambda may retry on transient failures - implement idempotency using a unique event ID stored in DynamoDB with a conditional write (PutItem with condition_expression) to detect and skip duplicates",
+    "topic": "Lambda and SnapStart",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "lambda-runtime",
+      "lambdas"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-019",
+    "question": "What is the maximum execution duration of an AWS Lambda function, and how should you handle long-running tasks that exceed this limit?",
+    "options": [
+      "Lambda timeout can be extended to 24 hours with a support request for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Lambda has a 15-minute maximum timeout; for longer tasks: use Step Functions to orchestrate multiple Lambda invocations, offload to ECS/Fargate tasks for hours-long processing, use SQS with visibility timeout for chunked processing, or use AWS Batch for truly long-running compute jobs",
+      "Lambda has no execution time limit for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use nested Lambda invocations to chain execution indefinitely for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Lambda has a 15-minute maximum timeout; for longer tasks: use Step Functions to orchestrate multiple Lambda invocations, offload to ECS/Fargate tasks for hours-long processing, use SQS with visibility timeout for chunked processing, or use AWS Batch for truly long-running compute jobs",
+    "topic": "Lambda and SnapStart",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "lambda-runtime",
+      "lambdas"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-020",
+    "question": "What is the AWS Shared Responsibility Model, and how does responsibility differ between EC2, RDS, and Lambda?",
+    "options": [
+      "Customers are responsible for physical data center security for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "The model only applies to government cloud regions for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "AWS is responsible for everything when you use their services for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "AWS manages security OF the cloud (physical, network, hypervisor); customer manages security IN the cloud - for EC2: customer manages OS patches, firewall, apps; for RDS: AWS manages OS/engine patching, customer manages access/encryption config; for Lambda: AWS manages everything except function code and IAM - responsibility shifts toward AWS as you move to higher-level services"
+    ],
+    "correct_answer": "AWS manages security OF the cloud (physical, network, hypervisor); customer manages security IN the cloud - for EC2: customer manages OS patches, firewall, apps; for RDS: AWS manages OS/engine patching, customer manages access/encryption config; for Lambda: AWS manages everything except function code and IAM - responsibility shifts toward AWS as you move to higher-level services",
+    "topic": "Lambda and SnapStart",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "lambdas"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-021",
+    "question": "A startup is running a stateless web application on a single EC2 instance with an attached EBS volume. Traffic has grown 10x in the last month and the instance frequently maxes out CPU. What is the most scalable and cost-effective architecture migration?",
+    "options": [
+      "Switch to a single larger RDS instance for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Add more EBS volumes to increase I/O performance for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Upgrade to the largest EC2 instance type available (vertical scaling) for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Move to an Auto Scaling Group behind an Application Load Balancer, store sessions in ElastiCache or DynamoDB, and serve static assets from S3+CloudFront - enabling horizontal scaling based on CPU/request metrics"
+    ],
+    "correct_answer": "Move to an Auto Scaling Group behind an Application Load Balancer, store sessions in ElastiCache or DynamoDB, and serve static assets from S3+CloudFront - enabling horizontal scaling based on CPU/request metrics",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-022",
+    "question": "You need to design an event-driven architecture where a single order event triggers: inventory update, email notification, analytics recording, and fraud check - all independently. What AWS architecture pattern is best?",
+    "options": [
+      "Use SNS fan-out pattern - publish the order event to an SNS topic with SQS subscriptions for each consumer (inventory, email, analytics, fraud); each SQS queue independently processes the event with its own Lambda/service, providing decoupling, independent scaling, and failure isolation",
+      "Use a single Lambda function that handles all four tasks for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Chain four Lambda functions sequentially for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Store the event in S3 and have each service poll the bucket for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use SNS fan-out pattern - publish the order event to an SNS topic with SQS subscriptions for each consumer (inventory, email, analytics, fraud); each SQS queue independently processes the event with its own Lambda/service, providing decoupling, independent scaling, and failure isolation",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-023",
+    "question": "You need to design a DynamoDB table for an e-commerce application with access patterns: get orders by customer_id, get orders by order_date range, and get order details by order_id. What is the optimal key design?",
+    "options": [
+      "Use a single attribute 'data' as partition key and store all queries in application code for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use order_id as partition key only; scan and filter for other access patterns for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Create three separate DynamoDB tables, one for each access pattern for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Partition key: customer_id, Sort key: order_date (composite); create a GSI with partition key: order_id for direct lookups - this supports all three access patterns efficiently without table scans"
+    ],
+    "correct_answer": "Partition key: customer_id, Sort key: order_date (composite); create a GSI with partition key: order_id for direct lookups - this supports all three access patterns efficiently without table scans",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-024",
+    "question": "You have a microservices architecture where Service A needs to call Service B's internal API. Both run on ECS in private subnets. You want to avoid exposing Service B to the internet. What is the best approach?",
+    "options": [
+      "Use a public ALB with IP whitelisting for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use public Route 53 DNS with security groups for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use AWS PrivateLink (VPC Endpoint Service) - Service B registers with an NLB, creates a VPC Endpoint Service; Service A accesses it via an Interface VPC Endpoint - traffic stays on the AWS private network, Service B is never exposed publicly, and it works across accounts/VPCs",
+      "Use S3 as a message queue between services for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use AWS PrivateLink (VPC Endpoint Service) - Service B registers with an NLB, creates a VPC Endpoint Service; Service A accesses it via an Interface VPC Endpoint - traffic stays on the AWS private network, Service B is never exposed publicly, and it works across accounts/VPCs",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-025",
+    "question": "An ElastiCache Redis cluster is used for session management. During peak hours, the single-node cluster reaches 100% memory. Eviction policy causes session data loss. What is the best architecture improvement?",
+    "options": [
+      "Increase the TTL on all session keys for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Enable Redis Cluster Mode with multiple shards to distribute data across nodes (horizontal scaling), implement data partitioning by user hash, set appropriate maxmemory-policy (volatile-lru for session data), add read replicas per shard for read scaling, and implement session data compression to reduce memory footprint",
+      "Move sessions to the application server's local memory for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Switch from Redis to Memcached for sessions for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Enable Redis Cluster Mode with multiple shards to distribute data across nodes (horizontal scaling), implement data partitioning by user hash, set appropriate maxmemory-policy (volatile-lru for session data), add read replicas per shard for read scaling, and implement session data compression to reduce memory footprint",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-026",
+    "question": "Your application stores sensitive customer data. A security audit requires that all API calls to your AWS account are logged, cannot be tampered with, and are retained for 7 years. How do you implement this?",
+    "options": [
+      "Use VPC Flow Logs to capture all API calls for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Enable CloudWatch Logs for all services for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Enable AWS CloudTrail in all regions with a trail that logs to S3 with SSE-KMS encryption, enable log file validation (digest files for tamper detection), set S3 bucket policy to deny deletion, enable S3 Object Lock (WORM) for compliance retention, and use S3 Lifecycle policies for cost-effective storage tiers",
+      "Enable AWS X-Ray for all services for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Enable AWS CloudTrail in all regions with a trail that logs to S3 with SSE-KMS encryption, enable log file validation (digest files for tamper detection), set S3 bucket policy to deny deletion, enable S3 Object Lock (WORM) for compliance retention, and use S3 Lifecycle policies for cost-effective storage tiers",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-027",
+    "question": "Your application needs to process 100,000 messages per second from IoT devices. Messages must be processed in order per device (but not globally) and stored for replay. What AWS service architecture is best?",
+    "options": [
+      "Use SNS topics with one topic per device for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use SQS Standard queue with a single consumer for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use S3 event notifications for message processing for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use Amazon Kinesis Data Streams with the device ID as the partition key (ensures per-device ordering), Lambda or KCL consumers for processing, and configure appropriate shard count (~100 shards at 1,000 records/shard/sec); Kinesis retains data for 24hrs-365 days for replay"
+    ],
+    "correct_answer": "Use Amazon Kinesis Data Streams with the device ID as the partition key (ensures per-device ordering), Lambda or KCL consumers for processing, and configure appropriate shard count (~100 shards at 1,000 records/shard/sec); Kinesis retains data for 24hrs-365 days for replay",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-028",
+    "question": "You're designing a multi-account AWS organization with separate accounts for dev, staging, prod, and shared services. How should you set up cross-account access for developers who need to deploy to staging?",
+    "options": [
+      "Share root account credentials across teams for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use the same AWS account for all environments with tag-based separation for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use IAM roles with cross-account trust policies - create a deployment role in the staging account that trusts the dev account, and use STS AssumeRole; manage through AWS Organizations SCPs to enforce guardrails",
+      "Create IAM users in each account with the same credentials for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use IAM roles with cross-account trust policies - create a deployment role in the staging account that trusts the dev account, and use STS AssumeRole; manage through AWS Organizations SCPs to enforce guardrails",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-029",
+    "question": "You're designing a disaster recovery strategy for a critical application with an RPO of 1 hour and RTO of 15 minutes. The primary region is us-east-1. Which DR strategy meets these requirements?",
+    "options": [
+      "Backup & Restore (RPO and RTO of hours to days) for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Simply back up to S3 with cross-region replication for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Warm Standby - maintain a scaled-down but functional copy of the production environment in us-west-2 with cross-region RDS read replica (promotes to primary), replicated S3 buckets, and pre-configured Auto Scaling that scales up during failover; Route 53 health checks trigger DNS failover",
+      "Pilot Light (RTO would be 30+ minutes to spin up resources) for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Warm Standby - maintain a scaled-down but functional copy of the production environment in us-west-2 with cross-region RDS read replica (promotes to primary), replicated S3 buckets, and pre-configured Auto Scaling that scales up during failover; Route 53 health checks trigger DNS failover",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-030",
+    "question": "An IAM policy has an explicit Deny for 's3:DeleteObject' on a bucket, but the user's group policy has an explicit Allow for 's3:*' on the same bucket. Can the user delete objects?",
+    "options": [
+      "No - an explicit Deny always overrides any Allow in AWS IAM policy evaluation; the user cannot delete objects regardless of other Allow statements",
+      "It depends on which policy was created first for that production scenario for that production scenario for that production scenario for that production scenario",
+      "The policies cancel each other out, defaulting to the AWS account root behavior for that production scenario for that production scenario",
+      "Yes, the Allow in the group policy overrides the Deny for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "No - an explicit Deny always overrides any Allow in AWS IAM policy evaluation; the user cannot delete objects regardless of other Allow statements",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-031",
+    "question": "You need to implement a real-time notification system that sends push notifications, SMS, and emails when specific events occur. What AWS architecture pattern is most appropriate?",
+    "options": [
+      "Use SES for all notification types for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "EventBridge captures events \u2192 triggers Lambda \u2192 Lambda formats messages and publishes to SNS with platform-specific endpoints (APNs/FCM for push, SMS, email) - use SNS message filtering to route to appropriate channels based on user preferences, and SQS as DLQ for failed deliveries",
+      "Use a cron job to check for events every minute for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Poll a database table for new events for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "EventBridge captures events \u2192 triggers Lambda \u2192 Lambda formats messages and publishes to SNS with platform-specific endpoints (APNs/FCM for push, SMS, email) - use SNS message filtering to route to appropriate channels based on user preferences, and SQS as DLQ for failed deliveries",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-032",
+    "question": "Your application processes credit card transactions and must be PCI-DSS compliant. You need to store card numbers for recurring billing. What AWS architecture ensures compliance?",
+    "options": [
+      "Use RDS encryption and store card numbers directly for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Store card numbers in a DynamoDB table with client-side encryption for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use AWS Payment Cryptography or tokenization - never store raw card numbers; use a tokenization service that replaces card data with a non-sensitive token, store tokens in your database; for encryption, use AWS KMS with HSM-backed keys (CloudHSM for dedicated HSMs), implement VPC isolation, enable encryption everywhere, and maintain audit trails via CloudTrail",
+      "Store card numbers in an encrypted S3 bucket for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use AWS Payment Cryptography or tokenization - never store raw card numbers; use a tokenization service that replaces card data with a non-sensitive token, store tokens in your database; for encryption, use AWS KMS with HSM-backed keys (CloudHSM for dedicated HSMs), implement VPC isolation, enable encryption everywhere, and maintain audit trails via CloudTrail",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-033",
+    "question": "What is the AWS Well-Architected Framework's definition of the 'Reliability' pillar, and what are its key design principles?",
+    "options": [
+      "Reliability means using the most expensive instance types for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Reliability ensures a workload performs its intended function correctly and consistently - key principles: automatically recover from failure, test recovery procedures, scale horizontally, stop guessing capacity, and manage change through automation; implemented via multi-AZ deployments, auto-scaling, health checks, and chaos engineering",
+      "Reliability means the application never has bugs for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Reliability only applies to database systems for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Reliability ensures a workload performs its intended function correctly and consistently - key principles: automatically recover from failure, test recovery procedures, scale horizontally, stop guessing capacity, and manage change through automation; implemented via multi-AZ deployments, auto-scaling, health checks, and chaos engineering",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-034",
+    "question": "What is the difference between a Security Group and a Network ACL (NACL) in AWS VPC?",
+    "options": [
+      "They are the same thing at different levels for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Security Groups are stateful (return traffic auto-allowed), operate at the instance/ENI level, support only Allow rules; NACLs are stateless (return traffic must be explicitly allowed), operate at the subnet level, support both Allow and Deny rules with numbered priority - use both for defense in depth",
+      "Security Groups operate at the subnet level; NACLs at the instance level for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "NACLs are stateful; Security Groups are stateless for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Security Groups are stateful (return traffic auto-allowed), operate at the instance/ENI level, support only Allow rules; NACLs are stateless (return traffic must be explicitly allowed), operate at the subnet level, support both Allow and Deny rules with numbered priority - use both for defense in depth",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-035",
+    "question": "You deployed a CloudFormation stack that creates an RDS instance, but the creation failed after 30 minutes due to an invalid parameter. The stack rolled back, but the failed RDS instance took another 20 minutes to delete. How can you improve this experience?",
+    "options": [
+      "Use CloudFormation change sets to preview changes before execution, validate templates with 'aws cloudformation validate-template', use shorter resource creation timeouts, implement stack policies to protect critical resources, and test in a sandbox account first with smaller/cheaper resource configurations",
+      "Avoid CloudFormation and provision resources manually for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Set DisableRollback=true to keep failed resources for debugging for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Always test with large EC2 instances to speed up creation for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use CloudFormation change sets to preview changes before execution, validate templates with 'aws cloudformation validate-template', use shorter resource creation timeouts, implement stack policies to protect critical resources, and test in a sandbox account first with smaller/cheaper resource configurations",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-036",
+    "question": "Your CloudWatch alarm for high CPU on an Auto Scaling Group triggered 10 scale-out events in 5 minutes due to a brief traffic spike, then 10 scale-in events when traffic dropped - causing instance thrashing. How do you prevent this?",
+    "options": [
+      "Set the maximum instance count to 1 for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Disable Auto Scaling during traffic spikes for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use scheduled scaling instead of dynamic scaling for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Implement Auto Scaling cooldown periods (prevent scaling actions during cooldown), use step scaling policies with wider step ranges, add scale-in protection for recently launched instances, use target tracking scaling (more stable), and set a minimum instance count to avoid over-scaling-in"
+    ],
+    "correct_answer": "Implement Auto Scaling cooldown periods (prevent scaling actions during cooldown), use step scaling policies with wider step ranges, add scale-in protection for recently launched instances, use target tracking scaling (more stable), and set a minimum instance count to avoid over-scaling-in",
+    "topic": "Observability",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "observability"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-037",
+    "question": "You need to set up a VPC with public and private subnets across 3 AZs. Web servers are in public subnets, application servers in private subnets need to download patches from the internet. What is the correct networking setup?",
+    "options": [
+      "Public subnets have route to Internet Gateway; private subnets route outbound traffic through a NAT Gateway (placed in a public subnet) - each AZ should have its own NAT Gateway for high availability; use NACLs and security groups for defense in depth",
+      "Private subnets don't need internet access; use VPC endpoints for everything for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Put all instances in public subnets with security groups for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use a VPN connection for all internet access for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Public subnets have route to Internet Gateway; private subnets route outbound traffic through a NAT Gateway (placed in a public subnet) - each AZ should have its own NAT Gateway for high availability; use NACLs and security groups for defense in depth",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-038",
+    "question": "An application uses CloudWatch custom metrics to track business KPIs. Publishing 50 custom metrics every 10 seconds is costing $500/month. How can you reduce costs while maintaining the same monitoring granularity?",
+    "options": [
+      "Disable all custom metrics and rely on AWS default metrics for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Publish metrics to S3 instead of CloudWatch for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Publish metrics every 1 second instead for better granularity for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use CloudWatch Embedded Metric Format (EMF) to batch-publish metrics from application logs at lower cost, use metric math instead of separate derived metrics, aggregate metrics before publishing (pre-compute percentiles), and consider using a third-party solution (Prometheus/Grafana) for high-cardinality metrics"
+    ],
+    "correct_answer": "Use CloudWatch Embedded Metric Format (EMF) to batch-publish metrics from application logs at lower cost, use metric math instead of separate derived metrics, aggregate metrics before publishing (pre-compute percentiles), and consider using a third-party solution (Prometheus/Grafana) for high-cardinality metrics",
+    "topic": "IAM and STS",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "observability"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-039",
+    "question": "Your ECS service has a task definition requesting 2 vCPU and 4GB memory, but the application inside the container only uses 0.5 vCPU and 1GB on average. What is the cost implication and how do you right-size?",
+    "options": [
+      "Fargate always uses the minimum required resources automatically for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Fargate charges based on requested (not used) vCPU and memory - you're paying 4x more than needed; use CloudWatch Container Insights to monitor actual CPU/memory utilization, reduce task definition resources to match actual usage with headroom (e.g., 1 vCPU, 2GB), and use AWS Compute Optimizer for recommendations",
+      "Over-provisioning has no cost impact on Fargate for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "You can only change task resources by creating a new ECS cluster for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Fargate charges based on requested (not used) vCPU and memory - you're paying 4x more than needed; use CloudWatch Container Insights to monitor actual CPU/memory utilization, reduce task definition resources to match actual usage with headroom (e.g., 1 vCPU, 2GB), and use AWS Compute Optimizer for recommendations",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-040",
+    "question": "Your S3 bucket receives 50,000 PUT requests per second for IoT sensor data with keys like 'sensors/2024/01/15/device-001/data.json'. Recently, you started getting 503 Slow Down errors. What is the issue?",
+    "options": [
+      "Enable S3 Transfer Acceleration for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "While S3 supports 3,500 PUT/s per prefix, all writes share the 'sensors/' prefix creating a hot partition - add randomness to key prefixes (e.g., hash-based prefixing) to distribute writes across S3's internal partitions, or use date-based prefixes that naturally spread the load",
+      "Switch from S3 to EBS for high-throughput writes for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "S3 has a hard limit of 100 requests per second for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "While S3 supports 3,500 PUT/s per prefix, all writes share the 'sensors/' prefix creating a hot partition - add randomness to key prefixes (e.g., hash-based prefixing) to distribute writes across S3's internal partitions, or use date-based prefixes that naturally spread the load",
+    "topic": "IAM and STS",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-041",
+    "question": "Your CI/CD pipeline deploys to ECS using CodePipeline. A bad deployment caused an outage because all containers were replaced simultaneously. How do you implement a safer deployment strategy?",
+    "options": [
+      "Deploy to a single container first and test manually for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use CodeCommit webhooks to notify the team before deploying for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Deploy only on weekends to minimize impact for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Implement blue/green deployment using CodeDeploy with ECS (creates new task set, shifts traffic gradually), configure automatic rollback on CloudWatch alarms (5xx rate, latency), set minimum healthy percent to 100% in the ECS service to ensure old tasks remain until new ones are healthy"
+    ],
+    "correct_answer": "Implement blue/green deployment using CodeDeploy with ECS (creates new task set, shifts traffic gradually), configure automatic rollback on CloudWatch alarms (5xx rate, latency), set minimum healthy percent to 100% in the ECS service to ensure old tasks remain until new ones are healthy",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-042",
+    "question": "Your data lake on S3 has grown to 500TB. Data analysts are running Athena queries that scan the entire dataset for each query, resulting in high costs and slow queries. How do you optimize?",
+    "options": [
+      "Partition data in S3 by date/region/type (e.g., s3://bucket/year=2024/month=01/region=us/), convert to columnar format (Parquet/ORC) for column pruning, use AWS Glue Crawler to maintain the data catalog, add partition projection for automatic partition management, and use Athena workgroups with per-query data scan limits",
+      "Compress all files to reduce scan costs for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Move all data to RDS for faster queries for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use larger Athena query concurrency for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Partition data in S3 by date/region/type (e.g., s3://bucket/year=2024/month=01/region=us/), convert to columnar format (Parquet/ORC) for column pruning, use AWS Glue Crawler to maintain the data catalog, add partition projection for automatic partition management, and use Athena workgroups with per-query data scan limits",
+    "topic": "IAM and STS",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-043",
+    "question": "A Step Functions workflow orchestrating a payment process needs to handle a scenario where the payment service is temporarily unavailable. What error handling pattern should you implement?",
+    "options": [
+      "Let the workflow fail and manually retry for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Set an infinite timeout on the payment step for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use a cron job to retry failed payments for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use Step Functions built-in retry with exponential backoff (Retry field with BackoffRate, MaxAttempts, IntervalSeconds), implement a Catch block that routes failures to a dead-letter queue or compensation workflow, and use the Parallel state with a timeout for the payment step"
+    ],
+    "correct_answer": "Use Step Functions built-in retry with exponential backoff (Retry field with BackoffRate, MaxAttempts, IntervalSeconds), implement a Catch block that routes failures to a dead-letter queue or compensation workflow, and use the Parallel state with a timeout for the payment step",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-044",
+    "question": "A team is using on-demand EC2 instances for a batch processing workload that runs nightly for 4-6 hours and can tolerate interruptions. How can they reduce costs by up to 90%?",
+    "options": [
+      "Use Spot Instances with diversified instance types and AZs, implement checkpointing so work can resume after interruption, use Spot Fleet or ASG with mixed instance types, and set a maximum price - Spot provides up to 90% discount for interruption-tolerant workloads",
+      "Run the workload on Lambda functions for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use smaller instance types running 24/7 instead for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Switch to Reserved Instances for the batch workload for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use Spot Instances with diversified instance types and AZs, implement checkpointing so work can resume after interruption, use Spot Fleet or ASG with mixed instance types, and set a maximum price - Spot provides up to 90% discount for interruption-tolerant workloads",
+    "topic": "IAM and STS",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-045",
+    "question": "Your application runs behind CloudFront and has been hit by a Layer 7 DDoS attack (HTTP flood). Rate limiting in the application is not sufficient. What AWS services can help?",
+    "options": [
+      "Use AWS WAF with rate-based rules attached to CloudFront, enable AWS Shield Advanced for DDoS protection with 24/7 DDoS Response Team, implement geo-blocking for suspicious regions, use WAF managed rules for common attack patterns, and configure CloudFront with origin failover",
+      "Disable CloudFront and expose the origin directly for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use Route 53 to block all traffic temporarily for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Increase EC2 instance sizes to absorb the traffic for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use AWS WAF with rate-based rules attached to CloudFront, enable AWS Shield Advanced for DDoS protection with 24/7 DDoS Response Team, implement geo-blocking for suspicious regions, use WAF managed rules for common attack patterns, and configure CloudFront with origin failover",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-046",
+    "question": "You're migrating from a monolith to microservices on AWS. During the transition, the monolith and new microservices need to coexist. What is the recommended migration pattern?",
+    "options": [
+      "Rewrite the entire monolith as microservices in one big bang release for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Freeze monolith development and only build new features as microservices for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Run both systems in parallel with manual data synchronization for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use the Strangler Fig pattern - gradually route specific API paths from the monolith to new microservices via ALB path-based routing or API Gateway, keeping the monolith as the default; migrate one bounded context at a time, ensuring data consistency between old and new services during the transition"
+    ],
+    "correct_answer": "Use the Strangler Fig pattern - gradually route specific API paths from the monolith to new microservices via ALB path-based routing or API Gateway, keeping the monolith as the default; migrate one bounded context at a time, ensuring data consistency between old and new services during the transition",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-047",
+    "question": "You're running containerized workloads on EKS and need to automatically scale both pods (application) and nodes (infrastructure) based on demand. What components do you need?",
+    "options": [
+      "Use a single large node and scale pods only for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Manually add EC2 instances when pods are pending for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use Lambda instead of EKS for auto-scaling for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Horizontal Pod Autoscaler (HPA) scales pods based on CPU/memory/custom metrics; Karpenter or Cluster Autoscaler scales nodes - Karpenter (preferred) provisions right-sized nodes faster by directly matching pod requirements to instance types, supports Spot and mixed instances, and removes unused nodes automatically"
+    ],
+    "correct_answer": "Horizontal Pod Autoscaler (HPA) scales pods based on CPU/memory/custom metrics; Karpenter or Cluster Autoscaler scales nodes - Karpenter (preferred) provisions right-sized nodes faster by directly matching pod requirements to instance types, supports Spot and mixed instances, and removes unused nodes automatically",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-048",
+    "question": "You need to migrate a 50TB on-premises Oracle database to AWS with minimal downtime. The database must remain operational during migration. What is the recommended approach?",
+    "options": [
+      "Use AWS Database Migration Service (DMS) with Schema Conversion Tool (SCT) for heterogeneous migration; set up continuous replication from on-premises to RDS/Aurora via DMS CDC (Change Data Capture), validate data consistency, then perform a cutover during a short maintenance window with DNS switch",
+      "Use S3 to transfer database files and import manually for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Stop the database, take a backup, and restore on RDS for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use AWS Snowball to ship the database for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use AWS Database Migration Service (DMS) with Schema Conversion Tool (SCT) for heterogeneous migration; set up continuous replication from on-premises to RDS/Aurora via DMS CDC (Change Data Capture), validate data consistency, then perform a cutover during a short maintenance window with DNS switch",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-049",
+    "question": "Your application uses SQS standard queues for order processing. Occasionally, orders are processed twice, causing double charges. How do you ensure exactly-once processing?",
+    "options": [
+      "Switch to SQS FIFO queues with content-based deduplication (or provide explicit MessageDeduplicationId), implement idempotent consumers using a deduplication table (DynamoDB with conditional writes), and ensure proper visibility timeout configuration to prevent re-delivery during processing",
+      "Use SNS instead of SQS for guaranteed delivery for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Increase the message retention period for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "SQS Standard queues guarantee exactly-once delivery for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Switch to SQS FIFO queues with content-based deduplication (or provide explicit MessageDeduplicationId), implement idempotent consumers using a deduplication table (DynamoDB with conditional writes), and ensure proper visibility timeout configuration to prevent re-delivery during processing",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-050",
+    "question": "An EC2 instance in a private subnet needs to access the S3 API. Currently, traffic routes through a NAT Gateway. What is the most cost-effective and secure alternative?",
+    "options": [
+      "Use AWS Direct Connect for S3 access for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use S3 Transfer Acceleration for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Move the EC2 instance to a public subnet for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Create an S3 Gateway VPC Endpoint - it's free, keeps traffic within the AWS network (never traverses the internet), supports S3 bucket policies for endpoint-based access control, and eliminates NAT Gateway data processing charges for S3 traffic"
+    ],
+    "correct_answer": "Create an S3 Gateway VPC Endpoint - it's free, keeps traffic within the AWS network (never traverses the internet), supports S3 bucket policies for endpoint-based access control, and eliminates NAT Gateway data processing charges for S3 traffic",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-051",
+    "question": "Your company needs to comply with HIPAA. You're storing PHI (Protected Health Information) in S3 and RDS. What encryption and access control measures are required?",
+    "options": [
+      "Use S3 public access with password-protected files for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "S3 default encryption is sufficient for HIPAA compliance for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Enable server-side encryption (SSE-KMS with CMK) for S3, encryption at rest and in transit for RDS, use VPC endpoints for S3 access, enable CloudTrail and S3 access logging, restrict access with bucket policies and IAM, enable MFA delete, and sign a BAA (Business Associate Agreement) with AWS",
+      "HIPAA only requires encryption in transit, not at rest for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Enable server-side encryption (SSE-KMS with CMK) for S3, encryption at rest and in transit for RDS, use VPC endpoints for S3 access, enable CloudTrail and S3 access logging, restrict access with bucket policies and IAM, enable MFA delete, and sign a BAA (Business Associate Agreement) with AWS",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-052",
+    "question": "Your application in VPC-A (10.0.0.0/16) needs to access a database in VPC-B (172.16.0.0/16) in a different AWS account. What are the options and their trade-offs?",
+    "options": [
+      "VPC Peering (free, low latency, but not transitive); AWS Transit Gateway (scalable hub-and-spoke, supports transitive routing, but costs more); or PrivateLink (for specific service endpoints, most restrictive but most secure) - VPC peering for simple two-VPC connectivity, Transit Gateway for multiple VPCs",
+      "Merge both VPCs into a single large VPC for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use S3 as an intermediary to transfer data between VPCs for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use public IP addresses for both VPCs for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "VPC Peering (free, low latency, but not transitive); AWS Transit Gateway (scalable hub-and-spoke, supports transitive routing, but costs more); or PrivateLink (for specific service endpoints, most restrictive but most secure) - VPC peering for simple two-VPC connectivity, Transit Gateway for multiple VPCs",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-053",
+    "question": "Your company's monthly AWS bill jumped from $50,000 to $120,000. CloudWatch shows no increase in traffic. What tools and approaches should you use to investigate?",
+    "options": [
+      "Contact AWS support; only they can explain the bill for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use AWS Cost Explorer (filter by service/region/tag), check for unattached EBS volumes/idle NAT Gateways/unused Elastic IPs, review AWS Trusted Advisor cost recommendations, enable Cost Allocation Tags, check for accidental resource provisioning in wrong regions, and review data transfer charges (often hidden cost drivers)",
+      "Just increase the budget and continue for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Delete all resources and start over for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use AWS Cost Explorer (filter by service/region/tag), check for unattached EBS volumes/idle NAT Gateways/unused Elastic IPs, review AWS Trusted Advisor cost recommendations, enable Cost Allocation Tags, check for accidental resource provisioning in wrong regions, and review data transfer charges (often hidden cost drivers)",
+    "topic": "Observability",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "observability"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-054",
+    "question": "Your CloudFront distribution serves a React SPA from S3. After deploying a new version, users still see the old version for up to 24 hours. How do you solve this?",
+    "options": [
+      "Create a CloudFront invalidation for '/*' after each deployment, or better yet - use content-hashed filenames for assets (e.g., main.a1b2c3.js) with long cache TTLs, and only invalidate index.html (which references the new hashed filenames)",
+      "Delete and recreate the CloudFront distribution for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Disable caching on CloudFront entirely for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use Route 53 to force DNS cache refresh for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Create a CloudFront invalidation for '/*' after each deployment, or better yet - use content-hashed filenames for assets (e.g., main.a1b2c3.js) with long cache TTLs, and only invalidate index.html (which references the new hashed filenames)",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-055",
+    "question": "What is the difference between S3 Standard, S3 Intelligent-Tiering, S3 Standard-IA, S3 One Zone-IA, and S3 Glacier Deep Archive in terms of use cases and cost?",
+    "options": [
+      "Glacier is the only option for compliance for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Standard-IA is more expensive than Standard for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "They all have the same performance and cost for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Standard: frequently accessed data (highest cost); Intelligent-Tiering: unknown access patterns (auto-moves between tiers); Standard-IA: infrequent access, still instant retrieval (lower storage, higher retrieval cost); One Zone-IA: same but single AZ (cheapest IA, less durable); Glacier Deep Archive: archival (cheapest, 12-48hr retrieval) - choose based on access frequency and retrieval time requirements"
+    ],
+    "correct_answer": "Standard: frequently accessed data (highest cost); Intelligent-Tiering: unknown access patterns (auto-moves between tiers); Standard-IA: infrequent access, still instant retrieval (lower storage, higher retrieval cost); One Zone-IA: same but single AZ (cheapest IA, less durable); Glacier Deep Archive: archival (cheapest, 12-48hr retrieval) - choose based on access frequency and retrieval time requirements",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-056",
+    "question": "Your Aurora MySQL cluster has a primary instance and 2 read replicas. Read queries are slow during peak hours. What strategies can improve read performance?",
+    "options": [
+      "Upgrade the primary instance to the largest available for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Add more read replicas and use Aurora Reader endpoint for load distribution, enable Aurora Auto Scaling for read replicas based on CPU/connections, implement application-level read/write splitting, use ElastiCache for frequently accessed query results, and review slow query logs to optimize expensive queries",
+      "Enable Multi-AZ on the primary instance for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Switch to DynamoDB for all queries for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Add more read replicas and use Aurora Reader endpoint for load distribution, enable Aurora Auto Scaling for read replicas based on CPU/connections, implement application-level read/write splitting, use ElastiCache for frequently accessed query results, and review slow query logs to optimize expensive queries",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-057",
+    "question": "An ECS Fargate service behind an ALB is experiencing intermittent 502 Bad Gateway errors. The application logs show no errors. What should you investigate?",
+    "options": [
+      "Increase the ECS task CPU to maximum for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "502 errors always indicate a DNS issue for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Check ALB target group health checks (containers may be failing health checks before being fully ready), verify the container's health check path returns 200, check deregistration delay settings, ensure the container doesn't exit before draining completes, and examine ALB access logs for timing patterns",
+      "The ALB is misconfigured and should be replaced with NLB for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Check ALB target group health checks (containers may be failing health checks before being fully ready), verify the container's health check path returns 200, check deregistration delay settings, ensure the container doesn't exit before draining completes, and examine ALB access logs for timing patterns",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-058",
+    "question": "You need to enable cross-region replication for an S3 bucket. After enabling it, only new objects are replicated. How do you replicate existing objects?",
+    "options": [
+      "Use AWS DataSync to copy existing objects once for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Delete and re-upload all existing objects for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Cross-region replication automatically replicates all existing objects for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use S3 Batch Replication (via S3 Batch Operations) to replicate existing objects - CRR only applies to new objects uploaded after the rule is enabled; Batch Replication can be initiated from the replication configuration and handles retry logic for failed replications"
+    ],
+    "correct_answer": "Use S3 Batch Replication (via S3 Batch Operations) to replicate existing objects - CRR only applies to new objects uploaded after the rule is enabled; Batch Replication can be initiated from the replication configuration and handles retry logic for failed replications",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-059",
+    "question": "You're choosing between ECS Fargate and EKS for running containerized microservices. What are the key differences that should influence your decision?",
+    "options": [
+      "ECS Fargate cannot auto-scale; EKS can for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "EKS only supports Java applications for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "ECS Fargate is serverless (no cluster management), simpler to operate, tightly integrated with AWS services, and good for AWS-native teams; EKS provides full Kubernetes (portable, rich ecosystem, complex), better for multi-cloud strategies or teams with Kubernetes expertise - cost and operational complexity are higher with EKS",
+      "ECS and EKS are identical services with different names for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "ECS Fargate is serverless (no cluster management), simpler to operate, tightly integrated with AWS services, and good for AWS-native teams; EKS provides full Kubernetes (portable, rich ecosystem, complex), better for multi-cloud strategies or teams with Kubernetes expertise - cost and operational complexity are higher with EKS",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-060",
+    "question": "Your CloudFormation stack update is stuck in UPDATE_ROLLBACK_FAILED state. You cannot update, rollback, or delete the stack. What options do you have?",
+    "options": [
+      "Create a new AWS account and migrate all resources for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Wait indefinitely; CloudFormation will eventually resolve it for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use 'ContinueUpdateRollback' API with resources-to-skip parameter to skip the problematic resources that are preventing rollback, then fix or manually delete those resources; alternatively, contact AWS support for stacks in truly unrecoverable states - prevention: use stack policies and change sets",
+      "Delete the stack using the AWS CLI force flag for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use 'ContinueUpdateRollback' API with resources-to-skip parameter to skip the problematic resources that are preventing rollback, then fix or manually delete those resources; alternatively, contact AWS support for stacks in truly unrecoverable states - prevention: use stack policies and change sets",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-061",
+    "question": "What is the difference between an Application Load Balancer (ALB) and a Network Load Balancer (NLB)? When would you choose one over the other?",
+    "options": [
+      "ALB supports TCP; NLB supports HTTP only for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "NLB is always cheaper than ALB for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "They are identical; ALB is just the newer version of NLB for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "ALB operates at Layer 7 (HTTP/HTTPS) with content-based routing, host/path rules, and WAF integration; NLB operates at Layer 4 (TCP/UDP) with ultra-low latency, static IPs, and millions of requests per second - use ALB for HTTP APIs, NLB for TCP/gaming/IoT/gRPC or when you need static IPs"
+    ],
+    "correct_answer": "ALB operates at Layer 7 (HTTP/HTTPS) with content-based routing, host/path rules, and WAF integration; NLB operates at Layer 4 (TCP/UDP) with ultra-low latency, static IPs, and millions of requests per second - use ALB for HTTP APIs, NLB for TCP/gaming/IoT/gRPC or when you need static IPs",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-062",
+    "question": "You need to run a one-time data processing job that requires 256 vCPUs and 512GB RAM for 4 hours. What is the most cost-effective AWS service?",
+    "options": [
+      "Use Lambda functions chained together for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use AWS Batch with Spot Instances - Batch automatically provisions the optimal compute resources, manages job queues, and uses Spot Instances for up to 90% cost savings; for a single large job, it handles resource allocation and cleanup automatically",
+      "Use a large EC2 on-demand instance for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use 256 t2.micro instances in parallel for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use AWS Batch with Spot Instances - Batch automatically provisions the optimal compute resources, manages job queues, and uses Spot Instances for up to 90% cost savings; for a single large job, it handles resource allocation and cleanup automatically",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-063",
+    "question": "You notice your NAT Gateway charges are $2,000/month for a development environment. What is likely causing this and how can you reduce costs?",
+    "options": [
+      "NAT Gateway has a fixed monthly fee that cannot be reduced for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use a t2.micro NAT instance instead for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "NAT Gateway charges per GB of data processed - common culprits: S3/DynamoDB traffic going through NAT instead of VPC Endpoints (Gateway Endpoints are free), ECR image pulls, or excessive logging traffic; add S3 and DynamoDB Gateway VPC Endpoints, use Interface VPC Endpoints for other services, and review traffic flow with VPC Flow Logs",
+      "Replace NAT Gateway with an Internet Gateway for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "NAT Gateway charges per GB of data processed - common culprits: S3/DynamoDB traffic going through NAT instead of VPC Endpoints (Gateway Endpoints are free), ECR image pulls, or excessive logging traffic; add S3 and DynamoDB Gateway VPC Endpoints, use Interface VPC Endpoints for other services, and review traffic flow with VPC Flow Logs",
+    "topic": "IAM and STS",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-064",
+    "question": "A developer accidentally committed AWS access keys to a public GitHub repository. What immediate actions should you take?",
+    "options": [
+      "Change the AWS account password for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Immediately rotate/deactivate the compromised access keys in IAM, check CloudTrail logs for unauthorized API calls during the exposure window, review and revoke any resources created by the compromised keys, enable AWS GuardDuty for ongoing threat detection, and implement secrets management (AWS Secrets Manager/SSM Parameter Store) with automated rotation",
+      "Delete the GitHub commit and the keys will be safe for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Enable MFA on the root account only for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Immediately rotate/deactivate the compromised access keys in IAM, check CloudTrail logs for unauthorized API calls during the exposure window, review and revoke any resources created by the compromised keys, enable AWS GuardDuty for ongoing threat detection, and implement secrets management (AWS Secrets Manager/SSM Parameter Store) with automated rotation",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-065",
+    "question": "You need to implement mutual TLS (mTLS) authentication between microservices running on ECS. What AWS services can help?",
+    "options": [
+      "Use Security Groups to authenticate services for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use API Keys stored in environment variables for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Use AWS App Mesh (service mesh) with Envoy proxies for automatic mTLS between services, or AWS Certificate Manager Private CA to issue client certificates - App Mesh handles certificate rotation and provides observability; alternatively, use ECS Service Connect with TLS enabled",
+      "Use IAM roles for all service-to-service authentication for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Use AWS App Mesh (service mesh) with Envoy proxies for automatic mTLS between services, or AWS Certificate Manager Private CA to issue client certificates - App Mesh handles certificate rotation and provides observability; alternatively, use ECS Service Connect with TLS enabled",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-066",
+    "question": "What is the difference between CloudFormation drift detection and AWS Config rules for infrastructure compliance?",
+    "options": [
+      "CloudFormation drift detection checks if actual resource configurations have diverged from the CloudFormation template definition (point-in-time check); AWS Config continuously monitors resource configurations against compliance rules, maintains a configuration timeline, and can trigger automatic remediation - Config provides continuous monitoring, drift detection is on-demand",
+      "Drift detection is for EC2 only; Config is for S3 only for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "AWS Config replaces CloudFormation entirely for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "They are the same feature for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "CloudFormation drift detection checks if actual resource configurations have diverged from the CloudFormation template definition (point-in-time check); AWS Config continuously monitors resource configurations against compliance rules, maintains a configuration timeline, and can trigger automatic remediation - Config provides continuous monitoring, drift detection is on-demand",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-067",
+    "question": "What is the key difference between Amazon Cognito User Pools and Identity Pools (Federated Identities)?",
+    "options": [
+      "User Pools are for mobile apps; Identity Pools are for web apps for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "They are the same service with different names for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "Identity Pools replace IAM entirely for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "User Pools handle user authentication (sign-up, sign-in, tokens, MFA) - like a user directory; Identity Pools provide temporary AWS credentials for accessing AWS services (S3, DynamoDB) by exchanging tokens from User Pools or external IdPs (Google, Facebook) for IAM role credentials - they're often used together"
+    ],
+    "correct_answer": "User Pools handle user authentication (sign-up, sign-in, tokens, MFA) - like a user directory; Identity Pools provide temporary AWS credentials for accessing AWS services (S3, DynamoDB) by exchanging tokens from User Pools or external IdPs (Google, Facebook) for IAM role credentials - they're often used together",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-068",
+    "question": "What are the key differences between Amazon SQS and Amazon MSK (Managed Kafka) for message processing?",
+    "options": [
+      "SQS and MSK are interchangeable for all use cases for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "SQS supports ordering; MSK does not for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "MSK is serverless; SQS requires provisioned capacity for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario for that production scenario",
+      "SQS is serverless, pay-per-message, simple queue semantics, auto-scaling, and best for decoupling services; MSK provides persistent ordered log streams, consumer groups, high throughput, message replay, and is better for event streaming, real-time analytics, and event sourcing architectures - SQS for task queues, MSK for event streams"
+    ],
+    "correct_answer": "SQS is serverless, pay-per-message, simple queue semantics, auto-scaling, and best for decoupling services; MSK provides persistent ordered log streams, consumer groups, high throughput, message replay, and is better for event streaming, real-time analytics, and event sourcing architectures - SQS for task queues, MSK for event streams",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-069",
+    "question": "A Spring Boot service reports healthy even when its Kafka publisher cannot send messages because the readiness endpoint checks only JVM liveness. What is the gap?",
+    "options": [
+      "Readiness is not validating a dependency the service needs before it should receive live traffic.",
+      "Kafka failures should appear only on the liveness endpoint, never readiness. for that production scenario",
+      "Spring Boot forbids dependency checks inside readiness probes. for that production scenario",
+      "Traffic routing is unrelated to readiness once the JVM has started. for that production scenario"
+    ],
+    "correct_answer": "Readiness is not validating a dependency the service needs before it should receive live traffic.",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "kafka",
+      "readiness",
+      "spring-boot"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-070",
+    "question": "Which production-readiness improvement is strongest for a Spring Boot service that currently exposes only a ping endpoint?",
+    "options": [
+      "Separate liveness from readiness and include dependency-aware health signals plus deployment-time observability.",
+      "Return HTTP 200 from every health endpoint so load balancers never drain traffic. for that production scenario",
+      "Disable health groups and rely on thread dumps whenever the service degrades. for that production scenario",
+      "Expose heap usage only in logs because health endpoints should never mention dependencies. for that production scenario"
+    ],
+    "correct_answer": "Separate liveness from readiness and include dependency-aware health signals plus deployment-time observability.",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "health",
+      "operations",
+      "spring-boot"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-071",
+    "question": "A Boot API starts accepting traffic before Flyway migrations complete, causing random SQL failures during rollout. What is the main release-risk?",
+    "options": [
+      "The instance becomes ready before its schema state is actually safe for production traffic.",
+      "Flyway always blocks the network port until every migration finishes.",
+      "SQL failures during startup are harmless because the first request retries them automatically.",
+      "Schema drift can occur only when blue-green deployment is disabled."
+    ],
+    "correct_answer": "The instance becomes ready before its schema state is actually safe for production traffic.",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "database",
+      "deployments",
+      "spring-boot"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-072",
+    "question": "Which deployment design is safer when a Boot service depends on migrations, warm caches, and message subscriptions before taking live traffic?",
+    "options": [
+      "Delay readiness until startup tasks complete and the instance can serve real requests without predictable failure.",
+      "Mark the instance live and ready as soon as the JVM opens the HTTP port. for that production scenario",
+      "Disable readiness probes because startup dependencies slow down scale-out. for that production scenario",
+      "Use only liveness probes and let the load balancer discover failures by retry volume. for that production scenario"
+    ],
+    "correct_answer": "Delay readiness until startup tasks complete and the instance can serve real requests without predictable failure.",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "deployments",
+      "readiness",
+      "spring-boot"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-073",
+    "question": "A service ships without request IDs in logs, metrics, or traces. During an incident, teams cannot follow one order across services. What is missing?",
+    "options": [
+      "The service lacks correlated observability, so one business request cannot be stitched across telemetry signals.",
+      "Distributed systems require only logs; metrics and traces are optional duplicates. for that production scenario",
+      "Correlation IDs are needed only for asynchronous systems, not HTTP APIs. for that production scenario",
+      "CloudWatch creates request IDs automatically for every custom log line. for that production scenario for that production scenario"
+    ],
+    "correct_answer": "The service lacks correlated observability, so one business request cannot be stitched across telemetry signals.",
+    "topic": "Spring Boot Production Readiness",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "correlation",
+      "observability",
+      "spring-boot"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-074",
+    "question": "An internal team enables every Actuator endpoint on the public ingress because it is 'only for non-prod'. Which risk should be flagged first?",
+    "options": [
+      "Operational endpoints can leak configuration, environment, or diagnostic data that should stay behind trusted boundaries.",
+      "Actuator endpoints are safe in public because they return JSON instead of HTML. for that production scenario",
+      "Only /health is sensitive; every other Actuator endpoint is read-only and harmless. for that production scenario",
+      "Actuator exposure matters only when the application does not use TLS. for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Operational endpoints can leak configuration, environment, or diagnostic data that should stay behind trusted boundaries.",
+    "topic": "Actuator and Management Security",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "actuator",
+      "ingress",
+      "security"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-075",
+    "question": "Which Actuator exposure pattern is safer for production?",
+    "options": [
+      "Expose only the minimum endpoints needed, keep sensitive ones on a protected management plane, and enforce authentication.",
+      "Expose every endpoint so SREs can troubleshoot without changing configuration during incidents. for that production scenario",
+      "Expose /env publicly because it helps clients self-diagnose request problems. for that production scenario",
+      "Expose /heapdump publicly but rate-limit it to once per minute. for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Expose only the minimum endpoints needed, keep sensitive ones on a protected management plane, and enforce authentication.",
+    "topic": "Actuator and Management Security",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "actuator",
+      "least-privilege",
+      "security"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-076",
+    "question": "A production incident requires heap analysis, but the service exposes /heapdump on the same public gateway as the customer API. Why is that dangerous?",
+    "options": [
+      "A heap dump can contain secrets and user data, and exposing it publicly creates an unnecessary high-impact attack path.",
+      "Heap dumps are safe to expose because only Java tooling can read them. for that production scenario",
+      "The endpoint is harmless as long as the response body is compressed. for that production scenario for that production scenario",
+      "Only /threaddump is sensitive; /heapdump contains structure but no actual data. for that production scenario"
+    ],
+    "correct_answer": "A heap dump can contain secrets and user data, and exposing it publicly creates an unnecessary high-impact attack path.",
+    "topic": "Actuator and Management Security",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "actuator",
+      "heapdump",
+      "security"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-077",
+    "question": "A team wants to expose /prometheus and /health publicly while keeping all other management endpoints internal. What is the key design principle?",
+    "options": [
+      "Management exposure should be deliberately segmented so monitoring gets what it needs without broadening diagnostic attack surface.",
+      "Public exposure is acceptable only if every endpoint returns less than 1 KB of JSON. for that production scenario",
+      "Prometheus scraping requires every Actuator endpoint to share one public base path. for that production scenario for that production scenario",
+      "Internal endpoints become safe once /health is also public. for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Management exposure should be deliberately segmented so monitoring gets what it needs without broadening diagnostic attack surface.",
+    "topic": "Actuator and Management Security",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "actuator",
+      "prometheus",
+      "security"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-078",
+    "question": "A misconfigured reverse proxy exposes /env and /configprops. During incident review, why is this treated as a security bug and not just an ops mistake?",
+    "options": [
+      "Those endpoints can reveal secrets, internal topology, and configuration assumptions that materially increase attacker leverage.",
+      "The problem is cosmetic because Actuator redacts every sensitive key by default in all cases. for that production scenario",
+      "Configuration endpoints are safe if the service also exposes a health check. for that production scenario for that production scenario",
+      "Reverse proxies strip sensitive Actuator payloads before clients can read them. for that production scenario"
+    ],
+    "correct_answer": "Those endpoints can reveal secrets, internal topology, and configuration assumptions that materially increase attacker leverage.",
+    "topic": "Actuator and Management Security",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "actuator",
+      "config",
+      "security"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-079",
+    "question": "A Java service runs fine on a developer laptop because the AWS profile is configured locally, but it fails in ECS with 'Unable to load credentials'. What is the most likely cause?",
+    "options": [
+      "The runtime does not have a valid task role or other provider in the default credentials chain available in that environment.",
+      "DefaultCredentialsProvider reads credentials only from ~/.aws even inside ECS. for that production scenario",
+      "ECS injects credentials only for Python and Node runtimes, not Java. for that production scenario for that production scenario",
+      "The AWS SDK v2 requires static keys whenever the service runs inside containers. for that production scenario"
+    ],
+    "correct_answer": "The runtime does not have a valid task role or other provider in the default credentials chain available in that environment.",
+    "topic": "AWS SDK v2 Credentials",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "aws-sdk-v2",
+      "credentials",
+      "ecs"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-080",
+    "question": "Which credential strategy is preferred for a Java service on ECS or EC2?",
+    "options": [
+      "Use the default credentials chain with a task role or instance profile instead of baking static keys into configuration.",
+      "Store long-lived access keys in application.yml so every environment behaves the same way. for that production scenario",
+      "Pass credentials through system properties only, because the SDK ignores role-based providers by default. for that production scenario",
+      "Create one IAM user per microservice instance and rotate the passwords weekly. for that production scenario"
+    ],
+    "correct_answer": "Use the default credentials chain with a task role or instance profile instead of baking static keys into configuration.",
+    "topic": "AWS SDK v2 Credentials",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "aws-sdk-v2",
+      "credentials",
+      "iam-roles"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-081",
+    "question": "A service accidentally sets AWS_ACCESS_KEY_ID in the container image and also assigns an ECS task role. Why can that be dangerous?",
+    "options": [
+      "Environment variables can override the role-based path, causing the service to use the wrong credentials everywhere the image runs.",
+      "The SDK always merges both providers into one stronger credential set. for that production scenario for that production scenario",
+      "Task roles take precedence over every other provider, so the environment variable is ignored safely. for that production scenario",
+      "The service will fail to start because the SDK forbids multiple credential sources. for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Environment variables can override the role-based path, causing the service to use the wrong credentials everywhere the image runs.",
+    "topic": "AWS SDK v2 Credentials",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "aws-sdk-v2",
+      "containers",
+      "credentials"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-082",
+    "question": "A deployment role in account A cannot assume a target role in account B even though the caller policy allows sts:AssumeRole. What is the most likely missing piece?",
+    "options": [
+      "The target role trust policy does not trust the caller principal from account A.",
+      "AssumeRole works with caller permissions only; trust policies are optional for cross-account use.",
+      "The SDK requires both roles to exist in the same region.",
+      "Cross-account AssumeRole fails unless the source role also has s3:ListBucket."
+    ],
+    "correct_answer": "The target role trust policy does not trust the caller principal from account A.",
+    "topic": "IAM and STS",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "assumerole",
+      "iam",
+      "sts"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-083",
+    "question": "Which IAM design is most appropriate when one workload in account A must deploy into account B?",
+    "options": [
+      "Create a role in account B with a narrow permission set and a trust policy that explicitly allows the source principal in account A.",
+      "Share one IAM user and long-lived secret across both accounts to reduce role complexity. for that production scenario",
+      "Attach AdministratorAccess to the source role so cross-account API calls inherit all rights automatically. for that production scenario",
+      "Copy the target account's root credentials into AWS Secrets Manager and load them at runtime. for that production scenario"
+    ],
+    "correct_answer": "Create a role in account B with a narrow permission set and a trust policy that explicitly allows the source principal in account A.",
+    "topic": "IAM and STS",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "iam",
+      "least-privilege",
+      "sts"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-084",
+    "question": "A batch job assumes a role successfully at startup, then begins failing three hours later with expired-token errors. What is the most likely issue?",
+    "options": [
+      "The workload is holding temporary STS credentials too long instead of refreshing them through the provider chain.",
+      "STS credentials never expire once the first API call succeeds. for that production scenario",
+      "The AWS SDK v2 refreshes temporary credentials only for Lambda, not long-running services. for that production scenario",
+      "Role sessions expire only when the JVM restarts and loses its system properties. for that production scenario"
+    ],
+    "correct_answer": "The workload is holding temporary STS credentials too long instead of refreshing them through the provider chain.",
+    "topic": "IAM and STS",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "refresh",
+      "sts",
+      "temporary-credentials"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-085",
+    "question": "A Java 21 service in EKS uses IRSA, but engineers keep debugging ~/.aws/credentials inside the container. What should they focus on first?",
+    "options": [
+      "Verify that the pod service account is correctly bound to the IAM role and that the web-identity provider path is available to the SDK.",
+      "Copy a personal developer profile into the image so the SDK has a guaranteed local fallback. for that production scenario",
+      "Disable IRSA because the Java SDK v2 does not support web-identity credentials. for that production scenario for that production scenario",
+      "Switch the service to long-lived IAM user keys because Kubernetes hides all role-based credentials. for that production scenario"
+    ],
+    "correct_answer": "Verify that the pod service account is correctly bound to the IAM role and that the web-identity provider path is available to the SDK.",
+    "topic": "AWS SDK v2 Credentials",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "aws-sdk-v2",
+      "irsa",
+      "web-identity"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-086",
+    "question": "A team hard-codes Region.US_EAST_1 in one SDK client while the rest of the platform runs in eu-west-1. What production risk does that create?",
+    "options": [
+      "The service can read or write the wrong regional resources even when credentials are otherwise valid.",
+      "The SDK automatically rewrites hard-coded regions to the ECS cluster region at runtime.",
+      "Regional mismatches affect only S3 and have no impact on other AWS services. for that production scenario",
+      "The client falls back to the instance metadata region whenever a static region is wrong."
+    ],
+    "correct_answer": "The service can read or write the wrong regional resources even when credentials are otherwise valid.",
+    "topic": "AWS SDK v2 Credentials",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "aws-sdk-v2",
+      "configuration",
+      "region"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-087",
+    "question": "A Java Lambda uses SnapStart and loads an OAuth token into a static field during initialization. Hours later, restored invocations fail authentication. Why?",
+    "options": [
+      "SnapStart can restore the pre-initialized memory image, so short-lived secrets captured at init can be stale after restore.",
+      "SnapStart disables all static fields and reloads them before each invocation. for that production scenario",
+      "OAuth tokens become invalid only when Lambda concurrency exceeds one. for that production scenario for that production scenario",
+      "Static fields are safe with SnapStart as long as they were created before the first request. for that production scenario"
+    ],
+    "correct_answer": "SnapStart can restore the pre-initialized memory image, so short-lived secrets captured at init can be stale after restore.",
+    "topic": "Lambda and SnapStart",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "lambda",
+      "secrets",
+      "snapstart"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-088",
+    "question": "Which initialization pattern is safer for Java Lambda functions using SnapStart?",
+    "options": [
+      "Cache only data that stays valid across restore and refresh volatile secrets or tokens after the function resumes.",
+      "Move every secret into a static field so SnapStart never has to retrieve it again. for that production scenario",
+      "Disable environment variables because SnapStart restores them incorrectly. for that production scenario",
+      "Load every dependency lazily inside the handler and avoid any initialization outside it. for that production scenario"
+    ],
+    "correct_answer": "Cache only data that stays valid across restore and refresh volatile secrets or tokens after the function resumes.",
+    "topic": "Lambda and SnapStart",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "initialization",
+      "lambda",
+      "snapstart"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-089",
+    "question": "A Lambda behind API Gateway returns 504s during traffic spikes, but the function logs often show only cold-start dominated invocations. What should engineers investigate first?",
+    "options": [
+      "The end-to-end path may be spending its budget in cold starts, init work, or downstream calls before API Gateway's timeout is reached.",
+      "API Gateway never times out Lambda integrations unless the function crashes. for that production scenario for that production scenario",
+      "The 504 proves the Lambda handler returned an invalid JSON body, not a latency issue. for that production scenario",
+      "Cold starts matter only for Python and Node runtimes, not Java. for that production scenario for that production scenario"
+    ],
+    "correct_answer": "The end-to-end path may be spending its budget in cold starts, init work, or downstream calls before API Gateway's timeout is reached.",
+    "topic": "Lambda and SnapStart",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-gateway",
+      "lambda",
+      "timeouts"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-090",
+    "question": "A Java Lambda processes duplicate S3 events and writes duplicate rows to DynamoDB. What is the most robust explanation?",
+    "options": [
+      "The event source and Lambda execution model are at-least-once, so the function needs idempotency instead of assuming one delivery.",
+      "DynamoDB duplicates rows automatically whenever a Lambda uses the Java runtime. for that production scenario for that production scenario",
+      "S3 guarantees exactly-once delivery, so duplicates prove the SDK retried the PutItem call twice. for that production scenario",
+      "Duplicate S3 events occur only when the bucket uses multipart uploads. for that production scenario for that production scenario"
+    ],
+    "correct_answer": "The event source and Lambda execution model are at-least-once, so the function needs idempotency instead of assuming one delivery.",
+    "topic": "Lambda and SnapStart",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "idempotency",
+      "lambda",
+      "s3-events"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-091",
+    "question": "Which Java Lambda design is safest for webhook processing under retries and duplicate deliveries?",
+    "options": [
+      "Persist an idempotency key or event identifier before side effects so repeated deliveries can be detected and skipped safely.",
+      "Increase the function timeout so retries stop happening. for that production scenario for that production scenario",
+      "Use a static Set in memory to remember every processed event forever. for that production scenario for that production scenario",
+      "Write side effects first and store the idempotency key only after success to avoid extra reads. for that production scenario"
+    ],
+    "correct_answer": "Persist an idempotency key or event identifier before side effects so repeated deliveries can be detected and skipped safely.",
+    "topic": "Lambda and SnapStart",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "idempotency",
+      "lambda",
+      "webhooks"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-092",
+    "question": "A service emits request logs and custom metrics, but neither includes the order ID or trace ID. What is the main observability loss?",
+    "options": [
+      "Teams cannot correlate symptoms across signals for one business request, which slows root-cause isolation.",
+      "CloudWatch rejects metrics unless every log line repeats the same identifier. for that production scenario",
+      "Tracing IDs are useful only for front-end telemetry, not backend services. for that production scenario",
+      "Metrics become invalid whenever logs omit the same business field. for that production scenario"
+    ],
+    "correct_answer": "Teams cannot correlate symptoms across signals for one business request, which slows root-cause isolation.",
+    "topic": "Observability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "correlation",
+      "metrics",
+      "observability"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-093",
+    "question": "Which instrumentation change best improves a Java microservice platform's ability to debug cross-service latency?",
+    "options": [
+      "Propagate trace context and consistent request IDs through logs, metrics, and downstream calls instead of instrumenting each signal in isolation.",
+      "Increase log volume so more stack traces are captured without changing any identifiers. for that production scenario for that production scenario",
+      "Store every request body in metrics because cardinality does not affect observability cost. for that production scenario",
+      "Disable sampling entirely and keep only access logs to simplify dashboards. for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Propagate trace context and consistent request IDs through logs, metrics, and downstream calls instead of instrumenting each signal in isolation.",
+    "topic": "Observability",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "correlation",
+      "observability",
+      "tracing"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-094",
+    "question": "An alarm fires on p95 latency, but the dashboard shows no breakdown by dependency, region, or response code. What is the operational weakness?",
+    "options": [
+      "The telemetry cannot narrow the symptom to a failing path, so engineers have alerting without actionable diagnosis.",
+      "Latency alarms should never be paired with dashboards because alerts must remain generic. for that production scenario",
+      "Response-code dimensions are useful only for synchronous systems, not cloud APIs. for that production scenario",
+      "CloudWatch metrics lose accuracy once more than one dimension is published. for that production scenario"
+    ],
+    "correct_answer": "The telemetry cannot narrow the symptom to a failing path, so engineers have alerting without actionable diagnosis.",
+    "topic": "Observability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "dashboards",
+      "latency",
+      "observability"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-095",
+    "question": "A platform enables tracing at the API layer but never propagates the context into downstream Kafka consumers. What debugging problem remains?",
+    "options": [
+      "The trace breaks across asynchronous boundaries, so end-to-end request flow cannot be reconstructed reliably.",
+      "Kafka carries trace context automatically even when applications never forward headers. for that production scenario",
+      "Asynchronous consumers do not need trace context because offsets already identify each message uniquely.",
+      "Tracing matters only for synchronous HTTP calls, not event-driven pipelines. for that production scenario"
+    ],
+    "correct_answer": "The trace breaks across asynchronous boundaries, so end-to-end request flow cannot be reconstructed reliably.",
+    "topic": "Observability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "kafka",
+      "observability",
+      "tracing"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-096",
+    "question": "An SQS consumer times out after 25 seconds, but the queue visibility timeout is 20 seconds and duplicate processing appears. What is the main root cause?",
+    "options": [
+      "Messages can become visible again before processing finishes, so another consumer can receive the same work.",
+      "SQS deletes the message as soon as the consumer starts, so duplicates point to a client bug.",
+      "Visibility timeout matters only for FIFO queues, not standard queues. for that production scenario",
+      "The timeout mismatch affects CloudWatch alarms but not message delivery behavior. for that production scenario"
+    ],
+    "correct_answer": "Messages can become visible again before processing finishes, so another consumer can receive the same work.",
+    "topic": "Cloud Runtime Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "duplicates",
+      "sqs",
+      "visibility-timeout"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-097",
+    "question": "Which remediation is strongest when retries and duplicate deliveries are already causing double-charging in a Java order workflow?",
+    "options": [
+      "Make the handler idempotent and align queue visibility, retry, and processing-time settings so the system tolerates repeats safely.",
+      "Increase only the JVM heap so each duplicate charge has more room to complete. for that production scenario",
+      "Disable all retries globally so the workflow never sees the same order twice. for that production scenario for that production scenario",
+      "Replace the queue with synchronous HTTP and rely on client timeouts for backpressure. for that production scenario"
+    ],
+    "correct_answer": "Make the handler idempotent and align queue visibility, retry, and processing-time settings so the system tolerates repeats safely.",
+    "topic": "Cloud Runtime Debugging",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "idempotency",
+      "retries",
+      "sqs"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-098",
+    "question": "A service retries outbound calls in the SDK, the HTTP client, and the workflow orchestrator. During a dependency outage, latency and queue depth spike everywhere. What is happening?",
+    "options": [
+      "Retry multiplication is amplifying one failure into a broader platform incident. in that implementation",
+      "Independent retry layers always reduce total work because each layer backs off on its own.",
+      "Queue depth cannot increase from retries unless the service uses synchronous JDBC. for that production scenario",
+      "Latency spikes prove the dependency is healthy and callers are just over-provisioned."
+    ],
+    "correct_answer": "Retry multiplication is amplifying one failure into a broader platform incident. in that implementation",
+    "topic": "Cloud Runtime Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "incident-response",
+      "latency",
+      "retries"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-099",
+    "question": "What is the strongest follow-up when a platform incident was caused by layered retries and no clear request correlation?",
+    "options": [
+      "Consolidate retry ownership, add end-to-end correlation, and publish dependency-level latency metrics before the next rollout.",
+      "Increase every timeout so retried requests have more time to pile up safely. for that production scenario",
+      "Disable dashboards during incidents so teams focus only on raw logs. for that production scenario for that production scenario",
+      "Move retries into finally blocks so they run after cleanup in every service. for that production scenario"
+    ],
+    "correct_answer": "Consolidate retry ownership, add end-to-end correlation, and publish dependency-level latency metrics before the next rollout.",
+    "topic": "Cloud Runtime Debugging",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "incident-response",
+      "observability",
+      "retries"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l3-100",
+    "question": "A Java service writes only aggregate success counts to CloudWatch, so a partial regional outage hides behind a stable global average. What observability gap exists?",
+    "options": [
+      "The metrics are missing dimensions that separate traffic by region, dependency, or failure class, so localized incidents stay masked.",
+      "CloudWatch cannot store dimensional metrics for Java services unless X-Ray is enabled first. for that production scenario",
+      "Regional outages always appear in global averages, so no additional dimensions are required. for that production scenario",
+      "Aggregated metrics are preferable because dimensions make alarms less accurate under load. for that production scenario for that production scenario"
+    ],
+    "correct_answer": "The metrics are missing dimensions that separate traffic by region, dependency, or failure class, so localized incidents stay masked.",
+    "topic": "Observability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "cloudwatch",
+      "dimensions",
+      "observability"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  }
+]

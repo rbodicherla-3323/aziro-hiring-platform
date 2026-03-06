@@ -6,10 +6,8 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='mcq/mcq.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v={{ ASSET_VERSION }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='mcq/mcq.css') }}?v={{ ASSET_VERSION }}">
 
     <style>
         :root {
@@ -105,9 +103,14 @@
     {% block content %}{% endblock %}
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+window.__AZIRO_PROCTORING_ENABLED = {{ "true" if proctoring_enabled else "false" }};
+</script>
 {% block extra_js %}{% endblock %}
+{% if proctoring_enabled %}
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script src="{{ url_for('static', filename='js/proctoring.js') }}"></script>
 <script src="{{ url_for('static', filename='js/proctoring_ai.js') }}"></script>
+{% endif %}
 </body>
 </html>

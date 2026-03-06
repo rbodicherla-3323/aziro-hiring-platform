@@ -1,0 +1,27 @@
+# Docker ignore — keep image lean
+__pycache__
+*.pyc
+*.pyo
+.git
+.gitignore
+.env
+.env.production
+.env.production.template
+*.md
+test_*.py
+check_counts.py
+fix_conflicts.py
+validate_questions.py
+instance/
+data/
+ssl/
+deploy/
+venv/
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+app/uploads/*.pdf
+app/runtime/reports/*.pdf
+app/runtime/proctoring/
+app/runtime/coding_exec_tmp/

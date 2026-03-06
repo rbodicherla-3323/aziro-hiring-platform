@@ -1,28 +1,24 @@
-﻿{% extends "base.html" %}
+{% extends "base.html" %}
 {% block title %}Generate Test  Aziro Hiring Platform{% endblock %}
 {% block breadcrumb %}Create Test{% endblock %}
 
 {% block head %}
 <style>
     .create-test-page {
-        --az-brand: #0d3b66;
-        --az-brand-2: #1f6feb;
-        --az-soft: #e7f0ff;
-        --az-ink: #1f2937;
+        --az-brand: #0f766e;
+        --az-brand-2: #14b8a6;
+        --az-soft: #f0fdfa;
+        --az-ink: #0f172a;
         --az-muted: #64748b;
-        --az-card-shadow: 0 14px 34px rgba(13, 59, 102, 0.10);
-        --az-card-border: #dbe6f4;
-        font-family: "Poppins", "Segoe UI", sans-serif;
-        background:
-            radial-gradient(1100px 500px at 88% -8%, rgba(31,111,235,0.10), transparent 58%),
-            radial-gradient(900px 460px at 8% -14%, rgba(13,59,102,0.09), transparent 52%);
-        border-radius: 20px;
+        --az-card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+        --az-card-border: #e2e8f0;
+                border-radius: 10px;
         padding-top: 6px;
         padding-bottom: 14px;
     }
     .page-header { margin-bottom: 20px; }
     .page-header h4 {
-        font-weight: 800;
+        font-weight: 600;
         color: var(--az-brand);
         margin-bottom: 6px;
         letter-spacing: 0.2px;
@@ -34,9 +30,9 @@
     }
     .mode-card {
         border: 1px solid var(--az-card-border);
-        border-radius: 18px;
+        border-radius: 10px;
         box-shadow: var(--az-card-shadow);
-        background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+        background: #ffffff;
     }
     .mode-option {
         display: inline-flex;
@@ -44,74 +40,130 @@
         gap: 8px;
         padding: 10px 20px;
         border-radius: 999px;
-        border: 1.5px solid #cfddf2;
+        border: 1px solid #e2e8f0;
         background: #fff;
         cursor: pointer;
         transition: all 0.24s ease;
         font-size: 0.85rem;
-        font-weight: 700;
+        font-weight: 500;
         color: #4b5563;
     }
     .mode-option:hover {
         transform: translateY(-1px);
         border-color: var(--az-brand-2);
         color: var(--az-brand);
-        box-shadow: 0 8px 20px rgba(13, 59, 102, 0.14);
+        box-shadow: 0 2px 8px rgba(15,118,110,0.10);
     }
     .mode-option.active {
-        background: linear-gradient(135deg, var(--az-brand) 0%, var(--az-brand-2) 100%);
+        background: var(--az-brand);
         color: #fff;
         border-color: transparent;
-        box-shadow: 0 10px 22px rgba(20, 80, 140, 0.28);
+        box-shadow: 0 1px 3px rgba(15,118,110,0.15);
     }
     .mode-option input[type="radio"] { display: none; }
     .candidate-card {
         border: 1px solid var(--az-card-border);
-        border-radius: 18px;
+        border-radius: 10px;
         padding: 24px;
         margin-bottom: 16px;
         position: relative;
-        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        background: #ffffff;
         transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
         box-shadow: var(--az-card-shadow);
     }
     .candidate-card:hover {
-        box-shadow: 0 18px 34px rgba(13, 59, 102, 0.16);
-        border-color: #b7cee9;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        border-color: #cbd5e1;
         transform: translateY(-2px);
     }
+    .upload-field-title {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: #334155;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 6px;
+    }
     .upload-zone {
-        border: 2px dashed #bed0e7;
-        border-radius: 14px;
-        padding: 18px 20px;
-        text-align: center;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 8px 10px;
+        text-align: left;
         cursor: pointer;
-        transition: all 0.24s ease;
-        background: linear-gradient(180deg, #ffffff 0%, #f4f9ff 100%);
+        transition: all 0.2s ease;
+        background: #fff;
         position: relative;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 42px;
     }
     .upload-zone:hover {
         border-color: var(--az-brand-2);
-        background: linear-gradient(180deg, #ffffff 0%, #edf5ff 100%);
-        box-shadow: 0 10px 22px rgba(31, 111, 235, 0.14);
+        box-shadow: 0 2px 8px rgba(15,118,110,0.10);
+        transform: translateY(-1px);
     }
     .upload-zone.has-file {
         border-color: #1e9e56;
-        background: linear-gradient(180deg, #f4fff7 0%, #ecfff2 100%);
+        background: #f4fff7;
         border-style: solid;
-        box-shadow: 0 10px 18px rgba(30, 158, 86, 0.13);
+        box-shadow: 0 2px 6px rgba(30,158,86,0.10);
     }
-    .upload-zone .upload-icon { font-size: 1.7rem; color: #8ca3bf; margin-bottom: 6px; }
-    .upload-zone.has-file .upload-icon { color: #1e9e56; }
-    .upload-zone .upload-label { font-size: 0.88rem; font-weight: 700; color: var(--az-ink); }
-    .upload-zone .upload-hint { font-size: 0.76rem; color: #8091a7; margin-top: 2px; }
-    .upload-zone .file-name { font-size: 0.78rem; color: #1e9e56; font-weight: 700; margin-top: 6px; word-break: break-all; }
+    .upload-zone .upload-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.78rem;
+        color: #64748b;
+        background: #f0fdfa;
+        margin-bottom: 0;
+        flex: 0 0 26px;
+    }
+    .upload-zone.has-file .upload-icon {
+        color: #1e9e56;
+        background: #e7f7ed;
+    }
+    .upload-zone .upload-label {
+        font-size: 0.73rem;
+        font-weight: 600;
+        color: #1f2937;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        flex: 0 0 auto;
+    }
+    .upload-zone .file-name {
+        font-size: 0.78rem;
+        color: #4b5563;
+        font-weight: 600;
+        margin-top: 0;
+        min-width: 0;
+        flex: 1 1 auto;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .upload-zone .file-name:empty::before {
+        content: "No file selected";
+        color: #8091a7;
+        font-weight: 500;
+    }
+    .upload-zone.has-file .file-name { color: #1e9e56; }
+    .upload-hint {
+        font-size: 0.7rem;
+        color: #8091a7;
+        margin-top: 4px;
+        padding-left: 2px;
+        line-height: 1.2;
+    }
     .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
     .auto-fill-badge { font-size: 0.65rem; padding: 2px 8px; border-radius: 10px; background: #e6f4ea; color: #137333; font-weight: 600; margin-left: 6px; display: none; }
     .auto-fill-badge.visible { display: inline; }
     .section-label {
         font-size: 0.82rem;
-        font-weight: 800;
+        font-weight: 600;
         color: var(--az-brand);
         text-transform: uppercase;
         letter-spacing: 0.75px;
@@ -123,7 +175,7 @@
     .section-label .section-line {
         flex: 1;
         height: 2px;
-        background: linear-gradient(90deg, #cfe0f5 0%, #eaf2fb 80%);
+        background: #e2e8f0;
         border-radius: 999px;
     }
     .remove-btn {
@@ -145,9 +197,9 @@
     }
     .remove-btn:hover { background: #c53030; color: #fff; }
     .action-bar {
-        background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+        background: #ffffff;
         border: 1px solid var(--az-card-border);
-        border-radius: 18px;
+        border-radius: 10px;
         box-shadow: var(--az-card-shadow);
         padding: 16px 24px;
         display: flex;
@@ -156,35 +208,44 @@
     }
     .action-bar .btn {
         border-radius: 12px;
-        font-weight: 700;
+        font-weight: 500;
         letter-spacing: 0.1px;
         padding: 9px 20px;
     }
     .action-bar .btn-primary {
-        background: linear-gradient(135deg, var(--az-brand) 0%, var(--az-brand-2) 100%);
+        background: var(--az-brand);
         border: none;
-        box-shadow: 0 10px 20px rgba(31, 111, 235, 0.20);
+        box-shadow: 0 1px 3px rgba(15,118,110,0.15);
     }
     .action-bar .btn-primary:hover {
         transform: translateY(-1px);
-        box-shadow: 0 12px 22px rgba(31, 111, 235, 0.24);
+        box-shadow: 0 2px 6px rgba(15,118,110,0.20);
     }
-    .create-test-page .form-label { font-weight: 700; color: #27384c; }
+    .create-test-page .form-label { font-weight: 500; color: #334155; }
     .create-test-page .form-control,
     .create-test-page .form-select {
         border-radius: 12px;
-        border: 1.5px solid #cfddf2;
+        border: 1px solid #e2e8f0;
         min-height: 46px;
         font-size: 0.95rem;
     }
     .create-test-page .form-control:focus,
     .create-test-page .form-select:focus {
         border-color: var(--az-brand-2);
-        box-shadow: 0 0 0 0.2rem rgba(31, 111, 235, 0.14);
+        box-shadow: 0 0 0 0.2rem rgba(15,118,110,0.14);
     }
-    .extract-spinner { display: none; width: 14px; height: 14px; border: 2px solid #dee2e6; border-top-color: #0d6efd; border-radius: 50%; animation: spin 0.6s linear infinite; margin-left: 6px; }
+    .extract-spinner { display: none; width: 14px; height: 14px; border: 2px solid #dee2e6; border-top-color: var(--az-brand); border-radius: 50%; animation: spin 0.6s linear infinite; margin-left: 6px; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .extract-spinner.active { display: inline-block; }
+    .field-error {
+        display: block;
+        min-height: 16px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: #dc3545;
+        margin-top: 4px;
+        line-height: 1.2;
+    }
     @media (max-width: 992px) {
         .action-bar {
             flex-direction: column;
@@ -222,22 +283,24 @@
             <div class="section-label"><i class="fas fa-cloud-upload-alt"></i> Step 1  Upload Documents <span class="section-line"></span></div>
             <div class="row g-3 mb-4">
                 <div class="col-md-6">
+                    <div class="upload-field-title">Resume</div>
                     <div class="upload-zone">
-                        <input type="file" class="resume-upload" name="resume[]" accept=".pdf,.doc,.docx">
-                        <div class="upload-icon"><i class="fas fa-file-pdf"></i></div>
-                        <div class="upload-label">Resume</div>
-                        <div class="upload-hint">PDF, DOC, DOCX  Auto-extracts name &amp; email</div>
+                        <input type="file" class="resume-upload" name="resume[]" accept=".pdf,.doc,.docx,.txt">
+                        <div class="upload-icon" data-default-icon="fa-file-pdf"><i class="fas fa-file-pdf"></i></div>
+                        <div class="upload-label">Choose File</div>
                         <div class="file-name"></div>
                     </div>
+                    <div class="upload-hint">PDF, DOC, DOCX, TXT  Auto-extracts name &amp; email</div>
                 </div>
                 <div class="col-md-6">
+                    <div class="upload-field-title">Job Description (JD)</div>
                     <div class="upload-zone">
                         <input type="file" class="jd-upload" name="jd[]" accept=".pdf,.doc,.docx,.txt">
-                        <div class="upload-icon"><i class="fas fa-file-alt"></i></div>
-                        <div class="upload-label">Job Description (JD)</div>
-                        <div class="upload-hint">PDF, DOC, TXT  Auto-matches role from JD</div>
+                        <div class="upload-icon" data-default-icon="fa-file-alt"><i class="fas fa-file-alt"></i></div>
+                        <div class="upload-label">Choose File</div>
                         <div class="file-name"></div>
                     </div>
+                    <div class="upload-hint">PDF, DOC, TXT  Auto-matches role from JD</div>
                 </div>
             </div>
             <div class="section-label"><i class="fas fa-user-edit"></i> Step 2  Candidate Details <span class="extract-spinner"></span><span class="section-line"></span></div>
@@ -245,24 +308,29 @@
                 <div class="col-md-3">
                     <label class="form-label">Full Name <span class="auto-fill-badge">Auto-filled</span></label>
                     <input type="text" class="form-control candidate-name" name="name[]" placeholder="John Doe" required>
+                    <span class="field-error name-error"></span>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Email <span class="auto-fill-badge">Auto-filled</span></label>
                     <input type="email" class="form-control candidate-email" name="email[]" placeholder="john.doe@email.com" required>
+                    <span class="field-error email-error"></span>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Role <span class="auto-fill-badge">Auto-matched</span></label>
                     <select class="form-select candidate-role" name="role[]" required>
                         <option value="">Select role</option>
-                        <optgroup label="Entry Level (0–2 Years)">
-                            <option>Python Entry Level (0–2 Years)</option>
-                            <option>Java Entry Level (0–2 Years)</option>
-                            <option>JavaScript Entry Level (0–2 Years)</option>
+                        <optgroup label="Entry Level (0-2 Years)">
+                            <option>Python Entry Level (0-2 Years)</option>
+                            <option>Java Entry Level (0-2 Years)</option>
+                            <option>JavaScript Entry Level (0-2 Years)</option>
                         </optgroup>
-                        <optgroup label="Mid / Senior Level (2–5 Years)">
-                            <option>BMC Engineer (2–5 Years)</option>
-                            <option>Staff Engineer – Linux Kernel &amp; Device Driver (3–5 Years)</option>
-                            <option>Systems Architect – C++ (3–5 Years)</option>
+                        <optgroup label="Mid / Senior Level (2-5 Years)">
+                            <option>BMC Engineer (2-5 Years)</option>
+                            <option>Staff Engineer - Linux Kernel &amp; Device Driver (3-5 Years)</option>
+                            <option>Systems Architect - C++ (3-5 Years)</option>
+                        </optgroup>
+                        <optgroup label="Mid / Senior Level (3-6 Years)">
+                            <option>C# Developer (3-6 Years)</option>
                         </optgroup>
                         <optgroup label="Experienced (4+ Years)">
                             <option>Python QA / System / Linux (4+ Years)</option>
@@ -273,6 +341,7 @@
                             <option>Java QA (5+ Years)</option>
                         </optgroup>
                     </select>
+                    <span class="field-error role-error"></span>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Domain <small class="text-muted">(Optional)</small></label>
@@ -281,13 +350,6 @@
                         <option>Virtualization</option>
                         <option>Networking</option>
                         <option>Storage</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Aptitude Test <small class="text-muted">(Optional)</small></label>
-                    <select class="form-select" name="aptitude_enabled[]">
-                        <option value="yes" selected>Yes</option>
-                        <option value="no">No</option>
                     </select>
                 </div>
             </div>
@@ -313,7 +375,344 @@
     </div>
 </div>
 <script>
-const singleMode=document.getElementById("single_mode"),multiMode=document.getElementById("multi_mode"),singleLabel=document.getElementById("singleModeLabel"),multiLabel=document.getElementById("multiModeLabel"),addCandidateWrapper=document.getElementById("addCandidateWrapper"),addCandidateBtn=document.getElementById("addCandidateBtn"),candidateContainer=document.getElementById("candidateContainer");function updateRemoveButtons(){document.querySelectorAll(".candidate-row").forEach((r,i)=>{const b=r.querySelector(".removeCandidateBtn");if(b)b.classList.toggle("d-none",i===0||!multiMode.checked)})}singleMode.addEventListener("change",()=>{singleLabel.classList.add("active");multiLabel.classList.remove("active");addCandidateWrapper.classList.add("d-none");const rows=candidateContainer.querySelectorAll(".candidate-row");rows.forEach((r,i)=>{if(i>0)r.remove()});updateRemoveButtons()});multiMode.addEventListener("change",()=>{multiLabel.classList.add("active");singleLabel.classList.remove("active");addCandidateWrapper.classList.remove("d-none");updateRemoveButtons()});addCandidateBtn.addEventListener("click",()=>{const n=candidateContainer.firstElementChild.cloneNode(true);n.querySelectorAll("input[type='text'],input[type='email']").forEach(i=>{i.value=""});n.querySelectorAll("input[type='file']").forEach(i=>{i.value=""});n.querySelectorAll("select").forEach(s=>s.selectedIndex=0);n.querySelectorAll(".upload-zone").forEach(z=>{z.classList.remove("has-file");z.querySelector(".file-name").textContent=""});n.querySelectorAll(".auto-fill-badge").forEach(b=>b.classList.remove("visible"));n.querySelectorAll(".extract-spinner").forEach(s=>s.classList.remove("active"));setupFileInputListeners(n);n.querySelector(".removeCandidateBtn").addEventListener("click",function(){this.closest(".candidate-row").remove();updateRemoveButtons()});candidateContainer.appendChild(n);updateRemoveButtons()});function setupFileInputListeners(row){const ri=row.querySelector(".resume-upload"),ji=row.querySelector(".jd-upload"),nf=row.querySelector(".candidate-name"),ef=row.querySelector(".candidate-email"),rf=row.querySelector(".candidate-role"),sp=row.querySelector(".extract-spinner"),bd=row.querySelectorAll(".auto-fill-badge");if(ri)ri.addEventListener("change",function(){const z=this.closest(".upload-zone");if(this.files.length>0){const f=this.files[0];z.classList.add("has-file");z.querySelector(".file-name").textContent=f.name;z.querySelector(".upload-icon").innerHTML='<i class="fas fa-check-circle"></i>';const nameFromFile=f.name.replace(/\.[^/.]+$/,"").replace(/[_-]/g," ").trim();if(nf&&!nf.value.trim())nf.value=nameFromFile;if(sp)sp.classList.add("active");const fd=new FormData();fd.append("resume",f);fetch("/api/extract-resume",{method:"POST",body:fd}).then(r=>r.json()).then(d=>{if(d.email&&ef&&!ef.value.trim()){ef.value=d.email;if(bd[1])bd[1].classList.add("visible")}if(d.name&&nf){if(!nf.value.trim()||nf.value===nameFromFile)nf.value=d.name;if(bd[0])bd[0].classList.add("visible")}}).catch(e=>console.log("Resume parse:",e)).finally(()=>{if(sp)sp.classList.remove("active")})}else{z.classList.remove("has-file");z.querySelector(".file-name").textContent="";z.querySelector(".upload-icon").innerHTML='<i class="fas fa-file-pdf"></i>'}});if(ji)ji.addEventListener("change",function(){const z=this.closest(".upload-zone");if(this.files.length>0){const f=this.files[0];z.classList.add("has-file");z.querySelector(".file-name").textContent=f.name;z.querySelector(".upload-icon").innerHTML='<i class="fas fa-check-circle"></i>';if(sp)sp.classList.add("active");const fd=new FormData();fd.append("jd",f);fetch("/api/extract-jd-role",{method:"POST",body:fd}).then(r=>r.json()).then(d=>{if(d.role&&rf){const opts=rf.querySelectorAll("option");for(let o of opts){if(o.textContent.trim()===d.role){rf.value=o.value;if(bd[2])bd[2].classList.add("visible");break}}}}).catch(e=>console.log("JD parse:",e)).finally(()=>{if(sp)sp.classList.remove("active")})}else{z.classList.remove("has-file");z.querySelector(".file-name").textContent="";z.querySelector(".upload-icon").innerHTML='<i class="fas fa-file-alt"></i>'}})}document.addEventListener("DOMContentLoaded",()=>{const fr=candidateContainer.querySelector(".candidate-row");if(fr)setupFileInputListeners(fr)});const form=document.getElementById("generateForm"),overlay=document.getElementById("loadingOverlay"),button=document.getElementById("generateBtn");form.addEventListener("submit",e=>{e.preventDefault();const ni=document.querySelectorAll('input[name="name[]"]'),ei=document.querySelectorAll('input[name="email[]"]'),rs=document.querySelectorAll('select[name="role[]"]');let v=true;ni.forEach((inp,i)=>{if(!inp.value.trim()||!ei[i].value.trim()||!rs[i].value){v=false;if(!inp.value.trim())inp.classList.add("is-invalid");if(!ei[i].value.trim())ei[i].classList.add("is-invalid");if(!rs[i].value)rs[i].classList.add("is-invalid")}});if(!v){if(typeof showToast==='function')showToast('Please fill all required fields','warning');return}button.disabled=true;button.innerHTML='<span class="spinner-border spinner-border-sm me-1"></span> Generating';overlay.classList.remove("d-none");setTimeout(()=>{form.submit()},800)});document.addEventListener("input",e=>{if(e.target.classList.contains("is-invalid"))e.target.classList.remove("is-invalid")});
+const singleMode = document.getElementById("single_mode");
+const multiMode = document.getElementById("multi_mode");
+const singleLabel = document.getElementById("singleModeLabel");
+const multiLabel = document.getElementById("multiModeLabel");
+const addCandidateWrapper = document.getElementById("addCandidateWrapper");
+const addCandidateBtn = document.getElementById("addCandidateBtn");
+const candidateContainer = document.getElementById("candidateContainer");
+
+function normalizeRoleLabel(value) {
+    return String(value || "")
+        .replace(/&amp;/gi, "&")
+        .replace(/\u00e2\u20ac\u201c|\u00e2\u20ac\u201d/g, "-")
+        .replace(/[\u2013\u2014]/g, "-")
+        .replace(/\s*-\s*/g, "-")
+        .replace(/\s*\+\s*/g, "+")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
+}
+
+function setFieldError(row, selector, message) {
+    const node = row.querySelector(selector);
+    if (!node) return;
+    node.textContent = String(message || "").trim();
+}
+
+function clearFieldError(row, selector) {
+    setFieldError(row, selector, "");
+}
+
+function clearFieldErrors(row) {
+    clearFieldError(row, ".name-error");
+    clearFieldError(row, ".email-error");
+    clearFieldError(row, ".role-error");
+}
+
+function resetUploadZone(zone) {
+    if (!zone) return;
+    zone.classList.remove("has-file");
+    const fileName = zone.querySelector(".file-name");
+    if (fileName) fileName.textContent = "";
+    const icon = zone.querySelector(".upload-icon");
+    if (icon) {
+        const iconName = icon.dataset.defaultIcon || "fa-upload";
+        icon.innerHTML = '<i class="fas ' + iconName + '"></i>';
+    }
+}
+
+function showBadge(node, visible) {
+    if (!node) return;
+    node.classList.toggle("visible", !!visible);
+}
+
+function findRoleOption(selectEl, targetRole) {
+    if (!selectEl || !targetRole) return null;
+    const normalizedTarget = normalizeRoleLabel(targetRole);
+    const options = selectEl.querySelectorAll("option");
+    for (const option of options) {
+        const normalizedOption = normalizeRoleLabel(option.textContent || option.value);
+        if (normalizedOption === normalizedTarget) {
+            return option;
+        }
+    }
+    return null;
+}
+
+function updateRemoveButtons() {
+    document.querySelectorAll(".candidate-row").forEach((row, index) => {
+        const removeButton = row.querySelector(".removeCandidateBtn");
+        if (removeButton) {
+            removeButton.classList.toggle("d-none", index === 0 || !multiMode.checked);
+        }
+    });
+}
+
+singleMode.addEventListener("change", () => {
+    singleLabel.classList.add("active");
+    multiLabel.classList.remove("active");
+    addCandidateWrapper.classList.add("d-none");
+    const rows = candidateContainer.querySelectorAll(".candidate-row");
+    rows.forEach((row, index) => {
+        if (index > 0) row.remove();
+    });
+    updateRemoveButtons();
+});
+
+multiMode.addEventListener("change", () => {
+    multiLabel.classList.add("active");
+    singleLabel.classList.remove("active");
+    addCandidateWrapper.classList.remove("d-none");
+    updateRemoveButtons();
+});
+
+addCandidateBtn.addEventListener("click", () => {
+    const newRow = candidateContainer.firstElementChild.cloneNode(true);
+    newRow.querySelectorAll("input[type='text'],input[type='email']").forEach((node) => {
+        node.value = "";
+    });
+    newRow.querySelectorAll("input[type='file']").forEach((node) => {
+        node.value = "";
+    });
+    newRow.querySelectorAll("select").forEach((node) => {
+        node.selectedIndex = 0;
+    });
+    newRow.querySelectorAll(".upload-zone").forEach((zone) => resetUploadZone(zone));
+    newRow.querySelectorAll(".auto-fill-badge").forEach((node) => node.classList.remove("visible"));
+    newRow.querySelectorAll(".extract-spinner").forEach((node) => node.classList.remove("active"));
+    newRow.querySelectorAll(".field-error").forEach((node) => {
+        node.textContent = "";
+    });
+
+    setupFileInputListeners(newRow);
+    newRow.querySelector(".removeCandidateBtn").addEventListener("click", function () {
+        this.closest(".candidate-row").remove();
+        updateRemoveButtons();
+    });
+    candidateContainer.appendChild(newRow);
+    updateRemoveButtons();
+});
+
+function parseJsonResponse(response) {
+    return response
+        .json()
+        .then((data) => ({ ok: response.ok, data }))
+        .catch(() => ({ ok: response.ok, data: {} }));
+}
+
+function applyResumeResponse(row, payload) {
+    const nameField = row.querySelector(".candidate-name");
+    const emailField = row.querySelector(".candidate-email");
+    const badges = row.querySelectorAll(".auto-fill-badge");
+
+    if (payload.name_found && payload.name && nameField && !nameField.value.trim()) {
+        nameField.value = payload.name;
+        showBadge(badges[0], true);
+    }
+    if (payload.email_found && payload.email && emailField && !emailField.value.trim()) {
+        emailField.value = payload.email;
+        showBadge(badges[1], true);
+    }
+
+    const nameMsg = (payload.messages && payload.messages.name) || "Name not found in resume.";
+    const emailMsg = (payload.messages && payload.messages.email) || "Email not found in resume.";
+
+    if (!payload.name_found && (!nameField || !nameField.value.trim())) {
+        setFieldError(row, ".name-error", nameMsg);
+    } else {
+        clearFieldError(row, ".name-error");
+    }
+
+    if (!payload.email_found && (!emailField || !emailField.value.trim())) {
+        setFieldError(row, ".email-error", emailMsg);
+    } else {
+        clearFieldError(row, ".email-error");
+    }
+}
+
+function applyJdResponse(row, payload) {
+    const roleField = row.querySelector(".candidate-role");
+    const badges = row.querySelectorAll(".auto-fill-badge");
+
+    if (payload.role_found && payload.role && roleField) {
+        const matched = findRoleOption(roleField, payload.role);
+        if (matched) {
+            roleField.value = matched.value;
+            showBadge(badges[2], true);
+            clearFieldError(row, ".role-error");
+            return;
+        }
+    }
+
+    const fallbackMessage = payload.message || "No role fits perfectly among available roles.";
+    if (!roleField || !roleField.value) {
+        setFieldError(row, ".role-error", fallbackMessage);
+    }
+}
+
+function setupFileInputListeners(row) {
+    const resumeInput = row.querySelector(".resume-upload");
+    const jdInput = row.querySelector(".jd-upload");
+    const spinner = row.querySelector(".extract-spinner");
+
+    const nameField = row.querySelector(".candidate-name");
+    const emailField = row.querySelector(".candidate-email");
+    const roleField = row.querySelector(".candidate-role");
+
+    if (nameField) {
+        nameField.addEventListener("input", () => clearFieldError(row, ".name-error"));
+    }
+    if (emailField) {
+        emailField.addEventListener("input", () => clearFieldError(row, ".email-error"));
+    }
+    if (roleField) {
+        roleField.addEventListener("change", () => clearFieldError(row, ".role-error"));
+    }
+
+    if (resumeInput) {
+        resumeInput.addEventListener("change", function () {
+            const zone = this.closest(".upload-zone");
+            if (!zone) return;
+
+            if (this.files.length > 0) {
+                const file = this.files[0];
+                zone.classList.add("has-file");
+                zone.querySelector(".file-name").textContent = file.name;
+                zone.querySelector(".upload-icon").innerHTML = '<i class="fas fa-check-circle"></i>';
+
+                clearFieldError(row, ".name-error");
+                clearFieldError(row, ".email-error");
+
+                if (spinner) spinner.classList.add("active");
+
+                const formData = new FormData();
+                formData.append("resume", file);
+
+                fetch("/api/extract-resume", { method: "POST", body: formData })
+                    .then(parseJsonResponse)
+                    .then(({ ok, data }) => {
+                        if (!ok) {
+                            const msg = data.error || "Unable to parse resume.";
+                            if (!nameField || !nameField.value.trim()) {
+                                setFieldError(row, ".name-error", msg);
+                            }
+                            if (!emailField || !emailField.value.trim()) {
+                                setFieldError(row, ".email-error", msg);
+                            }
+                            return;
+                        }
+                        applyResumeResponse(row, data || {});
+                    })
+                    .catch(() => {
+                        const msg = "Unable to parse resume.";
+                        if (!nameField || !nameField.value.trim()) {
+                            setFieldError(row, ".name-error", msg);
+                        }
+                        if (!emailField || !emailField.value.trim()) {
+                            setFieldError(row, ".email-error", msg);
+                        }
+                    })
+                    .finally(() => {
+                        if (spinner) spinner.classList.remove("active");
+                    });
+            } else {
+                resetUploadZone(zone);
+            }
+        });
+    }
+
+    if (jdInput) {
+        jdInput.addEventListener("change", function () {
+            const zone = this.closest(".upload-zone");
+            if (!zone) return;
+
+            if (this.files.length > 0) {
+                const file = this.files[0];
+                zone.classList.add("has-file");
+                zone.querySelector(".file-name").textContent = file.name;
+                zone.querySelector(".upload-icon").innerHTML = '<i class="fas fa-check-circle"></i>';
+                clearFieldError(row, ".role-error");
+
+                if (spinner) spinner.classList.add("active");
+
+                const formData = new FormData();
+                formData.append("jd", file);
+
+                fetch("/api/extract-jd-role", { method: "POST", body: formData })
+                    .then(parseJsonResponse)
+                    .then(({ ok, data }) => {
+                        if (!ok) {
+                            if (!roleField || !roleField.value) {
+                                setFieldError(row, ".role-error", data.error || "Unable to parse JD.");
+                            }
+                            return;
+                        }
+                        applyJdResponse(row, data || {});
+                    })
+                    .catch(() => {
+                        if (!roleField || !roleField.value) {
+                            setFieldError(row, ".role-error", "Unable to parse JD.");
+                        }
+                    })
+                    .finally(() => {
+                        if (spinner) spinner.classList.remove("active");
+                    });
+            } else {
+                resetUploadZone(zone);
+            }
+        });
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const firstRow = candidateContainer.querySelector(".candidate-row");
+    if (firstRow) setupFileInputListeners(firstRow);
+});
+
+const form = document.getElementById("generateForm");
+const overlay = document.getElementById("loadingOverlay");
+const button = document.getElementById("generateBtn");
+
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const nameInputs = document.querySelectorAll('input[name="name[]"]');
+    const emailInputs = document.querySelectorAll('input[name="email[]"]');
+    const roleSelects = document.querySelectorAll('select[name="role[]"]');
+
+    let valid = true;
+    nameInputs.forEach((input, index) => {
+        if (!input.value.trim() || !emailInputs[index].value.trim() || !roleSelects[index].value) {
+            valid = false;
+            if (!input.value.trim()) input.classList.add("is-invalid");
+            if (!emailInputs[index].value.trim()) emailInputs[index].classList.add("is-invalid");
+            if (!roleSelects[index].value) roleSelects[index].classList.add("is-invalid");
+        }
+    });
+
+    if (!valid) {
+        if (typeof showToast === "function") {
+            showToast("Please fill all required fields", "warning");
+        }
+        return;
+    }
+
+    button.disabled = true;
+    button.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Generating';
+    overlay.classList.remove("d-none");
+
+    setTimeout(() => {
+        form.submit();
+    }, 800);
+});
+
+document.addEventListener("input", (event) => {
+    if (event.target.classList.contains("is-invalid")) {
+        event.target.classList.remove("is-invalid");
+    }
+});
 </script>
 <script>
 (function () {
@@ -363,7 +762,6 @@ const singleMode=document.getElementById("single_mode"),multiMode=document.getEl
                 email: getInputValue(row, 'input[name="email[]"]'),
                 role: getInputValue(row, 'select[name="role[]"]'),
                 domain: getInputValue(row, 'select[name="domain[]"]'),
-                aptitude_enabled: getInputValue(row, 'select[name="aptitude_enabled[]"]'),
             };
         });
 
@@ -448,7 +846,6 @@ const singleMode=document.getElementById("single_mode"),multiMode=document.getEl
             setInputValue(row, 'input[name="email[]"]', rowData.email || "");
             setInputValue(row, 'select[name="role[]"]', rowData.role || "");
             setInputValue(row, 'select[name="domain[]"]', rowData.domain || "None");
-            setInputValue(row, 'select[name="aptitude_enabled[]"]', rowData.aptitude_enabled || "yes");
         });
     }
 
@@ -500,3 +897,4 @@ const singleMode=document.getElementById("single_mode"),multiMode=document.getEl
 })();
 </script>
 {% endblock %}
+

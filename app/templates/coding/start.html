@@ -1,51 +1,66 @@
 {% extends "coding/base_coding.html" %}
+
+{% block extra_css %}
+<link id="codingStartMcqTheme" rel="stylesheet" href="{{ url_for('static', filename='mcq/mcq.css') }}">
+<style>
+body.mcq-start-page::before {
+    content: none !important;
+    background: none !important;
+}
+
+body.mcq-start-page .logo img {
+    box-shadow: none !important;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 
-<div class="coding-start-shell">
-    <div class="card coding-start-card">
-        <div class="coding-status-row">
-            <span class="coding-status-pill">Secure Proctoring Active</span>
-            <span class="coding-status-pill">Timed Assessment</span>
+<div class="mcq-start-shell">
+    <div class="card mcq-start-card">
+        <div class="mcq-status-row">
+            <span class="mcq-status-pill">
+                {% if proctoring_enabled %}Secure Proctoring Active{% else %}Standard Assessment Mode{% endif %}
+            </span>
+            <span class="mcq-status-pill">Timed Assessment</span>
         </div>
 
-        <div class="coding-brand-row">
-            <img class="coding-inline-logo"
+        <div class="mcq-brand-row">
+            <img class="mcq-inline-logo"
                  src="{{ url_for('static', filename='images/azirotech_logo.jpg') }}"
                  alt="Aziro logo">
             <div>
-                <div class="coding-brand-copy">Aziro Enterprise Hiring Platform</div>
-                <h2 class="coding-round-title">{{ test.round_name }}</h2>
+                <div class="mcq-brand-copy">Aziro Enterprise Hiring Platform</div>
+                <h2 class="mcq-round-title">{{ test.round_name }}</h2>
             </div>
         </div>
 
-        <div class="coding-overview-grid">
-            <div class="coding-overview-item">
-                <span class="coding-overview-label">Questions</span>
-                <span class="coding-overview-value">1</span>
+        <div class="mcq-overview-grid">
+            <div class="mcq-overview-item">
+                <span class="mcq-overview-label">Questions</span>
+                <span class="mcq-overview-value">1</span>
             </div>
-            <div class="coding-overview-item">
-                <span class="coding-overview-label">Duration</span>
-                <span class="coding-overview-value">{{ test.time_minutes }}m</span>
+            <div class="mcq-overview-item">
+                <span class="mcq-overview-label">Duration</span>
+                <span class="mcq-overview-value">{{ test.time_minutes }}m</span>
             </div>
-            <div class="coding-overview-item">
-                <span class="coding-overview-label">Language</span>
-                <span class="coding-overview-value">{{ test.language }}</span>
-            </div>
-            <div class="coding-overview-item">
-                <span class="coding-overview-label">Mode</span>
-                <span class="coding-overview-value">Proctored</span>
+            <div class="mcq-overview-item">
+                <span class="mcq-overview-label">Mode</span>
+                <span class="mcq-overview-value">{% if proctoring_enabled %}Proctored{% else %}Standard{% endif %}</span>
             </div>
         </div>
 
-        <div class="coding-instruction-wrap">
-            <h4 class="coding-instruction-title">Instructions</h4>
-            <ul class="coding-instruction-list">
+        <div class="mcq-instruction-wrap">
+            <h4 class="mcq-instruction-title">Instructions</h4>
+            <ul class="mcq-instruction-list">
                 <li>You will be given <strong>1 coding question</strong> to solve.</li>
-                <li>Write your solution in the integrated code editor.</li>
+                <li>Write your solution in the integrated code editor using {{ test.language }}.</li>
                 <li>You can run your code against sample test cases at any time.</li>
                 <li>Your code is auto-saved periodically.</li>
                 <li>Do not refresh or close the browser during the test.</li>
+                {% if proctoring_enabled %}
                 <li>Switching tabs and leaving fullscreen are monitored.</li>
+                {% endif %}
             </ul>
         </div>
 
@@ -57,8 +72,9 @@
             </form>
         </div>
 
-        <p class="coding-start-footer">
-            Once started, your timer begins immediately and full-screen mode will stay enforced.
+        <p class="mcq-start-footer">
+            Once started, your timer begins immediately.
+            {% if proctoring_enabled %}Full-screen mode will stay enforced.{% endif %}
         </p>
     </div>
 </div>

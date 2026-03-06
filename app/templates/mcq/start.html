@@ -4,7 +4,9 @@
 <div class="mcq-start-shell">
     <div class="card mcq-start-card">
         <div class="mcq-status-row">
-            <span class="mcq-status-pill">Secure Proctoring Active</span>
+            <span class="mcq-status-pill">
+                {% if proctoring_enabled %}Secure Proctoring Active{% else %}Standard Assessment Mode{% endif %}
+            </span>
             <span class="mcq-status-pill">Timed Assessment</span>
         </div>
 
@@ -29,7 +31,7 @@
             </div>
             <div class="mcq-overview-item">
                 <span class="mcq-overview-label">Mode</span>
-                <span class="mcq-overview-value">Proctored</span>
+                <span class="mcq-overview-value">{% if proctoring_enabled %}Proctored{% else %}Standard{% endif %}</span>
             </div>
         </div>
 
@@ -40,7 +42,9 @@
                 <li>Question palette is available to jump between questions.</li>
                 <li>You can move next even without selecting an answer.</li>
                 <li>Do not refresh or close the browser while taking the test.</li>
+                {% if proctoring_enabled %}
                 <li>Switching tabs and leaving fullscreen are monitored.</li>
+                {% endif %}
             </ul>
         </div>
 
@@ -53,7 +57,8 @@
         </div>
 
         <p class="mcq-start-footer">
-            Once started, your timer begins immediately and full-screen mode will stay enforced.
+            Once started, your timer begins immediately.
+            {% if proctoring_enabled %}Full-screen mode will stay enforced.{% endif %}
         </p>
     </div>
 </div>
