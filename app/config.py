@@ -13,7 +13,7 @@ class Config:
     GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 
     # 🔴 DEV MODE AUTH BYPASS
-    AUTH_DISABLED = True   # <-- change to False later
+    AUTH_DISABLED = False
 
     # ---------------------------------------------------------------
     # DATABASE
