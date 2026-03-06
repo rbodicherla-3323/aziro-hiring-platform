@@ -327,6 +327,32 @@ def _resolve_executable(cmd_name):
             found = shutil.which(alias)
             if found:
                 return found
+
+        # Explicit Linux fallback paths for services with restricted PATH.
+        linux_paths_by_cmd = {
+            "dotnet": [
+                "/usr/bin/dotnet",
+                "/usr/local/bin/dotnet",
+                "/usr/share/dotnet/dotnet",
+                "/snap/bin/dotnet",
+                os.path.expanduser("~/.dotnet/dotnet"),
+            ],
+            "mono": [
+                "/usr/bin/mono",
+                "/usr/local/bin/mono",
+            ],
+            "mcs": [
+                "/usr/bin/mcs",
+                "/usr/local/bin/mcs",
+            ],
+            "csc": [
+                "/usr/bin/csc",
+                "/usr/local/bin/csc",
+            ],
+        }
+        for candidate in linux_paths_by_cmd.get(cmd_name, []):
+            if os.path.isfile(candidate):
+                return candidate
         return cmd_name
 
     # ── Windows-specific resolution below ────────────────
@@ -1248,8 +1274,21 @@ def _compile_and_run(language, code, stdin_input, work_dir):
         dotnet_env.setdefault("NUGET_PACKAGES", nuget_packages)
         dotnet_build_error = ""
 
+        dotnet_cmd = compilers.get("dotnet")
+        if dotnet_cmd and _command_available(dotnet_cmd):
+            resolved_dotnet = os.path.realpath(dotnet_cmd)
+            dotnet_bin_dir = os.path.dirname(resolved_dotnet)
+            dotnet_env.setdefault("DOTNET_ROOT", dotnet_bin_dir)
+            existing_path = dotnet_env.get("PATH", "")
+            if dotnet_bin_dir and dotnet_bin_dir not in existing_path.split(os.pathsep):
+                dotnet_env["PATH"] = (
+                    f"{dotnet_bin_dir}{os.pathsep}{existing_path}"
+                    if existing_path
+                    else dotnet_bin_dir
+                )
+
         # Preferred path: dotnet SDK build/run (cross-platform, LTS-first targets).
-        if _command_available(compilers.get("dotnet")):
+        if _command_available(dotnet_cmd):
             project_file = os.path.join(work_dir, "AziroSolution.csproj")
             frameworks = ["net10.0", "net8.0"]
             compile_error = "dotnet build failed for all supported target frameworks."
@@ -1267,7 +1306,7 @@ def _compile_and_run(language, code, stdin_input, work_dir):
                     )
 
                 comp = subprocess.run(
-                    [compilers["dotnet"], "build", project_file, "-nologo", "-v", "q", "-c", "Release"],
+                    [dotnet_cmd, "build", project_file, "-nologo", "-v", "q", "-c", "Release"],
                     capture_output=True, text=True, timeout=max(COMPILE_TIMEOUT * 12, 180), cwd=work_dir, env=dotnet_env
                 )
                 if comp.returncode != 0:
@@ -1280,7 +1319,7 @@ def _compile_and_run(language, code, stdin_input, work_dir):
                     continue
 
                 run = subprocess.run(
-                    [compilers["dotnet"], dll_path],
+                    [dotnet_cmd, dll_path],
                     input=stdin_input, capture_output=True, text=True,
                     timeout=RUN_TIMEOUT, cwd=work_dir, env=dotnet_env
                 )
@@ -1591,7 +1630,7 @@ def run_code(session_id):
                 }
                 return jsonify({
                     "status": "error",
-                    "output": f"Warning: {lang_label} compiler not found on this machine.\n\n"
+                    "output": f"Warning: {lang_label} compiler not found on execution server.\n\n"
                               f"Required: {compiler_info.get(lang_key, lang_label + ' compiler')}\n"
                               f"Your code has been saved and will be evaluated after submission.",
                     "test_results": [],
@@ -1686,7 +1725,7 @@ def run_code(session_id):
                 }
                 return jsonify({
                     "status": "error",
-                    "output": f"Warning: {lang_label} compiler not found on this machine.\n\n"
+                    "output": f"Warning: {lang_label} compiler not found on execution server.\n\n"
                               f"Required: {compiler_info.get(lang_key, lang_label + ' compiler')}\n"
                               f"Your code has been saved and will be evaluated after submission.",
                     "test_results": [],

@@ -2,6 +2,7 @@
 """
 Dashboard & Test Creation routes.
 """
+import os
 import uuid
 from datetime import datetime, timezone, timedelta
 
@@ -52,11 +53,18 @@ def _build_test_url(endpoint, **values):
     Build an absolute test URL that respects reverse-proxy headers.
     This prevents generating http:// links when the app is externally served over HTTPS.
     """
+    path = url_for(endpoint, **values)
+
+    # Optional force-base URL for centralized execution environments.
+    # Example: APP_PUBLIC_BASE_URL=https://azirohire.aziro.com
+    forced_base = (os.getenv("APP_PUBLIC_BASE_URL") or "").strip().rstrip("/")
+    if forced_base:
+        return f"{forced_base}{path}"
+
     forwarded_proto = (request.headers.get("X-Forwarded-Proto") or "").split(",")[0].strip()
     forwarded_host = (request.headers.get("X-Forwarded-Host") or "").split(",")[0].strip()
     scheme = forwarded_proto or request.scheme
     host = forwarded_host or request.host
-    path = url_for(endpoint, **values)
     return f"{scheme}://{host}{path}"
 
 
