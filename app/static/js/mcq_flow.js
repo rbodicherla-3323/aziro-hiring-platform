@@ -438,6 +438,304 @@ window.__MCQ_AJAX_FLOW = false;
         </div>`;
     }
 
+    function normalizeQuestionText(value) {
+        return String(value || "").replace(/\r\n?/g, "\n");
+    }
+
+    function trimSurroundingBlankLines(value) {
+        return String(value || "")
+            .replace(/^\s*\n+/, "")
+            .replace(/\n+\s*$/, "");
+    }
+
+    function isLikelyNarrativeLine(line) {
+        const text = String(line || "").trim();
+        if (!text) return false;
+        if (!/^[A-Za-z][A-Za-z0-9 ,.'"():!?+\-_/&[\]]+$/.test(text)) return false;
+        return /[?.!:]$/.test(text);
+    }
+
+    function isLikelyCodeLine(line) {
+        const text = String(line || "").trim();
+        if (!text) return false;
+
+        if (isLikelyNarrativeLine(text) && !/[{}();=<>[\]]/.test(text)) {
+            return false;
+        }
+
+        if (/^(\/\/|\/\*|\*|#include\b|#\s|using\s+[A-Za-z0-9_.]+;?|namespace\b|import\s+[A-Za-z0-9_.]+;?)/.test(text)) return true;
+        if (/^(class|interface|enum|struct|public|private|protected|static|final|const|let|var|def|if|else|elif|for|while|try|catch|finally|return|throw|new|void|int|long|float|double|char|bool|string)\b/.test(text)) return true;
+        if (/\b(Console\.WriteLine|System\.out\.println|console\.log|printf|scanf|print)\s*\(/.test(text)) return true;
+        if (/^\w+\s*\(.*\)\s*(\{|=>|;)$/.test(text)) return true;
+        if (/=>|::|->/.test(text)) return true;
+        if (/[{};]/.test(text)) return true;
+        if (/^[A-Za-z_][A-Za-z0-9_<>,\[\]\s]*\s+[A-Za-z_][A-Za-z0-9_]*\s*=\s*.+/.test(text)) return true;
+        if (/^\w+\.\w+\s*\(/.test(text)) return true;
+        if (/\(.*\)/.test(text) && /[=+\-/*%]/.test(text)) return true;
+        return false;
+    }
+
+    function isStrongCodeLine(line) {
+        const text = String(line || "").trim();
+        if (!text) return false;
+        if (/^(#include\b|using\s+[A-Za-z0-9_.]+;?|namespace\b|class\b|public\b|private\b|protected\b|interface\b|enum\b|struct\b|import\s+[A-Za-z0-9_.]+;?)/.test(text)) return true;
+        if (/\b(Console\.WriteLine|System\.out\.println|console\.log|printf|scanf|print)\s*\(/.test(text)) return true;
+        return /[{};=]|=>|::|->/.test(text);
+    }
+
+    function looksLikeInlineCodePayload(text) {
+        const value = String(text || "").trim();
+        if (!value) return false;
+        if (isStrongCodeLine(value)) return true;
+        if (/^#\s*[A-Za-z_][A-Za-z0-9_]*/.test(value)) return true;
+        if (/\b(Console\.WriteLine|System\.out\.println|console\.log|printf|scanf|print)\s*\(/.test(value)) return true;
+        if (/[{};=]|=>|::|->/.test(value)) return true;
+        if (/^[A-Za-z_][A-Za-z0-9_]*\s*\(.*\)/.test(value)) return true;
+        if (/\b(int|long|float|double|char|bool|string|var|let|const|def|class|public|private|protected)\b/.test(value) && /[()=]/.test(value)) return true;
+        return false;
+    }
+
+    function extractSingleInlineCodeFragment(text) {
+        const source = String(text || "");
+        const patterns = [
+            /#\s*[A-Za-z_][A-Za-z0-9_]*\s*(?:<[^>]+>|\"[^\"]+\")?/g,
+            /\b(?:[A-Za-z_][A-Za-z0-9_<>\[\]]*\s+)?[A-Za-z_][A-Za-z0-9_<>.\[\]]*\s*=\s*[^.?!\n]+?;/g,
+            /\b[A-Za-z_][A-Za-z0-9_<>.\[\]]*\s*\([^)\n]*\)\s*;?/g,
+            /\b(?:for|while|if|switch|return|throw|new)\b[^.?!\n]+/g,
+            /\b[A-Za-z_][A-Za-z0-9_<>.\[\]]*::[A-Za-z_][A-Za-z0-9_<>.\[\]]*\b/g
+        ];
+
+        let best = null;
+        patterns.forEach((pattern) => {
+            let match = null;
+            while ((match = pattern.exec(source)) !== null) {
+                const fragment = trimSurroundingBlankLines(match[0] || "");
+                if (!fragment) continue;
+                if (!looksLikeInlineCodePayload(fragment)) continue;
+                if (!best || fragment.length > best.fragment.length) {
+                    best = {
+                        start: match.index,
+                        end: match.index + match[0].length,
+                        fragment
+                    };
+                }
+            }
+        });
+        return best;
+    }
+
+    function splitFencedQuestionSegments(text) {
+        if (!text.includes("```")) {
+            return null;
+        }
+
+        const segments = [];
+        const fencePattern = /```[^\n`]*\n?([\s\S]*?)```/g;
+        let match = null;
+        let start = 0;
+
+        while ((match = fencePattern.exec(text)) !== null) {
+            const before = trimSurroundingBlankLines(text.slice(start, match.index));
+            if (before) {
+                segments.push({ type: "text", text: before });
+            }
+
+            const code = trimSurroundingBlankLines(match[1] || "");
+            if (code) {
+                segments.push({ type: "code", text: code });
+            }
+            start = fencePattern.lastIndex;
+        }
+
+        const after = trimSurroundingBlankLines(text.slice(start));
+        if (after) {
+            segments.push({ type: "text", text: after });
+        }
+
+        return segments.length ? segments : null;
+    }
+
+    function splitSingleLineQuestionWithInlineCode(text) {
+        const normalized = trimSurroundingBlankLines(text);
+        const colonIndex = normalized.indexOf(":");
+        if (colonIndex >= 0) {
+            const prose = trimSurroundingBlankLines(normalized.slice(0, colonIndex + 1));
+            let remainder = trimSurroundingBlankLines(normalized.slice(colonIndex + 1));
+            if (prose && remainder && looksLikeInlineCodePayload(remainder)) {
+                let code = remainder;
+                let tail = "";
+                const lastSemicolon = remainder.lastIndexOf(";");
+                if (lastSemicolon >= 0 && lastSemicolon < remainder.length - 1) {
+                    code = trimSurroundingBlankLines(remainder.slice(0, lastSemicolon + 1));
+                    tail = trimSurroundingBlankLines(remainder.slice(lastSemicolon + 1));
+                } else {
+                    const trailingBoundary = Math.max(remainder.lastIndexOf("}"), remainder.lastIndexOf(")"));
+                    if (trailingBoundary >= 0 && trailingBoundary < remainder.length - 1) {
+                        const possibleTail = trimSurroundingBlankLines(remainder.slice(trailingBoundary + 1));
+                        if (possibleTail && !looksLikeInlineCodePayload(possibleTail)) {
+                            code = trimSurroundingBlankLines(remainder.slice(0, trailingBoundary + 1));
+                            tail = possibleTail;
+                        }
+                    }
+                }
+
+                code = trimSurroundingBlankLines(code.replace(/\?+$/, ""));
+                tail = trimSurroundingBlankLines(tail.replace(/^\?+/, ""));
+                if (code && looksLikeInlineCodePayload(code)) {
+                    const segments = [
+                        { type: "text", text: prose },
+                        { type: "code", text: code }
+                    ];
+                    if (tail) {
+                        segments.push({ type: "text", text: tail });
+                    }
+                    return segments;
+                }
+            }
+        }
+
+        const extracted = extractSingleInlineCodeFragment(normalized);
+        if (!extracted) {
+            return null;
+        }
+
+        const prefix = trimSurroundingBlankLines(normalized.slice(0, extracted.start));
+        const code = trimSurroundingBlankLines(extracted.fragment.replace(/\?+$/, ""));
+        const suffix = trimSurroundingBlankLines(normalized.slice(extracted.end).replace(/^\?+/, ""));
+        if (!code || !looksLikeInlineCodePayload(code)) {
+            return null;
+        }
+
+        const segments = [];
+        if (prefix) segments.push({ type: "text", text: prefix });
+        segments.push({ type: "code", text: code });
+        if (suffix) segments.push({ type: "text", text: suffix });
+        return segments.length ? segments : null;
+    }
+
+    function findFirstCodeStartIndex(lines) {
+        for (let i = 0; i < lines.length; i += 1) {
+            const line = String(lines[i] || "").trim();
+            if (!line || !isLikelyCodeLine(line)) {
+                continue;
+            }
+
+            const lookahead = lines.slice(i, i + 7)
+                .map((item) => String(item || "").trim())
+                .filter((item) => item !== "");
+            const strongCount = lookahead.filter((item) => isStrongCodeLine(item)).length;
+            const codeLikeCount = lookahead.filter((item) => isLikelyCodeLine(item)).length;
+            if (strongCount >= 1 || codeLikeCount >= 2) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    function findLastCodeEndIndex(lines, startIndex) {
+        for (let i = lines.length - 1; i >= startIndex; i -= 1) {
+            const line = String(lines[i] || "").trim();
+            if (!line) {
+                continue;
+            }
+            if (isLikelyCodeLine(line) || isStrongCodeLine(line)) {
+                return i;
+            }
+            if (isLikelyNarrativeLine(line)) {
+                continue;
+            }
+            if (looksLikeInlineCodePayload(line)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    function splitQuestionSegments(rawText) {
+        const normalized = normalizeQuestionText(rawText);
+        const fenced = splitFencedQuestionSegments(normalized);
+        if (fenced) {
+            return fenced;
+        }
+
+        if (!normalized.includes("\n")) {
+            const inline = splitSingleLineQuestionWithInlineCode(normalized);
+            if (inline) {
+                return inline;
+            }
+            return [{ type: "text", text: trimSurroundingBlankLines(normalized) }];
+        }
+
+        const lines = normalized.split("\n");
+        const codeStart = findFirstCodeStartIndex(lines);
+        if (codeStart < 0) {
+            return [{ type: "text", text: trimSurroundingBlankLines(normalized) }];
+        }
+
+        const codeEnd = findLastCodeEndIndex(lines, codeStart);
+        if (codeEnd < codeStart) {
+            return [{ type: "text", text: trimSurroundingBlankLines(normalized) }];
+        }
+
+        const prefix = trimSurroundingBlankLines(lines.slice(0, codeStart).join("\n"));
+        const code = trimSurroundingBlankLines(lines.slice(codeStart, codeEnd + 1).join("\n"));
+        const suffix = trimSurroundingBlankLines(lines.slice(codeEnd + 1).join("\n"));
+
+        const nonEmptyCodeLines = code.split("\n").filter((line) => String(line || "").trim() !== "");
+        const strongCount = nonEmptyCodeLines.filter((line) => isStrongCodeLine(line)).length;
+        const codeLikeCount = nonEmptyCodeLines.filter((line) => isLikelyCodeLine(line)).length;
+        if (!code || (strongCount === 0 && codeLikeCount < 2)) {
+            return [{ type: "text", text: trimSurroundingBlankLines(normalized) }];
+        }
+
+        const segments = [];
+        if (prefix) {
+            segments.push({ type: "text", text: prefix });
+        }
+        segments.push({ type: "code", text: code });
+        if (suffix) {
+            segments.push({ type: "text", text: suffix });
+        }
+        return segments;
+    }
+
+    function renderQuestionTextHtml(rawText) {
+        const segments = splitQuestionSegments(rawText);
+        if (!segments.length) {
+            return `<p class="mcq-question-paragraph"></p>`;
+        }
+
+        return segments.map((segment) => {
+            if (segment.type === "code") {
+                return `<pre class="mcq-question-code"><code>${escapeHtml(segment.text)}</code></pre>`;
+            }
+            return `<p class="mcq-question-paragraph">${escapeHtml(segment.text).replace(/\n/g, "<br>")}</p>`;
+        }).join("");
+    }
+
+    function applyQuestionTextFormattingToDom() {
+        const questionTextEl = document.getElementById("mcqQuestionText");
+        if (!questionTextEl) return;
+
+        let rawText = questionTextEl.dataset.rawQuestion || "";
+        if (!rawText) {
+            const rawJsonNode = document.getElementById("mcqQuestionTextRaw");
+            if (rawJsonNode && rawJsonNode.textContent) {
+                try {
+                    rawText = JSON.parse(rawJsonNode.textContent);
+                } catch (_) {
+                    rawText = rawJsonNode.textContent;
+                }
+                rawJsonNode.remove();
+            }
+        }
+        if (!rawText) {
+            rawText = questionTextEl.textContent || "";
+        }
+        questionTextEl.dataset.rawQuestion = rawText;
+        questionTextEl.innerHTML = renderQuestionTextHtml(rawText);
+    }
+
     function rememberAnswer(questionData) {
         if (questionData && questionData.selected_answer) {
             state.answeredQuestions.add(Number(questionData.q_index));
@@ -495,9 +793,9 @@ window.__MCQ_AJAX_FLOW = false;
 
         <div class="card mcq-question-card">
             <div class="mcq-question-number">Question ${questionData.q_index + 1}</div>
-            <h3 id="mcqQuestionText" class="mcq-question-title">
-                ${escapeHtml(questionData.question_text)}
-            </h3>
+            <div id="mcqQuestionText" class="mcq-question-title">
+                ${renderQuestionTextHtml(questionData.question_text)}
+            </div>
             <div class="mcq-question-help">
                 Select the best answer. You can revisit questions using the palette.
             </div>
@@ -856,6 +1154,8 @@ window.__MCQ_AJAX_FLOW = false;
 
         setPageMode("wide");
         setBodyView("question");
+
+        applyQuestionTextFormattingToDom();
 
         state.qIndex = Number(view.dataset.qIndex || 0);
         state.totalQuestions = Number(view.dataset.totalQuestions || 0);
