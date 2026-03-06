@@ -2,56 +2,51 @@
 {% block title %}Evaluation{% endblock %}
 {% block breadcrumb %}Evaluation{% endblock %}
 
-{% block content %}
-
+{% block head %}
 <style>
     .evaluation-page {
-        --ev-brand: #0d3b66;
-        --ev-brand-2: #1f6feb;
+        --ev-brand: #0f766e;
+        --ev-brand-2: #14b8a6;
         --ev-ink: #0f172a;
-        --ev-muted: #5f6f87;
-        --ev-border: #d8e5f5;
-        --ev-shadow: 0 14px 30px rgba(13, 59, 102, 0.10);
-        font-family: "Poppins", "Segoe UI", sans-serif;
-        background:
-            radial-gradient(1100px 520px at 94% -12%, rgba(31,111,235,0.12), transparent 60%),
-            radial-gradient(950px 460px at 4% -18%, rgba(13,59,102,0.09), transparent 58%);
-        border-radius: 20px;
+        --ev-muted: #64748b;
+        --ev-border: #e2e8f0;
+        --ev-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+                border-radius: 10px;
         padding: 8px 0 14px;
     }
 
     /* ===== Evaluation Page Styles ===== */
     .eval-header {
-        background: linear-gradient(135deg, #0d3b66 0%, #1f6feb 100%);
+        background: var(--ev-brand);
         color: white;
-        border-radius: 16px;
+        border-radius: 10px;
         padding: 26px 30px;
         margin-bottom: 24px;
-        box-shadow: 0 16px 30px rgba(13, 59, 102, 0.24);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
     }
     .eval-header h4 {
         margin: 0;
-        font-weight: 800;
-        font-size: 1.65rem;
-        letter-spacing: 0.2px;
+        font-weight: 600;
+        font-size: 1.5rem;
+        letter-spacing: -0.01em;
     }
     .eval-header p {
         margin: 8px 0 0 0;
-        opacity: 0.95;
-        font-size: 0.98rem;
+        opacity: 0.92;
+        font-size: 0.95rem;
     }
 
     /* Candidate selector */
     .candidate-selector {
         border: 1px solid var(--ev-border);
-        border-radius: 14px;
-        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        border-radius: 10px;
+        background: #ffffff;
         transition: border-color 0.2s, box-shadow 0.2s;
         box-shadow: var(--ev-shadow);
     }
     .candidate-selector:hover {
-        border-color: #1f6feb;
-        box-shadow: 0 18px 30px rgba(13, 59, 102, 0.14);
+        border-color: var(--ev-brand);
+        box-shadow: 0 2px 8px rgba(15,118,110,0.10);
     }
     .candidate-selector .toggle-bar {
         padding: 16px 20px;
@@ -60,18 +55,18 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: #f7fbff;
-        border-radius: 13px;
-        font-weight: 700;
-        color: #183c68;
+        background: #f8fafc;
+        border-radius: 9px;
+        font-weight: 500;
+        color: #334155;
     }
     .candidate-selector .toggle-bar:hover {
-        background: #eef5ff;
+        background: #f1f5f9;
     }
     .candidate-selector .toggle-bar .arrow {
         transition: transform 0.3s;
         font-size: 0.85rem;
-        color: #0d6efd;
+        color: var(--ev-brand);
     }
     .candidate-selector.open .arrow {
         transform: rotate(180deg);
@@ -83,7 +78,7 @@
     }
     .candidate-list .form-check {
         padding: 12px 0 12px 30px;
-        border-bottom: 1px solid #eef3fb;
+        border-bottom: 1px solid #f1f5f9;
     }
     .candidate-list .form-check:last-child {
         border-bottom: none;
@@ -92,11 +87,11 @@
     /* Candidate result card */
     .candidate-result-card {
         border: 1px solid var(--ev-border);
-        border-radius: 16px;
+        border-radius: 10px;
         overflow: hidden;
         margin-bottom: 28px;
         box-shadow: var(--ev-shadow);
-        background: linear-gradient(180deg, #ffffff 0%, #f9fcff 100%);
+        background: #ffffff;
     }
     .candidate-result-header {
         padding: 20px 24px;
@@ -107,33 +102,33 @@
         gap: 12px;
     }
     .candidate-info .candidate-name {
-        font-size: 1.25rem;
-        font-weight: 800;
-        color: #0d3b66;
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: #0f172a;
     }
     .candidate-info .candidate-meta {
         font-size: 0.87rem;
-        color: #4b5563;
+        color: #64748b;
         margin-top: 2px;
     }
     /* Stat pills (header summary) */
     .stat-pill {
-        background: linear-gradient(180deg, #ffffff 0%, #f2f7ff 100%);
-        border: 1px solid #d8e5f5;
-        border-radius: 10px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
         padding: 10px 18px;
         text-align: center;
         flex: 1;
         min-width: 120px;
     }
     .stat-pill .stat-value {
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: #0d3b66;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #0f172a;
     }
     .stat-pill .stat-label {
         font-size: 0.75rem;
-        color: #6c757d;
+        color: #94a3b8;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         margin-top: 2px;
@@ -145,9 +140,9 @@
         font-size: 0.88rem;
     }
     .score-table thead th {
-        background: linear-gradient(135deg, #0d3b66 0%, #1f6feb 100%);
+        background: #1e293b;
         color: white;
-        font-weight: 600;
+        font-weight: 500;
         padding: 12px 16px;
         border: none;
         white-space: nowrap;
@@ -158,13 +153,13 @@
     .score-table tbody td {
         padding: 14px 16px;
         vertical-align: middle;
-        border-bottom: 1px solid #f0f0f0;
+        border-bottom: 1px solid #f1f5f9;
     }
     .score-table tbody tr:last-child td {
         border-bottom: none;
     }
     .score-table tbody tr:hover {
-        background: #f3f8ff;
+        background: #f8fafc;
     }
 
     /* Progress bar for percentage */
@@ -185,7 +180,7 @@
     .status-pill {
         padding: 4px 14px;
         border-radius: 20px;
-        font-weight: 600;
+        font-weight: 500;
         font-size: 0.78rem;
         display: inline-block;
         text-transform: uppercase;
@@ -207,8 +202,8 @@
     /* Threshold info */
     .threshold-info {
         padding: 16px 24px;
-        background: #f5f9ff;
-        border-top: 1px solid #e2ecf9;
+        background: #f8fafc;
+        border-top: 1px solid #e2e8f0;
     }
     .threshold-item {
         display: inline-flex;
@@ -216,7 +211,7 @@
         gap: 6px;
         margin-right: 20px;
         font-size: 0.8rem;
-        color: #555;
+        color: #64748b;
     }
     .threshold-dot {
         width: 10px;
@@ -235,7 +230,7 @@
     .proctoring-title {
         display: block;
         font-size: 0.78rem;
-        font-weight: 700;
+        font-weight: 600;
         color: #7a5a11;
         text-transform: uppercase;
         letter-spacing: 0.05em;
@@ -255,7 +250,7 @@
         background: #fff8e8;
         color: #5f4a18;
         font-size: 0.76rem;
-        font-weight: 600;
+        font-weight: 500;
     }
     .proctoring-chip.alert {
         border-color: #f5c6cb;
@@ -264,15 +259,15 @@
     }
     .plagiarism-summary {
         padding: 12px 24px;
-        background: #f5f9ff;
-        border-top: 1px solid #d9e6fb;
-        border-bottom: 1px solid #d9e6fb;
+        background: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+        border-bottom: 1px solid #e2e8f0;
     }
     .plagiarism-title {
         display: block;
         font-size: 0.78rem;
-        font-weight: 700;
-        color: #1b4f9b;
+        font-weight: 600;
+        color: #334155;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         margin-bottom: 8px;
@@ -287,11 +282,11 @@
         align-items: center;
         padding: 4px 10px;
         border-radius: 999px;
-        border: 1px solid #cfe0fb;
-        background: #eef5ff;
-        color: #17407e;
+        border: 1px solid #e2e8f0;
+        background: #f1f5f9;
+        color: #334155;
         font-size: 0.76rem;
-        font-weight: 600;
+        font-weight: 500;
     }
     .plagiarism-chip.risk-high {
         border-color: #f5c6cb;
@@ -313,54 +308,56 @@
     .eval-empty-state {
         text-align: center;
         padding: 64px 22px;
-        border: 1px dashed #c9d9ef;
-        border-radius: 16px;
-        background: linear-gradient(180deg, #ffffff 0%, #f5faff 100%);
+        border: 1px dashed #cbd5e1;
+        border-radius: 10px;
+        background: #ffffff;
         box-shadow: var(--ev-shadow);
     }
     .eval-empty-state .empty-icon {
         font-size: 3rem;
-        color: #dee2e6;
+        color: #cbd5e1;
         margin-bottom: 16px;
     }
     .eval-empty-state h5 {
-        color: #6c757d;
+        color: #64748b;
         font-weight: 600;
     }
     .eval-empty-state p {
-        color: #adb5bd;
+        color: #94a3b8;
         font-size: 0.9rem;
     }
 
     /* Select all */
     .select-all-bar {
         padding: 8px 0;
-        border-bottom: 2px solid #e2ecf9;
+        border-bottom: 2px solid #e2e8f0;
         margin-bottom: 4px;
     }
 
     .evaluation-page .card {
         border: 1px solid var(--ev-border);
-        border-radius: 16px;
+        border-radius: 10px;
         box-shadow: var(--ev-shadow);
-        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        background: #ffffff;
     }
 
     .evaluation-page .btn-primary {
         border: 0;
-        border-radius: 12px;
-        font-weight: 700;
+        border-radius: 8px;
+        font-weight: 500;
         padding: 11px 24px;
-        background: linear-gradient(135deg, var(--ev-brand) 0%, var(--ev-brand-2) 100%);
-        box-shadow: 0 12px 22px rgba(31, 111, 235, 0.22);
+        background: var(--ev-brand);
+        box-shadow: 0 1px 3px rgba(15,118,110,0.15);
     }
 
     .evaluation-page .btn-primary:hover {
+        background: #0d6963;
         transform: translateY(-1px);
-        box-shadow: 0 14px 24px rgba(31, 111, 235, 0.28);
-    }
+        box-shadow: 0 2px 6px rgba(15,118,110,0.20);    }
 </style>
+{% endblock %}
 
+{% block content %}
 <div class="evaluation-page">
 <!-- ===== PAGE HEADER ===== -->
 <div class="eval-header">
@@ -372,11 +369,11 @@
 <div class="card shadow-sm mb-4">
     <div class="card-body py-3">
         <div class="d-flex align-items-center flex-wrap gap-3">
-            <span class="fw-semibold text-muted" style="font-size:0.82rem;">
+            <span class="fw-medium text-muted" style="font-size:0.82rem;">
                 <i class="bi bi-info-circle me-1"></i> Pass Thresholds:
             </span>
             <span class="threshold-item">
-                <span class="threshold-dot" style="background:#0d6efd;"></span>
+                <span class="threshold-dot" style="background:#0f766e;"></span>
                 Aptitude (L1): {{ pass_thresholds.get('L1', default_threshold) }}%
             </span>
             <span class="threshold-item">
@@ -407,7 +404,7 @@
     <div class="toggle-bar" id="candidateDropdownToggle">
         <span>
             <i class="bi bi-people me-2"></i>
-            <span class="fw-semibold">Select Candidates</span>
+            <span class="fw-medium">Select Candidates</span>
             {% if candidates %}
                 <span class="text-muted ms-2" style="font-size:0.85rem;">({{ candidates|length }} available)</span>
             {% endif %}
@@ -422,8 +419,8 @@
         <div class="select-all-bar px-3 pt-2">
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="selectAllCandidates">
-                <label class="form-check-label fw-semibold" for="selectAllCandidates"
-                       style="font-size:0.9rem; color:#0d3b66;">
+                <label class="form-check-label fw-medium" for="selectAllCandidates"
+                       style="font-size:0.9rem; color:#334155;">
                     Select All
                 </label>
             </div>
@@ -440,9 +437,9 @@
                        id="cand_{{ loop.index }}"
                        {% if c.email in selected_emails %}checked{% endif %}>
                 <label class="form-check-label" for="cand_{{ loop.index }}">
-                    <span class="fw-bold" style="color:#0d3b66;">{{ c.name }}</span>
-                    <div style="font-size:0.82rem; color:#666;">
-                        {{ c.email }} &nbsp;&middot;&nbsp; <span class="text-primary">{{ c.role }}</span>
+                    <span class="fw-semibold" style="color:#0f172a;">{{ c.name }}</span>
+                    <div style="font-size:0.82rem; color:#64748b;">
+                        {{ c.email }} &nbsp;&middot;&nbsp; <span style="color:var(--ev-brand);">{{ c.role }}</span>
                     </div>
                 </label>
             </div>
@@ -472,8 +469,9 @@
 
     {% for c in filtered_candidates %}
 
-    <div class="candidate-result-card">        <!-- Candidate Header -->
-        <div class="candidate-result-header" style="background: #f8f9fa;">
+    <div class="candidate-result-card">
+        <!-- Candidate Header -->
+        <div class="candidate-result-header" style="background: #f8fafc;">
 
             <div class="candidate-info">
                 <div class="candidate-name">
@@ -562,10 +560,10 @@
 
                     <tr>
                         <td>
-                            <span class="fw-semibold" style="color:#1d3557;">
+                            <span class="fw-medium" style="color:#334155;">
                                 {{ r.round_label }}
                             </span>
-                            <div style="font-size:0.75rem; color:#aaa;">{{ rk }}</div>
+                            <div style="font-size:0.75rem; color:#94a3b8;">{{ rk }}</div>
                         </td>
                         <td colspan="5" class="text-center text-muted" style="font-style:italic;">
                             <i class="bi bi-dash-circle me-1"></i> Not Attempted
@@ -579,14 +577,14 @@
 
                     <tr>
                         <td>
-                            <span class="fw-semibold" style="color:#1d3557;">
+                            <span class="fw-medium" style="color:#334155;">
                                 {{ r.round_label }}
                             </span>
-                            <div style="font-size:0.75rem; color:#aaa;">{{ rk }}</div>
+                            <div style="font-size:0.75rem; color:#94a3b8;">{{ rk }}</div>
                         </td>
 
                         <td>
-                            <span class="fw-bold" style="font-size:1rem; color:#0d3b66;">
+                            <span class="fw-semibold" style="font-size:1rem; color:#0f172a;">
                                 {{ r.correct }}
                             </span>
                             <span class="text-muted">/ {{ r.total }}</span>
@@ -606,7 +604,7 @@
                                                     linear-gradient(90deg, #d62828, #e76f51)
                                                 {% endif %};"></div>
                                 </div>
-                                <span class="fw-bold" style="min-width:45px;
+                                <span class="fw-semibold" style="min-width:45px;
                                     color:
                                     {% if r.percentage >= r.pass_threshold %}#2a9d8f
                                     {% elif r.percentage >= (r.pass_threshold - 10) %}#e67e22
@@ -617,15 +615,15 @@
                         </td>
 
                         <td>
-                            <span class="text-muted fw-semibold">&ge; {{ r.pass_threshold }}%</span>
+                            <span class="text-muted fw-medium">&ge; {{ r.pass_threshold }}%</span>
                         </td>
 
                         <td>
-                            <span style="color:#333;">{{ r.attempted }} / {{ r.total }}</span>
+                            <span style="color:#334155;">{{ r.attempted }} / {{ r.total }}</span>
                         </td>
 
                         <td>
-                            <span style="color:#e76f51; font-weight:600;">
+                            <span style="color:#e76f51; font-weight:500;">
                                 <i class="bi bi-clock me-1"></i>
                                 {{ (r.time_taken_seconds // 60) }}m {{ (r.time_taken_seconds % 60) }}s
                             </span>

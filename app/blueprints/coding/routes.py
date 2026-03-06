@@ -1828,30 +1828,30 @@ def _evaluate_and_store_coding_result(session_id):
                 "percentage": percentage,
                 "pass_threshold": pass_threshold,
                 "status": status,
-                "time_taken_seconds": time_taken,
-                "submission_details": {
+                "time_taken_seconds": time_taken,                "submission_details": {
                     "question_title": question.get("title", ""),
                     "question_text": question.get("description") or question.get("problem_statement") or "",
                     "language": language,
-                    "submitted_code": code,
+                    "submitted_code": code if attempted else "",
                 },
             }
             EVALUATION_STORE[session_id] = result_data
             EvaluationService._persist_result_to_db(session_meta, result_data)
-            save_coding_submission(
-                session_id=session_id,
-                email=session_meta.get("email", ""),
-                round_key=round_key,
-                round_label=round_label,
-                role=session_meta.get("role_label", ""),
-                language=language,
-                question_title=question.get("title", ""),
-                question_text=question.get("description") or question.get("problem_statement") or "",
-                submitted_code=code,
-                starter_code=starter_code,
-                role_key=session_meta.get("role_key", ""),
-                batch_id=session_meta.get("batch_id", ""),
-            )
+            if attempted:
+                save_coding_submission(
+                    session_id=session_id,
+                    email=session_meta.get("email", ""),
+                    round_key=round_key,
+                    round_label=round_label,
+                    role=session_meta.get("role_label", ""),
+                    language=language,
+                    question_title=question.get("title", ""),
+                    question_text=question.get("description") or question.get("problem_statement") or "",
+                    submitted_code=code,
+                    starter_code=starter_code,
+                    role_key=session_meta.get("role_key", ""),
+                    batch_id=session_meta.get("batch_id", ""),
+                )
             return
 
     test_suite = hidden_tests or public_tests
@@ -1920,26 +1920,27 @@ def _evaluate_and_store_coding_result(session_id):
             "question_title": question.get("title", ""),
             "question_text": question.get("description") or question.get("problem_statement") or "",
             "language": language,
-            "submitted_code": code,
+            "submitted_code": code if attempted else "",
         },
     }
 
     EVALUATION_STORE[session_id] = result_data
     EvaluationService._persist_result_to_db(session_meta, result_data)
-    save_coding_submission(
-        session_id=session_id,
-        email=session_meta.get("email", ""),
-        round_key=round_key,
-        round_label=round_label,
-        role=session_meta.get("role_label", ""),
-        language=language,
-        question_title=question.get("title", ""),
-        question_text=question.get("description") or question.get("problem_statement") or "",
-        submitted_code=code,
-        starter_code=starter_code,
-        role_key=session_meta.get("role_key", ""),
-        batch_id=session_meta.get("batch_id", ""),
-    )
+    if attempted:
+        save_coding_submission(
+            session_id=session_id,
+            email=session_meta.get("email", ""),
+            round_key=round_key,
+            round_label=round_label,
+            role=session_meta.get("role_label", ""),
+            language=language,
+            question_title=question.get("title", ""),
+            question_text=question.get("description") or question.get("problem_statement") or "",
+            submitted_code=code,
+            starter_code=starter_code,
+            role_key=session_meta.get("role_key", ""),
+            batch_id=session_meta.get("batch_id", ""),
+        )
 
 
 @coding_bp.route("/submit/<session_id>", methods=["GET", "POST"])

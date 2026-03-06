@@ -2,30 +2,24 @@
 {% block title %}Generated Tests{% endblock %}
 {% block breadcrumb %}Generated Tests{% endblock %}
 
-{% block content %}
-<div class="generated-tests-page">
-
+{% block head %}
 <style>
     .generated-tests-page {
-        --gt-brand: #0d3b66;
-        --gt-brand-2: #1f6feb;
+        --gt-brand: #0f766e;
+        --gt-brand-2: #14b8a6;
         --gt-ink: #0f172a;
-        --gt-muted: #5b6b82;
-        --gt-border: #d6e2f1;
-        --gt-shadow: 0 14px 34px rgba(13, 59, 102, 0.10);
-        font-family: "Poppins", "Segoe UI", sans-serif;
-        background:
-            radial-gradient(1200px 540px at 95% -10%, rgba(31,111,235,0.10), transparent 60%),
-            radial-gradient(980px 470px at 5% -20%, rgba(13,59,102,0.08), transparent 55%);
-        border-radius: 20px;
+        --gt-muted: #64748b;
+        --gt-border: #e2e8f0;
+        --gt-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+                border-radius: 10px;
         padding-top: 6px;
         padding-bottom: 14px;
     }
 
     .generated-tests-page .page-title {
-        font-weight: 800;
-        letter-spacing: 0.2px;
-        color: var(--gt-brand);
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: #0f172a;
         margin-bottom: 4px;
     }
 
@@ -37,41 +31,42 @@
     .generated-tests-page .toolbar-card,
     .generated-tests-page .list-card {
         border: 1px solid var(--gt-border);
-        border-radius: 18px;
-        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        border-radius: 10px;
+        background: #ffffff;
         box-shadow: var(--gt-shadow);
     }
 
     .generated-tests-page .btn-brand {
-        border-radius: 12px;
-        font-weight: 700;
+        border-radius: 8px;
+        font-weight: 500;
         border: 0;
-        background: linear-gradient(135deg, var(--gt-brand) 0%, var(--gt-brand-2) 100%);
-        box-shadow: 0 10px 20px rgba(31, 111, 235, 0.20);
+        background: var(--gt-brand);
+        box-shadow: 0 1px 3px rgba(15,118,110,0.15);
     }
 
     .generated-tests-page .btn-brand:hover {
+        background: #0d6963;
         transform: translateY(-1px);
-        box-shadow: 0 12px 24px rgba(31, 111, 235, 0.25);
+        box-shadow: 0 2px 6px rgba(15,118,110,0.20);
     }
 
     /* Scoped refinement: compact, readable generated-links section only */
     .candidate-card {
         padding: 0.9rem 1rem !important;
         margin-bottom: 0.7rem !important;
-        color: #111;
+        color: #0f172a;
         font-size: calc(0.875rem + 1px);
-        border: 1px solid #d8e5f5 !important;
-        border-radius: 14px !important;
-        background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%) !important;
-        box-shadow: 0 10px 22px rgba(13, 59, 102, 0.08);
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 10px !important;
+        background: #ffffff !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
     }
 
     .candidate-card:hover {
         transform: translateY(-2px);
-        border-color: #b9cde6 !important;
-        box-shadow: 0 16px 26px rgba(13, 59, 102, 0.12);
+        border-color: #cbd5e1 !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     }
 
     .candidate-card .candidate-heading {
@@ -82,14 +77,14 @@
     }
 
     .candidate-card .candidate-name {
-        color: #0d3b8e;
-        font-size: 1.07rem;
-        font-weight: 750;
+        color: #0f172a;
+        font-size: 1.05rem;
+        font-weight: 600;
         line-height: 1;
     }
 
     .candidate-card .candidate-meta {
-        color: #334155;
+        color: #64748b;
         font-size: 0.84rem;
     }
 
@@ -99,7 +94,7 @@
         margin-top: 0.38rem !important;
         margin-left: 1.35rem;
         padding-left: 0.45rem;
-        border-left: 2px solid #d6e2f1;
+        border-left: 2px solid #e2e8f0;
     }
 
     .candidate-card .test-link-item {
@@ -128,16 +123,16 @@
         min-width: 46px;
         padding: 0.08rem 0.35rem;
         border-radius: 999px;
-        background: linear-gradient(135deg, #e8f0ff 0%, #dce9ff 100%);
-        color: #184c92;
-        font-weight: 700;
+        background: #f0fdfa;
+        color: #0f766e;
+        font-weight: 600;
         font-size: 0.67rem;
     }
 
     .candidate-card .test-link-label {
-        color: #111;
+        color: #0f172a;
         font-size: 0.79rem;
-        font-weight: 600;
+        font-weight: 500;
         max-width: 260px;
         white-space: nowrap;
         overflow: hidden;
@@ -154,8 +149,8 @@
 
     .candidate-card .test-link-actions .btn-link {
         text-decoration: none;
-        font-weight: 700;
-        color: #111;
+        font-weight: 500;
+        color: #0f172a;
         padding: 0 !important;
         font-size: 0.75rem;
         line-height: 1;
@@ -169,15 +164,15 @@
     }
 
     .candidate-card .copy-all-btn {
-        border-radius: 10px;
+        border-radius: 8px;
         font-size: 0.75rem;
-        font-weight: 700;
+        font-weight: 500;
     }
 
     .generated-tests-page .empty-state-card {
-        border: 1px dashed #c4d6ee;
-        border-radius: 16px;
-        background: linear-gradient(180deg, #ffffff 0%, #f4f9ff 100%);
+        border: 1px dashed #cbd5e1;
+        border-radius: 10px;
+        background: #ffffff;
         padding: 2.5rem 1.25rem;
     }
 
@@ -195,10 +190,13 @@
 
         .candidate-card .test-link-actions {
             width: 100%;
-            justify-content: flex-start;
-        }
+            justify-content: flex-start;        }
     }
 </style>
+{% endblock %}
+
+{% block content %}
+<div class="generated-tests-page">
 
 <!-- NEW BACK BUTTON (TOP) -->
 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -388,22 +386,22 @@
 
         const htmlRows = rows.map(row => (
             `<tr>` +
-            `<td style="border:1px solid #d8e5f5;padding:7px 10px;text-align:center;background:#ffffff;">${escapeHtml(row.index)}</td>` +
-            `<td style="border:1px solid #d8e5f5;padding:7px 10px;background:#ffffff;">${escapeHtml(row.label)}</td>` +
-            `<td style="border:1px solid #d8e5f5;padding:7px 10px;background:#ffffff;">` +
-            `<a href="${escapeHtml(row.url)}" style="color:#0d3b66;text-decoration:none;">${escapeHtml(row.url)}</a>` +
+            `<td style="border:1px solid #d8e5f0;padding:7px 10px;text-align:center;background:#ffffff;">${escapeHtml(row.index)}</td>` +
+            `<td style="border:1px solid #d8e5f0;padding:7px 10px;background:#ffffff;">${escapeHtml(row.label)}</td>` +
+            `<td style="border:1px solid #d8e5f0;padding:7px 10px;background:#ffffff;">` +
+            `<a href="${escapeHtml(row.url)}" style="color:#0f766e;text-decoration:none;">${escapeHtml(row.url)}</a>` +
             `</td>` +
             `</tr>`
         )).join("");
 
         const html = (
-            `<div style="font-family:Segoe UI,Arial,sans-serif;font-size:13px;color:#0f172a;">` +
+            `<div style="font-family:Inter,Arial,sans-serif;font-size:13px;color:#0f172a;">` +
             `<table style="border-collapse:separate;border-spacing:0 6px;width:100%;font-size:13px;">` +
             `<thead>` +
-            `<tr style="background:#f1f6fd;">` +
-            `<th style="border:1px solid #d8e5f5;padding:6px 8px;text-align:center;">No</th>` +
-            `<th style="border:1px solid #d8e5f5;padding:6px 8px;text-align:left;">Test Name</th>` +
-            `<th style="border:1px solid #d8e5f5;padding:6px 8px;text-align:left;">Test Link</th>` +
+            `<tr style="background:#f0fdfa;">` +
+            `<th style="border:1px solid #d8e5f0;padding:6px 8px;text-align:center;">No</th>` +
+            `<th style="border:1px solid #d8e5f0;padding:6px 8px;text-align:left;">Test Name</th>` +
+            `<th style="border:1px solid #d8e5f0;padding:6px 8px;text-align:left;">Test Link</th>` +
             `</tr>` +
             `</thead>` +
             `<tbody>${htmlRows}</tbody>` +

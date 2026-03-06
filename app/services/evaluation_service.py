@@ -245,8 +245,16 @@ class EvaluationService:
     def generate_candidate_coding_round_summary(candidate_email):
         """
         Generate a separate summary only for L4 coding round, including question and submitted code.
+        Skip AI summary entirely if the coding round was not attempted.
         """
         coding_data = EvaluationService.get_candidate_coding_round_data(candidate_email)
+        if not coding_data:
+            return None
+        # If not attempted or no submitted code, don't generate AI summary
+        status = str(coding_data.get("status", "")).strip()
+        submitted_code = str(coding_data.get("submitted_code", "")).strip()
+        if status in ("Not Attempted", "Pending", "") or not submitted_code:
+            return None
         return generate_coding_round_summary(coding_data)
 
     @staticmethod
@@ -302,6 +310,9 @@ class EvaluationService:
                 "question_text": _pick(submission_details.get("question_text"), latest_submission.get("question_text", "")),
                 "submitted_code": _pick(submission_details.get("submitted_code"), latest_submission.get("submitted_code", "")),
             }
+            # If not attempted, clear submitted_code to prevent starter code leaking into AI summary
+            if not latest.get("attempted") or coding_data["status"] in ("Not Attempted", "Pending"):
+                coding_data["submitted_code"] = ""
             coding_data.update(overall_context)
             return coding_data
 
@@ -330,6 +341,9 @@ class EvaluationService:
                     "question_text": _pick(l4_submission_details.get("question_text"), latest_submission.get("question_text", "")),
                     "submitted_code": _pick(l4_submission_details.get("submitted_code"), latest_submission.get("submitted_code", "")),
                 }
+                # If not attempted, clear submitted_code to prevent starter code leaking into AI summary
+                if not l4.get("attempted") or coding_data["status"] in ("Not Attempted", "Pending"):
+                    coding_data["submitted_code"] = ""
                 coding_data.update(overall_context)
                 return coding_data
         except Exception:

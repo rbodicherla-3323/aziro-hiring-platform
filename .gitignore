@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment
+.env
+.env.*
+!.env.production.template
+
+# IDE
+.vscode/
+.idea/
+
+# Instance / DB
+instance/
+
+# Uploads (user data)
+app/uploads/*.pdf
+
+# Runtime data
+app/runtime/
+
+# Utility scripts (not part of the app)
+_apply_ui.py
+_apply_ui2.py
+_fix_test_create.py
+check_counts.py
+fix_conflicts.py
+
+# SSL certs (deployed on VM only)
+ssl/
+
+# OS
+Thumbs.db
+.DS_Store

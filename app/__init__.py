@@ -57,6 +57,10 @@ def create_app():
         from . import models  # noqa: F401
         db.create_all()
 
+    # Inject asset version into all templates for cache busting
+    from .config import Config
+    app.jinja_env.globals["ASSET_VERSION"] = Config.ASSET_VERSION
+
     # Dev mode: Bypass login for local testing
     # Activates when AUTH_DISABLED=true  **or**  when Azure AD creds are
     # still the placeholder values (i.e. .env was never customised / is missing).

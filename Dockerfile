@@ -24,4 +24,4 @@ RUN mkdir -p app/uploads app/runtime/reports app/runtime/proctoring \
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "--threads", "4", "--timeout", "300", "wsgi:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "1", "--threads", "8", "--timeout", "300", "wsgi:app"]

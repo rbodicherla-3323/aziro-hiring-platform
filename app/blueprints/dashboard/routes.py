@@ -356,6 +356,23 @@ def create_test():
                 "created_at": datetime.now(timezone.utc).isoformat(),
             }
         )
+                "url": test_url,                "type": "mcq",
+            }
+
+        # Store in generated tests
+        add_generated_test({
+            "name": name,
+            "email": email,
+            "role": role_label,
+            "role_key": role_key,
+            "batch_id": batch_id,
+            "aptitude_enabled": aptitude_enabled,
+            "tests": tests,
+            "resume_path": resume_path,
+            "jd_path": jd_path,
+            "created_by": user_email,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+        })
 
         email_sent, email_error = send_candidate_test_links_email(
             candidate_name=name,
