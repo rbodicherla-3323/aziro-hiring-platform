@@ -1,8 +1,11 @@
 import os
+from pathlib import Path
 from flask import Flask
 from dotenv import load_dotenv
 
-load_dotenv()
+# Always load project-level .env regardless of launch working directory.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+load_dotenv(PROJECT_ROOT / ".env")
 
 from .extensions import db, migrate
 from .blueprints.dashboard import dashboard_bp
@@ -61,16 +64,9 @@ def create_app():
     from .config import Config
     app.jinja_env.globals["ASSET_VERSION"] = Config.ASSET_VERSION
 
-    # Dev mode: Bypass login for local testing
-    # Activates when AUTH_DISABLED=true  **or**  when Azure AD creds are
-    # still the placeholder values (i.e. .env was never customised / is missing).
-    auth_disabled_env = os.getenv("AUTH_DISABLED", "").lower() == "true"
-    azure_client_id = os.getenv("AZURE_CLIENT_ID", "")
-    azure_unconfigured = (
-        not azure_client_id
-        or azure_client_id == "your-azure-client-id"
-    )
-    dev_bypass = auth_disabled_env or azure_unconfigured
+    # Dev mode: Bypass login only when explicitly enabled.
+    auth_disabled_env = os.getenv("AUTH_DISABLED", "").strip().lower() == "true"
+    dev_bypass = auth_disabled_env
 
     if dev_bypass:
         @app.before_request
@@ -85,5 +81,18 @@ def create_app():
                     "email": "dev@aziro.com",
                     "authenticated": True
                 }
+    else:
+        @app.before_request
+        def clear_stale_dev_bypass_session():
+            from flask import session
+            user = session.get("user")
+            if not isinstance(user, dict):
+                return
+            if (
+                user.get("email") == "dev@aziro.com"
+                and user.get("name") == "Dev User"
+                and "oauth" not in session
+            ):
+                session.clear()
 
     return app

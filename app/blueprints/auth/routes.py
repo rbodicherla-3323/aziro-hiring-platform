@@ -1,18 +1,18 @@
-# filepath: d:\Projects\aziro-hiring-platform\app\blueprints\auth\routes.py
 """
-Auth routes — Microsoft MSAL OAuth for @aziro.com users.
-Also provides local dev fallback routes.
+Auth routes - Microsoft MSAL OAuth for @aziro.com users.
 """
+
 import os
 import time
+
 import msal
 import requests
-from flask import render_template, redirect, url_for, session, request, flash
+from flask import flash, redirect, render_template, request, session, url_for
 
 from . import auth_bp
 from app.services.user_token_store import (
-    set_graph_delegated_token,
     clear_graph_delegated_token,
+    set_graph_delegated_token,
 )
 
 # Azure AD Configuration
@@ -21,9 +21,6 @@ AZURE_CLIENT_SECRET = os.getenv("AZURE_CLIENT_SECRET", "")
 AZURE_TENANT_ID = os.getenv("AZURE_TENANT_ID", "common")
 AZURE_REDIRECT_URI = os.getenv("AZURE_REDIRECT_URI", "").strip()
 AUTHORITY = f"https://login.microsoftonline.com/{AZURE_TENANT_ID}"
-# Delegated send support requires Mail.Send consent for the logged-in user.
-# Keep only resource scopes for MSAL auth request; reserved OIDC scopes are
-# added by the library as needed.
 SCOPES = ["User.Read", "Mail.Send"]
 
 
@@ -37,11 +34,7 @@ def _build_msal_app(cache=None):
 
 
 def _get_redirect_uri() -> str:
-    """
-    Return OAuth redirect URI.
-    Prefer explicit AZURE_REDIRECT_URI for VM/proxy deployments to avoid
-    localhost callback mismatches.
-    """
+    """Return OAuth redirect URI."""
     if AZURE_REDIRECT_URI:
         return AZURE_REDIRECT_URI
     return url_for("auth.auth_callback", _external=True)
@@ -49,27 +42,32 @@ def _get_redirect_uri() -> str:
 
 @auth_bp.route("/")
 def index():
-    """Root URL — redirect to dashboard if logged in, else login."""
-    if session.get("user"):
-        return redirect(url_for("dashboard.dashboard"))
+    """Root URL - always start at login page."""
     return redirect(url_for("auth.login"))
 
 
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     """Login page."""
-    if session.get("user"):
-        return redirect(url_for("dashboard.dashboard"))
+    auth_disabled = os.getenv("AUTH_DISABLED", "").strip().lower() == "true"
 
+    # Normal mode: force explicit Microsoft sign-in at app entry.
+    if request.method == "GET":
+        if not auth_disabled and (session.get("user") or session.get("oauth")):
+            user = session.get("user", {})
+            clear_graph_delegated_token(user.get("email", ""))
+            session.clear()
+        return render_template("login.html", error=None)
+
+    # POST local login is allowed only in explicit dev-bypass mode.
     error = None
-    if request.method == "POST":
-        # Simple email/password login for dev mode
+    if auth_disabled:
         username = request.form.get("username", "").strip()
         password = request.form.get("password", "").strip()
 
         if not username.endswith("@aziro.com"):
             error = "Only @aziro.com email addresses are allowed."
-        elif password == "aziro123":  # Dev mode password
+        elif password == "aziro123":
             session["user"] = {
                 "name": username.split("@")[0].title(),
                 "email": username,
@@ -78,6 +76,8 @@ def login():
             return redirect(url_for("dashboard.dashboard"))
         else:
             error = "Invalid credentials."
+    else:
+        error = "Use 'Continue with Microsoft' to sign in."
 
     return render_template("login.html", error=error)
 
@@ -86,7 +86,7 @@ def login():
 def microsoft_login():
     """Initiate Microsoft OAuth2 flow."""
     if not AZURE_CLIENT_ID or AZURE_CLIENT_ID == "your-azure-client-id":
-        flash("Microsoft login is not configured. Use email/password login.", "warning")
+        flash("Microsoft login is not configured.", "warning")
         return redirect(url_for("auth.login"))
 
     try:
@@ -108,11 +108,12 @@ def microsoft_login():
 
 
 @auth_bp.route("/auth/callback")
+@auth_bp.route("/login/azure/callback")
 def auth_callback():
-    """Handle Microsoft OAuth2 callback."""
+    """Handle Microsoft OAuth2 callback (legacy and Azure-style paths)."""
     code = request.args.get("code")
     if not code:
-        flash("Authentication failed — no authorization code received.", "danger")
+        flash("Authentication failed - no authorization code received.", "danger")
         return redirect(url_for("auth.login"))
 
     try:
@@ -136,7 +137,6 @@ def auth_callback():
         flash(f"Authentication failed: {result.get('error_description', result['error'])}", "danger")
         return redirect(url_for("auth.login"))
 
-    # Get user identity from ID token claims (preferred), fallback to Graph /me.
     user_info = result.get("id_token_claims") or {}
     if not isinstance(user_info, dict):
         user_info = {}
@@ -172,13 +172,11 @@ def auth_callback():
                 if not name:
                     name = str(me.get("displayName") or "").strip()
         except Exception:
-            # Keep existing values; explicit validation below handles empty email.
             pass
 
     if not name:
         name = email.split("@")[0].title() if email else "User"
 
-    # Restrict to @aziro.com emails
     if not email.endswith("@aziro.com"):
         flash("Access denied. Only @aziro.com accounts are allowed.", "danger")
         return redirect(url_for("auth.login"))
@@ -216,4 +214,3 @@ def logout():
     clear_graph_delegated_token(user.get("email", ""))
     session.clear()
     return redirect(url_for("auth.login"))
-

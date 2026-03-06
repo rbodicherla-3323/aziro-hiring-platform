@@ -115,11 +115,9 @@ server {
     add_header Permissions-Policy "display-capture=(self), camera=(self), microphone=(self), fullscreen=(self)" always;
 
     # ── Body size (PDF uploads, resumes) ──
-    client_max_body_size 25M;
-
-    # ── Static files — served directly by Nginx ──
+    client_max_body_size 25M;    # ── Static files — served directly by Nginx ──
     location /static/ {
-        alias /home/aziro/app/aziro-hiring-platform/app/static/;
+        alias __APP_DIR__/app/static/;
         expires 1h;
         add_header Cache-Control "public, must-revalidate";
     }
@@ -145,6 +143,14 @@ server {
     }
 }
 NGXEOF
+
+# Replace placeholder with actual app directory
+sudo sed -i "s|__APP_DIR__|$APP_DIR|g" /etc/nginx/sites-available/aziro
+
+# Fix permissions so Nginx (www-data) can read static files
+echo "  Setting static file permissions..."
+sudo chmod -R o+rX "$APP_DIR/app/static/"
+sudo chmod o+x "$HOME" "$HOME/app" "$APP_DIR" "$APP_DIR/app"
 
 # Enable site & remove default
 sudo ln -sf /etc/nginx/sites-available/aziro /etc/nginx/sites-enabled/aziro
