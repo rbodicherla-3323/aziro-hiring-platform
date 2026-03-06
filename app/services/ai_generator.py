@@ -21,6 +21,18 @@ def _round_sort_key(round_key: str) -> tuple[int, str]:
     return 999, value
 
 
+def _get_env_value(name: str, default: str | None = None):
+    """Read env var with fallback for BOM-prefixed keys."""
+    value = os.getenv(name)
+    if value is not None:
+        return value
+    bom_name = f"\ufeff{name}"
+    bom_value = os.getenv(bom_name)
+    if bom_value is not None:
+        return bom_value
+    return default
+
+
 class _GeminiRestResponse:
     def __init__(self, text: str):
         self.text = text or ""
@@ -214,11 +226,11 @@ def _get_ai_client():
     if AI_CLIENT is not None:
         return AI_CLIENT
 
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = _get_env_value("GEMINI_API_KEY")
     if not api_key:
         return None
 
-    client_mode = os.getenv("GEMINI_CLIENT_MODE", "auto").strip().lower()
+    client_mode = str(_get_env_value("GEMINI_CLIENT_MODE", "auto") or "auto").strip().lower()
     prefer_rest = (
         client_mode == "rest"
         or sys.version_info >= (3, 14)
