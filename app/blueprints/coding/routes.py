@@ -224,6 +224,7 @@ def start_test(session_id):
         },
         candidate_name=session_meta["candidate_name"],
         body_class="mcq-start-page",
+        proctoring_enabled=_proctoring_enabled(),
     )
 
 
@@ -278,6 +279,7 @@ def editor(session_id):
         candidate_name=session_meta["candidate_name"],
         submit_url=url_for("coding.submit", session_id=session_id),
         body_class="coding-editor-page",
+        proctoring_enabled=_proctoring_enabled(),
     )
 
 
@@ -1976,6 +1978,7 @@ def submit(session_id):
         session_id=session_id,
         candidate_name=session_meta.get("candidate_name", "Candidate"),
         body_class="coding-start-page",
+        proctoring_enabled=_proctoring_enabled(),
     )
 
 
@@ -1988,6 +1991,7 @@ def completed(session_id):
         "coding/completed.html",
         candidate_name=CODING_SESSION_REGISTRY.get(session_id, {}).get("candidate_name", "Candidate"),
         body_class="coding-start-page",
+        proctoring_enabled=_proctoring_enabled(),
     )
 
 

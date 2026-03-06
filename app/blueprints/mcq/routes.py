@@ -201,7 +201,8 @@ def start_test(session_id):
             "total_questions": MCQSessionService.total_questions(session_id),
             "time_minutes": 20
         },
-        candidate_name=session_meta["candidate_name"]
+        candidate_name=session_meta["candidate_name"],
+        proctoring_enabled=_proctoring_enabled(),
     )
 
 
@@ -301,7 +302,8 @@ def question(session_id):
         remaining_seconds=MCQSessionService.remaining_time(session_id),
         selected_answer=MCQSessionService.get_answer(session_id, q_index),
         session_id=session_id,
-        candidate_name=session_meta["candidate_name"]
+        candidate_name=session_meta["candidate_name"],
+        proctoring_enabled=_proctoring_enabled(),
     )
 
 
@@ -558,7 +560,10 @@ def submit(session_id):
             completed_url
         )
 
-    return render_template("mcq/submit.html")
+    return render_template(
+        "mcq/submit.html",
+        proctoring_enabled=_proctoring_enabled(),
+    )
 
 
 # -------------------------------------------------
@@ -566,4 +571,7 @@ def submit(session_id):
 # -------------------------------------------------
 @mcq_bp.route("/completed/<session_id>")
 def completed(session_id):
-    return render_template("mcq/completed.html")
+    return render_template(
+        "mcq/completed.html",
+        proctoring_enabled=_proctoring_enabled(),
+    )
