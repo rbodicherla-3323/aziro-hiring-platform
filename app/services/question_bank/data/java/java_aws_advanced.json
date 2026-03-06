@@ -1,0 +1,2325 @@
+[
+  {
+    "id": "java-aws-l2-001",
+    "question": "During a QA test of checked exception handling, what is required?\n\nFileInputStream fis = new FileInputStream(\"file.txt\");  // FileNotFoundException is checked",
+    "options": [
+      "Automatically handled",
+      "Compilation error not needed",
+      "Optional to handle for that production scenario",
+      "Must handle with try-catch or throws"
+    ],
+    "correct_answer": "Must handle with try-catch or throws",
+    "topic": "Backend Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-002",
+    "question": "During a QA test of deadlock scenario, what happens?\n\n// Thread 1: Lock A -> Lock B\n// Thread 2: Lock B -> Lock A",
+    "options": [
+      "Deadlock occurs, threads wait indefinitely",
+      "One thread is killed",
+      "Exception is thrown for that production scenario",
+      "Both threads execute normally"
+    ],
+    "correct_answer": "Deadlock occurs, threads wait indefinitely",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-003",
+    "question": "In a QA test of Future interface, what does it represent?\n\nExecutorService executor = Executors.newSingleThreadExecutor();\nFuture<Integer> future = executor.submit(() -> 42);",
+    "options": [
+      "Thread object for that production scenario",
+      "Placeholder for result that may not yet be available",
+      "Result of immediate computation",
+      "Current execution state for that production scenario"
+    ],
+    "correct_answer": "Placeholder for result that may not yet be available",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "executors",
+      "future",
+      "threads"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-004",
+    "question": "During a QA test of ExecutorService, what is its advantage?\n\nExecutorService executor = Executors.newFixedThreadPool(5);\nexecutor.execute(() -> System.out.println(\"Task\"));",
+    "options": [
+      "Prevents multithreading for that production scenario",
+      "Slower than manual threading",
+      "Cannot execute Runnable",
+      "Manages thread pool efficiently"
+    ],
+    "correct_answer": "Manages thread pool efficiently",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "executors",
+      "threads"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-005",
+    "question": "During a QA test of multiple catch blocks, which executes?\n\ntry {\n  Object obj = \"string\";\n  int num = (Integer) obj;  // ClassCastException\n} catch(NumberFormatException e) {\n  System.out.println(\"NumberFormat\");\n} catch(ClassCastException e) {\n  System.out.println(\"ClassCast\");\n}",
+    "options": [
+      "Both",
+      "NumberFormat",
+      "Neither",
+      "ClassCast"
+    ],
+    "correct_answer": "ClassCast",
+    "topic": "Backend Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-006",
+    "question": "A QA test uses suppressed exceptions (Java 7 feature). What is the purpose?\n\ntry(BufferedReader reader = new BufferedReader(new FileReader(\"file.txt\"))) {\n  // code\n} catch(IOException e) {\n  e.printStackTrace();\n  // Suppressed exceptions can be accessed\n}",
+    "options": [
+      "Requires manual tracking",
+      "Prevents resource leak for that production scenario",
+      "Hides exceptions for that production scenario",
+      "Tracks exceptions suppressed when closing resources"
+    ],
+    "correct_answer": "Tracks exceptions suppressed when closing resources",
+    "topic": "Backend Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-007",
+    "question": "During a QA test of custom exceptions, what is valid?\n\nclass ValidationException extends Exception {\n  public ValidationException(String message) {\n    super(message);\n  }\n}\n\nthrow new ValidationException(\"Invalid input\");",
+    "options": [
+      "Requires catch block",
+      "Invalid syntax",
+      "Cannot extend Exception",
+      "Valid custom exception"
+    ],
+    "correct_answer": "Valid custom exception",
+    "topic": "Backend Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-008",
+    "question": "A QA test checks try-with-resources. What is the advantage?\n\ntry(BufferedReader reader = new BufferedReader(new FileReader(\"file.txt\"))) {\n  // read file\n} catch(IOException e) {\n  e.printStackTrace();\n}",
+    "options": [
+      "Requires less memory",
+      "No difference from regular try-catch",
+      "Automatically closes resources",
+      "Prevents exceptions"
+    ],
+    "correct_answer": "Automatically closes resources",
+    "topic": "Backend Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-009",
+    "question": "During a QA test of try-catch, what is the behavior?\n\ntry {\n  int result = 10 / 0;\n  System.out.println(\"After division\");\n} catch(ArithmeticException e) {\n  System.out.println(\"Caught\");\n}",
+    "options": [
+      "Prints: Caught",
+      "No output",
+      "Prints: After division",
+      "Throws exception"
+    ],
+    "correct_answer": "Prints: Caught",
+    "topic": "Backend Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-010",
+    "question": "During a QA test of throws keyword, what is its purpose?\n\npublic void method() throws IOException {\n  // Can throw IOException\n}",
+    "options": [
+      "Prevents exception",
+      "Handles exception for that production scenario",
+      "Declares that method can throw exception",
+      "Catches exception"
+    ],
+    "correct_answer": "Declares that method can throw exception",
+    "topic": "Backend Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-011",
+    "question": "In a QA test of ArrayIndexOutOfBoundsException, what triggers it?\n\nint[] arr = {1, 2, 3};\nint value = arr[5];  // What happens?",
+    "options": [
+      "Returns 0 for that production scenario",
+      "Throws ArrayIndexOutOfBoundsException",
+      "Returns null",
+      "Returns -1"
+    ],
+    "correct_answer": "Throws ArrayIndexOutOfBoundsException",
+    "topic": "Backend Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-012",
+    "question": "A QA test checks ClassCastException. When is it thrown?\n\nObject obj = \"string\";\nInteger num = (Integer) obj;  // What happens?",
+    "options": [
+      "Compiles and executes",
+      "Returns null for that production scenario",
+      "Throws ClassCastException at runtime",
+      "Compilation error"
+    ],
+    "correct_answer": "Throws ClassCastException at runtime",
+    "topic": "Backend Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-013",
+    "question": "A QA test examines NullPointerException. When is it thrown?\n\nString str = null;\nint length = str.length();  // What happens?",
+    "options": [
+      "Returns 0 for that production scenario",
+      "Returns -1",
+      "Returns null",
+      "Throws NullPointerException"
+    ],
+    "correct_answer": "Throws NullPointerException",
+    "topic": "Backend Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-014",
+    "question": "A QA test examines exception hierarchy. What is the relationship?\n\nclass CustomException extends Exception { }",
+    "options": [
+      "CustomException is Error",
+      "CustomException is unchecked exception",
+      "No inheritance relationship",
+      "CustomException is checked exception"
+    ],
+    "correct_answer": "CustomException is checked exception",
+    "topic": "Backend Debugging",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-015",
+    "question": "A QA test examines RuntimeException. What type is it?\n\nclass CustomRuntime extends RuntimeException { }",
+    "options": [
+      "Unchecked exception",
+      "Interface",
+      "Error for that production scenario",
+      "Checked exception"
+    ],
+    "correct_answer": "Unchecked exception",
+    "topic": "Backend Debugging",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-016",
+    "question": "In a QA test of Exception vs Error, what is the difference?\n\nclass OutOfMemoryError extends Error { }",
+    "options": [
+      "Error is for system-level issues, recoverable exceptions are Exception",
+      "Error is for simple mistakes for that production scenario",
+      "No difference in behavior for that production scenario",
+      "Both are same for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Error is for system-level issues, recoverable exceptions are Exception",
+    "topic": "Backend Debugging",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-017",
+    "question": "A QA test uses Reflection API to access private field. What is the approach?\n\nclass MyClass { private int value = 10; }\nMyClass obj = new MyClass();\nField field = MyClass.class.getDeclaredField(\"value\");\nfield.setAccessible(true);\nint value = field.getInt(obj);",
+    "options": [
+      "Compilation error for that production scenario",
+      "Invalid, cannot access private",
+      "Runtime exception",
+      "Valid, Reflection allows private access"
+    ],
+    "correct_answer": "Valid, Reflection allows private access",
+    "topic": "JVM Memory and GC",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-018",
+    "question": "During a QA test of Stream intermediate operations, what is returned?\n\nStream<Integer> stream = Arrays.asList(1, 2, 3).stream();\nStream<Integer> filtered = stream.filter(n -> n > 1);\n// filtered is a what?",
+    "options": [
+      "Stream",
+      "Iterator",
+      "Integer",
+      "List"
+    ],
+    "correct_answer": "Stream",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-019",
+    "question": "In a QA test of Stream.map(), what is the operation?\n\nList<Integer> numbers = Arrays.asList(1, 2, 3);\nList<Integer> doubled = numbers.stream()\n  .map(n -> n * 2)\n  .collect(Collectors.toList());",
+    "options": [
+      "Finds maximum for that production scenario",
+      "Counts elements",
+      "Filters the stream",
+      "Transforms each element"
+    ],
+    "correct_answer": "Transforms each element",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-020",
+    "question": "In a QA test of Thread creation, which approach is correct?\n\nclass MyThread extends Thread {\n  public void run() { System.out.println(\"Thread\"); }\n}\n\nMyThread t = new MyThread();\nt.start();",
+    "options": [
+      "Cannot call start() on custom Thread",
+      "Incorrect, must use ExecutorService",
+      "Incorrect, must use Runnable for that production scenario",
+      "Correct, thread executes in that implementation"
+    ],
+    "correct_answer": "Correct, thread executes in that implementation",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-021",
+    "question": "A QA test examines InputStream and OutputStream behavior. What is the correct usage?\n\nFileOutputStream fos = new FileOutputStream(\"output.txt\");\nfos.write(\"Hello\".getBytes());\nfos.close();",
+    "options": [
+      "Compilation error",
+      "Requires flush() call",
+      "Valid, writes bytes to file",
+      "Invalid, must use BufferedOutputStream"
+    ],
+    "correct_answer": "Valid, writes bytes to file",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-022",
+    "question": "In a QA test of ReentrantLock, what is the advantage over synchronized?\n\nReentrantLock lock = new ReentrantLock();\nlock.lock();\ntry {\n  // Critical section\n} finally {\n  lock.unlock();\n}",
+    "options": [
+      "Automatic unlocking",
+      "No advantage for that production scenario",
+      "Provides more control and flexibility",
+      "Prevents deadlock"
+    ],
+    "correct_answer": "Provides more control and flexibility",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-023",
+    "question": "A QA test examines WeakReference behavior. When is it garbage collected?\n\nWeakReference<String> weakRef = new WeakReference<>(new String(\"value\"));\n// When can weakRef be collected?",
+    "options": [
+      "When no strong references exist",
+      "Never until explicitly cleared",
+      "When program ends for that production scenario",
+      "On next GC if needed"
+    ],
+    "correct_answer": "When no strong references exist",
+    "topic": "JVM Memory and GC",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-024",
+    "question": "A QA test uses Runnable interface. What is the benefit over Thread class?\n\nclass MyRunnable implements Runnable {\n  public void run() { }\n}\nThread t = new Thread(new MyRunnable());",
+    "options": [
+      "Simpler implementation",
+      "No benefit for that production scenario",
+      "Faster execution",
+      "Allows multiple inheritance in Java"
+    ],
+    "correct_answer": "Allows multiple inheritance in Java",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-025",
+    "question": "A QA test examines ConcurrentHashMap behavior in multi-threaded scenarios. What is an advantage over HashMap?\n\nConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();",
+    "options": [
+      "Segment-based locking for better concurrency",
+      "Faster single-threaded access",
+      "Thread-safe without any locking",
+      "Automatic sorting for that production scenario"
+    ],
+    "correct_answer": "Segment-based locking for better concurrency",
+    "topic": "Collections Contracts",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "hashmap",
+      "threads"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-026",
+    "question": "In a QA test of Stream.sorted(), what is the default behavior?\n\nList<Integer> numbers = Arrays.asList(3, 1, 4, 1, 5);\nnumbers.stream()\n  .sorted()\n  .forEach(System.out::print);",
+    "options": [
+      "11345",
+      "34115",
+      "54311",
+      "Random order"
+    ],
+    "correct_answer": "11345",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-027",
+    "question": "During a QA test of CopyOnWriteArrayList, when is copying done?\n\nCopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();\nlist.add(\"item\");  // When does copy happen?",
+    "options": [
+      "On read operations",
+      "Never for that production scenario",
+      "On iteration",
+      "On write operations"
+    ],
+    "correct_answer": "On write operations",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-028",
+    "question": "A QA test checks Stream terminal operations. What is the difference?\n\nList<Integer> list = Arrays.asList(1, 2, 3);\nlong count = list.stream().filter(n -> n > 1).count();",
+    "options": [
+      "count is an intermediate operation",
+      "count modifies the original list",
+      "count returns a Stream for that production scenario",
+      "count is a terminal operation that returns a value"
+    ],
+    "correct_answer": "count is a terminal operation that returns a value",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-029",
+    "question": "A QA test uses Method.invoke() for reflection. What is the syntax?\n\nMethod method = MyClass.class.getMethod(\"myMethod\");\nObject result = method.invoke(obj, args);",
+    "options": [
+      "Must be static method",
+      "Incorrect syntax for that production scenario",
+      "Valid, invokes method dynamically",
+      "Cannot pass arguments"
+    ],
+    "correct_answer": "Valid, invokes method dynamically",
+    "topic": "JVM Memory and GC",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-030",
+    "question": "During a QA test of Stack memory, what is stored?\n\nint x = 10;  // Where is x stored?\nString str = new String(\"value\");  // Where is reference stored?",
+    "options": [
+      "Both in Stack",
+      "int in Stack, reference in Stack",
+      "int in Method Area, reference in Heap",
+      "Both in Heap"
+    ],
+    "correct_answer": "int in Stack, reference in Stack",
+    "topic": "JVM Memory and GC",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-031",
+    "question": "A QA test uses CountDownLatch for synchronization. What is its purpose?\n\nCountDownLatch latch = new CountDownLatch(3);\n// Multiple threads countdown",
+    "options": [
+      "Prevents thread creation for that production scenario",
+      "Starts threads for that production scenario",
+      "Counts up to limit for that production scenario",
+      "Allows threads to wait until countdown reaches zero"
+    ],
+    "correct_answer": "Allows threads to wait until countdown reaches zero",
+    "topic": "Concurrency and Executors",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-032",
+    "question": "During a QA test of memory leak in Java, what causes it?\n\nList<String> list = new ArrayList<>();\nwhile(true) {\n  list.add(new String(\"item\"));\n}",
+    "options": [
+      "Memory leak due to unbounded list growth",
+      "No memory leak, GC handles it",
+      "GC automatically prevents it",
+      "Impossible in Java for that production scenario"
+    ],
+    "correct_answer": "Memory leak due to unbounded list growth",
+    "topic": "JVM Memory and GC",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-033",
+    "question": "During a QA test of Java module system (Java 9+), what is a module?\n\nmodule com.example {\n  requires java.base;\n  exports com.example.api;\n}",
+    "options": [
+      "Deprecated feature for that production scenario",
+      "Required only for large projects for that production scenario",
+      "Same as package for that production scenario",
+      "A named collection of packages with access control"
+    ],
+    "correct_answer": "A named collection of packages with access control",
+    "topic": "JVM Memory and GC",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-034",
+    "question": "A QA test compares java.io vs java.nio. What is the key difference?\n\n// java.io - Stream-based\n// java.nio - Channel and Buffer-based",
+    "options": [
+      "NIO provides better performance for large files",
+      "No difference for that production scenario",
+      "IO is faster for that production scenario",
+      "NIO doesn't support files for that production scenario"
+    ],
+    "correct_answer": "NIO provides better performance for large files",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-035",
+    "question": "A QA test checks garbage collection. When is an object eligible for GC?\n\nObject obj = new Object();\nobj = null;  // Eligible for GC?",
+    "options": [
+      "When program ends",
+      "When no references exist",
+      "Never for that production scenario",
+      "When explicitly deleted"
+    ],
+    "correct_answer": "When no references exist",
+    "topic": "JVM Memory and GC",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "gc"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-036",
+    "question": "A QA test examines Thread states. What are the main states?\n\nThread t = new Thread(() -> { });\n// Different states during execution",
+    "options": [
+      "New, Runnable, Running, Blocked, Terminated",
+      "Active and Inactive",
+      "Running and Waiting",
+      "Start and Stop for that production scenario"
+    ],
+    "correct_answer": "New, Runnable, Running, Blocked, Terminated",
+    "topic": "Concurrency and Executors",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-037",
+    "question": "During a QA test of synchronized keyword, what does it do?\n\nsynchronized void criticalSection() {\n  // Only one thread at a time\n}",
+    "options": [
+      "Provides mutual exclusion for shared resources",
+      "Speeds up execution",
+      "Prevents exceptions",
+      "Stops all threads for that production scenario"
+    ],
+    "correct_answer": "Provides mutual exclusion for shared resources",
+    "topic": "Concurrency and Executors",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-038",
+    "question": "A QA test examines JVM memory areas. What is stored in Heap?\n\nString str = new String(\"Hello\");  // Where is the object stored?",
+    "options": [
+      "Native Method Stack",
+      "Heap in that implementation",
+      "Stack for that production scenario",
+      "Method Area"
+    ],
+    "correct_answer": "Heap in that implementation",
+    "topic": "JVM Memory and GC",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "heap"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-039",
+    "question": "A QA test uses Stream.reduce(). What does it do?\n\nint sum = Arrays.asList(1, 2, 3, 4).stream()\n  .reduce(0, (a, b) -> a + b);",
+    "options": [
+      "Combines all elements into single value",
+      "Removes duplicates",
+      "Filters elements",
+      "Sorts elements for that production scenario"
+    ],
+    "correct_answer": "Combines all elements into single value",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-040",
+    "question": "A QA test checks volatile keyword behavior. What is its purpose?\n\nvolatile int flag = 0;  // Shared between threads",
+    "options": [
+      "Ensures visibility of changes across threads",
+      "Speeds up access for that production scenario",
+      "Prevents modifications",
+      "Synchronizes access"
+    ],
+    "correct_answer": "Ensures visibility of changes across threads",
+    "topic": "Concurrency and Executors",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-041",
+    "question": "A QA test uses Callable vs Runnable. What is the difference?\n\nCallable<Integer> task = () -> 42;  // Returns value",
+    "options": [
+      "Callable is deprecated",
+      "Runnable returns value",
+      "Callable returns value, Runnable doesn't",
+      "No difference for that production scenario"
+    ],
+    "correct_answer": "Callable returns value, Runnable doesn't",
+    "topic": "Concurrency and Executors",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-042",
+    "question": "During a QA test of getDeclaredFields(), what is returned?\n\nField[] fields = MyClass.class.getDeclaredFields();",
+    "options": [
+      "No fields for that production scenario",
+      "All fields including private",
+      "Only public fields",
+      "Only inherited fields"
+    ],
+    "correct_answer": "All fields including private",
+    "topic": "JVM Memory and GC",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-043",
+    "question": "During a QA test of ClassLoader, what are the types?\n\nClassLoader loader = String.class.getClassLoader();",
+    "options": [
+      "No types for that production scenario",
+      "One type of ClassLoader for that production scenario",
+      "Bootstrap, Extension, Application ClassLoaders",
+      "Only Application ClassLoader"
+    ],
+    "correct_answer": "Bootstrap, Extension, Application ClassLoaders",
+    "topic": "JVM Memory and GC",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-044",
+    "question": "During a QA test of Class.forName(), what happens?\n\nClass<?> clazz = Class.forName(\"java.lang.String\");",
+    "options": [
+      "Creates String instance",
+      "Loads the class dynamically",
+      "Throws ClassNotFoundException if not found",
+      "Returns class object"
+    ],
+    "correct_answer": "Loads the class dynamically",
+    "topic": "JVM Memory and GC",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-045",
+    "question": "A QA test checks Thread.sleep(). What does it do?\n\nThread.sleep(1000);  // Sleeps for 1 second",
+    "options": [
+      "Pauses the thread",
+      "Throws InterruptedException only if interrupted",
+      "Resumes the thread",
+      "Kills the thread"
+    ],
+    "correct_answer": "Pauses the thread",
+    "topic": "Concurrency and Executors",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "threads"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-046",
+    "question": "In a QA test of custom annotation with retention, what is the default?\n\n@Retention(RetentionPolicy.RUNTIME)\npublic @interface MyAnnotation { }",
+    "options": [
+      "Available in source code only",
+      "Not available at runtime for that production scenario",
+      "Available at runtime via Reflection",
+      "Available only at compile time"
+    ],
+    "correct_answer": "Available at runtime via Reflection",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-047",
+    "question": "A QA test checks exception chaining. What is the output?\n\ntry {\n  throw new IOException(\"Original\");\n} catch(IOException e) {\n  throw new RuntimeException(\"Wrapped\", e);\n}",
+    "options": [
+      "Prints IOException message for that production scenario",
+      "Compilation error for that production scenario",
+      "Throws RuntimeException with IOException as cause",
+      "No exception thrown for that production scenario"
+    ],
+    "correct_answer": "Throws RuntimeException with IOException as cause",
+    "topic": "Backend Debugging",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-048",
+    "question": "In a QA test of Iterator, what is the correct way to remove elements?\n\nList<String> list = new ArrayList<>(Arrays.asList(\"a\", \"b\", \"c\"));\nIterator<String> iter = list.iterator();\nwhile(iter.hasNext()) {\n  String item = iter.next();\n  if(item.equals(\"b\")) iter.remove();  // Using iterator's remove\n}",
+    "options": [
+      "Skips the element",
+      "Throws exception for that production scenario",
+      "Compilation error",
+      "Removes b successfully"
+    ],
+    "correct_answer": "Removes b successfully",
+    "topic": "Collections Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "equals-hashcode"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-049",
+    "question": "During a QA test of Collectors.groupingBy(), what is the output?\n\nList<String> items = Arrays.asList(\"apple\", \"apricot\", \"banana\");\nMap<Character, Long> grouped = items.stream()\n  .collect(Collectors.groupingBy(s -> s.charAt(0), Collectors.counting()));\n\nSystem.out.println(grouped.get('a'));",
+    "options": [
+      "1",
+      "2",
+      "null",
+      "3"
+    ],
+    "correct_answer": "2",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-050",
+    "question": "In a QA test of Comparator, what is the difference from Comparable?\n\nComparator<String> comp = (s1, s2) -> s2.compareTo(s1);  // Reverse order\nList<String> list = Arrays.asList(\"c\", \"a\", \"b\");\nCollections.sort(list, comp);\nfor(String s : list) System.out.print(s + \" \");",
+    "options": [
+      "a b c",
+      "No output",
+      "c b a",
+      "Compilation error"
+    ],
+    "correct_answer": "c b a",
+    "topic": "Collections Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-051",
+    "question": "A QA test checks method overloading behavior. Which method will be called?\n\nclass Calculator {\n  void add(int a, int b) { System.out.print(\"Int \"); }\n  void add(double a, double b) { System.out.print(\"Double \"); }\n}\n\nCalculator c = new Calculator();\nc.add(5, 10);",
+    "options": [
+      "Int in that implementation",
+      "Both Int and Double",
+      "Compilation error",
+      "Double for that production scenario"
+    ],
+    "correct_answer": "Int in that implementation",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-052",
+    "question": "In a QA test of Collections.unmodifiableList, what happens?\n\nList<String> originalList = new ArrayList<>();\noriginalList.add(\"item1\");\nList<String> unmodifiableList = Collections.unmodifiableList(originalList);\nunmodifiableList.add(\"item2\");  // What happens?",
+    "options": [
+      "Silently ignores",
+      "Throws UnsupportedOperationException",
+      "Adds successfully",
+      "Returns false for that production scenario"
+    ],
+    "correct_answer": "Throws UnsupportedOperationException",
+    "topic": "Collections Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-053",
+    "question": "A QA test examines LinkedHashMap behavior. What is the order of iteration?\n\nLinkedHashMap<String, Integer> map = new LinkedHashMap<>();\nmap.put(\"c\", 3);\nmap.put(\"a\", 1);\nmap.put(\"b\", 2);\nfor(String key : map.keySet()) System.out.print(key + \" \");",
+    "options": [
+      "c a b",
+      "Random order",
+      "a b c",
+      "1 2 3"
+    ],
+    "correct_answer": "c a b",
+    "topic": "Collections Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "hashmap"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-054",
+    "question": "A QA test checks the behavior of remove() in iteration. What happens?\n\nList<String> list = new ArrayList<>(Arrays.asList(\"a\", \"b\", \"c\"));\nfor(String item : list) {\n  if(item.equals(\"b\")) list.remove(item);  // Modifying during iteration\n}",
+    "options": [
+      "Throws ConcurrentModificationException",
+      "Removes successfully",
+      "Compilation error for that production scenario",
+      "Silently skips the item"
+    ],
+    "correct_answer": "Throws ConcurrentModificationException",
+    "topic": "Collections Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "equals-hashcode"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-055",
+    "question": "In a QA test of LinkedList operations, what is the time complexity of removing an element from the middle?\n\nLinkedList<String> list = new LinkedList<>();\n// After adding elements\nlist.remove(500);  // Remove element at index 500",
+    "options": [
+      "O(1)",
+      "O(n)",
+      "O(log n)",
+      "O(n log n)"
+    ],
+    "correct_answer": "O(n)",
+    "topic": "Collections Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-056",
+    "question": "A QA test examines access modifiers. What will compile successfully?\n\nclass Outer { private int x = 10; }\nclass Test { \n  public static void main(String[] args) {\n    System.out.println(new Outer().x);  // Will this work?\n  }\n}",
+    "options": [
+      "x is automatically public",
+      "Runtime exception for that production scenario",
+      "Compilation error: x has private access",
+      "Compiles and prints 10"
+    ],
+    "correct_answer": "Compilation error: x has private access",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-057",
+    "question": "During a QA test, HashMap collision handling is examined. What happens in case of hash collision?\n\nHashMap<String, String> map = new HashMap<>();\nmap.put(\"key1\", \"value1\");\nmap.put(\"key2\", \"value2\");  // Assuming hash collision",
+    "options": [
+      "Throws exception for that production scenario",
+      "Second entry is ignored",
+      "Both entries are stored separately",
+      "Overrides first entry"
+    ],
+    "correct_answer": "Both entries are stored separately",
+    "topic": "Collections Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "hashmap"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-058",
+    "question": "In a QA test of constructor behavior, what is the execution order?\n\nclass Parent {\n  Parent() { System.out.print(\"P \"); }\n}\n\nclass Child extends Parent {\n  Child() {\n    super();\n    System.out.print(\"C\");\n  }\n}\n\nnew Child();",
+    "options": [
+      "C P",
+      "C",
+      "P",
+      "P C"
+    ],
+    "correct_answer": "P C",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-059",
+    "question": "In a performance test, a QA engineer compares String concatenation methods. Which approach is most efficient in a loop?\n\n// Using String concatenation\nString result = \"\";\nfor(int i = 0; i < 1000; i++) {\n  result += \"x\";\n}",
+    "options": [
+      "Most efficient due to compiler optimization for that production scenario",
+      "Creates 1000 String objects for that production scenario",
+      "Uses StringBuilder internally in modern Java",
+      "Least efficient as it creates many intermediate String objects"
+    ],
+    "correct_answer": "Least efficient as it creates many intermediate String objects",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-060",
+    "question": "In a test of multiple inheritance via interfaces, what happens?\n\ninterface A { void test(); }\ninterface B { void test(); }\n\nclass C implements A, B {\n  public void test() { System.out.println(\"Test\"); }\n}\n\nnew C().test();",
+    "options": [
+      "Ambiguity runtime error",
+      "Only A's test is called",
+      "Compilation error due to diamond problem",
+      "Prints: Test in that implementation"
+    ],
+    "correct_answer": "Prints: Test in that implementation",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-061",
+    "question": "During a QA test of TreeMap, what is the sorting behavior?\n\nTreeMap<String, Integer> map = new TreeMap<>();\nmap.put(\"c\", 3);\nmap.put(\"a\", 1);\nmap.put(\"b\", 2);\nfor(String key : map.keySet()) System.out.print(key + \" \");",
+    "options": [
+      "Random order",
+      "c a b",
+      "3 1 2",
+      "a b c"
+    ],
+    "correct_answer": "a b c",
+    "topic": "Collections Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-062",
+    "question": "During a QA test of PriorityQueue, what is the behavior?\n\nPriorityQueue<Integer> queue = new PriorityQueue<>();\nqueue.add(5);\nqueue.add(2);\nqueue.add(8);\nwhile(!queue.isEmpty()) System.out.print(queue.poll() + \" \");",
+    "options": [
+      "8 5 2",
+      "2 5 8",
+      "Random order",
+      "5 2 8"
+    ],
+    "correct_answer": "2 5 8",
+    "topic": "Collections Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-063",
+    "question": "A QA test checks Comparable interface usage. What is the purpose?\n\nclass Student implements Comparable<Student> {\n  int marks;\n  public int compareTo(Student other) {\n    return this.marks - other.marks;\n  }\n}",
+    "options": [
+      "Enables comparison with equals()",
+      "Enables custom sorting",
+      "Enables cloning",
+      "Enables serialization"
+    ],
+    "correct_answer": "Enables custom sorting",
+    "topic": "Collections Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-064",
+    "question": "During a QA test of CopyOnWriteArrayList, when does the copy happen?\n\nCopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();\nlist.add(\"item1\");\nlist.add(\"item2\");  // When is copying triggered?",
+    "options": [
+      "Never for that production scenario",
+      "During write operations",
+      "During iteration",
+      "During read operations"
+    ],
+    "correct_answer": "During write operations",
+    "topic": "Collections Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-065",
+    "question": "A QA test compares ArrayList and LinkedList performance. Which statement is correct?\n\nArrayList<Integer> list = new ArrayList<>();\nfor(int i = 0; i < 1000; i++) {\n  list.add(i);  // Adding at the end\n}",
+    "options": [
+      "Performance depends on data size",
+      "ArrayList is faster for this operation",
+      "LinkedList is faster for this operation",
+      "Both have same performance"
+    ],
+    "correct_answer": "ArrayList is faster for this operation",
+    "topic": "Collections Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-066",
+    "question": "In a QA test of static methods in interfaces, what is allowed?\n\ninterface MyInterface {\n  static void staticMethod() { System.out.println(\"Static\"); }\n}\n\nMyInterface.staticMethod();  // Is this valid?",
+    "options": [
+      "Compilation error",
+      "Valid, can call static method from interface",
+      "Invalid, interfaces cannot have static methods",
+      "Throws exception"
+    ],
+    "correct_answer": "Valid, can call static method from interface",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-067",
+    "question": "During a QA test of Optional.flatMap(), what is the behavior?\n\nOptional<Optional<String>> nested = Optional.of(Optional.of(\"value\"));\nOptional<String> flattened = nested.flatMap(Function.identity());",
+    "options": [
+      "Returns empty Optional",
+      "Returns the nested Optional as is",
+      "Throws exception",
+      "Flattens nested Optionals"
+    ],
+    "correct_answer": "Flattens nested Optionals",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "optional"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-068",
+    "question": "During a QA test, the String pool behavior is examined. How many String objects are created?\n\nString s1 = \"Hello\";\nString s2 = \"Hello\";\nString s3 = new String(\"Hello\");\nString s4 = \"He\" + \"llo\";",
+    "options": [
+      "1",
+      "2",
+      "4",
+      "3"
+    ],
+    "correct_answer": "2",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-069",
+    "question": "A QA test uses lambda expressions with streams. What is the output?\n\nList<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);\nnumbers.stream()\n  .filter(n -> n > 2)\n  .forEach(System.out::print);",
+    "options": [
+      "Compilation error",
+      "345",
+      "234",
+      "12345"
+    ],
+    "correct_answer": "345",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "lambdas",
+      "streams"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-070",
+    "question": "A QA test examines method overriding rules. Which statement is correct?\n\nclass Parent {\n  public void test() { }\n}\n\nclass Child extends Parent {\n  private void test() { }  // Is this valid?\n}",
+    "options": [
+      "Invalid, access modifier cannot be more restrictive in child class",
+      "Throws runtime exception for that production scenario",
+      "Valid, method overriding allows access modifier reduction",
+      "Valid, method is overloaded not overridden for that production scenario"
+    ],
+    "correct_answer": "Invalid, access modifier cannot be more restrictive in child class",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-071",
+    "question": "In a QA test of encapsulation, what is the proper pattern?\n\nprivate int age;\n\npublic void setAge(int age) {\n  if(age > 0 && age < 120) this.age = age;\n}\n\npublic int getAge() { return age; }",
+    "options": [
+      "Proper encapsulation with validation",
+      "Not related to encapsulation",
+      "Violates encapsulation by using private",
+      "Violates encapsulation by having public methods"
+    ],
+    "correct_answer": "Proper encapsulation with validation",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-072",
+    "question": "A QA test involves string immutability. What is the length of str after these operations?\n\nString str = \"Hello\";\nstr.concat(\" World\");\nstr = str + \"!\";\nSystem.out.println(str.length());",
+    "options": [
+      "6",
+      "12",
+      "5",
+      "11"
+    ],
+    "correct_answer": "6",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-073",
+    "question": "A QA engineer is testing an application where narrowing conversion is required. Which casting approach will compile successfully?\n\nlong value = 1000000L;\nint result = (int) value;",
+    "options": [
+      "Compiles but result becomes negative",
+      "Compiles and executes successfully",
+      "Will not compile due to narrowing",
+      "Compiles but throws runtime exception"
+    ],
+    "correct_answer": "Compiles and executes successfully",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-074",
+    "question": "A QA test checks Supplier functional interface. What does it return?\n\nSupplier<Integer> randomSupplier = () -> new Random().nextInt(100);\nInteger value = randomSupplier.get();",
+    "options": [
+      "Returns value without taking parameter",
+      "Modifies existing value",
+      "Throws exception for that production scenario",
+      "Takes parameter and returns value"
+    ],
+    "correct_answer": "Returns value without taking parameter",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-075",
+    "question": "During a QA test of bounded type parameters, what is allowed?\n\nclass Box<T extends Number> {\n  void process(T value) { }\n}\nBox<String> box = new Box<>();  // Is this valid?",
+    "options": [
+      "Invalid, String doesn't extend Number",
+      "Runtime exception for that production scenario",
+      "Valid for that production scenario",
+      "Compilation error"
+    ],
+    "correct_answer": "Invalid, String doesn't extend Number",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-076",
+    "question": "A QA test examines the internal structure of HashMap. How many buckets are created initially?\n\nHashMap<String, Integer> map = new HashMap<>();\n// Default initial capacity?",
+    "options": [
+      "64",
+      "16",
+      "32",
+      "8"
+    ],
+    "correct_answer": "16",
+    "topic": "Collections Contracts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "hashmap"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-077",
+    "question": "A QA test examines Generics type safety. What happens?\n\nList<String> strings = new ArrayList<>();\nstrings.add(\"hello\");\nString str = strings.get(0);  // Is this type-safe?",
+    "options": [
+      "Compilation error",
+      "Type-safe, no casting needed",
+      "Requires explicit casting",
+      "No type safety for that production scenario"
+    ],
+    "correct_answer": "Type-safe, no casting needed",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-078",
+    "question": "In a test, a multi-dimensional array is created and accessed. What is the value at arr[1][2]?\n\nint[][] arr = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};\nint value = arr[1][2];",
+    "options": [
+      "6",
+      "5",
+      "2",
+      "8"
+    ],
+    "correct_answer": "6",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-079",
+    "question": "A QA test checks Class hierarchy with Reflection. What is the output?\n\nClass<?> superClass = String.class.getSuperclass();\nSystem.out.println(superClass.getName());",
+    "options": [
+      "Comparable",
+      "String",
+      "Object",
+      "Serializable"
+    ],
+    "correct_answer": "Object",
+    "topic": "JVM Memory and GC",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-080",
+    "question": "During a QA test of HashSet null handling, what is allowed?\n\nHashSet<String> set = new HashSet<>();\nset.add(null);\nset.add(\"item\");\nSystem.out.println(set.size());",
+    "options": [
+      "1",
+      "2",
+      "0",
+      "Throws exception"
+    ],
+    "correct_answer": "2",
+    "topic": "Collections Contracts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-081",
+    "question": "During a QA test of method references, which is equivalent?\n\nlist.forEach(System.out::println);\n// is equivalent to\nlist.forEach(item -> System.out.println(item));",
+    "options": [
+      "Not equivalent for that production scenario",
+      "Different behavior",
+      "Equivalent in that implementation",
+      "Method reference doesn't compile"
+    ],
+    "correct_answer": "Equivalent in that implementation",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-082",
+    "question": "A QA test checks default methods in interfaces. What is the advantage?\n\ninterface MyInterface {\n  default void defaultMethod() { System.out.println(\"Default\"); }\n}",
+    "options": [
+      "Must be implemented",
+      "Backwards compatibility",
+      "Interface becomes abstract class",
+      "No advantage"
+    ],
+    "correct_answer": "Backwards compatibility",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-083",
+    "question": "A QA test checks Stream.distinct(). What is the output?\n\nList<Integer> numbers = Arrays.asList(1, 2, 2, 3, 3, 3);\nlong count = numbers.stream().distinct().count();",
+    "options": [
+      "3",
+      "1",
+      "6",
+      "2"
+    ],
+    "correct_answer": "3",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-084",
+    "question": "In a QA test of Optional, what is the purpose?\n\nOptional<String> optional = Optional.of(\"value\");\nif(optional.isPresent()) System.out.println(optional.get());",
+    "options": [
+      "Provides null safety and alternative handling",
+      "Used only for Streams for that production scenario",
+      "Throws exception if empty",
+      "Same as regular if-else"
+    ],
+    "correct_answer": "Provides null safety and alternative handling",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "optional"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-085",
+    "question": "A QA test checks finally block execution. When does finally execute?\n\ntry {\n  return 10;\n} finally {\n  System.out.println(\"Finally\");  // Does this execute?\n}",
+    "options": [
+      "Only if exception occurs",
+      "Depends on catch block",
+      "Never, due to return statement",
+      "Always executes before return"
+    ],
+    "correct_answer": "Always executes before return",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-086",
+    "question": "During a QA test of abstraction, which statement is valid?\n\nclass Test extends AbstractClass { }\n\nabstract class AbstractClass {\n  abstract void test();\n}",
+    "options": [
+      "Valid, abstract methods are implemented by subclass",
+      "Valid, abstract methods are optional for that production scenario",
+      "Invalid, abstract method test() is not implemented in Test class",
+      "Invalid, abstract class cannot be extended"
+    ],
+    "correct_answer": "Invalid, abstract method test() is not implemented in Test class",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-087",
+    "question": "During a QA test of Consumer functional interface, what is the purpose?\n\nConsumer<String> printer = s -> System.out.println(s);\nprinter.accept(\"Hello\");",
+    "options": [
+      "Throws exception for that production scenario",
+      "Returns a value for that production scenario for that production scenario",
+      "Returns boolean for that production scenario",
+      "Accepts input and performs action without returning"
+    ],
+    "correct_answer": "Accepts input and performs action without returning",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-088",
+    "question": "In a QA test of File I/O with java.io, what is the advantage of BufferedReader?\n\nBufferedReader reader = new BufferedReader(new FileReader(\"file.txt\"));",
+    "options": [
+      "Direct file access",
+      "Prevents exceptions",
+      "Less memory usage for that production scenario",
+      "Buffering improves performance"
+    ],
+    "correct_answer": "Buffering improves performance",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-089",
+    "question": "A QA test checks array memory allocation. What will happen?\n\nint[] arr = new int[5];\nfor(int i = 0; i < 5; i++) {\n  System.out.print(arr[i] + \" \");\n}",
+    "options": [
+      "Throws ArrayIndexOutOfBoundsException",
+      "Compilation error",
+      "Prints: 0 0 0 0 0",
+      "Prints 5 uninitialized values"
+    ],
+    "correct_answer": "Prints: 0 0 0 0 0",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-090",
+    "question": "During a QA test of final keyword behavior, which statement is correct?\n\nfinal class Parent { }\nclass Child extends Parent { }  // Is this valid?",
+    "options": [
+      "Invalid, cannot extend a final class",
+      "Throws runtime exception",
+      "Valid, final keyword has no impact on inheritance",
+      "Valid, final is only for methods"
+    ],
+    "correct_answer": "Invalid, cannot extend a final class",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-091",
+    "question": "A service moves request handling to virtual threads but still wraps a blocking JDBC call inside synchronized(this). Why can throughput remain poor?",
+    "options": [
+      "The synchronized block can pin the virtual thread to its carrier while the blocking call runs.",
+      "Virtual threads never work with JDBC, even when the driver is modern.",
+      "synchronized forces every virtual thread to become a daemon thread. for that production scenario",
+      "Carrier threads ignore synchronized blocks and schedule around them automatically."
+    ],
+    "correct_answer": "The synchronized block can pin the virtual thread to its carrier while the blocking call runs.",
+    "topic": "Virtual Threads",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "jdbc",
+      "pinning",
+      "virtual-threads"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-092",
+    "question": "Which refactor is most appropriate when a virtual-thread endpoint still serializes around a slow remote call?",
+    "options": [
+      "Reduce synchronized scope or replace it with finer-grained concurrency control around only truly shared state.",
+      "Increase the platform-thread pool so pinned virtual threads become invisible. for that production scenario",
+      "Replace the remote call with parallelStream() to bypass carrier-thread scheduling.",
+      "Move the synchronized block to a static initializer so it runs only once per JVM. for that production scenario"
+    ],
+    "correct_answer": "Reduce synchronized scope or replace it with finer-grained concurrency control around only truly shared state.",
+    "topic": "Virtual Threads",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "design",
+      "locking",
+      "virtual-threads"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-093",
+    "question": "A Spring Boot controller catches Exception and still returns HTTP 200 with an error message in the body. Why is that dangerous in production?",
+    "options": [
+      "Clients, monitors, and retries see a success status and lose the signal that the request actually failed.",
+      "Spring Boot rewrites all 200 responses to 500 once Actuator is enabled. for that production scenario",
+      "The framework refuses to serialize error bodies unless the status is 4xx. for that production scenario",
+      "Returning 200 prevents exceptions from appearing in logs entirely. for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Clients, monitors, and retries see a success status and lose the signal that the request actually failed.",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "error-handling",
+      "http-status",
+      "spring-boot"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-094",
+    "question": "Which design is stronger for a backend service that needs consistent error semantics and observable failure paths?",
+    "options": [
+      "Use typed exceptions or problem-details style responses and map them centrally instead of returning HTTP 200 for failures.",
+      "Return HTTP 200 for all responses and let frontends infer failure from message text. for that production scenario",
+      "Catch Throwable at the controller edge and suppress stack traces to reduce noise. for that production scenario for that production scenario",
+      "Convert all validation errors to RuntimeException so the JVM can optimize them together. for that production scenario"
+    ],
+    "correct_answer": "Use typed exceptions or problem-details style responses and map them centrally instead of returning HTTP 200 for failures.",
+    "topic": "Spring Boot Architecture",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "api-design",
+      "exception-mapping",
+      "spring-boot"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-095",
+    "question": "A service wraps an outbound HTTP call with its own retry loop, while the HTTP client and the circuit-breaker library also retry. What is the main production risk?",
+    "options": [
+      "Layered retries can amplify load and latency, turning a brief dependency issue into a retry storm.",
+      "Multiple retry layers are safe because each one reduces total request volume automatically.",
+      "Circuit breakers disable all inner retries by default, so the loops never overlap. for that production scenario",
+      "Retries cannot increase latency unless the dependency is CPU-bound. for that production scenario"
+    ],
+    "correct_answer": "Layered retries can amplify load and latency, turning a brief dependency issue into a retry storm.",
+    "topic": "Resilience Patterns",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "latency",
+      "resilience",
+      "retry"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-096",
+    "question": "What is the strongest remediation when duplicate retry logic exists in several layers of a Java service?",
+    "options": [
+      "Choose one primary retry policy close to the dependency boundary and make every other layer fail fast or observe only.",
+      "Add exponential backoff to each layer independently so the retries cancel each other out. for that production scenario",
+      "Increase the thread pool so the service can absorb every retry burst concurrently. for that production scenario",
+      "Move retries into finally blocks so cleanup happens before each next attempt. for that production scenario"
+    ],
+    "correct_answer": "Choose one primary retry policy close to the dependency boundary and make every other layer fail fast or observe only.",
+    "topic": "Resilience Patterns",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "design",
+      "resilience",
+      "retry"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-097",
+    "question": "Heap usage climbs after every batch import, and a singleton bean keeps all processed rows in a List for 'future troubleshooting'. What is the most likely explanation?",
+    "options": [
+      "The singleton is retaining objects that should have become unreachable, so the heap keeps growing between runs.",
+      "The JVM refuses to collect lists stored inside Spring-managed beans. for that production scenario",
+      "GC in Java 17 does not reclaim objects created inside streams. for that production scenario",
+      "A singleton bean always stores its fields in native memory instead of heap memory. for that production scenario"
+    ],
+    "correct_answer": "The singleton is retaining objects that should have become unreachable, so the heap keeps growing between runs.",
+    "topic": "JVM Memory and GC",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "gc",
+      "heap",
+      "memory-leak"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-098",
+    "question": "Which review recommendation is best when a batch service stores every processed payload in a singleton cache for convenience?",
+    "options": [
+      "Retain only bounded summaries or identifiers and let the heavy payloads fall out of scope once processing finishes.",
+      "Mark the cache final so the GC can compact it more aggressively. for that production scenario for that production scenario",
+      "Replace the List with a LinkedList so heap growth stops after the first expansion. for that production scenario",
+      "Call System.gc() at the end of each batch to guarantee reclamation. for that production scenario"
+    ],
+    "correct_answer": "Retain only bounded summaries or identifiers and let the heavy payloads fall out of scope once processing finishes.",
+    "topic": "JVM Memory and GC",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "design",
+      "gc",
+      "heap"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-099",
+    "question": "A fixed thread pool accepts blocking tasks faster than they complete, and queue length keeps growing during incidents. What production issue is emerging?",
+    "options": [
+      "The executor has no effective backpressure, so latency and memory usage rise as work piles up.",
+      "A fixed pool automatically scales once the queue crosses the CPU-count threshold.",
+      "Blocking tasks are harmless in fixed pools because each worker owns its own queue.",
+      "Queue growth matters only for scheduled executors, not standard thread pools. for that production scenario"
+    ],
+    "correct_answer": "The executor has no effective backpressure, so latency and memory usage rise as work piles up.",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "backpressure",
+      "executors",
+      "queues"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-aws-l2-100",
+    "question": "Which executor design is safer when tasks may block on remote dependencies for unpredictable durations?",
+    "options": [
+      "Use bounded queues, explicit rejection or throttling, and metrics so the service applies backpressure before saturation.",
+      "Use an unbounded queue because it prevents task rejection and therefore guarantees stability. for that production scenario",
+      "Use a single-thread executor so requests line up fairly and never overload the dependency. for that production scenario",
+      "Move blocking work into synchronized blocks so workers do not compete for CPU. for that production scenario"
+    ],
+    "correct_answer": "Use bounded queues, explicit rejection or throttling, and metrics so the service applies backpressure before saturation.",
+    "topic": "Concurrency and Executors",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "backpressure",
+      "capacity-planning",
+      "executors"
+    ],
+    "role_target": "java_aws",
+    "round_target": "L2",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  }
+]

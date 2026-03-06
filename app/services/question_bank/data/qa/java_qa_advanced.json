@@ -1,0 +1,2322 @@
+[
+  {
+    "id": "java-qa-l3-001",
+    "question": "When using Explicit Wait with WebDriverWait, what exception is thrown if the condition is not met within timeout?",
+    "options": [
+      "TimeoutException",
+      "WaitException",
+      "InterruptedException",
+      "NoSuchElementException"
+    ],
+    "correct_answer": "TimeoutException",
+    "topic": "FluentWait and Synchronization",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "webdriver"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-002",
+    "question": "When handling TimeoutException during explicit wait, what should be verified in test logs?",
+    "options": [
+      "Only the timeout duration for that production scenario",
+      "Browser version number for that production scenario for that production scenario",
+      "Network connectivity only for that production scenario",
+      "Whether condition was met, expected elements, DOM state before timeout"
+    ],
+    "correct_answer": "Whether condition was met, expected elements, DOM state before timeout",
+    "topic": "FluentWait and Synchronization",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-003",
+    "question": "In a flaky test with intermittent ElementNotInteractableException, what is the root cause?",
+    "options": [
+      "Test is poorly written for that production scenario for that production scenario",
+      "Element exists but is covered by overlay or off-screen; use scrolling or wait for visibility",
+      "Always a false failure for that production scenario for that production scenario",
+      "Network latency for that production scenario for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Element exists but is covered by overlay or off-screen; use scrolling or wait for visibility",
+    "topic": "CI Failure Triage",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-004",
+    "question": "What is the relationship between TimeoutException and implicit/explicit waits?",
+    "options": [
+      "TimeoutException only occurs with implicit wait",
+      "TimeoutException indicates network failure for that production scenario",
+      "No relationship exists for that production scenario",
+      "Thrown when explicit wait condition is not met within timeout period"
+    ],
+    "correct_answer": "Thrown when explicit wait condition is not met within timeout period",
+    "topic": "FluentWait and Synchronization",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-005",
+    "question": "You want to capture exceptions, stack traces, and user context from a Django app in production. Which tool is widely used for this?",
+    "options": [
+      "Black",
+      "Gunicorn",
+      "Sentry",
+      "Celery"
+    ],
+    "correct_answer": "Sentry",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-006",
+    "question": "What is the relationship between implicit wait timeout and explicit wait timeout when both are configured?",
+    "options": [
+      "Explicit timeout is checked in addition to implicit timeout",
+      "Implicit timeout overrides explicit",
+      "They cancel each other out for that production scenario",
+      "Only one can be used at a time for that production scenario"
+    ],
+    "correct_answer": "Explicit timeout is checked in addition to implicit timeout",
+    "topic": "FluentWait and Synchronization",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-007",
+    "question": "When using Fluent Wait with ignoreException(StaleElementReferenceException.class), what behavior occurs?",
+    "options": [
+      "Exception is logged only for that production scenario",
+      "Element is automatically refreshed for that production scenario",
+      "Test fails immediately on StaleElementReferenceException",
+      "StaleElementReferenceException is caught and poll continues"
+    ],
+    "correct_answer": "StaleElementReferenceException is caught and poll continues",
+    "topic": "FluentWait and Synchronization",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-008",
+    "question": "When handling WebDriverException as a general exception, what information is crucial for debugging?",
+    "options": [
+      "Exception type, message, stack trace, screenshot, and browser logs",
+      "Only the exception message for that production scenario",
+      "Test duration for that production scenario for that production scenario",
+      "Browser type only for that production scenario"
+    ],
+    "correct_answer": "Exception type, message, stack trace, screenshot, and browser logs",
+    "topic": "Selenium WebDriver",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "webdriver"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-009",
+    "question": "When does NoSuchElementException occur in Selenium and what is the appropriate recovery strategy?",
+    "options": [
+      "Browser crashed for that production scenario for that production scenario",
+      "Element doesn't exist in DOM; verify locator, DOM structure, or use explicit wait",
+      "Element exists but is not visible for that production scenario for that production scenario",
+      "Selenium version issue for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Element doesn't exist in DOM; verify locator, DOM structure, or use explicit wait",
+    "topic": "Selenium WebDriver",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "selenium"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-010",
+    "question": "In a test with ScreenshotException during failure capture, what is the appropriate handling?",
+    "options": [
+      "Log exception but continue execution to verify test state",
+      "Ignore the exception for that production scenario",
+      "Stop test immediately for that production scenario",
+      "Screenshots are not necessary for that production scenario"
+    ],
+    "correct_answer": "Log exception but continue execution to verify test state",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-011",
+    "question": "In Selenium 4, what is the significance of the wait condition for 'stalenessOf' an element?",
+    "options": [
+      "Waits until element is loaded for that production scenario",
+      "Waits until element becomes clickable",
+      "Waits until element is no longer attached to DOM",
+      "Waits until element is visible"
+    ],
+    "correct_answer": "Waits until element is no longer attached to DOM",
+    "topic": "FluentWait and Synchronization",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "selenium"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-012",
+    "question": "What causes StaleElementReferenceException in Selenium and how should it be handled?",
+    "options": [
+      "Browser version incompatibility for that production scenario for that production scenario",
+      "Element was removed from DOM and needs to be re-located, handle with retry logic or fresh locator",
+      "Element is hidden for that production scenario for that production scenario for that production scenario",
+      "Network timeout during element access for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Element was removed from DOM and needs to be re-located, handle with retry logic or fresh locator",
+    "topic": "FluentWait and Synchronization",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "selenium"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-013",
+    "question": "When handling InvalidElementStateException, what scenario typically causes it?",
+    "options": [
+      "Attempting interaction with disabled or read-only element; verify element state before interaction",
+      "Element is not found for that production scenario for that production scenario for that production scenario",
+      "Driver not initialized for that production scenario for that production scenario",
+      "Browser version issue for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Attempting interaction with disabled or read-only element; verify element state before interaction",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-014",
+    "question": "What should be checked when NoSuchSessionException occurs in Selenium Grid?",
+    "options": [
+      "Element was not found for that production scenario",
+      "Browser incompatibility for that production scenario",
+      "WebDriver session ID is invalid or Node crashed; recreate driver",
+      "Test timeout for that production scenario for that production scenario"
+    ],
+    "correct_answer": "WebDriver session ID is invalid or Node crashed; recreate driver",
+    "topic": "Selenium WebDriver",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "selenium"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-015",
+    "question": "What does InvalidSessionIdException indicate in Selenium Grid environment?",
+    "options": [
+      "Session was terminated or Node crashed; re-establish session",
+      "WebDriver version mismatch for that production scenario",
+      "Element locator is incorrect for that production scenario",
+      "Browser window closed for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Session was terminated or Node crashed; re-establish session",
+    "topic": "Selenium WebDriver",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "selenium"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-016",
+    "question": "In a QA test with UnhandledAlertException, what indicates the root cause?",
+    "options": [
+      "Unexpected alert appeared during execution; must handle alert before continuing",
+      "Alert was expected and properly handled for that production scenario",
+      "Test execution is incomplete for that production scenario for that production scenario",
+      "Alert handling is not supported for that production scenario"
+    ],
+    "correct_answer": "Unexpected alert appeared during execution; must handle alert before continuing",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-017",
+    "question": "When using TestNG IRetryAnalyzer, what is its purpose?",
+    "options": [
+      "Disables failure reporting for that production scenario",
+      "Retries only specific failed tests based on custom logic before marking as failed",
+      "Prevents test failure for that production scenario for that production scenario",
+      "Retries all failed tests for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Retries only specific failed tests based on custom logic before marking as failed",
+    "topic": "TestNG Execution",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "testng"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-018",
+    "question": "A Python API defines rate limits per IP. Frontend requests are routed through a shared gateway, causing unexpected throttling. Which header can help the backend identify the originating client correctly?",
+    "options": [
+      "Accept-Encoding for that production scenario",
+      "User-Agent for that production scenario",
+      "Referer for that production scenario for that production scenario",
+      "X-Forwarded-For or a similar forwarded IP header"
+    ],
+    "correct_answer": "X-Forwarded-For or a similar forwarded IP header",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-019",
+    "question": "In production, your Python app logs are scattered across containers and servers. Which stack centralizes and indexes logs for search and dashboards?",
+    "options": [
+      "LAMP stack for that production scenario for that production scenario",
+      "ELK stack (Elasticsearch, Logstash, Kibana)",
+      "Django stack for that production scenario",
+      "MEAN stack for that production scenario"
+    ],
+    "correct_answer": "ELK stack (Elasticsearch, Logstash, Kibana)",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-020",
+    "question": "A Python service is experiencing memory leaks in production. Which tool combination helps detect and alert on increasing memory usage over time?",
+    "options": [
+      "Black and isort",
+      "Flake8 and MyPy",
+      "PyPI and pip for that production scenario",
+      "Prometheus and Grafana"
+    ],
+    "correct_answer": "Prometheus and Grafana",
+    "topic": "CI Failure Triage",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-021",
+    "question": "A migration fails in production because a column is dropped while the Python code still reads it. What deployment practice helps prevent this?",
+    "options": [
+      "Use backward-compatible migrations and deploy in two phases",
+      "Apply DB migrations after app deployment only for that production scenario",
+      "Use raw SQL only for that production scenario",
+      "Drop all indexes first for that production scenario"
+    ],
+    "correct_answer": "Use backward-compatible migrations and deploy in two phases",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-022",
+    "question": "Your API returns stack traces and SQL queries in 500 error responses in production. Which OWASP Top 10 category does this primarily violate?",
+    "options": [
+      "Security Misconfiguration",
+      "Sensitive Data Exposure",
+      "Broken Access Control",
+      "Injection for that production scenario"
+    ],
+    "correct_answer": "Security Misconfiguration",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-023",
+    "question": "A high-throughput Python system needs strongly-typed, low-latency service-to-service communication. Which protocol is a good choice?",
+    "options": [
+      "REST over HTTP/1.1",
+      "Plain text over TCP",
+      "gRPC with Protocol Buffers",
+      "SOAP for that production scenario"
+    ],
+    "correct_answer": "gRPC with Protocol Buffers",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-024",
+    "question": "A migration in Alembic/SQLAlchemy modifies a column type in production. What best practice should be followed?",
+    "options": [
+      "Apply directly without backups for that production scenario",
+      "Disable foreign keys for that production scenario",
+      "Drop and recreate the database",
+      "Test migration on a staging copy of production data first"
+    ],
+    "correct_answer": "Test migration on a staging copy of production data first",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-025",
+    "question": "What should you do when API tests are flaky due to shared test data?",
+    "options": [
+      "Run tests serially forever",
+      "Use isolated test data per run and cleanup hooks",
+      "Disable failing tests for that production scenario",
+      "Increase timeout only"
+    ],
+    "correct_answer": "Use isolated test data per run and cleanup hooks",
+    "topic": "CI Failure Triage",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-026",
+    "question": "How should flaky tests be treated in a healthy automation pipeline?",
+    "options": [
+      "Ignore them permanently for that production scenario",
+      "Quarantine, fix root cause quickly, and track flake rate",
+      "Run only manually for that production scenario for that production scenario",
+      "Delete all unstable tests for that production scenario"
+    ],
+    "correct_answer": "Quarantine, fix root cause quickly, and track flake rate",
+    "topic": "CI Failure Triage",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-027",
+    "question": "How should you handle flaky click failures caused by overlays?",
+    "options": [
+      "Retry click immediately in loop",
+      "Wait until element is clickable and overlay is gone",
+      "Use JavaScript click always for that production scenario",
+      "Disable the test for that production scenario"
+    ],
+    "correct_answer": "Wait until element is clickable and overlay is gone",
+    "topic": "CI Failure Triage",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-028",
+    "question": "Which metric best indicates API reliability in production?",
+    "options": [
+      "Code line count for that production scenario",
+      "Error rate and latency percentiles (e.g., p95)",
+      "Number of endpoints for that production scenario",
+      "Container image size"
+    ],
+    "correct_answer": "Error rate and latency percentiles (e.g., p95)",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-029",
+    "question": "What is the role of health checks in production services?",
+    "options": [
+      "Code minification for that production scenario",
+      "Indicate service readiness/liveness for orchestration",
+      "Encrypt traffic for that production scenario",
+      "Generate docs for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Indicate service readiness/liveness for orchestration",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-030",
+    "question": "What is a common cause of flaky UI tests?",
+    "options": [
+      "Using assertions",
+      "Timing/synchronization issues",
+      "Small test data for that production scenario",
+      "Headless browser support"
+    ],
+    "correct_answer": "Timing/synchronization issues",
+    "topic": "CI Failure Triage",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-031",
+    "question": "What is returned when JavaScriptExecutor.executeScript() executes JavaScript without an explicit return statement?",
+    "options": [
+      "null in that implementation",
+      "The last expression value",
+      "undefined for that production scenario",
+      "The script result"
+    ],
+    "correct_answer": "null in that implementation",
+    "topic": "CI Failure Triage",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "executors"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-032",
+    "question": "When using JavaScriptExecutor to scroll to a hidden element, what JavaScript property is typically modified?",
+    "options": [
+      "element.position",
+      "element.scrollIntoView()",
+      "window.scrollTo()",
+      "element.style.visibility"
+    ],
+    "correct_answer": "element.scrollIntoView()",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "executors"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-033",
+    "question": "When passing WebElement objects to JavaScriptExecutor as parameters, how are they accessible in JavaScript?",
+    "options": [
+      "Must convert to strings first for that production scenario",
+      "As JavaScript objects directly",
+      "Elements cannot be passed as parameters",
+      "Elements are automatically converted to DOM nodes"
+    ],
+    "correct_answer": "Elements are automatically converted to DOM nodes",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "executors"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-034",
+    "question": "In JavaScriptExecutor.executeAsyncScript(), what parameter indicates completion of asynchronous operation?",
+    "options": [
+      "arguments[0]",
+      "callback for that production scenario",
+      "arguments[arguments.length - 1]",
+      "completion()"
+    ],
+    "correct_answer": "arguments[arguments.length - 1]",
+    "topic": "FluentWait and Synchronization",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "executors"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-035",
+    "question": "In parallel execution with Selenium Grid, what metric should be monitored to prevent resource exhaustion?",
+    "options": [
+      "Disk space only for that production scenario for that production scenario",
+      "Network bandwidth for that production scenario",
+      "Test execution time only for that production scenario",
+      "Browser instances, memory usage per Node, and session limits"
+    ],
+    "correct_answer": "Browser instances, memory usage per Node, and session limits",
+    "topic": "Selenium WebDriver",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "selenium"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-036",
+    "question": "When using JavaScriptExecutor to modify DOM attributes, what is the typical use case in QA automation?",
+    "options": [
+      "Attributes should never be changed",
+      "Avoid attribute modification as it violates test principles",
+      "Modify read-only or protected attributes for test scenarios",
+      "JavaScriptExecutor cannot modify attributes"
+    ],
+    "correct_answer": "Modify read-only or protected attributes for test scenarios",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "executors"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-037",
+    "question": "When using JavaScriptExecutor to handle AJAX requests, what should be checked before proceeding?",
+    "options": [
+      "Just wait a fixed duration for that production scenario",
+      "AJAX cannot be verified for that production scenario for that production scenario",
+      "Skip verification in automation for that production scenario",
+      "Check jQuery.active or XMLHttpRequest readyState before proceeding"
+    ],
+    "correct_answer": "Check jQuery.active or XMLHttpRequest readyState before proceeding",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "executors"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-038",
+    "question": "In JavaScriptExecutor, what is the difference between executeScript() and executeAsyncScript()?",
+    "options": [
+      "executeAsyncScript() is faster for that production scenario for that production scenario",
+      "executeScript() cannot modify DOM for that production scenario for that production scenario",
+      "No difference for that production scenario for that production scenario",
+      "executeScript() executes synchronously, executeAsyncScript() allows asynchronous completion"
+    ],
+    "correct_answer": "executeScript() executes synchronously, executeAsyncScript() allows asynchronous completion",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "executors"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-039",
+    "question": "For changing element text content via JavaScriptExecutor, what property should be modified?",
+    "options": [
+      "element.innerHTML",
+      "element.textContent or element.innerText",
+      "element.value",
+      "element.text for that production scenario"
+    ],
+    "correct_answer": "element.textContent or element.innerText",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "executors"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-040",
+    "question": "When clicking a hidden element using JavaScriptExecutor, what should be the last action?",
+    "options": [
+      "Just modify display property for that production scenario for that production scenario",
+      "Use click() even without visibility for that production scenario",
+      "Hidden elements cannot be clicked for that production scenario",
+      "Use click() method after making element visible via display or opacity"
+    ],
+    "correct_answer": "Use click() method after making element visible via display or opacity",
+    "topic": "Framework Architecture",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "executors"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-041",
+    "question": "What is the correct syntax to get page title using JavaScriptExecutor in Selenium?",
+    "options": [
+      "executor.executeScript(\"return title\")",
+      "Cannot retrieve page title via JavaScriptExecutor",
+      "executor.executeScript(\"return document.getTitle()\")",
+      "executor.executeScript(\"return document.title\")"
+    ],
+    "correct_answer": "executor.executeScript(\"return document.title\")",
+    "topic": "Selenium WebDriver",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "executors",
+      "selenium"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-042",
+    "question": "In TestNG parallel execution with testng.xml, what does parallel=\"methods\" mean?",
+    "options": [
+      "Execute sequentially despite configuration",
+      "Execute test methods concurrently within and across classes",
+      "Parallel execution is not supported for that production scenario",
+      "Parallelize test classes for that production scenario"
+    ],
+    "correct_answer": "Execute test methods concurrently within and across classes",
+    "topic": "TestNG Execution",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "testng"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-043",
+    "question": "During debugging, a frontend engineer shows a 422 Unprocessable Entity response from a FastAPI backend. Where should the Python developer look first to understand which field failed validation?",
+    "options": [
+      "The HTML source for that production scenario",
+      "The TLS certificate",
+      "The browser cache",
+      "The error details in the JSON response body"
+    ],
+    "correct_answer": "The error details in the JSON response body",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-044",
+    "question": "A dashboard API needs near real-time data but can tolerate slight staleness to reduce DB load. What is an appropriate caching TTL strategy?",
+    "options": [
+      "Cache forever for that production scenario",
+      "TTL of several hours for that production scenario",
+      "No cache for that production scenario for that production scenario",
+      "Very short TTL (e.g., a few seconds) with periodic refresh"
+    ],
+    "correct_answer": "Very short TTL (e.g., a few seconds) with periodic refresh",
+    "topic": "FluentWait and Synchronization",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-045",
+    "question": "A Python application uses Django ORM and you see hundreds of queries per request in debug toolbar. What is a likely cause?",
+    "options": [
+      "Missing migrations",
+      "N+1 query patterns on related objects",
+      "Too much caching for that production scenario",
+      "Excessive use of select_related"
+    ],
+    "correct_answer": "N+1 query patterns on related objects",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-046",
+    "question": "In a QA test scenario requiring idempotent operations, which HTTP methods are safe to retry?",
+    "options": [
+      "All methods are equally safe for that production scenario",
+      "GET, PUT, DELETE can be safely retried without side effects",
+      "No methods are safe for that production scenario",
+      "POST and PATCH for that production scenario for that production scenario"
+    ],
+    "correct_answer": "GET, PUT, DELETE can be safely retried without side effects",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-047",
+    "question": "In test automation with retryable requests, why are idempotent operations critical?",
+    "options": [
+      "They reduce server load for that production scenario",
+      "They ensure repeated retries don't cause unintended side effects or duplicates",
+      "They are not necessary for that production scenario for that production scenario",
+      "They improve response time for that production scenario"
+    ],
+    "correct_answer": "They ensure repeated retries don't cause unintended side effects or duplicates",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-048",
+    "question": "Which frontend concept is critical for API integration debugging?",
+    "options": [
+      "DOM paint order only for that production scenario",
+      "Browser network tab request/response inspection",
+      "Font loading for that production scenario",
+      "Favicon caching for that production scenario"
+    ],
+    "correct_answer": "Browser network tab request/response inspection",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-049",
+    "question": "In CI, what is a good first step for debugging failing UI tests?",
+    "options": [
+      "Re-run until pass without logs for that production scenario",
+      "Capture screenshot, DOM snapshot, and browser logs",
+      "Increase all waits to 60 seconds",
+      "Disable assertions for that production scenario"
+    ],
+    "correct_answer": "Capture screenshot, DOM snapshot, and browser logs",
+    "topic": "CI Failure Triage",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-050",
+    "question": "Why is idempotency important when testing retry behavior?",
+    "options": [
+      "It increases payload size for that production scenario",
+      "It avoids unintended duplicate side effects",
+      "It disables authentication",
+      "It guarantees zero latency"
+    ],
+    "correct_answer": "It avoids unintended duplicate side effects",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-051",
+    "question": "In Selenium 4 architecture, what is the significance of the Remote WebDriver endpoint?",
+    "options": [
+      "It only supports Safari browser",
+      "It manages only test data for that production scenario",
+      "It replaces local WebDriver completely",
+      "It communicates with remote browser instances via HTTP"
+    ],
+    "correct_answer": "It communicates with remote browser instances via HTTP",
+    "topic": "Selenium WebDriver",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "selenium",
+      "webdriver"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-052",
+    "question": "In Selenium Grid architecture, what is the primary responsibility of the Hub node?",
+    "options": [
+      "Monitor network traffic only for that production scenario",
+      "Execute test scripts on the browser",
+      "Store test data and manage test cases",
+      "Route session requests to appropriate Node"
+    ],
+    "correct_answer": "Route session requests to appropriate Node",
+    "topic": "Selenium WebDriver",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "selenium"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-053",
+    "question": "In the Selenium architecture, what role does the Local WebDriver end represent?",
+    "options": [
+      "Manages browser lifecycle and executes commands",
+      "Handles HTTP requests only",
+      "Manages test data only for that production scenario",
+      "Connects to remote Selenium Grid"
+    ],
+    "correct_answer": "Manages browser lifecycle and executes commands",
+    "topic": "Selenium WebDriver",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "selenium",
+      "webdriver"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-054",
+    "question": "Which pattern can help a Python service remain responsive when a downstream dependency is slow or failing?",
+    "options": [
+      "Circuit breaker with fallback",
+      "Shared database",
+      "Global locks for that production scenario",
+      "Tight coupling"
+    ],
+    "correct_answer": "Circuit breaker with fallback",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "streams"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-055",
+    "question": "In API testing with concurrent requests, how does idempotency prevent data corruption?",
+    "options": [
+      "Idempotent operations ensure consistent state even with duplicate concurrent calls",
+      "Idempotency has no effect on concurrency for that production scenario",
+      "Concurrency is always unsafe for that production scenario for that production scenario",
+      "Idempotency slows down requests for that production scenario"
+    ],
+    "correct_answer": "Idempotent operations ensure consistent state even with duplicate concurrent calls",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-056",
+    "question": "What is the best way to reduce false failures in parallel UI execution?",
+    "options": [
+      "Share same user and environment state for that production scenario",
+      "Use isolated accounts/data and avoid inter-test dependency",
+      "Disable parallel execution for that production scenario",
+      "Skip cleanup for that production scenario"
+    ],
+    "correct_answer": "Use isolated accounts/data and avoid inter-test dependency",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-057",
+    "question": "A team is building a large, database-heavy internal tool with admin panels, ORM, and built-in auth. Which Python web framework is most appropriate to minimize boilerplate?",
+    "options": [
+      "Flask",
+      "Django",
+      "Falcon",
+      "FastAPI"
+    ],
+    "correct_answer": "Django",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-058",
+    "question": "A client sends multiple identical requests to update a user's profile using PUT /users/123. What should be true about this operation in a properly designed REST API?",
+    "options": [
+      "It must return 409 Conflict each time",
+      "Only the first request succeeds for that production scenario",
+      "The operation is idempotent and results in the same final state",
+      "Each request creates a new resource for that production scenario"
+    ],
+    "correct_answer": "The operation is idempotent and results in the same final state",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-059",
+    "question": "A Python app stores time-series logs in PostgreSQL but queries are mostly recent data. What table design approach can help performance and manageability?",
+    "options": [
+      "Partition the table by time (e.g., monthly partitions)",
+      "Use a single huge table for that production scenario",
+      "Disable indexes for that production scenario",
+      "Store logs as JSON in a single row for that production scenario"
+    ],
+    "correct_answer": "Partition the table by time (e.g., monthly partitions)",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-060",
+    "question": "You need a minimal, highly customizable microservice where you will manually choose extensions for ORM, auth, and validation. Which framework fits best?",
+    "options": [
+      "Flask in that implementation",
+      "FastAPI",
+      "Pyramid",
+      "Django for that production scenario"
+    ],
+    "correct_answer": "Flask in that implementation",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-061",
+    "question": "A new Python API needs to support high-throughput async I/O with automatic OpenAPI docs generation and type hints. Which framework is most suitable?",
+    "options": [
+      "Bottle",
+      "Flask for that production scenario",
+      "Django",
+      "FastAPI"
+    ],
+    "correct_answer": "FastAPI",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-062",
+    "question": "You notice tight coupling between Django views and ORM models across the project. Which refactoring can improve testability and design?",
+    "options": [
+      "Use global variables for that production scenario",
+      "Introduce service/repository layers between views and ORM",
+      "Move all logic to templates for that production scenario",
+      "Disable the ORM for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Introduce service/repository layers between views and ORM",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-063",
+    "question": "When using CSS attribute selectors for dynamic attributes, what syntax locates elements with attributes containing specific values?",
+    "options": [
+      "[attr^=value]",
+      "[attr=value]",
+      "[attr*=value]",
+      "[attr$=value]"
+    ],
+    "correct_answer": "[attr*=value]",
+    "topic": "CI Failure Triage",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-064",
+    "question": "A REST endpoint returns 200 OK but includes an 'errors' array in the body for validation failures. What is a better design choice?",
+    "options": [
+      "Keep 200 OK and errors in body for that production scenario",
+      "Use 500 Internal Server Error for that production scenario",
+      "Return 204 No Content for that production scenario for that production scenario",
+      "Use 400 Bad Request or 422 Unprocessable Entity with validation error details"
+    ],
+    "correct_answer": "Use 400 Bad Request or 422 Unprocessable Entity with validation error details",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-065",
+    "question": "A team wants to ensure only one instance of a configuration object exists within a Python process. Which design pattern applies?",
+    "options": [
+      "Factory",
+      "Strategy",
+      "Repository",
+      "Singleton"
+    ],
+    "correct_answer": "Singleton",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-066",
+    "question": "When using Selenium 4 with the W3C protocol, which capability flag ensures compatibility with older Selenium 3 implementations?",
+    "options": [
+      "useJsonWireProtocol",
+      "seleniumProtocol",
+      "goog:chromeOptions",
+      "webdriver.chrome.version"
+    ],
+    "correct_answer": "goog:chromeOptions",
+    "topic": "Selenium WebDriver",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "selenium"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-067",
+    "question": "Which architecture pattern is characterized by a central message broker and multiple worker services handling specific tasks?",
+    "options": [
+      "Event-driven / pub-sub",
+      "Request-response",
+      "Peer-to-peer for that production scenario",
+      "Layered monolith"
+    ],
+    "correct_answer": "Event-driven / pub-sub",
+    "topic": "CI Failure Triage",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-068",
+    "question": "When designing a schema for a high-write log table, which pattern can help avoid index bloat and improve insert performance?",
+    "options": [
+      "Use text columns for all data",
+      "Use many foreign keys for that production scenario",
+      "Index every column for that production scenario",
+      "Minimize indexes to only necessary query patterns"
+    ],
+    "correct_answer": "Minimize indexes to only necessary query patterns",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-069",
+    "question": "A Python startup app is small, with one team and simple requirements. Which architecture is usually best to start with?",
+    "options": [
+      "Event-driven microservices only",
+      "Serverless functions per endpoint only",
+      "Monolith with clear modular boundaries",
+      "Microservices from day one"
+    ],
+    "correct_answer": "Monolith with clear modular boundaries",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-070",
+    "question": "When configuring Selenium 4 with ChromeDriver, which parameter specifies the port for local webdriver communication?",
+    "options": [
+      "webdriverPort",
+      "localPort for that production scenario",
+      "chromePort",
+      "port in that implementation"
+    ],
+    "correct_answer": "port in that implementation",
+    "topic": "Selenium WebDriver",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "selenium",
+      "webdriver"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-071",
+    "question": "When a web application dynamically loads elements via JavaScript, which locator strategy is most affected by timing?",
+    "options": [
+      "Dynamic XPath with wait conditions",
+      "CSS selectors",
+      "Static XPath for that production scenario",
+      "ID-based locators"
+    ],
+    "correct_answer": "Dynamic XPath with wait conditions",
+    "topic": "Framework Architecture",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-072",
+    "question": "When using Docker containers for Selenium Grid, which component is typically containerized along with the browser?",
+    "options": [
+      "Only the Hub for that production scenario for that production scenario",
+      "Browser and Node with standalone or standalone-chrome image",
+      "Only the database for that production scenario",
+      "Only the test scripts for that production scenario"
+    ],
+    "correct_answer": "Browser and Node with standalone or standalone-chrome image",
+    "topic": "Selenium WebDriver",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "selenium"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-073",
+    "question": "When a new window opens via JavaScript window.open(), what must happen before accessing elements in that window?",
+    "options": [
+      "The window cannot be accessed",
+      "A new WebDriver instance must be created",
+      "Driver must switch to the new window handle",
+      "Nothing, elements are accessible automatically"
+    ],
+    "correct_answer": "Driver must switch to the new window handle",
+    "topic": "Framework Architecture",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-074",
+    "question": "When Selenium Grid is configured with multiple Node machines, what protocol is used for Hub-Node communication?",
+    "options": [
+      "FTP protocol",
+      "TCP only",
+      "HTTP/HTTPS REST API",
+      "Websockets exclusively"
+    ],
+    "correct_answer": "HTTP/HTTPS REST API",
+    "topic": "Selenium WebDriver",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "selenium"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-075",
+    "question": "When setting up Selenium Grid with browser capabilities, what happens if requested capability is not available?",
+    "options": [
+      "Hub modifies requested capabilities for that production scenario",
+      "Random Node is assigned for that production scenario",
+      "Session creation fails; error indicates unavailable capability",
+      "Hub waits for Node to support capability"
+    ],
+    "correct_answer": "Session creation fails; error indicates unavailable capability",
+    "topic": "Selenium WebDriver",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "selenium"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-076",
+    "question": "In the W3C WebDriver protocol, what does the /session endpoint return after successful browser initialization?",
+    "options": [
+      "Browser version string only for that production scenario",
+      "List of all browser drivers",
+      "Network configuration details",
+      "Session ID and browser capabilities"
+    ],
+    "correct_answer": "Session ID and browser capabilities",
+    "topic": "Selenium WebDriver",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "webdriver"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-077",
+    "question": "When performing multi-element drag operations, what does Actions.dragAndDrop(source, target).perform() return?",
+    "options": [
+      "The source element for that production scenario",
+      "The target element",
+      "Void/null after performing the action",
+      "A boolean indicating success"
+    ],
+    "correct_answer": "Void/null after performing the action",
+    "topic": "Framework Architecture",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-078",
+    "question": "How should you handle interactions with dynamically positioned elements that may move during action execution?",
+    "options": [
+      "Ignore positioning changes for that production scenario",
+      "Actions automatically handle dynamic positioning",
+      "Use wait conditions to ensure element is stable before interaction",
+      "Reposition elements using JavaScriptExecutor for that production scenario"
+    ],
+    "correct_answer": "Use wait conditions to ensure element is stable before interaction",
+    "topic": "Framework Architecture",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-079",
+    "question": "When handling a web application with dynamically created iFrames, what challenge occurs with iFrame switching?",
+    "options": [
+      "iFrame IDs are always consistent",
+      "No special handling is needed for that production scenario",
+      "iFrames cannot be tested dynamically",
+      "iFrame IDs or names may change, requiring dynamic locators"
+    ],
+    "correct_answer": "iFrame IDs or names may change, requiring dynamic locators",
+    "topic": "Framework Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-080",
+    "question": "When validating response body with multiple assertions in REST Assured, what happens if first assertion fails?",
+    "options": [
+      "Assertions are reordered for that production scenario for that production scenario",
+      "Execution stops at first failure; subsequent assertions are skipped",
+      "Second assertion overrides first for that production scenario",
+      "All assertions are executed for that production scenario"
+    ],
+    "correct_answer": "Execution stops at first failure; subsequent assertions are skipped",
+    "topic": "REST Assured",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "rest-assured"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-081",
+    "question": "Which ExpectedCondition should be used when you need to click an element that might be covered by an overlay?",
+    "options": [
+      "elementToBeClickable in that implementation",
+      "presenceOfAllElementsLocatedBy",
+      "visibilityOfElementLocated",
+      "presenceOfElementLocated for that production scenario"
+    ],
+    "correct_answer": "elementToBeClickable in that implementation",
+    "topic": "Framework Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-082",
+    "question": "In a scenario with AJAX requests completing before element visibility, what is the appropriate wait strategy?",
+    "options": [
+      "Wait conditions are unnecessary for that production scenario",
+      "Use Thread.sleep() for that production scenario for that production scenario",
+      "Use explicit wait for element visibility after AJAX completion",
+      "Rely on implicit wait only for that production scenario"
+    ],
+    "correct_answer": "Use explicit wait for element visibility after AJAX completion",
+    "topic": "FluentWait and Synchronization",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-083",
+    "question": "When using XPath text() function for dynamic elements with varying whitespace, what approach is most robust?",
+    "options": [
+      "Use contains() with normalize-space() function",
+      "Use exact text match only for that production scenario",
+      "XPath text() is unreliable for automation",
+      "Avoid text-based locators entirely"
+    ],
+    "correct_answer": "Use contains() with normalize-space() function",
+    "topic": "Framework Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-084",
+    "question": "A Python API uses JWTs stored in localStorage in a browser. Which security risk must be carefully mitigated?",
+    "options": [
+      "SQL injection for that production scenario",
+      "XSS allowing token theft via JavaScript",
+      "CSRF for that production scenario",
+      "Insecure deserialization"
+    ],
+    "correct_answer": "XSS allowing token theft via JavaScript",
+    "topic": "Framework Architecture",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "api-testing"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-085",
+    "question": "When switching between multiple browser windows opened via target='_blank', what identifier should be used?",
+    "options": [
+      "Cannot switch between windows for that production scenario",
+      "Window number for that production scenario",
+      "Window handle obtained from driver.getWindowHandles()",
+      "Window title only for that production scenario"
+    ],
+    "correct_answer": "Window handle obtained from driver.getWindowHandles()",
+    "topic": "Framework Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-086",
+    "question": "When validating JSON arrays in REST Assured, what Hamcrest matcher checks if array contains specific item?",
+    "options": [
+      "hasSize()",
+      "contains()",
+      "hasItems()",
+      "equalTo()"
+    ],
+    "correct_answer": "hasItems()",
+    "topic": "REST Assured",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "rest-assured"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-087",
+    "question": "Which XPath axis would you use to find all preceding elements in the DOM tree before the current element?",
+    "options": [
+      "preceding",
+      "ancestor-or-self",
+      "preceding-or-self",
+      "ancestor"
+    ],
+    "correct_answer": "preceding",
+    "topic": "Framework Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-088",
+    "question": "In a QA automation scenario with nested iFrames, how should you locate elements in the inner-most iFrame?",
+    "options": [
+      "XPath automatically traverses all iFrames for that production scenario",
+      "Use JavaScriptExecutor to bypass iFrame boundaries",
+      "iFrames cannot contain locatable elements",
+      "Switch to outer iFrame first, then switch to nested iFrame"
+    ],
+    "correct_answer": "Switch to outer iFrame first, then switch to nested iFrame",
+    "topic": "Framework Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-089",
+    "question": "In Django REST Framework, which class is typically used to restrict access to authenticated users only?",
+    "options": [
+      "ReadOnly for that production scenario",
+      "IsAdminUser",
+      "AllowAny",
+      "IsAuthenticated"
+    ],
+    "correct_answer": "IsAuthenticated",
+    "topic": "Framework Architecture",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-090",
+    "question": "In system design, what is the primary tradeoff when introducing aggressive caching in a Python backend?",
+    "options": [
+      "Harder authentication for that production scenario",
+      "Increased CPU usage for that production scenario",
+      "Possible data staleness vs. reduced load and latency",
+      "More network hops for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Possible data staleness vs. reduced load and latency",
+    "topic": "CI Failure Triage",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-091",
+    "question": "When using ITestListener in TestNG, which method is called after test completion regardless of result?",
+    "options": [
+      "onTestStart()",
+      "onTestEnd() for that production scenario",
+      "onFinish() in that implementation",
+      "onTestFinish()"
+    ],
+    "correct_answer": "onFinish() in that implementation",
+    "topic": "TestNG Execution",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "testng"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-092",
+    "question": "When designing relational schemas, which principle aims to reduce redundant data and update anomalies?",
+    "options": [
+      "Normalization (e.g., 3NF)",
+      "Denormalization",
+      "Sharding for that production scenario",
+      "Indexing"
+    ],
+    "correct_answer": "Normalization (e.g., 3NF)",
+    "topic": "CI Failure Triage",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "java"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-093",
+    "question": "A JUnit 5 test class switches to @TestInstance(PER_CLASS) and now one failing test pollutes another through shared fields. What changed?",
+    "options": [
+      "JUnit now reuses one test instance, so mutable instance state is shared across test methods.",
+      "PER_CLASS creates a fresh test instance for every assertion instead of every method.",
+      "JUnit disables @BeforeEach when PER_CLASS is enabled. for that production scenario",
+      "PER_CLASS forces all tests to run sequentially in one transaction. for that production scenario"
+    ],
+    "correct_answer": "JUnit now reuses one test instance, so mutable instance state is shared across test methods.",
+    "topic": "JUnit Jupiter",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "junit",
+      "state-leaks",
+      "test-lifecycle"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-094",
+    "question": "Which JUnit 5 design is safer when a test class stores mutable fixtures that must not leak between methods?",
+    "options": [
+      "Keep the default per-method lifecycle or recreate mutable fixtures in @BeforeEach.",
+      "Use @TestInstance(PER_CLASS) so JUnit can cache every mutable field for reuse.",
+      "Move all mutable state into static fields to make test order deterministic. for that production scenario",
+      "Replace @BeforeEach with Thread.sleep so background cleanup finishes first."
+    ],
+    "correct_answer": "Keep the default per-method lifecycle or recreate mutable fixtures in @BeforeEach.",
+    "topic": "JUnit Jupiter",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "fixtures",
+      "junit",
+      "test-design"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-095",
+    "question": "A Selenium wrapper sets a 20-second implicit wait and also uses WebDriverWait with 20 seconds. Why does the suite feel slower and less predictable?",
+    "options": [
+      "Mixing implicit and explicit waits can multiply polling delays and make timeouts harder to reason about.",
+      "WebDriverWait disables implicit waits, so the 20-second setting becomes harmless. for that production scenario",
+      "Implicit waits apply only to click() while explicit waits apply only to findElement().",
+      "The slowdown happens because Selenium runs both waits on separate threads and merges the result."
+    ],
+    "correct_answer": "Mixing implicit and explicit waits can multiply polling delays and make timeouts harder to reason about.",
+    "topic": "FluentWait and Synchronization",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "selenium",
+      "synchronization",
+      "waits"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-096",
+    "question": "A page object caches a WebElement for the checkout button, but React re-renders the DOM before click. What is the most likely failure mode?",
+    "options": [
+      "The cached element reference becomes stale because the underlying DOM node was replaced.",
+      "React prevents Selenium from clicking any element after re-render. for that production scenario",
+      "The click fails only when the WebElement was located by CSS instead of XPath.",
+      "The JVM clears cached WebElements whenever garbage collection runs."
+    ],
+    "correct_answer": "The cached element reference becomes stale because the underlying DOM node was replaced.",
+    "topic": "Selenium WebDriver",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "page-objects",
+      "selenium",
+      "stale-element"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-097",
+    "question": "A TestNG suite uses parallel=\"methods\" and a static WebDriver field. Why do tests begin stealing focus from each other?",
+    "options": [
+      "Parallel methods share the same static driver reference, so commands from different tests hit the same browser instance.",
+      "Static fields become thread-local automatically when TestNG enables method parallelism. for that production scenario",
+      "TestNG clones the browser per method but keeps windows synchronized on purpose. for that production scenario",
+      "Method parallelism affects only data providers, not driver usage. for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Parallel methods share the same static driver reference, so commands from different tests hit the same browser instance.",
+    "topic": "TestNG Execution",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "parallel",
+      "testng",
+      "webdriver"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-098",
+    "question": "A REST Assured base specification is stored in a mutable static object and different suites override headers in parallel. What risk does that introduce?",
+    "options": [
+      "Requests become order-dependent because one suite can leak header changes into another suite's calls.",
+      "REST Assured snapshots every static specification per thread, so no leakage is possible.",
+      "Static RequestSpecification objects are immutable once the first request is sent. for that production scenario",
+      "Header overrides are ignored whenever a base URI is also configured. for that production scenario"
+    ],
+    "correct_answer": "Requests become order-dependent because one suite can leak header changes into another suite's calls.",
+    "topic": "REST Assured",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "parallel",
+      "rest-assured",
+      "shared-state"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-099",
+    "question": "A CI failure report only stores 'Assertion failed' without request payloads, response bodies, browser logs, or screenshots. What is the main operational problem?",
+    "options": [
+      "Engineers lose the evidence needed to distinguish product defects, environment issues, and flaky automation.",
+      "CI pipelines should avoid artifacts because they slow down future retries. for that production scenario",
+      "Screenshots and payloads matter only for manual testing, not automation failures. for that production scenario",
+      "The lack of artifacts affects only UI tests and is irrelevant for API suites. for that production scenario"
+    ],
+    "correct_answer": "Engineers lose the evidence needed to distinguish product defects, environment issues, and flaky automation.",
+    "topic": "CI Failure Triage",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "artifacts",
+      "ci",
+      "failure-triage"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  },
+  {
+    "id": "java-qa-l3-100",
+    "question": "Which failure-handling change is strongest when a UI suite has become flaky under load on Selenium Grid?",
+    "options": [
+      "Capture browser logs, network traces, screenshots, and node metadata so recurring failure signatures can be grouped and fixed.",
+      "Retry every failed test three times and publish only the final result to keep reports clean. for that production scenario",
+      "Disable all explicit waits so timing issues fail faster and look more deterministic. for that production scenario",
+      "Run every test on the same node to avoid comparing behavior across browsers. for that production scenario for that production scenario"
+    ],
+    "correct_answer": "Capture browser logs, network traces, screenshots, and node metadata so recurring failure signatures can be grouped and fixed.",
+    "topic": "CI Failure Triage",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "ci",
+      "grid",
+      "observability"
+    ],
+    "role_target": "java_qa",
+    "round_target": "L3",
+    "version_scope": [
+      "java17",
+      "java21"
+    ]
+  }
+]
