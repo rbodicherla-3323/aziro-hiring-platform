@@ -197,6 +197,7 @@ def get_candidate_report_data(email: str) -> dict:
         "name": candidate.name,
         "email": candidate.email,
         "role": ts.role_label or ts.role_key,
+        "role_key": ts.role_key,
         "batch_id": ts.batch_id,
         "test_session_id": ts.id,
         "rounds": rounds,
