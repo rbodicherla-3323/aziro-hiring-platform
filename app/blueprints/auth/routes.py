@@ -23,6 +23,32 @@ AZURE_REDIRECT_URI = os.getenv("AZURE_REDIRECT_URI", "").strip()
 AUTHORITY = f"https://login.microsoftonline.com/{AZURE_TENANT_ID}"
 SCOPES = ["User.Read", "Mail.Send"]
 
+# Hardcoded allowlist: only these Aziro users can log in.
+ALLOWED_AZIRO_EMAILS = {
+    "rbodicherla@aziro.com",
+    "njagadeesh@aziro.com",
+    "snaik@aziro.com",
+    "sshaikh@aziro.com",
+    "smrao@aziro.com"
+}
+
+
+def _get_allowed_aziro_emails() -> set[str]:
+    """Return hardcoded normalized allowlist."""
+    return {email.strip().lower() for email in ALLOWED_AZIRO_EMAILS if email.strip()}
+
+
+def _is_allowed_aziro_email(email: str) -> bool:
+    """Allow only @aziro.com emails, optionally restricted to configured allowlist."""
+    normalized_email = str(email or "").strip().lower()
+    if not normalized_email.endswith("@aziro.com"):
+        return False
+
+    allowed_emails = _get_allowed_aziro_emails()
+    if allowed_emails and normalized_email not in allowed_emails:
+        return False
+    return True
+
 
 def _build_msal_app(cache=None):
     return msal.ConfidentialClientApplication(
@@ -49,37 +75,16 @@ def index():
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     """Login page."""
-    auth_disabled = os.getenv("AUTH_DISABLED", "").strip().lower() == "true"
-
-    # Normal mode: force explicit Microsoft sign-in at app entry.
+    # Always require explicit Microsoft sign-in at app entry.
     if request.method == "GET":
-        if not auth_disabled and (session.get("user") or session.get("oauth")):
+        if session.get("user") or session.get("oauth"):
             user = session.get("user", {})
             clear_graph_delegated_token(user.get("email", ""))
             session.clear()
         return render_template("login.html", error=None)
 
-    # POST local login is allowed only in explicit dev-bypass mode.
-    error = None
-    if auth_disabled:
-        username = request.form.get("username", "").strip()
-        password = request.form.get("password", "").strip()
-
-        if not username.endswith("@aziro.com"):
-            error = "Only @aziro.com email addresses are allowed."
-        elif password == "aziro123":
-            session["user"] = {
-                "name": username.split("@")[0].title(),
-                "email": username,
-                "authenticated": True,
-            }
-            return redirect(url_for("dashboard.dashboard"))
-        else:
-            error = "Invalid credentials."
-    else:
-        error = "Use 'Continue with Microsoft' to sign in."
-
-    return render_template("login.html", error=error)
+    # POST local login is disabled.
+    return render_template("login.html", error="Use 'Continue with Microsoft' to sign in.")
 
 
 @auth_bp.route("/login/microsoft")
@@ -177,8 +182,8 @@ def auth_callback():
     if not name:
         name = email.split("@")[0].title() if email else "User"
 
-    if not email.endswith("@aziro.com"):
-        flash("Access denied. Only @aziro.com accounts are allowed.", "danger")
+    if not _is_allowed_aziro_email(email):
+        flash("Access denied. Only approved @aziro.com accounts are allowed.", "danger")
         return redirect(url_for("auth.login"))
 
     session["user"] = {
