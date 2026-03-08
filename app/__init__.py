@@ -67,35 +67,17 @@ def create_app():
     from .config import Config
     app.jinja_env.globals["ASSET_VERSION"] = Config.ASSET_VERSION
 
-    # Dev mode: Bypass login only when explicitly enabled.
-    auth_disabled_env = os.getenv("AUTH_DISABLED", "").strip().lower() == "true"
-    dev_bypass = auth_disabled_env
-
-    if dev_bypass:
-        @app.before_request
-        def auto_login_for_dev():
-            from flask import session, request as req
-            # Skip bypass for static files
-            if req.path.startswith("/static"):
-                return
-            if not session.get("user"):
-                session["user"] = {
-                    "name": "Dev User",
-                    "email": "dev@aziro.com",
-                    "authenticated": True
-                }
-    else:
-        @app.before_request
-        def clear_stale_dev_bypass_session():
-            from flask import session
-            user = session.get("user")
-            if not isinstance(user, dict):
-                return
-            if (
-                user.get("email") == "dev@aziro.com"
-                and user.get("name") == "Dev User"
-                and "oauth" not in session
-            ):
-                session.clear()
+    @app.before_request
+    def clear_stale_dev_bypass_session():
+        from flask import session
+        user = session.get("user")
+        if not isinstance(user, dict):
+            return
+        if (
+            user.get("email") == "dev@aziro.com"
+            and user.get("name") == "Dev User"
+            and "oauth" not in session
+        ):
+            session.clear()
 
     return app
