@@ -254,6 +254,20 @@ def create_test():
         coding_language = role_config.get("coding_language", "java")
         allow_domain = role_config.get("allow_domain", False)
 
+        # Hard gate: only generate coding links if server runtime is available.
+        if coding_rounds:
+            from app.blueprints.coding.routes import get_language_runtime_status
+
+            runtime_ok, runtime_requirement = get_language_runtime_status(coding_language)
+            if not runtime_ok:
+                flash(
+                    f"Coding runtime unavailable on server for {coding_language.upper()}. "
+                    f"Required: {runtime_requirement}. "
+                    f"Candidate '{name}' was skipped to prevent runtime failures.",
+                    "danger",
+                )
+                continue
+
         tests = {}
 
         # Generate MCQ round links
