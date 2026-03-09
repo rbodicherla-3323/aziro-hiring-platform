@@ -343,6 +343,20 @@ def send_candidate_test_links_email(
 
     body = _build_email_body(candidate_name, role_label, tests)
 
+    # Prefer logged-in user's mailbox whenever a delegated token is available.
+    if delegated_access_token:
+        delegated_ok, delegated_err = _send_via_graph_delegated(
+            candidate_email=candidate_email,
+            role_label=role_label,
+            body=body,
+            delegated_access_token=delegated_access_token,
+            delegated_sender_email=delegated_sender_email,
+        )
+        if delegated_ok:
+            return True, ""
+        if email_provider == "graph_delegated":
+            return False, delegated_err
+
     if email_provider == "graph":
         return _send_via_graph(
             candidate_email=candidate_email,
@@ -351,13 +365,7 @@ def send_candidate_test_links_email(
         )
 
     if email_provider == "graph_delegated":
-        return _send_via_graph_delegated(
-            candidate_email=candidate_email,
-            role_label=role_label,
-            body=body,
-            delegated_access_token=delegated_access_token,
-            delegated_sender_email=delegated_sender_email,
-        )
+        return False, "Delegated Graph token is missing or expired. Please sign in with Microsoft again."
 
     if email_provider == "smtp":
         return _send_via_smtp(
