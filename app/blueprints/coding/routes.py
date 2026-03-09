@@ -322,8 +322,10 @@ def _resolve_executable(cmd_name):
     # ── Linux / macOS fallbacks ──────────────────────────
     if os.name != "nt":
         linux_aliases = {
-            "python": ["python3"],
+            "python": ["python3", "python3.12", "python3.11", "python3.10"],
             "node": ["nodejs"],
+            "gcc": ["cc", "clang"],
+            "g++": ["c++", "clang++"],
         }
         for alias in linux_aliases.get(cmd_name, []):
             found = shutil.which(alias)
@@ -332,6 +334,52 @@ def _resolve_executable(cmd_name):
 
         # Explicit Linux fallback paths for services with restricted PATH.
         linux_paths_by_cmd = {
+            "java": [
+                "/usr/bin/java",
+                "/usr/local/bin/java",
+                "/usr/lib/jvm/*/bin/java",
+                "/opt/java/*/bin/java",
+                os.path.expanduser("~/.sdkman/candidates/java/*/bin/java"),
+            ],
+            "javac": [
+                "/usr/bin/javac",
+                "/usr/local/bin/javac",
+                "/usr/lib/jvm/*/bin/javac",
+                "/opt/java/*/bin/javac",
+                os.path.expanduser("~/.sdkman/candidates/java/*/bin/javac"),
+            ],
+            "gcc": [
+                "/usr/bin/gcc",
+                "/usr/local/bin/gcc",
+                "/usr/bin/cc",
+                "/usr/local/bin/cc",
+                "/usr/bin/clang",
+                "/usr/local/bin/clang",
+            ],
+            "g++": [
+                "/usr/bin/g++",
+                "/usr/local/bin/g++",
+                "/usr/bin/c++",
+                "/usr/local/bin/c++",
+                "/usr/bin/clang++",
+                "/usr/local/bin/clang++",
+            ],
+            "python": [
+                "/usr/bin/python3",
+                "/usr/local/bin/python3",
+                "/usr/bin/python",
+                "/usr/local/bin/python",
+                os.path.expanduser("~/.pyenv/shims/python"),
+                os.path.expanduser("~/.local/bin/python"),
+            ],
+            "node": [
+                "/usr/bin/node",
+                "/usr/local/bin/node",
+                "/usr/bin/nodejs",
+                "/usr/local/bin/nodejs",
+                "/snap/bin/node",
+                os.path.expanduser("~/.nvm/versions/node/*/bin/node"),
+            ],
             "dotnet": [
                 "/usr/bin/dotnet",
                 "/usr/local/bin/dotnet",
@@ -353,6 +401,11 @@ def _resolve_executable(cmd_name):
             ],
         }
         for candidate in linux_paths_by_cmd.get(cmd_name, []):
+            if "*" in candidate:
+                for match in sorted(glob.glob(candidate), reverse=True):
+                    if os.path.isfile(match):
+                        return match
+                continue
             if os.path.isfile(candidate):
                 return candidate
         return cmd_name
@@ -393,11 +446,15 @@ def _resolve_executable(cmd_name):
             r"D:\winlibs*\mingw64\bin\gcc.exe",
             r"D:\Downloads\winlibs*\mingw64\bin\gcc.exe",
             r"C:\winlibs*\mingw64\bin\gcc.exe",
+            r"C:\msys64\mingw64\bin\gcc.exe",
+            r"C:\TDM-GCC-64\bin\gcc.exe",
         ],
         "g++": [
             r"D:\winlibs*\mingw64\bin\g++.exe",
             r"D:\Downloads\winlibs*\mingw64\bin\g++.exe",
             r"C:\winlibs*\mingw64\bin\g++.exe",
+            r"C:\msys64\mingw64\bin\g++.exe",
+            r"C:\TDM-GCC-64\bin\g++.exe",
         ],
         "python": [
             r"C:\Users\*\AppData\Local\Programs\Python\Python*\python.exe",
@@ -405,6 +462,8 @@ def _resolve_executable(cmd_name):
         ],
         "node": [
             r"C:\Program Files\nodejs\node.exe",
+            r"C:\Users\*\AppData\Roaming\nvm\v*\node.exe",
+            r"C:\Users\*\AppData\Local\Microsoft\WinGet\Packages\OpenJS.NodeJS*\node-v*\node.exe",
         ],
         "py": [
             r"C:\Windows\py.exe",
@@ -454,6 +513,8 @@ def _compiler_commands():
         "java": _resolve_executable("java"),
         "gcc": _resolve_executable("gcc"),
         "g++": _resolve_executable("g++"),
+        "clang": _resolve_executable("clang"),
+        "clang++": _resolve_executable("clang++"),
         "python": python_cmd,
         "node": _resolve_executable("node"),
         "dotnet": _resolve_executable("dotnet"),
@@ -469,6 +530,55 @@ def _command_available(command):
     if os.path.isfile(command):
         return True
     return shutil.which(command) is not None
+
+
+def get_language_runtime_status(language):
+    """
+    Check if the server has the required runtime/compiler toolchain
+    for the requested coding language.
+    Returns: (is_available: bool, requirement_hint: str)
+    """
+    lang = str(language or "").strip().lower()
+    if lang == "js":
+        lang = "javascript"
+    if lang in ("c#", "cs"):
+        lang = "csharp"
+
+    compilers = _compiler_commands()
+
+    if lang == "java":
+        ok = _command_available(compilers.get("javac")) and _command_available(compilers.get("java"))
+        return ok, "JDK (javac + java)"
+
+    if lang == "c":
+        ok = _command_available(compilers.get("gcc")) or _command_available(compilers.get("clang"))
+        return ok, "GCC/Clang toolchain (gcc or clang)"
+
+    if lang == "cpp":
+        ok = _command_available(compilers.get("g++")) or _command_available(compilers.get("clang++"))
+        return ok, "G++/Clang++ toolchain (g++ or clang++)"
+
+    if lang == "python":
+        ok = _command_available(compilers.get("python"))
+        return ok, "Python 3 runtime (python3/python/py)"
+
+    if lang == "javascript":
+        ok = _command_available(compilers.get("node"))
+        return ok, "Node.js runtime (node/nodejs)"
+
+    if lang == "csharp":
+        dotnet_ok = _command_available(compilers.get("dotnet"))
+        mcs_ok = _command_available(compilers.get("mcs"))
+        csc_ok = _command_available(compilers.get("csc"))
+        mono_ok = _command_available(compilers.get("mono"))
+        if os.name != "nt":
+            ok = dotnet_ok or (mcs_ok and mono_ok) or csc_ok
+        else:
+            ok = dotnet_ok or mcs_ok or csc_ok
+        return ok, "dotnet SDK 10.x/8.x LTS (or mcs/csc fallback)"
+
+    # Unknown language key – treat as unavailable and let caller handle it.
+    return False, f"{str(language).upper()} compiler/runtime"
 
 
 def _split_top_level_csv(raw_text):
@@ -1189,8 +1299,12 @@ def _compile_and_run(language, code, stdin_input, work_dir):
         with open(src_file, "w", encoding="utf-8") as f:
             f.write(code)
 
+        c_compiler = compilers["gcc"]
+        if not _command_available(c_compiler):
+            c_compiler = compilers.get("clang") or c_compiler
+
         comp = subprocess.run(
-            [compilers["gcc"], src_file, "-o", exe_file, "-lm"],
+            [c_compiler, src_file, "-o", exe_file, "-lm"],
             capture_output=True, text=True, timeout=COMPILE_TIMEOUT, cwd=work_dir
         )
         if comp.returncode != 0:
@@ -1212,8 +1326,12 @@ def _compile_and_run(language, code, stdin_input, work_dir):
         with open(src_file, "w", encoding="utf-8") as f:
             f.write(code)
 
+        cpp_compiler = compilers["g++"]
+        if not _command_available(cpp_compiler):
+            cpp_compiler = compilers.get("clang++") or cpp_compiler
+
         comp = subprocess.run(
-            [compilers["g++"], src_file, "-o", exe_file, "-std=c++17"],
+            [cpp_compiler, src_file, "-o", exe_file, "-std=c++17"],
             capture_output=True, text=True, timeout=COMPILE_TIMEOUT, cwd=work_dir
         )
         if comp.returncode != 0:
@@ -1234,8 +1352,13 @@ def _compile_and_run(language, code, stdin_input, work_dir):
         with open(src_file, "w", encoding="utf-8") as f:
             f.write(code)
 
+        python_cmd = compilers["python"]
+        run_cmd = [python_cmd, src_file]
+        if os.path.basename(str(python_cmd)).lower() in ("py", "py.exe"):
+            run_cmd = [python_cmd, "-3", src_file]
+
         run = subprocess.run(
-            [compilers["python"], src_file],
+            run_cmd,
             input=stdin_input, capture_output=True, text=True,
             timeout=RUN_TIMEOUT, cwd=work_dir
         )
@@ -1622,11 +1745,11 @@ def run_code(session_id):
                 }.get(lang_key, str(language).upper())
                 compiler_info = {
                     "java": "JDK (javac + java)",
-                    "c": "GCC (gcc)",
-                    "cpp": "G++ (g++)",
-                    "python": "Python 3 runtime (python/py)",
-                    "javascript": "Node.js runtime (node)",
-                    "js": "Node.js runtime (node)",
+                    "c": "GCC/Clang toolchain (gcc or clang)",
+                    "cpp": "G++/Clang++ toolchain (g++ or clang++)",
+                    "python": "Python 3 runtime (python3/python/py)",
+                    "javascript": "Node.js runtime (node/nodejs)",
+                    "js": "Node.js runtime (node/nodejs)",
                     "csharp": "dotnet SDK 10.x (LTS, preferred) or dotnet SDK 8.x (LTS)",
                     "c#": "dotnet SDK 10.x (LTS, preferred) or dotnet SDK 8.x (LTS)",
                 }
@@ -1717,11 +1840,11 @@ def run_code(session_id):
                 }.get(lang_key, str(language).upper())
                 compiler_info = {
                     "java": "JDK (javac + java)",
-                    "c": "GCC (gcc)",
-                    "cpp": "G++ (g++)",
-                    "python": "Python 3 runtime (python/py)",
-                    "javascript": "Node.js runtime (node)",
-                    "js": "Node.js runtime (node)",
+                    "c": "GCC/Clang toolchain (gcc or clang)",
+                    "cpp": "G++/Clang++ toolchain (g++ or clang++)",
+                    "python": "Python 3 runtime (python3/python/py)",
+                    "javascript": "Node.js runtime (node/nodejs)",
+                    "js": "Node.js runtime (node/nodejs)",
                     "csharp": "dotnet SDK 10.x (LTS, preferred) or dotnet SDK 8.x (LTS)",
                     "c#": "dotnet SDK 10.x (LTS, preferred) or dotnet SDK 8.x (LTS)",
                 }
