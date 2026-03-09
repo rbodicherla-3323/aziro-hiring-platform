@@ -608,6 +608,36 @@ body.mcq-question-page .candidate {
     font-size: 23px;
     line-height: 1.4;
     color: #1e335f;
+    display: grid;
+    gap: 10px;
+}
+
+.mcq-question-paragraph {
+    margin: 0;
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: 700;
+}
+
+.mcq-question-code {
+    margin: 0;
+    padding: 13px 14px;
+    border-radius: 12px;
+    border: 1px solid #c8d8fa;
+    background: linear-gradient(180deg, #101a31 0%, #0d162a 100%);
+    color: #e8f0ff;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.55;
+    white-space: pre;
+    overflow-x: auto;
+}
+
+.mcq-question-code code {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
 }
 
 .mcq-question-help {
@@ -716,11 +746,12 @@ body.mcq-question-page .candidate {
     margin: 0;
 }
 
-/* Desktop exam mode: keep question page inside viewport with no scroll */
+/* Desktop exam mode: keep layout compact but allow vertical scroll for long question content */
 @media (min-width: 993px) {
     body.mcq-question-page,
     body.mcq-question-screen {
-        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
     body.mcq-question-page .header,
@@ -820,6 +851,12 @@ body.mcq-question-page .candidate {
         margin-top: 5px;
         margin-bottom: 10px;
         font-size: 12px;
+    }
+
+    body.mcq-question-page .mcq-question-code,
+    body.mcq-question-screen .mcq-question-code {
+        font-size: 12px;
+        padding: 10px 12px;
     }
 
     body.mcq-question-page .mcq-options,
@@ -937,6 +974,11 @@ body.mcq-question-page .candidate {
 
     .mcq-question-title {
         font-size: 20px;
+    }
+
+    .mcq-question-code {
+        font-size: 12px;
+        padding: 10px 11px;
     }
 
     .mcq-actions {

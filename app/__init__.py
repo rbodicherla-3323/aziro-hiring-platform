@@ -30,6 +30,9 @@ def create_app():
     )
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SESSION_PERMANENT"] = True
+    app.config["PROCTORING_ENABLED"] = (
+        os.getenv("PROCTORING_ENABLED", "").strip().lower() in {"1", "true", "yes", "on"}
+    )
 
     # Initialize extensions
     db.init_app(app)
