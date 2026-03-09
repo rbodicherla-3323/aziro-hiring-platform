@@ -31,7 +31,8 @@ ALLOWED_AZIRO_EMAILS = {
     "sshaikh@aziro.com",
     "smrao@aziro.com",
     "arana@aziro.com",
-    "mnamde@aziro.com"
+    "mnamde@aziro.com",
+    "it@aziro.com"
 }
 
 
