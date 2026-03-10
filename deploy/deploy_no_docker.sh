@@ -48,13 +48,19 @@ fi
 # ── 5. Install coding round compilers (if not already) ──
 echo ""
 echo "▸ Checking coding round compilers..."
-for cmd in gcc g++ javac node mcs; do
+for cmd in gcc g++ javac node mcs mono; do
     if command -v $cmd &>/dev/null; then
         echo "  ✓ $cmd found"
     else
         echo "  ✗ $cmd NOT found (install separately if needed)"
     fi
 done
+
+# Ensure mono-runtime is installed (mcs compiles, mono executes .exe on Linux)
+if ! command -v mono &>/dev/null; then
+    echo "  ⚠ Installing mono-runtime (needed to run compiled C# on Linux)..."
+    sudo apt install -y mono-runtime 2>/dev/null || echo "  ✗ Could not install mono-runtime automatically"
+fi
 
 # ── 6. Setup systemd service for Gunicorn ──
 echo ""

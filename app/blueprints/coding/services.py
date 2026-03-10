@@ -474,7 +474,9 @@ class CodingSessionService:
             return (
                 "using System;\n"
                 "using System.Collections.Generic;\n"
-                "using System.Linq;\n\n"
+                "using System.Linq;\n"
+                "using System.Text;\n"
+                "using System.Text.RegularExpressions;\n\n"
                 f"public class {class_name} {{\n"
                 f"    {signature} {{\n"
                 f"        // TODO: Implement this method according to the problem statement.\n"

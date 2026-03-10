@@ -1036,6 +1036,7 @@ def _build_csharp_driver(code, func_info, test_inputs):
         signature = "public static int solve(int n)"
 
     _, method_name, params = _parse_function_signature(signature)
+
     if len(params) != len(test_inputs):
         raise ValueError(
             f"C# test input mismatch for {method_name}: expected {len(params)} args, got {len(test_inputs)}"
@@ -1051,7 +1052,9 @@ def _build_csharp_driver(code, func_info, test_inputs):
         "using System.Collections;\n"
         "using System.Collections.Generic;\n"
         "using System.Globalization;\n"
-        "using System.Linq;\n\n"
+        "using System.Linq;\n"
+        "using System.Text;\n"
+        "using System.Text.RegularExpressions;\n\n"
         f"{code}\n\n"
         "public class Program {\n"
         "    static string __esc(string s) {\n"
@@ -1064,19 +1067,21 @@ def _build_csharp_driver(code, func_info, test_inputs):
         "    }\n\n"
         "    static string __toJson(object obj) {\n"
         "        if (obj == null) return \"null\";\n"
-        "        if (obj is string s) return \"\\\"\" + __esc(s) + \"\\\"\";\n"
-        "        if (obj is bool b) return b ? \"true\" : \"false\";\n"
-        "        if (obj is char c) return \"\\\"\" + __esc(c.ToString()) + \"\\\"\";\n"
+        "        if (obj is string) return \"\\\"\" + __esc((string)obj) + \"\\\"\";\n"
+        "        if (obj is bool) return ((bool)obj) ? \"true\" : \"false\";\n"
+        "        if (obj is char) return \"\\\"\" + __esc(((char)obj).ToString()) + \"\\\"\";\n"
         "        if (obj is byte || obj is sbyte || obj is short || obj is ushort || obj is int || obj is uint || obj is long || obj is ulong || obj is float || obj is double || obj is decimal)\n"
         "            return Convert.ToString(obj, CultureInfo.InvariantCulture);\n"
-        "        if (obj is IDictionary dict) {\n"
+        "        if (obj is IDictionary) {\n"
+        "            IDictionary dict = (IDictionary)obj;\n"
         "            var parts = new List<string>();\n"
         "            foreach (DictionaryEntry entry in dict) {\n"
         "                parts.Add(\"\\\"\" + __esc(Convert.ToString(entry.Key, CultureInfo.InvariantCulture)) + \"\\\":\" + __toJson(entry.Value));\n"
         "            }\n"
         "            return \"{\" + string.Join(\",\", parts) + \"}\";\n"
         "        }\n"
-        "        if (obj is IEnumerable en && obj is not string) {\n"
+        "        if (obj is IEnumerable && !(obj is string)) {\n"
+        "            IEnumerable en = (IEnumerable)obj;\n"
         "            var parts = new List<string>();\n"
         "            foreach (var item in en) {\n"
         "                parts.Add(__toJson(item));\n"
@@ -1236,22 +1241,54 @@ def _compile_and_run(language, code, stdin_input, work_dir):
         with open(src_file, "w", encoding="utf-8") as f:
             f.write(code)
 
-        # Keep dotnet CLI state inside execution workspace to avoid profile permission issues.
-        dotnet_env = os.environ.copy()
-        dotnet_cli_home = os.path.join(work_dir, ".dotnet_cli_home")
-        nuget_packages = os.path.join(work_dir, ".nuget", "packages")
-        os.makedirs(dotnet_cli_home, exist_ok=True)
-        os.makedirs(nuget_packages, exist_ok=True)
-        dotnet_env["DOTNET_CLI_HOME"] = dotnet_cli_home
-        dotnet_env.setdefault("DOTNET_SKIP_FIRST_TIME_EXPERIENCE", "1")
-        dotnet_env.setdefault("DOTNET_CLI_TELEMETRY_OPTOUT", "1")
-        dotnet_env.setdefault("NUGET_PACKAGES", nuget_packages)
-        dotnet_build_error = ""
+        # ── Fast path: Mono mcs + mono runtime (preferred on Linux VMs) ──
+        # Try mcs first — it compiles in < 2s and avoids dotnet's slow NuGet restore.
+        if _command_available(compilers.get("mcs")):
+            exe_file = os.path.join(work_dir, "solution.exe")
+            comp = subprocess.run(
+                [compilers["mcs"], "-out:" + exe_file,
+                 "-r:System.Core",
+                 "-r:System.Numerics",
+                 src_file],
+                capture_output=True, text=True, timeout=COMPILE_TIMEOUT, cwd=work_dir
+            )
+            if comp.returncode != 0:
+                return False, "", f"Compilation Error:\n{comp.stderr or comp.stdout}", 0
 
-        # Preferred path: dotnet SDK build/run (cross-platform, LTS-first targets).
+            run_cmd = [exe_file]
+            if os.name != "nt" and _command_available(compilers.get("mono")):
+                run_cmd = [compilers["mono"], exe_file]
+            elif os.name != "nt":
+                # mono runtime missing — cannot execute .exe on Linux
+                return False, "", "Runtime Error:\nmono runtime is not installed. Cannot execute compiled C# on Linux.\nPlease ask admin to install mono-runtime.", 0
+
+            run = subprocess.run(
+                run_cmd,
+                input=stdin_input, capture_output=True, text=True,
+                timeout=RUN_TIMEOUT, cwd=work_dir
+            )
+            elapsed = int((_time.time() - start_t) * 1000)
+            if run.returncode != 0:
+                return False, run.stdout, f"Runtime Error:\n{run.stderr}", elapsed
+            return True, run.stdout, run.stderr, elapsed
+
+        # ── Fallback: dotnet SDK build (slower, needs NuGet) ──
+        dotnet_build_error = ""
         if _command_available(compilers.get("dotnet")):
+            # Keep dotnet CLI state inside execution workspace to avoid profile permission issues.
+            dotnet_env = os.environ.copy()
+            dotnet_cli_home = os.path.join(work_dir, ".dotnet_cli_home")
+            nuget_packages = os.path.join(work_dir, ".nuget", "packages")
+            os.makedirs(dotnet_cli_home, exist_ok=True)
+            os.makedirs(nuget_packages, exist_ok=True)
+            dotnet_env["DOTNET_CLI_HOME"] = dotnet_cli_home
+            dotnet_env.setdefault("DOTNET_SKIP_FIRST_TIME_EXPERIENCE", "1")
+            dotnet_env.setdefault("DOTNET_CLI_TELEMETRY_OPTOUT", "1")
+            dotnet_env.setdefault("DOTNET_NOLOGO", "1")
+            dotnet_env.setdefault("NUGET_PACKAGES", nuget_packages)
+
             project_file = os.path.join(work_dir, "AziroSolution.csproj")
-            frameworks = ["net10.0", "net8.0"]
+            frameworks = ["net8.0", "net6.0"]
             compile_error = "dotnet build failed for all supported target frameworks."
             for framework in frameworks:
                 with open(project_file, "w", encoding="utf-8") as f:
@@ -1262,13 +1299,13 @@ def _compile_and_run(language, code, stdin_input, work_dir):
                         f"    <TargetFramework>{framework}</TargetFramework>\n"
                         "    <ImplicitUsings>disable</ImplicitUsings>\n"
                         "    <Nullable>disable</Nullable>\n"
-                        "  </PropertyGroup>\n"
-                        "</Project>\n"
+                        "  </PropertyGroup>\n"                        "</Project>\n"
                     )
 
+                build_cmd = [compilers["dotnet"], "build", project_file, "-nologo", "-v", "q", "-c", "Release"]
                 comp = subprocess.run(
-                    [compilers["dotnet"], "build", project_file, "-nologo", "-v", "q", "-c", "Release"],
-                    capture_output=True, text=True, timeout=max(COMPILE_TIMEOUT * 12, 180), cwd=work_dir, env=dotnet_env
+                    build_cmd,
+                    capture_output=True, text=True, timeout=60, cwd=work_dir, env=dotnet_env
                 )
                 if comp.returncode != 0:
                     compile_error = comp.stderr or comp.stdout
@@ -1289,34 +1326,9 @@ def _compile_and_run(language, code, stdin_input, work_dir):
                     return False, run.stdout, f"Runtime Error:\n{run.stderr}", elapsed
                 return True, run.stdout, run.stderr, elapsed
 
-            # If dotnet build fails (e.g., NuGet/proxy/env constraints), continue to compiler fallbacks.
             dotnet_build_error = compile_error
 
-        # Fallback path: Mono compiler/runtime if present.
-        if _command_available(compilers.get("mcs")):
-            exe_file = os.path.join(work_dir, "solution.exe")
-            comp = subprocess.run(
-                [compilers["mcs"], "-out:" + exe_file, src_file],
-                capture_output=True, text=True, timeout=COMPILE_TIMEOUT, cwd=work_dir
-            )
-            if comp.returncode != 0:
-                return False, "", f"Compilation Error:\n{comp.stderr or comp.stdout}", 0
-
-            run_cmd = [exe_file]
-            if os.name != "nt" and _command_available(compilers.get("mono")):
-                run_cmd = [compilers["mono"], exe_file]
-
-            run = subprocess.run(
-                run_cmd,
-                input=stdin_input, capture_output=True, text=True,
-                timeout=RUN_TIMEOUT, cwd=work_dir
-            )
-            elapsed = int((_time.time() - start_t) * 1000)
-            if run.returncode != 0:
-                return False, run.stdout, f"Runtime Error:\n{run.stderr}", elapsed
-            return True, run.stdout, run.stderr, elapsed
-
-        # Final fallback: Roslyn csc (primarily Windows environments).
+        # ── Last fallback: Roslyn csc (primarily Windows) ──
         if _command_available(compilers.get("csc")):
             exe_file = os.path.join(work_dir, "solution.exe")
             comp = subprocess.run(
@@ -1350,7 +1362,7 @@ def _compile_and_run(language, code, stdin_input, work_dir):
                 0,
             )
 
-        raise FileNotFoundError("No C# compiler/runtime found (dotnet, mcs, csc).")
+        raise FileNotFoundError("No C# compiler/runtime found (mcs, dotnet, csc).")
 
     return False, "", "Unsupported language", 0
 
