@@ -172,10 +172,7 @@ def generate_report(email):
 
     # Attach AI summaries for PDF rendering.
     try:
-        candidate_data["ai_overall_summary"] = EvaluationService.generate_candidate_overall_summary(
-            email,
-            candidate_data=candidate_data,
-        )
+        candidate_data["ai_overall_summary"] = EvaluationService.generate_candidate_overall_summary(email)
     except Exception:
         candidate_data["ai_overall_summary"] = None
 

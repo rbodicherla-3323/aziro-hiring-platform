@@ -1,18 +1,18 @@
+# filepath: d:\Projects\aziro-hiring-platform\app\blueprints\auth\routes.py
 """
-Auth routes - Microsoft MSAL OAuth for @aziro.com users.
+Auth routes — Microsoft MSAL OAuth for @aziro.com users.
+Also provides local dev fallback routes.
 """
-
 import os
 import time
-
 import msal
 import requests
-from flask import flash, redirect, render_template, request, session, url_for
+from flask import render_template, redirect, url_for, session, request, flash
 
 from . import auth_bp
 from app.services.user_token_store import (
-    clear_graph_delegated_token,
     set_graph_delegated_token,
+    clear_graph_delegated_token,
 )
 
 # Azure AD Configuration
@@ -21,36 +21,10 @@ AZURE_CLIENT_SECRET = os.getenv("AZURE_CLIENT_SECRET", "")
 AZURE_TENANT_ID = os.getenv("AZURE_TENANT_ID", "common")
 AZURE_REDIRECT_URI = os.getenv("AZURE_REDIRECT_URI", "").strip()
 AUTHORITY = f"https://login.microsoftonline.com/{AZURE_TENANT_ID}"
+# Delegated send support requires Mail.Send consent for the logged-in user.
+# Keep only resource scopes for MSAL auth request; reserved OIDC scopes are
+# added by the library as needed.
 SCOPES = ["User.Read", "Mail.Send"]
-
-# Hardcoded allowlist: only these Aziro users can log in.
-ALLOWED_AZIRO_EMAILS = {
-    "rbodicherla@aziro.com",
-    "njagadeesh@aziro.com",
-    "snaik@aziro.com",
-    "sshaikh@aziro.com",
-    "smrao@aziro.com",
-    "arana@aziro.com",
-    "mnamde@aziro.com",
-    "it@aziro.com"
-}
-
-
-def _get_allowed_aziro_emails() -> set[str]:
-    """Return hardcoded normalized allowlist."""
-    return {email.strip().lower() for email in ALLOWED_AZIRO_EMAILS if email.strip()}
-
-
-def _is_allowed_aziro_email(email: str) -> bool:
-    """Allow only @aziro.com emails, optionally restricted to configured allowlist."""
-    normalized_email = str(email or "").strip().lower()
-    if not normalized_email.endswith("@aziro.com"):
-        return False
-
-    allowed_emails = _get_allowed_aziro_emails()
-    if allowed_emails and normalized_email not in allowed_emails:
-        return False
-    return True
 
 
 def _build_msal_app(cache=None):
@@ -63,7 +37,11 @@ def _build_msal_app(cache=None):
 
 
 def _get_redirect_uri() -> str:
-    """Return OAuth redirect URI."""
+    """
+    Return OAuth redirect URI.
+    Prefer explicit AZURE_REDIRECT_URI for VM/proxy deployments to avoid
+    localhost callback mismatches.
+    """
     if AZURE_REDIRECT_URI:
         return AZURE_REDIRECT_URI
     return url_for("auth.auth_callback", _external=True)
@@ -71,30 +49,44 @@ def _get_redirect_uri() -> str:
 
 @auth_bp.route("/")
 def index():
-    """Root URL - always start at login page."""
+    """Root URL — redirect to dashboard if logged in, else login."""
+    if session.get("user"):
+        return redirect(url_for("dashboard.dashboard"))
     return redirect(url_for("auth.login"))
 
 
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     """Login page."""
-    # Always require explicit Microsoft sign-in at app entry.
-    if request.method == "GET":
-        if session.get("user") or session.get("oauth"):
-            user = session.get("user", {})
-            clear_graph_delegated_token(user.get("email", ""))
-            session.clear()
-        return render_template("login.html", error=None)
+    if session.get("user"):
+        return redirect(url_for("dashboard.dashboard"))
 
-    # POST local login is disabled.
-    return render_template("login.html", error="Use 'Continue with Microsoft' to sign in.")
+    error = None
+    if request.method == "POST":
+        # Simple email/password login for dev mode
+        username = request.form.get("username", "").strip()
+        password = request.form.get("password", "").strip()
+
+        if not username.endswith("@aziro.com"):
+            error = "Only @aziro.com email addresses are allowed."
+        elif password == "aziro123":  # Dev mode password
+            session["user"] = {
+                "name": username.split("@")[0].title(),
+                "email": username,
+                "authenticated": True,
+            }
+            return redirect(url_for("dashboard.dashboard"))
+        else:
+            error = "Invalid credentials."
+
+    return render_template("login.html", error=error)
 
 
 @auth_bp.route("/login/microsoft")
 def microsoft_login():
     """Initiate Microsoft OAuth2 flow."""
     if not AZURE_CLIENT_ID or AZURE_CLIENT_ID == "your-azure-client-id":
-        flash("Microsoft login is not configured.", "warning")
+        flash("Microsoft login is not configured. Use email/password login.", "warning")
         return redirect(url_for("auth.login"))
 
     try:
@@ -118,10 +110,10 @@ def microsoft_login():
 @auth_bp.route("/auth/callback")
 @auth_bp.route("/login/azure/callback")
 def auth_callback():
-    """Handle Microsoft OAuth2 callback (legacy and Azure-style paths)."""
+    """Handle Microsoft OAuth2 callback (supports legacy and Azure-style paths)."""
     code = request.args.get("code")
     if not code:
-        flash("Authentication failed - no authorization code received.", "danger")
+        flash("Authentication failed — no authorization code received.", "danger")
         return redirect(url_for("auth.login"))
 
     try:
@@ -145,6 +137,7 @@ def auth_callback():
         flash(f"Authentication failed: {result.get('error_description', result['error'])}", "danger")
         return redirect(url_for("auth.login"))
 
+    # Get user identity from ID token claims (preferred), fallback to Graph /me.
     user_info = result.get("id_token_claims") or {}
     if not isinstance(user_info, dict):
         user_info = {}
@@ -180,13 +173,15 @@ def auth_callback():
                 if not name:
                     name = str(me.get("displayName") or "").strip()
         except Exception:
+            # Keep existing values; explicit validation below handles empty email.
             pass
 
     if not name:
         name = email.split("@")[0].title() if email else "User"
 
-    if not _is_allowed_aziro_email(email):
-        flash("Access denied. Only approved @aziro.com accounts are allowed.", "danger")
+    # Restrict to @aziro.com emails
+    if not email.endswith("@aziro.com"):
+        flash("Access denied. Only @aziro.com accounts are allowed.", "danger")
         return redirect(url_for("auth.login"))
 
     session["user"] = {
@@ -222,3 +217,4 @@ def logout():
     clear_graph_delegated_token(user.get("email", ""))
     session.clear()
     return redirect(url_for("auth.login"))
+

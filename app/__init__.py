@@ -1,11 +1,8 @@
 import os
-from pathlib import Path
 from flask import Flask
 from dotenv import load_dotenv
 
-# Always load project-level .env regardless of launch working directory.
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-load_dotenv(PROJECT_ROOT / ".env")
+load_dotenv()
 
 from .extensions import db, migrate
 from .blueprints.dashboard import dashboard_bp
@@ -30,9 +27,6 @@ def create_app():
     )
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SESSION_PERMANENT"] = True
-    app.config["PROCTORING_ENABLED"] = (
-        os.getenv("PROCTORING_ENABLED", "").strip().lower() in {"1", "true", "yes", "on"}
-    )
 
     # Initialize extensions
     db.init_app(app)
@@ -67,17 +61,29 @@ def create_app():
     from .config import Config
     app.jinja_env.globals["ASSET_VERSION"] = Config.ASSET_VERSION
 
-    @app.before_request
-    def clear_stale_dev_bypass_session():
-        from flask import session
-        user = session.get("user")
-        if not isinstance(user, dict):
-            return
-        if (
-            user.get("email") == "dev@aziro.com"
-            and user.get("name") == "Dev User"
-            and "oauth" not in session
-        ):
-            session.clear()
+    # Dev mode: Bypass login for local testing
+    # Activates when AUTH_DISABLED=true  **or**  when Azure AD creds are
+    # still the placeholder values (i.e. .env was never customised / is missing).
+    auth_disabled_env = os.getenv("AUTH_DISABLED", "").lower() == "true"
+    azure_client_id = os.getenv("AZURE_CLIENT_ID", "")
+    azure_unconfigured = (
+        not azure_client_id
+        or azure_client_id == "your-azure-client-id"
+    )
+    dev_bypass = auth_disabled_env or azure_unconfigured
+
+    if dev_bypass:
+        @app.before_request
+        def auto_login_for_dev():
+            from flask import session, request as req
+            # Skip bypass for static files
+            if req.path.startswith("/static"):
+                return
+            if not session.get("user"):
+                session["user"] = {
+                    "name": "Dev User",
+                    "email": "dev@aziro.com",
+                    "authenticated": True
+                }
 
     return app

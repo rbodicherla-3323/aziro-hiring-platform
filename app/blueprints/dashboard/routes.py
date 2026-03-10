@@ -2,7 +2,6 @@
 """
 Dashboard & Test Creation routes.
 """
-import os
 import uuid
 from datetime import datetime, timezone, timedelta
 
@@ -48,18 +47,11 @@ def _build_test_url(endpoint, **values):
     Build an absolute test URL that respects reverse-proxy headers.
     This prevents generating http:// links when the app is externally served over HTTPS.
     """
-    path = url_for(endpoint, **values)
-
-    # Optional force-base URL for centralized execution environments.
-    # Example: APP_PUBLIC_BASE_URL=https://azirohire.aziro.com
-    forced_base = (os.getenv("APP_PUBLIC_BASE_URL") or "").strip().rstrip("/")
-    if forced_base:
-        return f"{forced_base}{path}"
-
     forwarded_proto = (request.headers.get("X-Forwarded-Proto") or "").split(",")[0].strip()
     forwarded_host = (request.headers.get("X-Forwarded-Host") or "").split(",")[0].strip()
     scheme = forwarded_proto or request.scheme
     host = forwarded_host or request.host
+    path = url_for(endpoint, **values)
     return f"{scheme}://{host}{path}"
 
 
@@ -242,20 +234,6 @@ def create_test():
         coding_language = role_config.get("coding_language", "java")
         allow_domain = role_config.get("allow_domain", False)
 
-        # Hard gate: only generate coding links if server runtime is available.
-        if coding_rounds:
-            from app.blueprints.coding.routes import get_language_runtime_status
-
-            runtime_ok, runtime_requirement = get_language_runtime_status(coding_language)
-            if not runtime_ok:
-                flash(
-                    f"Coding runtime unavailable on server for {coding_language.upper()}. "
-                    f"Required: {runtime_requirement}. "
-                    f"Candidate '{name}' was skipped to prevent runtime failures.",
-                    "danger",
-                )
-                continue
-
         tests = {}
 
         # Generate MCQ round links
@@ -353,4 +331,3 @@ def create_test():
     flash("Test links generated successfully!", "success")
     flash("Emails will be sent only when 'Send Emails to Selected' is clicked.", "info")
     return redirect(url_for("tests.generated_tests"))
- 

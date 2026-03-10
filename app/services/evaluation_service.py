@@ -1,15 +1,11 @@
 from app.services.evaluation_store import EVALUATION_STORE
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
 from app.services.coding_submission_store import get_latest_coding_submission
-from app.services.generated_tests_store import GENERATED_TESTS
 from app.services.ai_generator import generate_evaluation_summary, generate_coding_round_summary
 from app.services.mcq_runtime_store import get_mcq_session_data, mcq_session_key
-from app.utils.role_round_mapping import ROLE_ROUND_MAPPING
-from app.utils.round_display_mapping import ROUND_DISPLAY_MAPPING
 from flask import session
 import logging
 import time
-from datetime import datetime
 
 log = logging.getLogger(__name__)
 
@@ -32,7 +28,14 @@ ROUND_PASS_PERCENTAGE = {
 }
 
 DEFAULT_PASS_PERCENTAGE = 70
-SUMMARY_ROUNDS = ("L1", "L2", "L3", "L4", "L5", "L6")
+SUMMARY_ROUNDS = ("L1", "L2", "L3", "L4", "L5")
+SUMMARY_ROUND_LABELS = {
+    "L1": "Aptitude",
+    "L2": "Technical Theory",
+    "L3": "Technical Practical",
+    "L4": "Coding Challenge",
+    "L5": "Soft Skills",
+}
 
 
 class EvaluationService:
@@ -65,119 +68,40 @@ class EvaluationService:
         return details
 
     @staticmethod
-    def _round_sort_key(round_key: str) -> tuple[int, str]:
-        value = str(round_key or "").upper()
-        if value.startswith("L") and value[1:].isdigit():
-            return int(value[1:]), value
-        return 999, value
-
-    @staticmethod
-    def _created_at_sort_value(value) -> float:
-        if isinstance(value, datetime):
-            return value.timestamp()
-        if isinstance(value, str):
-            try:
-                return datetime.fromisoformat(value.replace("Z", "+00:00")).timestamp()
-            except Exception:
-                return 0.0
-        return 0.0
-
-    @staticmethod
-    def _resolve_generated_test_entry(candidate_data: dict) -> dict | None:
-        email = str((candidate_data or {}).get("email", "")).strip().lower()
-        if not email:
-            return None
-
-        candidates = [
-            entry for entry in GENERATED_TESTS
-            if str(entry.get("email", "")).strip().lower() == email
-        ]
-        if not candidates:
-            return None
-
-        batch_id = str((candidate_data or {}).get("batch_id", "")).strip()
-        role_key = str((candidate_data or {}).get("role_key", "")).strip()
-
-        if batch_id:
-            exact_batch = [entry for entry in candidates if str(entry.get("batch_id", "")).strip() == batch_id]
-            if exact_batch:
-                return max(exact_batch, key=lambda e: EvaluationService._created_at_sort_value(e.get("created_at")))
-
-        if role_key:
-            exact_role = [entry for entry in candidates if str(entry.get("role_key", "")).strip() == role_key]
-            if exact_role:
-                return max(exact_role, key=lambda e: EvaluationService._created_at_sort_value(e.get("created_at")))
-
-        return max(candidates, key=lambda e: EvaluationService._created_at_sort_value(e.get("created_at")))
-
-    @staticmethod
-    def _resolve_round_blueprint(candidate_data: dict) -> tuple[list[str], dict, dict]:
-        """Resolve canonical round order/labels from generated tests, then role config, then existing rounds."""
-        ordered_keys = []
-        round_labels = {}
-        round_totals = {}
-        rounds = (candidate_data or {}).get("rounds", {}) or {}
-
-        generated = EvaluationService._resolve_generated_test_entry(candidate_data)
-        if generated:
-            tests = generated.get("tests", {}) or {}
-            for rk in SUMMARY_ROUNDS:
-                if rk not in tests:
-                    continue
-                ordered_keys.append(rk)
-                test_info = tests.get(rk, {}) or {}
-                round_labels[rk] = str(test_info.get("label") or rk)
-                round_totals[rk] = 1 if str(test_info.get("type", "")).lower() == "coding" else 15
-
-        role_key = str((candidate_data or {}).get("role_key", "")).strip()
-        if not ordered_keys and role_key:
-            role_cfg = ROLE_ROUND_MAPPING.get(role_key, {}) or {}
-            display_map = ROUND_DISPLAY_MAPPING.get(role_key, {}) or {}
-
-            for rk in list(role_cfg.get("rounds", [])) + list(role_cfg.get("coding_rounds", [])):
-                if rk in ordered_keys:
-                    continue
-                ordered_keys.append(rk)
-                round_labels[rk] = str(display_map.get(rk) or rk)
-                round_totals[rk] = 1 if rk in role_cfg.get("coding_rounds", []) else 15
-
-        for rk in sorted(rounds.keys(), key=EvaluationService._round_sort_key):
-            if rk in ordered_keys:
-                continue
-            ordered_keys.append(rk)
-            existing = rounds.get(rk, {}) or {}
-            round_labels[rk] = str(existing.get("round_label") or rk)
-            round_totals[rk] = 1 if rk == "L4" else 15
-
-        return ordered_keys, round_labels, round_totals
-
-    @staticmethod
     def _prepare_l1_l4_summary_payload(candidate_data: dict) -> dict | None:
-        """Build summary payload using role-accurate round labels and ordering."""
+        """Build summary payload including L1-L5 rounds (attempted or not attempted)."""
         if not candidate_data:
             return None
 
         rounds = candidate_data.get("rounds", {}) or {}
-        ordered_rounds, round_labels, round_totals = EvaluationService._resolve_round_blueprint(candidate_data)
-        if not ordered_rounds:
-            ordered_rounds = sorted(rounds.keys(), key=EvaluationService._round_sort_key)
 
         rounds_l1_l4 = {}
-        for rk in ordered_rounds:
-            existing = rounds.get(rk) or {}
-            default_total = round_totals.get(rk, 1 if rk == "L4" else 15)
-
-            rounds_l1_l4[rk] = {
-                "round_label": existing.get("round_label") or round_labels.get(rk) or rk,
-                "correct": existing.get("correct", 0),
-                "total": existing.get("total", default_total),
-                "attempted": existing.get("attempted", 0),
-                "percentage": existing.get("percentage", 0),
-                "pass_threshold": existing.get("pass_threshold", EvaluationService.get_pass_threshold(rk)),
-                "status": existing.get("status", "Not Attempted"),
-                "time_taken_seconds": existing.get("time_taken_seconds", 0),
-                "submission_details": existing.get("submission_details", {}),
-            }
+        for rk in SUMMARY_ROUNDS:
+            existing = rounds.get(rk)
+            if existing:
+                rounds_l1_l4[rk] = {
+                    "round_label": existing.get("round_label", SUMMARY_ROUND_LABELS[rk]),
+                    "correct": existing.get("correct", 0),
+                    "total": existing.get("total", 0),
+                    "attempted": existing.get("attempted", 0),
+                    "percentage": existing.get("percentage", 0),
+                    "pass_threshold": existing.get("pass_threshold", EvaluationService.get_pass_threshold(rk)),
+                    "status": existing.get("status", "Not Attempted"),
+                    "time_taken_seconds": existing.get("time_taken_seconds", 0),
+                    "submission_details": existing.get("submission_details", {}),
+                }
+            else:
+                rounds_l1_l4[rk] = {
+                    "round_label": SUMMARY_ROUND_LABELS[rk],
+                    "correct": 0,
+                    "total": 0,
+                    "attempted": 0,
+                    "percentage": 0,
+                    "pass_threshold": EvaluationService.get_pass_threshold(rk),
+                    "status": "Not Attempted",
+                    "time_taken_seconds": 0,
+                    "submission_details": {},
+                }
 
         attempted_only = [
             r for r in rounds_l1_l4.values()
@@ -193,7 +117,7 @@ class EvaluationService:
             overall_verdict = "Pending"
         elif failed_rounds > 0:
             overall_verdict = "Rejected"
-        elif attempted_rounds < len(rounds_l1_l4):
+        elif attempted_rounds < len(SUMMARY_ROUNDS):
             overall_verdict = "In Progress"
         else:
             overall_verdict = "Selected"
@@ -203,11 +127,10 @@ class EvaluationService:
             "email": candidate_data.get("email", ""),
             "role": candidate_data.get("role", ""),
             "batch_id": candidate_data.get("batch_id", ""),
-            "role_key": candidate_data.get("role_key", ""),
             "test_session_id": candidate_data.get("test_session_id"),
             "rounds": rounds_l1_l4,
             "summary": {
-                "total_rounds": len(rounds_l1_l4),
+                "total_rounds": len(SUMMARY_ROUNDS),
                 "attempted_rounds": attempted_rounds,
                 "passed_rounds": passed_rounds,
                 "failed_rounds": failed_rounds,
@@ -256,22 +179,10 @@ class EvaluationService:
         return candidate_data
 
     @staticmethod
-    def generate_candidate_overall_summary(candidate_email, candidate_data=None):
+    def generate_candidate_overall_summary(candidate_email):
         """
-        Generate an AI-based summary for candidate rounds using role-accurate labels/order.
+        Generate an AI-based summary for L1-L5 rounds (attempted or not attempted).
         """
-        if isinstance(candidate_email, str):
-            candidate_email = candidate_email.strip()
-
-        # Prefer caller-supplied candidate context so summary aligns with the selected report row.
-        if isinstance(candidate_data, dict) and str(candidate_data.get("email", "")).strip() == candidate_email:
-            try:
-                candidate_data = EvaluationService._enrich_l4_with_coding_submission(candidate_data)
-                summary_payload = EvaluationService._prepare_l1_l4_summary_payload(candidate_data)
-                return generate_evaluation_summary(summary_payload) if summary_payload else None
-            except Exception:
-                pass
-
         # Prefer persisted DB report data when available.
         try:
             from app.services.db_service import get_candidate_report_data
