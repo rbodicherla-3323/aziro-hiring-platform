@@ -525,25 +525,28 @@
                 const result = await response.json();
                 if (!response.ok || !result.success) {
                     const message = (result && result.error) ? result.error : 'Failed to send selected emails.';
-                    console.error('Failed to send test links:', message, result);
-                    if (typeof showToast === 'function') showToast('Failed: Failed to send test links', 'danger');
+                    if (typeof showToast === 'function') showToast(message, 'danger');
                     return;
                 }
 
                 if (result.failed_count > 0) {
-                    const failureReasons = (result.failures || [])
-                        .map(item => `${item.email || 'unknown'}: ${item.reason || 'unknown error'}`)
-                        .join(' | ');
-                    console.error('Failed to send test links:', failureReasons, result.failures);
-                    if (typeof showToast === 'function') showToast('Failed: Failed to send test links', 'danger');
+                    const firstFailure = (result.failures && result.failures.length)
+                        ? (result.failures[0].reason || '')
+                        : '';
+                    const detail = firstFailure ? ` ${firstFailure}` : '';
+                    if (typeof showToast === 'function') {
+                        showToast(
+                            `Sent ${result.sent_count}/${result.requested_count}. Failed: ${result.failed_count}.${detail}`,
+                            'warning'
+                        );
+                    }
                 } else {
                     if (typeof showToast === 'function') {
-                        showToast('Success: Test links sent successfully', 'success');
+                        showToast(`Emails sent successfully to ${result.sent_count} candidate(s).`, 'success');
                     }
                 }
             } catch (error) {
-                console.error('Failed to send test links:', error);
-                if (typeof showToast === 'function') showToast('Failed: Failed to send test links', 'danger');
+                if (typeof showToast === 'function') showToast('Failed to send selected emails.', 'danger');
             } finally {
                 bulkEmailBtn.disabled = false;
                 bulkEmailBtn.innerHTML = originalHtml;
