@@ -6,9 +6,64 @@ import logging
 from datetime import datetime, timezone
 
 from app.extensions import db
-from app.models import Candidate, TestSession, RoundResult, Report
+from app.models import Candidate, TestSession, RoundResult, Report, ProctoringScreenshot
 
 log = logging.getLogger(__name__)
+
+
+def save_proctoring_screenshot(
+    *,
+    session_uuid: str,
+    candidate_email: str,
+    candidate_name: str,
+    round_key: str,
+    round_label: str,
+    source: str,
+    event_type: str,
+    mime_type: str,
+    image_bytes: bytes,
+    image_size: int,
+    captured_at=None,
+    screenshot_path: str = "",
+):
+    if not image_bytes:
+        return None
+
+    record = ProctoringScreenshot(
+        session_uuid=session_uuid or "",
+        candidate_email=(candidate_email or "").strip().lower(),
+        candidate_name=candidate_name or "",
+        round_key=round_key or "",
+        round_label=round_label or "",
+        source=source or "mcq",
+        event_type=event_type or "screenshot",
+        mime_type=mime_type or "image/png",
+        image_bytes=image_bytes,
+        image_size=int(image_size or len(image_bytes)),
+        screenshot_path=screenshot_path or "",
+    )
+    if captured_at is not None:
+        record.captured_at = captured_at
+
+    db.session.add(record)
+    db.session.commit()
+    return record
+
+
+def get_proctoring_screenshots_by_email(email: str, limit: int = 200):
+    if not email:
+        return []
+    q = (
+        ProctoringScreenshot.query
+        .filter_by(candidate_email=email.strip().lower())
+        .order_by(ProctoringScreenshot.captured_at.desc())
+        .limit(limit)
+    )
+    return q.all()
+
+
+def get_proctoring_screenshot_by_id(screenshot_id: int):
+    return ProctoringScreenshot.query.get(screenshot_id)
 
 
 def get_or_create_candidate(name: str, email: str) -> Candidate:

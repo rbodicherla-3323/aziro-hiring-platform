@@ -3,6 +3,7 @@
 Reports page — today's session candidates + historical DB search.
 """
 import os
+from io import BytesIO
 from flask import Blueprint, render_template, request, session, jsonify, send_file, abort
 
 from app.utils.auth_decorator import login_required
@@ -205,6 +206,51 @@ def generate_report(email):
         })
     except Exception as e:
         return jsonify({"success": False, "error": f"Failed to generate report: {str(e)}"}), 500
+
+
+@reports_bp.route("/reports/proctoring/screenshots")
+@login_required
+def list_proctoring_screenshots():
+    email = request.args.get("email", "").strip()
+    if not email:
+        return jsonify({"screenshots": [], "error": "email required"}), 400
+
+    try:
+        limit_raw = request.args.get("limit", "200")
+        limit = max(1, min(int(limit_raw), 500))
+    except (TypeError, ValueError):
+        limit = 200
+
+    records = db_service.get_proctoring_screenshots_by_email(email, limit=limit)
+    screenshots = []
+    for rec in records:
+        captured = rec.captured_at.isoformat() if rec.captured_at else ""
+        screenshots.append({
+            "id": rec.id,
+            "captured_at": captured,
+            "round_key": rec.round_key,
+            "round_label": rec.round_label,
+            "source": rec.source,
+            "event_type": rec.event_type,
+        })
+
+    return jsonify({"screenshots": screenshots})
+
+
+@reports_bp.route("/reports/proctoring/screenshot/<int:screenshot_id>")
+@login_required
+def get_proctoring_screenshot(screenshot_id):
+    rec = db_service.get_proctoring_screenshot_by_id(screenshot_id)
+    if not rec or not rec.image_bytes:
+        abort(404, description="Screenshot not found")
+
+    filename = f"proctoring_{rec.id}.png"
+    return send_file(
+        BytesIO(rec.image_bytes),
+        mimetype=rec.mime_type or "image/png",
+        download_name=filename,
+        as_attachment=False,
+    )
 
 
 @reports_bp.route("/reports/view/<path:filename>")

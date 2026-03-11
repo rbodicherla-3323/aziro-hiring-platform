@@ -30,7 +30,91 @@
     .icon-btn.btn-dl:hover { background:#dcfce7; }
     .icon-btn.btn-regen { background:#fffbeb; color:#d97706; border-color:#fde68a; }
     .icon-btn.btn-regen:hover { background:#fef3c7; }
+    .icon-btn.btn-gallery { background:#eef2ff; color:#4f46e5; border-color:#c7d2fe; }
+    .icon-btn.btn-gallery:hover { background:#e0e7ff; }
     .icon-btn.btn-loading { background:var(--az-slate-100); color:var(--az-slate-400); pointer-events:none; }
+
+    .proctoring-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.55);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        padding: 24px;
+    }
+    .proctoring-modal.active { display: flex; }
+    .proctoring-modal-content {
+        background: #fff;
+        border-radius: 14px;
+        width: min(960px, 95vw);
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
+    }
+    .proctoring-modal-header {
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--az-border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+    .proctoring-modal-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--az-slate-900);
+    }
+    .proctoring-modal-close {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        border: 1px solid var(--az-border);
+        background: var(--az-slate-50);
+        color: var(--az-slate-600);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+    .proctoring-modal-body {
+        padding: 16px 20px 22px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .proctoring-gallery-meta {
+        font-size: 0.8rem;
+        color: var(--az-slate-500);
+    }
+    .proctoring-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+        overflow: auto;
+        padding-right: 4px;
+    }
+    .proctoring-shot {
+        border: 1px solid var(--az-border);
+        border-radius: 10px;
+        padding: 6px;
+        background: var(--az-slate-50);
+    }
+    .proctoring-shot img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        display: block;
+    }
+    .proctoring-shot-meta {
+        margin-top: 6px;
+        font-size: 0.7rem;
+        color: var(--az-slate-500);
+        line-height: 1.2;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -69,6 +153,7 @@
                     <div class="d-flex align-items-center gap-3">
                         <div class="report-actions" id="actions-{{ loop.index }}">
                             <button class="icon-btn btn-gen" onclick="generateReport('{{ cand.email }}', 'actions-{{ loop.index }}')" title="Generate Report"><i class="fas fa-file-pdf"></i></button>
+                            <button class="icon-btn btn-gallery" onclick="openProctoringGallery('{{ cand.email }}')" title="View Proctoring Screenshots"><i class="fas fa-images"></i></button>
                         </div>
                     </div>
                 </div>
@@ -83,12 +168,29 @@
         {% endif %}
     </div>
 </div>
+
+<div class="proctoring-modal" id="proctoringModal" aria-hidden="true">
+    <div class="proctoring-modal-content" role="dialog" aria-modal="true" aria-label="Proctoring Screenshots">
+        <div class="proctoring-modal-header">
+            <div class="proctoring-modal-title" id="proctoringModalTitle">Proctoring Screenshots</div>
+            <button class="proctoring-modal-close" type="button" onclick="closeProctoringGallery()" title="Close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="proctoring-modal-body">
+            <div class="proctoring-gallery-meta" id="proctoringGalleryMeta">Loading screenshots...</div>
+            <div class="proctoring-gallery" id="proctoringGallery"></div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 {% block scripts %}
 <script>
 const searchInput = document.getElementById('searchInput');
 const searchResults = document.getElementById('searchResults');
 const searchResultsList = document.getElementById('searchResultsList');
+const proctoringModal = document.getElementById('proctoringModal');
+const proctoringGallery = document.getElementById('proctoringGallery');
+const proctoringGalleryMeta = document.getElementById('proctoringGalleryMeta');
+const proctoringModalTitle = document.getElementById('proctoringModalTitle');
 document.getElementById('searchBtn').addEventListener('click', searchCandidates);
 searchInput.addEventListener('keyup', function(e) { if (e.key === 'Enter') searchCandidates(); });
 document.getElementById('clearSearchBtn').addEventListener('click', function() { searchInput.value = ''; searchResults.classList.remove('active'); searchResultsList.innerHTML = ''; });
@@ -111,6 +213,7 @@ function searchCandidates() {
                        + '<div style="font-size:0.78rem;color:var(--az-slate-500);">' + c.email + '</div></div>'
                        + '<div class="report-actions" id="' + aid + '">'
                        + '<button class="icon-btn btn-gen" onclick="generateReport(\'' + c.email + '\',\'' + aid + '\')" title="Generate Report"><i class="fas fa-file-pdf"></i></button>'
+                       + '<button class="icon-btn btn-gallery" onclick="openProctoringGallery(\'' + c.email + '\')" title="View Proctoring Screenshots"><i class="fas fa-images"></i></button>'
                        + '</div></div>';
                 });
                 searchResultsList.innerHTML = h;
@@ -139,6 +242,85 @@ function generateReport(email, containerId) {
             c.innerHTML = '<span class="text-danger" style="font-size:0.75rem;"><i class="fas fa-exclamation-circle"></i> Error</span>'
                 + ' <button class="icon-btn btn-regen" onclick="generateReport(\'' + email + '\',\'' + containerId + '\')"><i class="fas fa-redo"></i></button>';
         });
+}
+
+function formatGalleryTimestamp(ts) {
+    if (!ts) return '';
+    try {
+        const date = new Date(ts);
+        if (Number.isNaN(date.getTime())) return ts;
+        return date.toLocaleString();
+    } catch (_) {
+        return ts;
+    }
+}
+
+function openProctoringGallery(email) {
+    if (!email) return;
+    if (proctoringModal) {
+        proctoringModal.classList.add('active');
+        proctoringModal.setAttribute('aria-hidden', 'false');
+    }
+    if (proctoringModalTitle) {
+        proctoringModalTitle.textContent = 'Proctoring Screenshots • ' + email;
+    }
+    if (proctoringGalleryMeta) {
+        proctoringGalleryMeta.textContent = 'Loading screenshots...';
+    }
+    if (proctoringGallery) {
+        proctoringGallery.innerHTML = '';
+    }
+
+    fetch('/reports/proctoring/screenshots?email=' + encodeURIComponent(email))
+        .then(r => r.json())
+        .then(data => {
+            const items = (data && data.screenshots) ? data.screenshots : [];
+            if (!items.length) {
+                if (proctoringGalleryMeta) proctoringGalleryMeta.textContent = 'No proctoring screenshots found.';
+                return;
+            }
+            if (proctoringGalleryMeta) {
+                proctoringGalleryMeta.textContent = items.length + ' screenshot(s) captured';
+            }
+            let html = '';
+            items.forEach(item => {
+                const meta = [];
+                if (item.round_label) meta.push(item.round_label);
+                if (item.source) meta.push(item.source.toUpperCase());
+                if (item.captured_at) meta.push(formatGalleryTimestamp(item.captured_at));
+                html += '<div class="proctoring-shot">'
+                    + '<img src="/reports/proctoring/screenshot/' + item.id + '" loading="lazy" alt="Proctoring screenshot">'
+                    + '<div class="proctoring-shot-meta">' + meta.join(' • ') + '</div>'
+                    + '</div>';
+            });
+            if (proctoringGallery) {
+                proctoringGallery.innerHTML = html;
+            }
+        })
+        .catch(() => {
+            if (proctoringGalleryMeta) {
+                proctoringGalleryMeta.textContent = 'Failed to load screenshots. Please try again.';
+            }
+        });
+}
+
+function closeProctoringGallery() {
+    if (!proctoringModal) return;
+    proctoringModal.classList.remove('active');
+    proctoringModal.setAttribute('aria-hidden', 'true');
+}
+
+if (proctoringModal) {
+    proctoringModal.addEventListener('click', function(e) {
+        if (e.target === proctoringModal) {
+            closeProctoringGallery();
+        }
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && proctoringModal.classList.contains('active')) {
+            closeProctoringGallery();
+        }
+    });
 }
 </script>
 {% endblock %}

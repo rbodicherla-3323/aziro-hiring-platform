@@ -21,6 +21,7 @@ from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 from app.services.coding_submission_store import save_coding_submission
 from app.services.evaluation_store import EVALUATION_STORE
 from app.services.evaluation_service import EvaluationService
+from app.services import db_service
 from .services import CodingSessionService
 
 # -------------------------------------------------
@@ -39,6 +40,15 @@ MAX_WEBCAM_CHUNK_BYTES = 5 * 1024 * 1024
 
 def _utc_now_iso():
     return datetime.now(timezone.utc).isoformat()
+
+
+def _parse_iso_ts(ts):
+    if isinstance(ts, str) and ts:
+        try:
+            return datetime.fromisoformat(ts.replace("Z", "+00:00"))
+        except ValueError:
+            return None
+    return None
 
 
 def _extract_session_id_from_context(payload):
@@ -2330,6 +2340,8 @@ def proctoring_screenshot():
     ts = payload.get("ts") or _utc_now_iso()
 
     screenshot_path = ""
+    image_bytes = b""
+    mime_type = "image/png"
 
     try:
         if image_data.startswith("data:image/") and "," in image_data:
@@ -2373,6 +2385,28 @@ def proctoring_screenshot():
         ts=ts,
         screenshot_path=screenshot_path,
     )
+
+    # Persist screenshot in DB for reports gallery (best-effort).
+    if image_bytes and not details.get("screenshot_rejected"):
+        try:
+            session_meta = CODING_SESSION_REGISTRY.get(session_id, {})
+            captured_at = _parse_iso_ts(ts)
+            db_service.save_proctoring_screenshot(
+                session_uuid=session_id,
+                candidate_email=session_meta.get("email", ""),
+                candidate_name=session_meta.get("candidate_name", ""),
+                round_key=session_meta.get("round_key", ""),
+                round_label=session_meta.get("round_label", ""),
+                source="coding",
+                event_type=event_type,
+                mime_type=mime_type,
+                image_bytes=image_bytes,
+                image_size=len(image_bytes),
+                captured_at=captured_at,
+                screenshot_path=screenshot_path,
+            )
+        except Exception:
+            pass
 
     return jsonify({
         "status": "logged",

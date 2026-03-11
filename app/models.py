@@ -71,3 +71,25 @@ class Report(db.Model):
 
     def __repr__(self):
         return f"<Report {self.filename}>"
+
+
+class ProctoringScreenshot(db.Model):
+    __tablename__ = "proctoring_screenshots"
+
+    id = db.Column(db.Integer, primary_key=True)
+    session_uuid = db.Column(db.String(100), nullable=True, index=True, default="")
+    candidate_email = db.Column(db.String(200), nullable=True, index=True, default="")
+    candidate_name = db.Column(db.String(200), nullable=True, default="")
+    round_key = db.Column(db.String(20), nullable=True, default="")
+    round_label = db.Column(db.String(200), nullable=True, default="")
+    source = db.Column(db.String(20), nullable=False, default="mcq")
+    event_type = db.Column(db.String(50), nullable=True, default="screenshot")
+    mime_type = db.Column(db.String(50), nullable=False, default="image/png")
+    image_bytes = db.Column(db.LargeBinary, nullable=False)
+    image_size = db.Column(db.Integer, nullable=False, default=0)
+    screenshot_path = db.Column(db.String(500), nullable=True, default="")
+    captured_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), index=True)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+
+    def __repr__(self):
+        return f"<ProctoringScreenshot {self.id} {self.candidate_email}>"
