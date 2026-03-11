@@ -190,7 +190,11 @@ def start_test(session_id):
     stale_keys = [k for k in list(session.keys())
                   if k.startswith(("mcq_", "coding_"))]
     for k in stale_keys:
-        session.pop(k)
+        if k.startswith("coding_"):
+            stale_session_id = k.replace("coding_", "", 1)
+            if stale_session_id:
+                CodingSessionService.clear_session(stale_session_id)
+        session.pop(k, None)
 
     language = session_meta.get("language", "java")
 
@@ -225,6 +229,7 @@ def start_test(session_id):
             "difficulty": question.get("difficulty", "MEDIUM") if question else "MEDIUM",
         },
         candidate_name=session_meta["candidate_name"],
+        proctoring_enabled=_proctoring_enabled(),
         body_class="mcq-start-page",
     )
 
@@ -278,6 +283,7 @@ def editor(session_id):
         public_tests=formatted_tests,
         remaining_seconds=remaining,
         candidate_name=session_meta["candidate_name"],
+        proctoring_enabled=_proctoring_enabled(),
         submit_url=url_for("coding.submit", session_id=session_id),
         body_class="coding-editor-page",
     )
@@ -1830,7 +1836,6 @@ def run_code(session_id):
                     "time_ms": total_time,
                     "status": "PASS" if total and total_passed == total else "FAIL",
                 }
-                session.modified = True
 
             return jsonify({
                 "status": "executed" if total_passed == total else "partial",
@@ -1973,7 +1978,6 @@ def run_code(session_id):
                 "time_ms": total_time,
                 "status": "PASS" if total and total_passed == total else "FAIL",
             }
-            session.modified = True
 
         return jsonify({
             "status": "executed" if total_passed == total else "partial",
@@ -2245,8 +2249,8 @@ def submit(session_id):
 
         Thread(target=_run_async_eval, daemon=True).start()
 
-        # Free cookie space immediately after submission
-        session.pop(f"coding_{session_id}", None)
+        # Free runtime/cookie space immediately after submission
+        CodingSessionService.clear_session(session_id)
 
         completed_url = url_for("coding.completed", session_id=session_id)
         if _is_ajax_request():
@@ -2258,6 +2262,7 @@ def submit(session_id):
         "coding/submit.html",
         session_id=session_id,
         candidate_name=session_meta.get("candidate_name", "Candidate"),
+        proctoring_enabled=_proctoring_enabled(),
         body_class="coding-start-page",
     )
 
@@ -2270,6 +2275,7 @@ def completed(session_id):
     return render_template(
         "coding/completed.html",
         candidate_name=CODING_SESSION_REGISTRY.get(session_id, {}).get("candidate_name", "Candidate"),
+        proctoring_enabled=_proctoring_enabled(),
         body_class="coding-start-page",
     )
 
