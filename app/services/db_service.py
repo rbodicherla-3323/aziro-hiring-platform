@@ -195,8 +195,20 @@ def search_candidates_with_reports(query: str, role_filter: str = ""):
 
     base = (
         db.session.query(Candidate, TestSession)
-        .join(Report, Report.candidate_email == Candidate.email)
         .outerjoin(TestSession, TestSession.candidate_id == Candidate.id)
+        .join(
+            Report,
+            db.or_(
+                db.and_(
+                    Report.candidate_email != "",
+                    db.func.lower(Report.candidate_email) == db.func.lower(Candidate.email),
+                ),
+                db.and_(
+                    Report.test_session_id.isnot(None),
+                    Report.test_session_id == TestSession.id,
+                ),
+            ),
+        )
     )
 
     filters = []
@@ -345,6 +357,7 @@ def save_report(identifier, filename: str, generated_by: str = "") -> Report:
         if ts:
             cand = Candidate.query.get(ts.candidate_id)
             candidate_email = cand.email if cand else ""
+        candidate_email = (candidate_email or "").strip().lower()
         report = Report(
             test_session_id=identifier,
             candidate_email=candidate_email,
@@ -353,7 +366,7 @@ def save_report(identifier, filename: str, generated_by: str = "") -> Report:
         )
     else:
         report = Report(
-            candidate_email=identifier,
+            candidate_email=(identifier or "").strip().lower(),
             filename=filename,
             generated_by=generated_by,
         )
@@ -398,3 +411,4 @@ def get_all_candidates_with_results():
                 data["report_filename"] = report.filename if report else ""
                 results.append(data)
     return results
+
