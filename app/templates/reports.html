@@ -108,12 +108,92 @@
         height: auto;
         border-radius: 8px;
         display: block;
+        cursor: zoom-in;
     }
     .proctoring-shot-meta {
         margin-top: 6px;
         font-size: 0.7rem;
         color: var(--az-slate-500);
         line-height: 1.2;
+    }
+    .proctoring-viewer {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.78);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2100;
+        padding: 24px;
+    }
+    .proctoring-viewer.active { display: flex; }
+    .proctoring-viewer-frame {
+        position: relative;
+        background: #0b1220;
+        border-radius: 14px;
+        width: min(1100px, 96vw);
+        max-height: 88vh;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.4);
+    }
+    .proctoring-viewer-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+        color: #e2e8f0;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+        font-size: 0.85rem;
+    }
+    .proctoring-viewer-body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        overflow: hidden;
+    }
+    .proctoring-viewer-body img {
+        max-width: 100%;
+        max-height: 68vh;
+        border-radius: 12px;
+        background: #0f172a;
+        cursor: zoom-out;
+    }
+    .proctoring-viewer-footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 16px 16px;
+    }
+    .proctoring-viewer-btn {
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        background: rgba(15, 23, 42, 0.6);
+        color: #e2e8f0;
+        border-radius: 10px;
+        padding: 8px 14px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .proctoring-viewer-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+    .proctoring-viewer-close {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        background: rgba(15, 23, 42, 0.7);
+        color: #e2e8f0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
     }
 </style>
 {% endblock %}
@@ -181,6 +261,26 @@
         </div>
     </div>
 </div>
+
+<div class="proctoring-viewer" id="proctoringViewer" aria-hidden="true">
+    <div class="proctoring-viewer-frame" role="dialog" aria-modal="true" aria-label="Screenshot viewer">
+        <div class="proctoring-viewer-header">
+            <div id="proctoringViewerMeta">Screenshot</div>
+            <button class="proctoring-viewer-close" type="button" onclick="closeProctoringViewer()" title="Close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="proctoring-viewer-body">
+            <img id="proctoringViewerImage" alt="Proctoring screenshot">
+        </div>
+        <div class="proctoring-viewer-footer">
+            <button class="proctoring-viewer-btn" id="proctoringPrevBtn" type="button" onclick="stepProctoringViewer(-1)">
+                <i class="fas fa-chevron-left"></i> Prev
+            </button>
+            <button class="proctoring-viewer-btn" id="proctoringNextBtn" type="button" onclick="stepProctoringViewer(1)">
+                Next <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
 {% endblock %}
 {% block scripts %}
 <script>
@@ -191,6 +291,13 @@ const proctoringModal = document.getElementById('proctoringModal');
 const proctoringGallery = document.getElementById('proctoringGallery');
 const proctoringGalleryMeta = document.getElementById('proctoringGalleryMeta');
 const proctoringModalTitle = document.getElementById('proctoringModalTitle');
+const proctoringViewer = document.getElementById('proctoringViewer');
+const proctoringViewerImage = document.getElementById('proctoringViewerImage');
+const proctoringViewerMeta = document.getElementById('proctoringViewerMeta');
+const proctoringPrevBtn = document.getElementById('proctoringPrevBtn');
+const proctoringNextBtn = document.getElementById('proctoringNextBtn');
+let proctoringShots = [];
+let proctoringShotIndex = -1;
 document.getElementById('searchBtn').addEventListener('click', searchCandidates);
 searchInput.addEventListener('keyup', function(e) { if (e.key === 'Enter') searchCandidates(); });
 document.getElementById('clearSearchBtn').addEventListener('click', function() { searchInput.value = ''; searchResults.classList.remove('active'); searchResultsList.innerHTML = ''; });
@@ -270,6 +377,8 @@ function openProctoringGallery(email) {
     if (proctoringGallery) {
         proctoringGallery.innerHTML = '';
     }
+    proctoringShots = [];
+    proctoringShotIndex = -1;
 
     fetch('/reports/proctoring/screenshots?email=' + encodeURIComponent(email))
         .then(r => r.json())
@@ -279,17 +388,19 @@ function openProctoringGallery(email) {
                 if (proctoringGalleryMeta) proctoringGalleryMeta.textContent = 'No proctoring screenshots found.';
                 return;
             }
+            proctoringShots = items.map((item, idx) => Object.assign({ __index: idx }, item));
+            proctoringShotIndex = -1;
             if (proctoringGalleryMeta) {
                 proctoringGalleryMeta.textContent = items.length + ' screenshot(s) captured';
             }
             let html = '';
-            items.forEach(item => {
+            proctoringShots.forEach(item => {
                 const meta = [];
                 if (item.round_label) meta.push(item.round_label);
                 if (item.source) meta.push(item.source.toUpperCase());
                 if (item.captured_at) meta.push(formatGalleryTimestamp(item.captured_at));
                 html += '<div class="proctoring-shot">'
-                    + '<img src="/reports/proctoring/screenshot/' + item.id + '" loading="lazy" alt="Proctoring screenshot">'
+                    + '<img src="/reports/proctoring/screenshot/' + item.id + '" loading="lazy" alt="Proctoring screenshot" onclick="openProctoringViewer(' + item.__index + ')">'
                     + '<div class="proctoring-shot-meta">' + meta.join(' • ') + '</div>'
                     + '</div>';
             });
@@ -302,6 +413,50 @@ function openProctoringGallery(email) {
                 proctoringGalleryMeta.textContent = 'Failed to load screenshots. Please try again.';
             }
         });
+}
+
+function openProctoringViewer(index) {
+    if (!Array.isArray(proctoringShots) || proctoringShots.length === 0) return;
+    const idx = Number(index);
+    if (Number.isNaN(idx) || idx < 0 || idx >= proctoringShots.length) return;
+    proctoringShotIndex = idx;
+    renderProctoringViewer();
+    if (proctoringViewer) {
+        proctoringViewer.classList.add('active');
+        proctoringViewer.setAttribute('aria-hidden', 'false');
+    }
+}
+
+function renderProctoringViewer() {
+    if (proctoringShotIndex < 0 || proctoringShotIndex >= proctoringShots.length) return;
+    const shot = proctoringShots[proctoringShotIndex];
+    if (proctoringViewerImage) {
+        proctoringViewerImage.src = '/reports/proctoring/screenshot/' + shot.id;
+    }
+    if (proctoringViewerMeta) {
+        const parts = [];
+        if (shot.round_label) parts.push(shot.round_label);
+        if (shot.source) parts.push(String(shot.source).toUpperCase());
+        if (shot.captured_at) parts.push(formatGalleryTimestamp(shot.captured_at));
+        parts.push((proctoringShotIndex + 1) + ' / ' + proctoringShots.length);
+        proctoringViewerMeta.textContent = parts.join(' • ');
+    }
+    if (proctoringPrevBtn) proctoringPrevBtn.disabled = proctoringShotIndex === 0;
+    if (proctoringNextBtn) proctoringNextBtn.disabled = proctoringShotIndex === (proctoringShots.length - 1);
+}
+
+function stepProctoringViewer(delta) {
+    if (!proctoringShots.length) return;
+    const next = proctoringShotIndex + delta;
+    if (next < 0 || next >= proctoringShots.length) return;
+    proctoringShotIndex = next;
+    renderProctoringViewer();
+}
+
+function closeProctoringViewer() {
+    if (!proctoringViewer) return;
+    proctoringViewer.classList.remove('active');
+    proctoringViewer.setAttribute('aria-hidden', 'true');
 }
 
 function closeProctoringGallery() {
@@ -317,8 +472,24 @@ if (proctoringModal) {
         }
     });
     document.addEventListener('keydown', function(e) {
+        if (proctoringViewer && proctoringViewer.classList.contains('active')) {
+            if (e.key === 'ArrowRight') stepProctoringViewer(1);
+            if (e.key === 'ArrowLeft') stepProctoringViewer(-1);
+            if (e.key === 'Escape') {
+                closeProctoringViewer();
+                return;
+            }
+        }
         if (e.key === 'Escape' && proctoringModal.classList.contains('active')) {
             closeProctoringGallery();
+        }
+    });
+}
+
+if (proctoringViewer) {
+    proctoringViewer.addEventListener('click', function(e) {
+        if (e.target === proctoringViewer) {
+            closeProctoringViewer();
         }
     });
 }
