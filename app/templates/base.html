@@ -41,7 +41,7 @@
                     <i class="bi bi-person-circle" style="font-size:1.4rem; opacity:0.7;"></i>
                 </div>
                 <div>
-                    <div class="small text-white" style="font-weight:500;">{{ session.get('user', {}).get('name', 'HR Admin') }}</div>
+                    <div class="small text-white" style="font-weight:500;">{{ session.get('user', {}).get('name', 'Admin') }}</div>
                     <small style="font-size:11px; color:var(--az-slate-400);">{{ session.get('user', {}).get('email', '') }}</small>
                 </div>
             </div>
@@ -89,6 +89,14 @@
         </a>
     </li>
 
+    {% if is_access_admin %}
+    <li class="nav-item">
+        <a class="nav-link {% if request.path.startswith('/access-management') %}active{% endif %}"
+           href="/access-management">
+            <i class="bi bi-shield-check me-2"></i>Access Management
+        </a>
+    </li>
+    {% endif %}
 </ul>
 
 
@@ -364,4 +372,9 @@ function showToast(message, type = 'success') {
 </body>
 
 </html>
+
+
+
+
+
 
