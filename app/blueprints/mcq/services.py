@@ -1,4 +1,5 @@
 import random
+import re
 import time
 from copy import deepcopy
 
@@ -21,6 +22,54 @@ from app.services.question_bank.selector import (
 
 QUESTION_COUNT = 15
 DEFAULT_DURATION_MINUTES = 20
+
+_JAVA_QA_WORDING_REPLACEMENTS = (
+    (r"\bDuring a QA test\b", "During testing"),
+    (r"\bIn a QA test\b", "In testing"),
+    (r"\bA QA test\b", "A Java scenario"),
+    (r"\bA QA engineer\b", "An engineer"),
+    (r"\bQA test\b", "Java scenario"),
+    (r"\bQA automation\b", "Java automation"),
+    (r"\bQA\b", "Java"),
+)
+
+_JAVA_PYTHON_WORDING_REPLACEMENTS = (
+    (r"\bDjango REST Framework\b", "Spring Security"),
+    (r"\bDjango ORM\b", "JPA/Hibernate ORM"),
+    (r"\bFastAPI\b", "Spring WebFlux"),
+    (r"\bFlask\b", "Micronaut"),
+    (r"\bDjango\b", "Spring Boot"),
+    (r"\bPyPI\b", "Maven Central"),
+    (r"\bpip\b", "Maven"),
+    (r"\bPython\b", "Java"),
+)
+
+
+def _apply_replacements(text, replacements):
+    value = str(text or "")
+    for pattern, replacement in replacements:
+        value = re.sub(pattern, replacement, value, flags=re.IGNORECASE)
+    return value
+
+
+def _normalize_question_wording_for_role(question, role_key):
+    if not isinstance(question, dict):
+        return question
+
+    if not str(role_key or "").startswith("java_"):
+        return question
+
+    normalized = dict(question)
+    replacements = list(_JAVA_PYTHON_WORDING_REPLACEMENTS)
+    if role_key == "java_entry":
+        replacements.extend(_JAVA_QA_WORDING_REPLACEMENTS)
+
+    normalized["question"] = _apply_replacements(normalized.get("question", ""), replacements)
+    normalized["correct_answer"] = _apply_replacements(normalized.get("correct_answer", ""), replacements)
+    options = normalized.get("options")
+    if isinstance(options, list):
+        normalized["options"] = [_apply_replacements(option, replacements) for option in options]
+    return normalized
 
 
 class MCQSessionService:
@@ -71,7 +120,10 @@ class MCQSessionService:
             else:
                 selected_questions = random.sample(questions, min(QUESTION_COUNT, len(questions)))
 
-        selected_questions = MCQSessionService._prepare_selected_questions(selected_questions)
+        selected_questions = MCQSessionService._prepare_selected_questions(
+            selected_questions=selected_questions,
+            role_key=role_key,
+        )
 
         data = {
             "questions": selected_questions,
@@ -85,8 +137,12 @@ class MCQSessionService:
         session.modified = True
 
     @staticmethod
-    def _prepare_selected_questions(selected_questions):
-        return prepare_question_options(selected_questions, rng=random)
+    def _prepare_selected_questions(selected_questions, role_key):
+        prepared = prepare_question_options(selected_questions, rng=random)
+        return [
+            _normalize_question_wording_for_role(question, role_key)
+            for question in prepared
+        ]
 
     @staticmethod
     def get_question(session_id, index):

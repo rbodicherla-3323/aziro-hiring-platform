@@ -8,7 +8,6 @@ ROUND_QUESTION_MAPPING = {
     "java_entry": {
         "L1": ["aptitude.json"],
         "L2": ["java/java_entry_theory.json"],
-        "L3": ["java/java_entry_fundamentals.json"],
         "L5": ["soft_skills.json"],
     },
     "js_entry": {

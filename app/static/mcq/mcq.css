@@ -615,26 +615,105 @@ body.mcq-question-page .candidate {
 .mcq-question-paragraph {
     margin: 0;
     font-size: inherit;
-    line-height: inherit;
-    font-weight: 700;
+    line-height: 1.56;
+    font-weight: 600;
+    color: #213760;
+    text-wrap: pretty;
+}
+
+.mcq-question-section {
+    margin: 0;
+    border: 1px solid #d7e3fb;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #f9fbff 0%, #f2f7ff 100%);
+    padding: 12px 14px;
+    display: grid;
+    gap: 10px;
+    box-shadow: 0 6px 14px rgba(23, 52, 112, 0.06);
+}
+
+.mcq-question-direction {
+    background: linear-gradient(180deg, #fff9ec 0%, #fff4da 100%);
+    border-color: #f2d596;
+}
+
+.mcq-question-direction .mcq-question-section-title {
+    color: #8a5b08;
+}
+
+.mcq-question-direction .mcq-question-paragraph {
+    color: #6a4d13;
+}
+
+.mcq-question-section-title {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.35;
+    font-weight: 800;
+    color: #1f4c9e;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.mcq-question-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 8px;
+}
+
+.mcq-question-list-item {
+    margin: 0;
+    font-size: inherit;
+    line-height: 1.5;
+    font-weight: 600;
+    color: #1f355f;
+    border: 1px solid #dce7fb;
+    border-radius: 10px;
+    background: #ffffff;
+    padding: 9px 10px;
+    box-shadow: 0 3px 8px rgba(27, 56, 118, 0.05);
+    text-wrap: pretty;
 }
 
 .mcq-question-code {
     margin: 0;
-    padding: 13px 14px;
+    position: relative;
+    padding: 14px;
     border-radius: 12px;
-    border: 1px solid #c8d8fa;
-    background: linear-gradient(180deg, #101a31 0%, #0d162a 100%);
-    color: #e8f0ff;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-    font-family: "Consolas", "Courier New", monospace;
-    font-size: 13px;
-    line-height: 1.55;
-    white-space: pre;
+    border: 1px solid #d4e2fb;
+    border-left: 4px solid #2b63de;
+    background: linear-gradient(180deg, #fafdff 0%, #edf4ff 100%);
+    color: #14305c;
+    box-shadow: 0 6px 14px rgba(28, 60, 128, 0.08);
+    font-family: "JetBrains Mono", "Consolas", "Courier New", monospace;
+    font-size: 15px;
+    line-height: 1.62;
+    white-space: pre-wrap;
+    word-break: break-word;
+    tab-size: 4;
     overflow-x: auto;
 }
 
+.mcq-question-code::before {
+    content: "Code";
+    display: inline-block;
+    margin-bottom: 6px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    border: 1px solid #c8d9fb;
+    background: #ffffff;
+    color: #2252b5;
+    font-family: "Manrope", "Segoe UI", sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
 .mcq-question-code code {
+    display: block;
     font-family: inherit;
     font-size: inherit;
     color: inherit;
@@ -855,7 +934,7 @@ body.mcq-question-page .candidate {
 
     body.mcq-question-page .mcq-question-code,
     body.mcq-question-screen .mcq-question-code {
-        font-size: 12px;
+        font-size: 14px;
         padding: 10px 12px;
     }
 
@@ -977,8 +1056,24 @@ body.mcq-question-page .candidate {
     }
 
     .mcq-question-code {
-        font-size: 12px;
+        font-size: 14px;
         padding: 10px 11px;
+    }
+
+    .mcq-question-code::before {
+        margin-bottom: 4px;
+        padding: 1px 5px;
+        font-size: 9px;
+    }
+
+    .mcq-question-section {
+        padding: 10px 11px;
+        border-radius: 12px;
+        gap: 8px;
+    }
+
+    .mcq-question-list-item {
+        padding: 8px 9px;
     }
 
     .mcq-actions {

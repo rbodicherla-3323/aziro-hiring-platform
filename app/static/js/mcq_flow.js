@@ -468,10 +468,12 @@ window.__MCQ_AJAX_FLOW = false;
         if (/\b(Console\.WriteLine|System\.out\.println|console\.log|printf|scanf|print)\s*\(/.test(text)) return true;
         if (/^\w+\s*\(.*\)\s*(\{|=>|;)$/.test(text)) return true;
         if (/=>|::|->/.test(text)) return true;
-        if (/[{};]/.test(text)) return true;
+        if (/[{}]/.test(text)) return true;
+        if (/;/.test(text) && (/[=(){}]/.test(text) || /^(return|break|continue|throw)\b/.test(text))) return true;
         if (/^[A-Za-z_][A-Za-z0-9_<>,\[\]\s]*\s+[A-Za-z_][A-Za-z0-9_]*\s*=\s*.+/.test(text)) return true;
         if (/^\w+\.\w+\s*\(/.test(text)) return true;
-        if (/\(.*\)/.test(text) && /[=+\-/*%]/.test(text)) return true;
+        // Slash-only endpoint examples inside prose should not be treated as code operators.
+        if (/\(.*\)/.test(text) && /[=+\-*%]/.test(text)) return true;
         return false;
     }
 
@@ -480,7 +482,10 @@ window.__MCQ_AJAX_FLOW = false;
         if (!text) return false;
         if (/^(#include\b|using\s+[A-Za-z0-9_.]+;?|namespace\b|class\b|public\b|private\b|protected\b|interface\b|enum\b|struct\b|import\s+[A-Za-z0-9_.]+;?)/.test(text)) return true;
         if (/\b(Console\.WriteLine|System\.out\.println|console\.log|printf|scanf|print)\s*\(/.test(text)) return true;
-        return /[{};=]|=>|::|->/.test(text);
+        if (/[{}]|=>|::|->/.test(text)) return true;
+        if (/\b[A-Za-z_][A-Za-z0-9_]*\s*=\s*[^=]/.test(text)) return true;
+        if (/;/.test(text) && (/[=(){}]/.test(text) || /^(return|break|continue|throw)\b/.test(text))) return true;
+        return false;
     }
 
     function looksLikeInlineCodePayload(text) {
@@ -489,8 +494,24 @@ window.__MCQ_AJAX_FLOW = false;
         if (isStrongCodeLine(value)) return true;
         if (/^#\s*[A-Za-z_][A-Za-z0-9_]*/.test(value)) return true;
         if (/\b(Console\.WriteLine|System\.out\.println|console\.log|printf|scanf|print)\s*\(/.test(value)) return true;
-        if (/[{};=]|=>|::|->/.test(value)) return true;
-        if (/^[A-Za-z_][A-Za-z0-9_]*\s*\(.*\)/.test(value)) return true;
+        if (/[{}]|=>|::|->/.test(value)) return true;
+        if (/\b[A-Za-z_][A-Za-z0-9_]*\s*=\s*[^=]/.test(value)) return true;
+        if (/;/.test(value) && (/[=(){}]/.test(value) || /^(return|break|continue|throw)\b/.test(value))) return true;
+
+        // Avoid false positives for prose fragments like:
+        // "nouns (e.g., /createUser, /getUser)"
+        const hasEndpointStylePath = /\/[A-Za-z][A-Za-z0-9_/-]*/.test(value);
+        const hasProseCue = /\b(e\.g\.|i\.e\.|for example|for instance)\b/i.test(value);
+        const wordCount = value.split(/\s+/).filter(Boolean).length;
+        if (hasEndpointStylePath && (hasProseCue || wordCount >= 4) && !/[{};=]|=>|::|->/.test(value)) {
+            return false;
+        }
+
+        // Treat function-call style text as code only when identifier is immediately
+        // followed by "(" (no prose spacing before bracket).
+        if (/^[A-Za-z_][A-Za-z0-9_]*\([^)\n]*\)\s*;?$/.test(value)) return true;
+        if (/^[A-Za-z_][A-Za-z0-9_.]*\([^)\n]*\)\s*;?$/.test(value)) return true;
+
         if (/\b(int|long|float|double|char|bool|string|var|let|const|def|class|public|private|protected)\b/.test(value) && /[()=]/.test(value)) return true;
         return false;
     }
@@ -500,8 +521,7 @@ window.__MCQ_AJAX_FLOW = false;
         const patterns = [
             /#\s*[A-Za-z_][A-Za-z0-9_]*\s*(?:<[^>]+>|\"[^\"]+\")?/g,
             /\b(?:[A-Za-z_][A-Za-z0-9_<>\[\]]*\s+)?[A-Za-z_][A-Za-z0-9_<>.\[\]]*\s*=\s*[^.?!\n]+?;/g,
-            /\b[A-Za-z_][A-Za-z0-9_<>.\[\]]*\s*\([^)\n]*\)\s*;?/g,
-            /\b(?:for|while|if|switch|return|throw|new)\b[^.?!\n]+/g,
+            /\b[A-Za-z_][A-Za-z0-9_<>.\[\]]*\([^)\n]*\)\s*;?/g,
             /\b[A-Za-z_][A-Za-z0-9_<>.\[\]]*::[A-Za-z_][A-Za-z0-9_<>.\[\]]*\b/g
         ];
 
@@ -699,6 +719,334 @@ window.__MCQ_AJAX_FLOW = false;
         return segments;
     }
 
+    function _normalizeSectionLabel(label) {
+        const raw = String(label || "").trim().toLowerCase();
+        const map = {
+            "direction": "Direction",
+            "directions": "Direction",
+            "statement": "Statements",
+            "statements": "Statements",
+            "conclusion": "Conclusions",
+            "conclusions": "Conclusions",
+            "assumption": "Assumptions",
+            "assumptions": "Assumptions",
+            "premise": "Premises",
+            "premises": "Premises",
+            "question": "Question",
+            "data sufficiency": "Data Sufficiency",
+            "argument": "Arguments",
+            "arguments": "Arguments",
+            "course of action": "Courses of Action",
+            "courses of action": "Courses of Action",
+            "fact": "Facts",
+            "facts": "Facts"
+        };
+        return map[raw] || String(label || "").trim();
+    }
+
+    function _extractLeadingDirectionBlock(text) {
+        const source = trimSurroundingBlankLines(String(text || ""));
+        if (!source) return null;
+
+        const match = source.match(/^\s*\[\s*(Direction|Directions)\s*:\s*([\s\S]*?)\]\s*([\s\S]*)$/i);
+        if (!match) return null;
+
+        const directionBody = trimSurroundingBlankLines(match[2] || "");
+        const remainder = trimSurroundingBlankLines(match[3] || "");
+        if (!directionBody) return null;
+
+        return {
+            direction: directionBody,
+            remainder
+        };
+    }
+
+    function _renderReadableText(rawText) {
+        let text = trimSurroundingBlankLines(String(rawText || ""));
+        if (!text) return "";
+
+        text = text.replace(/\t+/g, " ");
+        if (!text.includes("\n") && text.length >= 220) {
+            const punctuationCount = (text.match(/[.?!]/g) || []).length;
+            if (punctuationCount >= 2) {
+                text = text.replace(/([.?!])\s+(?=[A-Z(])/g, "$1\n\n");
+            }
+        }
+
+        return escapeHtml(text).replace(/\n/g, "<br>");
+    }
+
+    function _supportsSentenceList(label) {
+        const normalized = String(label || "").trim().toLowerCase();
+        return [
+            "statements",
+            "conclusions",
+            "assumptions",
+            "premises",
+            "arguments",
+            "courses of action",
+            "facts"
+        ].includes(normalized);
+    }
+
+    function _splitSentenceItems(text, label) {
+        if (!_supportsSentenceList(label)) return [];
+
+        const source = trimSurroundingBlankLines(String(text || ""));
+        if (!source) return [];
+
+        const compact = source.replace(/\s+/g, " ").trim();
+        if (!compact) return [];
+
+        // Prefer semicolon-delimited items when present.
+        let candidates = [];
+        if (compact.includes(";")) {
+            candidates = compact.split(/\s*;\s*/g);
+        } else {
+            // Split by sentence boundaries for unnumbered statement-style blocks.
+            const separated = compact.replace(/([.?!])\s+(?=[A-Z(“"'])/g, "$1\n");
+            candidates = separated.split(/\n+/g);
+        }
+
+        const rawItems = candidates
+            .map((part) => trimSurroundingBlankLines(part))
+            .filter((part) => part && part.length >= 8);
+
+        const items = [];
+        const isContinuationFragment = (part) => {
+            const text = trimSurroundingBlankLines(String(part || ""));
+            if (!text) return false;
+
+            // Merge only genuinely orphaned tails, e.g. "facts." after a bad split.
+            // Do not merge valid short conclusions like "None follows".
+            const tokenCount = text.split(/\s+/).filter(Boolean).length;
+            const startsLowercase = /^[a-z]/.test(text);
+            const veryShort = text.length <= 14;
+            return startsLowercase && (veryShort || tokenCount <= 3);
+        };
+
+        rawItems.forEach((part) => {
+            if (items.length > 0 && isContinuationFragment(part)) {
+                items[items.length - 1] = `${items[items.length - 1]} ${part}`.trim();
+                return;
+            }
+            items.push(part);
+        });
+
+        if (items.length >= 2) {
+            return items;
+        }
+        return [];
+    }
+
+    function _toRoman(value) {
+        const num = Math.max(1, Number(value) || 1);
+        const table = [
+            [1000, "M"], [900, "CM"], [500, "D"], [400, "CD"],
+            [100, "C"], [90, "XC"], [50, "L"], [40, "XL"],
+            [10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]
+        ];
+
+        let n = num;
+        let out = "";
+        table.forEach(([base, symbol]) => {
+            while (n >= base) {
+                out += symbol;
+                n -= base;
+            }
+        });
+        return out || "I";
+    }
+
+    function _hasExplicitLeadingMarker(item) {
+        const text = trimSurroundingBlankLines(String(item || ""));
+        if (!text) return false;
+        const markerRegex = /^(?:(?:statement|conclusion|assumption|premise|argument|fact|course of action)\s*)?(?:[ivxlcdm]+|\d+|[pqrs]|s\d+)\s*[:.)-]\s*/i;
+        const verbalMarkerRegex = /^(?:statement|conclusion|assumption|premise|argument|fact|course of action)\s*(?:[ivxlcdm]+|\d+)\b/i;
+        const yesNoMarkerRegex = /^(?:yes|no)\s*[:.)-]\s*/i;
+        return markerRegex.test(text) || verbalMarkerRegex.test(text) || yesNoMarkerRegex.test(text);
+    }
+
+    function _splitStructuredSections(text) {
+        const raw = trimSurroundingBlankLines(normalizeQuestionText(text));
+        if (!raw) return null;
+
+        const sections = [];
+        let preface = "";
+        let normalized = raw;
+        const bracketedDirection = _extractLeadingDirectionBlock(normalized);
+        if (bracketedDirection) {
+            sections.push({ label: "Direction", body: bracketedDirection.direction });
+            normalized = bracketedDirection.remainder;
+            if (!normalized) {
+                return { preface: "", sections };
+            }
+        }
+
+        const sectionLabelPattern = /(Direction|Directions|Statements?|Conclusions?|Assumptions?|Premises?|Question|Data\s+Sufficiency|Arguments?|Courses?\s+of\s+Action|Facts?|Fact\s+\d+)\s*(?::|[-–—])/ig;
+        const sectionStartHints = /(Direction|Directions|Statements?|Conclusions?|Assumptions?|Premises?|Question|Data\s+Sufficiency|Arguments?|Courses?\s+of\s+Action|Facts?|Fact\s+\d+)\s*(?::|[-–—])/ig;
+
+        // If headings are inline, split them onto new lines for stable parsing.
+        normalized = normalized.replace(/\s+(?=(Direction|Directions|Statements?|Conclusions?|Assumptions?|Premises?|Question|Data\s+Sufficiency|Arguments?|Courses?\s+of\s+Action|Facts?|Fact\s+\d+)\s*(?::|[-–—]))/ig, "\n");
+
+        const matches = [...normalized.matchAll(sectionLabelPattern)];
+        if (!matches.length) {
+            const markerItems = _splitStructuredItems(normalized);
+            if (markerItems.length >= 2) {
+                sections.push({ label: "Question", body: normalized });
+                return { preface: "", sections };
+            }
+            if (sections.length && normalized) {
+                sections.push({ label: "Question", body: normalized });
+                return { preface: "", sections };
+            }
+            return null;
+        }
+
+        const hasStructuredSignal = sectionStartHints.test(normalized);
+        if (!hasStructuredSignal) {
+            return sections.length ? { preface: "", sections } : null;
+        }
+        const firstMatch = matches[0];
+        preface = trimSurroundingBlankLines(normalized.slice(0, firstMatch.index));
+
+        for (let i = 0; i < matches.length; i += 1) {
+            const current = matches[i];
+            const next = matches[i + 1];
+            const label = _normalizeSectionLabel(current[1]);
+            const start = current.index + current[0].length;
+            const end = next ? next.index : normalized.length;
+            const body = trimSurroundingBlankLines(normalized.slice(start, end));
+            if (!body) continue;
+            sections.push({ label, body });
+        }
+
+        if (!sections.length) return null;
+        return { preface, sections };
+    }
+
+    function _splitStructuredItems(text) {
+        const source = trimSurroundingBlankLines(String(text || ""));
+        if (!source) return [];
+
+        const markerPrefix = "(?:statements?|conclusions?|assumptions?|premises?|arguments?|facts?|courses? of action)";
+        const markerRegex = new RegExp(`^(?:${markerPrefix}\\b\\s*)?(?:[ivxlcdm]+|\\d+|[pqrs]|s\\d+)\\s*[:.)-]\\s*`, "i");
+        const verbalMarkerRegex = new RegExp(`^(?:${markerPrefix})\\b\\s*(?:[ivxlcdm]+|\\d+)\\b`, "i");
+        const yesNoMarkerRegex = /^(?:yes|no)\s*[:.)-]\s*/i;
+
+        const numericMarkerCount = (source.match(/\b\d+\s*[:.)-]/g) || []).length;
+        let injected = source.replace(
+            /\s+(?=(?:(?:statements?|conclusions?|assumptions?|premises?|arguments?|facts?|courses? of action)\b\s*)?(?:[ivxlcdm]+|[pqrs]|s\d+)\s*[:.)-])/ig,
+            "\n"
+        );
+        injected = injected.replace(
+            /\s+(?=(?:statements?|conclusions?|assumptions?|premises?|arguments?|facts?|courses? of action)\b\s*(?:[ivxlcdm]+|\d+)\b)/ig,
+            "\n"
+        );
+        if (numericMarkerCount >= 2) {
+            injected = injected.replace(
+                /\s+(?=(?:(?:statements?|conclusions?|assumptions?|premises?|arguments?|facts?|courses? of action)\b\s*)?\d+\s*[:.)-])/ig,
+                "\n"
+            );
+        }
+        const yesNoMarkerCount = (source.match(/\b(?:yes|no)\s*[:.)-]/ig) || []).length;
+        if (yesNoMarkerCount >= 2) {
+            injected = injected.replace(
+                /\s+(?=(?:yes|no)\s*[:.)-])/ig,
+                "\n"
+            );
+        }
+
+        const lines = injected
+            .split(/\n+/)
+            .map((line) => trimSurroundingBlankLines(line))
+            .filter(Boolean);
+
+        const items = [];
+        let current = "";
+        lines.forEach((line) => {
+            if (markerRegex.test(line) || verbalMarkerRegex.test(line) || yesNoMarkerRegex.test(line)) {
+                if (current) items.push(current);
+                current = line;
+                return;
+            }
+            if (current) {
+                current = `${current} ${line}`.trim();
+            } else {
+                items.push(line);
+            }
+        });
+        if (current) items.push(current);
+
+        for (let i = 0; i < items.length - 1; i += 1) {
+            items[i] = items[i].replace(/\s+(and|or)\s*$/i, "").trim();
+        }
+
+        const markerHits = items.filter((item) => markerRegex.test(item) || verbalMarkerRegex.test(item) || yesNoMarkerRegex.test(item)).length;
+        if (items.length >= 2 && markerHits >= 2) {
+            return items;
+        }
+        return [];
+    }
+
+    function renderStructuredQuestionHtml(rawText) {
+        const structured = _splitStructuredSections(rawText);
+        if (!structured) return "";
+
+        const blocks = [];
+        if (structured.preface) {
+            blocks.push(
+                `<p class="mcq-question-paragraph">${_renderReadableText(structured.preface)}</p>`
+            );
+        }
+
+        structured.sections.forEach((section) => {
+            const label = escapeHtml(section.label);
+            const body = section.body;
+            const lowerLabel = section.label.toLowerCase();
+
+            if (lowerLabel === "direction") {
+                blocks.push(
+                    `<section class="mcq-question-section mcq-question-direction">` +
+                    `<div class="mcq-question-section-title">${label}</div>` +
+                    `<p class="mcq-question-paragraph">${_renderReadableText(body)}</p>` +
+                    `</section>`
+                );
+                return;
+            }
+
+            const items = _splitStructuredItems(body);
+            const sentenceItems = items.length >= 2 ? items : _splitSentenceItems(body, lowerLabel);
+            if (sentenceItems.length >= 2) {
+                const shouldAutoEnumerate = _supportsSentenceList(lowerLabel) && sentenceItems.every((item) => !_hasExplicitLeadingMarker(item));
+                const listItems = sentenceItems
+                    .map((item, index) => {
+                        const rendered = shouldAutoEnumerate
+                            ? `${_toRoman(index + 1)}. ${item}`
+                            : item;
+                        return `<li class="mcq-question-list-item">${_renderReadableText(rendered)}</li>`;
+                    })
+                    .join("");
+                blocks.push(
+                    `<section class="mcq-question-section">` +
+                    `<div class="mcq-question-section-title">${label}</div>` +
+                    `<ul class="mcq-question-list">${listItems}</ul>` +
+                    `</section>`
+                );
+                return;
+            }
+
+            blocks.push(
+                `<section class="mcq-question-section">` +
+                `<div class="mcq-question-section-title">${label}</div>` +
+                `<p class="mcq-question-paragraph">${_renderReadableText(body)}</p>` +
+                `</section>`
+            );
+        });
+
+        return blocks.join("");
+    }
+
     function renderQuestionTextHtml(rawText) {
         const segments = splitQuestionSegments(rawText);
         if (!segments.length) {
@@ -709,7 +1057,11 @@ window.__MCQ_AJAX_FLOW = false;
             if (segment.type === "code") {
                 return `<pre class="mcq-question-code"><code>${escapeHtml(segment.text)}</code></pre>`;
             }
-            return `<p class="mcq-question-paragraph">${escapeHtml(segment.text).replace(/\n/g, "<br>")}</p>`;
+            const structuredHtml = renderStructuredQuestionHtml(segment.text);
+            if (structuredHtml) {
+                return structuredHtml;
+            }
+            return `<p class="mcq-question-paragraph">${_renderReadableText(segment.text)}</p>`;
         }).join("");
     }
 

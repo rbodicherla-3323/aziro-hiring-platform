@@ -7,7 +7,7 @@ ROLE_ROUND_MAPPING = {
         "allow_domain": False
     },
     "java_entry": {
-        "rounds": ["L1", "L2", "L3", "L5"],
+        "rounds": ["L1", "L2", "L5"],
         "coding_rounds": ["L4"],
         "coding_language": "java",
         "allow_domain": False

@@ -45,17 +45,24 @@ def test_java_mcq_generation_locks_selected_questions(monkeypatch):
 
     assert response.status_code == 302
 
-    java_sessions = [
+    java_l2_sessions = [
         payload
         for payload in MCQ_SESSION_REGISTRY.values()
-        if payload.get("role_key") == "java_entry" and payload.get("round_key") in {"L2", "L3"}
+        if payload.get("role_key") == "java_entry" and payload.get("round_key") == "L2"
     ]
-    assert len(java_sessions) == 2
-    for payload in java_sessions:
-        assert payload["selection_strategy"] == "balanced_difficulty_v2"
-        assert payload["difficulty_mix"] == {"easy": 5, "medium": 5, "hard": 5}
-        assert len(payload["selected_questions"]) == 15
-        assert len(payload["selected_question_ids"]) == 15
+    assert len(java_l2_sessions) == 1
+    payload = java_l2_sessions[0]
+    assert payload["selection_strategy"] == "balanced_difficulty_v2"
+    assert payload["difficulty_mix"] == {"easy": 5, "medium": 5, "hard": 5}
+    assert len(payload["selected_questions"]) == 15
+    assert len(payload["selected_question_ids"]) == 15
+    assert payload["debugging_mix"] == {"easy": 1, "medium": 1, "hard": 1}
+
+    java_l3_sessions = [
+        p for p in MCQ_SESSION_REGISTRY.values()
+        if p.get("role_key") == "java_entry" and p.get("round_key") == "L3"
+    ]
+    assert not java_l3_sessions
 
     session_id = next(
         key

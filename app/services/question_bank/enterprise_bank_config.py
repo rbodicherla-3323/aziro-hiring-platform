@@ -20,6 +20,7 @@ ENTERPRISE_BANK_POLICIES = {
         'difficulty_counts': {'easy': 40, 'medium': 35, 'hard': 25},
         'debugging_counts': {'easy': 6, 'medium': 8, 'hard': 6},
         'min_selected_debugging': 3,
+        'selected_debugging_by_difficulty': {'easy': 1, 'medium': 1, 'hard': 1},
         'required_topics': {
             'Java Language Fundamentals',
             'Strings and Immutability',

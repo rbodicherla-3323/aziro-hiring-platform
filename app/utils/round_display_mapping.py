@@ -13,9 +13,8 @@ ROUND_DISPLAY_MAPPING = {
     # ---------------- Java Entry ----------------
     "java_entry": {
         "L1": "Aptitude",
-        "L2": "Java Theory",
-        "L3": "Java Fundamentals",
-        "L4": "Coding Challenge",
+        "L2": "Java Theory + Debugging",
+        "L4": "Coding Challenge (Java)",
         "L5": "Soft Skills",
     },
 
