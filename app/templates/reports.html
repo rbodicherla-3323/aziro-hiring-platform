@@ -219,7 +219,7 @@
     </div>
     <div class="session-section">
         <div class="section-title">
-            <i class="fas fa-clock" style="color:var(--az-primary);"></i> Today's Session
+            <i class="fas fa-clock" style="color:var(--az-primary);"></i> Last 24 Hours
             <span class="badge bg-primary ms-2" style="font-size:0.7rem; background:var(--az-primary) !important;">{{ session_candidates|length }} candidates</span>
         </div>
         {% if session_candidates %}
@@ -242,7 +242,7 @@
         {% else %}
             <div class="empty-state">
                 <i class="fas fa-inbox d-block"></i>
-                <p class="mb-1" style="font-weight:500;">No candidates in today's session</p>
+                <p class="mb-1" style="font-weight:500;">No candidates in the last 24 hours</p>
                 <p style="font-size:0.8rem;">Create tests from the <a href="{{ url_for('dashboard.create_test') }}" style="color:var(--az-primary);">Create Test</a> page to see candidates here.</p>
             </div>
         {% endif %}

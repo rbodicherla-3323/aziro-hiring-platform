@@ -189,6 +189,69 @@ def search_candidates(query: str, role_filter: str = ""):
     return results
 
 
+def search_candidates_with_reports(query: str, role_filter: str = ""):
+    """Search candidates that have at least one generated report."""
+    like_query = f"%{query}%"
+
+    base = (
+        db.session.query(Candidate, TestSession)
+        .join(Report, Report.candidate_email == Candidate.email)
+        .outerjoin(TestSession, TestSession.candidate_id == Candidate.id)
+    )
+
+    filters = []
+    if query:
+        filters.append(
+            db.or_(
+                Candidate.name.ilike(like_query),
+                Candidate.email.ilike(like_query),
+                TestSession.role_label.ilike(like_query),
+                TestSession.role_key.ilike(like_query),
+            )
+        )
+    if role_filter:
+        like_role = f"%{role_filter}%"
+        filters.append(
+            db.or_(
+                TestSession.role_label.ilike(like_role),
+                TestSession.role_key.ilike(like_role),
+            )
+        )
+
+    if filters:
+        base = base.filter(*filters)
+
+    rows = (
+        base
+        .order_by(TestSession.created_at.desc())
+        .limit(100)
+        .all()
+    )
+
+    results = []
+    seen_emails = set()
+    for cand, ts in rows:
+        email = cand.email
+        if email in seen_emails:
+            continue
+        role = ""
+        created_at = ""
+        test_session_id = None
+        if ts:
+            role = ts.role_label or ts.role_key
+            created_at = ts.created_at.strftime("%Y-%m-%d %H:%M") if ts.created_at else ""
+            test_session_id = ts.id
+        results.append({
+            "name": cand.name,
+            "email": email,
+            "role": role,
+            "created_at": created_at,
+            "test_session_id": test_session_id,
+        })
+        seen_emails.add(email)
+    return results
+
+
 def get_candidate_report_data(email: str) -> dict:
     """Get full candidate data for report generation."""
     candidate = Candidate.query.filter_by(email=email).first()
