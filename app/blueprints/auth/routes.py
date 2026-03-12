@@ -5,6 +5,7 @@ Also provides local dev fallback routes.
 """
 import os
 import time
+import logging
 import msal
 import requests
 from flask import render_template, redirect, url_for, session, request, flash
@@ -14,6 +15,12 @@ from app.services.user_token_store import (
     set_graph_delegated_token,
     clear_graph_delegated_token,
 )
+from app.services.access_approvals_service import (
+    decide_access,
+    maybe_notify_admin_of_request,
+    upsert_access_request,
+)
+from app.access_config import DEFAULT_FULL_ACCESS_EMAILS, ACCESS_ADMIN_EMAIL
 
 # Azure AD Configuration
 AZURE_CLIENT_ID = os.getenv("AZURE_CLIENT_ID", "")
@@ -26,6 +33,13 @@ AUTHORITY = f"https://login.microsoftonline.com/{AZURE_TENANT_ID}"
 # added by the library as needed.
 SCOPES = ["User.Read", "Mail.Send"]
 
+log = logging.getLogger(__name__)
+
+
+def _parse_csv_emails(env_value: str) -> list[str]:
+    raw = str(env_value or "")
+    parts = [p.strip().lower() for p in raw.split(",")]
+    return [p for p in parts if p]
 
 def _build_msal_app(cache=None):
     return msal.ConfidentialClientApplication(
@@ -184,6 +198,41 @@ def auth_callback():
         flash("Access denied. Only @aziro.com accounts are allowed.", "danger")
         return redirect(url_for("auth.login"))
 
+    default_full_access = sorted([e for e in DEFAULT_FULL_ACCESS_EMAILS])
+    access_admin_email = (ACCESS_ADMIN_EMAIL or "").strip().lower()
+    decision = decide_access(
+        email=email,
+        default_full_access_emails=default_full_access,
+        access_admin_email=access_admin_email,
+    )
+    log.info("Access decision: email=%s allowed=%s", email, decision.allowed)
+    if not decision.allowed:
+        # Record the request for audit/UI visibility.
+        if email.endswith("@aziro.com"):
+            try:
+                upsert_access_request(email=email)
+            except Exception:
+                log.exception("Failed to record access request for %s", email)
+
+            try:
+                management_url = url_for("access.access_management_page", _external=True)
+                sent = maybe_notify_admin_of_request(
+                    requester_name=name,
+                    requester_email=email,
+                    management_url=management_url,
+                    delegated_access_token=access_token,
+                    delegated_sender_email=email,
+                )
+                if not sent:
+                    log.warning(
+                        "Access request notification not sent (cooldown or email failure) for %s",
+                        email,
+                    )
+            except Exception:
+                log.exception("Failed to notify approver for access request %s", email)
+
+        flash(decision.reason or "Access denied.", "danger")
+        return redirect(url_for("auth.login"))
     session["user"] = {
         "name": name,
         "email": email,
@@ -217,4 +266,12 @@ def logout():
     clear_graph_delegated_token(user.get("email", ""))
     session.clear()
     return redirect(url_for("auth.login"))
+
+
+
+
+
+
+
+
 

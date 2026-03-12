@@ -14,6 +14,10 @@ from app.utils.auth_decorator import login_required
 from app.utils.role_normalizer import ROLE_NAME_TO_KEY
 from app.services.generated_tests_store import get_tests_for_user_today
 from app.services.email_service import send_candidate_test_links_email
+from app.services.user_token_store import (
+    get_valid_graph_delegated_token,
+    get_valid_graph_delegated_token_from_session,
+)
 from app.services.document_intelligence import (
     allowed_file_extension,
     extract_text_from_file,
@@ -256,6 +260,11 @@ def send_generated_tests_emails():
 
     user = session.get("user", {})
     user_email = user.get("email", "dev@aziro.com")
+    delegated_access_token = get_valid_graph_delegated_token(user_email)
+    if not delegated_access_token:
+        delegated_access_token = get_valid_graph_delegated_token_from_session(
+            session.get("oauth", {}),
+        )
     candidates = get_tests_for_user_today(user_email)
     candidates_by_email = {
         str(c.get("email", "")).strip().lower(): c
@@ -277,6 +286,8 @@ def send_generated_tests_emails():
             candidate_email=candidate.get("email", email),
             role_label=candidate.get("role", ""),
             tests=candidate.get("tests", {}),
+            delegated_access_token=delegated_access_token,
+            delegated_sender_email=user_email,
         )
         if sent:
             sent_count += 1

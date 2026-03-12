@@ -1,4 +1,4 @@
-# filepath: d:\Projects\aziro-hiring-platform\app\models.py
+﻿# filepath: d:\Projects\aziro-hiring-platform\app\models.py
 from datetime import datetime, timezone
 from app.extensions import db
 
@@ -72,7 +72,6 @@ class Report(db.Model):
     def __repr__(self):
         return f"<Report {self.filename}>"
 
-
 class ProctoringScreenshot(db.Model):
     __tablename__ = "proctoring_screenshots"
 
@@ -93,3 +92,17 @@ class ProctoringScreenshot(db.Model):
 
     def __repr__(self):
         return f"<ProctoringScreenshot {self.id} {self.candidate_email}>"
+
+
+class AccessApproval(db.Model):
+    __tablename__ = "access_approvals"
+
+    email = db.Column(db.String(320), primary_key=True)
+    is_active = db.Column(db.Boolean, nullable=False, default=False)
+    approved_by = db.Column(db.String(320), nullable=True)
+    approved_at = db.Column(db.DateTime, nullable=True)
+    requested_at = db.Column(db.DateTime, nullable=True)
+    last_notified_at = db.Column(db.DateTime, nullable=True)
+
+    def __repr__(self):
+        return f"<AccessApproval {self.email} active={self.is_active}>"
