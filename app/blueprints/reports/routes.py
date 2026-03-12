@@ -148,7 +148,31 @@ def search_reports():
                 })
                 found_emails.add(email_key)
 
-    # 2. Search DB (reports generated for any candidate)
+    # 2. Search in-memory candidates that have reports (org-wide)
+    try:
+        all_candidates = EvaluationAggregator.get_candidates()
+        for c in all_candidates:
+            email = str(c.get("email", "")).strip()
+            if not email:
+                continue
+            email_key = email.lower()
+            if email_key in found_emails:
+                continue
+            if (query_lower in c.get("name", "").lower()
+                    or query_lower in email_key
+                    or query_lower in c.get("role", "").lower()):
+                if db_service.has_report_for_email(email):
+                    results.append({
+                        "name": c.get("name", ""),
+                        "email": email,
+                        "role": c.get("role", "N/A"),
+                        "source": "database",
+                    })
+                    found_emails.add(email_key)
+    except Exception:
+        pass
+
+    # 3. Search DB (reports generated for any candidate)
     try:
         db_results = db_service.search_candidates_with_reports(query)
         for r in db_results:
@@ -209,12 +233,21 @@ def generate_report(email):
 
     # Generate PDF
     try:
+        user = session.get("user", {})
+        ts = None
+        try:
+            ts = db_service.ensure_candidate_session_for_report(candidate_data, user.get("email", ""))
+        except Exception:
+            ts = None
+
         filename = generate_candidate_pdf(candidate_data)
 
         # Save report record to DB
-        user = session.get("user", {})
         try:
-            db_service.save_report(email, filename, user.get("email", ""))
+            if ts and getattr(ts, "id", None):
+                db_service.save_report(ts.id, filename, user.get("email", ""))
+            else:
+                db_service.save_report(email, filename, user.get("email", ""))
         except Exception:
             pass
 

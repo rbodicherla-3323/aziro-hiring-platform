@@ -264,6 +264,30 @@ def search_candidates_with_reports(query: str, role_filter: str = ""):
     return results
 
 
+def has_report_for_email(email: str) -> bool:
+    """Return True if any report exists for the given candidate email."""
+    if not email:
+        return False
+    email_lc = email.strip().lower()
+
+    direct = (
+        Report.query
+        .filter(db.func.lower(Report.candidate_email) == email_lc)
+        .first()
+    )
+    if direct:
+        return True
+
+    linked = (
+        db.session.query(Report.id)
+        .join(TestSession, Report.test_session_id == TestSession.id)
+        .join(Candidate, TestSession.candidate_id == Candidate.id)
+        .filter(db.func.lower(Candidate.email) == email_lc)
+        .first()
+    )
+    return linked is not None
+
+
 def get_candidate_report_data(email: str) -> dict:
     """Get full candidate data for report generation."""
     candidate = Candidate.query.filter_by(email=email).first()
@@ -341,6 +365,30 @@ def get_candidate_report_data(email: str) -> dict:
             "overall_verdict": overall_verdict,
         },
     }
+
+
+def ensure_candidate_session_for_report(candidate_data: dict, generated_by: str = ""):
+    """Ensure candidate + test session exist for a report generated from in-memory data."""
+    if not candidate_data:
+        return None
+
+    email = str(candidate_data.get("email", "")).strip().lower()
+    if not email:
+        return None
+
+    name = candidate_data.get("name", "") or email
+    role_key = candidate_data.get("role_key") or candidate_data.get("role") or "general"
+    role_label = candidate_data.get("role") or candidate_data.get("role_key") or role_key
+    batch_id = candidate_data.get("batch_id", "") or ""
+
+    candidate = get_or_create_candidate(name, email)
+    return get_or_create_test_session(
+        candidate_id=candidate.id,
+        role_key=role_key,
+        role_label=role_label,
+        batch_id=batch_id,
+        created_by=generated_by,
+    )
 
 
 def save_report(identifier, filename: str, generated_by: str = "") -> Report:
