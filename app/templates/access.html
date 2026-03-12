@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Access Management{% endblock %}
+{% block breadcrumb %}Access Management{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <div>
+    <h4 class="mb-1"><i class="bi bi-shield-check me-2" style="color:var(--az-primary);"></i>Access Management</h4>
+    <div class="text-muted small">Only <strong>{{ access_admin_email }}</strong> can approve or revoke access.</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex align-items-center justify-content-between mb-2">
+      <h6 class="mb-0">Requests and Approvals</h6>
+      <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('access.access_management_page') }}"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</a>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-sm align-middle">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Requested</th>
+            <th>Approved By</th>
+            <th>Approved At</th>
+            <th class="text-end">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in approvals %}
+          <tr>
+            <td><code>{{ a.email }}</code></td>
+            <td>
+              {% if a.is_active %}
+                <span class="badge text-bg-success">Approved</span>
+              {% elif a.requested_at %}
+                <span class="badge text-bg-warning">Pending</span>
+              {% else %}
+                <span class="badge text-bg-secondary">Revoked</span>
+              {% endif %}
+            </td>
+            <td class="small text-muted">{{ a.requested_at or "" }}</td>
+            <td class="small text-muted">{{ a.approved_by or "" }}</td>
+            <td class="small text-muted">{{ a.approved_at or "" }}</td>
+            <td class="text-end">
+              <div class="d-flex justify-content-end gap-2">
+                <form method="post" action="{{ url_for('access.access_management_approve') }}">
+                  <input type="hidden" name="email" value="{{ a.email }}">
+                  <button class="btn btn-sm btn-outline-success" type="submit"><i class="bi bi-check2 me-1"></i>Approve</button>
+                </form>
+                <form method="post" action="{{ url_for('access.access_management_revoke') }}">
+                  <input type="hidden" name="email" value="{{ a.email }}">
+                  <button class="btn btn-sm btn-outline-danger" type="submit"><i class="bi bi-x-circle me-1"></i>Revoke</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+          {% if approvals|length == 0 %}
+          <tr>
+            <td colspan="6" class="text-muted small">No access requests yet.</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+

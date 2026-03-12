@@ -1,8 +1,15 @@
 import os
-from flask import Flask
-from dotenv import load_dotenv
+from pathlib import Path
 
-load_dotenv()
+from dotenv import load_dotenv
+from flask import Flask
+
+from .access_config import ACCESS_ADMIN_EMAIL
+
+# Always load project-level .env regardless of launch working directory.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+load_dotenv(PROJECT_ROOT / ".env")
+load_dotenv(PROJECT_ROOT / ".env.production", override=True)
 
 from .extensions import db, migrate
 from .blueprints.dashboard import dashboard_bp
@@ -12,6 +19,7 @@ from .blueprints.evaluation import evaluation_bp
 from .blueprints.coding import coding_bp
 from .blueprints.reports import reports_bp
 from .blueprints.auth import auth_bp
+from .blueprints.access import access_bp
 
 
 def create_app():
@@ -19,12 +27,26 @@ def create_app():
     app.secret_key = os.getenv("SECRET_KEY", "default-secret-key")
 
     # Database configuration
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
-        "DATABASE_URL",
-        "sqlite:///" + os.path.join(
-            os.path.abspath(os.path.dirname(__file__)), "..", "instance", "aziro_hiring.db"
-        )
-    )
+    database_url = (os.getenv("DATABASE_URL") or "").strip()
+    if database_url:
+        # Accept both postgresql:// and legacy postgres://
+        if database_url.startswith("postgres://"):
+            database_url = "postgresql://" + database_url[len("postgres://") :]
+
+        if not database_url.startswith("postgresql://"):
+            scheme = database_url.split(":", 1)[0]
+            raise RuntimeError(
+                f"DATABASE_URL must be a Postgres DSN (postgresql://...). Got: {scheme}://"
+            )
+
+        # Server (nginx) uses Postgres.
+        app.config["SQLALCHEMY_DATABASE_URI"] = database_url
+    else:
+        # Local dev convenience: allow running without Postgres by falling back to SQLite.
+        sqlite_path = Path(app.instance_path) / "aziro_hiring.sqlite3"
+        sqlite_path.parent.mkdir(parents=True, exist_ok=True)
+        app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{sqlite_path.as_posix()}"
+
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SESSION_PERMANENT"] = True
 
@@ -40,8 +62,21 @@ def create_app():
     app.register_blueprint(evaluation_bp)
     app.register_blueprint(coding_bp)
     app.register_blueprint(reports_bp)
+    app.register_blueprint(access_bp)
 
-    # ── Permissions-Policy / Feature-Policy headers ──
+    @app.context_processor
+    def inject_access_admin_context():
+        from flask import session
+
+        user = session.get("user", {}) if isinstance(session.get("user"), dict) else {}
+        user_email = str(user.get("email", "") or "").strip().lower()
+        admin_email = str(ACCESS_ADMIN_EMAIL or "").strip().lower()
+        return {
+            "is_access_admin": bool(admin_email and user_email == admin_email),
+            "access_admin_email": admin_email,
+        }
+
+    # -- Permissions-Policy / Feature-Policy headers --
     @app.after_request
     def set_permissions_policy(response):
         response.headers["Permissions-Policy"] = (
@@ -55,10 +90,12 @@ def create_app():
     # Create DB tables
     with app.app_context():
         from . import models  # noqa: F401
+
         db.create_all()
 
     # Inject asset version into all templates for cache busting
     from .config import Config
+
     app.jinja_env.globals["ASSET_VERSION"] = Config.ASSET_VERSION
 
     # Dev mode: Bypass login for local testing
@@ -85,5 +122,18 @@ def create_app():
                     "email": "dev@aziro.com",
                     "authenticated": True
                 }
+    else:
+        @app.before_request
+        def clear_stale_dev_bypass_session():
+            from flask import session
 
+            user = session.get("user")
+            if not isinstance(user, dict):
+                return
+            if (
+                user.get("email") == "dev@aziro.com"
+                and user.get("name") == "Dev User"
+                and "oauth" not in session
+            ):
+                session.clear()
     return app

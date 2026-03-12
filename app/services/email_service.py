@@ -426,3 +426,294 @@ def send_candidate_test_links_email(
             f"SMTP failed: {smtp_err}"
         ),
     )
+
+# ---- Generic plain-text email sender (used for access requests) ----
+
+def _send_plain_via_smtp(
+    to_email: str,
+    subject: str,
+    body: str,
+) -> Tuple[bool, str]:
+    smtp_enabled = _env_bool("SMTP_ENABLED", default=True)
+    if not smtp_enabled:
+        return False, "SMTP email sending is disabled (SMTP_ENABLED=false)."
+
+    smtp_host = os.getenv("SMTP_HOST", DEFAULT_SMTP_HOST).strip()
+    smtp_port_raw = os.getenv("SMTP_PORT", str(DEFAULT_SMTP_PORT)).strip()
+    try:
+        smtp_port = int(smtp_port_raw)
+    except ValueError:
+        return False, f"Invalid SMTP_PORT: {smtp_port_raw}"
+    smtp_use_tls = _env_bool("SMTP_USE_TLS", default=True)
+    smtp_username = os.getenv("SMTP_USERNAME", DEFAULT_FROM_EMAIL).strip()
+    smtp_password = os.getenv("SMTP_PASSWORD", "").strip()
+    smtp_from_email = os.getenv("SMTP_FROM_EMAIL", smtp_username or DEFAULT_FROM_EMAIL).strip()
+
+    if not smtp_username or not smtp_password:
+        return False, "SMTP credentials are missing. Set SMTP_USERNAME and SMTP_PASSWORD."
+
+    message = EmailMessage()
+    message["Subject"] = subject
+    message["From"] = smtp_from_email
+    message["To"] = to_email
+    message.set_content(body)
+
+    try:
+        with smtplib.SMTP(smtp_host, smtp_port, timeout=15) as smtp:
+            smtp.ehlo()
+            if smtp_use_tls:
+                smtp.starttls()
+                smtp.ehlo()
+            smtp.login(smtp_username, smtp_password)
+            smtp.send_message(message)
+        return True, ""
+    except Exception as exc:
+        return False, str(exc)
+
+
+def _send_plain_via_graph(
+    to_email: str,
+    subject: str,
+    body: str,
+) -> Tuple[bool, str]:
+    tenant_id = os.getenv("AZURE_TENANT_ID", "").strip()
+    client_id = os.getenv("AZURE_CLIENT_ID", "").strip()
+    client_secret = os.getenv("AZURE_CLIENT_SECRET", "").strip()
+    sender_email = (
+        os.getenv("SENDER_EMAIL", "").strip()
+        or os.getenv("SMTP_FROM_EMAIL", "").strip()
+        or os.getenv("SMTP_USERNAME", "").strip()
+        or DEFAULT_FROM_EMAIL
+    )
+
+    if not tenant_id or not client_id or not client_secret:
+        return (
+            False,
+            "Graph credentials are missing. Set AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET.",
+        )
+    if not sender_email:
+        return False, "SENDER_EMAIL is missing for Graph send."
+
+    authority = f"https://login.microsoftonline.com/{tenant_id}"
+    app = msal.ConfidentialClientApplication(
+        client_id,
+        authority=authority,
+        client_credential=client_secret,
+    )
+    token_result = app.acquire_token_for_client(scopes=GRAPH_SCOPE)
+    access_token = token_result.get("access_token")
+    if not access_token:
+        err = token_result.get("error_description") or token_result.get("error") or "Unknown token error"
+        return False, f"Graph token acquisition failed: {err}"
+
+    payload = {
+        "message": {
+            "subject": subject,
+            "body": {"contentType": "Text", "content": body},
+            "toRecipients": [{"emailAddress": {"address": to_email}}],
+        },
+        "saveToSentItems": "true",
+    }
+
+    sender_encoded = quote(sender_email)
+    url = f"https://graph.microsoft.com/v1.0/users/{sender_encoded}/sendMail"
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "Content-Type": "application/json",
+    }
+
+    try:
+        response = requests.post(url, headers=headers, json=payload, timeout=20)
+    except Exception as exc:
+        return False, f"Graph request failed: {exc}"
+
+    if response.status_code in (200, 202):
+        return True, ""
+
+    try:
+        data = response.json()
+    except Exception:
+        data = {}
+    message = data.get("error", {}).get("message") or response.text or f"HTTP {response.status_code}"
+    return False, f"Graph send failed ({response.status_code}): {message}"
+
+
+def _send_plain_via_graph_delegated(
+    to_email: str,
+    subject: str,
+    body: str,
+    delegated_access_token: str = "",
+    delegated_sender_email: str = "",
+) -> Tuple[bool, str]:
+    access_token = str(delegated_access_token or "").strip()
+    if not access_token:
+        return (
+            False,
+            "Delegated Graph token is missing or expired. Please sign in with Microsoft again.",
+        )
+
+    payload = {
+        "message": {
+            "subject": subject,
+            "body": {"contentType": "Text", "content": body},
+            "toRecipients": [{"emailAddress": {"address": to_email}}],
+        },
+        "saveToSentItems": "true",
+    }
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "Content-Type": "application/json",
+    }
+
+    try:
+        response = requests.post(
+            "https://graph.microsoft.com/v1.0/me/sendMail",
+            headers=headers,
+            json=payload,
+            timeout=20,
+        )
+    except Exception as exc:
+        return False, f"Delegated Graph request failed: {exc}"
+
+    if response.status_code in (200, 202):
+        return True, ""
+
+    try:
+        data = response.json()
+    except Exception:
+        data = {}
+
+    sender_hint = f" for signed-in user {delegated_sender_email}" if delegated_sender_email else ""
+    message = data.get("error", {}).get("message") or response.text or f"HTTP {response.status_code}"
+    return False, f"Delegated Graph send failed ({response.status_code}){sender_hint}: {message}"
+
+
+def _send_plain_via_resend(
+    to_email: str,
+    subject: str,
+    body: str,
+) -> Tuple[bool, str]:
+    api_key = os.getenv("RESEND_API_KEY", "").strip()
+    from_email = (
+        os.getenv("RESEND_FROM_EMAIL", "").strip()
+        or os.getenv("SENDER_EMAIL", "").strip()
+        or os.getenv("SMTP_FROM_EMAIL", "").strip()
+        or DEFAULT_FROM_EMAIL
+    )
+
+    if not api_key:
+        return False, "Resend API key is missing. Set RESEND_API_KEY."
+    if not from_email:
+        return False, "Resend sender is missing. Set RESEND_FROM_EMAIL."
+
+    payload = {
+        "from": from_email,
+        "to": [to_email],
+        "subject": subject,
+        "text": body,
+    }
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+    }
+
+    try:
+        response = requests.post(
+            RESEND_SEND_EMAIL_URL,
+            headers=headers,
+            json=payload,
+            timeout=20,
+        )
+    except Exception as exc:
+        return False, f"Resend request failed: {exc}"
+
+    if 200 <= response.status_code < 300:
+        return True, ""
+
+    try:
+        data = response.json()
+    except Exception:
+        data = {}
+
+    message = data.get("message") or data.get("error", {}).get("message") or response.text or f"HTTP {response.status_code}"
+    return False, f"Resend send failed ({response.status_code}): {message}"
+
+
+def send_plain_email(
+    to_email: str,
+    subject: str,
+    body: str,
+    delegated_access_token: str = "",
+    delegated_sender_email: str = "",
+) -> Tuple[bool, str]:
+    """Send a plain-text email (used for access request notifications)."""
+    email_provider = os.getenv("EMAIL_PROVIDER", "smtp").strip().lower()
+    valid_providers = {"smtp", "graph", "graph_delegated", "resend", "auto"}
+    if email_provider not in valid_providers:
+        return (
+            False,
+            f"Invalid EMAIL_PROVIDER: {email_provider}. Use one of: smtp, graph, graph_delegated, resend, auto.",
+        )
+
+    to_email = str(to_email or "").strip()
+    subject = str(subject or "").strip()
+    body = str(body or "")
+    if not to_email or not subject:
+        return False, "Recipient and subject are required."
+
+    if delegated_access_token:
+        delegated_ok, delegated_err = _send_plain_via_graph_delegated(
+            to_email=to_email,
+            subject=subject,
+            body=body,
+            delegated_access_token=delegated_access_token,
+            delegated_sender_email=delegated_sender_email,
+        )
+        if delegated_ok:
+            return True, ""
+        if email_provider == "graph_delegated":
+            return False, delegated_err
+
+    if email_provider == "graph":
+        return _send_plain_via_graph(to_email=to_email, subject=subject, body=body)
+
+    if email_provider == "graph_delegated":
+        return False, "Delegated Graph token is missing or expired. Please sign in with Microsoft again."
+
+    if email_provider == "smtp":
+        return _send_plain_via_smtp(to_email=to_email, subject=subject, body=body)
+
+    if email_provider == "resend":
+        return _send_plain_via_resend(to_email=to_email, subject=subject, body=body)
+
+    delegated_ok, delegated_err = _send_plain_via_graph_delegated(
+        to_email=to_email,
+        subject=subject,
+        body=body,
+        delegated_access_token=delegated_access_token,
+        delegated_sender_email=delegated_sender_email,
+    )
+    if delegated_ok:
+        return True, ""
+
+    resend_ok, resend_err = _send_plain_via_resend(to_email=to_email, subject=subject, body=body)
+    if resend_ok:
+        return True, ""
+
+    graph_ok, graph_err = _send_plain_via_graph(to_email=to_email, subject=subject, body=body)
+    if graph_ok:
+        return True, ""
+
+    smtp_ok, smtp_err = _send_plain_via_smtp(to_email=to_email, subject=subject, body=body)
+    if smtp_ok:
+        return True, ""
+
+    return (
+        False,
+        (
+            f"Delegated Graph failed: {delegated_err} | "
+            f"Resend failed: {resend_err} | "
+            f"Graph failed: {graph_err} | "
+            f"SMTP failed: {smtp_err}"
+        ),
+    )
