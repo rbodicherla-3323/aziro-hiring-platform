@@ -20,6 +20,22 @@ from app.services.pdf_service import generate_candidate_pdf, REPORTS_DIR
 reports_bp = Blueprint("reports", __name__)
 
 
+def _get_db_service():
+    try:
+        from app.services import db_service
+        return db_service
+    except Exception:
+        return None
+
+
+def _get_pdf_service():
+    try:
+        from app.services.pdf_service import generate_candidate_pdf, REPORTS_DIR
+        return generate_candidate_pdf, REPORTS_DIR
+    except Exception:
+        return None, None
+
+
 @reports_bp.route("/reports")
 @login_required
 def reports():
