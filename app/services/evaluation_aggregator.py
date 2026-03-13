@@ -4,6 +4,7 @@ from app.services.generated_tests_store import GENERATED_TESTS
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 from app.services.evaluation_service import EvaluationService
+from app.utils.round_order import ordered_present_round_keys, round_number_map
 
 
 class EvaluationAggregator:
@@ -101,17 +102,18 @@ class EvaluationAggregator:
         # -------------------------------
         # 4️⃣ Sort rounds & compute overall
         # -------------------------------
-        ordered_rounds = ["L1", "L2", "L3", "L4", "L5", "L6"]
-
         final_list = []
 
         for candidate in candidates_map.values():
 
             sorted_rounds = {}
-
-            for rk in ordered_rounds:
+            ordered_keys = ordered_present_round_keys(candidate["rounds"])
+            numbers = round_number_map(ordered_keys)
+            for rk in ordered_keys:
                 if rk in candidate["rounds"]:
-                    sorted_rounds[rk] = candidate["rounds"][rk]
+                    row = dict(candidate["rounds"][rk])
+                    row["round_number"] = numbers.get(rk, 0)
+                    sorted_rounds[rk] = row
 
             candidate["rounds"] = sorted_rounds
 

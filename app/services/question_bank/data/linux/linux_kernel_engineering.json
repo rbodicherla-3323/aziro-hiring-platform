@@ -1,0 +1,2585 @@
+[
+  {
+    "id": "linux-linux-kernel-engineering-001",
+    "question": "A production defect investigation needs clarity on the purpose of the Linux kernel's 'kconfig' system?",
+    "options": [
+      "A configuration system (menuconfig/defconfig) that selects which features and modules to build into the kernel",
+      "To configure user account settings",
+      "To configure the bootloader",
+      "To configure kernel network settings at runtime in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A configuration system (menuconfig/defconfig) that selects which features and modules to build into the kernel",
+    "topic": "Kernel Build and Deployment",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "kernel-build-and-deployment",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-002",
+    "question": "What command is used to build the Linux kernel?",
+    "options": [
+      "make (with targets like make bzImage, make modules)",
+      "gcc kernel.c",
+      "kernel-build",
+      "cmake --build in this scenario under production constraints"
+    ],
+    "correct_answer": "make (with targets like make bzImage, make modules)",
+    "topic": "Kernel Build and Deployment",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "kernel-build-and-deployment",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-003",
+    "question": "A production server is experiencing high load averages (15+) but CPU utilization stays under 20%. 'top' shows many processes in D (uninterruptible sleep) state. What is the most likely root cause?",
+    "options": [
+      "Processes are waiting on I/O operations (disk or NFS), causing I/O wait",
+      "The system is CPU-bound and needs more cores",
+      "The scheduler is misconfigured and needs tuning via nice values in this scenario",
+      "OOM killer is throttling processes"
+    ],
+    "correct_answer": "Processes are waiting on I/O operations (disk or NFS), causing I/O wait",
+    "topic": "Performance and Observability",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-observability"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-004",
+    "question": "A production defect investigation needs clarity on the purpose of the 'init' process (PID 1) in Linux?",
+    "options": [
+      "It is the first user-space process; it initializes the system and is the ancestor of all processes",
+      "To manage network connections in this scenario under production constraints for the stated requirement",
+      "To handle interrupt requests",
+      "To compile the kernel"
+    ],
+    "correct_answer": "It is the first user-space process; it initializes the system and is the ancestor of all processes",
+    "topic": "Scheduling and Memory Management",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux",
+      "scheduling-and-memory-management"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-005",
+    "question": "You run 'iostat -x 1' and notice that a disk has an average queue size (avgqu-sz) of 32 and %util is at 100%. The await time is 450ms. What does this indicate?",
+    "options": [
+      "The disk is saturated with high latency; requests are queuing excessively",
+      "The filesystem is corrupted and needs fsck",
+      "The disk controller firmware needs updating in this scenario under production constraints",
+      "The disk is idle and performing optimally"
+    ],
+    "correct_answer": "The disk is saturated with high latency; requests are queuing excessively",
+    "topic": "Performance and Observability",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-observability"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-006",
+    "question": "In a production scenario, which option best describes the OOM (Out of Memory) killer in Linux?",
+    "options": [
+      "A kernel mechanism that selects and kills processes when the system runs critically low on memory",
+      "A tool to optimize memory usage",
+      "A memory leak detection tool",
+      "A user-space daemon for memory management in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A kernel mechanism that selects and kills processes when the system runs critically low on memory",
+    "topic": "Scheduling and Memory Management",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "linux",
+      "memory",
+      "scenario",
+      "scheduling-and-memory-management"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-007",
+    "question": "A server has a RAID-5 array with 4 disks, and one disk fails. During rebuild with a hot spare, a second disk fails. What happens?",
+    "options": [
+      "The array fails completely and data is lost; RAID-5 can tolerate only one disk failure at a time",
+      "Data is preserved because the hot spare already has a complete copy in this scenario under production constraints",
+      "The array continues operating normally with degraded performance",
+      "The array automatically switches to RAID-1 mode"
+    ],
+    "correct_answer": "The array fails completely and data is lost; RAID-5 can tolerate only one disk failure at a time",
+    "topic": "Kernel Build and Deployment",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "kernel-build-and-deployment"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-008",
+    "question": "The command 'ss -tlnp' shows a process listening on 0.0.0.0:8080 but external clients cannot connect. Firewall rules (iptables -L) show no DROP rules. What else could be blocking external access?",
+    "options": [
+      "A cloud security group, network ACL, or firewalld/nftables rule is blocking inbound traffic on port 8080",
+      "The process must listen on 127.0.0.1 instead of 0.0.0.0",
+      "The ss command output is unreliable; use netstat instead in this scenario under production constraints for the stated requirement",
+      "The process is only configured for IPv6"
+    ],
+    "correct_answer": "A cloud security group, network ACL, or firewalld/nftables rule is blocking inbound traffic on port 8080",
+    "topic": "Kernel Concurrency and Locking",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "kernel-concurrency-and-locking",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-009",
+    "question": "What is the CFS (Completely Fair Scheduler) in Linux?",
+    "options": [
+      "The default CPU process scheduler that uses a red-black tree to fairly allocate CPU time",
+      "A file system scheduler",
+      "A disk I/O scheduler",
+      "A network packet scheduler in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "The default CPU process scheduler that uses a red-black tree to fairly allocate CPU time",
+    "topic": "Scheduling and Memory Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "linux",
+      "scheduling-and-memory-management"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-010",
+    "question": "A Java application's response times have degraded. You notice the system's swap usage is at 6GB despite 32GB physical RAM. 'vmstat 1' shows high si/so values. What is happening and what should you check first?",
+    "options": [
+      "The system is thrashing - memory is overcommitted and pages are constantly swapping in/out; check per-process RSS with 'ps aux --sort=-rss'",
+      "The kernel is proactively caching swap; this is normal behavior",
+      "Swap is being used as additional RAM intentionally; increase swap to 12GB in this scenario under production constraints for the stated requirement",
+      "The Java application has a file descriptor leak causing swap usage"
+    ],
+    "correct_answer": "The system is thrashing - memory is overcommitted and pages are constantly swapping in/out; check per-process RSS with 'ps aux --sort=-rss'",
+    "topic": "Performance and Observability",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "performance-and-observability",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-011",
+    "question": "During architecture review, which option best describes the Linux kernel?",
+    "options": [
+      "The core component of the Linux OS that manages hardware, memory, processes, and system calls",
+      "A command-line shell",
+      "A Linux distribution like Ubuntu",
+      "A graphical user interface for Linux in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "The core component of the Linux OS that manages hardware, memory, processes, and system calls",
+    "topic": "Kernel Build and Deployment",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "kernel",
+      "kernel-build-and-deployment",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-012",
+    "question": "During live operations, which option best describes the difference between monolithic and microkernel architectures?",
+    "options": [
+      "Monolithic kernels run all services in kernel space; microkernels run most services in user space",
+      "There is no architectural difference",
+      "Microkernels are faster than monolithic kernels",
+      "Monolithic kernels are smaller than microkernels in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "Monolithic kernels run all services in kernel space; microkernels run most services in user space",
+    "topic": "Kernel Build and Deployment",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "kernel",
+      "kernel-build-and-deployment",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-013",
+    "question": "What is a kernel panic?",
+    "options": [
+      "A fatal error where the kernel cannot safely continue operation and halts",
+      "A warning message in the kernel log",
+      "A kernel performance optimization",
+      "A scheduled kernel maintenance event in this scenario under production constraints"
+    ],
+    "correct_answer": "A fatal error where the kernel cannot safely continue operation and halts",
+    "topic": "Kernel Debugging",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "kernel",
+      "kernel-debugging"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-014",
+    "question": "In a production scenario, which option best describes a system call in Linux?",
+    "options": [
+      "An interface through which user-space programs request services from the kernel",
+      "A function call between two user-space programs in this scenario under production constraints",
+      "A call to the system BIOS",
+      "A network RPC mechanism"
+    ],
+    "correct_answer": "An interface through which user-space programs request services from the kernel",
+    "topic": "Kernel APIs and Subsystems",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "kernel-apis-and-subsystems",
+      "linux",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-015",
+    "question": "During architecture review, which option best describes a zombie process?",
+    "options": [
+      "A terminated process whose exit status has not yet been collected by its parent via wait()",
+      "A suspended process",
+      "A process running in the background in this scenario under production constraints for the stated requirement",
+      "A process using too much CPU"
+    ],
+    "correct_answer": "A terminated process whose exit status has not yet been collected by its parent via wait()",
+    "topic": "Scheduling and Memory Management",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "scheduling-and-memory-management"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-016",
+    "question": "During live operations, which option best describes the difference between kernel space and user space?",
+    "options": [
+      "Kernel space has unrestricted hardware access; user space has restricted access and must use syscalls",
+      "User space is more privileged than kernel space",
+      "There is no separation in Linux",
+      "Kernel space is for storing files; user space is for programs in this scenario under production constraints"
+    ],
+    "correct_answer": "Kernel space has unrestricted hardware access; user space has restricted access and must use syscalls",
+    "topic": "Kernel Architecture and Internals",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "kernel",
+      "kernel-architecture-and-internals",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-017",
+    "question": "What is the purpose of 'dmesg' command?",
+    "options": [
+      "To display the kernel ring buffer messages (boot and runtime kernel logs)",
+      "To send messages to other users in this scenario under production constraints",
+      "To display disk messages",
+      "To manage device messages"
+    ],
+    "correct_answer": "To display the kernel ring buffer messages (boot and runtime kernel logs)",
+    "topic": "Kernel Debugging",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "kernel-debugging"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-018",
+    "question": "In a production scenario, which option best describes the purpose of 'printk' in the Linux kernel?",
+    "options": [
+      "The kernel's logging function for outputting messages to the kernel log buffer",
+      "To format print jobs",
+      "To print to the user's terminal in this scenario under production constraints for the stated requirement",
+      "To print kernel configuration"
+    ],
+    "correct_answer": "The kernel's logging function for outputting messages to the kernel log buffer",
+    "topic": "Kernel Debugging",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "kernel",
+      "kernel-debugging",
+      "linux",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-019",
+    "question": "During architecture review, which option best describes a loadable kernel module (LKM)?",
+    "options": [
+      "Code that can be loaded into and unloaded from the running kernel without rebooting",
+      "A module for loading user applications",
+      "A kernel that can be loaded from a USB drive in this scenario under production constraints",
+      "A precompiled kernel binary"
+    ],
+    "correct_answer": "Code that can be loaded into and unloaded from the running kernel without rebooting",
+    "topic": "Kernel Concurrency and Locking",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "kernel",
+      "kernel-concurrency-and-locking"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-020",
+    "question": "During live operations, which option best describes the difference between /dev/null, /dev/zero, and /dev/urandom?",
+    "options": [
+      "/dev/null discards all data written to it; /dev/zero produces an infinite stream of zero bytes (for disk wiping, file creation); /dev/urandom provides cryptographically secure pseudorandom bytes",
+      "/dev/null produces random data; /dev/zero discards data; /dev/urandom produces zeros in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "They are all identical devices that discard data",
+      "/dev/zero is for zeroing network connections; /dev/null is for zeroing disks"
+    ],
+    "correct_answer": "/dev/null discards all data written to it; /dev/zero produces an infinite stream of zero bytes (for disk wiping, file creation); /dev/urandom provides cryptographically secure pseudorandom bytes",
+    "topic": "Kernel Architecture and Internals",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "kernel-architecture-and-internals",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-021",
+    "question": "Which commands are used to load and unload kernel modules?",
+    "options": [
+      "insmod / rmmod (or modprobe / modprobe -r)",
+      "kmod_add / kmod_remove in this scenario under production constraints",
+      "modload / modunload",
+      "load / unload"
+    ],
+    "correct_answer": "insmod / rmmod (or modprobe / modprobe -r)",
+    "topic": "Kernel APIs and Subsystems",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "kernel-apis-and-subsystems"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-022",
+    "question": "A production defect investigation needs clarity on the kernel ring buffer?",
+    "options": [
+      "A fixed-size circular buffer where the kernel stores log messages (accessible via dmesg)",
+      "A graphics rendering buffer",
+      "A circular buffer for network packets in this scenario under production constraints for the stated requirement",
+      "A buffer for keyboard input"
+    ],
+    "correct_answer": "A fixed-size circular buffer where the kernel stores log messages (accessible via dmesg)",
+    "topic": "Kernel Debugging",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "kernel-debugging"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-023",
+    "question": "Explain the difference between /etc/environment, /etc/profile, ~/.bashrc, and ~/.bash_profile. In which order are they sourced for a login shell?",
+    "options": [
+      "For a login shell: /etc/environment (PAM) \u2192 /etc/profile \u2192 /etc/profile.d/*.sh \u2192 ~/.bash_profile (or ~/.profile); ~/.bashrc is sourced only for non-login interactive shells (but often called from.bash_profile)",
+      "They are all sourced simultaneously",
+      "/etc/environment is only for graphical sessions",
+      "~/.bashrc is always sourced first, then /etc/profile in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback"
+    ],
+    "correct_answer": "For a login shell: /etc/environment (PAM) \u2192 /etc/profile \u2192 /etc/profile.d/*.sh \u2192 ~/.bash_profile (or ~/.profile); ~/.bashrc is sourced only for non-login interactive shells (but often called from.bash_profile)",
+    "topic": "Kernel Architecture and Internals",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel-architecture-and-internals"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-024",
+    "question": "A production defect investigation needs clarity on the difference between 'insmod' and 'modprobe'?",
+    "options": [
+      "modprobe automatically handles module dependencies; insmod does not",
+      "modprobe works only for network modules",
+      "They are identical",
+      "insmod handles dependencies; modprobe does not in this scenario under production constraints"
+    ],
+    "correct_answer": "modprobe automatically handles module dependencies; insmod does not",
+    "topic": "Kernel Concurrency and Locking",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel-concurrency-and-locking"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-025",
+    "question": "A production defect investigation needs clarity on the purpose of the Linux kernel's memory management unit (MMU)?",
+    "options": [
+      "To translate virtual addresses to physical addresses and enforce memory protection",
+      "To manage network memory buffers in this scenario under production constraints for the stated requirement",
+      "To compress memory data",
+      "To manage disk memory"
+    ],
+    "correct_answer": "To translate virtual addresses to physical addresses and enforce memory protection",
+    "topic": "Scheduling and Memory Management",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "linux",
+      "memory",
+      "scheduling-and-memory-management"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-026",
+    "question": "A production defect investigation needs clarity on the Virtual File System (VFS) in Linux?",
+    "options": [
+      "An abstraction layer that provides a uniform interface for different file systems",
+      "A file system stored entirely in RAM",
+      "A virtual disk for storing temporary files in this scenario under production constraints",
+      "A virtual machine file system"
+    ],
+    "correct_answer": "An abstraction layer that provides a uniform interface for different file systems",
+    "topic": "Kernel Concurrency and Locking",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel-concurrency-and-locking",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-027",
+    "question": "A production defect investigation needs clarity on the purpose of the 'proc' filesystem (/proc)?",
+    "options": [
+      "A virtual filesystem providing process and kernel information as files",
+      "To store application configuration files in this scenario under production constraints",
+      "To store procedure definitions",
+      "To provide network protocol information"
+    ],
+    "correct_answer": "A virtual filesystem providing process and kernel information as files",
+    "topic": "Kernel Concurrency and Locking",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel-concurrency-and-locking"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-028",
+    "question": "You need to trace all system calls made by a running process with PID 4521 without stopping it. Which command would you use?",
+    "options": [
+      "strace -p 4521 under production constraints",
+      "ltrace --pid 4521",
+      "gdb attach 4521",
+      "perf record -p 4521 under production constraints"
+    ],
+    "correct_answer": "strace -p 4521 under production constraints",
+    "topic": "Kernel Debugging",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel-debugging"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-029",
+    "question": "You need to identify which process is consuming the most disk I/O on a Linux server. Which tool gives per-process I/O statistics including read/write bytes per second?",
+    "options": [
+      "iotop",
+      "vmstat",
+      "netstat",
+      "top"
+    ],
+    "correct_answer": "iotop",
+    "topic": "Performance and Observability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux",
+      "performance-and-observability"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-030",
+    "question": "You run 'sysctl -a | grep net.core.rmem_max' and it shows 212992 (208KB). Your application requires large UDP receive buffers of 4MB. What do you need to do?",
+    "options": [
+      "Set net.core.rmem_max=4194304 via sysctl and configure the application to request the larger buffer with SO_RCVBUF",
+      "Increase the application's thread count to handle packets faster in this scenario under production constraints for the stated requirement",
+      "Install a faster network card",
+      "Change the MTU to 9000 to increase buffer size"
+    ],
+    "correct_answer": "Set net.core.rmem_max=4194304 via sysctl and configure the application to request the larger buffer with SO_RCVBUF",
+    "topic": "Kernel Architecture and Internals",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel-architecture-and-internals"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-031",
+    "question": "A server experiences a sudden disk performance drop. 'smartctl -a /dev/sda' shows 'Reallocated_Sector_Ct' increasing and 'Current_Pending_Sector' at 48. What action should you take?",
+    "options": [
+      "The disk is developing bad sectors and likely failing; plan an immediate replacement, ensure backups are current, and consider putting the RAID array into a degraded state for proactive swap",
+      "Increase the disk's write cache to improve performance in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "Reformat the disk to fix the bad sectors",
+      "Run fsck to repair the sectors"
+    ],
+    "correct_answer": "The disk is developing bad sectors and likely failing; plan an immediate replacement, ensure backups are current, and consider putting the RAID array into a degraded state for proactive swap",
+    "topic": "Performance and Observability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance",
+      "performance-and-observability"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-032",
+    "question": "A production defect investigation needs clarity on a page fault in the Linux kernel?",
+    "options": [
+      "An event triggered when a process accesses a virtual memory page not currently mapped in physical memory",
+      "A corrupted memory page",
+      "An error in the filesystem",
+      "A hardware failure in memory in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "An event triggered when a process accesses a virtual memory page not currently mapped in physical memory",
+    "topic": "Scheduling and Memory Management",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "linux",
+      "scheduling-and-memory-management"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-033",
+    "question": "You need to transfer a 50GB database dump between two servers. The network bandwidth is 1Gbps but rsync is only achieving 200Mbps. What could improve transfer speed?",
+    "options": [
+      "rsync's SSH encryption adds overhead; try rsync with --compress disabled (already compressed data), use a faster cipher (-e 'ssh -c aes128-gcm@openssh.com'), or use rsync daemon mode (no SSH) on a trusted network",
+      "Use scp instead; it's always faster than rsync",
+      "Use 'cp' command over NFS; it's faster than rsync in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback",
+      "Increase the server's RAM to 128GB"
+    ],
+    "correct_answer": "rsync's SSH encryption adds overhead; try rsync with --compress disabled (already compressed data), use a faster cipher (-e 'ssh -c aes128-gcm@openssh.com'), or use rsync daemon mode (no SSH) on a trusted network",
+    "topic": "Performance and Observability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-observability"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-034",
+    "question": "A production defect investigation needs clarity on the difference between a process and a thread in the Linux kernel?",
+    "options": [
+      "Threads share the same address space within a process; processes have separate address spaces",
+      "Threads have separate address spaces; processes share address space in this scenario under production constraints",
+      "Threads cannot be created in the kernel",
+      "Processes and threads are identical in Linux"
+    ],
+    "correct_answer": "Threads share the same address space within a process; processes have separate address spaces",
+    "topic": "Kernel Build and Deployment",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "kernel-build-and-deployment",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-035",
+    "question": "A production defect investigation needs clarity on the 'ldd' command do, and why should you never run it on untrusted binaries?",
+    "options": [
+      "ldd lists shared library dependencies of a binary; on some systems it may actually execute the binary's dynamic linker, potentially running malicious code in untrusted binaries",
+      "ldd checks for logical disk damage; it's always safe",
+      "ldd lists directory contents in detail; security is not a concern in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "ldd lists disk drive partitions; it's safe to run on any file"
+    ],
+    "correct_answer": "ldd lists shared library dependencies of a binary; on some systems it may actually execute the binary's dynamic linker, potentially running malicious code in untrusted binaries",
+    "topic": "Kernel Architecture and Internals",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel-architecture-and-internals"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-036",
+    "question": "What are the states a process can be in within the Linux kernel?",
+    "options": [
+      "TASK_RUNNING, TASK_INTERRUPTIBLE, TASK_UNINTERRUPTIBLE, TASK_STOPPED, TASK_ZOMBIE, etc.",
+      "Start, Run, Stop",
+      "Running, Waiting, Terminated only in this scenario under production constraints for the stated requirement",
+      "Active, Inactive, Dead"
+    ],
+    "correct_answer": "TASK_RUNNING, TASK_INTERRUPTIBLE, TASK_UNINTERRUPTIBLE, TASK_STOPPED, TASK_ZOMBIE, etc.",
+    "topic": "Kernel Concurrency and Locking",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "kernel",
+      "kernel-concurrency-and-locking",
+      "linux",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-037",
+    "question": "During architecture review, which option best describes the purpose of the sysfs filesystem (/sys)?",
+    "options": [
+      "A virtual filesystem exposing kernel objects, device info, and driver attributes to user space",
+      "To log system events",
+      "To store system configuration files in this scenario under production constraints for the stated requirement",
+      "To manage system services"
+    ],
+    "correct_answer": "A virtual filesystem exposing kernel objects, device info, and driver attributes to user space",
+    "topic": "Kernel APIs and Subsystems",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "kernel-apis-and-subsystems"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-038",
+    "question": "During live operations, which option best describes a spinlock in the Linux kernel?",
+    "options": [
+      "A lock where the waiting thread continuously polls (spins) until the lock becomes available",
+      "A file locking mechanism",
+      "A lock that puts the waiting thread to sleep in this scenario under production constraints for the stated requirement",
+      "A network socket lock"
+    ],
+    "correct_answer": "A lock where the waiting thread continuously polls (spins) until the lock becomes available",
+    "topic": "Kernel Build and Deployment",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "kernel",
+      "kernel-build-and-deployment",
+      "linux",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-039",
+    "question": "What is the difference between a spinlock and a mutex in the kernel?",
+    "options": [
+      "Spinlocks busy-wait and cannot sleep; mutexes can put the caller to sleep while waiting",
+      "Spinlocks are only for user space; mutexes are for kernel space in this scenario under production constraints",
+      "Mutexes busy-wait; spinlocks sleep",
+      "They are identical"
+    ],
+    "correct_answer": "Spinlocks busy-wait and cannot sleep; mutexes can put the caller to sleep while waiting",
+    "topic": "Kernel APIs and Subsystems",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "kernel",
+      "kernel-apis-and-subsystems"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-040",
+    "question": "A process is stuck and not responding but hasn't crashed. 'strace -p <pid>' shows it's blocked on a futex() call. What does this suggest?",
+    "options": [
+      "The process is waiting on a userspace lock (mutex/semaphore), likely a deadlock or contention issue",
+      "The filesystem is read-only",
+      "The process is performing a DNS lookup",
+      "The process has exceeded its CPU time limit in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "The process is waiting on a userspace lock (mutex/semaphore), likely a deadlock or contention issue",
+    "topic": "Kernel Debugging",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "kernel-debugging",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-041",
+    "question": "You need to find which files a process has open, including sockets, pipes, and file descriptors. Which command provides this information?",
+    "options": [
+      "lsof -p <pid>",
+      "fuser",
+      "file /proc/<pid>/fd",
+      "stat /proc/<pid>"
+    ],
+    "correct_answer": "lsof -p <pid>",
+    "topic": "Kernel Debugging",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "kernel-debugging"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-042",
+    "question": "During live operations, which option best describes a kernel work queue?",
+    "options": [
+      "A mechanism for deferring work to be executed later in process context by kernel threads",
+      "A print queue managed by the kernel",
+      "A queue of pending system calls",
+      "A job scheduling system for user programs in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A mechanism for deferring work to be executed later in process context by kernel threads",
+    "topic": "Kernel APIs and Subsystems",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "kernel",
+      "kernel-apis-and-subsystems",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-043",
+    "question": "What is a tasklet in the Linux kernel?",
+    "options": [
+      "A software interrupt mechanism for deferring work from a hardware interrupt handler (runs in softirq context)",
+      "A scheduled cron task",
+      "A kernel thread",
+      "A small user-space task in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "A software interrupt mechanism for deferring work from a hardware interrupt handler (runs in softirq context)",
+    "topic": "Kernel Concurrency and Locking",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "kernel",
+      "kernel-concurrency-and-locking",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-044",
+    "question": "In a production scenario, which option best describes the difference between top half and bottom half in interrupt handling?",
+    "options": [
+      "Top half runs immediately in interrupt context (fast); bottom half defers longer work to be done later",
+      "Top half runs in user space; bottom half in kernel space",
+      "There is no such distinction",
+      "Top half is the first half of the code; bottom half is the second half in this scenario under production constraints"
+    ],
+    "correct_answer": "Top half runs immediately in interrupt context (fast); bottom half defers longer work to be done later",
+    "topic": "Performance and Observability",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "performance-and-observability",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-045",
+    "question": "During architecture review, which option best describes the purpose of the /proc/sys/kernel/core_pattern setting, and how would you configure it to capture core dumps for debugging production crashes?",
+    "options": [
+      "It defines the filename pattern and location for core dump files when a process crashes; set it to a path like '/var/coredumps/core.%e.%p.%t' to capture dumps with executable name, PID, and timestamp - also ensure ulimit -c is set to unlimited",
+      "It controls the CPU core affinity pattern for processes in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback",
+      "It controls how kernel modules are loaded",
+      "It sets the pattern for kernel boot parameters"
+    ],
+    "correct_answer": "It defines the filename pattern and location for core dump files when a process crashes; set it to a path like '/var/coredumps/core.%e.%p.%t' to capture dumps with executable name, PID, and timestamp - also ensure ulimit -c is set to unlimited",
+    "topic": "Kernel Debugging",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "debugging",
+      "kernel",
+      "kernel-debugging"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-046",
+    "question": "During live operations, which option best describes the slab allocator in the Linux kernel?",
+    "options": [
+      "A memory allocation mechanism optimized for frequently allocated/freed fixed-size kernel objects",
+      "A user-space memory allocator in this scenario under production constraints for the stated requirement",
+      "A network buffer allocator",
+      "A disk allocation mechanism"
+    ],
+    "correct_answer": "A memory allocation mechanism optimized for frequently allocated/freed fixed-size kernel objects",
+    "topic": "Performance and Observability",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "kernel",
+      "linux",
+      "operations",
+      "performance-and-observability"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-047",
+    "question": "What is the purpose of 'kmalloc' vs 'vmalloc' in the kernel?",
+    "options": [
+      "kmalloc allocates physically contiguous memory; vmalloc allocates virtually contiguous but potentially physically non-contiguous memory",
+      "vmalloc is faster than kmalloc",
+      "They are identical",
+      "kmalloc is for user space; vmalloc is for kernel space in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "kmalloc allocates physically contiguous memory; vmalloc allocates virtually contiguous but potentially physically non-contiguous memory",
+    "topic": "Performance and Observability",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "kernel",
+      "performance-and-observability"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-048",
+    "question": "In a production scenario, which option best describes a kernel namespace?",
+    "options": [
+      "A feature that isolates and virtualizes system resources (PID, network, mount, etc.) for process groups",
+      "A C++ naming convention in the kernel in this scenario under production constraints for the stated requirement",
+      "A file naming convention",
+      "A directory namespace for /proc"
+    ],
+    "correct_answer": "A feature that isolates and virtualizes system resources (PID, network, mount, etc.) for process groups",
+    "topic": "Performance and Observability",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "kernel",
+      "performance-and-observability",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-049",
+    "question": "During architecture review, which option best describes the purpose of 'mmap' in the Linux kernel?",
+    "options": [
+      "To map files or devices into the process's virtual address space for memory-mapped I/O",
+      "To map MAC addresses to IP addresses in this scenario under production constraints for the stated requirement",
+      "To manage memory allocation pools",
+      "To map email addresses"
+    ],
+    "correct_answer": "To map files or devices into the process's virtual address space for memory-mapped I/O",
+    "topic": "Scheduling and Memory Management",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "kernel",
+      "linux",
+      "scheduling-and-memory-management"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-050",
+    "question": "During live operations, which option best describes the 'assert' macro do in C?",
+    "options": [
+      "Terminates the program if the given condition is false (debug mode)",
+      "Prints a warning message in this scenario under production constraints",
+      "Logs an error to a file",
+      "Throws an exception"
+    ],
+    "correct_answer": "Terminates the program if the given condition is false (debug mode)",
+    "topic": "Kernel Debugging",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "kernel-debugging",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-051",
+    "question": "What is the GFP (Get Free Pages) flag used for in kernel memory allocation?",
+    "options": [
+      "To specify the allocation context and constraints (e.g., GFP_KERNEL, GFP_ATOMIC)",
+      "To get file permissions in this scenario under production constraints for the stated requirement",
+      "To free unused pages",
+      "To get free disk pages"
+    ],
+    "correct_answer": "To specify the allocation context and constraints (e.g., GFP_KERNEL, GFP_ATOMIC)",
+    "topic": "Scheduling and Memory Management",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "kernel",
+      "memory",
+      "scheduling-and-memory-management"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-052",
+    "question": "What are cgroups (control groups) in Linux?",
+    "options": [
+      "A kernel feature to limit, account for, and isolate resource usage (CPU, memory, I/O) of process groups",
+      "A version control feature",
+      "A group policy for user accounts in this scenario under production constraints for the stated requirement",
+      "Groups of C source files"
+    ],
+    "correct_answer": "A kernel feature to limit, account for, and isolate resource usage (CPU, memory, I/O) of process groups",
+    "topic": "Kernel Concurrency and Locking",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "kernel-concurrency-and-locking",
+      "linux",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-053",
+    "question": "During architecture review, which option best describes the purpose of the /etc/nsswitch.conf file, and what does 'hosts: files dns myhostname' mean?",
+    "options": [
+      "nsswitch.conf controls the order of name resolution sources; 'hosts: files dns myhostname' means: first check /etc/hosts, then DNS servers, then the local hostname - this ordering determines how hostnames are resolved",
+      "It configures network switch VLAN settings",
+      "It controls which users can access DNS services in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback",
+      "It configures NFS switch parameters"
+    ],
+    "correct_answer": "nsswitch.conf controls the order of name resolution sources; 'hosts: files dns myhostname' means: first check /etc/hosts, then DNS servers, then the local hostname - this ordering determines how hostnames are resolved",
+    "topic": "Kernel Architecture and Internals",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "kernel-architecture-and-internals"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-054",
+    "question": "During live operations, which option best describes the purpose of the inode in the Linux filesystem?",
+    "options": [
+      "A data structure storing file metadata (size, permissions, timestamps, block pointers) but not the filename",
+      "To manage input devices in this scenario under production constraints for the stated requirement during incident triage",
+      "To index network nodes",
+      "To store file content"
+    ],
+    "correct_answer": "A data structure storing file metadata (size, permissions, timestamps, block pointers) but not the filename",
+    "topic": "Kernel Build and Deployment",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "kernel-build-and-deployment",
+      "linux",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-055",
+    "question": "What is the difference between hard links and soft (symbolic) links?",
+    "options": [
+      "Hard links point to the same inode; soft links are separate files pointing to a path name",
+      "Hard links work across filesystems; soft links do not",
+      "They are the same thing",
+      "Soft links point to the same inode; hard links point to a path in this scenario under production constraints"
+    ],
+    "correct_answer": "Hard links point to the same inode; soft links are separate files pointing to a path name",
+    "topic": "Kernel Architecture and Internals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "kernel-architecture-and-internals"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-056",
+    "question": "A production defect investigation needs clarity on a softirq in the Linux kernel?",
+    "options": [
+      "A statically defined, high-priority kernel mechanism for deferred interrupt processing",
+      "A soft reset interrupt",
+      "A user-defined signal",
+      "A software application interrupt in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A statically defined, high-priority kernel mechanism for deferred interrupt processing",
+    "topic": "Kernel Concurrency and Locking",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "kernel-concurrency-and-locking",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-057",
+    "question": "A production defect investigation needs clarity on RCU (Read-Copy-Update) in the Linux kernel?",
+    "options": [
+      "A synchronization mechanism allowing concurrent reads without locks while updates create new copies",
+      "A registry cleanup utility",
+      "A file versioning system",
+      "A remote configuration utility in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A synchronization mechanism allowing concurrent reads without locks while updates create new copies",
+    "topic": "Kernel APIs and Subsystems",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "kernel-apis-and-subsystems",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-058",
+    "question": "A production defect investigation needs clarity on the purpose of the device tree (DT) in Linux?",
+    "options": [
+      "A data structure describing hardware so the kernel can discover and configure devices (common on ARM)",
+      "A device driver dependency graph",
+      "To list USB device connections",
+      "A tree structure for /dev directory in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A data structure describing hardware so the kernel can discover and configure devices (common on ARM)",
+    "topic": "Performance and Observability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux",
+      "performance-and-observability"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-059",
+    "question": "A production defect investigation needs clarity on the purpose of the 'ioctl' system call?",
+    "options": [
+      "To send device-specific control commands to a device driver that aren't covered by read/write",
+      "To optimize I/O performance",
+      "To perform I/O on regular files only in this scenario under production constraints for the stated requirement",
+      "To control I/O ports directly"
+    ],
+    "correct_answer": "To send device-specific control commands to a device driver that aren't covered by read/write",
+    "topic": "Kernel Architecture and Internals",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel-architecture-and-internals"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-060",
+    "question": "A production defect investigation needs clarity on the copy_to_user / copy_from_user function used for?",
+    "options": [
+      "To safely transfer data between kernel space and user space, with proper validation",
+      "To copy kernel modules between servers in this scenario under production constraints",
+      "To copy files between user accounts",
+      "To duplicate user processes"
+    ],
+    "correct_answer": "To safely transfer data between kernel space and user space, with proper validation",
+    "topic": "Kernel Architecture and Internals",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel-architecture-and-internals"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-061",
+    "question": "A production defect investigation needs clarity on the difference between GFP_KERNEL and GFP_ATOMIC?",
+    "options": [
+      "GFP_KERNEL can sleep and is used in process context; GFP_ATOMIC cannot sleep and is used in interrupt context",
+      "GFP_KERNEL is for atomic operations in this scenario under production constraints for the stated requirement during incident triage",
+      "GFP_ATOMIC allocates more memory",
+      "No difference"
+    ],
+    "correct_answer": "GFP_KERNEL can sleep and is used in process context; GFP_ATOMIC cannot sleep and is used in interrupt context",
+    "topic": "Kernel Build and Deployment",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "kernel-build-and-deployment"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-062",
+    "question": "A production defect investigation needs clarity on the Linux kernel's netfilter framework?",
+    "options": [
+      "A framework of hooks in the networking stack for packet filtering, NAT, and mangling (basis of iptables/nftables)",
+      "A network monitoring tool",
+      "A network file sharing protocol in this scenario under production constraints for the stated requirement during incident triage",
+      "A DNS filtering service"
+    ],
+    "correct_answer": "A framework of hooks in the networking stack for packet filtering, NAT, and mangling (basis of iptables/nftables)",
+    "topic": "Kernel Architecture and Internals",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "kernel-architecture-and-internals",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-063",
+    "question": "A production defect investigation needs clarity on the purpose of the 'kthread' API in the Linux kernel?",
+    "options": [
+      "To create and manage kernel threads that run entirely in kernel space",
+      "To create user-space threads",
+      "To manage thread pools in applications in this scenario under production constraints",
+      "To kill threads"
+    ],
+    "correct_answer": "To create and manage kernel threads that run entirely in kernel space",
+    "topic": "Kernel Build and Deployment",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "kernel",
+      "kernel-build-and-deployment",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-064",
+    "question": "A production defect investigation needs clarity on the Linux kernel's 'completion' mechanism?",
+    "options": [
+      "A synchronization primitive where one thread waits for another to signal that a task is complete",
+      "A file transfer completion notification in this scenario under production constraints for the stated requirement",
+      "A mechanism for code auto-completion",
+      "A process termination handler"
+    ],
+    "correct_answer": "A synchronization primitive where one thread waits for another to signal that a task is complete",
+    "topic": "Kernel Architecture and Internals",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "kernel-architecture-and-internals",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-065",
+    "question": "A production defect investigation needs clarity on the purpose of the 'udev' subsystem?",
+    "options": [
+      "A user-space device manager that dynamically creates/removes device nodes in /dev based on kernel events",
+      "To monitor user activity",
+      "To update device firmware in this scenario under production constraints for the stated requirement during incident triage",
+      "To compile device drivers"
+    ],
+    "correct_answer": "A user-space device manager that dynamically creates/removes device nodes in /dev based on kernel events",
+    "topic": "Kernel Concurrency and Locking",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel-concurrency-and-locking"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-066",
+    "question": "A production defect investigation needs clarity on eBPF in the Linux kernel?",
+    "options": [
+      "Extended Berkeley Packet Filter - a technology for running sandboxed programs in the kernel for tracing, networking, and security",
+      "An embedded BIOS programming framework in this scenario under production constraints for the stated requirement during incident triage",
+      "An error-based packet filter",
+      "An enhanced boot process framework"
+    ],
+    "correct_answer": "Extended Berkeley Packet Filter - a technology for running sandboxed programs in the kernel for tracing, networking, and security",
+    "topic": "Kernel Build and Deployment",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "kernel-build-and-deployment",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-067",
+    "question": "A production defect investigation needs clarity on KASLR (Kernel Address Space Layout Randomization)?",
+    "options": [
+      "A security feature that randomizes the kernel's base address at boot to mitigate exploits",
+      "A kernel allocation strategy for large pages in this scenario under production constraints",
+      "A virtual address sorting algorithm",
+      "A memory defragmentation technique"
+    ],
+    "correct_answer": "A security feature that randomizes the kernel's base address at boot to mitigate exploits",
+    "topic": "Kernel APIs and Subsystems",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "kernel-apis-and-subsystems"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-068",
+    "question": "A production defect investigation needs clarity on the purpose of the 'cgroups' (control groups) feature in the Linux kernel?",
+    "options": [
+      "To limit, account for, and isolate resource usage (CPU, memory, I/O) of process groups",
+      "To group source files during kernel compilation in this scenario under production constraints",
+      "To create user groups for file permissions",
+      "To organize kernel modules into categories"
+    ],
+    "correct_answer": "To limit, account for, and isolate resource usage (CPU, memory, I/O) of process groups",
+    "topic": "Kernel Architecture and Internals",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "kernel-architecture-and-internals",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-069",
+    "question": "After deploying a new application, 'dmesg' shows repeated 'Out of memory: Kill process' messages. The server has 64GB RAM but the application is configured with -Xmx48g. What kernel parameter controls how aggressively the OOM killer acts, and what value disables memory overcommit?",
+    "options": [
+      "vm.overcommit_memory=2 disables overcommit; the kernel will reject allocations exceeding physical RAM + swap",
+      "kernel.panic=1 prevents OOM situations",
+      "vm.swappiness=0 disables OOM killing entirely",
+      "vm.oom_kill_allocating_task=0 stops the OOM killer permanently in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "vm.overcommit_memory=2 disables overcommit; the kernel will reject allocations exceeding physical RAM + swap",
+    "topic": "Scheduling and Memory Management",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "memory",
+      "scheduling-and-memory-management"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-070",
+    "question": "A production defect investigation needs clarity on the difference between the 'resident set size' (RSS) and 'virtual memory size' (VSZ) of a process as shown by 'ps aux'?",
+    "options": [
+      "RSS is the physical memory currently in use by the process; VSZ is the total virtual address space including mapped but not yet allocated pages",
+      "RSS includes swap usage; VSZ does not",
+      "They are identical on systems without swap enabled",
+      "VSZ is always smaller than RSS because it excludes shared libraries in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "RSS is the physical memory currently in use by the process; VSZ is the total virtual address space including mapped but not yet allocated pages",
+    "topic": "Scheduling and Memory Management",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "memory",
+      "scheduling-and-memory-management"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-071",
+    "question": "A production database server has vm.swappiness set to 60 (default). The DBA complains about unpredictable latency spikes. What tuning would you recommend and why?",
+    "options": [
+      "Set vm.swappiness=1 or lower to strongly prefer reclaiming page cache over swapping out application memory, reducing latency spikes",
+      "Set vm.swappiness=60 is optimal for all workloads; investigate elsewhere",
+      "Set vm.swappiness=100 to maximize I/O throughput",
+      "Disable swap entirely with swapoff; this is always the best approach for databases in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "Set vm.swappiness=1 or lower to strongly prefer reclaiming page cache over swapping out application memory, reducing latency spikes",
+    "topic": "Performance and Observability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-observability"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-072",
+    "question": "A production defect investigation needs clarity on the 'dirty_ratio' and 'dirty_background_ratio' kernel parameters control in Linux?",
+    "options": [
+      "The threshold of dirty (modified in page cache but not written to disk) pages before processes are blocked vs. when background writeback starts",
+      "The ratio of user-space to kernel-space memory allocation",
+      "The maximum percentage of swap that can be used before OOM triggers in this scenario under production constraints for the stated requirement during incident triage",
+      "The percentage of corrupted filesystem blocks before fsck triggers"
+    ],
+    "correct_answer": "The threshold of dirty (modified in page cache but not written to disk) pages before processes are blocked vs. when background writeback starts",
+    "topic": "Kernel Architecture and Internals",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "kernel-architecture-and-internals",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-073",
+    "question": "You need to view the last 200 log entries for the nginx service since today, including kernel messages. Which journalctl command achieves this?",
+    "options": [
+      "journalctl -u nginx --since today -n 200",
+      "journalctl -u nginx --since today -n 200 -k",
+      "tail -200 /var/log/syslog | grep nginx",
+      "journalctl --unit=nginx --lines=200 --follow"
+    ],
+    "correct_answer": "journalctl -u nginx --since today -n 200",
+    "topic": "Kernel APIs and Subsystems",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "kernel-apis-and-subsystems"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-074",
+    "question": "A server is running out of file descriptors and 'ulimit -n' shows 1024. You need to increase the limit to 65535 for a specific service running under systemd. Where should you configure this?",
+    "options": [
+      "In the systemd unit file using LimitNOFILE=65535, since systemd-managed services do not inherit limits.conf",
+      "By running 'ulimit -n 65535' in the service startup script in this scenario under production constraints for the stated requirement",
+      "Only in /etc/security/limits.conf under the user's entry",
+      "In /etc/sysctl.conf using fs.file-max=65535"
+    ],
+    "correct_answer": "In the systemd unit file using LimitNOFILE=65535, since systemd-managed services do not inherit limits.conf",
+    "topic": "Kernel Build and Deployment",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel-build-and-deployment"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-075",
+    "question": "A production defect investigation needs clarity on the difference between 'systemctl restart' and 'systemctl reload' for a service?",
+    "options": [
+      "'restart' stops and starts the service (new PID); 'reload' sends a signal (typically SIGHUP) to re-read config without stopping the service",
+      "'restart' only works for enabled services; 'reload' works for all in this scenario under production constraints for the stated requirement during incident triage",
+      "They are functionally identical",
+      "'reload' always requires a reboot; 'restart' does not"
+    ],
+    "correct_answer": "'restart' stops and starts the service (new PID); 'reload' sends a signal (typically SIGHUP) to re-read config without stopping the service",
+    "topic": "Kernel Build and Deployment",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel-build-and-deployment"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-076",
+    "question": "A service is in 'failed' state after a crash. You want it to automatically restart on failure with a 5-second delay. Which systemd unit directives achieve this?",
+    "options": [
+      "Restart=on-failure and RestartSec=5 in the [Service] section",
+      "ExecRestart=/bin/sleep 5 in the [Unit] section in this scenario",
+      "WatchdogSec=5 and FailureAction=restart",
+      "AutoRestart=true and Delay=5"
+    ],
+    "correct_answer": "Restart=on-failure and RestartSec=5 in the [Service] section",
+    "topic": "Kernel Build and Deployment",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel-build-and-deployment"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-077",
+    "question": "You suspect a network issue between your application server and a database on port 5432. 'ping' works but connections fail intermittently. Which tool would help you diagnose the TCP-level connectivity and path issues?",
+    "options": [
+      "traceroute db-server && ss -tnp | grep 5432",
+      "ping -c 10 db-server in this scenario under production constraints",
+      "nslookup db-server",
+      "arp -a db-server"
+    ],
+    "correct_answer": "traceroute db-server && ss -tnp | grep 5432",
+    "topic": "Kernel APIs and Subsystems",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel-apis-and-subsystems"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-078",
+    "question": "In systemd, what is the purpose of the 'WantedBy=multi-user.target' directive in the [Install] section?",
+    "options": [
+      "It creates a dependency so the service starts when the system reaches multi-user runlevel (runlevel 3 equivalent), i.e., when 'systemctl enable' is run",
+      "It limits the service to only run on multi-CPU systems in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "It prevents the service from starting during boot",
+      "It forces the service to run in single-user mode"
+    ],
+    "correct_answer": "It creates a dependency so the service starts when the system reaches multi-user runlevel (runlevel 3 equivalent), i.e., when 'systemctl enable' is run",
+    "topic": "Kernel Concurrency and Locking",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel-concurrency-and-locking"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-079",
+    "question": "You SSH into a server and find a process using 100% of a single CPU core. 'top' shows it as a zombie process (Z state). What does this mean and how do you clean it up?",
+    "options": [
+      "A zombie is a terminated process whose exit status hasn't been collected by its parent; kill the parent process or send SIGCHLD to the parent to reap it - you cannot kill a zombie directly since it's already dead",
+      "Use 'renice -20 <pid>' to reduce its CPU usage",
+      "Reboot the server; zombies cannot be removed otherwise in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback",
+      "Kill the zombie with 'kill -9 <zombie-pid>'"
+    ],
+    "correct_answer": "A zombie is a terminated process whose exit status hasn't been collected by its parent; kill the parent process or send SIGCHLD to the parent to reap it - you cannot kill a zombie directly since it's already dead",
+    "topic": "Scheduling and Memory Management",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "scheduling-and-memory-management"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-080",
+    "question": "A production defect investigation needs clarity on the difference between SIGTERM (signal 15), SIGKILL (signal 9), and SIGHUP (signal 1)?",
+    "options": [
+      "SIGTERM requests graceful termination (can be caught/handled); SIGKILL forces immediate termination (cannot be caught); SIGHUP traditionally signals config reload or terminal hangup (can be caught)",
+      "SIGKILL is the gentlest signal; SIGTERM is the harshest",
+      "All three signals immediately terminate the process in the same way",
+      "SIGTERM is for terminals; SIGKILL is for kernel processes; SIGHUP is for network connections in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "SIGTERM requests graceful termination (can be caught/handled); SIGKILL forces immediate termination (cannot be caught); SIGHUP traditionally signals config reload or terminal hangup (can be caught)",
+    "topic": "Scheduling and Memory Management",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "scheduling-and-memory-management"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-081",
+    "question": "In a production scenario, which option best describes the difference between iptables chains INPUT, FORWARD, and OUTPUT?",
+    "options": [
+      "INPUT processes packets destined for the local system; FORWARD handles packets being routed through; OUTPUT handles locally generated outbound packets",
+      "INPUT handles TCP; FORWARD handles UDP; OUTPUT handles ICMP",
+      "They all process the same packets but in different priority order in this scenario under production constraints for the stated requirement during incident triage",
+      "INPUT handles all packets; FORWARD and OUTPUT are aliases"
+    ],
+    "correct_answer": "INPUT processes packets destined for the local system; FORWARD handles packets being routed through; OUTPUT handles locally generated outbound packets",
+    "topic": "Kernel Concurrency and Locking",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "kernel-concurrency-and-locking",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-082",
+    "question": "You need to run a long-running process that survives after you disconnect from SSH. What are the differences between nohup, screen, tmux, and disown?",
+    "options": [
+      "nohup prevents SIGHUP on disconnect but provides no reattach; screen/tmux create persistent terminal sessions you can reattach to; disown removes a running job from the shell's job table so it won't receive SIGHUP",
+      "tmux only works on Ubuntu; screen only works on CentOS",
+      "They are all identical tools",
+      "screen is deprecated in favor of nohup on all modern systems in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback"
+    ],
+    "correct_answer": "nohup prevents SIGHUP on disconnect but provides no reattach; screen/tmux create persistent terminal sessions you can reattach to; disown removes a running job from the shell's job table so it won't receive SIGHUP",
+    "topic": "Scheduling and Memory Management",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "scheduling-and-memory-management"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-083",
+    "question": "You need to capture all DNS queries leaving a server to debug name resolution issues. Which tcpdump command would you use?",
+    "options": [
+      "tcpdump -i any port 53 -nn",
+      "tcpdump -i eth0 icmp",
+      "tcpdump -i lo port 53",
+      "tcpdump -i any port 80 in this scenario"
+    ],
+    "correct_answer": "tcpdump -i any port 53 -nn",
+    "topic": "Kernel APIs and Subsystems",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "debugging",
+      "kernel-apis-and-subsystems",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-084",
+    "question": "A server has multiple network interfaces. You want a service to only listen on the 10.0.1.5 interface, not on all interfaces. How is this typically achieved?",
+    "options": [
+      "Bind the service to 10.0.1.5 instead of 0.0.0.0 in its configuration",
+      "Set the default gateway to 10.0.1.5",
+      "Remove all other network interfaces using ip link delete in this scenario",
+      "Configure iptables to block other interfaces"
+    ],
+    "correct_answer": "Bind the service to 10.0.1.5 instead of 0.0.0.0 in its configuration",
+    "topic": "Kernel APIs and Subsystems",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "kernel-apis-and-subsystems"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-085",
+    "question": "The 'ss -s' command shows 15,000 sockets in TIME_WAIT state on a high-traffic web server. What does this indicate and what kernel parameter can help?",
+    "options": [
+      "These are closed connections waiting for late packets; enable net.ipv4.tcp_tw_reuse=1 to allow reuse of TIME_WAIT sockets for new outbound connections",
+      "All 15,000 connections are actively transferring data",
+      "Increase the number of network interfaces to distribute the load in this scenario under production constraints for the stated requirement during incident triage",
+      "The server has a memory leak; restart all services"
+    ],
+    "correct_answer": "These are closed connections waiting for late packets; enable net.ipv4.tcp_tw_reuse=1 to allow reuse of TIME_WAIT sockets for new outbound connections",
+    "topic": "Kernel APIs and Subsystems",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "kernel",
+      "kernel-apis-and-subsystems",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-086",
+    "question": "You run 'curl -v https://api.internal.company.com' and get 'SSL: certificate subject name does not match target host name'. The IP resolves correctly. What is the issue?",
+    "options": [
+      "The certificate's Subject Alternative Name (SAN) or Common Name (CN) does not include 'api.internal.company.com'",
+      "The CA bundle is missing on the client",
+      "The server is using HTTP/2 which is incompatible in this scenario under production constraints for the stated requirement",
+      "The SSL certificate is expired"
+    ],
+    "correct_answer": "The certificate's Subject Alternative Name (SAN) or Common Name (CN) does not include 'api.internal.company.com'",
+    "topic": "Kernel Debugging",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "api",
+      "architecture",
+      "kernel-debugging"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-087",
+    "question": "During live operations, which option best describes the significance of the setuid (SUID) bit on a Linux executable, and why is it a security concern?",
+    "options": [
+      "It causes the executable to run with the permissions of the file owner (often root) regardless of who executes it, creating potential privilege escalation risks",
+      "It prevents the file from being modified after creation",
+      "It allows the file to be executed by any user but with no special privileges in this scenario under production constraints for the stated requirement during incident triage",
+      "It encrypts the file contents during execution"
+    ],
+    "correct_answer": "It causes the executable to run with the permissions of the file owner (often root) regardless of who executes it, creating potential privilege escalation risks",
+    "topic": "Kernel Architecture and Internals",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "kernel-architecture-and-internals",
+      "linux",
+      "operations",
+      "security"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-088",
+    "question": "During a security audit, you need to find all SUID binaries on the system. Which command accomplishes this?",
+    "options": [
+      "find / -perm -4000 -type f 2>/dev/null",
+      "chmod -R 4000 /",
+      "locate --suid",
+      "ls -la /usr/bin | grep suid in this scenario"
+    ],
+    "correct_answer": "find / -perm -4000 -type f 2>/dev/null",
+    "topic": "Kernel Debugging",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "kernel-debugging",
+      "security"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-089",
+    "question": "You need to restrict SSH access to only key-based authentication and disable root login. Which sshd_config directives should you set?",
+    "options": [
+      "PasswordAuthentication no, PermitRootLogin no, PubkeyAuthentication yes",
+      "AuthenticationMethods password, RootLogin disabled in this scenario under production constraints",
+      "UseSSHKeys only, DisableRoot true",
+      "AllowPassword yes, PermitRootLogin yes"
+    ],
+    "correct_answer": "PasswordAuthentication no, PermitRootLogin no, PubkeyAuthentication yes",
+    "topic": "Kernel Concurrency and Locking",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "kernel-concurrency-and-locking",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-090",
+    "question": "During architecture review, which option best describes the 'sticky bit' on a directory (e.g., /tmp with permissions drwxrwxrwt) accomplish?",
+    "options": [
+      "Only the file owner, directory owner, or root can delete or rename files within it, even though others have write permission to the directory",
+      "It causes files to be automatically encrypted",
+      "It prevents any new files from being created",
+      "It makes the directory read-only for all users in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "Only the file owner, directory owner, or root can delete or rename files within it, even though others have write permission to the directory",
+    "topic": "Performance and Observability",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "performance-and-observability"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-091",
+    "question": "A compromised server had an attacker add a cron job. Where should you check for persistence mechanisms beyond /etc/crontab?",
+    "options": [
+      "Check /var/spool/cron/crontabs/, /etc/cron.d/, /etc/cron.{daily,weekly,monthly}/, user crontabs, systemd timers, and ~/.bashrc/.profile for backdoors",
+      "Only check /tmp for suspicious scripts",
+      "Only /etc/crontab needs to be checked",
+      "Run 'crontab -l' as root only; that shows everything in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "Check /var/spool/cron/crontabs/, /etc/cron.d/, /etc/cron.{daily,weekly,monthly}/, user crontabs, systemd timers, and ~/.bashrc/.profile for backdoors",
+    "topic": "Kernel Debugging",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "kernel-debugging",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-092",
+    "question": "What is the purpose of SELinux 'enforcing' mode and how does it differ from 'permissive' mode?",
+    "options": [
+      "Enforcing mode actively blocks policy violations and logs them; permissive mode only logs violations without blocking, useful for testing policies",
+      "Enforcing mode disables all user access; permissive mode allows root-only access",
+      "Enforcing mode logs violations but allows them; permissive mode blocks all access in this scenario under production constraints for the stated requirement",
+      "Both modes are identical in behavior"
+    ],
+    "correct_answer": "Enforcing mode actively blocks policy violations and logs them; permissive mode only logs violations without blocking, useful for testing policies",
+    "topic": "Kernel Debugging",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "kernel-debugging",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-093",
+    "question": "In a production scenario, which option best describes the 'nice' value of a process control, and what is the range of nice values on Linux?",
+    "options": [
+      "Nice controls CPU scheduling priority; range is -20 (highest priority) to 19 (lowest priority); only root can set negative nice values",
+      "Nice controls memory allocation priority; range is 1 to 10 in this scenario under production constraints for the stated requirement during incident triage",
+      "Nice controls network bandwidth; range is -100 to 100",
+      "Nice controls I/O priority; range is 0 to 100"
+    ],
+    "correct_answer": "Nice controls CPU scheduling priority; range is -20 (highest priority) to 19 (lowest priority); only root can set negative nice values",
+    "topic": "Scheduling and Memory Management",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "linux",
+      "scenario",
+      "scheduling-and-memory-management"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-094",
+    "question": "You need to create a filesystem on /dev/sdb1, mount it at /data with noexec and nosuid options, and make it persist across reboots. What is the correct sequence?",
+    "options": [
+      "mkfs.ext4 /dev/sdb1; mkdir -p /data; mount -o noexec,nosuid /dev/sdb1 /data; add entry to /etc/fstab with options noexec,nosuid",
+      "parted /dev/sdb1 mkfs; mount /dev/sdb1 /data; crontab @reboot mount",
+      "fdisk /dev/sdb1 --format; mountpoint /data; echo mount >> /etc/rc.local in this scenario under production constraints for the stated requirement",
+      "format /dev/sdb1; mount /data; edit /etc/mtab"
+    ],
+    "correct_answer": "mkfs.ext4 /dev/sdb1; mkdir -p /data; mount -o noexec,nosuid /dev/sdb1 /data; add entry to /etc/fstab with options noexec,nosuid",
+    "topic": "Kernel APIs and Subsystems",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "kernel-apis-and-subsystems"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-095",
+    "question": "A production server shows a filesystem at 100% usage but 'du -sh /*' reports only 60% used. What could explain this discrepancy?",
+    "options": [
+      "Deleted files are still held open by running processes, consuming space not visible to du; use 'lsof +L1' to find them",
+      "The 'du' command is inaccurate on ext4 filesystems",
+      "The filesystem has bad sectors hiding the actual usage",
+      "Reserved blocks for root (typically 5%) account for 40% of disk space in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "Deleted files are still held open by running processes, consuming space not visible to du; use 'lsof +L1' to find them",
+    "topic": "Kernel Architecture and Internals",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "kernel-architecture-and-internals",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-096",
+    "question": "What is the key difference between ext4 and XFS filesystems in a production Linux environment?",
+    "options": [
+      "XFS excels at parallel I/O with large files and cannot be shrunk; ext4 supports both grow and shrink operations and is more versatile for general use",
+      "ext4 is deprecated in all modern distributions in favor of XFS",
+      "XFS does not support journaling while ext4 does",
+      "ext4 supports only files up to 1GB; XFS supports unlimited file sizes in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "XFS excels at parallel I/O with large files and cannot be shrunk; ext4 supports both grow and shrink operations and is more versatile for general use",
+    "topic": "Kernel APIs and Subsystems",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "kernel-apis-and-subsystems",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-097",
+    "question": "You need to extend a logical volume /dev/vg0/lv_data by 50GB and resize the ext4 filesystem online (without unmounting). What commands would you use?",
+    "options": [
+      "lvextend -L +50G /dev/vg0/lv_data && resize2fs /dev/vg0/lv_data",
+      "vgextend +50G vg0 && mkfs.ext4 /dev/vg0/lv_data",
+      "fdisk /dev/vg0/lv_data --resize +50G",
+      "lvresize -r -L 50G /dev/vg0/lv_data (this shrinks to 50G, not extends by 50G)"
+    ],
+    "correct_answer": "lvextend -L +50G /dev/vg0/lv_data && resize2fs /dev/vg0/lv_data",
+    "topic": "Kernel Concurrency and Locking",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "kernel-concurrency-and-locking",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-098",
+    "question": "During architecture review, which option best describes the 'inode' represent in a Linux filesystem, and what happens when all inodes are exhausted even though disk space is available?",
+    "options": [
+      "An inode stores metadata (permissions, ownership, timestamps, block pointers) for a file; when inodes are exhausted, no new files or directories can be created despite free disk space",
+      "Inodes are network indexes; exhausting them blocks network access",
+      "Inodes store file data blocks; exhausting them corrupts existing files in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "Inodes are only relevant to NFS filesystems"
+    ],
+    "correct_answer": "An inode stores metadata (permissions, ownership, timestamps, block pointers) for a file; when inodes are exhausted, no new files or directories can be created despite free disk space",
+    "topic": "Kernel Debugging",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "kernel-debugging",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-099",
+    "question": "You need to write a bash script that processes a CSV file, extracts the 3rd column, sorts unique values, and counts occurrences. Which pipeline accomplishes this?",
+    "options": [
+      "awk -F',' '{print $3}' file.csv | sort | uniq -c | sort -rn",
+      "cat file.csv | grep -c column3",
+      "sed 's/,/\\n/g' file.csv | head -3 in this scenario under production constraints",
+      "cut -f3 file.csv | sort | wc -l"
+    ],
+    "correct_answer": "awk -F',' '{print $3}' file.csv | sort | uniq -c | sort -rn",
+    "topic": "Kernel APIs and Subsystems",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "kernel-apis-and-subsystems",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-kernel-engineering-100",
+    "question": "What is the difference between $*, $@, \"$*\", and \"$@\" in bash when a script is called with arguments 'arg1' 'arg 2' 'arg3'?",
+    "options": [
+      "\"$@\" preserves each argument as a separate quoted word (3 args); \"$*\" combines all arguments into a single string; unquoted versions are subject to word splitting",
+      "$* preserves quotes while $@ does not",
+      "$@ only works inside functions; $* works everywhere in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "They are all identical and interchangeable"
+    ],
+    "correct_answer": "\"$@\" preserves each argument as a separate quoted word (3 args); \"$*\" combines all arguments into a single string; unquoted versions are subject to word splitting",
+    "topic": "Performance and Observability",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "performance-and-observability"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L2",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  }
+]

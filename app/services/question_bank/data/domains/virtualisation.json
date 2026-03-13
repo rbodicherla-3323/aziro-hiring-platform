@@ -1,159 +1,356 @@
 [
   {
+    "id": "shared-domain-virtualization-001",
     "question": "What is the primary purpose of virtualization in modern IT infrastructure?",
     "options": [
-      "To eliminate the need for storage",
+      "To run multiple operating systems on a single physical machine",
+      "To eliminate the need for storage for that enterprise scenario",
       "To reduce network speed",
-      "To increase hardware costs",
-      "To run multiple operating systems on a single physical machine"
+      "To increase hardware costs"
     ],
     "correct_answer": "To run multiple operating systems on a single physical machine",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-002",
     "question": "Which component acts as an intermediary layer between physical hardware and virtual machines?",
     "options": [
+      "Hypervisor",
       "Load Balancer",
       "Router",
-      "Hypervisor",
       "BIOS"
     ],
     "correct_answer": "Hypervisor",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-003",
     "question": "In virtualization terminology, what is the Host OS?",
     "options": [
-      "The OS running inside a virtual machine",
+      "The OS running directly on physical hardware that manages VMs",
+      "The OS running inside a virtual machine for that enterprise scenario",
       "A cloud-based operating system",
-      "The OS used only for networking",
-      "The OS running directly on physical hardware that manages VMs"
+      "The OS used only for networking"
     ],
     "correct_answer": "The OS running directly on physical hardware that manages VMs",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-004",
     "question": "What is a Guest OS in the context of virtualization?",
     "options": [
-      "A temporary operating system",
       "The operating system running inside a virtual machine",
+      "A temporary operating system",
       "An operating system for network management",
       "The operating system running on the physical hardware"
     ],
     "correct_answer": "The operating system running inside a virtual machine",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-005",
     "question": "Which of the following is NOT a benefit of virtualization?",
     "options": [
-      "Easier disaster recovery",
-      "Better hardware utilization",
       "Increased physical server requirements",
+      "Easier disaster recovery",
+      "Better hardware utilization for that enterprise scenario",
       "Reduced power consumption"
     ],
     "correct_answer": "Increased physical server requirements",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-006",
     "question": "How does virtualization help in cost reduction?",
     "options": [
-      "By increasing electricity consumption",
       "By consolidating multiple workloads on fewer physical machines",
+      "By increasing electricity consumption for that enterprise scenario",
       "By eliminating all software licenses",
       "By requiring more physical servers"
     ],
     "correct_answer": "By consolidating multiple workloads on fewer physical machines",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-007",
     "question": "What is a key limitation of virtualization?",
     "options": [
-      "Cannot run multiple operating systems",
+      "Performance overhead due to the hypervisor layer",
+      "Cannot run multiple operating systems for that enterprise scenario",
       "Requires no physical infrastructure",
-      "Eliminates all hardware failures",
-      "Performance overhead due to the hypervisor layer"
+      "Eliminates all hardware failures"
     ],
     "correct_answer": "Performance overhead due to the hypervisor layer",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-008",
     "question": "In a virtualized environment, what happens when the physical host fails?",
     "options": [
-      "All VMs continue running independently",
       "All VMs on that host are affected",
+      "All VMs continue running independently",
       "The hypervisor continues alone",
       "Only the Guest OS is affected"
     ],
     "correct_answer": "All VMs on that host are affected",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-009",
     "question": "What is server virtualization primarily used for?",
     "options": [
-      "Creating virtual network cables",
+      "Partitioning a physical server into multiple virtual servers",
+      "Creating virtual network cables for that enterprise scenario",
       "Backing up data only",
-      "Replacing routers",
-      "Partitioning a physical server into multiple virtual servers"
+      "Replacing routers"
     ],
     "correct_answer": "Partitioning a physical server into multiple virtual servers",
-    "topic": "Types of Virtualisation"
+    "topic": "Types of Virtualisation",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "types",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-010",
     "question": "Desktop virtualization allows users to:",
     "options": [
-      "Create physical computers",
       "Access their desktop environment from any device",
+      "Create physical computers",
       "Only work on physical desktops",
-      "Eliminate the need for monitors"
+      "Eliminate the need for monitors for that enterprise scenario"
     ],
     "correct_answer": "Access their desktop environment from any device",
-    "topic": "Types of Virtualisation"
+    "topic": "Types of Virtualisation",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "types",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-011",
     "question": "What is the main advantage of desktop virtualization for organizations?",
     "options": [
       "Centralized management and improved security",
-      "More physical space required",
+      "More physical space required for that enterprise scenario",
       "Slower user access",
       "Increased hardware costs"
     ],
     "correct_answer": "Centralized management and improved security",
-    "topic": "Types of Virtualisation"
+    "topic": "Types of Virtualisation",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "types",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-012",
     "question": "Network virtualization involves:",
     "options": [
-      "Eliminating all routers",
-      "Creating physical network cables",
       "Abstracting network resources to create logical networks",
+      "Eliminating all routers",
+      "Creating physical network cables for that enterprise scenario",
       "Using only wireless connections"
     ],
     "correct_answer": "Abstracting network resources to create logical networks",
-    "topic": "Types of Virtualisation"
+    "topic": "Types of Virtualisation",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "types",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-013",
     "question": "Storage virtualization enables:",
     "options": [
       "Pooling storage from multiple devices into a single logical unit",
       "Using only local storage",
       "Deleting all data",
-      "Physical expansion of hard drives"
+      "Physical expansion of hard drives for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Pooling storage from multiple devices into a single logical unit",
-    "topic": "Types of Virtualisation"
+    "topic": "Types of Virtualisation",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "types",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-014",
     "question": "OS-level virtualization is the technology behind:",
     "options": [
+      "Container technology",
       "Full virtual machines only",
       "Physical servers",
-      "BIOS updates",
-      "Container technology"
+      "BIOS updates"
     ],
     "correct_answer": "Container technology",
-    "topic": "Types of Virtualisation"
+    "topic": "Types of Virtualisation",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "types",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-015",
     "question": "Which virtualization type would be most suitable for a company wanting employees to access their work desktop from home?",
     "options": [
       "Desktop virtualization",
@@ -162,42 +359,95 @@
       "Server virtualization"
     ],
     "correct_answer": "Desktop virtualization",
-    "topic": "Types of Virtualisation"
+    "topic": "Types of Virtualisation",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "types",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-016",
     "question": "What distinguishes Type 1 hypervisor from Type 2?",
     "options": [
+      "Type 1 runs directly on hardware, Type 2 runs on top of an OS",
       "Both run on hardware equally",
       "Type 1 is slower than Type 2",
-      "Type 1 runs on top of an OS, Type 2 runs directly on hardware",
-      "Type 1 runs directly on hardware, Type 2 runs on top of an OS"
+      "Type 1 runs on top of an OS, Type 2 runs directly on hardware"
     ],
     "correct_answer": "Type 1 runs directly on hardware, Type 2 runs on top of an OS",
-    "topic": "Hypervisors"
+    "topic": "Hypervisors",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "hypervisors"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-017",
     "question": "Type 1 hypervisors are also known as:",
     "options": [
       "Bare-metal hypervisors",
+      "metal hypervisors",
       "Virtual hypervisors",
-      "Application hypervisors",
-      "Hosted hypervisors"
+      "Application hypervisors"
     ],
     "correct_answer": "Bare-metal hypervisors",
-    "topic": "Hypervisors"
+    "topic": "Hypervisors",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "hypervisors"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-018",
     "question": "Which is an example of a Type 1 hypervisor?",
     "options": [
+      "VMware ESXi",
       "VMware Workstation",
       "VirtualBox",
-      "Windows Media Player",
-      "VMware ESXi"
+      "Windows Media Player"
     ],
     "correct_answer": "VMware ESXi",
-    "topic": "Hypervisors"
+    "topic": "Hypervisors",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "hypervisors"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-019",
     "question": "Which is an example of a Type 2 hypervisor?",
     "options": [
       "Oracle VirtualBox",
@@ -206,9 +456,22 @@
       "Cisco IOS"
     ],
     "correct_answer": "Oracle VirtualBox",
-    "topic": "Hypervisors"
+    "topic": "Hypervisors",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "hypervisors"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-020",
     "question": "What is a key advantage of Type 1 hypervisors over Type 2?",
     "options": [
       "Better performance and lower overhead",
@@ -217,31 +480,70 @@
       "Cannot run multiple VMs"
     ],
     "correct_answer": "Better performance and lower overhead",
-    "topic": "Hypervisors"
+    "topic": "Hypervisors",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "hypervisors"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-021",
     "question": "When would a Type 2 hypervisor be more appropriate than Type 1?",
     "options": [
       "For development and testing on personal workstations",
       "For production data centers",
       "For mission-critical applications",
-      "For high-performance computing clusters"
+      "For high-performance computing clusters for that enterprise scenario"
     ],
     "correct_answer": "For development and testing on personal workstations",
-    "topic": "Hypervisors"
+    "topic": "Hypervisors",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "hypervisors"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-022",
     "question": "Which hypervisor is built into Windows operating systems?",
     "options": [
+      "Hyper-V",
       "KVM",
       "VirtualBox",
-      "Hyper-V",
-      "VMware ESXi"
+      "V"
     ],
     "correct_answer": "Hyper-V",
-    "topic": "Hypervisors"
+    "topic": "Hypervisors",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "hypervisors"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-023",
     "question": "KVM (Kernel-based Virtual Machine) is primarily used on which operating system?",
     "options": [
       "Linux",
@@ -250,1073 +552,2447 @@
       "DOS"
     ],
     "correct_answer": "Linux",
-    "topic": "Hypervisors"
+    "topic": "Hypervisors",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "hypervisors"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-024",
     "question": "What does the hypervisor control in a virtualized environment?",
     "options": [
+      "Allocation of physical resources to VMs",
       "Only user passwords",
-      "Only network traffic",
-      "Internet speed",
-      "Allocation of physical resources to VMs"
+      "Only network traffic for that enterprise scenario",
+      "Internet speed"
     ],
     "correct_answer": "Allocation of physical resources to VMs",
-    "topic": "Hypervisors"
+    "topic": "Hypervisors",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "hypervisors"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-025",
     "question": "From a security perspective, which hypervisor type typically offers better isolation?",
     "options": [
       "Type 1, because it has fewer layers and direct hardware access",
       "Neither provides security",
       "Both are equally secure",
-      "Type 2, because it has more layers"
+      "Type 2, because it has more layers for that enterprise scenario"
     ],
     "correct_answer": "Type 1, because it has fewer layers and direct hardware access",
-    "topic": "Hypervisors"
+    "topic": "Hypervisors",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "hypervisors"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-026",
     "question": "What happens if a hypervisor is compromised?",
     "options": [
-      "Only the network is affected",
-      "Nothing happens",
       "All VMs on that hypervisor could potentially be affected",
+      "Only the network is affected for that enterprise scenario",
+      "Nothing happens",
       "Only one VM is affected"
     ],
     "correct_answer": "All VMs on that hypervisor could potentially be affected",
-    "topic": "Hypervisors"
+    "topic": "Hypervisors",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "hypervisors"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-027",
     "question": "Which component must support virtualization features for efficient hypervisor operation?",
     "options": [
+      "CPU (with technologies like Intel VT-x or AMD-V)",
       "Monitor",
-      "Keyboard",
-      "Mouse",
-      "CPU (with technologies like Intel VT-x or AMD-V)"
+      "Keyboard for that enterprise scenario while meeting reliability expectations",
+      "Mouse"
     ],
     "correct_answer": "CPU (with technologies like Intel VT-x or AMD-V)",
-    "topic": "Hypervisors"
+    "topic": "Hypervisors",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "hypervisors"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-028",
     "question": "What are the essential virtual hardware components of a VM?",
     "options": [
       "CPU, RAM, storage, and network interface",
-      "Only CPU and RAM",
+      "Only CPU and RAM for that enterprise scenario",
       "Only storage",
       "Physical cables"
     ],
     "correct_answer": "CPU, RAM, storage, and network interface",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-029",
     "question": "What is a VM snapshot?",
     "options": [
+      "A point-in-time copy of the VM's state and data",
       "A network configuration file",
       "A photograph of the server",
-      "A point-in-time copy of the VM's state and data",
-      "A physical backup of hardware"
+      "A physical backup of hardware for that enterprise scenario"
     ],
     "correct_answer": "A point-in-time copy of the VM's state and data",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-030",
     "question": "When is it most useful to take a VM snapshot?",
     "options": [
-      "Never",
-      "During normal operation without changes",
       "Before making significant changes like updates or configuration modifications",
+      "Never",
+      "During normal operation without changes for that enterprise scenario while meeting reliability expectations",
       "After deleting the VM"
     ],
     "correct_answer": "Before making significant changes like updates or configuration modifications",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-031",
     "question": "What is a potential downside of keeping too many VM snapshots?",
     "options": [
+      "Consumes significant storage space and can slow down VM performance",
       "Makes the VM faster",
       "Reduces security",
-      "Consumes significant storage space and can slow down VM performance",
-      "Improves performance significantly"
+      "Improves performance significantly for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Consumes significant storage space and can slow down VM performance",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-032",
     "question": "What does VM cloning accomplish?",
     "options": [
-      "Removes all data",
-      "Upgrades the hypervisor",
       "Creates an exact copy of an existing VM",
+      "Removes all data",
+      "Upgrades the hypervisor for that enterprise scenario",
       "Deletes the original VM"
     ],
     "correct_answer": "Creates an exact copy of an existing VM",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-033",
     "question": "What is the difference between a full clone and a linked clone?",
     "options": [
+      "Full clone is independent, linked clone shares disk with parent VM",
       "Both are identical",
-      "Linked clone is larger than full clone",
-      "Full clone cannot be started",
-      "Full clone is independent, linked clone shares disk with parent VM"
+      "Linked clone is larger than full clone for that enterprise scenario",
+      "Full clone cannot be started"
     ],
     "correct_answer": "Full clone is independent, linked clone shares disk with parent VM",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-034",
     "question": "What is VM provisioning?",
     "options": [
-      "Only backing up VMs",
       "The process of setting up and deploying new VMs",
+      "Only backing up VMs",
       "Deleting VMs",
-      "Connecting physical cables"
+      "Connecting physical cables for that enterprise scenario"
     ],
     "correct_answer": "The process of setting up and deploying new VMs",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-035",
     "question": "How does VM isolation benefit security?",
     "options": [
       "Each VM operates independently, preventing issues in one VM from affecting others",
       "VMs share all data freely",
-      "All VMs run the same applications",
+      "All VMs run the same applications for that enterprise scenario while meeting reliability expectations",
       "VMs have no security"
     ],
     "correct_answer": "Each VM operates independently, preventing issues in one VM from affecting others",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-036",
     "question": "Can multiple VMs on the same host run different operating systems?",
     "options": [
-      "No, all VMs must run the same OS",
-      "Only Linux variants",
       "Yes, each VM can run a different OS",
+      "No, all VMs must run the same OS for that enterprise scenario",
+      "Only Linux variants",
       "Only Windows versions"
     ],
     "correct_answer": "Yes, each VM can run a different OS",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-037",
     "question": "What determines how many VMs can run on a single physical host?",
     "options": [
-      "The color of the server",
       "Available physical resources like CPU, RAM, and storage",
+      "The color of the server for that enterprise scenario while meeting reliability expectations",
       "The hypervisor brand",
       "Only the network speed"
     ],
     "correct_answer": "Available physical resources like CPU, RAM, and storage",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-038",
     "question": "What is a VM template?",
     "options": [
+      "A pre-configured VM image used to quickly deploy new VMs",
       "A network diagram",
       "A backup schedule",
-      "A pre-configured VM image used to quickly deploy new VMs",
-      "A physical server blueprint"
+      "A physical server blueprint for that enterprise scenario"
     ],
     "correct_answer": "A pre-configured VM image used to quickly deploy new VMs",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-039",
     "question": "What happens to a VM when it is powered off?",
     "options": [
-      "It is permanently deleted",
+      "It stops running but its configuration and data remain stored",
+      "It is permanently deleted for that enterprise scenario while meeting reliability expectations",
       "All data is lost",
-      "It automatically restarts",
-      "It stops running but its configuration and data remain stored"
+      "It automatically restarts"
     ],
     "correct_answer": "It stops running but its configuration and data remain stored",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-040",
     "question": "What is the purpose of VM migration?",
     "options": [
-      "Deleting VMs",
-      "Upgrading the OS inside the VM",
       "Moving a VM from one physical host to another",
+      "Deleting VMs",
+      "Upgrading the OS inside the VM for that enterprise scenario",
       "Installing new applications"
     ],
     "correct_answer": "Moving a VM from one physical host to another",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-041",
     "question": "What does live migration allow?",
     "options": [
-      "Deleting snapshots",
-      "Shutting down VMs permanently",
       "Moving a running VM to another host without downtime",
+      "Deleting snapshots",
+      "Shutting down VMs permanently for that enterprise scenario",
       "Creating snapshots"
     ],
     "correct_answer": "Moving a running VM to another host without downtime",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-042",
     "question": "What is a virtual disk?",
     "options": [
       "A file that acts as a hard drive for a VM",
-      "A physical hard drive",
+      "A physical hard drive for that enterprise scenario",
       "A network cable",
       "A backup tape"
     ],
     "correct_answer": "A file that acts as a hard drive for a VM",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-043",
     "question": "Can a VM access USB devices from the physical host?",
     "options": [
       "Yes, through USB passthrough features",
       "Only keyboards",
-      "Only if the VM is Linux",
+      "Only if the VM is Linux for that enterprise scenario",
       "Never"
     ],
     "correct_answer": "Yes, through USB passthrough features",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-044",
     "question": "What is a benefit of using VM snapshots during software testing?",
     "options": [
-      "Permanent changes are made",
+      "You can quickly revert to a clean state if something goes wrong",
+      "Permanent changes are made for that enterprise scenario while meeting reliability expectations",
       "Snapshots delete the VM",
-      "Testing becomes slower",
-      "You can quickly revert to a clean state if something goes wrong"
+      "Testing becomes slower"
     ],
     "correct_answer": "You can quickly revert to a clean state if something goes wrong",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-045",
     "question": "What is CPU overcommitment in virtualization?",
     "options": [
       "Allocating more virtual CPUs to VMs than physical CPUs available",
-      "Having too many physical CPUs",
+      "Having too many physical CPUs for that enterprise scenario while meeting reliability expectations",
       "Using less CPU than available",
       "Turning off CPUs"
     ],
     "correct_answer": "Allocating more virtual CPUs to VMs than physical CPUs available",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-046",
     "question": "When is CPU overcommitment acceptable?",
     "options": [
-      "Only on weekends",
-      "Always for all workloads",
       "When VMs don't use their allocated CPU resources simultaneously",
+      "Only on weekends",
+      "Always for all workloads for that enterprise scenario while meeting reliability expectations",
       "Never"
     ],
     "correct_answer": "When VMs don't use their allocated CPU resources simultaneously",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-047",
     "question": "What is memory overcommitment?",
     "options": [
-      "Deleting RAM",
       "Allocating more RAM to VMs than physically available",
+      "Deleting RAM",
       "Having too much RAM",
-      "Reducing memory usage"
+      "Reducing memory usage for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Allocating more RAM to VMs than physically available",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-048",
     "question": "What technique do hypervisors use to enable memory overcommitment?",
     "options": [
-      "Adding physical RAM dynamically",
-      "Deleting inactive VMs",
       "Memory ballooning, swapping, or page sharing",
+      "Adding physical RAM dynamically for that enterprise scenario",
+      "Deleting inactive VMs",
       "Disabling memory"
     ],
     "correct_answer": "Memory ballooning, swapping, or page sharing",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-049",
     "question": "What is memory ballooning?",
     "options": [
+      "A technique where the hypervisor reclaims unused memory from VMs",
       "Deleting VMs",
       "Creating new memory",
-      "A technique where the hypervisor reclaims unused memory from VMs",
-      "Inflating physical RAM"
+      "Inflating physical RAM for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "A technique where the hypervisor reclaims unused memory from VMs",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-050",
     "question": "Which disk format is commonly used for VM virtual disks?",
     "options": [
-      "TXT",
+      "VMDK, VHD, or QCOW2",
+      "TXT for that enterprise scenario",
       "MP3",
-      "JPG",
-      "VMDK, VHD, or QCOW2"
+      "JPG"
     ],
     "correct_answer": "VMDK, VHD, or QCOW2",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-051",
     "question": "What is thin provisioning for VM disks?",
     "options": [
-      "Allocating all disk space immediately",
       "Allocating disk space dynamically as data is written",
+      "Allocating all disk space immediately for that enterprise scenario",
       "Deleting disk space",
       "Using physical disks only"
     ],
     "correct_answer": "Allocating disk space dynamically as data is written",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-052",
     "question": "What is thick provisioning?",
     "options": [
+      "Allocating all required disk space to a VM immediately",
       "Using only network storage",
       "Deleting unused space",
-      "Not allocating any disk space",
-      "Allocating all required disk space to a VM immediately"
+      "Not allocating any disk space for that enterprise scenario"
     ],
     "correct_answer": "Allocating all required disk space to a VM immediately",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-053",
     "question": "In NAT networking mode, what can a VM do?",
     "options": [
-      "Be directly accessible from external networks",
+      "Access external networks but is not directly accessible from outside",
+      "Be directly accessible from external networks for that enterprise scenario",
       "Only local access",
-      "No network access",
-      "Access external networks but is not directly accessible from outside"
+      "No network access"
     ],
     "correct_answer": "Access external networks but is not directly accessible from outside",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-054",
     "question": "In Bridged networking mode, how does a VM appear on the network?",
     "options": [
+      "As a separate physical device with its own IP on the network",
       "Without any IP address",
-      "Only accessible by host",
-      "Hidden completely",
-      "As a separate physical device with its own IP on the network"
+      "Only accessible by host for that enterprise scenario while meeting reliability expectations",
+      "Hidden completely"
     ],
     "correct_answer": "As a separate physical device with its own IP on the network",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-055",
     "question": "Which networking mode provides better isolation for a VM?",
     "options": [
-      "Neither provides isolation",
+      "NAT mode for that enterprise scenario",
+      "Neither provides isolation while meeting reliability expectations",
       "Bridged mode",
-      "NAT mode",
       "Both are equal"
     ],
-    "correct_answer": "NAT mode",
-    "topic": "Resource Management"
+    "correct_answer": "NAT mode for that enterprise scenario",
+    "topic": "Resource Management",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-056",
     "question": "What happens when a VM is allocated insufficient RAM?",
     "options": [
-      "It runs faster",
       "Performance degrades, excessive swapping may occur",
+      "It runs faster",
       "No effect on performance",
-      "RAM increases automatically"
+      "RAM increases automatically for that enterprise scenario"
     ],
     "correct_answer": "Performance degrades, excessive swapping may occur",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-057",
     "question": "What is resource reservation in virtualization?",
     "options": [
-      "Deleting resources",
       "Guaranteeing a minimum amount of resources to a VM",
-      "Using maximum resources always",
+      "Deleting resources",
+      "Using maximum resources always for that enterprise scenario",
       "Sharing all resources equally"
     ],
     "correct_answer": "Guaranteeing a minimum amount of resources to a VM",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-058",
     "question": "What is a resource limit in VM configuration?",
     "options": [
+      "The maximum amount of resources a VM can consume",
       "No resources",
-      "The minimum resources a VM can use",
-      "Unlimited resources",
-      "The maximum amount of resources a VM can consume"
+      "The minimum resources a VM can use for that enterprise scenario",
+      "Unlimited resources"
     ],
     "correct_answer": "The maximum amount of resources a VM can consume",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-059",
     "question": "Why might you set resource shares for VMs?",
     "options": [
-      "To delete VMs",
       "To prioritize resource allocation during contention",
-      "To eliminate all resources",
+      "To delete VMs",
+      "To eliminate all resources for that enterprise scenario",
       "To disable VMs"
     ],
     "correct_answer": "To prioritize resource allocation during contention",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-060",
     "question": "What is storage I/O control used for?",
     "options": [
+      "Managing and prioritizing storage access among VMs",
       "Deleting storage",
-      "Increasing physical storage",
-      "Disabling storage",
-      "Managing and prioritizing storage access among VMs"
+      "Increasing physical storage for that enterprise scenario",
+      "Disabling storage"
     ],
     "correct_answer": "Managing and prioritizing storage access among VMs",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-061",
     "question": "What is the primary architectural difference between VMs and containers?",
     "options": [
-      "Neither uses an OS",
       "VMs include a full OS, containers share the host OS kernel",
+      "Neither uses an OS",
       "Both are identical",
-      "Containers include a full OS, VMs don't"
+      "Containers include a full OS, VMs don't for that enterprise scenario"
     ],
     "correct_answer": "VMs include a full OS, containers share the host OS kernel",
-    "topic": "Virtualisation vs Containers"
+    "topic": "Virtualisation vs Containers",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "containers",
+      "virtualisation",
+      "vs"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-062",
     "question": "Which is typically more lightweight?",
     "options": [
-      "Both are equal in size",
-      "Containers",
+      "Containers for that enterprise scenario",
+      "Both are equal in size while meeting reliability expectations",
       "Virtual machines",
       "Neither is lightweight"
     ],
-    "correct_answer": "Containers",
-    "topic": "Virtualisation vs Containers"
+    "correct_answer": "Containers for that enterprise scenario",
+    "topic": "Virtualisation vs Containers",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "containers",
+      "virtualisation",
+      "vs"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-063",
     "question": "Why do containers start faster than VMs?",
     "options": [
       "They don't need to boot a full operating system",
-      "They have more resources",
+      "They have more resources for that enterprise scenario",
       "They use more memory",
       "They are slower actually"
     ],
     "correct_answer": "They don't need to boot a full operating system",
-    "topic": "Virtualisation vs Containers"
+    "topic": "Virtualisation vs Containers",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "containers",
+      "virtualisation",
+      "vs"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-064",
     "question": "Which provides better isolation?",
     "options": [
-      "Containers, because they share the kernel",
+      "Virtual machines, because each has its own OS and kernel",
+      "Containers, because they share the kernel for that enterprise scenario",
       "Both provide identical isolation",
-      "Neither provides isolation",
-      "Virtual machines, because each has its own OS and kernel"
+      "Neither provides isolation"
     ],
     "correct_answer": "Virtual machines, because each has its own OS and kernel",
-    "topic": "Virtualisation vs Containers"
+    "topic": "Virtualisation vs Containers",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "containers",
+      "virtualisation",
+      "vs"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-065",
     "question": "When would you choose VMs over containers?",
     "options": [
       "When you need to run different operating systems or require strong isolation",
       "For microservices architectures",
       "Never",
-      "For lightweight applications only"
+      "For lightweight applications only for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "When you need to run different operating systems or require strong isolation",
-    "topic": "Virtualisation vs Containers"
+    "topic": "Virtualisation vs Containers",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "containers",
+      "virtualisation",
+      "vs"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-066",
     "question": "Can you run containers inside a VM?",
     "options": [
-      "No, they are mutually exclusive",
-      "Only on Windows",
       "Yes, this is a common practice for combining benefits",
+      "No, they are mutually exclusive for that enterprise scenario",
+      "Only on Windows",
       "Only on Linux"
     ],
     "correct_answer": "Yes, this is a common practice for combining benefits",
-    "topic": "Virtualisation vs Containers"
+    "topic": "Virtualisation vs Containers",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "containers",
+      "virtualisation",
+      "vs"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-067",
     "question": "From a security perspective, what is a key consideration with containers?",
     "options": [
-      "They are always more secure than VMs",
       "Containers share the host kernel, so a kernel vulnerability affects all containers",
+      "They are always more secure than VMs for that enterprise scenario while meeting reliability expectations",
       "They are completely isolated",
       "They have no security concerns"
     ],
     "correct_answer": "Containers share the host kernel, so a kernel vulnerability affects all containers",
-    "topic": "Virtualisation vs Containers"
+    "topic": "Virtualisation vs Containers",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "containers",
+      "virtualisation",
+      "vs"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-068",
     "question": "Which technology is Docker associated with?",
     "options": [
-      "Virtual machines",
-      "Physical servers",
       "Container technology",
+      "Virtual machines for that enterprise scenario",
+      "Physical servers",
       "Network switches"
     ],
     "correct_answer": "Container technology",
-    "topic": "Virtualisation vs Containers"
+    "topic": "Virtualisation vs Containers",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "containers",
+      "virtualisation",
+      "vs"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-069",
     "question": "What is a common reason for VM slow performance?",
     "options": [
       "Insufficient allocated resources or resource contention",
       "Too much available RAM",
       "Having no snapshots",
-      "Too few VMs on the host"
+      "Too few VMs on the host for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Insufficient allocated resources or resource contention",
-    "topic": "Troubleshooting & Scenarios"
+    "topic": "Troubleshooting & Scenarios",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "scenarios",
+      "troubleshooting"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-070",
     "question": "A VM won't start and shows a file locking error. What is a likely cause?",
     "options": [
       "The VM's files are already in use by another process or snapshot",
       "Too much RAM",
-      "Not enough network bandwidth",
+      "Not enough network bandwidth for that enterprise scenario while meeting reliability expectations",
       "Wrong keyboard"
     ],
     "correct_answer": "The VM's files are already in use by another process or snapshot",
-    "topic": "Troubleshooting & Scenarios"
+    "topic": "Troubleshooting & Scenarios",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "scenarios",
+      "troubleshooting"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-071",
     "question": "Users report a VM is extremely slow. You notice disk usage is at 100%. What should you check?",
     "options": [
-      "Monitor resolution",
       "Disk I/O performance, check for inadequate storage resources or excessive snapshots",
+      "Monitor resolution",
       "Network cables",
-      "CPU temperature only"
+      "CPU temperature only for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Disk I/O performance, check for inadequate storage resources or excessive snapshots",
-    "topic": "Troubleshooting & Scenarios"
+    "topic": "Troubleshooting & Scenarios",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "scenarios",
+      "troubleshooting"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-072",
     "question": "A VM cannot connect to the internet. Where should you start troubleshooting?",
     "options": [
-      "CPU allocation",
       "Network adapter configuration in VM settings",
+      "CPU allocation for that enterprise scenario while meeting reliability expectations",
       "VM disk size",
       "RAM amount"
     ],
     "correct_answer": "Network adapter configuration in VM settings",
-    "topic": "Troubleshooting & Scenarios"
+    "topic": "Troubleshooting & Scenarios",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "scenarios",
+      "troubleshooting"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-073",
     "question": "What could cause network connectivity issues in Bridged mode?",
     "options": [
-      "Too much RAM",
-      "Low CPU",
       "Physical network issues or incorrect network selection",
+      "Too much RAM for that enterprise scenario while meeting reliability expectations",
+      "Low CPU",
       "Large disk"
     ],
     "correct_answer": "Physical network issues or incorrect network selection",
-    "topic": "Troubleshooting & Scenarios"
+    "topic": "Troubleshooting & Scenarios",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "scenarios",
+      "troubleshooting"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-074",
     "question": "A VM runs out of disk space. What are possible solutions?",
     "options": [
+      "Expand the virtual disk or add additional virtual disks",
       "Add more RAM",
       "Delete all VMs",
-      "Change CPU count",
-      "Expand the virtual disk or add additional virtual disks"
+      "Change CPU count for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Expand the virtual disk or add additional virtual disks",
-    "topic": "Troubleshooting & Scenarios"
+    "topic": "Troubleshooting & Scenarios",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "scenarios",
+      "troubleshooting"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-075",
     "question": "Too many snapshots exist for a VM and performance is degraded. What should you do?",
     "options": [
+      "Consolidate or delete unnecessary snapshots",
       "Change network mode",
       "Add more CPUs",
-      "Create more snapshots",
-      "Consolidate or delete unnecessary snapshots"
+      "Create more snapshots for that enterprise scenario"
     ],
     "correct_answer": "Consolidate or delete unnecessary snapshots",
-    "topic": "Troubleshooting & Scenarios"
+    "topic": "Troubleshooting & Scenarios",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "scenarios",
+      "troubleshooting"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-076",
     "question": "The physical host is running out of memory affecting all VMs. What is an immediate action?",
     "options": [
+      "Shut down or migrate some VMs to other hosts",
       "Delete all VMs",
       "Disconnect network",
-      "Shut down or migrate some VMs to other hosts",
-      "Remove all snapshots immediately"
+      "Remove all snapshots immediately for that enterprise scenario"
     ],
     "correct_answer": "Shut down or migrate some VMs to other hosts",
-    "topic": "Troubleshooting & Scenarios"
+    "topic": "Troubleshooting & Scenarios",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "scenarios",
+      "troubleshooting"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-077",
     "question": "What does enabling hardware-assisted virtualization in BIOS do?",
     "options": [
       "Improves VM performance by allowing better CPU virtualization",
-      "Reduces performance",
+      "Reduces performance for that enterprise scenario while meeting reliability expectations",
       "Disables the CPU",
       "Deletes all VMs"
     ],
     "correct_answer": "Improves VM performance by allowing better CPU virtualization",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-078",
     "question": "What is paravirtualization?",
     "options": [
-      "Using physical servers only",
       "A technique where the guest OS is modified to be aware of virtualization",
+      "Using physical servers only",
       "A type of container",
-      "Running VMs without a hypervisor"
+      "Running VMs without a hypervisor for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "A technique where the guest OS is modified to be aware of virtualization",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-079",
     "question": "What is full virtualization?",
     "options": [
-      "Only for Linux",
       "Guest OS runs unmodified and is unaware of virtualization",
+      "Only for Linux",
       "No hypervisor needed",
-      "Guest OS requires modification"
+      "Guest OS requires modification for that enterprise scenario"
     ],
     "correct_answer": "Guest OS runs unmodified and is unaware of virtualization",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-080",
     "question": "Which virtualization approach generally offers better performance?",
     "options": [
       "Paravirtualization can offer better performance due to optimized communication",
       "Full virtualization always",
       "Both are identical",
-      "Neither has performance benefits"
+      "Neither has performance benefits for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Paravirtualization can offer better performance due to optimized communication",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-081",
     "question": "What is the benefit of VMs for disaster recovery?",
     "options": [
-      "VMs make recovery impossible",
-      "VMs cannot be backed up",
       "VMs can be quickly backed up and restored across different hardware",
+      "VMs make recovery impossible for that enterprise scenario while meeting reliability expectations",
+      "VMs cannot be backed up",
       "VMs slow down recovery"
     ],
     "correct_answer": "VMs can be quickly backed up and restored across different hardware",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-082",
     "question": "What is VM sprawl?",
     "options": [
+      "Uncontrolled growth of VMs leading to management challenges",
       "Having too few VMs",
-      "Proper VM management",
-      "Deleting all VMs",
-      "Uncontrolled growth of VMs leading to management challenges"
+      "Proper VM management for that enterprise scenario while meeting reliability expectations",
+      "Deleting all VMs"
     ],
     "correct_answer": "Uncontrolled growth of VMs leading to management challenges",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-083",
     "question": "How can VM sprawl negatively impact an organization?",
     "options": [
       "Wasted resources, increased costs, and security risks from unmanaged VMs",
       "Reduces costs",
       "Improves security",
-      "Better resource utilization"
+      "Better resource utilization for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Wasted resources, increased costs, and security risks from unmanaged VMs",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-084",
     "question": "What is a key requirement for successful live VM migration?",
     "options": [
-      "VMs must be powered off",
       "Shared storage accessible by both source and destination hosts",
+      "VMs must be powered off",
       "No network connection",
-      "Different operating systems"
+      "Different operating systems for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Shared storage accessible by both source and destination hosts",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-085",
     "question": "What is the purpose of VM resource monitoring?",
     "options": [
-      "To disable monitoring",
       "To track resource usage and optimize allocation",
+      "To disable monitoring for that enterprise scenario",
       "To increase costs",
       "To delete VMs"
     ],
     "correct_answer": "To track resource usage and optimize allocation",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "management",
+      "operations",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-086",
     "question": "Which resource is typically most critical for database VMs?",
     "options": [
-      "CPU cores only",
-      "Network only",
       "Disk I/O performance and RAM",
+      "CPU cores only for that enterprise scenario",
+      "Network only",
       "Graphics card"
     ],
     "correct_answer": "Disk I/O performance and RAM",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-087",
     "question": "What is High Availability (HA) in virtualization?",
     "options": [
       "Automatically restarting VMs on other hosts if a host fails",
-      "Running VMs slower",
+      "Running VMs slower for that enterprise scenario while meeting reliability expectations",
       "Deleting VMs",
       "Reducing uptime"
     ],
     "correct_answer": "Automatically restarting VMs on other hosts if a host fails",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-088",
     "question": "What is VM affinity?",
     "options": [
-      "VMs that must run on separate hosts",
+      "Rules that keep specific VMs together on the same host",
+      "VMs that must run on separate hosts for that enterprise scenario",
       "Disabling VMs",
-      "Deleting VMs",
-      "Rules that keep specific VMs together on the same host"
+      "Deleting VMs"
     ],
     "correct_answer": "Rules that keep specific VMs together on the same host",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-089",
     "question": "What is VM anti-affinity?",
     "options": [
+      "Rules that keep specific VMs on separate hosts for redundancy",
       "Disabling all VMs",
       "Deleting VMs",
-      "Rules that keep specific VMs on separate hosts for redundancy",
-      "Keeping VMs on the same host"
+      "Keeping VMs on the same host for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Rules that keep specific VMs on separate hosts for redundancy",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-090",
     "question": "What is a VM export?",
     "options": [
-      "Starting a VM",
       "Saving a VM to a portable format for backup or migration",
+      "Starting a VM for that enterprise scenario while meeting reliability expectations",
       "Stopping a VM",
       "Deleting a VM"
     ],
     "correct_answer": "Saving a VM to a portable format for backup or migration",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-091",
     "question": "What format is commonly used for VM exports in VMware?",
     "options": [
       "OVF/OVA",
-      "DOC",
+      "DOC for that enterprise scenario",
       "MP4",
       "PDF"
     ],
     "correct_answer": "OVF/OVA",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-092",
     "question": "What is nested virtualization?",
     "options": [
-      "Running VMs in a physical server",
       "Running a hypervisor inside a VM to create VMs within VMs",
+      "Running VMs in a physical server for that enterprise scenario",
       "Using containers only",
       "Deleting VMs"
     ],
     "correct_answer": "Running a hypervisor inside a VM to create VMs within VMs",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-093",
     "question": "When might nested virtualization be useful?",
     "options": [
-      "For email servers",
+      "For testing hypervisors or training environments",
+      "For email servers for that enterprise scenario while meeting reliability expectations",
       "Never useful",
-      "Only for gaming",
-      "For testing hypervisors or training environments"
+      "Only for gaming"
     ],
     "correct_answer": "For testing hypervisors or training environments",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-094",
     "question": "What is a datastore in virtualization?",
     "options": [
+      "A storage repository where VM files are kept",
       "A backup tape",
       "A network device",
-      "A storage repository where VM files are kept",
-      "A physical server"
+      "A physical server for that enterprise scenario"
     ],
     "correct_answer": "A storage repository where VM files are kept",
-    "topic": "Types of Virtualisation"
+    "topic": "Types of Virtualisation",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "types",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-095",
     "question": "What is SAN in the context of virtualized environments?",
     "options": [
-      "A type of VM",
       "Storage Area Network providing centralized storage",
+      "A type of VM",
       "A hypervisor type",
-      "A network protocol"
+      "A network protocol for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Storage Area Network providing centralized storage",
-    "topic": "Types of Virtualisation"
+    "topic": "Types of Virtualisation",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "types",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-096",
     "question": "What is NAS in virtualization storage?",
     "options": [
+      "Network Attached Storage providing file-level storage access",
       "A VM type",
-      "A backup method",
-      "A network cable",
-      "Network Attached Storage providing file-level storage access"
+      "A backup method for that enterprise scenario while meeting reliability expectations",
+      "A network cable"
     ],
     "correct_answer": "Network Attached Storage providing file-level storage access",
-    "topic": "Types of Virtualisation"
+    "topic": "Types of Virtualisation",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "types",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-097",
     "question": "What is the advantage of using shared storage for VMs?",
     "options": [
+      "Enables features like live migration and HA",
       "VMs cannot move",
-      "Increases complexity without benefits",
-      "Reduces performance",
-      "Enables features like live migration and HA"
+      "Increases complexity without benefits for that enterprise scenario",
+      "Reduces performance"
     ],
     "correct_answer": "Enables features like live migration and HA",
-    "topic": "Types of Virtualisation"
+    "topic": "Types of Virtualisation",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "types",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-098",
     "question": "What is the purpose of VM tools (like VMware Tools)?",
     "options": [
-      "To delete VMs",
       "To improve integration between the VM and hypervisor, enhancing performance",
+      "To delete VMs",
       "To disable features",
-      "To reduce performance"
+      "To reduce performance for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "To improve integration between the VM and hypervisor, enhancing performance",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-099",
     "question": "What feature do VM tools typically provide?",
     "options": [
-      "Slower network",
       "Better graphics, time synchronization, and seamless mouse integration",
+      "Slower network",
       "No benefits",
-      "Worse performance"
+      "Worse performance for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Better graphics, time synchronization, and seamless mouse integration",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-100",
     "question": "Can you convert a physical server to a VM?",
     "options": [
-      "Never possible",
       "Yes, through a process called P2V (Physical to Virtual)",
+      "Never possible for that enterprise scenario while meeting reliability expectations",
       "Only manually",
       "Only for Linux"
     ],
     "correct_answer": "Yes, through a process called P2V (Physical to Virtual)",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-101",
     "question": "What is V2V conversion?",
     "options": [
-      "Deleting VMs",
-      "Virtual to physical",
       "Converting a VM from one hypervisor format to another",
+      "Deleting VMs",
+      "Virtual to physical for that enterprise scenario while meeting reliability expectations",
       "Physical to virtual"
     ],
     "correct_answer": "Converting a VM from one hypervisor format to another",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-102",
     "question": "What is vMotion in VMware?",
     "options": [
-      "Deleting VMs",
       "Live migration technology that moves running VMs between hosts",
-      "A static configuration",
+      "Deleting VMs",
+      "A static configuration for that enterprise scenario while meeting reliability expectations",
       "Creating snapshots"
     ],
     "correct_answer": "Live migration technology that moves running VMs between hosts",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-103",
     "question": "What is DRS (Distributed Resource Scheduler)?",
     "options": [
+      "Automated load balancing of VMs across hosts",
       "A backup solution",
       "A network protocol",
-      "Manual VM placement",
-      "Automated load balancing of VMs across hosts"
+      "Manual VM placement for that enterprise scenario"
     ],
     "correct_answer": "Automated load balancing of VMs across hosts",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-104",
     "question": "What does a resource pool allow you to do?",
     "options": [
+      "Group resources and allocate them hierarchically to VMs",
       "Disable hosts",
       "Remove all VMs",
-      "Group resources and allocate them hierarchically to VMs",
-      "Delete resources"
+      "Delete resources for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Group resources and allocate them hierarchically to VMs",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-105",
     "question": "What is the purpose of memory page sharing?",
     "options": [
+      "To consolidate identical memory pages across VMs to save RAM",
       "To delete VMs",
       "To waste memory",
-      "To consolidate identical memory pages across VMs to save RAM",
-      "To disable memory"
+      "To disable memory for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "To consolidate identical memory pages across VMs to save RAM",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-106",
     "question": "What is host-only networking?",
     "options": [
       "VMs can only communicate with the host and other VMs on the same host",
-      "Internet-only access",
-      "VMs can access external networks",
+      "only access",
+      "VMs can access external networks for that enterprise scenario while meeting reliability expectations",
       "No communication possible"
     ],
     "correct_answer": "VMs can only communicate with the host and other VMs on the same host",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-107",
     "question": "What is vSAN?",
     "options": [
+      "Virtual Storage Area Network that pools local storage from hosts",
       "A hypervisor type",
-      "A network protocol",
-      "A backup method",
-      "Virtual Storage Area Network that pools local storage from hosts"
+      "A network protocol for that enterprise scenario while meeting reliability expectations",
+      "A backup method"
     ],
     "correct_answer": "Virtual Storage Area Network that pools local storage from hosts",
-    "topic": "Types of Virtualisation"
+    "topic": "Types of Virtualisation",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "types",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-108",
     "question": "What is the benefit of using a management plane in virtualization?",
     "options": [
-      "Complicates management",
+      "Centralized control and monitoring of all virtualized resources",
+      "Complicates management for that enterprise scenario while meeting reliability expectations",
       "No benefits",
-      "Slows down operations",
-      "Centralized control and monitoring of all virtualized resources"
+      "Slows down operations"
     ],
     "correct_answer": "Centralized control and monitoring of all virtualized resources",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-109",
     "question": "What is vCenter Server?",
     "options": [
+      "A centralized management platform for VMware environments",
       "A backup tool",
-      "A Type 2 hypervisor",
-      "A network switch",
-      "A centralized management platform for VMware environments"
+      "A Type 2 hypervisor for that enterprise scenario while meeting reliability expectations",
+      "A network switch"
     ],
     "correct_answer": "A centralized management platform for VMware environments",
-    "topic": "Virtualisation Fundamentals"
+    "topic": "Virtualisation Fundamentals",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-110",
     "question": "What does hot-adding resources mean?",
     "options": [
-      "Cold boot required",
       "Adding resources like CPU or RAM to a VM while it's running",
+      "Cold boot required for that enterprise scenario while meeting reliability expectations",
       "Deleting resources",
       "Shutting down VMs"
     ],
     "correct_answer": "Adding resources like CPU or RAM to a VM while it's running",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-111",
     "question": "Is hot-add supported for all resources in all VMs?",
     "options": [
       "No, it depends on the guest OS and VM configuration",
       "Yes, always",
-      "Only for network",
+      "Only for network for that enterprise scenario while meeting reliability expectations",
       "Only for storage"
     ],
     "correct_answer": "No, it depends on the guest OS and VM configuration",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-112",
     "question": "What is VM encryption?",
     "options": [
-      "Backing up VMs",
-      "Disabling security",
       "Encrypting VM files and disks to protect data at rest",
+      "Backing up VMs",
+      "Disabling security for that enterprise scenario while meeting reliability expectations",
       "Deleting VMs"
     ],
     "correct_answer": "Encrypting VM files and disks to protect data at rest",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-113",
     "question": "What is the primary purpose of virtual switches?",
     "options": [
-      "Delete VMs",
       "Enable network communication between VMs and external networks",
+      "Delete VMs",
       "Store data",
-      "Provide physical connectivity"
+      "Provide physical connectivity for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Enable network communication between VMs and external networks",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-114",
     "question": "What is a VLAN in virtualized networking?",
     "options": [
-      "A hypervisor type",
       "Virtual Local Area Network for network segmentation",
+      "A hypervisor type for that enterprise scenario while meeting reliability expectations",
       "A storage type",
       "A physical cable"
     ],
     "correct_answer": "Virtual Local Area Network for network segmentation",
-    "topic": "Types of Virtualisation"
+    "topic": "Types of Virtualisation",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "types",
+      "virtualisation"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-115",
     "question": "What is SR-IOV?",
     "options": [
-      "A storage protocol",
       "Single Root I/O Virtualization allowing direct hardware access to VMs",
+      "A storage protocol for that enterprise scenario while meeting reliability expectations",
       "A hypervisor",
       "A backup method"
     ],
     "correct_answer": "Single Root I/O Virtualization allowing direct hardware access to VMs",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-116",
     "question": "Why might you use GPU passthrough?",
     "options": [
       "To provide a VM with direct access to a physical GPU for better performance",
       "To delete VMs",
-      "To reduce performance",
+      "To reduce performance for that enterprise scenario while meeting reliability expectations",
       "To disable graphics"
     ],
     "correct_answer": "To provide a VM with direct access to a physical GPU for better performance",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-117",
     "question": "What is the purpose of VM heartbeat monitoring?",
     "options": [
+      "To detect if a VM or its guest OS has failed",
       "To delete VMs",
-      "To disable monitoring",
-      "To increase costs",
-      "To detect if a VM or its guest OS has failed"
+      "To disable monitoring for that enterprise scenario",
+      "To increase costs"
     ],
     "correct_answer": "To detect if a VM or its guest OS has failed",
-    "topic": "Troubleshooting & Scenarios"
+    "topic": "Troubleshooting & Scenarios",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "scenarios",
+      "troubleshooting"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-118",
     "question": "What is the primary difference between a VM backup and a VM snapshot?",
     "options": [
-      "Snapshots are larger than backups",
+      "Backups are stored separately and intended for long-term retention, snapshots are short-term and stored with the VM",
+      "Snapshots are larger than backups for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
       "Backups cannot be restored",
-      "They are exactly the same thing",
-      "Backups are stored separately and intended for long-term retention, snapshots are short-term and stored with the VM"
+      "They are exactly the same thing"
     ],
     "correct_answer": "Backups are stored separately and intended for long-term retention, snapshots are short-term and stored with the VM",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-119",
     "question": "What happens when multiple VMs on the same host compete for limited CPU resources?",
     "options": [
+      "The hypervisor schedules CPU time based on shares, reservations, and limits",
       "All VMs stop working",
       "The oldest VM gets priority",
-      "All VMs get equal CPU regardless of configuration",
-      "The hypervisor schedules CPU time based on shares, reservations, and limits"
+      "All VMs get equal CPU regardless of configuration for that enterprise scenario"
     ],
     "correct_answer": "The hypervisor schedules CPU time based on shares, reservations, and limits",
-    "topic": "Resource Management"
+    "topic": "Resource Management",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "resource"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   },
   {
+    "id": "shared-domain-virtualization-120",
     "question": "What is a virtual hardware version in the context of VMs?",
     "options": [
-      "The physical hardware model",
       "The set of virtual hardware features available to a VM, determined by the hypervisor version",
-      "The VM's operating system version",
+      "The physical hardware model",
+      "The VM's operating system version for that enterprise scenario while meeting reliability expectations",
       "The network adapter speed"
     ],
     "correct_answer": "The set of virtual hardware features available to a VM, determined by the hypervisor version",
-    "topic": "Virtual Machines"
+    "topic": "Virtual Machines",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "machines",
+      "virtual"
+    ],
+    "role_target": "shared_domain_virtualization",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-virtualization"
+    ]
   }
 ]

@@ -6,19 +6,13 @@ import sys
 from pathlib import Path
 from dotenv import load_dotenv
 import requests
+from app.utils.round_order import ordered_present_round_keys, round_number_map, round_sort_key
 
 # Load .env from project root deterministically (works in stdin / script / module runs).
 _PROJECT_ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(_PROJECT_ROOT / ".env")
 AI_CLIENT = None
 log = logging.getLogger(__name__)
-
-
-def _round_sort_key(round_key: str) -> tuple[int, str]:
-    value = str(round_key or "").upper()
-    if value.startswith("L") and value[1:].isdigit():
-        return int(value[1:]), value
-    return 999, value
 
 
 def _get_env_value(name: str, default: str | None = None):
@@ -296,11 +290,14 @@ def _build_fallback_summary(candidate_data):
         "",
         "**Round-wise Detailed Insights:**",
     ]
-    for rk in sorted(rounds.keys(), key=_round_sort_key):
+    ordered_keys = ordered_present_round_keys(rounds)
+    numbers = round_number_map(ordered_keys)
+    for rk in ordered_keys:
         rv = rounds.get(rk)
         if not rv:
             continue
         round_label = rv.get("round_label", rk)
+        round_number = rv.get("round_number", numbers.get(rk, 0))
         status = rv.get("status", "Pending")
         pct = rv.get("percentage", 0)
         correct = rv.get("correct", 0)
@@ -308,7 +305,7 @@ def _build_fallback_summary(candidate_data):
         threshold = rv.get("pass_threshold", 0)
 
         lines.append(
-            f"- **{round_label} ({rk})**: Status = {status}; Score = {pct}% ({correct}/{total}); "
+            f"- **{round_number}. {round_label}**: Status = {status}; Score = {pct}% ({correct}/{total}); "
             f"Pass Threshold = {threshold}%."
         )
 
@@ -351,12 +348,15 @@ def _build_fallback_coding_summary(coding_data):
     overall_rounds = coding_data.get("overall_rounds", {}) or {}
 
     insight_lines = []
-    for rk in ["L1", "L2", "L3", "L4", "L5"]:
+    ordered_keys = ordered_present_round_keys(overall_rounds)
+    numbers = round_number_map(ordered_keys)
+    for rk in ordered_keys:
         rd = overall_rounds.get(rk)
         if not rd:
             continue
+        number = rd.get("round_number", numbers.get(rk, 0))
         insight_lines.append(
-            f"- {rk} {rd.get('round_label', rk)}: {rd.get('status', 'Pending')} "
+            f"- {number}. {rd.get('round_label', rk)}: {rd.get('status', 'Pending')} "
             f"({rd.get('percentage', 0)}%, {rd.get('correct', 0)}/{rd.get('total', 0)})"
         )
     key_insights = "\n".join(insight_lines) if insight_lines else "- Round-wise insights not available."

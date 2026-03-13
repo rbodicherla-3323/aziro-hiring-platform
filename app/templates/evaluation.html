@@ -374,23 +374,23 @@
             </span>
             <span class="threshold-item">
                 <span class="threshold-dot" style="background:#0f766e;"></span>
-                Aptitude (L1): {{ pass_thresholds.get('L1', default_threshold) }}%
+                Aptitude: {{ pass_thresholds.get('L1', default_threshold) }}%
             </span>
             <span class="threshold-item">
                 <span class="threshold-dot" style="background:#6610f2;"></span>
-                Technical (L2): {{ pass_thresholds.get('L2', default_threshold) }}%
+                Technical: {{ pass_thresholds.get('L2', default_threshold) }}%
             </span>
             <span class="threshold-item">
                 <span class="threshold-dot" style="background:#e76f51;"></span>
-                Practical (L3): {{ pass_thresholds.get('L3', default_threshold) }}%
+                Practical: {{ pass_thresholds.get('L3', default_threshold) }}%
             </span>
             <span class="threshold-item">
                 <span class="threshold-dot" style="background:#2a9d8f;"></span>
-                Soft Skills (L5): {{ pass_thresholds.get('L5', default_threshold) }}%
+                Soft Skills: {{ pass_thresholds.get('L5', default_threshold) }}%
             </span>
             <span class="threshold-item">
                 <span class="threshold-dot" style="background:#f4a261;"></span>
-                Domain (L6): {{ pass_thresholds.get('L6', default_threshold) }}%
+                Domain: {{ pass_thresholds.get('L6', default_threshold) }}%
             </span>
         </div>
     </div>
@@ -543,6 +543,7 @@
 
             <thead>
             <tr>
+                <th style="width:6%;">No.</th>
                 <th style="width:22%;">Round</th>
                 <th style="width:10%;">Score</th>
                 <th style="width:24%;">Percentage</th>
@@ -560,10 +561,12 @@
 
                     <tr>
                         <td>
+                            <span class="fw-medium">{{ r.round_number or loop.index }}</span>
+                        </td>
+                        <td>
                             <span class="fw-medium" style="color:#334155;">
                                 {{ r.round_label }}
                             </span>
-                            <div style="font-size:0.75rem; color:#94a3b8;">{{ rk }}</div>
                         </td>
                         <td colspan="5" class="text-center text-muted" style="font-style:italic;">
                             <i class="bi bi-dash-circle me-1"></i> Not Attempted
@@ -577,10 +580,12 @@
 
                     <tr>
                         <td>
+                            <span class="fw-medium">{{ r.round_number or loop.index }}</span>
+                        </td>
+                        <td>
                             <span class="fw-medium" style="color:#334155;">
                                 {{ r.round_label }}
                             </span>
-                            <div style="font-size:0.75rem; color:#94a3b8;">{{ rk }}</div>
                         </td>
 
                         <td>

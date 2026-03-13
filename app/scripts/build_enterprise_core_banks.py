@@ -4,7 +4,7 @@ from copy import deepcopy
 from pathlib import Path
 
 from app.services.question_bank.helpers import normalize_text
-from app.services.question_bank.java_bank_config import JAVA_BANK_POLICIES
+from app.services.question_bank.enterprise_bank_config import ENTERPRISE_BANK_POLICIES
 from app.services.question_bank.validator import validate_question_bank
 
 DATA_DIR = Path("app/services/question_bank/data")
@@ -447,7 +447,7 @@ def assign_styles(questions, policy):
 
 
 def finalize_questions(bank_key, role_target, round_target, questions):
-    policy = JAVA_BANK_POLICIES[bank_key]
+    policy = ENTERPRISE_BANK_POLICIES[bank_key]
     assign_difficulties(questions, policy)
     assign_styles(questions, policy)
     finalized = []
@@ -1654,6 +1654,9 @@ BANK_SPECS = [
 
 def build_all_banks():
     for spec in BANK_SPECS:
+        if spec["bank_key"] not in ENTERPRISE_BANK_POLICIES:
+            # Inactive/legacy spec retained for historical reference.
+            continue
         old_pool = build_old_pool(spec["bank_key"], spec["role_target"], spec["round_target"])
         old_questions = select_old_questions(old_pool, spec["old_count"])
         combined = old_questions + [deepcopy(question) for question in spec["supplements"]]

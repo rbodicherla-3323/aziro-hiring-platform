@@ -365,6 +365,63 @@ class CodingSessionService:
                     param_names.append(f"arg{len(param_names) + 1}")
             return name, param_names
 
+        def extract_return_type(signature, default_type="int"):
+            m = re.match(r"\s*(.+?)\s+[A-Za-z_]\w*\s*\(.*\)\s*$", str(signature or ""))
+            if not m:
+                return default_type
+            ret = m.group(1).strip()
+            # Java signatures may include modifiers in the return-type capture.
+            ret = re.sub(r"^(public|private|protected)\s+", "", ret)
+            ret = re.sub(r"^static\s+", "", ret)
+            ret = re.sub(r"^final\s+", "", ret)
+            return ret.strip() or default_type
+
+        def java_default_return(ret_type):
+            t = re.sub(r"\s+", "", str(ret_type or ""))
+            if t in ("void",):
+                return ""
+            if t in ("int", "Integer", "short", "Short", "long", "Long", "byte", "Byte"):
+                return "        return 0;"
+            if t in ("double", "Double", "float", "Float"):
+                return "        return 0.0;"
+            if t in ("boolean", "Boolean"):
+                return "        return false;"
+            if t == "String":
+                return "        return \"\";"
+            if t.endswith("[]"):
+                return f"        return new {t[:-2]}[0];"
+            if t.startswith("List<"):
+                return "        return new ArrayList<>();"
+            if t.startswith("Map<"):
+                return "        return new HashMap<>();"
+            return "        return null;"
+
+        def cpp_default_return(ret_type):
+            t = re.sub(r"\s+", "", str(ret_type or "")).replace("std::", "")
+            if t == "void":
+                return ""
+            if t in ("int", "short", "long", "longlong"):
+                return "    return 0;"
+            if t in ("double", "float"):
+                return "    return 0.0;"
+            if t == "bool":
+                return "    return false;"
+            if t == "string":
+                return "    return \"\";"
+            if t.startswith("vector<") or t.startswith("map<"):
+                return "    return {};"
+            return "    return {};"
+
+        def c_default_return(ret_type):
+            t = re.sub(r"\s+", "", str(ret_type or ""))
+            if t == "void":
+                return ""
+            if t in ("int", "short", "long"):
+                return "    return 0;"
+            if t in ("double", "float"):
+                return "    return 0.0;"
+            return "    return 0;"
+
         if lang == "java":
             java_info = func_info if isinstance(func_info, dict) else {}
             class_name = java_info.get("class", "Solution")

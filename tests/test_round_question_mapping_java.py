@@ -3,7 +3,7 @@ from app.utils.round_question_mapping import ROUND_QUESTION_MAPPING
 
 def test_java_role_mappings_point_to_new_banks():
     assert ROUND_QUESTION_MAPPING["java_entry"]["L2"] == ["java/java_entry_theory.json"]
-    assert ROUND_QUESTION_MAPPING["java_entry"]["L3"] == ["java/java_entry_fundamentals.json"]
+    assert "L3" not in ROUND_QUESTION_MAPPING["java_entry"]
     assert ROUND_QUESTION_MAPPING["java_qa"]["L2"] == ["java/java_senior_theory_debug.json"]
     assert ROUND_QUESTION_MAPPING["java_qa"]["L3"] == ["qa/java_qa_advanced.json"]
     assert ROUND_QUESTION_MAPPING["java_aws"]["L2"] == ["java/java_senior_theory_debug.json"]

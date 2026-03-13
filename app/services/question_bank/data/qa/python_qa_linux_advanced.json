@@ -1,0 +1,2531 @@
+[
+  {
+    "id": "qa-python-qa-linux-advanced-001",
+    "question": "Which metric best reflects automation suite reliability over time?",
+    "options": [
+      "Pass rate adjusted for known flakes and reruns",
+      "Number of test files under production constraints",
+      "Execution time only",
+      "Code coverage alone"
+    ],
+    "correct_answer": "Pass rate adjusted for known flakes and reruns",
+    "topic": "CI and Reliability",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "ci-and-reliability",
+      "debugging"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-002",
+    "question": "Which metric best indicates API reliability in production?",
+    "options": [
+      "Error rate and latency percentiles (e.g., p95)",
+      "Code line count",
+      "Number of endpoints",
+      "Container image size under production constraints"
+    ],
+    "correct_answer": "Error rate and latency percentiles (e.g., p95)",
+    "topic": "CI and Reliability",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "ci-and-reliability",
+      "debugging"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-003",
+    "question": "When monitoring Selenium Grid performance, what indicates Node saturation?",
+    "options": [
+      "Session queue buildup and timeout errors; new requests cannot be fulfilled",
+      "High CPU usage under production constraints in enterprise environments for large-scale systems",
+      "High memory",
+      "Low disk space"
+    ],
+    "correct_answer": "Session queue buildup and timeout errors; new requests cannot be fulfilled",
+    "topic": "Performance and Troubleshooting",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance",
+      "performance-and-troubleshooting"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-004",
+    "question": "For API performance checks in functional suites, what is a reasonable practice?",
+    "options": [
+      "Track baseline response time and alert on regression thresholds",
+      "Add strict millisecond assertion for every endpoint under production constraints",
+      "Ignore performance in automation",
+      "Run load test on each PR"
+    ],
+    "correct_answer": "Track baseline response time and alert on regression thresholds",
+    "topic": "Performance and Troubleshooting",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "performance",
+      "performance-and-troubleshooting"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-005",
+    "question": "A Python app stores time-series logs in PostgreSQL but queries are mostly recent data. What table design approach can help performance and manageability?",
+    "options": [
+      "Partition the table by time (e.g., monthly partitions)",
+      "Use a single huge table",
+      "Disable indexes",
+      "Store logs as JSON in a single row under production constraints"
+    ],
+    "correct_answer": "Partition the table by time (e.g., monthly partitions)",
+    "topic": "Performance and Troubleshooting",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance",
+      "performance-and-troubleshooting"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-006",
+    "question": "What causes StaleElementReferenceException in Selenium and how should it be handled?",
+    "options": [
+      "Element was removed from DOM and needs to be re-located, handle with retry logic or fresh locator",
+      "Browser version incompatibility",
+      "Element is hidden",
+      "Network timeout during element access under production constraints in enterprise environments for large-scale systems"
+    ],
+    "correct_answer": "Element was removed from DOM and needs to be re-located, handle with retry logic or fresh locator",
+    "topic": "Debugging and Root Cause",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "debugging-and-root-cause",
+      "scenario"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-007",
+    "question": "In Selenium 4, what is the primary difference between W3C protocol and JSON Wire Protocol?",
+    "options": [
+      "W3C is a W3C standard and JSON Wire Protocol is deprecated",
+      "W3C requires additional licensing",
+      "JSON Wire Protocol is faster than W3C",
+      "W3C is proprietary to Chrome while JSON Wire is universal under production constraints"
+    ],
+    "correct_answer": "W3C is a W3C standard and JSON Wire Protocol is deprecated",
+    "topic": "CI and Reliability",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "ci-and-reliability"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-008",
+    "question": "When using Actions.moveToElement() for hover operations, what should happen after movement?",
+    "options": [
+      "Must call perform() to execute the action chain",
+      "No further action needed",
+      "Must click after hover",
+      "Hover automatically triggers mouseenter event under production constraints"
+    ],
+    "correct_answer": "Must call perform() to execute the action chain",
+    "topic": "Linux QA Operations",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "linux-qa-operations",
+      "operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-009",
+    "question": "In a QA automation scenario with nested iFrames, how should you locate elements in the inner-most iFrame?",
+    "options": [
+      "Switch to outer iFrame first, then switch to nested iFrame",
+      "XPath automatically traverses all iFrames",
+      "Use JavaScriptExecutor to bypass iFrame boundaries under production constraints",
+      "iFrames cannot contain locatable elements"
+    ],
+    "correct_answer": "Switch to outer iFrame first, then switch to nested iFrame",
+    "topic": "Python Test Automation",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "python-test-automation"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-010",
+    "question": "In a QA test with UnhandledAlertException, what indicates the root cause?",
+    "options": [
+      "Unexpected alert appeared during execution; must handle alert before continuing",
+      "Alert was expected and properly handled under production constraints in enterprise environments",
+      "Test execution is incomplete",
+      "Alert handling is not supported"
+    ],
+    "correct_answer": "Unexpected alert appeared during execution; must handle alert before continuing",
+    "topic": "Debugging and Root Cause",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "debugging-and-root-cause",
+      "scenario"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-011",
+    "question": "When using Selenium 4 with the W3C protocol, which capability flag ensures compatibility with older Selenium 3 implementations?",
+    "options": [
+      "goog:chromeOptions",
+      "useJsonWireProtocol",
+      "seleniumProtocol",
+      "webdriver.chrome.version"
+    ],
+    "correct_answer": "goog:chromeOptions",
+    "topic": "CI and Reliability",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "ci-and-reliability"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-012",
+    "question": "When handling InvalidElementStateException, what scenario typically causes it?",
+    "options": [
+      "Attempting interaction with disabled or read-only element; verify element state before interaction",
+      "Element is not found",
+      "Driver not initialized under production constraints in enterprise environments for large-scale systems",
+      "Browser version issue"
+    ],
+    "correct_answer": "Attempting interaction with disabled or read-only element; verify element state before interaction",
+    "topic": "Debugging and Root Cause",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "debugging-and-root-cause",
+      "operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-013",
+    "question": "In the Selenium architecture, what role does the Local WebDriver end represent?",
+    "options": [
+      "Manages browser lifecycle and executes commands",
+      "Handles HTTP requests only",
+      "Manages test data only",
+      "Connects to remote Selenium Grid under production constraints"
+    ],
+    "correct_answer": "Manages browser lifecycle and executes commands",
+    "topic": "Test Framework Architecture",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "test-framework-architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-014",
+    "question": "In Selenium Grid architecture, what is the primary responsibility of the Hub node?",
+    "options": [
+      "Route session requests to appropriate Node",
+      "Monitor network traffic only",
+      "Execute test scripts on the browser",
+      "Store test data and manage test cases under production constraints"
+    ],
+    "correct_answer": "Route session requests to appropriate Node",
+    "topic": "Test Framework Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "test-framework-architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-015",
+    "question": "When handling TimeoutException during explicit wait, what should be verified in test logs?",
+    "options": [
+      "Whether condition was met, expected elements, DOM state before timeout",
+      "Only the timeout duration under production constraints in enterprise environments",
+      "Browser version number",
+      "Network connectivity only"
+    ],
+    "correct_answer": "Whether condition was met, expected elements, DOM state before timeout",
+    "topic": "Python Test Automation",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "python-test-automation"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-016",
+    "question": "When configuring Selenium 4 with ChromeDriver, which parameter specifies the port for local webdriver communication?",
+    "options": [
+      "port in enterprise environments",
+      "webdriverPort in enterprise environments",
+      "localPort",
+      "chromePort"
+    ],
+    "correct_answer": "port in enterprise environments",
+    "topic": "API and Integration Testing",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "api-and-integration-testing",
+      "operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-017",
+    "question": "In Selenium 4 architecture, what is the significance of the Remote WebDriver endpoint?",
+    "options": [
+      "It communicates with remote browser instances via HTTP",
+      "It only supports Safari browser",
+      "It manages only test data",
+      "It replaces local WebDriver completely under production constraints"
+    ],
+    "correct_answer": "It communicates with remote browser instances via HTTP",
+    "topic": "Test Framework Architecture",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "test-framework-architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-018",
+    "question": "When designing a schema for a high-write log table, which pattern can help avoid index bloat and improve insert performance?",
+    "options": [
+      "Minimize indexes to only necessary query patterns",
+      "Use text columns for all data under production constraints",
+      "Use many foreign keys",
+      "Index every column"
+    ],
+    "correct_answer": "Minimize indexes to only necessary query patterns",
+    "topic": "Performance and Troubleshooting",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "performance",
+      "performance-and-troubleshooting",
+      "scenario"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-019",
+    "question": "During architecture review, which option best describes the execution order of TestNG annotations in a test class?",
+    "options": [
+      "@BeforeClass, @BeforeMethod, @Test, @AfterMethod, @AfterClass",
+      "Random order",
+      "Order is configurable under production constraints in enterprise environments",
+      "@Test always first"
+    ],
+    "correct_answer": "@BeforeClass, @BeforeMethod, @Test, @AfterMethod, @AfterClass",
+    "topic": "Test Framework Architecture",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "test-framework-architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-020",
+    "question": "You run 'iostat -x 1' and notice that a disk has an average queue size (avgqu-sz) of 32 and %util is at 100%. The await time is 450ms. What does this indicate?",
+    "options": [
+      "The disk is saturated with high latency; requests are queuing excessively",
+      "The filesystem is corrupted and needs fsck",
+      "The disk controller firmware needs updating in this scenario under production constraints",
+      "The disk is idle and performing optimally"
+    ],
+    "correct_answer": "The disk is saturated with high latency; requests are queuing excessively",
+    "topic": "Performance and Troubleshooting",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "performance-and-troubleshooting"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-021",
+    "question": "A Java application's response times have degraded. You notice the system's swap usage is at 6GB despite 32GB physical RAM. 'vmstat 1' shows high si/so values. What is happening and what should you check first?",
+    "options": [
+      "The system is thrashing - memory is overcommitted and pages are constantly swapping in/out; check per-process RSS with 'ps aux --sort=-rss'",
+      "The kernel is proactively caching swap; this is normal behavior",
+      "Swap is being used as additional RAM intentionally; increase swap to 12GB in this scenario under production constraints for the stated requirement",
+      "The Java application has a file descriptor leak causing swap usage"
+    ],
+    "correct_answer": "The system is thrashing - memory is overcommitted and pages are constantly swapping in/out; check per-process RSS with 'ps aux --sort=-rss'",
+    "topic": "Performance and Troubleshooting",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-troubleshooting"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-022",
+    "question": "When performing multi-element drag operations, what does Actions.dragAndDrop(source, target).perform() return?",
+    "options": [
+      "Void/null after performing the action",
+      "The source element",
+      "The target element",
+      "A boolean indicating success under production constraints"
+    ],
+    "correct_answer": "Void/null after performing the action",
+    "topic": "Linux QA Operations",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux-qa-operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-023",
+    "question": "In a test with multiple pop-up windows, how should you handle window order unpredictability?",
+    "options": [
+      "Use window title/URL to identify and switch to specific window",
+      "Assume first window is always the popup under production constraints",
+      "Pop-ups appear in consistent order",
+      "Pop-ups cannot be reliably handled"
+    ],
+    "correct_answer": "Use window title/URL to identify and switch to specific window",
+    "topic": "Python Test Automation",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "python-test-automation"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-024",
+    "question": "You need to identify which process is consuming the most disk I/O on a Linux server. Which tool gives per-process I/O statistics including read/write bytes per second?",
+    "options": [
+      "iotop",
+      "vmstat",
+      "netstat",
+      "top"
+    ],
+    "correct_answer": "iotop",
+    "topic": "Performance and Troubleshooting",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux",
+      "performance-and-troubleshooting"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-025",
+    "question": "When a Selenium Grid Node goes offline, how should the Hub handle incoming requests for that Node?",
+    "options": [
+      "Mark the Node as unavailable and route to other Nodes",
+      "Throw immediate timeout error",
+      "Queue requests indefinitely",
+      "Automatically restart the Node under production constraints"
+    ],
+    "correct_answer": "Mark the Node as unavailable and route to other Nodes",
+    "topic": "API and Integration Testing",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api-and-integration-testing",
+      "debugging"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-026",
+    "question": "In a flaky test with intermittent ElementNotInteractableException, what is the root cause?",
+    "options": [
+      "Element exists but is covered by overlay or off-screen; use scrolling or wait for visibility",
+      "Test is poorly written under production constraints in enterprise environments for large-scale systems",
+      "Always a false failure",
+      "Network latency"
+    ],
+    "correct_answer": "Element exists but is covered by overlay or off-screen; use scrolling or wait for visibility",
+    "topic": "Debugging and Root Cause",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "debugging-and-root-cause"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-027",
+    "question": "When using Docker containers for Selenium Grid, which component is typically containerized along with the browser?",
+    "options": [
+      "Browser and Node with standalone or standalone-chrome image",
+      "Only the Hub",
+      "Only the database",
+      "Only the test scripts under production constraints in enterprise environments"
+    ],
+    "correct_answer": "Browser and Node with standalone or standalone-chrome image",
+    "topic": "API and Integration Testing",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api-and-integration-testing",
+      "debugging"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-028",
+    "question": "In TestNG, what is the difference between @DataProvider and @Parameters?",
+    "options": [
+      "@DataProvider provides data via method returning Object[][] array, @Parameters via XML",
+      "DataProvider is deprecated under production constraints in enterprise environments for large-scale systems",
+      "No difference",
+      "Both require XML"
+    ],
+    "correct_answer": "@DataProvider provides data via method returning Object[][] array, @Parameters via XML",
+    "topic": "Test Framework Architecture",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "test-framework-architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-029",
+    "question": "You suspect a network issue between your application server and a database on port 5432. 'ping' works but connections fail intermittently. Which tool would help you diagnose the TCP-level connectivity and path issues?",
+    "options": [
+      "traceroute db-server && ss -tnp | grep 5432",
+      "ping -c 10 db-server in this scenario under production constraints",
+      "nslookup db-server",
+      "arp -a db-server"
+    ],
+    "correct_answer": "traceroute db-server && ss -tnp | grep 5432",
+    "topic": "Performance and Troubleshooting",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-troubleshooting"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-030",
+    "question": "In the W3C WebDriver protocol, what does the /session endpoint return after successful browser initialization?",
+    "options": [
+      "Session ID and browser capabilities",
+      "Browser version string only",
+      "List of all browser drivers",
+      "Network configuration details under production constraints"
+    ],
+    "correct_answer": "Session ID and browser capabilities",
+    "topic": "API and Integration Testing",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api-and-integration-testing",
+      "debugging"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-031",
+    "question": "When using TestNG groups, what is the purpose of grouping tests?",
+    "options": [
+      "Allows selective test execution; run specific groups via testng.xml",
+      "Groups are not useful",
+      "Mandatory for all tests",
+      "Improves execution speed under production constraints in enterprise environments"
+    ],
+    "correct_answer": "Allows selective test execution; run specific groups via testng.xml",
+    "topic": "Test Framework Architecture",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "test-framework-architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-032",
+    "question": "When Selenium Grid is configured with multiple Node machines, what protocol is used for Hub-Node communication?",
+    "options": [
+      "HTTP/HTTPS REST API",
+      "FTP protocol",
+      "TCP only",
+      "Websockets exclusively"
+    ],
+    "correct_answer": "HTTP/HTTPS REST API",
+    "topic": "CI and Reliability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "ci-and-reliability",
+      "debugging"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-033",
+    "question": "Which XPath axis is used to locate an element's parent in a deeply nested DOM structure?",
+    "options": [
+      "parent in enterprise environments",
+      "following",
+      "preceding-sibling in enterprise environments",
+      "ancestor"
+    ],
+    "correct_answer": "parent in enterprise environments",
+    "topic": "CI and Reliability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "ci-and-reliability",
+      "debugging"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-034",
+    "question": "When using dynamic XPath with following-sibling axis, what is the typical use case?",
+    "options": [
+      "Finding elements below the current element that share the same parent",
+      "Finding the element's grandparent",
+      "Finding elements above the current element under production constraints",
+      "Finding elements in a different DOM branch"
+    ],
+    "correct_answer": "Finding elements below the current element that share the same parent",
+    "topic": "CI and Reliability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "ci-and-reliability",
+      "debugging"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-035",
+    "question": "When performing context menu operations, what key combination should be used with Actions class?",
+    "options": [
+      "Right-click via contextClick() method",
+      "Alt + Click",
+      "Context menus cannot be automated under production constraints",
+      "Shift + Click"
+    ],
+    "correct_answer": "Right-click via contextClick() method",
+    "topic": "Linux QA Operations",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux-qa-operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-036",
+    "question": "In CSS selectors, what is the difference between using '>' and ' ' (space) combinator?",
+    "options": [
+      "'>' selects immediate children, space selects all descendants",
+      "Space is faster than '>'",
+      "'>' is deprecated in modern CSS",
+      "Both have identical functionality under production constraints"
+    ],
+    "correct_answer": "'>' selects immediate children, space selects all descendants",
+    "topic": "CI and Reliability",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "ci-and-reliability",
+      "scenario"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-037",
+    "question": "When using JavaScriptExecutor to modify DOM attributes, what is the typical use case in QA automation?",
+    "options": [
+      "Modify read-only or protected attributes for test scenarios",
+      "Attributes should never be changed",
+      "Avoid attribute modification as it violates test principles",
+      "JavaScriptExecutor cannot modify attributes"
+    ],
+    "correct_answer": "Modify read-only or protected attributes for test scenarios",
+    "topic": "Python Test Automation",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "python-test-automation"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-038",
+    "question": "When handling Shadow DOM elements in Selenium 4, what is the recommended approach?",
+    "options": [
+      "Use getShadowRoot() method and query elements within shadow tree",
+      "Use regular XPath as Shadow DOM is transparent",
+      "Shadow DOM cannot be automated with Selenium",
+      "Use only CSS selectors without shadow penetration under production constraints"
+    ],
+    "correct_answer": "Use getShadowRoot() method and query elements within shadow tree",
+    "topic": "API and Integration Testing",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "api-and-integration-testing",
+      "operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-039",
+    "question": "In TestNG parallel execution with testng.xml, what does parallel=\"methods\" mean?",
+    "options": [
+      "Execute test methods concurrently within and across classes",
+      "Execute sequentially despite configuration under production constraints",
+      "Parallel execution is not supported",
+      "Parallelize test classes"
+    ],
+    "correct_answer": "Execute test methods concurrently within and across classes",
+    "topic": "Test Framework Architecture",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "test-framework-architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-040",
+    "question": "How do you chain multiple Actions operations without calling perform() between each operation?",
+    "options": [
+      "Chain operations and call perform() once at the end",
+      "Each operation requires separate perform() call under production constraints",
+      "Actions cannot be chained",
+      "Chaining is not recommended"
+    ],
+    "correct_answer": "Chain operations and call perform() once at the end",
+    "topic": "Linux QA Operations",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "linux-qa-operations",
+      "scenario"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-041",
+    "question": "Which XPath axis would you use to find all preceding elements in the DOM tree before the current element?",
+    "options": [
+      "preceding",
+      "ancestor-or-self",
+      "preceding-or-self",
+      "ancestor"
+    ],
+    "correct_answer": "preceding",
+    "topic": "API and Integration Testing",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "api-and-integration-testing",
+      "architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-042",
+    "question": "Which data structure works best for implementing LRU cache in O(1) operations?",
+    "options": [
+      "HashMap + Doubly Linked List",
+      "Array + sort",
+      "LinkedList only under production constraints",
+      "Stack + Queue"
+    ],
+    "correct_answer": "HashMap + Doubly Linked List",
+    "topic": "Linux QA Operations",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "linux-qa-operations",
+      "operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-043",
+    "question": "When handling WebDriverException as a general exception, what information is crucial for debugging?",
+    "options": [
+      "Exception type, message, stack trace, screenshot, and browser logs",
+      "Only the exception message under production constraints in enterprise environments",
+      "Test duration",
+      "Browser type only"
+    ],
+    "correct_answer": "Exception type, message, stack trace, screenshot, and browser logs",
+    "topic": "Debugging and Root Cause",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "debugging",
+      "debugging-and-root-cause"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-044",
+    "question": "When using TestNG IRetryAnalyzer, what is its purpose?",
+    "options": [
+      "Retries only specific failed tests based on custom logic before marking as failed",
+      "Disables failure reporting under production constraints in enterprise environments",
+      "Prevents test failure",
+      "Retries all failed tests"
+    ],
+    "correct_answer": "Retries only specific failed tests based on custom logic before marking as failed",
+    "topic": "Test Framework Architecture",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "test-framework-architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-045",
+    "question": "The command 'ss -tlnp' shows a process listening on 0.0.0.0:8080 but external clients cannot connect. Firewall rules (iptables -L) show no DROP rules. What else could be blocking external access?",
+    "options": [
+      "A cloud security group, network ACL, or firewalld/nftables rule is blocking inbound traffic on port 8080",
+      "The process must listen on 127.0.0.1 instead of 0.0.0.0",
+      "The ss command output is unreliable; use netstat instead in this scenario under production constraints for the stated requirement",
+      "The process is only configured for IPv6"
+    ],
+    "correct_answer": "A cloud security group, network ACL, or firewalld/nftables rule is blocking inbound traffic on port 8080",
+    "topic": "Performance and Troubleshooting",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "performance-and-troubleshooting"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-046",
+    "question": "When using CSS attribute selectors for dynamic attributes, what syntax locates elements with attributes containing specific values?",
+    "options": [
+      "[attr*=value]",
+      "[attr^=value]",
+      "[attr=value]",
+      "[attr$=value]"
+    ],
+    "correct_answer": "[attr*=value]",
+    "topic": "API and Integration Testing",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "api-and-integration-testing",
+      "operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-047",
+    "question": "In TestNG, what is the difference between hard assert and soft assert?",
+    "options": [
+      "Hard assert stops execution on failure, soft assert collects all failures and reports at end",
+      "Soft assert is not supported under production constraints in enterprise environments for large-scale systems",
+      "Both are identical",
+      "Hard assert is faster"
+    ],
+    "correct_answer": "Hard assert stops execution on failure, soft assert collects all failures and reports at end",
+    "topic": "Test Framework Architecture",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "test-framework-architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-048",
+    "question": "When using XPath text() function for dynamic elements with varying whitespace, what approach is most robust?",
+    "options": [
+      "Use contains() with normalize-space() function",
+      "Use exact text match only",
+      "XPath text() is unreliable for automation under production constraints",
+      "Avoid text-based locators entirely"
+    ],
+    "correct_answer": "Use contains() with normalize-space() function",
+    "topic": "API and Integration Testing",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "api-and-integration-testing",
+      "scenario"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-049",
+    "question": "During architecture review, which option best describes the 'dirty_ratio' and 'dirty_background_ratio' kernel parameters control in Linux?",
+    "options": [
+      "The threshold of dirty (modified in page cache but not written to disk) pages before processes are blocked vs. when background writeback starts",
+      "The ratio of user-space to kernel-space memory allocation",
+      "The maximum percentage of swap that can be used before OOM triggers in this scenario under production constraints for the stated requirement during incident triage",
+      "The percentage of corrupted filesystem blocks before fsck triggers"
+    ],
+    "correct_answer": "The threshold of dirty (modified in page cache but not written to disk) pages before processes are blocked vs. when background writeback starts",
+    "topic": "Linux QA Operations",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "kernel",
+      "linux",
+      "linux-qa-operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-050",
+    "question": "During live operations, which option best describes the difference between iptables chains INPUT, FORWARD, and OUTPUT?",
+    "options": [
+      "INPUT processes packets destined for the local system; FORWARD handles packets being routed through; OUTPUT handles locally generated outbound packets",
+      "INPUT handles TCP; FORWARD handles UDP; OUTPUT handles ICMP",
+      "They all process the same packets but in different priority order in this scenario under production constraints for the stated requirement during incident triage",
+      "INPUT handles all packets; FORWARD and OUTPUT are aliases"
+    ],
+    "correct_answer": "INPUT processes packets destined for the local system; FORWARD handles packets being routed through; OUTPUT handles locally generated outbound packets",
+    "topic": "Performance and Troubleshooting",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "performance-and-troubleshooting"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-051",
+    "question": "You need to capture all DNS queries leaving a server to debug name resolution issues. Which tcpdump command would you use?",
+    "options": [
+      "tcpdump -i any port 53 -nn",
+      "tcpdump -i eth0 icmp",
+      "tcpdump -i lo port 53",
+      "tcpdump -i any port 80 in this scenario"
+    ],
+    "correct_answer": "tcpdump -i any port 53 -nn",
+    "topic": "Performance and Troubleshooting",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "debugging",
+      "performance-and-troubleshooting"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-052",
+    "question": "How should you handle flaky click failures caused by overlays?",
+    "options": [
+      "Wait until element is clickable and overlay is gone",
+      "Retry click immediately in loop under production constraints",
+      "Use JavaScript click always",
+      "Disable the test"
+    ],
+    "correct_answer": "Wait until element is clickable and overlay is gone",
+    "topic": "Debugging and Root Cause",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "debugging-and-root-cause",
+      "scenario"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-053",
+    "question": "In CSS selectors, how do you target an element that is the first child of its parent?",
+    "options": [
+      ":first-child in enterprise environments",
+      ":nth-child(1)",
+      ":first-of-type",
+      "All of the above are equivalent in enterprise environments"
+    ],
+    "correct_answer": ":first-child in enterprise environments",
+    "topic": "API and Integration Testing",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "api-and-integration-testing",
+      "architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-054",
+    "question": "A FastAPI endpoint uses async def but internally calls a blocking database driver. What issue can this cause?",
+    "options": [
+      "Blocking the event loop and reducing concurrency",
+      "Type hint errors only",
+      "Increased throughput",
+      "Automatic connection pooling under production constraints"
+    ],
+    "correct_answer": "Blocking the event loop and reducing concurrency",
+    "topic": "Debugging and Root Cause",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "api",
+      "async",
+      "debugging-and-root-cause",
+      "operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-055",
+    "question": "In a test with ScreenshotException during failure capture, what is the appropriate handling?",
+    "options": [
+      "Log exception but continue execution to verify test state",
+      "Ignore the exception",
+      "Stop test immediately",
+      "Screenshots are not necessary under production constraints"
+    ],
+    "correct_answer": "Log exception but continue execution to verify test state",
+    "topic": "Python Test Automation",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "python-test-automation"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-056",
+    "question": "A production defect investigation needs clarity on the significance of the setuid (SUID) bit on a Linux executable, and why is it a security concern?",
+    "options": [
+      "It causes the executable to run with the permissions of the file owner (often root) regardless of who executes it, creating potential privilege escalation risks",
+      "It prevents the file from being modified after creation",
+      "It allows the file to be executed by any user but with no special privileges in this scenario under production constraints for the stated requirement during incident triage",
+      "It encrypts the file contents during execution"
+    ],
+    "correct_answer": "It causes the executable to run with the permissions of the file owner (often root) regardless of who executes it, creating potential privilege escalation risks",
+    "topic": "Linux QA Operations",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux",
+      "linux-qa-operations",
+      "security"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-057",
+    "question": "In a MySQL-backed Django app, which issue is most likely caused by missing indexes on foreign key columns?",
+    "options": [
+      "Slow JOIN queries between related tables",
+      "Inconsistent data types",
+      "Deadlocks on writes only under production constraints",
+      "Too many connections"
+    ],
+    "correct_answer": "Slow JOIN queries between related tables",
+    "topic": "Debugging and Root Cause",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "debugging-and-root-cause"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-058",
+    "question": "A production defect investigation needs clarity on the purpose of SELinux 'enforcing' mode and how does it differ from 'permissive' mode?",
+    "options": [
+      "Enforcing mode actively blocks policy violations and logs them; permissive mode only logs violations without blocking, useful for testing policies",
+      "Enforcing mode disables all user access; permissive mode allows root-only access",
+      "Enforcing mode logs violations but allows them; permissive mode blocks all access in this scenario under production constraints for the stated requirement",
+      "Both modes are identical in behavior"
+    ],
+    "correct_answer": "Enforcing mode actively blocks policy violations and logs them; permissive mode only logs violations without blocking, useful for testing policies",
+    "topic": "Linux QA Operations",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux",
+      "linux-qa-operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-059",
+    "question": "In a Selenium Grid with scheduled cleanup, what should be terminated after test completion?",
+    "options": [
+      "WebDriver session and browser instance to free resources",
+      "Entire Grid infrastructure under production constraints in enterprise environments",
+      "Node process",
+      "Hub process"
+    ],
+    "correct_answer": "WebDriver session and browser instance to free resources",
+    "topic": "Python Test Automation",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "python-test-automation"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-060",
+    "question": "A Python application uses Django ORM and you see hundreds of queries per request in debug toolbar. What is a likely cause?",
+    "options": [
+      "N+1 query patterns on related objects",
+      "Missing migrations",
+      "Too much caching",
+      "Excessive use of select_related under production constraints"
+    ],
+    "correct_answer": "N+1 query patterns on related objects",
+    "topic": "Debugging and Root Cause",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "debugging-and-root-cause"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-061",
+    "question": "When a web application dynamically loads elements via JavaScript, which locator strategy is most affected by timing?",
+    "options": [
+      "Dynamic XPath with wait conditions",
+      "CSS selectors",
+      "Static XPath",
+      "based locators under production constraints"
+    ],
+    "correct_answer": "Dynamic XPath with wait conditions",
+    "topic": "API and Integration Testing",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-and-integration-testing",
+      "debugging"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-062",
+    "question": "When using ITestListener in TestNG, which method is called after test completion regardless of result?",
+    "options": [
+      "onFinish() in enterprise environments",
+      "onTestStart()",
+      "onTestEnd()",
+      "onTestFinish() in enterprise environments"
+    ],
+    "correct_answer": "onFinish() in enterprise environments",
+    "topic": "Test Framework Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "test-framework-architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-063",
+    "question": "In TestNG, what is the purpose of @BeforeSuite annotation?",
+    "options": [
+      "Executes once before all tests in entire suite",
+      "Executes after suite",
+      "Executes for each test class",
+      "Executes before each test method under production constraints"
+    ],
+    "correct_answer": "Executes once before all tests in entire suite",
+    "topic": "Test Framework Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "test-framework-architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-064",
+    "question": "A server has multiple network interfaces. You want a service to only listen on the 10.0.1.5 interface, not on all interfaces. How is this typically achieved?",
+    "options": [
+      "Bind the service to 10.0.1.5 instead of 0.0.0.0 in its configuration",
+      "Set the default gateway to 10.0.1.5",
+      "Remove all other network interfaces using ip link delete in this scenario",
+      "Configure iptables to block other interfaces"
+    ],
+    "correct_answer": "Bind the service to 10.0.1.5 instead of 0.0.0.0 in its configuration",
+    "topic": "Performance and Troubleshooting",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-troubleshooting"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-065",
+    "question": "A production defect investigation needs clarity on the key difference between implicit wait and explicit wait in Selenium?",
+    "options": [
+      "Implicit is global, explicit is scoped to specific element conditions",
+      "Implicit is faster than explicit",
+      "Implicit waits are preferred in modern Selenium",
+      "Explicit cannot handle StaleElementReferenceException under production constraints"
+    ],
+    "correct_answer": "Implicit is global, explicit is scoped to specific element conditions",
+    "topic": "API and Integration Testing",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-and-integration-testing",
+      "debugging"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-066",
+    "question": "In test automation with retryable requests, why are idempotent operations critical?",
+    "options": [
+      "They ensure repeated retries don't cause unintended side effects or duplicates",
+      "They reduce server load",
+      "They are not necessary",
+      "They improve response time under production constraints in enterprise environments"
+    ],
+    "correct_answer": "They ensure repeated retries don't cause unintended side effects or duplicates",
+    "topic": "Python Test Automation",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "python-test-automation"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-067",
+    "question": "Which locator strategy is most stable for long-term UI automation?",
+    "options": [
+      "Dedicated data-testid attribute",
+      "Dynamic XPath with index",
+      "CSS path from full DOM",
+      "Absolute XPath from html tag under production constraints"
+    ],
+    "correct_answer": "Dedicated data-testid attribute",
+    "topic": "Python Test Automation",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "python-test-automation"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-068",
+    "question": "When using Explicit Wait with WebDriverWait, what exception is thrown if the condition is not met within timeout?",
+    "options": [
+      "TimeoutException",
+      "WaitException",
+      "InterruptedException",
+      "NoSuchElementException"
+    ],
+    "correct_answer": "TimeoutException",
+    "topic": "CI and Reliability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "ci-and-reliability",
+      "debugging"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-069",
+    "question": "When using dependsOnMethods in TestNG, what happens if dependency fails?",
+    "options": [
+      "Dependent test is skipped; does not count as failure",
+      "Order is ignored",
+      "Parent test is marked failed",
+      "Dependent test still executes under production constraints"
+    ],
+    "correct_answer": "Dependent test is skipped; does not count as failure",
+    "topic": "Test Framework Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "test-framework-architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-070",
+    "question": "In Selenium, what is the main purpose of Fluent Wait compared to WebDriverWait?",
+    "options": [
+      "Fluent Wait allows custom polling interval and ignored exceptions",
+      "Fluent Wait is deprecated under production constraints in enterprise environments",
+      "Fluent Wait is faster",
+      "They are identical"
+    ],
+    "correct_answer": "Fluent Wait allows custom polling interval and ignored exceptions",
+    "topic": "CI and Reliability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "ci-and-reliability",
+      "debugging"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-071",
+    "question": "In TestNG, how should test priorities be set for execution order within same class?",
+    "options": [
+      "Use priority attribute in @Test annotation (lower number = higher priority)",
+      "No priority system exists under production constraints in enterprise environments",
+      "Alphabetical order only",
+      "Execution order is random"
+    ],
+    "correct_answer": "Use priority attribute in @Test annotation (lower number = higher priority)",
+    "topic": "Test Framework Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "test-framework-architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-072",
+    "question": "A production defect investigation needs clarity on the key difference between ext4 and XFS filesystems in a production Linux environment?",
+    "options": [
+      "XFS excels at parallel I/O with large files and cannot be shrunk; ext4 supports both grow and shrink operations and is more versatile for general use",
+      "ext4 is deprecated in all modern distributions in favor of XFS",
+      "XFS does not support journaling while ext4 does",
+      "ext4 supports only files up to 1GB; XFS supports unlimited file sizes in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "XFS excels at parallel I/O with large files and cannot be shrunk; ext4 supports both grow and shrink operations and is more versatile for general use",
+    "topic": "Linux QA Operations",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux",
+      "linux-qa-operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-073",
+    "question": "When using ExpectedConditions.presenceOfElementLocated(), what does 'presence' specifically mean?",
+    "options": [
+      "Element exists in DOM regardless of visibility",
+      "Element has CSS styling applied under production constraints",
+      "Element is visible on the page",
+      "Element is clickable"
+    ],
+    "correct_answer": "Element exists in DOM regardless of visibility",
+    "topic": "API and Integration Testing",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-and-integration-testing",
+      "debugging"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-074",
+    "question": "Which ExpectedCondition should be used when you need to click an element that might be covered by an overlay?",
+    "options": [
+      "elementToBeClickable in enterprise environments",
+      "presenceOfAllElementsLocatedBy in enterprise environments",
+      "visibilityOfElementLocated",
+      "presenceOfElementLocated"
+    ],
+    "correct_answer": "elementToBeClickable in enterprise environments",
+    "topic": "API and Integration Testing",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-and-integration-testing",
+      "debugging"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-075",
+    "question": "In a scenario with AJAX requests completing before element visibility, what is the appropriate wait strategy?",
+    "options": [
+      "Use explicit wait for element visibility after AJAX completion",
+      "Wait conditions are unnecessary under production constraints in enterprise environments",
+      "Use Thread.sleep()",
+      "Rely on implicit wait only"
+    ],
+    "correct_answer": "Use explicit wait for element visibility after AJAX completion",
+    "topic": "CI and Reliability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "ci-and-reliability",
+      "debugging"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-076",
+    "question": "A migration fails in production because a column is dropped while the Python code still reads it. What deployment practice helps prevent this?",
+    "options": [
+      "Use backward-compatible migrations and deploy in two phases",
+      "Apply DB migrations after app deployment only under production constraints",
+      "Use raw SQL only",
+      "Drop all indexes first"
+    ],
+    "correct_answer": "Use backward-compatible migrations and deploy in two phases",
+    "topic": "Debugging and Root Cause",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "debugging-and-root-cause"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-077",
+    "question": "A production defect investigation needs clarity on the 'inode' represent in a Linux filesystem, and what happens when all inodes are exhausted even though disk space is available?",
+    "options": [
+      "An inode stores metadata (permissions, ownership, timestamps, block pointers) for a file; when inodes are exhausted, no new files or directories can be created despite free disk space",
+      "Inodes are network indexes; exhausting them blocks network access",
+      "Inodes store file data blocks; exhausting them corrupts existing files in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "Inodes are only relevant to NFS filesystems"
+    ],
+    "correct_answer": "An inode stores metadata (permissions, ownership, timestamps, block pointers) for a file; when inodes are exhausted, no new files or directories can be created despite free disk space",
+    "topic": "Linux QA Operations",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux",
+      "linux-qa-operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-078",
+    "question": "A production defect investigation needs clarity on the relationship between implicit wait timeout and explicit wait timeout when both are configured?",
+    "options": [
+      "Explicit timeout is checked in addition to implicit timeout",
+      "Implicit timeout overrides explicit under production constraints",
+      "They cancel each other out",
+      "Only one can be used at a time"
+    ],
+    "correct_answer": "Explicit timeout is checked in addition to implicit timeout",
+    "topic": "CI and Reliability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "ci-and-reliability",
+      "debugging"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-079",
+    "question": "A production defect investigation needs clarity on the best wait strategy for elements loaded after an API response?",
+    "options": [
+      "Explicit wait for expected condition",
+      "Thread.sleep with fixed delay under production constraints",
+      "Implicit wait only",
+      "No wait needed"
+    ],
+    "correct_answer": "Explicit wait for expected condition",
+    "topic": "Python Test Automation",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "python-test-automation"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-080",
+    "question": "A Dockerized Python app should not run as root inside the container. Why?",
+    "options": [
+      "It increases security risks if the container is compromised",
+      "It prevents logging",
+      "It reduces performance",
+      "It breaks environment variables under production constraints"
+    ],
+    "correct_answer": "It increases security risks if the container is compromised",
+    "topic": "Debugging and Root Cause",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "debugging-and-root-cause"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-081",
+    "question": "The 'ss -s' command shows 15,000 sockets in TIME_WAIT state on a high-traffic web server. What does this indicate and what kernel parameter can help?",
+    "options": [
+      "These are closed connections waiting for late packets; enable net.ipv4.tcp_tw_reuse=1 to allow reuse of TIME_WAIT sockets for new outbound connections",
+      "All 15,000 connections are actively transferring data",
+      "Increase the number of network interfaces to distribute the load in this scenario under production constraints for the stated requirement during incident triage",
+      "The server has a memory leak; restart all services"
+    ],
+    "correct_answer": "These are closed connections waiting for late packets; enable net.ipv4.tcp_tw_reuse=1 to allow reuse of TIME_WAIT sockets for new outbound connections",
+    "topic": "Performance and Troubleshooting",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "kernel",
+      "performance-and-troubleshooting",
+      "scenario"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-082",
+    "question": "You need a minimal, highly customizable microservice where you will manually choose extensions for ORM, auth, and validation. Which framework fits best?",
+    "options": [
+      "Flask in enterprise environments",
+      "FastAPI in enterprise environments",
+      "Pyramid",
+      "Django"
+    ],
+    "correct_answer": "Flask in enterprise environments",
+    "topic": "Test Framework Architecture",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "test-framework-architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-083",
+    "question": "Which pattern improves maintainability in Selenium UI suites?",
+    "options": [
+      "Page Object Model in enterprise environments",
+      "Hardcode locators in tests in enterprise environments",
+      "Single giant test method",
+      "Random execution order"
+    ],
+    "correct_answer": "Page Object Model in enterprise environments",
+    "topic": "Python Test Automation",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "python-test-automation"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-084",
+    "question": "What should a good UI smoke suite primarily validate?",
+    "options": [
+      "Critical user flows only",
+      "Every edge case",
+      "Only CSS styling under production constraints",
+      "Database indexes"
+    ],
+    "correct_answer": "Critical user flows only",
+    "topic": "Python Test Automation",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "python-test-automation"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-085",
+    "question": "What are Linux namespaces, and which namespace types are used by containers to provide isolation?",
+    "options": [
+      "Namespaces isolate kernel resources per process group: PID (process IDs), NET (network stack), MNT (mount points), UTS (hostname), IPC (inter-process communication), USER (UID/GID mapping), and CGROUP",
+      "Namespaces are DNS zones; containers use them for name resolution in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "Namespaces are filesystem partitions assigned to each container",
+      "Namespaces are only used by KVM virtual machines, not containers"
+    ],
+    "correct_answer": "Namespaces isolate kernel resources per process group: PID (process IDs), NET (network stack), MNT (mount points), UTS (hostname), IPC (inter-process communication), USER (UID/GID mapping), and CGROUP",
+    "topic": "Linux QA Operations",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "linux",
+      "linux-qa-operations",
+      "scenario"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-086",
+    "question": "When using Fluent Wait with ignoreException(StaleElementReferenceException.class), what behavior occurs?",
+    "options": [
+      "StaleElementReferenceException is caught and poll continues",
+      "Exception is logged only",
+      "Element is automatically refreshed",
+      "Test fails immediately on StaleElementReferenceException under production constraints"
+    ],
+    "correct_answer": "StaleElementReferenceException is caught and poll continues",
+    "topic": "API and Integration Testing",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "api-and-integration-testing",
+      "architecture"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-087",
+    "question": "A browser-based frontend on https://app.example.com calls a Python API on https://api.example.com and gets CORS errors. What is the likely cause?",
+    "options": [
+      "API not sending appropriate Access-Control-Allow-Origin headers",
+      "DNS misconfiguration",
+      "Expired TLS certificate",
+      "Missing Content-Type header under production constraints in enterprise environments"
+    ],
+    "correct_answer": "API not sending appropriate Access-Control-Allow-Origin headers",
+    "topic": "Debugging and Root Cause",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "api",
+      "debugging-and-root-cause",
+      "operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-088",
+    "question": "What does the 'nice' value of a process control, and what is the range of nice values on Linux?",
+    "options": [
+      "Nice controls CPU scheduling priority; range is -20 (highest priority) to 19 (lowest priority); only root can set negative nice values",
+      "Nice controls memory allocation priority; range is 1 to 10 in this scenario under production constraints for the stated requirement during incident triage",
+      "Nice controls network bandwidth; range is -100 to 100",
+      "Nice controls I/O priority; range is 0 to 100"
+    ],
+    "correct_answer": "Nice controls CPU scheduling priority; range is -20 (highest priority) to 19 (lowest priority); only root can set negative nice values",
+    "topic": "Linux QA Operations",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "linux",
+      "linux-qa-operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-089",
+    "question": "For cross-browser UI testing, what is a practical minimum set?",
+    "options": [
+      "Chrome, Firefox, and one WebKit-based browser",
+      "Only latest Chrome",
+      "All browser versions ever released under production constraints",
+      "Only Safari"
+    ],
+    "correct_answer": "Chrome, Firefox, and one WebKit-based browser",
+    "topic": "Python Test Automation",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "python-test-automation",
+      "scenario"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-090",
+    "question": "In Selenium 4, what is the significance of the wait condition for 'stalenessOf' an element?",
+    "options": [
+      "Waits until element is no longer attached to DOM",
+      "Waits until element is loaded",
+      "Waits until element becomes clickable under production constraints",
+      "Waits until element is visible"
+    ],
+    "correct_answer": "Waits until element is no longer attached to DOM",
+    "topic": "CI and Reliability",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "ci-and-reliability"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-091",
+    "question": "When using Actions class for drag-and-drop in Selenium, what is the correct method sequence?",
+    "options": [
+      "moveToElement(source).clickAndHold().moveToElement(target).release().perform()",
+      "Only dragAndDrop() method exists",
+      "Drag-and-drop cannot be automated with Actions under production constraints in enterprise environments",
+      "dragAndDrop(source, target) directly"
+    ],
+    "correct_answer": "moveToElement(source).clickAndHold().moveToElement(target).release().perform()",
+    "topic": "CI and Reliability",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "ci-and-reliability",
+      "operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-092",
+    "question": "During debugging, a frontend engineer shows a 422 Unprocessable Entity response from a FastAPI backend. Where should the Python developer look first to understand which field failed validation?",
+    "options": [
+      "The error details in the JSON response body",
+      "The HTML source",
+      "The TLS certificate under production constraints",
+      "The browser cache"
+    ],
+    "correct_answer": "The error details in the JSON response body",
+    "topic": "Debugging and Root Cause",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "api",
+      "concept",
+      "debugging",
+      "debugging-and-root-cause"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-093",
+    "question": "How should test data be managed for repeatable UI automation?",
+    "options": [
+      "Create deterministic seed/reset strategy",
+      "Reuse production users",
+      "Use random manual inputs under production constraints",
+      "Skip cleanup"
+    ],
+    "correct_answer": "Create deterministic seed/reset strategy",
+    "topic": "Python Test Automation",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "python-test-automation",
+      "scenario"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-094",
+    "question": "During architecture review, which option best describes the difference between Actions.doubleClick() and manually clicking twice with click()?",
+    "options": [
+      "doubleClick() triggers native double-click event with single DOM event",
+      "doubleClick() is not supported in Selenium",
+      "click() twice is more reliable",
+      "No difference, both trigger click event twice under production constraints"
+    ],
+    "correct_answer": "doubleClick() triggers native double-click event with single DOM event",
+    "topic": "CI and Reliability",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "ci-and-reliability"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-095",
+    "question": "You run 'curl -v https://api.internal.company.com' and get 'SSL: certificate subject name does not match target host name'. The IP resolves correctly. What is the issue?",
+    "options": [
+      "The certificate's Subject Alternative Name (SAN) or Common Name (CN) does not include 'api.internal.company.com'",
+      "The CA bundle is missing on the client",
+      "The server is using HTTP/2 which is incompatible in this scenario under production constraints for the stated requirement",
+      "The SSL certificate is expired"
+    ],
+    "correct_answer": "The certificate's Subject Alternative Name (SAN) or Common Name (CN) does not include 'api.internal.company.com'",
+    "topic": "Performance and Troubleshooting",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "api",
+      "operations",
+      "performance-and-troubleshooting"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-096",
+    "question": "What is the difference between a hard link and a soft (symbolic) link in Linux?",
+    "options": [
+      "A hard link is a directory entry pointing to the same inode (same data blocks); a soft link is a special file containing the path to the target - it breaks if the target is moved/deleted, and works across filesystems",
+      "Soft links share the same inode as the target; hard links create a copy in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "Hard links work across filesystems; soft links do not",
+      "There is no practical difference between them"
+    ],
+    "correct_answer": "A hard link is a directory entry pointing to the same inode (same data blocks); a soft link is a special file containing the path to the target - it breaks if the target is moved/deleted, and works across filesystems",
+    "topic": "Linux QA Operations",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "linux",
+      "linux-qa-operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-097",
+    "question": "In what scenario would you use Robot class instead of Actions class in Selenium?",
+    "options": [
+      "For OS-level interactions like keyboard shortcuts, file uploads outside browser",
+      "Robot cannot interact with web elements under production constraints in enterprise environments",
+      "Robot is always preferred",
+      "Robot is deprecated"
+    ],
+    "correct_answer": "For OS-level interactions like keyboard shortcuts, file uploads outside browser",
+    "topic": "API and Integration Testing",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "api-and-integration-testing",
+      "scenario"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-098",
+    "question": "During architecture review, which option best describes the most reliable approach for file upload automation in web apps?",
+    "options": [
+      "Set file path directly on input[type='file']",
+      "Use OS-level Robot for every case",
+      "Drag file via mouse movements only under production constraints",
+      "Manual upload during test"
+    ],
+    "correct_answer": "Set file path directly on input[type='file']",
+    "topic": "Python Test Automation",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "python-test-automation"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-099",
+    "question": "During live operations, which option best describes the purpose of Linux kernel parameter 'net.ipv4.ip_forward=1'?",
+    "options": [
+      "It enables IP packet forwarding between network interfaces, turning the system into a router; required for NAT, VPN gateways, and container networking",
+      "It forwards all traffic to localhost",
+      "It enables the system to forward ICMP echo requests only in this scenario under production constraints for the stated requirement during incident triage",
+      "It enables IPv6 compatibility mode"
+    ],
+    "correct_answer": "It enables IP packet forwarding between network interfaces, turning the system into a router; required for NAT, VPN gateways, and container networking",
+    "topic": "Linux QA Operations",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "kernel",
+      "linux",
+      "linux-qa-operations",
+      "operations"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "qa-python-qa-linux-advanced-100",
+    "question": "A production server is experiencing high load averages (15+) but CPU utilization stays under 20%. 'top' shows many processes in D (uninterruptible sleep) state. What is the most likely root cause?",
+    "options": [
+      "Processes are waiting on I/O operations (disk or NFS), causing I/O wait",
+      "The system is CPU-bound and needs more cores",
+      "The scheduler is misconfigured and needs tuning via nice values in this scenario",
+      "OOM killer is throttling processes"
+    ],
+    "correct_answer": "Processes are waiting on I/O operations (disk or NFS), causing I/O wait",
+    "topic": "Debugging and Root Cause",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "debugging-and-root-cause"
+    ],
+    "role_target": "python_qa_linux",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  }
+]

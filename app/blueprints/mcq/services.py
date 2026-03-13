@@ -13,6 +13,7 @@ from app.services.mcq_runtime_store import (
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
 from app.services.question_bank.helpers import prepare_question_options
 from app.services.question_bank.loader import QuestionLoader
+from app.services.question_bank.loader import sanitize_question_record
 from app.services.question_bank.registry import QuestionRegistry
 from app.services.question_bank.selector import (
     build_frozen_mcq_round_payload,
@@ -46,30 +47,47 @@ class MCQSessionService:
         loader = QuestionLoader(base_path="app/services/question_bank/data")
         registry = QuestionRegistry(loader)
         session_meta = MCQ_SESSION_REGISTRY.get(session_id, {})
+        force_non_enterprise = bool(session_meta.get("force_non_enterprise_selection"))
 
         selected_questions = session_meta.get("selected_questions")
+        source_file = None
         if selected_questions:
             selected_questions = deepcopy(selected_questions)
+            files = session_meta.get("question_bank_files") or []
+            if not files:
+                files = registry.get_question_files(role_key=role_key, round_key=round_key, domain=domain)
+            if files:
+                source_file = files[0]
         else:
             question_files = registry.get_question_files(role_key=role_key, round_key=round_key, domain=domain)
             questions = registry.get_questions(role_key=role_key, round_key=round_key, domain=domain)
+            if question_files:
+                source_file = question_files[0]
 
             if not questions:
                 raise ValueError(f"No questions found for role={role_key}, round={round_key}, domain={domain}")
 
-            if should_use_enterprise_selection(role_key, round_key, question_files):
-                frozen_payload = build_frozen_mcq_round_payload(
-                    role_key=role_key,
-                    round_key=round_key,
-                    question_files=question_files,
-                    questions=questions,
-                    rng=random.Random(),
-                )
-                session_meta.update(frozen_payload)
-                MCQ_SESSION_REGISTRY[session_id] = session_meta
-                selected_questions = deepcopy(frozen_payload["selected_questions"])
+            if (not force_non_enterprise) and should_use_enterprise_selection(role_key, round_key, question_files):
+                try:
+                    frozen_payload = build_frozen_mcq_round_payload(
+                        role_key=role_key,
+                        round_key=round_key,
+                        question_files=question_files,
+                        questions=questions,
+                        rng=random.Random(),
+                    )
+                    session_meta.update(frozen_payload)
+                    MCQ_SESSION_REGISTRY[session_id] = session_meta
+                    selected_questions = deepcopy(frozen_payload["selected_questions"])
+                except Exception:
+                    # Graceful runtime fallback keeps existing links usable even if
+                    # strict enterprise validation/select rules fail.
+                    selected_questions = random.sample(questions, min(QUESTION_COUNT, len(questions)))
             else:
                 selected_questions = random.sample(questions, min(QUESTION_COUNT, len(questions)))
+
+        if source_file:
+            selected_questions = [sanitize_question_record(question, relative_path=source_file) for question in selected_questions]
 
         selected_questions = MCQSessionService._prepare_selected_questions(selected_questions)
 

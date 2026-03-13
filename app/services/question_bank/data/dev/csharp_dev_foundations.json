@@ -1,0 +1,2524 @@
+[
+  {
+    "id": "dev-csharp-dev-foundations-001",
+    "question": "In C#, what is the key difference between 'var' and 'dynamic'?",
+    "options": [
+      "'var' is resolved at compile time, while 'dynamic' is resolved at runtime",
+      "Both are resolved only at runtime",
+      "'dynamic' is strongly typed, while 'var' is not",
+      "'var' can store any type changes at runtime automatically in this scenario"
+    ],
+    "correct_answer": "'var' is resolved at compile time, while 'dynamic' is resolved at runtime",
+    "topic": "API Design and Contracts",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "api-design-and-contracts",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-002",
+    "question": "A production defect investigation needs clarity on least privilege in application security?",
+    "options": [
+      "Grant only minimal required permissions",
+      "All users are admin",
+      "No authentication",
+      "Store secrets in code in this scenario under production constraints"
+    ],
+    "correct_answer": "Grant only minimal required permissions",
+    "topic": "Security and Reliability",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "security",
+      "security-and-reliability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-003",
+    "question": "Why is String considered immutable in C#?",
+    "options": [
+      "Because every modification creates a new string object",
+      "Because strings cannot contain numbers",
+      "Because string size is fixed by CLR metadata",
+      "Because strings are stored only on stack memory in this scenario"
+    ],
+    "correct_answer": "Because every modification creates a new string object",
+    "topic": "API Design and Contracts",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "api-design-and-contracts",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-004",
+    "question": "In code reviews for C# backend services, why avoid synchronous blocking calls in async flows?",
+    "options": [
+      "They can reduce scalability and tie up request threads",
+      "Because synchronous calls are not supported in CLR in this scenario",
+      "Because async methods cannot throw exceptions",
+      "Because Task type cannot represent results"
+    ],
+    "correct_answer": "They can reduce scalability and tie up request threads",
+    "topic": "C# Backend Foundations",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "async",
+      "c-backend-foundations",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-005",
+    "question": "A production defect investigation needs clarity on 'internal' access modifier mean?",
+    "options": [
+      "Accessible within the same assembly",
+      "Accessible only within the same class",
+      "Accessible only in derived classes",
+      "Accessible from everywhere"
+    ],
+    "correct_answer": "Accessible within the same assembly",
+    "topic": "Data Access and Persistence",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "data-access-and-persistence",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-006",
+    "question": "In a production scenario, which option best describes observability typically combine?",
+    "options": [
+      "Logs, metrics, and traces",
+      "Code + CSS",
+      "Only dashboards in this scenario",
+      "Only alerts"
+    ],
+    "correct_answer": "Logs, metrics, and traces",
+    "topic": "CI CD and Observability",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "ci-cd-and-observability",
+      "scenario"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-007",
+    "question": "For many concatenations in a loop, what is usually preferred over '+' with strings?",
+    "options": [
+      "StringBuilder",
+      "char[] only",
+      "Tuple<string>",
+      "dynamic"
+    ],
+    "correct_answer": "StringBuilder",
+    "topic": "Performance and Scalability",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "performance-and-scalability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-008",
+    "question": "During live operations, which option best describes the behavior of int division in C# for 5 / 2?",
+    "options": [
+      "2",
+      "5",
+      "3",
+      "Compilation error"
+    ],
+    "correct_answer": "2",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "debugging-and-incident-response",
+      "operations"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-009",
+    "question": "Which is a key advantage of using an ORM like SQLAlchemy or Django ORM in a Python backend?",
+    "options": [
+      "Database-agnostic abstractions and safer parameterized queries",
+      "No need to design schemas",
+      "Automatic horizontal scaling",
+      "Guaranteed best query performance in this scenario under production constraints"
+    ],
+    "correct_answer": "Database-agnostic abstractions and safer parameterized queries",
+    "topic": "C# Backend Foundations",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "c-backend-foundations",
+      "concept"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-010",
+    "question": "A CI pipeline for a Python backend should run unit tests on every push. Where is this typically configured in GitHub Actions?",
+    "options": [
+      ".github/workflows/*.yml",
+      "Dockerfile in this scenario",
+      "setup.cfg",
+      ".gitignore"
+    ],
+    "correct_answer": ".github/workflows/*.yml",
+    "topic": "C# Backend Foundations",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "c-backend-foundations",
+      "scenario"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-011",
+    "question": "Why should secrets not be hardcoded in source code?",
+    "options": [
+      "Risk of leakage and difficult rotation",
+      "It improves compile speed in this scenario",
+      "It breaks CI",
+      "No reason"
+    ],
+    "correct_answer": "Risk of leakage and difficult rotation",
+    "topic": "Security and Reliability",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "security-and-reliability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-012",
+    "question": "Which statement about value types and reference types is correct?",
+    "options": [
+      "Structs are value types and classes are reference types",
+      "Structs are reference types and classes are value types",
+      "Both structs and classes are value types",
+      "Both structs and classes are reference types"
+    ],
+    "correct_answer": "Structs are value types and classes are reference types",
+    "topic": "Performance and Scalability",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "performance-and-scalability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-013",
+    "question": "What does the nullable operator '?' on a value type indicate (for example, int?)?",
+    "options": [
+      "The value can hold null in addition to normal value-type values",
+      "The value is always required",
+      "The value is read-only",
+      "The value is dynamically typed in this scenario under production constraints"
+    ],
+    "correct_answer": "The value can hold null in addition to normal value-type values",
+    "topic": "Performance and Scalability",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "performance-and-scalability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-014",
+    "question": "When should you choose an interface over an abstract class?",
+    "options": [
+      "When you need multiple inheritance of behavior contracts",
+      "When you need shared state fields",
+      "When you need constructors",
+      "When you must block implementation in derived classes in this scenario"
+    ],
+    "correct_answer": "When you need multiple inheritance of behavior contracts",
+    "topic": "CI CD and Observability",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "ci-cd-and-observability",
+      "scenario"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-015",
+    "question": "During architecture review, which option best describes the main purpose of the 'sealed' keyword on a class?",
+    "options": [
+      "To prevent inheritance from that class",
+      "To allow only internal access",
+      "To force constructor injection",
+      "To make methods static automatically in this scenario"
+    ],
+    "correct_answer": "To prevent inheritance from that class",
+    "topic": "CI CD and Observability",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "ci-cd-and-observability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-016",
+    "question": "Debug this: int result = total / count; sometimes crashes. Most likely issue?",
+    "options": [
+      "DivideByZeroException when count is 0",
+      "Overflow on all divisions",
+      "NullReferenceException always in this scenario",
+      "InvalidCastException always"
+    ],
+    "correct_answer": "DivideByZeroException when count is 0",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "debugging",
+      "debugging-and-incident-response",
+      "operations"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-017",
+    "question": "Which keyword is required in the base class to allow overriding in derived classes?",
+    "options": [
+      "virtual",
+      "new",
+      "override",
+      "sealed"
+    ],
+    "correct_answer": "virtual",
+    "topic": "Performance and Scalability",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "performance-and-scalability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-018",
+    "question": "A Python backend uses environment variables for secrets in containers. What is a more secure alternative on AWS?",
+    "options": [
+      "AWS Secrets Manager or SSM Parameter Store with IAM access",
+      "Hard-code secrets in code",
+      "Store secrets in static JSON files in this scenario under production constraints",
+      "Pass secrets via query strings"
+    ],
+    "correct_answer": "AWS Secrets Manager or SSM Parameter Store with IAM access",
+    "topic": "C# Backend Foundations",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "c-backend-foundations",
+      "scenario"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-019",
+    "question": "During architecture review, which option best describes the difference between 'override' and 'new' when redefining a member?",
+    "options": [
+      "'override' participates in polymorphism; 'new' hides the base member",
+      "'new' participates in polymorphism; 'override' hides the base member",
+      "Both are identical in behavior",
+      "Both require the base method to be sealed"
+    ],
+    "correct_answer": "'override' participates in polymorphism; 'new' hides the base member",
+    "topic": "Performance and Scalability",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "performance-and-scalability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-020",
+    "question": "In a class constructor, what does 'base(...)' do?",
+    "options": [
+      "Invokes the base class constructor",
+      "Calls a static constructor",
+      "Calls a method named base",
+      "Initializes all properties automatically"
+    ],
+    "correct_answer": "Invokes the base class constructor",
+    "topic": "API Design and Contracts",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "api-design-and-contracts",
+      "operations"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-021",
+    "question": "After modifying tracked entities in EF Core, which call persists changes to database?",
+    "options": [
+      "SaveChanges() or SaveChangesAsync()",
+      "CommitChanges() in this scenario under production constraints",
+      "ApplyUpdates()",
+      "Flush()"
+    ],
+    "correct_answer": "SaveChanges() or SaveChangesAsync()",
+    "topic": "Data Access and Persistence",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "data-access-and-persistence",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-022",
+    "question": "A production defect investigation needs clarity on a practical benefit of using 'record' types in modern C#?",
+    "options": [
+      "They provide value-based equality by default",
+      "They always allocate on stack",
+      "They remove the need for constructors in this scenario",
+      "They cannot be immutable"
+    ],
+    "correct_answer": "They provide value-based equality by default",
+    "topic": "CI CD and Observability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "ci-cd-and-observability",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-023",
+    "question": "A production defect investigation needs clarity on the key difference between IEnumerable<T> and IQueryable<T>?",
+    "options": [
+      "IQueryable can translate expressions to data source queries; IEnumerable works in-memory",
+      "IEnumerable always executes in database; IQueryable always executes in memory in this scenario",
+      "IEnumerable supports async; IQueryable does not",
+      "There is no difference"
+    ],
+    "correct_answer": "IQueryable can translate expressions to data source queries; IEnumerable works in-memory",
+    "topic": "CI CD and Observability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "ci-cd-and-observability",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-024",
+    "question": "A production defect investigation needs clarity on the primary defense against CSRF in session-based web apps?",
+    "options": [
+      "CSRF tokens and same-site cookie strategy",
+      "Disable cookies",
+      "Use GET requests in this scenario under production constraints",
+      "Hide forms"
+    ],
+    "correct_answer": "CSRF tokens and same-site cookie strategy",
+    "topic": "Security and Reliability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "security-and-reliability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-025",
+    "question": "A Python backend needs to support real-time chat between browser clients. Which technology is most appropriate?",
+    "options": [
+      "WebSockets",
+      "FTP",
+      "Long polling only",
+      "Batch REST requests"
+    ],
+    "correct_answer": "WebSockets",
+    "topic": "C# Backend Foundations",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "c-backend-foundations",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-026",
+    "question": "Debug this code: List<int> nums = null; nums.Add(1); Which exception occurs?",
+    "options": [
+      "NullReferenceException",
+      "InvalidOperationException",
+      "IndexOutOfRangeException",
+      "FormatException"
+    ],
+    "correct_answer": "NullReferenceException",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-027",
+    "question": "To help frontend teams understand available endpoints and models, what should a Python backend provide?",
+    "options": [
+      "Interactive API documentation (Swagger/OpenAPI UI)",
+      "Source code access",
+      "Database ER diagrams only in this scenario under production constraints",
+      "Email-based docs"
+    ],
+    "correct_answer": "Interactive API documentation (Swagger/OpenAPI UI)",
+    "topic": "C# Backend Foundations",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "c-backend-foundations",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-028",
+    "question": "LINQ queries are generally executed when:",
+    "options": [
+      "They are enumerated",
+      "They are defined",
+      "The application starts",
+      "The class is loaded"
+    ],
+    "correct_answer": "They are enumerated",
+    "topic": "API Design and Contracts",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api-design-and-contracts",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-029",
+    "question": "Which operation forces immediate execution of a LINQ query?",
+    "options": [
+      "ToList() under production constraints",
+      "Where(...)",
+      "Select(...)",
+      "OrderBy(...) under production constraints"
+    ],
+    "correct_answer": "ToList() under production constraints",
+    "topic": "API Design and Contracts",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api-design-and-contracts",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-030",
+    "question": "A production defect investigation needs clarity on the difference between First() and FirstOrDefault()?",
+    "options": [
+      "First throws if no element exists, FirstOrDefault returns default value",
+      "FirstOrDefault throws if no element exists, First returns null in this scenario",
+      "Both throw on empty sequence",
+      "Both always return null on empty sequence"
+    ],
+    "correct_answer": "First throws if no element exists, FirstOrDefault returns default value",
+    "topic": "API Design and Contracts",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api-design-and-contracts",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-031",
+    "question": "Use of SelectMany in LINQ is mainly for:",
+    "options": [
+      "Flattening nested collections into a single sequence",
+      "Sorting multiple lists",
+      "Grouping records by key",
+      "Removing duplicate records only in this scenario under production constraints"
+    ],
+    "correct_answer": "Flattening nested collections into a single sequence",
+    "topic": "CI CD and Observability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "ci-cd-and-observability",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-032",
+    "question": "Which collection is ideal for key-value lookups with average O(1) access?",
+    "options": [
+      "Dictionary<TKey, TValue>",
+      "List<T>",
+      "Queue<T>",
+      "LinkedList<T> in this scenario"
+    ],
+    "correct_answer": "Dictionary<TKey, TValue>",
+    "topic": "Data Access and Persistence",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "data-access-and-persistence",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-033",
+    "question": "Debug this: for (int i = 0; i <= arr.Length; i++) sum += arr[i]; What is wrong?",
+    "options": [
+      "It should use i < arr.Length to avoid IndexOutOfRangeException",
+      "The loop must start at 1",
+      "arr.Length cannot be used in loops in this scenario under production constraints",
+      "sum must be double"
+    ],
+    "correct_answer": "It should use i < arr.Length to avoid IndexOutOfRangeException",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-034",
+    "question": "For checking whether any element exists in a collection, which is usually more efficient?",
+    "options": [
+      "Any() under production constraints",
+      "Count() > 0",
+      "First()!= null",
+      "Select(x => x).Count() > 0 under production constraints"
+    ],
+    "correct_answer": "Any() under production constraints",
+    "topic": "CI CD and Observability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "ci-cd-and-observability",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-035",
+    "question": "Which header policy helps reduce XSS risk in modern web apps?",
+    "options": [
+      "Content-Security-Policy",
+      "ETag",
+      "Accept-Encoding",
+      "Cache-Control only in this scenario"
+    ],
+    "correct_answer": "Content-Security-Policy",
+    "topic": "Security and Reliability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "security-and-reliability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-036",
+    "question": "A React frontend running on https://frontend.local calls a FastAPI backend on http://localhost:8000 during local development. What is the cleanest way to avoid CORS issues without disabling CORS entirely?",
+    "options": [
+      "Serve the frontend through the backend's domain or configure specific CORS origins",
+      "Set Access-Control-Allow-Origin: * and Allow-Credentials: true together in this scenario",
+      "Use only HTTP instead of HTTPS",
+      "Disable CSRF protection in the backend"
+    ],
+    "correct_answer": "Serve the frontend through the backend's domain or configure specific CORS origins",
+    "topic": "C# Backend Foundations",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "api",
+      "c-backend-foundations",
+      "scenario"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-037",
+    "question": "Which method safely reads a value from Dictionary<TKey, TValue> without throwing if key is missing?",
+    "options": [
+      "TryGetValue(...)",
+      "GetValue()",
+      "ReadOrDefault(...)",
+      "ContainsValue(...)"
+    ],
+    "correct_answer": "TryGetValue(...)",
+    "topic": "Performance and Scalability",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "performance-and-scalability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-038",
+    "question": "A PostgreSQL table backing a Python API endpoint experiences slow SELECTs on a frequently filtered 'email' column. What is the first optimization to consider?",
+    "options": [
+      "Add an index on the email column",
+      "Switch to a NoSQL database",
+      "Increase application server threads",
+      "Use SELECT * instead of specific columns"
+    ],
+    "correct_answer": "Add an index on the email column",
+    "topic": "Data Access and Persistence",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "api",
+      "data-access-and-persistence",
+      "operations"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-039",
+    "question": "What happens if you modify a List<T> during foreach iteration over the same list?",
+    "options": [
+      "It throws InvalidOperationException",
+      "It is always safe",
+      "It silently skips modified items",
+      "It duplicates the list automatically"
+    ],
+    "correct_answer": "It throws InvalidOperationException",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-040",
+    "question": "A snippet runs with the following behavior. Which output is correct??\nstring s = \"abc\";\ns += \"d\";\nConsole.WriteLine(s);?",
+    "options": [
+      "abcd",
+      "abc",
+      "Compilation error",
+      "Runtime exception"
+    ],
+    "correct_answer": "abcd",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "debugging-and-incident-response",
+      "scenario"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-041",
+    "question": "A Python backend pushes live stock price updates to a trading dashboard. Which combination provides the most efficient real-time channel?",
+    "options": [
+      "Server-Sent Events (SSE) or WebSockets",
+      "Periodic polling over REST in this scenario",
+      "FTP file drops",
+      "Email notifications"
+    ],
+    "correct_answer": "Server-Sent Events (SSE) or WebSockets",
+    "topic": "C# Backend Foundations",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "c-backend-foundations"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-042",
+    "question": "In a MySQL-backed Django app, which issue is most likely caused by missing indexes on foreign key columns?",
+    "options": [
+      "Slow JOIN queries between related tables",
+      "Inconsistent data types",
+      "Deadlocks on writes only in this scenario",
+      "Too many connections"
+    ],
+    "correct_answer": "Slow JOIN queries between related tables",
+    "topic": "Data Access and Persistence",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "data-access-and-persistence",
+      "operations"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-043",
+    "question": "What is the difference between List<T>.Count and List<T>.Capacity?",
+    "options": [
+      "Count is current elements; Capacity is allocated internal storage",
+      "Count is allocated size; Capacity is number of elements currently stored",
+      "Both always have same value",
+      "Capacity is only available for arrays"
+    ],
+    "correct_answer": "Count is current elements; Capacity is allocated internal storage",
+    "topic": "Performance and Scalability",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "performance-and-scalability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-044",
+    "question": "In C#, what does the 'using' statement (or 'using var') primarily ensure?",
+    "options": [
+      "IDisposable resources are disposed deterministically",
+      "Automatic garbage collection immediately in this scenario",
+      "Object is pinned in memory",
+      "Code runs asynchronously"
+    ],
+    "correct_answer": "IDisposable resources are disposed deterministically",
+    "topic": "API Design and Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "api-design-and-contracts",
+      "scenario"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-045",
+    "question": "During architecture review, which option best describes HTTPS primarily guarantee?",
+    "options": [
+      "Transport encryption and integrity",
+      "No server bugs",
+      "Faster responses always in this scenario",
+      "No auth needed"
+    ],
+    "correct_answer": "Transport encryption and integrity",
+    "topic": "Security and Reliability",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "security-and-reliability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-046",
+    "question": "During live operations, which option best describes the likely issue in this code?\npublic int Factorial(int n) => n * Factorial(n - 1);?",
+    "options": [
+      "Missing base condition causes StackOverflowException",
+      "Invalid multiplication on int",
+      "Recursion is not supported in C# in this scenario under production constraints",
+      "Method must be static"
+    ],
+    "correct_answer": "Missing base condition causes StackOverflowException",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "debugging-and-incident-response",
+      "operations"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-047",
+    "question": "A JSON response from a Python API includes fields in snake_case, but the frontend uses camelCase. What is a good backend practice to ease integration?",
+    "options": [
+      "Use a serialization layer (e.g., DRF serializer or Pydantic) to map snake_case to camelCase",
+      "Rename database columns",
+      "Send both versions of each field in this scenario under production constraints for the stated requirement",
+      "Force the frontend to adapt"
+    ],
+    "correct_answer": "Use a serialization layer (e.g., DRF serializer or Pydantic) to map snake_case to camelCase",
+    "topic": "C# Backend Foundations",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "api",
+      "c-backend-foundations",
+      "concept"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-048",
+    "question": "Given: using var stream = File.OpenRead(path); When is stream disposed?",
+    "options": [
+      "At end of the current scope",
+      "Immediately after declaration",
+      "Only on GC finalization",
+      "When the method starts"
+    ],
+    "correct_answer": "At end of the current scope",
+    "topic": "CI CD and Observability",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "ci-cd-and-observability",
+      "scenario"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-049",
+    "question": "Which SQL clause is essential to limit result size and avoid returning millions of rows to a Python API client?",
+    "options": [
+      "LIMIT/OFFSET",
+      "JOIN",
+      "WHERE",
+      "GROUP BY in this scenario"
+    ],
+    "correct_answer": "LIMIT/OFFSET",
+    "topic": "Data Access and Persistence",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "api",
+      "architecture",
+      "data-access-and-persistence"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-050",
+    "question": "Which statement about finally block is correct?",
+    "options": [
+      "It generally runs whether or not exception occurs",
+      "It runs only if no exception occurs",
+      "It runs only when an exception occurs in this scenario",
+      "It runs only for checked exceptions"
+    ],
+    "correct_answer": "It generally runs whether or not exception occurs",
+    "topic": "Performance and Scalability",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "performance-and-scalability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-051",
+    "question": "The frontend sends large file uploads to a Python API and the browser shows network failures after 30 seconds. Which backend or infrastructure setting is most likely involved?",
+    "options": [
+      "Reverse proxy or web server request timeout (e.g., Nginx/Gunicorn timeout)",
+      "Number of workers",
+      "Database idle timeout in this scenario under production constraints for the stated requirement",
+      "DNS TTL"
+    ],
+    "correct_answer": "Reverse proxy or web server request timeout (e.g., Nginx/Gunicorn timeout)",
+    "topic": "C# Backend Foundations",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "api",
+      "c-backend-foundations",
+      "concept"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-052",
+    "question": "A Python service needs flexible document-like storage for user profiles with variable fields. Which database is most appropriate?",
+    "options": [
+      "MongoDB",
+      "Redis",
+      "Elasticsearch",
+      "PostgreSQL only"
+    ],
+    "correct_answer": "MongoDB",
+    "topic": "Data Access and Persistence",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "data-access-and-persistence",
+      "scenario"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-053",
+    "question": "Which metric best indicates API reliability in production?",
+    "options": [
+      "Error rate and latency percentiles (e.g., p95)",
+      "Code line count",
+      "Number of endpoints",
+      "Container image size in this scenario under production constraints"
+    ],
+    "correct_answer": "Error rate and latency percentiles (e.g., p95)",
+    "topic": "Security and Reliability",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "api",
+      "architecture",
+      "security-and-reliability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-054",
+    "question": "You need a fast in-memory cache for storing session tokens and rate-limiting counters for a Python API. Which datastore is best suited?",
+    "options": [
+      "Redis",
+      "Elasticsearch",
+      "MongoDB",
+      "MySQL"
+    ],
+    "correct_answer": "Redis",
+    "topic": "Data Access and Persistence",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "api",
+      "data-access-and-persistence",
+      "memory",
+      "operations"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-055",
+    "question": "Why is catching System.Exception everywhere usually discouraged?",
+    "options": [
+      "It can hide real bugs and make handling too broad",
+      "It improves performance too much in this scenario under production constraints",
+      "It is invalid C# syntax",
+      "It prevents logging"
+    ],
+    "correct_answer": "It can hide real bugs and make handling too broad",
+    "topic": "Performance and Scalability",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "performance-and-scalability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-056",
+    "question": "A production defect investigation needs clarity on the 'throw;' statement (without exception variable) inside a catch block do?",
+    "options": [
+      "Rethrows original exception preserving stack trace",
+      "Throws a new exception and resets stack trace in this scenario",
+      "Suppresses the exception",
+      "Throws only in debug mode"
+    ],
+    "correct_answer": "Rethrows original exception preserving stack trace",
+    "topic": "CI CD and Observability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "ci-cd-and-observability",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-057",
+    "question": "Which is the correct return type for an async method that returns a value?",
+    "options": [
+      "Task<T>",
+      "void",
+      "T only",
+      "IAsyncResult"
+    ],
+    "correct_answer": "Task<T>",
+    "topic": "Security and Reliability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "async",
+      "debugging",
+      "security-and-reliability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-058",
+    "question": "When is 'async void' generally acceptable?",
+    "options": [
+      "For event handlers under production constraints",
+      "For repository methods",
+      "For controller actions returning data under production constraints",
+      "For all async methods"
+    ],
+    "correct_answer": "For event handlers under production constraints",
+    "topic": "CI CD and Observability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "async",
+      "ci-cd-and-observability",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-059",
+    "question": "A Python service must support full-text search with relevance ranking across millions of documents. Which technology is specialized for this?",
+    "options": [
+      "Elasticsearch",
+      "Redis",
+      "PostgreSQL only",
+      "SQLite"
+    ],
+    "correct_answer": "Elasticsearch",
+    "topic": "Data Access and Persistence",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "data-access-and-persistence",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-060",
+    "question": "A production defect investigation needs clarity on Task.WhenAll(tasks) do?",
+    "options": [
+      "Waits for all tasks to complete",
+      "Runs tasks one by one",
+      "Cancels all tasks automatically",
+      "Runs only the first task"
+    ],
+    "correct_answer": "Waits for all tasks to complete",
+    "topic": "Security and Reliability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "security-and-reliability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-061",
+    "question": "Debug this loop with lambdas:\nvar actions = new List<Action>();\nfor (int i = 0; i < 3; i++) actions.Add(() => Console.WriteLine(i));\nAll actions print 3. Why?",
+    "options": [
+      "Because loop variable is captured by reference-like closure semantics",
+      "Because list is mutable",
+      "Because Action cannot capture local variables",
+      "Because Console.WriteLine always prints last value in this scenario under production constraints"
+    ],
+    "correct_answer": "Because loop variable is captured by reference-like closure semantics",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-062",
+    "question": "Why is using.Result or.Wait() on async tasks risky in UI/request contexts?",
+    "options": [
+      "It can cause deadlocks and thread blocking",
+      "It makes execution always faster",
+      "It converts Task to ValueTask",
+      "It automatically retries failed tasks in this scenario"
+    ],
+    "correct_answer": "It can cause deadlocks and thread blocking",
+    "topic": "Performance and Scalability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "async",
+      "debugging",
+      "performance-and-scalability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-063",
+    "question": "A production defect investigation needs clarity on a common fix for closure issue in for-loop lambdas?",
+    "options": [
+      "Create a local copy inside loop, then capture that copy",
+      "Use dynamic i",
+      "Use goto labels",
+      "Convert loop to while without changes in this scenario under production constraints"
+    ],
+    "correct_answer": "Create a local copy inside loop, then capture that copy",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-064",
+    "question": "A production defect investigation needs clarity on the purpose of ConfigureAwait(false) in library code?",
+    "options": [
+      "Avoids capturing synchronization context for continuation",
+      "Forces code to resume on original context in this scenario",
+      "Disables exceptions in async methods",
+      "Makes task run synchronously"
+    ],
+    "correct_answer": "Avoids capturing synchronization context for continuation",
+    "topic": "Performance and Scalability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-scalability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-065",
+    "question": "In C#, what does the null-coalescing operator '??' do?",
+    "options": [
+      "Returns left operand if not null, otherwise right operand",
+      "Checks for type compatibility",
+      "Throws if left operand is null",
+      "Converts null to empty string always in this scenario under production constraints"
+    ],
+    "correct_answer": "Returns left operand if not null, otherwise right operand",
+    "topic": "API Design and Contracts",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-design-and-contracts",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-066",
+    "question": "A production defect investigation needs clarity on 'x??= value' mean?",
+    "options": [
+      "Assign value to x only when x is null",
+      "Always assign value to x",
+      "Compare x and value for equality",
+      "Assign null to x if value is null in this scenario"
+    ],
+    "correct_answer": "Assign value to x only when x is null",
+    "topic": "Performance and Scalability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-scalability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-067",
+    "question": "A production defect investigation needs clarity on the null-conditional operator '?.' do?",
+    "options": [
+      "Skips member access and returns null if left side is null",
+      "Throws NullReferenceException immediately in this scenario",
+      "Converts null into default(T)",
+      "Works only on strings"
+    ],
+    "correct_answer": "Skips member access and returns null if left side is null",
+    "topic": "CI CD and Observability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "ci-cd-and-observability",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-068",
+    "question": "Which is true about 'const' and 'readonly'?",
+    "options": [
+      "const is compile-time constant; readonly is assigned at declaration or constructor",
+      "Both can be assigned at runtime anywhere",
+      "readonly is compile-time and const is runtime in this scenario under production constraints",
+      "They are interchangeable"
+    ],
+    "correct_answer": "const is compile-time constant; readonly is assigned at declaration or constructor",
+    "topic": "API Design and Contracts",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-design-and-contracts",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-069",
+    "question": "A production defect investigation needs clarity on boxing in C#?",
+    "options": [
+      "Wrapping a value type inside an object/reference",
+      "Converting reference type to value type in this scenario",
+      "Creating arrays of objects",
+      "Encrypting values for heap storage"
+    ],
+    "correct_answer": "Wrapping a value type inside an object/reference",
+    "topic": "Performance and Scalability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-scalability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-070",
+    "question": "In SQLAlchemy, what problem occurs when you iterate over a list of parent objects and access a lazy-loaded relationship inside a loop?",
+    "options": [
+      "N+1 query problem",
+      "Connection leak in this scenario",
+      "Race condition",
+      "Deadlock"
+    ],
+    "correct_answer": "N+1 query problem",
+    "topic": "Data Access and Persistence",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "data-access-and-persistence",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-071",
+    "question": "A production defect investigation needs clarity on unboxing in C#?",
+    "options": [
+      "Converting object/reference back to original value type",
+      "Converting int to string",
+      "Moving object from heap to stack in this scenario under production constraints",
+      "Disposing a boxed object"
+    ],
+    "correct_answer": "Converting object/reference back to original value type",
+    "topic": "API Design and Contracts",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-design-and-contracts",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-072",
+    "question": "A production defect investigation needs clarity on the difference between casting '(T)obj' and 'obj as T'?",
+    "options": [
+      "Explicit cast throws on failure; 'as' returns null for reference/nullable types",
+      "'as' throws InvalidCastException on failure in this scenario under production constraints",
+      "Explicit cast returns null on failure",
+      "Both always return null on failure"
+    ],
+    "correct_answer": "Explicit cast throws on failure; 'as' returns null for reference/nullable types",
+    "topic": "Security and Reliability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "security-and-reliability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-073",
+    "question": "Which statement about delegates and events is correct?",
+    "options": [
+      "Events expose add/remove subscription and can only be raised by declaring type",
+      "Events are just aliases with no restrictions",
+      "Delegates cannot reference methods",
+      "Events are faster because they run on separate threads in this scenario under production constraints"
+    ],
+    "correct_answer": "Events expose add/remove subscription and can only be raised by declaring type",
+    "topic": "API Design and Contracts",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-design-and-contracts",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-074",
+    "question": "A production defect investigation needs clarity on an extension method in C#?",
+    "options": [
+      "A static method that appears like an instance method via 'this' on first parameter",
+      "A method added by inheriting from System.Object in this scenario under production constraints",
+      "A virtual method with default implementation",
+      "A runtime-generated method by CLR only"
+    ],
+    "correct_answer": "A static method that appears like an instance method via 'this' on first parameter",
+    "topic": "Security and Reliability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "security-and-reliability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-075",
+    "question": "A production defect investigation needs clarity on the purpose of 'partial' class?",
+    "options": [
+      "Split class definition across multiple files",
+      "Load only part of class in memory",
+      "Create optional inheritance sections in this scenario",
+      "Define private-only members"
+    ],
+    "correct_answer": "Split class definition across multiple files",
+    "topic": "API Design and Contracts",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-design-and-contracts",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-076",
+    "question": "A production defect investigation needs clarity on the issue in this code?\nif (obj!= null && obj.ToString().Length > 0) {... }\nWhen obj is null it is safe because:?",
+    "options": [
+      "C# short-circuits && and skips second condition",
+      "ToString never throws",
+      "Length on null returns 0",
+      "Compiler rewrites it with try/catch in this scenario"
+    ],
+    "correct_answer": "C# short-circuits && and skips second condition",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-077",
+    "question": "A production defect investigation needs clarity on the common fix when a LINQ query is executed multiple times unexpectedly?",
+    "options": [
+      "Materialize results once using ToList/ToArray when needed",
+      "Replace Where with Select",
+      "Use dynamic instead of var",
+      "Disable deferred execution globally in this scenario under production constraints"
+    ],
+    "correct_answer": "Materialize results once using ToList/ToArray when needed",
+    "topic": "Security and Reliability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "security-and-reliability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-078",
+    "question": "In ASP.NET Core middleware pipeline, order matters mainly because:",
+    "options": [
+      "Each middleware can short-circuit or modify request/response before next one",
+      "Middleware runs alphabetically",
+      "Only first middleware is executed",
+      "Middleware executes in parallel by default in this scenario under production constraints"
+    ],
+    "correct_answer": "Each middleware can short-circuit or modify request/response before next one",
+    "topic": "API Design and Contracts",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-design-and-contracts",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-079",
+    "question": "From a browser developer tools perspective, which tab is most useful for inspecting Python API request/response payloads and headers?",
+    "options": [
+      "Network",
+      "Sources",
+      "Console only",
+      "Elements"
+    ],
+    "correct_answer": "Network",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-080",
+    "question": "Which ORM technique helps avoid N+1 queries when loading related objects for many parents?",
+    "options": [
+      "Using eager loading (select_related/joinedload)",
+      "Using raw SQL only",
+      "Disabling transactions in this scenario under production constraints",
+      "Using autocommit"
+    ],
+    "correct_answer": "Using eager loading (select_related/joinedload)",
+    "topic": "Data Access and Persistence",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "data-access-and-persistence",
+      "debugging"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-081",
+    "question": "A Python API defines rate limits per IP. Frontend requests are routed through a shared gateway, causing unexpected throttling. Which header can help the backend identify the originating client correctly?",
+    "options": [
+      "Forwarded-For or a similar forwarded IP header",
+      "Accept-Encoding in this scenario under production constraints",
+      "User-Agent",
+      "Referer"
+    ],
+    "correct_answer": "Forwarded-For or a similar forwarded IP header",
+    "topic": "C# Backend Foundations",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "api",
+      "c-backend-foundations",
+      "scenario"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-082",
+    "question": "Your OpenAPI schema for a Python backend is used by frontend teams to generate clients. What must be kept in sync to avoid breaking their builds?",
+    "options": [
+      "The OpenAPI spec and the actual implemented request/response shapes",
+      "Only log formats",
+      "Internal variable names in this scenario under production constraints",
+      "Database indexes"
+    ],
+    "correct_answer": "The OpenAPI spec and the actual implemented request/response shapes",
+    "topic": "C# Backend Foundations",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "api",
+      "architecture",
+      "c-backend-foundations"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-083",
+    "question": "Which DI lifetime creates one instance per HTTP request in ASP.NET Core?",
+    "options": [
+      "Scoped",
+      "Singleton",
+      "Transient",
+      "Static"
+    ],
+    "correct_answer": "Scoped",
+    "topic": "CI CD and Observability",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "ci-cd-and-observability",
+      "operations"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-084",
+    "question": "A frontend developer reports that JSON responses from the Python API are not being parsed correctly due to missing Content-Type. What should the API set?",
+    "options": [
+      "Content-Type: application/json",
+      "Accept: application/json in this scenario",
+      "Content-Type: text/plain",
+      "Content-Type: json"
+    ],
+    "correct_answer": "Content-Type: application/json",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "api",
+      "concept",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-085",
+    "question": "A Python API supports both JSON and XML. How should the client tell the API which response format it prefers?",
+    "options": [
+      "Using the Accept header (e.g., Accept: application/json)",
+      "Using the Host header",
+      "By URL query parameter only in this scenario under production constraints",
+      "Using User-Agent header"
+    ],
+    "correct_answer": "Using the Accept header (e.g., Accept: application/json)",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "api",
+      "debugging-and-incident-response",
+      "scenario"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-086",
+    "question": "When should you prefer async I/O in backend services?",
+    "options": [
+      "I/O-bound high concurrency workloads",
+      "CPU-bound heavy math in this scenario",
+      "Tiny scripts only",
+      "Never in production"
+    ],
+    "correct_answer": "I/O-bound high concurrency workloads",
+    "topic": "C# Backend Foundations",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "async",
+      "c-backend-foundations"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-087",
+    "question": "Why are contract tests useful between frontend and backend?",
+    "options": [
+      "Catch breaking API changes early",
+      "Increase UI flakiness in this scenario",
+      "Replace monitoring",
+      "Eliminate versioning"
+    ],
+    "correct_answer": "Catch breaking API changes early",
+    "topic": "C# Backend Foundations",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "c-backend-foundations",
+      "operations"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-088",
+    "question": "In Django ORM, which method best avoids N+1 queries when fetching foreign key related objects?",
+    "options": [
+      "select_related()",
+      "order_by()",
+      "all() only",
+      "values_list() in this scenario"
+    ],
+    "correct_answer": "select_related()",
+    "topic": "Data Access and Persistence",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "data-access-and-persistence"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-089",
+    "question": "In Django ORM, which method is appropriate for optimizing many-to-many relationship fetching to reduce additional queries?",
+    "options": [
+      "prefetch_related()",
+      "only()",
+      "defer()",
+      "select_related() in this scenario"
+    ],
+    "correct_answer": "prefetch_related()",
+    "topic": "Data Access and Persistence",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "data-access-and-persistence",
+      "scenario"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-090",
+    "question": "A migration in Alembic/SQLAlchemy modifies a column type in production. What best practice should be followed?",
+    "options": [
+      "Test migration on a staging copy of production data first",
+      "Apply directly without backups in this scenario under production constraints",
+      "Disable foreign keys",
+      "Drop and recreate the database"
+    ],
+    "correct_answer": "Test migration on a staging copy of production data first",
+    "topic": "Data Access and Persistence",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "data-access-and-persistence"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-091",
+    "question": "Which DI lifetime creates exactly one instance for entire application lifetime?",
+    "options": [
+      "Singleton",
+      "Transient",
+      "Scoped",
+      "PerThread"
+    ],
+    "correct_answer": "Singleton",
+    "topic": "API Design and Contracts",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "api-design-and-contracts",
+      "operations"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-092",
+    "question": "During debugging, a frontend engineer shows a 422 Unprocessable Entity response from a FastAPI backend. Where should the Python developer look first to understand which field failed validation?",
+    "options": [
+      "The error details in the JSON response body",
+      "The HTML source",
+      "The TLS certificate in this scenario under production constraints",
+      "The browser cache"
+    ],
+    "correct_answer": "The error details in the JSON response body",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "api",
+      "concept",
+      "debugging",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-093",
+    "question": "In Entity Framework Core, what does AsNoTracking() primarily do?",
+    "options": [
+      "Returns entities without change tracking overhead",
+      "Disables SQL generation",
+      "Tracks only primary keys",
+      "Automatically saves changes in this scenario under production constraints"
+    ],
+    "correct_answer": "Returns entities without change tracking overhead",
+    "topic": "API Design and Contracts",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "api-design-and-contracts",
+      "scenario"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-094",
+    "question": "During architecture review, which option best describes the primary role of the garbage collector in.NET?",
+    "options": [
+      "Automatically reclaims memory of unreachable managed objects",
+      "Compiles C# code to IL",
+      "Disposes unmanaged handles deterministically in this scenario",
+      "Prevents all memory leaks"
+    ],
+    "correct_answer": "Automatically reclaims memory of unreachable managed objects",
+    "topic": "Security and Reliability",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "security-and-reliability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-095",
+    "question": "Which statement is accurate about IDisposable and finalizers?",
+    "options": [
+      "IDisposable is for deterministic cleanup; finalizer is nondeterministic fallback",
+      "Finalizers run deterministically at scope end",
+      "Finalizers are preferred for database connections in this scenario under production constraints",
+      "IDisposable is only for value types"
+    ],
+    "correct_answer": "IDisposable is for deterministic cleanup; finalizer is nondeterministic fallback",
+    "topic": "Security and Reliability",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "security-and-reliability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-096",
+    "question": "Given:\nint x = 10;\nvoid Increment(ref int n) { n++; }\nIncrement(ref x);\nWhat is x?",
+    "options": [
+      "11",
+      "10",
+      "Compilation error",
+      "0"
+    ],
+    "correct_answer": "11",
+    "topic": "Performance and Scalability",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "performance-and-scalability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-097",
+    "question": "In a production scenario, which option best describes the key difference between 'ref' and 'out' parameters?",
+    "options": [
+      "'out' must be assigned in callee; 'ref' requires prior initialization",
+      "'out' requires caller variable to be initialized before call in this scenario",
+      "'ref' does not pass by reference",
+      "There is no difference"
+    ],
+    "correct_answer": "'out' must be assigned in callee; 'ref' requires prior initialization",
+    "topic": "CI CD and Observability",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "ci-cd-and-observability",
+      "scenario"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-098",
+    "question": "During architecture review, which option best describes the 'params' keyword allow?",
+    "options": [
+      "Passing a variable number of arguments",
+      "Passing parameters only by name",
+      "Defining optional generic constraints in this scenario",
+      "Creating readonly arrays only"
+    ],
+    "correct_answer": "Passing a variable number of arguments",
+    "topic": "C# Backend Foundations",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "c-backend-foundations"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-099",
+    "question": "Which code is null-safe and concise for nested properties?",
+    "options": [
+      "customer?.Address?.City",
+      "customer.Address.City.Length",
+      "customer.Address?.City!",
+      "customer!Address!City"
+    ],
+    "correct_answer": "customer?.Address?.City",
+    "topic": "Security and Reliability",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "security-and-reliability"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  },
+  {
+    "id": "dev-csharp-dev-foundations-100",
+    "question": "Which statement about pattern matching with 'is' is correct?",
+    "options": [
+      "It can both test type and introduce a typed variable",
+      "It only checks exact runtime type and cannot extract variable",
+      "It works only for primitive types",
+      "It is deprecated"
+    ],
+    "correct_answer": "It can both test type and introduce a typed variable",
+    "topic": "CI CD and Observability",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "ci-cd-and-observability",
+      "concept"
+    ],
+    "role_target": "csharp_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "dotnet8",
+      "csharp12",
+      "aspnetcore"
+    ]
+  }
+]

@@ -1,902 +1,1802 @@
 [
   {
+    "id": "shared-soft-skills-001",
     "question": "Your colleague sends you an email asking for a document you have. The email is polite but vague about the deadline. What should you do?",
     "options": [
+      "Reply immediately saying you'll send it today and ask clarifying questions if needed",
       "Send the document without asking questions",
-      "Forward it to your manager without responding",
-      "Ignore it until they follow up",
-      "Reply immediately saying you'll send it today and ask clarifying questions if needed"
+      "Forward it to your manager without responding for that enterprise scenario while meeting reliability expectations",
+      "Ignore it until they follow up"
     ],
     "correct_answer": "Reply immediately saying you'll send it today and ask clarifying questions if needed",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-002",
     "question": "During a team meeting, your manager asks for your input on a proposal. You have a question but worry it might sound silly. What should you do?",
     "options": [
+      "Ask the question politely and briefly",
       "Assume the answer and don't ask",
       "Wait until after the meeting to ask privately",
-      "Ask the question politely and briefly",
       "Stay quiet to avoid looking incompetent"
     ],
     "correct_answer": "Ask the question politely and briefly",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "communication",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-003",
     "question": "A team member made a small mistake on a task you're both working on. How should you address it?",
     "options": [
+      "Speak privately with them in a respectful way",
       "Tell the entire team about the error immediately",
       "Point it out loudly during the next meeting",
-      "Correct it yourself without mentioning it",
-      "Speak privately with them in a respectful way"
+      "Correct it yourself without mentioning it"
     ],
     "correct_answer": "Speak privately with them in a respectful way",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "communication",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-004",
     "question": "You need to send a request to another department. What makes for good email etiquette?",
     "options": [
-      "Use casual language and lots of emojis",
       "Use a clear subject line, explain what you need, and ask politely with a deadline",
+      "Use casual language and lots of emojis",
       "Send multiple emails to ensure they see it",
-      "Be vague about your needs and let them guess"
+      "Be vague about your needs and let them guess for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Use a clear subject line, explain what you need, and ask politely with a deadline",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-005",
     "question": "Your manager gives you feedback that you initially disagree with. What's the best approach?",
     "options": [
-      "Complain to your peers about the feedback",
+      "Listen carefully, ask clarifying questions, and reflect before responding",
+      "Complain to your peers about the feedback for that enterprise scenario while meeting reliability expectations",
       "Argue your point immediately",
-      "Ignore the feedback",
-      "Listen carefully, ask clarifying questions, and reflect before responding"
+      "Ignore the feedback"
     ],
     "correct_answer": "Listen carefully, ask clarifying questions, and reflect before responding",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-006",
     "question": "During a daily stand-up meeting, your colleague is discussing a blocker and you know you can help. What should you do?",
     "options": [
-      "Say nothing and let them struggle",
       "Wait until they finish speaking, then offer help during breaks",
-      "Help them without permission during the meeting",
+      "Say nothing and let them struggle",
+      "Help them without permission during the meeting for that enterprise scenario",
       "Interrupt them to offer help"
     ],
     "correct_answer": "Wait until they finish speaking, then offer help during breaks",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-007",
     "question": "Your team is assigned a group task and roles need to be assigned. What's your best approach?",
     "options": [
-      "Take the most important task without discussing",
+      "Discuss with the team, volunteer for a role that matches your strengths",
+      "Take the most important task without discussing for that enterprise scenario",
       "Refuse to participate in group work",
-      "Wait for someone else to assign you a role",
-      "Discuss with the team, volunteer for a role that matches your strengths"
+      "Wait for someone else to assign you a role"
     ],
     "correct_answer": "Discuss with the team, volunteer for a role that matches your strengths",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-008",
     "question": "A new tool is introduced at work that you've never used before. You're unsure how to get started. What should you do?",
     "options": [
-      "Avoid using it and stick to old methods",
       "Ask your manager or a colleague for training, then practice",
+      "Avoid using it and stick to old methods for that enterprise scenario",
       "Wait for others to master it first",
       "Pretend you know how to use it"
     ],
     "correct_answer": "Ask your manager or a colleague for training, then practice",
     "topic": "Adaptability",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "adaptability",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-009",
     "question": "You have three tasks to complete today, but they all seem equally important. How should you prioritize?",
     "options": [
+      "Ask your manager which one has the earliest deadline and do that first",
       "Pick randomly which one to do first",
       "Do whichever takes the least time",
-      "Work on all of them simultaneously without a plan",
-      "Ask your manager which one has the earliest deadline and do that first"
+      "Work on all of them simultaneously without a plan for that enterprise scenario"
     ],
     "correct_answer": "Ask your manager which one has the earliest deadline and do that first",
     "topic": "Adaptability",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "adaptability",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-010",
     "question": "You're introduced to a new colleague on your team. What's a good way to start building rapport?",
     "options": [
-      "Ask them about their previous job immediately",
-      "Ignore them until they approach you",
       "Introduce yourself, offer to help them get familiar with the team, and be friendly",
+      "Ask them about their previous job immediately for that enterprise scenario while meeting reliability expectations",
+      "Ignore them until they approach you",
       "Give them a list of all the work rules"
     ],
     "correct_answer": "Introduce yourself, offer to help them get familiar with the team, and be friendly",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "communication",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-011",
     "question": "A deadline for a project just moved up by two days. How should you respond?",
     "options": [
       "Acknowledge the change, assess what can be done, and communicate concerns if it's impossible",
-      "Blame the person who made the change",
+      "Blame the person who made the change for that enterprise scenario while meeting reliability expectations",
       "Ignore the new deadline",
       "Panic and work inefficiently"
     ],
     "correct_answer": "Acknowledge the change, assess what can be done, and communicate concerns if it's impossible",
     "topic": "Adaptability",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "adaptability",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-012",
     "question": "Your manager asks if you can take on a task outside your usual responsibilities. What should you do?",
     "options": [
-      "Say no without explanation",
-      "Immediately say yes even if you're overloaded",
       "Consider your current workload honestly and discuss capacity with your manager",
+      "Say no without explanation",
+      "Immediately say yes even if you're overloaded for that enterprise scenario while meeting reliability expectations",
       "Agree but don't actually do it"
     ],
     "correct_answer": "Consider your current workload honestly and discuss capacity with your manager",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "communication",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-013",
     "question": "You notice a team member is struggling and seems stressed. What's an appropriate response?",
     "options": [
       "Ask them privately if they need help or if you can do anything to support them",
-      "Tell your manager immediately without checking with them first",
+      "Tell your manager immediately without checking with them first for that enterprise scenario",
       "Talk about their stress with other team members",
       "Pretend you didn't notice"
     ],
     "correct_answer": "Ask them privately if they need help or if you can do anything to support them",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-014",
     "question": "You realize you made a mistake on a task that affects your team. What should you do?",
     "options": [
-      "Hide the mistake and hope no one notices",
+      "Immediately tell your manager and team, explain what happened, and propose a fix",
+      "Hide the mistake and hope no one notices for that enterprise scenario while meeting reliability expectations",
       "Blame someone else",
-      "Continue as if nothing happened",
-      "Immediately tell your manager and team, explain what happened, and propose a fix"
+      "Continue as if nothing happened"
     ],
     "correct_answer": "Immediately tell your manager and team, explain what happened, and propose a fix",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "communication",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-015",
     "question": "In a meeting, someone interrupts you while you're speaking. How should you handle it?",
     "options": [
       "Politely pause and ask if they have an urgent point, then continue",
-      "Stop talking and never speak again in meetings",
+      "Stop talking and never speak again in meetings for that enterprise scenario",
       "Interrupt them back immediately",
       "Get angry and raise your voice"
     ],
     "correct_answer": "Politely pause and ask if they have an urgent point, then continue",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-016",
     "question": "You disagree with how a task is being done by a peer. What's your first step?",
     "options": [
-      "Do the task your own way without telling them",
+      "Talk privately with the person and ask about their approach",
+      "Do the task your own way without telling them for that enterprise scenario",
       "Send a critical email",
-      "Complain to your manager immediately",
-      "Talk privately with the person and ask about their approach"
+      "Complain to your manager immediately"
     ],
     "correct_answer": "Talk privately with the person and ask about their approach",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-017",
     "question": "Your company implements a new process that's different from what you're used to. How should you adapt?",
     "options": [
       "Learn the new process, ask questions if unclear, and practice applying it",
       "Wait to see if others struggle before trying",
       "Complain that change is unnecessary",
-      "Stick to the old process and ignore the change"
+      "Stick to the old process and ignore the change for that enterprise scenario"
     ],
     "correct_answer": "Learn the new process, ask questions if unclear, and practice applying it",
     "topic": "Adaptability",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "adaptability",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-018",
     "question": "A colleague asks you a question you don't know the answer to. What should you do?",
     "options": [
       "Say you don't know, offer to find out, and follow up with them",
       "Make up an answer",
-      "Tell them to ask someone else without trying to help",
+      "Tell them to ask someone else without trying to help for that enterprise scenario",
       "Ignore the question"
     ],
     "correct_answer": "Say you don't know, offer to find out, and follow up with them",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-019",
     "question": "You have two conflicting priorities at the end of your workday. What's your best move?",
     "options": [
-      "Randomly pick one and hope for the best",
       "Stay organized and ask your manager which takes priority",
+      "Randomly pick one and hope for the best for that enterprise scenario",
       "Work late without telling anyone",
       "Leave both incomplete"
     ],
     "correct_answer": "Stay organized and ask your manager which takes priority",
     "topic": "Adaptability",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "adaptability",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-020",
     "question": "During a brainstorming session, you have an unconventional idea. Should you share it?",
     "options": [
       "Share it respectfully; brainstorming is meant for creative ideas",
       "Only share if someone directly asks you",
-      "Keep it to yourself because it might sound weird",
+      "Keep it to yourself because it might sound weird for that enterprise scenario",
       "Mock the idea before others do"
     ],
     "correct_answer": "Share it respectfully; brainstorming is meant for creative ideas",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-021",
     "question": "Your teammate completed a task earlier than expected. How should you acknowledge this?",
     "options": [
       "Thank them and, if appropriate, mention it to your manager",
       "Say nothing and assume it's expected",
       "Take credit for the early completion",
-      "Question if the work is actually complete"
+      "Question if the work is actually complete for that enterprise scenario"
     ],
     "correct_answer": "Thank them and, if appropriate, mention it to your manager",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-022",
     "question": "You receive constructive criticism from a colleague. How should you react?",
     "options": [
       "Listen carefully, thank them for the feedback, and reflect on it",
       "Retaliate with criticism",
-      "Dismiss it without considering",
+      "Dismiss it without considering for that enterprise scenario while meeting reliability expectations",
       "Get defensive and argue"
     ],
     "correct_answer": "Listen carefully, thank them for the feedback, and reflect on it",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-023",
     "question": "Your manager asks you to explain your reasoning for a decision you made. What's the right approach?",
     "options": [
       "Clearly explain your thought process, the factors you considered, and why you chose that option",
       "Blame someone else for the decision",
-      "Give a vague answer and change the subject",
+      "Give a vague answer and change the subject for that enterprise scenario while meeting reliability expectations",
       "Admit you didn't think it through"
     ],
     "correct_answer": "Clearly explain your thought process, the factors you considered, and why you chose that option",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "communication",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-024",
     "question": "A new team member asks you to explain a routine task. How should you respond?",
     "options": [
-      "Roll your eyes and give a rushed explanation",
+      "Patiently explain the task and offer to clarify if they have questions",
+      "Roll your eyes and give a rushed explanation for that enterprise scenario",
       "Tell them to figure it out themselves",
-      "Do the task for them without explaining",
-      "Patiently explain the task and offer to clarify if they have questions"
+      "Do the task for them without explaining"
     ],
     "correct_answer": "Patiently explain the task and offer to clarify if they have questions",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-025",
     "question": "You notice a communication gap between two team members causing issues. What should you do?",
     "options": [
       "Bring it to the attention of your manager",
       "Let the problem escalate",
-      "Spread the information yourself",
+      "Spread the information yourself for that enterprise scenario",
       "Stay out of it completely"
     ],
     "correct_answer": "Bring it to the attention of your manager",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "communication",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-026",
     "question": "Your workload suddenly increases significantly. What's your first step?",
     "options": [
+      "Inform your manager about the increased workload and discuss priorities",
       "Quit or get overwhelmed",
       "Accept all tasks without questioning",
-      "Inform your manager about the increased workload and discuss priorities",
-      "Start working overtime without telling anyone"
+      "Start working overtime without telling anyone for that enterprise scenario"
     ],
     "correct_answer": "Inform your manager about the increased workload and discuss priorities",
     "topic": "Adaptability",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "adaptability",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-027",
     "question": "A team member's work is consistently missing deadlines. As a peer, what should you do?",
     "options": [
+      "Talk to them privately to understand if they need support",
       "Report them to HR immediately",
       "Do their work for them",
-      "Complain publicly about their performance",
-      "Talk to them privately to understand if they need support"
+      "Complain publicly about their performance for that enterprise scenario"
     ],
     "correct_answer": "Talk to them privately to understand if they need support",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-028",
     "question": "You're asked to work on a project in an area outside your expertise. How should you handle it?",
     "options": [
       "Accept it, ask questions, seek training or mentorship, and do your best",
       "Refuse the assignment",
-      "Pretend to know what you're doing",
+      "Pretend to know what you're doing for that enterprise scenario while meeting reliability expectations",
       "Delegate it without permission"
     ],
     "correct_answer": "Accept it, ask questions, seek training or mentorship, and do your best",
     "topic": "Adaptability",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "adaptability",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-029",
     "question": "You disagree with your manager's decision on how to approach a problem. What's appropriate?",
     "options": [
+      "Ask to discuss your concerns professionally and present your reasoning",
       "Refuse to work on the project",
       "Complain to your coworkers",
-      "Ask to discuss your concerns professionally and present your reasoning",
-      "Ignore the decision and do it your own way"
+      "Ignore the decision and do it your own way for that enterprise scenario"
     ],
     "correct_answer": "Ask to discuss your concerns professionally and present your reasoning",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "communication",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-030",
     "question": "Your team is celebrating a completed project. How should you participate?",
     "options": [
+      "Join in, congratulate your teammates, and reflect on the teamwork",
       "Act distant and uninterested",
       "Mention only your own contributions",
-      "Join in, congratulate your teammates, and reflect on the teamwork",
-      "Skip it because celebrations are unproductive"
+      "Skip it because celebrations are unproductive for that enterprise scenario"
     ],
     "correct_answer": "Join in, congratulate your teammates, and reflect on the teamwork",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-031",
     "question": "You receive feedback that contradicts what you believed about your performance. What should you do?",
     "options": [
-      "Immediately become defensive",
-      "Assume the person giving feedback is wrong",
       "Ask clarifying questions, listen with an open mind, and ask for examples",
+      "Immediately become defensive",
+      "Assume the person giving feedback is wrong for that enterprise scenario while meeting reliability expectations",
       "Dismiss it outright"
     ],
     "correct_answer": "Ask clarifying questions, listen with an open mind, and ask for examples",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-032",
     "question": "A colleague asks for your help with a task, but you're very busy. What's the best response?",
     "options": [
-      "Refuse without explanation",
-      "Help immediately even if it impacts your work",
       "Explain your current commitments and offer a specific time you could help",
+      "Refuse without explanation",
+      "Help immediately even if it impacts your work for that enterprise scenario",
       "Ignore their request"
     ],
     "correct_answer": "Explain your current commitments and offer a specific time you could help",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-033",
     "question": "You make the same mistake twice. When you catch it the second time, what should you do?",
     "options": [
       "Analyze what you did wrong, adjust your approach, and inform your manager if it affects others",
       "Blame external factors",
-      "Ignore it and hope no one notices",
+      "Ignore it and hope no one notices for that enterprise scenario while meeting reliability expectations",
       "Continue making the mistake"
     ],
     "correct_answer": "Analyze what you did wrong, adjust your approach, and inform your manager if it affects others",
     "topic": "Adaptability",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "adaptability",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-034",
     "question": "Your manager compliments your work in front of the team. How should you respond?",
     "options": [
-      "Act overly proud",
       "Thank them, and credit team members who contributed",
-      "Dismiss the compliment",
+      "Act overly proud",
+      "Dismiss the compliment for that enterprise scenario",
       "Say nothing"
     ],
     "correct_answer": "Thank them, and credit team members who contributed",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "communication",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-035",
     "question": "You're on a call with a client and don't understand their request. What should you do?",
     "options": [
       "Politely ask them to clarify or repeat the request",
       "Pretend you understand and guess",
       "End the call abruptly",
-      "Promise something you're unsure about"
+      "Promise something you're unsure about for that enterprise scenario"
     ],
     "correct_answer": "Politely ask them to clarify or repeat the request",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-036",
     "question": "A team member seems upset after a meeting. What's your appropriate response?",
     "options": [
-      "Ignore their mood",
-      "Gossip about their mood with others",
       "Check in privately and ask if they're okay and if there's anything you can help with",
+      "Ignore their mood",
+      "Gossip about their mood with others for that enterprise scenario while meeting reliability expectations",
       "Make jokes to lighten the mood"
     ],
     "correct_answer": "Check in privately and ask if they're okay and if there's anything you can help with",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-037",
     "question": "Your schedule changes last minute due to a client emergency. How do you adapt?",
     "options": [
-      "Ignore the change and stick to your original plans",
       "Quickly reassess priorities, inform affected people, and adjust your schedule",
+      "Ignore the change and stick to your original plans for that enterprise scenario",
       "Hope the situation resolves itself",
       "Complain about the change"
     ],
     "correct_answer": "Quickly reassess priorities, inform affected people, and adjust your schedule",
     "topic": "Adaptability",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "adaptability",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-038",
     "question": "You're working on a project with someone you don't usually interact with. How should you approach it?",
     "options": [
-      "Assume you'll clash from the start",
-      "Only communicate when absolutely necessary",
       "Be professional, communicate regularly, and be open to their ideas",
+      "Assume you'll clash from the start",
+      "Only communicate when absolutely necessary for that enterprise scenario",
       "Avoid communicating as much as possible"
     ],
     "correct_answer": "Be professional, communicate regularly, and be open to their ideas",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-039",
     "question": "You notice the team's morale is low. What can you do as an individual contributor?",
     "options": [
-      "Make it everyone else's problem",
+      "Be positive, offer support, and suggest team activities to boost morale",
+      "Make it everyone else's problem for that enterprise scenario while meeting reliability expectations",
       "Point out all the problems",
-      "Leave the team",
-      "Be positive, offer support, and suggest team activities to boost morale"
+      "Leave the team"
     ],
     "correct_answer": "Be positive, offer support, and suggest team activities to boost morale",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-040",
     "question": "A colleague gives you feedback that you could improve your communication skills. How should you respond?",
     "options": [
+      "Thank them, ask for specific examples, and work on improvement",
       "Ignore it",
       "Become offended",
-      "Thank them, ask for specific examples, and work on improvement",
-      "Tell them their feedback is wrong"
+      "Tell them their feedback is wrong for that enterprise scenario"
     ],
     "correct_answer": "Thank them, ask for specific examples, and work on improvement",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-041",
     "question": "You complete a task faster than expected. What should you do?",
     "options": [
-      "Do additional work without asking",
-      "Leave early without telling anyone",
       "Inform your manager and ask if there are other priorities you should focus on",
+      "Do additional work without asking",
+      "Leave early without telling anyone for that enterprise scenario while meeting reliability expectations",
       "Take a long break"
     ],
     "correct_answer": "Inform your manager and ask if there are other priorities you should focus on",
     "topic": "Adaptability",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "adaptability",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-042",
     "question": "Your manager asks you to mentor a junior team member. How should you approach it?",
     "options": [
       "Agree to help, set regular check-ins, and be patient and supportive",
       "Refuse because it's not your job",
-      "Overwhelm them with too much information at once",
+      "Overwhelm them with too much information at once for that enterprise scenario",
       "Do the work for them instead of teaching"
     ],
     "correct_answer": "Agree to help, set regular check-ins, and be patient and supportive",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-043",
     "question": "You receive an email with harsh or offensive language from a colleague. What's your best response?",
     "options": [
       "Take time to cool down, then respond professionally or seek HR guidance if needed",
       "Spread the email around",
-      "Ignore it and harbor resentment",
+      "Ignore it and harbor resentment for that enterprise scenario while meeting reliability expectations",
       "Respond immediately with anger"
     ],
     "correct_answer": "Take time to cool down, then respond professionally or seek HR guidance if needed",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-044",
     "question": "A meeting runs overtime and conflicts with your next commitment. What should you do?",
     "options": [
+      "Wait for a break or end, then politely inform your manager you need to leave for your next meeting",
       "Interrupt the meeting and leave",
       "Sit and miss your next meeting",
-      "Skip your next meeting without notice",
-      "Wait for a break or end, then politely inform your manager you need to leave for your next meeting"
+      "Skip your next meeting without notice for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Wait for a break or end, then politely inform your manager you need to leave for your next meeting",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-045",
     "question": "You're tasked with a project but don't have all the information you need. What's the right approach?",
     "options": [
       "Ask your manager or relevant people for the missing information before starting",
       "Delay the project indefinitely",
-      "Start without the information and hope it works out",
+      "Start without the information and hope it works out for that enterprise scenario",
       "Make assumptions about what you need"
     ],
     "correct_answer": "Ask your manager or relevant people for the missing information before starting",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-046",
     "question": "A team member's idea is presented that you think could be improved. How should you respond?",
     "options": [
-      "Dismiss the idea outright",
-      "Say nothing and let a poor idea move forward",
       "Approach them privately, ask questions about their idea, then tactfully suggest improvements",
+      "Dismiss the idea outright",
+      "Say nothing and let a poor idea move forward for that enterprise scenario while meeting reliability expectations",
       "Criticize it publicly"
     ],
     "correct_answer": "Approach them privately, ask questions about their idea, then tactfully suggest improvements",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-047",
     "question": "You make a commitment to complete something but realize you can't meet the deadline. What should you do?",
     "options": [
-      "Blame someone else for the delay",
       "Inform the person as soon as possible, explain why, and propose a new timeline",
+      "Blame someone else for the delay",
       "Miss the deadline without explanation",
-      "Pretend you'll make it even though you won't"
+      "Pretend you'll make it even though you won't for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Inform the person as soon as possible, explain why, and propose a new timeline",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-048",
     "question": "Your company transitions to a new software system. How should you adapt?",
     "options": [
-      "Resist the change and use the old system",
-      "Complain about the transition",
       "Attend training, practice using the new system, and ask for help when needed",
+      "Resist the change and use the old system for that enterprise scenario while meeting reliability expectations",
+      "Complain about the transition",
       "Assume others will teach you eventually"
     ],
     "correct_answer": "Attend training, practice using the new system, and ask for help when needed",
     "topic": "Adaptability",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "adaptability",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-049",
     "question": "You overhear negative feedback about your work. How should you handle it?",
     "options": [
-      "Assume it's not valid",
-      "Spread rumors about the person who gave feedback",
       "Reflect on the feedback, ask the person directly for constructive details, and work on improvement",
+      "Assume it's not valid",
+      "Spread rumors about the person who gave feedback for that enterprise scenario while meeting reliability expectations",
       "Confront the person aggressively"
     ],
     "correct_answer": "Reflect on the feedback, ask the person directly for constructive details, and work on improvement",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-050",
     "question": "A colleague takes credit for your work in a meeting. What's your appropriate response?",
     "options": [
+      "Calmly clarify your role and contributions afterward, either privately or in the next meeting",
       "Make a scene and yell at them",
       "Let it go and resent them",
-      "Tell others about what happened behind the scenes",
-      "Calmly clarify your role and contributions afterward, either privately or in the next meeting"
+      "Tell others about what happened behind the scenes for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Calmly clarify your role and contributions afterward, either privately or in the next meeting",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-051",
     "question": "Your team has conflicting views on how to solve a problem. What's your role?",
     "options": [
-      "Push your idea without listening",
       "Listen to all perspectives, find common ground, and work toward consensus",
+      "Push your idea without listening",
       "Refuse to participate",
-      "Side with the most senior person without thinking"
+      "Side with the most senior person without thinking for that enterprise scenario"
     ],
     "correct_answer": "Listen to all perspectives, find common ground, and work toward consensus",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-052",
     "question": "You're assigned to work with someone known for being difficult. How should you start?",
     "options": [
+      "Approach with professionalism, set clear expectations, and focus on common goals",
       "Request a different partner",
       "Prepare for the worst",
-      "Assume conflict is inevitable",
-      "Approach with professionalism, set clear expectations, and focus on common goals"
+      "Assume conflict is inevitable for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Approach with professionalism, set clear expectations, and focus on common goals",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-053",
     "question": "You notice a process that could be more efficient. Should you speak up?",
     "options": [
+      "Yes, present it respectfully with specific suggestions to your manager",
       "No, because you're new",
       "Implement changes without permission",
-      "Criticize the current process publicly",
-      "Yes, present it respectfully with specific suggestions to your manager"
+      "Criticize the current process publicly for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Yes, present it respectfully with specific suggestions to your manager",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-054",
     "question": "Your personal life is stressful and it's affecting your work. What should you do?",
     "options": [
+      "Communicate with your manager about needing temporary support, and seek resources",
       "Hide your stress and overwork yourself",
       "Vent excessively to coworkers",
-      "Let your work quality decline without explanation",
-      "Communicate with your manager about needing temporary support, and seek resources"
+      "Let your work quality decline without explanation for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Communicate with your manager about needing temporary support, and seek resources",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-055",
     "question": "A colleague asks you to do their work so they can leave early. How should you respond?",
     "options": [
-      "Lecture them about responsibility",
-      "Agree immediately",
       "Politely decline and suggest they speak to their manager",
+      "Lecture them about responsibility for that enterprise scenario",
+      "Agree immediately",
       "Do it reluctantly"
     ],
     "correct_answer": "Politely decline and suggest they speak to their manager",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-056",
     "question": "You're unsure if your interpretation of a task is correct. What's the best action?",
     "options": [
-      "Proceed with your assumption",
       "Clarify with your manager or the person who assigned the task before proceeding",
+      "Proceed with your assumption",
       "Ask a coworker without verifying",
-      "Wait and see if you're corrected later"
+      "Wait and see if you're corrected later for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Clarify with your manager or the person who assigned the task before proceeding",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-057",
     "question": "You realize you don't have the skills needed for a promotion opportunity. What's your response?",
     "options": [
-      "Give up on advancement",
       "Ask your manager about training or development opportunities to build those skills",
-      "Pretend you already have those skills",
+      "Give up on advancement",
+      "Pretend you already have those skills for that enterprise scenario while meeting reliability expectations",
       "Accept the role and struggle"
     ],
     "correct_answer": "Ask your manager about training or development opportunities to build those skills",
     "topic": "Adaptability",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "adaptability",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-058",
     "question": "Your team meeting is becoming unproductive with too many tangents. What should you do?",
     "options": [
+      "Politely suggest refocusing on the agenda",
       "Leave the meeting",
-      "Let it continue without comment",
-      "Dominate the conversation",
-      "Politely suggest refocusing on the agenda"
+      "Let it continue without comment for that enterprise scenario",
+      "Dominate the conversation"
     ],
     "correct_answer": "Politely suggest refocusing on the agenda",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "communication",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-059",
     "question": "A junior team member asks for your advice on a career decision. How should you respond?",
     "options": [
-      "Tell them to just do whatever you did",
       "Listen carefully, share your perspective based on experience, and encourage them to consider their own goals",
+      "Tell them to just do whatever you did",
       "Say it's not your concern",
-      "Tell them the 'right' path without discussion"
+      "Tell them the 'right' path without discussion for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Listen carefully, share your perspective based on experience, and encourage them to consider their own goals",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-060",
     "question": "You're invited to an optional team social event. How should you consider attending?",
     "options": [
-      "Skip it because socializing isn't work",
+      "Attend if you can; it builds team relationships",
+      "Skip it because socializing isn't work for that enterprise scenario",
       "Only attend if specifically required",
-      "Go but stay disconnected from everyone",
-      "Attend if you can; it builds team relationships"
+      "Go but stay disconnected from everyone"
     ],
     "correct_answer": "Attend if you can; it builds team relationships",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-061",
     "question": "A task you completed is rejected by your manager. How should you respond?",
     "options": [
-      "Blame external factors",
       "Ask for specific feedback on what didn't meet expectations, then revise",
-      "Redo it without understanding the issues",
+      "Blame external factors",
+      "Redo it without understanding the issues for that enterprise scenario while meeting reliability expectations",
       "Defend yourself without listening"
     ],
     "correct_answer": "Ask for specific feedback on what didn't meet expectations, then revise",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "communication",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-062",
     "question": "You disagree with a team decision, but you're outvoted. What should you do?",
     "options": [
-      "Refuse to participate",
       "Support the team decision while documenting your concerns",
+      "Refuse to participate",
       "Sabotage the decision",
-      "Complain constantly about the decision"
+      "Complain constantly about the decision for that enterprise scenario"
     ],
     "correct_answer": "Support the team decision while documenting your concerns",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-063",
     "question": "A colleague gives you a compliment that makes you uncomfortable. How should you respond?",
     "options": [
       "Thank them politely and move on",
       "Accuse them of insincerity",
       "Avoid them afterward",
-      "Dismiss the compliment harshly"
+      "Dismiss the compliment harshly for that enterprise scenario"
     ],
     "correct_answer": "Thank them politely and move on",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-064",
     "question": "Your work hours are changing to accommodate a project. How should you adapt?",
     "options": [
+      "Adjust your personal schedule if possible and discuss any conflicts with your manager",
       "Refuse to adjust",
       "Show up whenever you want",
-      "Complain about every change",
-      "Adjust your personal schedule if possible and discuss any conflicts with your manager"
+      "Complain about every change for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Adjust your personal schedule if possible and discuss any conflicts with your manager",
     "topic": "Adaptability",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "adaptability",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-065",
     "question": "You're asked to present your work to senior management. How should you prepare?",
     "options": [
       "Practice your presentation, organize your thoughts clearly, and anticipate questions",
       "Wing it without preparation",
-      "Present without visuals or support",
+      "Present without visuals or support for that enterprise scenario while meeting reliability expectations",
       "Memorize word-for-word what to say"
     ],
     "correct_answer": "Practice your presentation, organize your thoughts clearly, and anticipate questions",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-066",
     "question": "A team member completes their work early and offers to help others. How should you respond as their manager?",
     "options": [
-      "Assign them more work immediately",
-      "Ignore their offer",
       "Appreciate their initiative, discuss how they'd like to contribute, and encourage peer learning",
+      "Assign them more work immediately for that enterprise scenario while meeting reliability expectations",
+      "Ignore their offer",
       "Tell them to take it easy"
     ],
     "correct_answer": "Appreciate their initiative, discuss how they'd like to contribute, and encourage peer learning",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-067",
     "question": "You're in a meeting and someone presents data that contradicts your earlier statement. What's the best response?",
     "options": [
-      "Dispute the data without examining it",
       "Thank them for the correction, examine the data, and adjust your understanding publicly",
+      "Dispute the data without examining it for that enterprise scenario while meeting reliability expectations",
       "Blame the person presenting",
       "Ignore the data"
     ],
     "correct_answer": "Thank them for the correction, examine the data, and adjust your understanding publicly",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-068",
     "question": "Your team has completed a challenging project successfully. What's an appropriate way to celebrate?",
     "options": [
+      "Acknowledge the team's effort publicly, celebrate together, and reflect on what was learned",
       "Ignore the achievement",
       "Credit only yourself",
-      "Acknowledge the team's effort publicly, celebrate together, and reflect on what was learned",
-      "Move immediately to the next project without pause"
+      "Move immediately to the next project without pause for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Acknowledge the team's effort publicly, celebrate together, and reflect on what was learned",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-069",
     "question": "A new process is being introduced that seems complicated initially. How should you approach learning it?",
     "options": [
       "Ask questions, give it a fair chance, practice, and ask for help when needed",
-      "Refuse to use it and stick to the old way",
+      "Refuse to use it and stick to the old way for that enterprise scenario while meeting reliability expectations",
       "Wait for others to master it first",
       "Complain that it's too complicated"
     ],
     "correct_answer": "Ask questions, give it a fair chance, practice, and ask for help when needed",
     "topic": "Adaptability",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "adaptability",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-070",
     "question": "Your manager is making a decision you think is wrong but hasn't asked for your input. What should you do?",
     "options": [
       "Request time to discuss your concerns professionally and respectfully",
       "Do nothing and let them make a mistake",
-      "Complain to your peers about the decision",
+      "Complain to your peers about the decision for that enterprise scenario",
       "Refuse to support the decision"
     ],
     "correct_answer": "Request time to discuss your concerns professionally and respectfully",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "communication",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-071",
     "question": "A colleague mentions they're struggling with a personal issue that's affecting work. How should you respond?",
     "options": [
-      "Minimize their concerns",
       "Listen supportively, offer any help you can, and suggest they speak with HR or employee assistance",
-      "Tell them personal issues are not work-related",
+      "Minimize their concerns",
+      "Tell them personal issues are not work-related for that enterprise scenario while meeting reliability expectations",
       "Spread the information to others"
     ],
     "correct_answer": "Listen supportively, offer any help you can, and suggest they speak with HR or employee assistance",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-072",
     "question": "You're asked to work on a task you don't fully understand. What's your best approach?",
     "options": [
-      "Do your best without asking",
       "Ask clarifying questions immediately to understand what's expected",
-      "Pretend you understand and figure it out alone",
+      "Do your best without asking",
+      "Pretend you understand and figure it out alone for that enterprise scenario",
       "Refuse the task"
     ],
     "correct_answer": "Ask clarifying questions immediately to understand what's expected",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-073",
     "question": "A colleague gives you feedback in front of a group and it's embarrassing. How should you handle it?",
     "options": [
-      "Get upset and defend yourself loudly",
-      "Leave the room",
       "Stay calm, listen to the feedback, thank them, and discuss further privately if needed",
+      "Get upset and defend yourself loudly for that enterprise scenario while meeting reliability expectations",
+      "Leave the room",
       "Retaliate with criticism"
     ],
     "correct_answer": "Stay calm, listen to the feedback, thank them, and discuss further privately if needed",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-074",
     "question": "You're assigned a project on a tight deadline with an unfamiliar tool. How should you approach this?",
     "options": [
-      "Use the tool anyway without learning it",
+      "Learn the basics quickly through resources, apply them, and ask for support from those with experience",
+      "Use the tool anyway without learning it for that enterprise scenario while meeting reliability expectations",
       "Try to avoid using the new tool",
-      "Request more time indefinitely",
-      "Learn the basics quickly through resources, apply them, and ask for support from those with experience"
+      "Request more time indefinitely"
     ],
     "correct_answer": "Learn the basics quickly through resources, apply them, and ask for support from those with experience",
     "topic": "Adaptability",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "adaptability",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   },
   {
+    "id": "shared-soft-skills-075",
     "question": "Your team member's approach to solving a problem is different from yours, but it might work. How should you respond?",
     "options": [
+      "Discuss the pros and cons of both approaches and agree on a path forward",
       "Do it your way after they leave",
       "Criticize their approach",
-      "Impose your approach without discussion",
-      "Discuss the pros and cons of both approaches and agree on a path forward"
+      "Impose your approach without discussion for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Discuss the pros and cons of both approaches and agree on a path forward",
     "topic": "Teamwork",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "teamwork"
+    ],
+    "role_target": "shared_soft_skills",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills"
+    ]
   }
 ]

@@ -269,7 +269,7 @@
 
                 <div class="test-links-grid mt-3">
                     {% set test_seq = namespace(value=0) %}
-                    {% for level in ["L1","L2","L3","L4","L5","L6"] if level in cand.tests %}
+                    {% for level in round_order if level in cand.tests %}
                     {% set test = cand.tests[level] %}
                     {% set test_seq.value = test_seq.value + 1 %}
                     <div class="test-link-item" data-test-label="{{ test.label }}" data-test-url="{{ test.url }}">

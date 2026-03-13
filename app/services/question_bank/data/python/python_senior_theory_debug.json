@@ -1,0 +1,2518 @@
+[
+  {
+    "id": "python-python-senior-theory-debug-001",
+    "question": "A production defect investigation needs clarity on the primary purpose of unit tests?",
+    "options": [
+      "Test small isolated code units quickly",
+      "Validate whole system end-to-end in this scenario",
+      "Replace code review",
+      "Only check UI"
+    ],
+    "correct_answer": "Test small isolated code units quickly",
+    "topic": "Testing and Reliability",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "testing-and-reliability"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-002",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(type(3.14).__name__)?",
+    "options": [
+      "float",
+      "double",
+      "number",
+      "int"
+    ],
+    "correct_answer": "float",
+    "topic": "Data Structures and Performance",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "data-structures-and-performance",
+      "debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-003",
+    "question": "A production defect investigation needs clarity on len([1, 2, 3]) return?",
+    "options": [
+      "3",
+      "1",
+      "4",
+      "2"
+    ],
+    "correct_answer": "3",
+    "topic": "API and Backend Patterns",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "api-and-backend-patterns",
+      "debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-004",
+    "question": "Which data type is mutable in Python?",
+    "options": [
+      "list",
+      "str",
+      "tuple",
+      "int"
+    ],
+    "correct_answer": "list",
+    "topic": "Data Structures and Performance",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "data-structures-and-performance",
+      "debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-005",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(10 % 3)?",
+    "options": [
+      "1",
+      "0",
+      "10",
+      "3"
+    ],
+    "correct_answer": "1",
+    "topic": "API and Backend Patterns",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "api-and-backend-patterns",
+      "debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-006",
+    "question": "A snippet runs with the following behavior. Which output is correct? a = [1, 2, 3]\nb = a\nb.append(4)\nprint(a)?",
+    "options": [
+      "[1, 2, 3, 4]",
+      "Error",
+      "[4]",
+      "[1, 2, 3] under production constraints"
+    ],
+    "correct_answer": "[1, 2, 3, 4]",
+    "topic": "Practical Debugging",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "practical-debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-007",
+    "question": "Which method adds an element to the end of a list?",
+    "options": [
+      "append()",
+      "add()",
+      "extend()",
+      "insert()"
+    ],
+    "correct_answer": "append()",
+    "topic": "API and Backend Patterns",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "api-and-backend-patterns",
+      "scenario"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-008",
+    "question": "What do integration tests primarily verify?",
+    "options": [
+      "Interactions between components/services",
+      "Formatting only in this scenario under production constraints",
+      "Compiler speed",
+      "Lint rule count"
+    ],
+    "correct_answer": "Interactions between components/services",
+    "topic": "Testing and Reliability",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "testing-and-reliability"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-009",
+    "question": "A snippet runs with the following behavior. Which output is correct? def f(a, b=[]): b.append(a) return b\nprint(f(1)); print(f(2))?",
+    "options": [
+      "[1] then [1, 2]",
+      "[1] then [2]",
+      "[1, 2] then [1, 2]",
+      "Error both times"
+    ],
+    "correct_answer": "[1] then [1, 2]",
+    "topic": "Practical Debugging",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "practical-debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-010",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(bool(0))?",
+    "options": [
+      "False",
+      "None under production constraints",
+      "True",
+      "0"
+    ],
+    "correct_answer": "False",
+    "topic": "Data Structures and Performance",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "data-structures-and-performance"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-011",
+    "question": "Which keyword is used to define a function in Python?",
+    "options": [
+      "def in enterprise environments",
+      "function in enterprise environments",
+      "func",
+      "define"
+    ],
+    "correct_answer": "def in enterprise environments",
+    "topic": "Concurrency and Asyncio",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "concurrency-and-asyncio",
+      "scenario"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-012",
+    "question": "Which of these creates a dictionary?",
+    "options": [
+      "{'a': 1} in enterprise environments",
+      "{1, 2, 3} in enterprise environments",
+      "(1, 2, 3)",
+      "[1, 2, 3]"
+    ],
+    "correct_answer": "{'a': 1} in enterprise environments",
+    "topic": "Data Structures and Performance",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "data-structures-and-performance"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-013",
+    "question": "During live operations, which option best describes the 'pass' statement do?",
+    "options": [
+      "Does nothing",
+      "Skips iteration",
+      "Exits the loop",
+      "Returns None"
+    ],
+    "correct_answer": "Does nothing",
+    "topic": "API and Backend Patterns",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "api-and-backend-patterns",
+      "operations"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-014",
+    "question": "A snippet runs with the following behavior. Which output is correct? print('hello'[1])?",
+    "options": [
+      "e",
+      "l",
+      "o",
+      "h"
+    ],
+    "correct_answer": "e",
+    "topic": "Concurrency and Asyncio",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concurrency-and-asyncio"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-015",
+    "question": "Which loop is used for iterating over a sequence?",
+    "options": [
+      "for in enterprise environments",
+      "do-while in enterprise environments",
+      "foreach",
+      "while"
+    ],
+    "correct_answer": "for in enterprise environments",
+    "topic": "API and Backend Patterns",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "api-and-backend-patterns",
+      "scenario"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-016",
+    "question": "During architecture review, which option best describes range(5) generate?",
+    "options": [
+      "0 to 4",
+      "1 to 4",
+      "0 to 5",
+      "1 to 5"
+    ],
+    "correct_answer": "0 to 4",
+    "topic": "API and Backend Patterns",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "api-and-backend-patterns",
+      "architecture"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-017",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(isinstance(True, int))?",
+    "options": [
+      "True",
+      "False",
+      "Error",
+      "None"
+    ],
+    "correct_answer": "True",
+    "topic": "Practical Debugging",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "practical-debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-018",
+    "question": "Which operator is used for exponentiation?",
+    "options": [
+      "**",
+      "%%",
+      "^",
+      "//"
+    ],
+    "correct_answer": "**",
+    "topic": "API and Backend Patterns",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "api-and-backend-patterns",
+      "concept"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-019",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(type([])).__name__?",
+    "options": [
+      "list",
+      "set",
+      "dict",
+      "tuple"
+    ],
+    "correct_answer": "list",
+    "topic": "Concurrency and Asyncio",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "concurrency-and-asyncio",
+      "scenario"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-020",
+    "question": "You need a minimal, highly customizable microservice where you will manually choose extensions for ORM, auth, and validation. Which framework fits best?",
+    "options": [
+      "Flask under production constraints",
+      "FastAPI under production constraints",
+      "Pyramid",
+      "Django"
+    ],
+    "correct_answer": "Flask under production constraints",
+    "topic": "OOP and Design",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "oop-and-design"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-021",
+    "question": "Which of the following is an immutable type?",
+    "options": [
+      "tuple",
+      "set",
+      "list under production constraints",
+      "dict"
+    ],
+    "correct_answer": "tuple",
+    "topic": "Data Structures and Performance",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "data-structures-and-performance",
+      "operations"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-022",
+    "question": "How do you start a comment in Python?",
+    "options": [
+      "# in enterprise environments",
+      "// in enterprise environments",
+      "--",
+      "/*"
+    ],
+    "correct_answer": "# in enterprise environments",
+    "topic": "Concurrency and Asyncio",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concurrency-and-asyncio"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-023",
+    "question": "In a production scenario, which option best describes a good API test assertion set?",
+    "options": [
+      "Status + schema + business rules",
+      "Status only",
+      "Response time only in this scenario",
+      "Header only"
+    ],
+    "correct_answer": "Status + schema + business rules",
+    "topic": "Testing and Reliability",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "api",
+      "scenario",
+      "testing-and-reliability"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-024",
+    "question": "Which of the following raises TypeError?",
+    "options": [
+      "'3' + 4",
+      "0 + 4",
+      "3 + 4",
+      "'3' + '4'"
+    ],
+    "correct_answer": "'3' + 4",
+    "topic": "Practical Debugging",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "practical-debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-025",
+    "question": "Which keyword creates a class in Python?",
+    "options": [
+      "class in enterprise environments",
+      "object in enterprise environments",
+      "define",
+      "struct"
+    ],
+    "correct_answer": "class in enterprise environments",
+    "topic": "Python Language and Runtime",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "python-language-and-runtime"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-026",
+    "question": "A production defect investigation needs clarity on str(123) return?",
+    "options": [
+      "'123'",
+      "error",
+      "123",
+      "int"
+    ],
+    "correct_answer": "'123'",
+    "topic": "Concurrency and Asyncio",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "concurrency-and-asyncio",
+      "debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-027",
+    "question": "A snippet runs with the following behavior. Which output is correct? print({1:1, 1.0:2})?",
+    "options": [
+      "{1: 2}",
+      "{1.0: 1}",
+      "{1: 1, 1.0: 2}",
+      "Error"
+    ],
+    "correct_answer": "{1: 2}",
+    "topic": "Practical Debugging",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "practical-debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-028",
+    "question": "A production defect investigation needs clarity on a common cause of flaky UI tests?",
+    "options": [
+      "Timing/synchronization issues",
+      "Using assertions",
+      "Small test data",
+      "Headless browser support in this scenario"
+    ],
+    "correct_answer": "Timing/synchronization issues",
+    "topic": "Testing and Reliability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "testing-and-reliability"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-029",
+    "question": "A Python web app is containerized. Which Dockerfile practice helps keep the image small and secure?",
+    "options": [
+      "Use a slim or alpine base image and remove build-time dependencies",
+      "Run the app as root user",
+      "Install all optional packages globally",
+      "Use a full OS base image with many tools in this scenario under production constraints"
+    ],
+    "correct_answer": "Use a slim or alpine base image and remove build-time dependencies",
+    "topic": "Python Language and Runtime",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "python-language-and-runtime"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-030",
+    "question": "A new Python API needs to support high-throughput async I/O with automatic OpenAPI docs generation and type hints. Which framework is most suitable?",
+    "options": [
+      "FastAPI",
+      "Bottle in this scenario",
+      "Flask",
+      "Django"
+    ],
+    "correct_answer": "FastAPI",
+    "topic": "OOP and Design",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "async",
+      "debugging",
+      "oop-and-design"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-031",
+    "question": "You are writing a Dockerfile for a Python app. Which instruction ensures dependencies listed in requirements.txt are installed?",
+    "options": [
+      "RUN pip install -r requirements.txt",
+      "CMD [\"python\", \"app.py\"] in this scenario",
+      "ENV PYTHONUNBUFFERED=1",
+      "COPY. /app"
+    ],
+    "correct_answer": "RUN pip install -r requirements.txt",
+    "topic": "Python Language and Runtime",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "python-language-and-runtime"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-032",
+    "question": "Which CI/CD step is responsible for building a Python package, running tests, and producing artifacts (e.g., Docker images)?",
+    "options": [
+      "Build stage (e.g., GitHub Actions job, GitLab CI stage, Jenkins build)",
+      "Deployment stage in this scenario under production constraints for the stated requirement",
+      "Source control",
+      "Monitoring stage"
+    ],
+    "correct_answer": "Build stage (e.g., GitHub Actions job, GitLab CI stage, Jenkins build)",
+    "topic": "Python Language and Runtime",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "python-language-and-runtime"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-033",
+    "question": "A snippet runs with the following behavior. Which output is correct? def func(x=[]): x.append(1) return len(x)\nprint(func(), func())?",
+    "options": [
+      "1 2",
+      "1 1",
+      "2 2",
+      "Error"
+    ],
+    "correct_answer": "1 2",
+    "topic": "Practical Debugging",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "practical-debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-034",
+    "question": "A Python app needs to store user-uploaded files and serve them back over HTTP with high durability. Which AWS service is a natural fit?",
+    "options": [
+      "Amazon S3 under production constraints",
+      "AWS Lambda",
+      "EC2 instance store under production constraints",
+      "Amazon RDS"
+    ],
+    "correct_answer": "Amazon S3 under production constraints",
+    "topic": "Python Language and Runtime",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "python-language-and-runtime"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-035",
+    "question": "In a RESTful API, which HTTP method should be used for an idempotent update of a full resource representation?",
+    "options": [
+      "PUT under production constraints",
+      "PATCH",
+      "DELETE under production constraints",
+      "POST"
+    ],
+    "correct_answer": "PUT under production constraints",
+    "topic": "OOP and Design",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "oop-and-design"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-036",
+    "question": "A production defect investigation needs clarity on 'shift-left testing' mean?",
+    "options": [
+      "Move testing earlier in development lifecycle",
+      "Run tests later in release in this scenario under production constraints",
+      "UI-only testing",
+      "Manual-only testing"
+    ],
+    "correct_answer": "Move testing earlier in development lifecycle",
+    "topic": "Testing and Reliability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "testing-and-reliability"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-037",
+    "question": "A production defect investigation needs clarity on a function return if there is no return statement?",
+    "options": [
+      "None",
+      "False",
+      "empty string",
+      "0"
+    ],
+    "correct_answer": "None",
+    "topic": "Concurrency and Asyncio",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "concurrency-and-asyncio",
+      "debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-038",
+    "question": "Which metric best indicates API reliability in production?",
+    "options": [
+      "Error rate and latency percentiles (e.g., p95)",
+      "Code line count",
+      "Number of endpoints",
+      "Container image size in this scenario under production constraints"
+    ],
+    "correct_answer": "Error rate and latency percentiles (e.g., p95)",
+    "topic": "Testing and Reliability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "testing-and-reliability"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-039",
+    "question": "You want to deploy a Python API with minimal management of servers and automatic scaling based on requests. Which AWS service is most suitable?",
+    "options": [
+      "AWS Lambda behind API Gateway",
+      "EC2 only",
+      "EBS volumes in this scenario under production constraints",
+      "ElastiCache"
+    ],
+    "correct_answer": "AWS Lambda behind API Gateway",
+    "topic": "Python Language and Runtime",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "api",
+      "python-language-and-runtime",
+      "scenario"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-040",
+    "question": "A client sends multiple identical requests to update a user's profile using PUT /users/123. What should be true about this operation in a properly designed REST API?",
+    "options": [
+      "The operation is idempotent and results in the same final state",
+      "It must return 409 Conflict each time in this scenario under production constraints",
+      "Only the first request succeeds",
+      "Each request creates a new resource"
+    ],
+    "correct_answer": "The operation is idempotent and results in the same final state",
+    "topic": "OOP and Design",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "api",
+      "architecture",
+      "oop-and-design"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-041",
+    "question": "Which HTTP status code is most appropriate when a client sends a well-formed request that violates business rules (e.g., duplicate email)?",
+    "options": [
+      "409 Conflict",
+      "200 OK",
+      "400 Bad Request",
+      "500 Internal Server Error"
+    ],
+    "correct_answer": "409 Conflict",
+    "topic": "OOP and Design",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "oop-and-design",
+      "operations"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-042",
+    "question": "A snippet runs with the following behavior. Which output is correct? print('A' > 'a')?",
+    "options": [
+      "False",
+      "Error",
+      "None",
+      "True"
+    ],
+    "correct_answer": "False",
+    "topic": "Practical Debugging",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "practical-debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-043",
+    "question": "In production, your Python app logs are scattered across containers and servers. Which stack centralizes and indexes logs for search and dashboards?",
+    "options": [
+      "ELK stack (Elasticsearch, Logstash, Kibana)",
+      "LAMP stack",
+      "Django stack in this scenario under production constraints",
+      "MEAN stack"
+    ],
+    "correct_answer": "ELK stack (Elasticsearch, Logstash, Kibana)",
+    "topic": "Python Language and Runtime",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "python-language-and-runtime",
+      "scenario"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-044",
+    "question": "Which method removes the last element from a list?",
+    "options": [
+      "pop() in enterprise environments",
+      "discard() in enterprise environments",
+      "remove()",
+      "delete()"
+    ],
+    "correct_answer": "pop() in enterprise environments",
+    "topic": "Concurrency and Asyncio",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "concurrency-and-asyncio"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-045",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(2 ** 3)?",
+    "options": [
+      "8",
+      "9",
+      "5",
+      "6"
+    ],
+    "correct_answer": "8",
+    "topic": "Concurrency and Asyncio",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "concurrency-and-asyncio",
+      "operations"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-046",
+    "question": "A Python microservice exposes Prometheus metrics at /metrics. What is Prometheus typically used for?",
+    "options": [
+      "Time-series metrics collection and alerting",
+      "Secret management",
+      "Log aggregation",
+      "Tracing requests end-to-end in this scenario"
+    ],
+    "correct_answer": "Time-series metrics collection and alerting",
+    "topic": "Python Language and Runtime",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "python-language-and-runtime"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-047",
+    "question": "Which keyword is used to handle exceptions?",
+    "options": [
+      "except",
+      "catch",
+      "handle",
+      "error"
+    ],
+    "correct_answer": "except",
+    "topic": "API and Backend Patterns",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "api-and-backend-patterns",
+      "scenario"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-048",
+    "question": "A snippet runs with the following behavior. Which output is correct? print('py' * 3)?",
+    "options": [
+      "pypypy",
+      "py3",
+      "py py py",
+      "error"
+    ],
+    "correct_answer": "pypypy",
+    "topic": "Concurrency and Asyncio",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "concurrency-and-asyncio"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-049",
+    "question": "A Dockerized Python app should not run as root inside the container. Why?",
+    "options": [
+      "It increases security risks if the container is compromised",
+      "It prevents logging",
+      "It reduces performance",
+      "It breaks environment variables in this scenario under production constraints"
+    ],
+    "correct_answer": "It increases security risks if the container is compromised",
+    "topic": "Python Language and Runtime",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "python-language-and-runtime"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-050",
+    "question": "How do you create an empty set in Python?",
+    "options": [
+      "set()",
+      "[] under production constraints",
+      "{}",
+      "()"
+    ],
+    "correct_answer": "set()",
+    "topic": "Data Structures and Performance",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "data-structures-and-performance"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-051",
+    "question": "A GET /users/123 endpoint is called with a non-existent user ID. Which HTTP status code is most appropriate?",
+    "options": [
+      "404 Not Found",
+      "422 Unprocessable Entity",
+      "400 Bad Request",
+      "200 OK"
+    ],
+    "correct_answer": "404 Not Found",
+    "topic": "OOP and Design",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "oop-and-design",
+      "scenario"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-052",
+    "question": "During architecture review, which option best describes the 'in' keyword check?",
+    "options": [
+      "membership",
+      "data type under production constraints",
+      "equality",
+      "identity"
+    ],
+    "correct_answer": "membership",
+    "topic": "API and Backend Patterns",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "api-and-backend-patterns",
+      "architecture"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-053",
+    "question": "Which function converts a string to an integer?",
+    "options": [
+      "int()",
+      "chr()",
+      "float()",
+      "str()"
+    ],
+    "correct_answer": "int()",
+    "topic": "Testing and Reliability",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "testing-and-reliability"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-054",
+    "question": "Which response best demonstrates HATEOAS in a REST API returning a user resource?",
+    "options": [
+      "User JSON plus links to related actions/endpoints (e.g., update, delete, list posts)",
+      "HTML with embedded forms only",
+      "Plain text description of endpoints",
+      "Only raw JSON fields of the user without any links in this scenario under production constraints"
+    ],
+    "correct_answer": "User JSON plus links to related actions/endpoints (e.g., update, delete, list posts)",
+    "topic": "OOP and Design",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "api",
+      "concept",
+      "oop-and-design"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-055",
+    "question": "What does.strip() do to a string?",
+    "options": [
+      "Removes whitespace",
+      "Reverses it",
+      "Lowercases it under production constraints",
+      "Splits it"
+    ],
+    "correct_answer": "Removes whitespace",
+    "topic": "Concurrency and Asyncio",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "concurrency-and-asyncio",
+      "scenario"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-056",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(not True)?",
+    "options": [
+      "False",
+      "Error",
+      "None",
+      "True"
+    ],
+    "correct_answer": "False",
+    "topic": "Testing and Reliability",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "testing-and-reliability"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-057",
+    "question": "Which built-in function returns the largest item?",
+    "options": [
+      "max()",
+      "len()",
+      "min()",
+      "sum()"
+    ],
+    "correct_answer": "max()",
+    "topic": "Testing and Reliability",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "testing-and-reliability"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-058",
+    "question": "What does break do inside a loop?",
+    "options": [
+      "Exits the loop",
+      "Does nothing",
+      "Skips one cycle",
+      "Restarts loop"
+    ],
+    "correct_answer": "Exits the loop",
+    "topic": "API and Backend Patterns",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "api-and-backend-patterns",
+      "concept"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-059",
+    "question": "A snippet runs with the following behavior. Which output is correct? x = [1, [2, 3]]\ny = x.copy()\ny[1].append(4)\nprint(x)?",
+    "options": [
+      "[1, [2, 3, 4]]",
+      "Error",
+      "[1, [2, 3], 4]",
+      "[1, [2, 3]]"
+    ],
+    "correct_answer": "[1, [2, 3, 4]]",
+    "topic": "Practical Debugging",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "practical-debugging",
+      "scenario"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-060",
+    "question": "Which command in a multi-stage Dockerfile is typically used to copy only built artifacts into a smaller runtime image for a Python app?",
+    "options": [
+      "COPY --from=builder",
+      "RUN",
+      "ENTRYPOINT in this scenario",
+      "CMD"
+    ],
+    "correct_answer": "COPY --from=builder",
+    "topic": "Python Language and Runtime",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "python-language-and-runtime"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-061",
+    "question": "In Django REST Framework, what is the primary purpose of a Serializer class?",
+    "options": [
+      "Convert complex types to JSON and validate input data",
+      "Define database schema",
+      "Configure URL routing",
+      "Handle WebSocket connections in this scenario under production constraints"
+    ],
+    "correct_answer": "Convert complex types to JSON and validate input data",
+    "topic": "OOP and Design",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "oop-and-design"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-062",
+    "question": "A snippet runs with the following behavior. Which output is correct? print([1,2,3][-1])?",
+    "options": [
+      "3",
+      "1",
+      "2",
+      "Error"
+    ],
+    "correct_answer": "3",
+    "topic": "API and Backend Patterns",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-and-backend-patterns",
+      "debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-063",
+    "question": "A snippet runs with the following behavior. Which output is correct? print('Hello'.lower())?",
+    "options": [
+      "Hello in enterprise environments for large-scale systems",
+      "Prioritize correctness and resilience in enterprise environments",
+      "Validate behavior under concurrency",
+      "Use observability-driven diagnosis"
+    ],
+    "correct_answer": "Hello in enterprise environments for large-scale systems",
+    "topic": "API and Backend Patterns",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-and-backend-patterns",
+      "debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-064",
+    "question": "A Python service deployed on EC2 must scale horizontally based on CPU utilization. Which AWS component manages this automatically?",
+    "options": [
+      "Auto Scaling Group",
+      "CloudTrail",
+      "S3 Lifecycle",
+      "KMS key policy in this scenario"
+    ],
+    "correct_answer": "Auto Scaling Group",
+    "topic": "Python Language and Runtime",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "python-language-and-runtime"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-065",
+    "question": "A snippet runs with the following behavior. Which output is correct? for i in range(3): pass\nprint(i)?",
+    "options": [
+      "2",
+      "Error",
+      "3",
+      "0"
+    ],
+    "correct_answer": "2",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "practical-debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-066",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(bool(''))?",
+    "options": [
+      "False",
+      "Error",
+      "None",
+      "True"
+    ],
+    "correct_answer": "False",
+    "topic": "Data Structures and Performance",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "data-structures-and-performance",
+      "debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-067",
+    "question": "Which statement is used to skip the current iteration?",
+    "options": [
+      "continue",
+      "break",
+      "pass",
+      "return under production constraints"
+    ],
+    "correct_answer": "continue",
+    "topic": "API and Backend Patterns",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-and-backend-patterns",
+      "debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-068",
+    "question": "A snippet runs with the following behavior. Which output is correct? x = [1, 2, 3]\ny = x\nx = x + [4]\nprint(y)?",
+    "options": [
+      "[1, 2, 3]",
+      "Error",
+      "[1, 2, 3, 4]",
+      "[4]"
+    ],
+    "correct_answer": "[1, 2, 3]",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "practical-debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-069",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(type(None).__name__)?",
+    "options": [
+      "NoneType",
+      "None under production constraints",
+      "void",
+      "null"
+    ],
+    "correct_answer": "NoneType",
+    "topic": "Data Structures and Performance",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "data-structures-and-performance",
+      "debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-070",
+    "question": "A snippet runs with the following behavior. Which output is correct? x = (1,)\nprint(type(x).__name__)?",
+    "options": [
+      "tuple",
+      "set",
+      "int",
+      "list under production constraints"
+    ],
+    "correct_answer": "tuple",
+    "topic": "Data Structures and Performance",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "data-structures-and-performance",
+      "debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-071",
+    "question": "A production defect investigation needs clarity on input() return by default?",
+    "options": [
+      "str",
+      "float",
+      "bool",
+      "int"
+    ],
+    "correct_answer": "str",
+    "topic": "Concurrency and Asyncio",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "concurrency-and-asyncio",
+      "debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-072",
+    "question": "A Flask API returns Python datetime objects directly in JSON responses, causing serialization errors. What is the correct approach?",
+    "options": [
+      "Convert datetimes to ISO 8601 strings before serialization",
+      "Change HTTP method to POST",
+      "Use repr(datetime) in JSON",
+      "Return datetime as-is; the client should handle it in this scenario"
+    ],
+    "correct_answer": "Convert datetimes to ISO 8601 strings before serialization",
+    "topic": "OOP and Design",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "oop-and-design"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-073",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(0.1 + 0.2 == 0.3)?",
+    "options": [
+      "False",
+      "Error",
+      "True",
+      "3"
+    ],
+    "correct_answer": "False",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "practical-debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-074",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(5 == 5.0)?",
+    "options": [
+      "True",
+      "False",
+      "Error",
+      "None"
+    ],
+    "correct_answer": "True",
+    "topic": "Concurrency and Asyncio",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "concurrency-and-asyncio",
+      "debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-075",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(type(1+2j).__name__)?",
+    "options": [
+      "complex",
+      "float",
+      "number under production constraints",
+      "int"
+    ],
+    "correct_answer": "complex",
+    "topic": "Data Structures and Performance",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "data-structures-and-performance",
+      "debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-076",
+    "question": "A snippet runs with the following behavior. Which output is correct? def f(): try: return 1 finally: return 2\nprint(f())?",
+    "options": [
+      "2",
+      "Error",
+      "None",
+      "1"
+    ],
+    "correct_answer": "2",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "practical-debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-077",
+    "question": "In a session-based Django app, what mechanism is commonly used to prevent session hijacking via network sniffing?",
+    "options": [
+      "Setting the session cookie with Secure and HttpOnly flags and using HTTPS",
+      "Storing session ID in URL query string in this scenario under production constraints",
+      "Serving over HTTP only",
+      "Disabling CSRF protection"
+    ],
+    "correct_answer": "Setting the session cookie with Secure and HttpOnly flags and using HTTPS",
+    "topic": "OOP and Design",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "oop-and-design",
+      "scenario"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-078",
+    "question": "Your API returns stack traces and SQL queries in 500 error responses in production. Which OWASP Top 10 category does this primarily violate?",
+    "options": [
+      "Security Misconfiguration",
+      "Sensitive Data Exposure in this scenario",
+      "Broken Access Control",
+      "Injection"
+    ],
+    "correct_answer": "Security Misconfiguration",
+    "topic": "OOP and Design",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "api",
+      "architecture",
+      "oop-and-design"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-079",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(frozenset([1,2,3]) == {1,2,3})?",
+    "options": [
+      "True",
+      "Error",
+      "None",
+      "False"
+    ],
+    "correct_answer": "True",
+    "topic": "Data Structures and Performance",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "data-structures-and-performance",
+      "operations"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-080",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(list('abc'))?",
+    "options": [
+      "['a','b','c']",
+      "['abc']",
+      "abc",
+      "('a','b','c')"
+    ],
+    "correct_answer": "['a','b','c']",
+    "topic": "Testing and Reliability",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "testing-and-reliability"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-081",
+    "question": "A team is building a large, database-heavy internal tool with admin panels, ORM, and built-in auth. Which Python web framework is most appropriate to minimize boilerplate?",
+    "options": [
+      "Django",
+      "Flask",
+      "Falcon",
+      "FastAPI"
+    ],
+    "correct_answer": "Django",
+    "topic": "Data Structures and Performance",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "data-structures-and-performance",
+      "scenario"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-082",
+    "question": "Which method returns all dictionary keys?",
+    "options": [
+      ".keys()",
+      ".values()",
+      ".items()",
+      ".get()"
+    ],
+    "correct_answer": ".keys()",
+    "topic": "Testing and Reliability",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "testing-and-reliability"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-083",
+    "question": "A developer concatenates user input directly into an SQL string in a Django view. Which OWASP risk is this?",
+    "options": [
+      "SQL Injection under production constraints",
+      "Insecure Deserialization",
+      "Cross-Site Request Forgery (CSRF) under production constraints",
+      "Cross-Site Scripting (XSS)"
+    ],
+    "correct_answer": "SQL Injection under production constraints",
+    "topic": "OOP and Design",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "oop-and-design",
+      "operations"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-084",
+    "question": "What is the index of the first element in a list?",
+    "options": [
+      "0",
+      "1",
+      "None",
+      "-1"
+    ],
+    "correct_answer": "0",
+    "topic": "API and Backend Patterns",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "api-and-backend-patterns",
+      "concept"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-085",
+    "question": "To prevent XSS in a Jinja2 template, what is the default and recommended behavior when rendering user-supplied strings?",
+    "options": [
+      "Escape HTML characters by default",
+      "Trust all content from the database",
+      "Disable escaping globally",
+      "Strip all tags server-side"
+    ],
+    "correct_answer": "Escape HTML characters by default",
+    "topic": "OOP and Design",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "oop-and-design",
+      "scenario"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-086",
+    "question": "Which module provides mathematical functions?",
+    "options": [
+      "math",
+      "random",
+      "os",
+      "sys"
+    ],
+    "correct_answer": "math",
+    "topic": "Concurrency and Asyncio",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "concurrency-and-asyncio"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-087",
+    "question": "Your Git-based workflow requires code reviews before merging feature branches into main for a Python project. Which practice does this represent?",
+    "options": [
+      "Pull request-based code review",
+      "Gitflow hotfixes",
+      "Continuous Deployment",
+      "Trunk-based development only in this scenario"
+    ],
+    "correct_answer": "Pull request-based code review",
+    "topic": "Python Language and Runtime",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "python-language-and-runtime"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-088",
+    "question": "What does.split() do with no arguments?",
+    "options": [
+      "Splits on spaces",
+      "Returns original",
+      "Splits on commas",
+      "Raises error"
+    ],
+    "correct_answer": "Splits on spaces",
+    "topic": "API and Backend Patterns",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "api-and-backend-patterns",
+      "concept"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-089",
+    "question": "To avoid 'works on my machine' issues for a Python web app, what is a common practice?",
+    "options": [
+      "Use containerization (e.g., Docker) with consistent images",
+      "Share local SQLite database",
+      "Use different Python versions locally and in prod in this scenario",
+      "Disable virtual environments"
+    ],
+    "correct_answer": "Use containerization (e.g., Docker) with consistent images",
+    "topic": "Python Language and Runtime",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "python-language-and-runtime",
+      "scenario"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-090",
+    "question": "A snippet runs with the following behavior. Which output is correct? print({True: 'a', 1: 'b', 1.0: 'c'})?",
+    "options": [
+      "{True: 'c'}",
+      "{True:'a',1:'b',1.0:'c'}",
+      "{1: 'b'}",
+      "Error"
+    ],
+    "correct_answer": "{True: 'c'}",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "practical-debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-091",
+    "question": "Which frontend concept is critical for API integration debugging?",
+    "options": [
+      "Browser network tab request/response inspection",
+      "DOM paint order only in this scenario under production constraints",
+      "Font loading",
+      "Favicon caching"
+    ],
+    "correct_answer": "Browser network tab request/response inspection",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "api",
+      "debugging",
+      "operations",
+      "practical-debugging"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-092",
+    "question": "FastAPI relies heavily on which library for data validation and serialization?",
+    "options": [
+      "Pydantic",
+      "Cerberus",
+      "WTForms",
+      "Marshmallow"
+    ],
+    "correct_answer": "Pydantic",
+    "topic": "Data Structures and Performance",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "api",
+      "concept",
+      "data-structures-and-performance"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-093",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(abs(-7))?",
+    "options": [
+      "7",
+      "Error",
+      "0",
+      "-7"
+    ],
+    "correct_answer": "7",
+    "topic": "Testing and Reliability",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "testing-and-reliability"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-094",
+    "question": "A Python service is experiencing memory leaks in production. Which tool combination helps detect and alert on increasing memory usage over time?",
+    "options": [
+      "Prometheus and Grafana",
+      "Black and isort in this scenario",
+      "Flake8 and MyPy",
+      "PyPI and pip"
+    ],
+    "correct_answer": "Prometheus and Grafana",
+    "topic": "Python Language and Runtime",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "memory",
+      "python-language-and-runtime"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-095",
+    "question": "A FastAPI endpoint uses async def but internally calls a blocking database driver. What issue can this cause?",
+    "options": [
+      "Blocking the event loop and reducing concurrency",
+      "Type hint errors only",
+      "Increased throughput",
+      "Automatic connection pooling in this scenario under production constraints"
+    ],
+    "correct_answer": "Blocking the event loop and reducing concurrency",
+    "topic": "Data Structures and Performance",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "api",
+      "async",
+      "data-structures-and-performance",
+      "operations"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-096",
+    "question": "Which of these is a valid variable name?",
+    "options": [
+      "_count",
+      "class",
+      "2name",
+      "my-var"
+    ],
+    "correct_answer": "_count",
+    "topic": "Testing and Reliability",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "testing-and-reliability"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-097",
+    "question": "Which method joins list elements into a string?",
+    "options": [
+      ".join() in enterprise environments",
+      ".merge()",
+      ".combine() in enterprise environments",
+      ".concat()"
+    ],
+    "correct_answer": ".join() in enterprise environments",
+    "topic": "Concurrency and Asyncio",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "concurrency-and-asyncio",
+      "scenario"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-098",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(3 in [1, 2, 3])?",
+    "options": [
+      "True",
+      "Error",
+      "False",
+      "3"
+    ],
+    "correct_answer": "True",
+    "topic": "Testing and Reliability",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "testing-and-reliability"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-099",
+    "question": "In Django, what is the primary purpose of the CSRF token added to forms?",
+    "options": [
+      "Prevent cross-site request forgery attacks",
+      "Speed up form submissions in this scenario under production constraints",
+      "Prevent SQL injection",
+      "Encrypt form fields"
+    ],
+    "correct_answer": "Prevent cross-site request forgery attacks",
+    "topic": "OOP and Design",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "oop-and-design",
+      "operations"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "python-python-senior-theory-debug-100",
+    "question": "What does the elif keyword mean?",
+    "options": [
+      "else if",
+      "end if",
+      "else loop",
+      "element if"
+    ],
+    "correct_answer": "else if",
+    "topic": "Concurrency and Asyncio",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concurrency-and-asyncio"
+    ],
+    "role_target": "python_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  }
+]

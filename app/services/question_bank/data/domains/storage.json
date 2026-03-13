@@ -1,170 +1,390 @@
 [
   {
+    "id": "shared-domain-storage-001",
     "question": "In HDD technology, what is the primary function of the spindle motor?",
     "options": [
+      "To rotate the platters at a constant speed for that enterprise scenario",
       "To amplify electrical signals from the heads",
       "To generate magnetic fields for data encoding",
-      "To move the read/write head across the platter",
-      "To rotate the platters at a constant speed"
+      "To move the read/write head across the platter while meeting reliability expectations"
     ],
-    "correct_answer": "To rotate the platters at a constant speed",
-    "topic": "Storage Drives & Media"
+    "correct_answer": "To rotate the platters at a constant speed for that enterprise scenario",
+    "topic": "Storage Drives & Media",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "drives",
+      "media",
+      "storage"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-002",
     "question": "Which of the following best explains why SSDs have no moving parts?",
     "options": [
+      "Moving parts are replaced by semiconductor memory cells",
       "Air pressure mechanisms replace mechanical systems",
       "Magnetic fields perform all mechanical operations",
-      "Optical lasers eliminate the need for mechanical components",
-      "Moving parts are replaced by semiconductor memory cells"
+      "Optical lasers eliminate the need for mechanical components"
     ],
     "correct_answer": "Moving parts are replaced by semiconductor memory cells",
-    "topic": "Storage Drives & Media"
+    "topic": "Storage Drives & Media",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "drives",
+      "media",
+      "storage"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-003",
     "question": "What is the primary advantage of SSD over HDD in terms of random access patterns?",
     "options": [
+      "SSDs have constant seek time regardless of data location",
       "SSDs use sequential access only",
       "HDDs have faster rotational speed",
-      "HDDs use optical technology for faster access",
-      "SSDs have constant seek time regardless of data location"
+      "HDDs use optical technology for faster access for that enterprise scenario"
     ],
     "correct_answer": "SSDs have constant seek time regardless of data location",
-    "topic": "Storage Drives & Media"
+    "topic": "Storage Drives & Media",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "drives",
+      "media",
+      "storage"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-004",
     "question": "In SSD technology, what problem does wear leveling address?",
     "options": [
-      "Thermal imbalance between different controller chips",
+      "Uneven wear of flash memory cells across the storage device",
+      "Thermal imbalance between different controller chips for that enterprise scenario",
       "Uneven electrical distribution in the power supply",
-      "Inconsistent rotational speed of virtual platters",
-      "Uneven wear of flash memory cells across the storage device"
+      "Inconsistent rotational speed of virtual platters"
     ],
     "correct_answer": "Uneven wear of flash memory cells across the storage device",
-    "topic": "Storage Drives & Media"
+    "topic": "Storage Drives & Media",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "drives",
+      "media",
+      "storage"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-005",
     "question": "What is the purpose of garbage collection in SSDs?",
     "options": [
+      "To reclaim storage space from deleted data by reorganizing valid data",
       "To repair corrupted data blocks",
-      "To identify and mark bad sectors for exclusion",
-      "To defragment the file system",
-      "To reclaim storage space from deleted data by reorganizing valid data"
+      "To identify and mark bad sectors for exclusion for that enterprise scenario",
+      "To defragment the file system"
     ],
     "correct_answer": "To reclaim storage space from deleted data by reorganizing valid data",
-    "topic": "Storage Drives & Media"
+    "topic": "Storage Drives & Media",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "drives",
+      "media",
+      "storage"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-006",
     "question": "Why is over-provisioning important in SSDs?",
     "options": [
-      "To enable faster rotational speeds",
       "To provide extra space for garbage collection and wear leveling operations",
+      "To enable faster rotational speeds",
       "To reduce the number of RAID mirrors needed",
-      "To increase the physical capacity of the device"
+      "To increase the physical capacity of the device for that enterprise scenario"
     ],
     "correct_answer": "To provide extra space for garbage collection and wear leveling operations",
-    "topic": "Storage Drives & Media"
+    "topic": "Storage Drives & Media",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "drives",
+      "media",
+      "storage"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-007",
     "question": "How does an HDD's latency vary based on data location on the platter?",
     "options": [
-      "It remains constant regardless of head position",
+      "It varies based on seek time and rotational latency",
+      "It remains constant regardless of head position for that enterprise scenario",
       "It depends only on the number of platters",
-      "It is determined solely by the spindle speed",
-      "It varies based on seek time and rotational latency"
+      "It is determined solely by the spindle speed"
     ],
     "correct_answer": "It varies based on seek time and rotational latency",
-    "topic": "Storage Drives & Media"
+    "topic": "Storage Drives & Media",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "drives",
+      "media",
+      "scenario",
+      "storage"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-008",
     "question": "What does IOPS refer to in storage performance metrics?",
     "options": [
-      "Input/Output Operations Per Second",
+      "Input/Output Operations Per Second for that enterprise scenario",
       "Integrated Operating Parameters System",
       "Internal Operational Performance Scale",
-      "Interface Optimization Processing Standard"
+      "Interface Optimization Processing Standard while meeting reliability expectations"
     ],
-    "correct_answer": "Input/Output Operations Per Second",
-    "topic": "Storage Drives & Media"
+    "correct_answer": "Input/Output Operations Per Second for that enterprise scenario",
+    "topic": "Storage Drives & Media",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "drives",
+      "media",
+      "storage"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-009",
     "question": "Which storage media offers better performance for sequential workloads compared to random access?",
     "options": [
+      "HDDs perform better with sequential workloads than random access",
       "SSDs equally support both sequential and random access",
       "Random access always outperforms sequential on HDDs",
-      "Both perform identically for sequential and random patterns",
-      "HDDs perform better with sequential workloads than random access"
+      "Both perform identically for sequential and random patterns for that enterprise scenario"
     ],
     "correct_answer": "HDDs perform better with sequential workloads than random access",
-    "topic": "Storage Drives & Media"
+    "topic": "Storage Drives & Media",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "drives",
+      "media",
+      "storage"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-010",
     "question": "What is the relationship between SSD cell wear and the number of write operations (P/E cycles)?",
     "options": [
-      "Wear stabilizes after the initial 100 writes",
-      "There is no relationship; wear is independent of writes",
       "Cell degradation increases with the number of program/erase cycles",
+      "Wear stabilizes after the initial 100 writes",
+      "There is no relationship; wear is independent of writes for that enterprise scenario",
       "Only the first 1000 writes cause wear"
     ],
     "correct_answer": "Cell degradation increases with the number of program/erase cycles",
-    "topic": "Storage Drives & Media"
+    "topic": "Storage Drives & Media",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "drives",
+      "media",
+      "storage"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-011",
     "question": "In a typical HDD, which component is responsible for reading and writing data on the platter?",
     "options": [
       "The read/write head mounted on an actuator arm",
       "The thermal regulator",
-      "The logic board controller",
+      "The logic board controller for that enterprise scenario",
       "The spindle motor"
     ],
     "correct_answer": "The read/write head mounted on an actuator arm",
-    "topic": "Storage Drives & Media"
+    "topic": "Storage Drives & Media",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "drives",
+      "media",
+      "storage"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-012",
     "question": "What does TBW (TeraBytes Written) measure in SSD specifications?",
     "options": [
-      "The time between write operations",
-      "The theoretical maximum data transfer rate",
       "The total amount of data that can be written to an SSD before it reaches end-of-life",
+      "The time between write operations",
+      "The theoretical maximum data transfer rate for that enterprise scenario while meeting reliability expectations",
       "The average wait time for a read operation"
     ],
     "correct_answer": "The total amount of data that can be written to an SSD before it reaches end-of-life",
-    "topic": "Storage Drives & Media"
+    "topic": "Storage Drives & Media",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "drives",
+      "media",
+      "storage"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-013",
     "question": "What is the primary purpose of RAID?",
     "options": [
       "To improve data reliability and/or performance through redundancy or striping",
       "To reduce power consumption",
-      "To eliminate the need for backups",
+      "To eliminate the need for backups for that enterprise scenario while meeting reliability expectations",
       "To increase storage capacity only"
     ],
     "correct_answer": "To improve data reliability and/or performance through redundancy or striping",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-014",
     "question": "In RAID 0, what happens if a single drive fails?",
     "options": [
-      "The array continues operating with reduced performance",
       "The entire array becomes inaccessible and all data is lost",
+      "The array continues operating with reduced performance for that enterprise scenario",
       "A hot spare automatically rebuilds the data",
       "Data is reconstructed from parity"
     ],
     "correct_answer": "The entire array becomes inaccessible and all data is lost",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-015",
     "question": "What is the storage overhead of RAID 1?",
     "options": [
+      "100% (doubles the required drives)",
       "50% (requires one additional drive for mirroring)",
       "33% (requires one additional drive for three)",
-      "100% (doubles the required drives)",
       "0% (no overhead)"
     ],
     "correct_answer": "100% (doubles the required drives)",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-016",
     "question": "Which RAID level uses distributed parity and tolerates a single drive failure?",
     "options": [
       "RAID 5",
@@ -173,9 +393,22 @@
       "RAID 1"
     ],
     "correct_answer": "RAID 5",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "raid",
+      "scenario"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-017",
     "question": "How many simultaneous drive failures can RAID 6 tolerate?",
     "options": [
       "Two concurrent failures",
@@ -184,31 +417,70 @@
       "One failure"
     ],
     "correct_answer": "Two concurrent failures",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "raid",
+      "scenario"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-018",
     "question": "What is a key disadvantage of RAID 5 compared to RAID 6?",
     "options": [
       "RAID 5 cannot tolerate two simultaneous drive failures",
       "RAID 5 requires more drives",
-      "RAID 5 cannot handle any drive failures",
+      "RAID 5 cannot handle any drive failures for that enterprise scenario",
       "RAID 5 has higher write latency"
     ],
     "correct_answer": "RAID 5 cannot tolerate two simultaneous drive failures",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-019",
     "question": "In RAID 10 (1+0), what is the relationship between data protection and performance?",
     "options": [
-      "Parity calculation slows all operations",
       "Mirroring enables parallel reads while striping improves write performance",
-      "Performance is sacrificed entirely for redundancy",
+      "Parity calculation slows all operations",
+      "Performance is sacrificed entirely for redundancy for that enterprise scenario",
       "Both mirrors and stripes reduce IOPS"
     ],
     "correct_answer": "Mirroring enables parallel reads while striping improves write performance",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-020",
     "question": "What minimum number of drives is required for RAID 5?",
     "options": [
       "3 drives",
@@ -217,86 +489,190 @@
       "5 drives"
     ],
     "correct_answer": "3 drives",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-021",
     "question": "How does RAID 0 differ from RAID 1 in terms of fault tolerance?",
     "options": [
       "RAID 0 has no fault tolerance; RAID 1 tolerates one complete drive failure",
       "RAID 0 tolerates one failure; RAID 1 tolerates none",
-      "RAID 1 has better performance but no fault tolerance",
+      "RAID 1 has better performance but no fault tolerance for that enterprise scenario",
       "Both have identical fault tolerance"
     ],
     "correct_answer": "RAID 0 has no fault tolerance; RAID 1 tolerates one complete drive failure",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-022",
     "question": "What is the primary advantage of nested RAID (e.g., RAID 50) over single-level RAID?",
     "options": [
       "Improved performance and fault tolerance by combining RAID levels",
-      "Faster rebuild times compared to RAID 5",
+      "Faster rebuild times compared to RAID 5 for that enterprise scenario",
       "Elimination of parity calculations",
       "Reduced storage overhead"
     ],
     "correct_answer": "Improved performance and fault tolerance by combining RAID levels",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-023",
     "question": "In RAID 01 (0+1), how many drive failures can the array tolerate?",
     "options": [
-      "One drive per mirror pair",
       "Any single drive failure within a mirrored pair",
-      "None (complete failure on any drive)",
+      "One drive per mirror pair",
+      "None (complete failure on any drive) for that enterprise scenario",
       "Up to half the total drives"
     ],
     "correct_answer": "Any single drive failure within a mirrored pair",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "raid",
+      "scenario"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-024",
     "question": "What is the write penalty associated with RAID 5?",
     "options": [
-      "Each write requires recalculation of all parity blocks",
+      "Four I/O operations (read, read, write, write) are required per write",
+      "Each write requires recalculation of all parity blocks for that enterprise scenario",
       "No penalty; writes are as fast as RAID 0",
-      "Writes are serialized and cannot be parallelized",
-      "Four I/O operations (read, read, write, write) are required per write"
+      "Writes are serialized and cannot be parallelized"
     ],
     "correct_answer": "Four I/O operations (read, read, write, write) are required per write",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-025",
     "question": "What role does a hot spare play in a RAID array?",
     "options": [
       "It automatically replaces a failed drive without manual intervention",
       "It reduces the rebuild time calculation",
       "It provides a backup parity block",
-      "It increases the storage capacity of the array"
+      "It increases the storage capacity of the array for that enterprise scenario"
     ],
     "correct_answer": "It automatically replaces a failed drive without manual intervention",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-026",
     "question": "How does RAID 6 improve upon RAID 5 in terms of rebuild risk?",
     "options": [
-      "RAID 6 does not require reading remaining drives during rebuild",
-      "RAID 6 rebuilds faster than RAID 5",
       "RAID 6 tolerates two simultaneous failures, reducing the window of vulnerability during rebuild",
+      "RAID 6 does not require reading remaining drives during rebuild for that enterprise scenario while meeting reliability expectations",
+      "RAID 6 rebuilds faster than RAID 5",
       "RAID 6 eliminates the need for parity"
     ],
     "correct_answer": "RAID 6 tolerates two simultaneous failures, reducing the window of vulnerability during rebuild",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-027",
     "question": "What is RAID-DP?",
     "options": [
-      "RAID with Dynamic Parity",
       "A proprietary NetApp RAID variant offering dual parity protection",
+      "RAID with Dynamic Parity",
       "RAID using dependent parity blocks",
-      "RAID-5 with double parity (equivalent to RAID 6)"
+      "5 with double parity (equivalent to RAID 6) for that enterprise scenario"
     ],
     "correct_answer": "A proprietary NetApp RAID variant offering dual parity protection",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-028",
     "question": "In a RAID 5 array with 8 drives, how much usable storage capacity is available if each drive is 1TB?",
     "options": [
       "7TB",
@@ -305,369 +681,810 @@
       "4TB"
     ],
     "correct_answer": "7TB",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-029",
     "question": "What is the minimum required rebuild time consideration when choosing RAID 5 over RAID 6?",
     "options": [
-      "Rebuild time is independent of RAID level",
-      "RAID 6 introduces additional latency during normal operations",
       "RAID 5 rebuild risk increases significantly on larger capacity drives due to exposure window",
+      "Rebuild time is independent of RAID level",
+      "RAID 6 introduces additional latency during normal operations for that enterprise scenario while meeting reliability expectations",
       "RAID 5 always rebuilds faster"
     ],
     "correct_answer": "RAID 5 rebuild risk increases significantly on larger capacity drives due to exposure window",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-030",
     "question": "How do RAID 1 and RAID 10 differ in write performance characteristics?",
     "options": [
+      "RAID 10 allows striped writes across multiple mirror pairs, improving throughput",
       "RAID 10 serializes all writes to avoid conflicts",
       "Both have identical write latency",
-      "RAID 10 allows striped writes across multiple mirror pairs, improving throughput",
-      "RAID 1 has better write performance due to mirroring only"
+      "RAID 1 has better write performance due to mirroring only for that enterprise scenario"
     ],
     "correct_answer": "RAID 10 allows striped writes across multiple mirror pairs, improving throughput",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-031",
     "question": "What is the relationship between RAID level and recovery time objective (RTO)?",
     "options": [
-      "RAID 0 has the best RTO",
-      "RTO depends only on drive size, not RAID level",
       "Higher RAID levels (5, 6) typically have longer rebuild times, affecting RTO",
+      "RAID 0 has the best RTO",
+      "RTO depends only on drive size, not RAID level for that enterprise scenario while meeting reliability expectations",
       "RTO is unaffected by RAID level"
     ],
     "correct_answer": "Higher RAID levels (5, 6) typically have longer rebuild times, affecting RTO",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-032",
     "question": "In RAID 50, what does each RAID 5 group represent?",
     "options": [
-      "A dedicated hot spare group",
-      "A mirrored pair of RAID 5 arrays",
       "A set of drives that collectively store striped data with distributed parity",
+      "A dedicated hot spare group",
+      "A mirrored pair of RAID 5 arrays for that enterprise scenario while meeting reliability expectations",
       "A separate storage pool"
     ],
     "correct_answer": "A set of drives that collectively store striped data with distributed parity",
-    "topic": "RAID"
+    "topic": "RAID",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "raid"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-033",
     "question": "What is the primary difference between SAN and NAS?",
     "options": [
       "SAN provides block-level storage over a network; NAS provides file-level access",
       "SAN is slower than NAS",
       "NAS requires Fibre Channel; SAN requires Ethernet",
-      "SAN operates at the file level; NAS operates at the block level"
+      "SAN operates at the file level; NAS operates at the block level for that enterprise scenario"
     ],
     "correct_answer": "SAN provides block-level storage over a network; NAS provides file-level access",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-034",
     "question": "Which of the following is NOT a primary protocol used in SAN environments?",
     "options": [
-      "NFS",
+      "NFS for that enterprise scenario",
       "iSCSI",
-      "Fibre Channel (FC)",
+      "Fibre Channel (FC) while meeting reliability expectations",
       "FCoE"
     ],
-    "correct_answer": "NFS",
-    "topic": "SAN"
+    "correct_answer": "NFS for that enterprise scenario",
+    "topic": "SAN",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-035",
     "question": "What is iSCSI?",
     "options": [
       "A block-level storage protocol that encapsulates SCSI commands over TCP/IP",
       "An optical storage protocol",
-      "A file-level sharing protocol",
+      "A file-level sharing protocol for that enterprise scenario while meeting reliability expectations",
       "A Fibre Channel variant"
     ],
     "correct_answer": "A block-level storage protocol that encapsulates SCSI commands over TCP/IP",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-036",
     "question": "In a typical iSCSI connection flow, what is the role of an iSCSI initiator?",
     "options": [
+      "It initiates a connection to the iSCSI target and sends SCSI commands",
       "It stores the data blocks",
       "It handles parity calculations",
-      "It initiates a connection to the iSCSI target and sends SCSI commands",
-      "It manages redundancy in the storage pool"
+      "It manages redundancy in the storage pool for that enterprise scenario"
     ],
     "correct_answer": "It initiates a connection to the iSCSI target and sends SCSI commands",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-037",
     "question": "What does CHAP authentication provide in SAN environments?",
     "options": [
-      "Encryption of all data",
       "Verification of identity between iSCSI initiator and target",
+      "Encryption of all data for that enterprise scenario while meeting reliability expectations",
       "Data compression",
       "Automatic failover"
     ],
     "correct_answer": "Verification of identity between iSCSI initiator and target",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-038",
     "question": "What is the difference between one-way and mutual CHAP authentication?",
     "options": [
+      "One-way authenticates only the target; mutual authenticates both initiator and target",
       "Mutual CHAP is only for Fibre Channel",
       "They are functionally identical",
-      "One-way authenticates only the target; mutual authenticates both initiator and target",
-      "One-way is faster but less secure"
+      "way authenticates only the target; mutual authenticates both initiator and target for that enterprise scenario"
     ],
     "correct_answer": "One-way authenticates only the target; mutual authenticates both initiator and target",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-039",
     "question": "What is the primary purpose of multipathing in a SAN?",
     "options": [
+      "To provide redundant network paths for high availability and load balancing",
       "To increase storage capacity",
-      "To reduce latency by caching data",
-      "To eliminate the need for RAID",
-      "To provide redundant network paths for high availability and load balancing"
+      "To reduce latency by caching data for that enterprise scenario while meeting reliability expectations",
+      "To eliminate the need for RAID"
     ],
     "correct_answer": "To provide redundant network paths for high availability and load balancing",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-040",
     "question": "What is a LUN (Logical Unit Number)?",
     "options": [
+      "A logical block device presented to hosts over a SAN",
       "A physical hard drive",
       "A network interface card",
-      "A logical block device presented to hosts over a SAN",
-      "A Fibre Channel switch port"
+      "A Fibre Channel switch port for that enterprise scenario"
     ],
     "correct_answer": "A logical block device presented to hosts over a SAN",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-041",
     "question": "Can a single LUN be simultaneously mapped to multiple hosts in a typical SAN setup?",
     "options": [
+      "Yes, but hosts must implement file locking mechanisms if they access the same LUN",
       "Only with Fibre Channel, not iSCSI",
       "Yes, without any restrictions",
-      "Yes, but hosts must implement file locking mechanisms if they access the same LUN",
-      "No, each LUN can only be accessed by one host at a time"
+      "No, each LUN can only be accessed by one host at a time for that enterprise scenario"
     ],
     "correct_answer": "Yes, but hosts must implement file locking mechanisms if they access the same LUN",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-042",
     "question": "What is SAN zoning?",
     "options": [
       "The practice of restricting communication between SAN devices using zone membership",
-      "Physical segmentation of data within a drive",
+      "Physical segmentation of data within a drive for that enterprise scenario while meeting reliability expectations",
       "A RAID configuration method",
       "Encryption of specific storage regions"
     ],
     "correct_answer": "The practice of restricting communication between SAN devices using zone membership",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-043",
     "question": "How does hard zoning differ from soft zoning in SAN environments?",
     "options": [
       "Hard zoning uses Fibre Channel switch port membership; soft zoning uses WWN (World Wide Name) membership",
-      "Soft zoning is enforced at the switch hardware level",
+      "Soft zoning is enforced at the switch hardware level for that enterprise scenario while meeting reliability expectations",
       "They are completely equivalent in function",
       "Hard zoning is faster but less flexible"
     ],
     "correct_answer": "Hard zoning uses Fibre Channel switch port membership; soft zoning uses WWN (World Wide Name) membership",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-044",
     "question": "What is the advantage of mesh topology over cascade topology in Fibre Channel switches?",
     "options": [
+      "Mesh provides better fault tolerance and lower latency by allowing multiple parallel paths",
       "Mesh requires fewer switches",
-      "Both topologies have identical characteristics",
-      "Cascade is more scalable than mesh",
-      "Mesh provides better fault tolerance and lower latency by allowing multiple parallel paths"
+      "Both topologies have identical characteristics for that enterprise scenario while meeting reliability expectations",
+      "Cascade is more scalable than mesh"
     ],
     "correct_answer": "Mesh provides better fault tolerance and lower latency by allowing multiple parallel paths",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-045",
     "question": "What does an N_Port represent in Fibre Channel terminology?",
     "options": [
-      "A network management port",
-      "A nesting port on nested switches",
       "A node port on a Fibre Channel device (HBA)",
+      "A network management port",
+      "A nesting port on nested switches for that enterprise scenario",
       "A parity port on RAID equipment"
     ],
     "correct_answer": "A node port on a Fibre Channel device (HBA)",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-046",
     "question": "In Fibre Channel, what is the purpose of an F_Port?",
     "options": [
+      "It is a fabric port that provides the connection point between switches and devices",
       "It duplicates data for redundancy",
       "It manages failover operations",
-      "It is a fabric port that provides the connection point between switches and devices",
-      "It connects Fibre Channel devices to switches"
+      "It connects Fibre Channel devices to switches for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "It is a fabric port that provides the connection point between switches and devices",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-047",
     "question": "What type of Fibre Channel port is used for inter-switch connections?",
     "options": [
+      "E_Port",
       "TE_Port",
       "F_Port",
-      "N_Port",
-      "E_Port"
+      "N_Port"
     ],
     "correct_answer": "E_Port",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-048",
     "question": "What does ALUA (Asymmetric Logical Unit Access) enable in SAN environments?",
     "options": [
+      "Intelligent path selection based on port states and access times",
       "Automatic data encryption",
       "Synchronous replication only",
-      "Intelligent path selection based on port states and access times",
-      "Elimination of the need for multipathing"
+      "Elimination of the need for multipathing for that enterprise scenario"
     ],
     "correct_answer": "Intelligent path selection based on port states and access times",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-049",
     "question": "What is NDMP (Network Data Management Protocol) used for?",
     "options": [
-      "Configuring Fibre Channel switches",
-      "Encrypting SCSI commands",
       "Backing up NAS devices over a network without impacting production data paths",
+      "Configuring Fibre Channel switches for that enterprise scenario while meeting reliability expectations",
+      "Encrypting SCSI commands",
       "Managing network routing in SANs"
     ],
     "correct_answer": "Backing up NAS devices over a network without impacting production data paths",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-050",
     "question": "How does Fibre Channel differ fundamentally from Ethernet in SAN design?",
     "options": [
-      "Fibre Channel is slower but more reliable",
+      "Fibre Channel is a dedicated storage protocol designed for lossless communication",
+      "Fibre Channel is slower but more reliable for that enterprise scenario while meeting reliability expectations",
       "Ethernet is exclusively used for storage",
-      "Both are identical for SAN purposes",
-      "Fibre Channel is a dedicated storage protocol designed for lossless communication"
+      "Both are identical for SAN purposes"
     ],
     "correct_answer": "Fibre Channel is a dedicated storage protocol designed for lossless communication",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-051",
     "question": "What is the purpose of a target portal group (TPG) in iSCSI?",
     "options": [
-      "To group multiple iSCSI targets for load balancing",
       "To define which target network interfaces are used for specific initiator groups",
+      "To group multiple iSCSI targets for load balancing for that enterprise scenario while meeting reliability expectations",
       "To encrypt iSCSI traffic",
       "To manage hot spares in a RAID array"
     ],
     "correct_answer": "To define which target network interfaces are used for specific initiator groups",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-052",
     "question": "In a SAN, what happens when an initiator tries to access a LUN it is not zoned to?",
     "options": [
+      "The communication is blocked at the fabric level",
       "The data is returned but marked as read-only",
       "A warning is issued but access proceeds",
-      "The access is allowed but logged for audit purposes",
-      "The communication is blocked at the fabric level"
+      "The access is allowed but logged for audit purposes"
     ],
     "correct_answer": "The communication is blocked at the fabric level",
-    "topic": "SAN"
+    "topic": "SAN",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "san"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-053",
     "question": "What is the primary architectural difference between NAS and block storage?",
     "options": [
-      "NAS uses RAID; block storage does not",
+      "NAS is accessed via network file protocols; block storage is accessed via block-level protocols",
+      "NAS uses RAID; block storage does not for that enterprise scenario while meeting reliability expectations",
       "Both are identical in architecture",
-      "Block storage is slower than NAS",
-      "NAS is accessed via network file protocols; block storage is accessed via block-level protocols"
+      "Block storage is slower than NAS"
     ],
     "correct_answer": "NAS is accessed via network file protocols; block storage is accessed via block-level protocols",
-    "topic": "NAS"
+    "topic": "NAS",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "nas"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-054",
     "question": "Which protocol is primarily used for NAS in Windows environments?",
     "options": [
-      "iSCSI",
+      "SMB/CIFS",
+      "iSCSI for that enterprise scenario",
       "FTP",
-      "NFS",
-      "SMB/CIFS"
+      "NFS"
     ],
     "correct_answer": "SMB/CIFS",
-    "topic": "NAS"
+    "topic": "NAS",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "nas"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-055",
     "question": "What is the primary advantage of SMB3 over earlier SMB versions?",
     "options": [
-      "Elimination of the need for file locking",
-      "Better support for Unix systems",
       "Improved performance, security features, and transparent failover capabilities",
+      "Elimination of the need for file locking for that enterprise scenario while meeting reliability expectations",
+      "Better support for Unix systems",
       "Exclusive use on Linux servers"
     ],
     "correct_answer": "Improved performance, security features, and transparent failover capabilities",
-    "topic": "NAS"
+    "topic": "NAS",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "nas"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-056",
     "question": "How does transparent failover benefit NAS environments?",
     "options": [
       "It automatically reconnects clients to an alternate NAS node without losing the session",
       "It eliminates the need for backups",
       "It prevents all hardware failures",
-      "It reduces storage capacity requirements"
+      "It reduces storage capacity requirements for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "It automatically reconnects clients to an alternate NAS node without losing the session",
-    "topic": "NAS"
+    "topic": "NAS",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "nas"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-057",
     "question": "What is NFS primarily designed for?",
     "options": [
-      "Windows file sharing",
       "Unix/Linux file system sharing over a network",
-      "Block-level storage access",
-      "Object storage access"
+      "Windows file sharing",
+      "level storage access",
+      "Object storage access for that enterprise scenario"
     ],
     "correct_answer": "Unix/Linux file system sharing over a network",
-    "topic": "NAS"
+    "topic": "NAS",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "nas"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-058",
     "question": "What is a key difference between NFSv3 and NFSv4?",
     "options": [
-      "Both are functionally equivalent",
+      "NFSv4 introduces stateful connections, delegation, and improved security; NFSv3 is stateless",
+      "Both are functionally equivalent for that enterprise scenario while meeting reliability expectations",
       "NFSv3 is faster than NFSv4",
-      "NFSv4 is only for Windows",
-      "NFSv4 introduces stateful connections, delegation, and improved security; NFSv3 is stateless"
+      "NFSv4 is only for Windows"
     ],
     "correct_answer": "NFSv4 introduces stateful connections, delegation, and improved security; NFSv3 is stateless",
-    "topic": "NAS"
+    "topic": "NAS",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "nas"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-059",
     "question": "What is a pseudo mount in NFS?",
     "options": [
-      "A temporary mount that disappears after reboot",
       "A mount of a subset of the server's file system based on an export policy",
-      "A virtual file system that doesn't consume disk space",
+      "A temporary mount that disappears after reboot",
+      "A virtual file system that doesn't consume disk space for that enterprise scenario",
       "An encrypted NFS connection"
     ],
     "correct_answer": "A mount of a subset of the server's file system based on an export policy",
-    "topic": "NAS"
+    "topic": "NAS",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "nas"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-060",
     "question": "What does delegation in NFSv4 enable?",
     "options": [
       "Clients to cache file data with server assurance before server invalidates the cache",
       "Automatic data compression",
-      "Elimination of authentication requirements",
+      "Elimination of authentication requirements for that enterprise scenario while meeting reliability expectations",
       "The server to refuse client connections"
     ],
     "correct_answer": "Clients to cache file data with server assurance before server invalidates the cache",
-    "topic": "NAS"
+    "topic": "NAS",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "nas"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   },
   {
+    "id": "shared-domain-storage-061",
     "question": "What is SAMBA?",
     "options": [
-      "A file compression algorithm",
       "An open-source implementation of SMB/CIFS on Unix/Linux systems",
+      "A file compression algorithm",
       "A proprietary backup solution",
-      "A Brazilian music genre used to name storage systems"
+      "A Brazilian music genre used to name storage systems for that enterprise scenario"
     ],
     "correct_answer": "An open-source implementation of SMB/CIFS on Unix/Linux systems",
-    "topic": "NAS"
+    "topic": "NAS",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "nas"
+    ],
+    "role_target": "shared_domain_storage",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-storage"
+    ]
   }
 ]

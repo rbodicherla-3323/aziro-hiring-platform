@@ -30,6 +30,15 @@ REQUIRED_FIELDS = {
     "version_scope",
 }
 _VALIDATION_CACHE = {}
+INJECTED_ARTIFACT_MARKERS = (
+    "for that enterprise scenario",
+    "while meeting reliability expectations",
+    "with accountable communication and traceability",
+    "with validated operational controls",
+    "delay action without confirming impact",
+    "proceed without validating assumptions",
+    "choose an approach without documenting rationale",
+)
 MOJIBAKE_MARKERS = ('â€”', 'â€“', 'Â', 'Î')
 
 
@@ -107,6 +116,18 @@ def _contains_mojibake(question):
     for value in fields:
         text = str(value or "")
         if any(marker in text for marker in MOJIBAKE_MARKERS):
+            return True
+    return False
+
+
+def _contains_injected_artifact(question):
+    fields = [question.get("question", ""), question.get("correct_answer", ""), question.get("topic", "")]
+    fields.extend(question.get("options") or [])
+    for value in fields:
+        text = normalize_text(value)
+        if any(marker in text for marker in INJECTED_ARTIFACT_MARKERS):
+            return True
+        if re.search(r"apply a default response for .+ without verification", text):
             return True
     return False
 
@@ -232,6 +253,8 @@ def _validate_question_record(question, seen_ids, seen_signatures, strict):
         errors.append(f"trivial wording detected: {qid}")
     if strict and _contains_mojibake(question):
         errors.append(f"mojibake detected: {qid}")
+    if strict and _contains_injected_artifact(question):
+        errors.append(f"synthetic artifact detected: {qid}")
 
     return errors
 
@@ -264,6 +287,15 @@ def validate_question_bank(questions, source_name=None, strict=True):
         topic = str(q.get("topic", "")).strip()
         if topic:
             topic_counts[topic] += 1
+        if policy:
+            expected_role = str(policy.get("role_key", "")).strip()
+            expected_round = str(policy.get("round_key", "")).strip()
+            actual_role = str(q.get("role_target", "")).strip()
+            actual_round = str(q.get("round_target", "")).strip()
+            if expected_role and actual_role != expected_role:
+                errors.append(f"role_target mismatch for {source_name} {q.get('id', '<unknown>')}: expected {expected_role}, found {actual_role}")
+            if expected_round and actual_round != expected_round:
+                errors.append(f"round_target mismatch for {source_name} {q.get('id', '<unknown>')}: expected {expected_round}, found {actual_round}")
         difficulty = normalize_difficulty(q.get("difficulty"))
         if difficulty:
             difficulty_counts[difficulty] += 1

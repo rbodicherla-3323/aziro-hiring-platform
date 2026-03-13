@@ -16,6 +16,7 @@ from reportlab.platypus import (
     SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, HRFlowable,
 )
 from app.services.ai_generator import generate_evaluation_summary
+from app.utils.round_order import ordered_present_round_keys, round_number_map
 
 # Directory where PDFs are saved (use absolute path relative to this file)
 _SERVICE_DIR = Path(__file__).resolve().parent          # app/services/
@@ -359,18 +360,23 @@ def generate_candidate_pdf(candidate_data: dict) -> str:
     # ---- Round scores table ----
     elements.append(Paragraph("Round-wise Performance", styles["SectionHead"]))
 
-    header = ["Round", "Label", "Score", "Percentage", "Threshold", "Status"]
+    header = ["No", "Round", "Score", "Percentage", "Threshold", "Status"]
     table_data = [header]
 
-    for rk, rd in rounds.items():
+    ordered_keys = ordered_present_round_keys(rounds)
+    numbers = round_number_map(ordered_keys)
+
+    for rk in ordered_keys:
+        rd = rounds.get(rk) or {}
         status_text = rd.get("status", "Pending")
         score_text = f'{rd.get("correct", 0)} / {rd.get("total", 0)}'
         pct_text = f'{float(rd.get("percentage", 0) or 0):.1f}%'
         pass_threshold = rd.get("pass_threshold")
         thresh_text = f"{pass_threshold}%" if pass_threshold is not None else "-"
-        table_data.append([rk, rd.get("round_label", rk), score_text, pct_text, thresh_text, status_text])
+        number = rd.get("round_number", numbers.get(rk, 0))
+        table_data.append([str(number), rd.get("round_label", rk), score_text, pct_text, thresh_text, status_text])
 
-    col_widths = [18 * mm, 52 * mm, 25 * mm, 25 * mm, 25 * mm, 25 * mm]
+    col_widths = [14 * mm, 56 * mm, 25 * mm, 25 * mm, 25 * mm, 25 * mm]
     score_table = Table(table_data, colWidths=col_widths)
 
     # Build style commands
