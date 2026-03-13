@@ -20,7 +20,7 @@ from app.services.access_approvals_service import (
     maybe_notify_admin_of_request,
     upsert_access_request,
 )
-from app.access_config import DEFAULT_FULL_ACCESS_EMAILS, ACCESS_ADMIN_EMAIL
+from app.access_config import DEFAULT_FULL_ACCESS_EMAILS, get_access_admin_emails
 
 # Azure AD Configuration
 AZURE_CLIENT_ID = os.getenv("AZURE_CLIENT_ID", "")
@@ -199,11 +199,11 @@ def auth_callback():
         return redirect(url_for("auth.login"))
 
     default_full_access = sorted([e for e in DEFAULT_FULL_ACCESS_EMAILS])
-    access_admin_email = (ACCESS_ADMIN_EMAIL or "").strip().lower()
+    access_admin_emails = get_access_admin_emails()
     decision = decide_access(
         email=email,
         default_full_access_emails=default_full_access,
-        access_admin_email=access_admin_email,
+        access_admin_emails=access_admin_emails,
     )
     log.info("Access decision: email=%s allowed=%s", email, decision.allowed)
     if not decision.allowed:

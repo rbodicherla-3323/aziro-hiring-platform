@@ -4,7 +4,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from flask import Flask
 
-from .access_config import ACCESS_ADMIN_EMAIL
+from .access_config import get_access_admin_emails
 
 # Always load project-level .env regardless of launch working directory.
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -72,10 +72,12 @@ def create_app():
 
         user = session.get("user", {}) if isinstance(session.get("user"), dict) else {}
         user_email = str(user.get("email", "") or "").strip().lower()
-        admin_email = str(ACCESS_ADMIN_EMAIL or "").strip().lower()
+        admin_emails = get_access_admin_emails()
+        admin_display = ", ".join(admin_emails)
         return {
-            "is_access_admin": bool(admin_email and user_email == admin_email),
-            "access_admin_email": admin_email,
+            "is_access_admin": bool(user_email and user_email in admin_emails),
+            "access_admin_email": admin_display,
+            "access_admin_emails": admin_emails,
         }
 
     # -- Permissions-Policy / Feature-Policy headers --
