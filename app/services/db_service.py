@@ -3,12 +3,26 @@
 Database service layer — CRUD operations for candidates, test sessions, round results, reports.
 """
 import logging
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 from app.extensions import db
-from app.models import Candidate, TestSession, RoundResult, Report, ProctoringScreenshot
+from app.models import Candidate, TestSession, RoundResult, Report, ProctoringScreenshot, TestLink
 
 log = logging.getLogger(__name__)
+
+TEST_LINK_TTL_HOURS = 12
+
+
+def _now_utc() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def _dt_to_iso(value) -> str:
+    if not value:
+        return ""
+    if isinstance(value, datetime):
+        return value.isoformat()
+    return str(value)
 
 
 def save_proctoring_screenshot(
@@ -73,6 +87,17 @@ def get_or_create_candidate(name: str, email: str) -> Candidate:
         candidate = Candidate(name=name, email=email)
         db.session.add(candidate)
         db.session.commit()
+        return candidate
+
+    # Update placeholder names when better data arrives.
+    incoming_name = str(name or "").strip()
+    existing_name = str(candidate.name or "").strip()
+    if incoming_name:
+        existing_lower = existing_name.lower()
+        email_lower = str(candidate.email or "").strip().lower()
+        if not existing_name or existing_lower in {"candidate", email_lower}:
+            candidate.name = incoming_name
+            db.session.commit()
     return candidate
 
 
@@ -145,6 +170,116 @@ def save_round_result(test_session_id: int, round_key: str, round_label: str,
     return existing
 
 
+def compute_test_link_expires_at(created_at: datetime | None = None) -> datetime:
+    base = created_at or _now_utc()
+    return base + timedelta(hours=TEST_LINK_TTL_HOURS)
+
+
+def save_test_link(
+    meta: dict,
+    test_type: str,
+    created_by: str = "",
+    created_at: datetime | None = None,
+    expires_at: datetime | None = None,
+) -> TestLink | None:
+    session_id = str((meta or {}).get("session_id") or "").strip()
+    if not session_id:
+        return None
+
+    created_at = created_at or _now_utc()
+    expires_at = expires_at or compute_test_link_expires_at(created_at)
+
+    record = TestLink.query.get(session_id)
+    if not record:
+        record = TestLink(session_id=session_id)
+
+    record.test_type = str(test_type or "mcq").strip().lower() or "mcq"
+    record.candidate_name = str(meta.get("candidate_name", "") or "").strip()
+    record.candidate_email = str(meta.get("email", "") or "").strip().lower()
+    record.role_key = str(meta.get("role_key", "") or "").strip()
+    record.role_label = str(meta.get("role_label", "") or "").strip()
+    record.round_key = str(meta.get("round_key", "") or "").strip()
+    record.round_label = str(meta.get("round_label", "") or "").strip()
+    record.batch_id = str(meta.get("batch_id", "") or "").strip()
+    record.domain = meta.get("domain") or None
+    record.language = str(meta.get("language", "") or "").strip()
+    record.created_by = str(created_by or meta.get("created_by", "") or "").strip().lower()
+    record.created_at = created_at
+    record.expires_at = expires_at
+
+    db.session.add(record)
+    db.session.commit()
+    return record
+
+
+def get_test_link_meta(session_id: str) -> dict | None:
+    session_id = str(session_id or "").strip()
+    if not session_id:
+        return None
+
+    record = TestLink.query.get(session_id)
+    if not record:
+        return None
+
+    return {
+        "session_id": record.session_id,
+        "test_type": record.test_type,
+        "candidate_name": record.candidate_name or "",
+        "email": record.candidate_email or "",
+        "role_key": record.role_key or "",
+        "role_label": record.role_label or "",
+        "round_key": record.round_key or "",
+        "round_label": record.round_label or "",
+        "batch_id": record.batch_id or "",
+        "domain": record.domain,
+        "language": record.language or "",
+        "created_by": record.created_by or "",
+        "created_at": _dt_to_iso(record.created_at),
+        "expires_at": _dt_to_iso(record.expires_at),
+    }
+
+
+def get_test_link_stats(
+    since: datetime | None = None,
+    until: datetime | None = None,
+    created_by: str | None = None,
+) -> dict:
+    query = TestLink.query
+
+    if created_by:
+        query = query.filter(db.func.lower(TestLink.created_by) == created_by.strip().lower())
+
+    if since:
+        query = query.filter(TestLink.created_at >= since)
+
+    if until:
+        query = query.filter(TestLink.created_at < until)
+
+    total_tests = query.count()
+    total_candidates = (
+        query.with_entities(db.func.count(db.distinct(TestLink.candidate_email))).scalar()
+        or 0
+    )
+
+    completed_query = (
+        query.join(
+            RoundResult,
+            db.func.lower(RoundResult.session_uuid) == db.func.lower(TestLink.session_id),
+        )
+        .filter(RoundResult.status.in_(("PASS", "FAIL")))
+    )
+    completed = completed_query.distinct(TestLink.session_id).count()
+
+    pending = max(0, total_tests - completed)
+
+    return {
+        "total_candidates": int(total_candidates),
+        "total_tests": int(total_tests),
+        "completed": int(completed),
+        "pending": int(pending),
+    }
+
+
 def search_candidates(query: str, role_filter: str = ""):
     """Search candidates by name, email, or role."""
     like_query = f"%{query}%"
@@ -194,20 +329,14 @@ def search_candidates_with_reports(query: str, role_filter: str = ""):
     like_query = f"%{query}%"
 
     base = (
-        db.session.query(Candidate, TestSession)
-        .outerjoin(TestSession, TestSession.candidate_id == Candidate.id)
-        .join(
-            Report,
-            db.or_(
-                db.and_(
-                    Report.candidate_email != "",
-                    db.func.lower(Report.candidate_email) == db.func.lower(Candidate.email),
-                ),
-                db.and_(
-                    Report.test_session_id.isnot(None),
-                    Report.test_session_id == TestSession.id,
-                ),
-            ),
+        db.session.query(Report, Candidate, TestSession)
+        .outerjoin(
+            Candidate,
+            db.func.lower(Report.candidate_email) == db.func.lower(Candidate.email),
+        )
+        .outerjoin(
+            TestSession,
+            Report.test_session_id == TestSession.id,
         )
     )
 
@@ -217,6 +346,7 @@ def search_candidates_with_reports(query: str, role_filter: str = ""):
             db.or_(
                 Candidate.name.ilike(like_query),
                 Candidate.email.ilike(like_query),
+                Report.candidate_email.ilike(like_query),
                 TestSession.role_label.ilike(like_query),
                 TestSession.role_key.ilike(like_query),
             )
@@ -235,16 +365,17 @@ def search_candidates_with_reports(query: str, role_filter: str = ""):
 
     rows = (
         base
-        .order_by(TestSession.created_at.desc())
+        .order_by(Report.created_at.desc())
         .limit(100)
         .all()
     )
 
     results = []
     seen_emails = set()
-    for cand, ts in rows:
-        email = cand.email
-        if email in seen_emails:
+    for report, cand, ts in rows:
+        email = (cand.email if cand else report.candidate_email) or ""
+        email = email.strip().lower()
+        if not email or email in seen_emails:
             continue
         role = ""
         created_at = ""
@@ -253,8 +384,10 @@ def search_candidates_with_reports(query: str, role_filter: str = ""):
             role = ts.role_label or ts.role_key
             created_at = ts.created_at.strftime("%Y-%m-%d %H:%M") if ts.created_at else ""
             test_session_id = ts.id
+        elif report and report.created_at:
+            created_at = report.created_at.strftime("%Y-%m-%d %H:%M")
         results.append({
-            "name": cand.name,
+            "name": cand.name if cand and cand.name else email,
             "email": email,
             "role": role,
             "created_at": created_at,

@@ -298,13 +298,31 @@ const proctoringPrevBtn = document.getElementById('proctoringPrevBtn');
 const proctoringNextBtn = document.getElementById('proctoringNextBtn');
 let proctoringShots = [];
 let proctoringShotIndex = -1;
-document.getElementById('searchBtn').addEventListener('click', searchCandidates);
-searchInput.addEventListener('keyup', function(e) { if (e.key === 'Enter') searchCandidates(); });
+let searchTimer = null;
+document.getElementById('searchBtn').addEventListener('click', function() { searchCandidates(undefined, true); });
+searchInput.addEventListener('keyup', function(e) { if (e.key === 'Enter') searchCandidates(undefined, true); });
+searchInput.addEventListener('input', function() {
+    const q = searchInput.value.trim();
+    window.clearTimeout(searchTimer);
+    if (q.length < 2) {
+        searchResults.classList.remove('active');
+        searchResultsList.innerHTML = '';
+        return;
+    }
+    searchTimer = window.setTimeout(function() {
+        searchCandidates(q, false);
+    }, 250);
+});
 document.getElementById('clearSearchBtn').addEventListener('click', function() { searchInput.value = ''; searchResults.classList.remove('active'); searchResultsList.innerHTML = ''; });
 
-function searchCandidates() {
-    const q = searchInput.value.trim();
-    if (q.length < 2) { if (typeof showToast === 'function') showToast('Enter at least 2 characters', 'warning'); return; }
+function searchCandidates(forcedQuery, showWarning) {
+    const q = (forcedQuery !== undefined ? forcedQuery : searchInput.value).trim();
+    if (q.length < 2) {
+        if (showWarning && typeof showToast === 'function') showToast('Enter at least 2 characters', 'warning');
+        searchResults.classList.remove('active');
+        searchResultsList.innerHTML = '';
+        return;
+    }
     searchResultsList.innerHTML = '<div class="text-center py-3"><div class="spinner-border spinner-border-sm" style="color:var(--az-primary);"></div><span class="ms-2 text-muted">Searching...</span></div>';
     searchResults.classList.add('active');
     fetch('/reports/search?q=' + encodeURIComponent(q))

@@ -493,6 +493,8 @@ class EvaluationService:
                 pass_threshold=result["pass_threshold"],
                 status=result["status"],
                 time_taken_seconds=result.get("time_taken_seconds", 0),
+                session_uuid=session_meta.get("session_id", ""),
+                test_link=session_meta.get("test_url", ""),
             )
         except Exception as exc:
             log.warning("DB persist failed for round result: %s", exc)

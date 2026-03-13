@@ -1,2 +1,4 @@
-# In-memory store (safe for demo & single-VM)
-MCQ_SESSION_REGISTRY = {}
+from app.services.session_registry import PersistentSessionRegistry
+
+# In-memory cache with DB fallback for cross-worker access
+MCQ_SESSION_REGISTRY = PersistentSessionRegistry("mcq")

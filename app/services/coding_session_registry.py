@@ -1,3 +1,4 @@
-# In-memory registry for coding session metadata
-# Key: session_id (str) → Value: dict with candidate/role/round info
-CODING_SESSION_REGISTRY = {}
+from app.services.session_registry import PersistentSessionRegistry
+
+# In-memory cache with DB fallback for cross-worker access
+CODING_SESSION_REGISTRY = PersistentSessionRegistry("coding")

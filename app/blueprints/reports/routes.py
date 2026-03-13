@@ -130,10 +130,28 @@ def search_reports():
     results = []
     query_lower = query.lower()
 
-    # 1. Search this user's recent (last 24 hours) candidates
+    found_emails = set()
+
+    # 1. Search DB (reports generated for any candidate - org-wide)
+    try:
+        db_results = db_service.search_candidates_with_reports(query)
+        for r in db_results:
+            email_key = str(r.get("email", "")).strip().lower()
+            if email_key and email_key not in found_emails:
+                results.append({
+                    "name": r.get("name", ""),
+                    "email": r.get("email", ""),
+                    "role": r.get("role", "N/A"),
+                    "created_at": r.get("created_at", ""),
+                    "source": "database",
+                })
+                found_emails.add(email_key)
+    except Exception:
+        pass
+
+    # 2. Search this user's recent (last 24 hours) candidates (fallback)
     since = datetime.now(timezone.utc) - timedelta(hours=24)
     user_tests = get_tests_for_user_in_range(user_email, since)
-    found_emails = set()
     for t in user_tests:
         if (query_lower in t.get("name", "").lower()
                 or query_lower in t.get("email", "").lower()
@@ -147,47 +165,6 @@ def search_reports():
                     "source": "session",
                 })
                 found_emails.add(email_key)
-
-    # 2. Search in-memory candidates that have reports (org-wide)
-    try:
-        all_candidates = EvaluationAggregator.get_candidates()
-        for c in all_candidates:
-            email = str(c.get("email", "")).strip()
-            if not email:
-                continue
-            email_key = email.lower()
-            if email_key in found_emails:
-                continue
-            if (query_lower in c.get("name", "").lower()
-                    or query_lower in email_key
-                    or query_lower in c.get("role", "").lower()):
-                if db_service.has_report_for_email(email):
-                    results.append({
-                        "name": c.get("name", ""),
-                        "email": email,
-                        "role": c.get("role", "N/A"),
-                        "source": "database",
-                    })
-                    found_emails.add(email_key)
-    except Exception:
-        pass
-
-    # 3. Search DB (reports generated for any candidate)
-    try:
-        db_results = db_service.search_candidates_with_reports(query)
-        for r in db_results:
-            email_key = str(r.get("email", "")).strip().lower()
-            if email_key and email_key not in found_emails:
-                results.append({
-                    "name": r["name"],
-                    "email": r["email"],
-                    "role": r.get("role", "N/A"),
-                    "created_at": r.get("created_at", ""),
-                    "source": "database",
-                })
-                found_emails.add(email_key)
-    except Exception:
-        pass
 
     return jsonify({"candidates": results})
 

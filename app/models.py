@@ -106,3 +106,25 @@ class AccessApproval(db.Model):
 
     def __repr__(self):
         return f"<AccessApproval {self.email} active={self.is_active}>"
+
+
+class TestLink(db.Model):
+    __tablename__ = "test_links"
+
+    session_id = db.Column(db.String(64), primary_key=True)
+    test_type = db.Column(db.String(20), nullable=False, default="mcq")
+    candidate_name = db.Column(db.String(200), nullable=True, default="")
+    candidate_email = db.Column(db.String(200), nullable=False, index=True)
+    role_key = db.Column(db.String(100), nullable=True, default="")
+    role_label = db.Column(db.String(200), nullable=True, default="")
+    round_key = db.Column(db.String(20), nullable=True, default="")
+    round_label = db.Column(db.String(200), nullable=True, default="")
+    batch_id = db.Column(db.String(100), nullable=True, default="")
+    domain = db.Column(db.String(100), nullable=True)
+    language = db.Column(db.String(50), nullable=True, default="")
+    created_by = db.Column(db.String(200), nullable=True, default="")
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    expires_at = db.Column(db.DateTime, nullable=True, index=True)
+
+    def __repr__(self):
+        return f"<TestLink {self.session_id} {self.test_type}>"

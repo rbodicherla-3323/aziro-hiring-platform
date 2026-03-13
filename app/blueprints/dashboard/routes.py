@@ -14,16 +14,10 @@ from app.utils.role_round_mapping import ROLE_ROUND_MAPPING, ROLE_CODING_LANGUAG
 from app.utils.round_display_mapping import ROUND_DISPLAY_MAPPING
 from app.utils.round_question_mapping import ROUND_QUESTION_MAPPING
 
-from app.services.generated_tests_store import (
-    GENERATED_TESTS,
-    add_generated_test,
-    get_tests_for_user_today,
-    get_all_tests_today,
-    get_tests_for_user_in_range,
-)
+from app.services.generated_tests_store import add_generated_test
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
-from app.services.evaluation_store import EVALUATION_STORE
+from app.services import db_service
 
 APTITUDE_ENABLED_ROLE_KEYS = {"python_entry", "java_entry", "js_entry"}
 
@@ -55,84 +49,27 @@ def _build_test_url(endpoint, **values):
     return f"{scheme}://{host}{path}"
 
 
-def _compute_stats(test_list):
-    """Compute stats dict from a list of generated test entries."""
-    emails = set()
-    total_tests = 0
-    completed = 0
-    pending = 0
-
-    for t in test_list:
-        emails.add(t.get("email", ""))
-        tests = t.get("tests", {})
-        for level, test_info in tests.items():
-            total_tests += 1
-            sid = test_info.get("session_id", "")
-            if sid and sid in EVALUATION_STORE:
-                completed += 1
-            else:
-                pending += 1
-
-    return {
-        "total_candidates": len(emails),
-        "total_tests": total_tests,
-        "completed": completed,
-        "pending": pending,
-    }
-
-
-def _filter_tests_by_date(test_list, filter_type, specific_date=None):
-    """Filter test entries by date range."""
+def _resolve_date_range(filter_type: str, specific_date: str = ""):
     now = datetime.now(timezone.utc)
-
     if filter_type == "today":
-        cutoff = now.replace(hour=0, minute=0, second=0, microsecond=0)
-    elif filter_type == "24h":
-        cutoff = now - timedelta(hours=24)
-    elif filter_type == "2d":
-        cutoff = now - timedelta(days=2)
-    elif filter_type == "7d":
-        cutoff = now - timedelta(days=7)
-    elif filter_type == "date" and specific_date:
+        start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        end = start + timedelta(days=1)
+        return start, end
+    if filter_type == "24h":
+        return now - timedelta(hours=24), now
+    if filter_type == "2d":
+        return now - timedelta(days=2), now
+    if filter_type == "7d":
+        return now - timedelta(days=7), now
+    if filter_type == "date" and specific_date:
         try:
             d = datetime.strptime(specific_date, "%Y-%m-%d")
-            cutoff = d.replace(tzinfo=timezone.utc)
-            end = cutoff + timedelta(days=1)
-            results = []
-            for t in test_list:
-                created = t.get("created_at", "")
-                if isinstance(created, str):
-                    try:
-                        dt = datetime.fromisoformat(created.replace("Z", "+00:00"))
-                    except (ValueError, TypeError):
-                        continue
-                elif isinstance(created, datetime):
-                    dt = created
-                else:
-                    continue
-                if cutoff <= dt < end:
-                    results.append(t)
-            return results
+            start = d.replace(tzinfo=timezone.utc)
+            end = start + timedelta(days=1)
+            return start, end
         except ValueError:
-            return test_list
-    else:
-        return test_list
-
-    results = []
-    for t in test_list:
-        created = t.get("created_at", "")
-        if isinstance(created, str):
-            try:
-                dt = datetime.fromisoformat(created.replace("Z", "+00:00"))
-            except (ValueError, TypeError):
-                continue
-        elif isinstance(created, datetime):
-            dt = created
-        else:
-            continue
-        if dt >= cutoff:
-            results.append(t)
-    return results
+            return None, None
+    return None, None
 
 
 # ────────────────────────────────────────────
@@ -152,17 +89,26 @@ def dashboard():
         date_filter = "date"
 
     # Today's stats (all users)
-    all_today = get_all_tests_today()
-    today_stats = _compute_stats(all_today)
+    today_start, today_end = _resolve_date_range("today")
+    today_stats = db_service.get_test_link_stats(
+        since=today_start,
+        until=today_end,
+    )
 
     # My today stats
-    my_today = get_tests_for_user_today(user_email)
-    my_today_stats = _compute_stats(my_today)
+    my_today_stats = db_service.get_test_link_stats(
+        since=today_start,
+        until=today_end,
+        created_by=user_email,
+    )
 
     # My stats with date filter
-    my_all = [t for t in GENERATED_TESTS if t.get("created_by", "").lower() == user_email.lower()]
-    my_filtered = _filter_tests_by_date(my_all, date_filter, specific_date)
-    my_stats = _compute_stats(my_filtered)
+    range_start, range_end = _resolve_date_range(date_filter, specific_date)
+    my_stats = db_service.get_test_link_stats(
+        since=range_start,
+        until=range_end,
+        created_by=user_email,
+    )
 
     return render_template(
         "dashboard.html",
@@ -236,6 +182,9 @@ def create_test():
 
         tests = {}
 
+        link_created_at = datetime.now(timezone.utc)
+        link_expires_at = db_service.compute_test_link_expires_at(link_created_at)
+
         # Generate MCQ round links
         for round_key in mcq_rounds:
             session_id = uuid.uuid4().hex
@@ -244,7 +193,8 @@ def create_test():
             # Build dynamic URL using forwarded scheme/host when behind proxy.
             test_url = _build_test_url("mcq.start_test", session_id=session_id)
 
-            MCQ_SESSION_REGISTRY[session_id] = {
+            mcq_meta = {
+                "session_id": session_id,
                 "candidate_name": name,
                 "email": email,
                 "role_key": role_key,
@@ -253,7 +203,19 @@ def create_test():
                 "round_label": round_label,
                 "batch_id": batch_id,
                 "domain": domain.lower() if domain != "None" else None,
+                "created_by": user_email,
+                "created_at": link_created_at.isoformat(),
+                "expires_at": link_expires_at.isoformat(),
+                "test_url": test_url,
             }
+            MCQ_SESSION_REGISTRY[session_id] = mcq_meta
+            db_service.save_test_link(
+                meta=mcq_meta,
+                test_type="mcq",
+                created_by=user_email,
+                created_at=link_created_at,
+                expires_at=link_expires_at,
+            )
 
             tests[round_key] = {
                 "session_id": session_id,
@@ -269,7 +231,8 @@ def create_test():
 
             test_url = _build_test_url("coding.start_test", session_id=session_id)
 
-            CODING_SESSION_REGISTRY[session_id] = {
+            coding_meta = {
+                "session_id": session_id,
                 "candidate_name": name,
                 "email": email,
                 "role_key": role_key,
@@ -279,7 +242,19 @@ def create_test():
                 "batch_id": batch_id,
                 "language": coding_language,
                 "domain": domain.lower() if domain != "None" else None,
+                "created_by": user_email,
+                "created_at": link_created_at.isoformat(),
+                "expires_at": link_expires_at.isoformat(),
+                "test_url": test_url,
             }
+            CODING_SESSION_REGISTRY[session_id] = coding_meta
+            db_service.save_test_link(
+                meta=coding_meta,
+                test_type="coding",
+                created_by=user_email,
+                created_at=link_created_at,
+                expires_at=link_expires_at,
+            )
 
             tests[round_key] = {
                 "session_id": session_id,
@@ -296,7 +271,8 @@ def create_test():
 
             test_url = _build_test_url("mcq.start_test", session_id=session_id)
 
-            MCQ_SESSION_REGISTRY[session_id] = {
+            mcq_domain_meta = {
+                "session_id": session_id,
                 "candidate_name": name,
                 "email": email,
                 "role_key": role_key,
@@ -305,7 +281,19 @@ def create_test():
                 "round_label": round_label,
                 "batch_id": batch_id,
                 "domain": domain.lower(),
+                "created_by": user_email,
+                "created_at": link_created_at.isoformat(),
+                "expires_at": link_expires_at.isoformat(),
+                "test_url": test_url,
             }
+            MCQ_SESSION_REGISTRY[session_id] = mcq_domain_meta
+            db_service.save_test_link(
+                meta=mcq_domain_meta,
+                test_type="mcq",
+                created_by=user_email,
+                created_at=link_created_at,
+                expires_at=link_expires_at,
+            )
 
             tests[round_key] = {
                 "session_id": session_id,
