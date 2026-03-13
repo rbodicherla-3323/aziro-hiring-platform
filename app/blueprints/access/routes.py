@@ -162,6 +162,43 @@ def access_management_page():
     )
 
 
+@access_bp.route("/access-management/add", methods=["POST"])
+@login_required
+def access_management_add():
+    denied = _require_access_admin_page()
+    if denied:
+        return denied
+
+    email = _extract_email_from_form()
+    if not email.endswith("@aziro.com"):
+        flash("Only @aziro.com emails are allowed.", "danger")
+        return redirect(url_for("access.access_management_page"))
+
+    existing = get_approval(email)
+    was_active = bool(existing and existing.is_active)
+
+    set_access_active(email=email, is_active=True, approved_by=_current_user_email())
+
+    if not was_active:
+        user_ok, user_err = _send_access_approved_user_email(email)
+        approver_ok, approver_err = _send_access_approved_approver_email(email)
+
+        if user_ok and approver_ok:
+            flash(f"Added access for {email}. Emails sent to user and approver.", "success")
+        else:
+            parts = []
+            if not user_ok:
+                parts.append(f"user email failed: {user_err}")
+            if not approver_ok:
+                parts.append(f"approver email failed: {approver_err}")
+            detail = "; ".join([p for p in parts if p])
+            flash(f"Added access for {email}, but notifications had issues: {detail}", "warning")
+    else:
+        flash(f"{email} already has access.", "success")
+
+    return redirect(url_for("access.access_management_page"))
+
+
 @access_bp.route("/access-management/approve", methods=["POST"])
 @login_required
 def access_management_approve():
