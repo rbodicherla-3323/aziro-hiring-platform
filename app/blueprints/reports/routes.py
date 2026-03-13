@@ -1,12 +1,13 @@
 # filepath: d:\Projects\aziro-hiring-platform\app\blueprints\reports\routes.py
 """
-Reports page — today's session candidates + historical DB search.
+Reports page — recent session candidates + historical report search.
 """
-import os
+from datetime import datetime, timezone, timedelta
+from io import BytesIO
 from flask import Blueprint, render_template, request, session, jsonify, send_file, abort
 
 from app.utils.auth_decorator import login_required
-from app.services.generated_tests_store import get_tests_for_user_today, GENERATED_TESTS
+from app.services.generated_tests_store import get_tests_for_user_in_range
 from app.services.evaluation_aggregator import EvaluationAggregator
 from app.services import db_service
 from app.services.evaluation_service import EvaluationService
@@ -43,44 +44,72 @@ def reports():
     user_email = user.get("email", "dev@aziro.com")
     q = request.args.get("q", "").strip()
 
-    # Today's session candidates for this user
-    user_tests = get_tests_for_user_today(user_email)
-    user_emails = {t["email"] for t in user_tests}
+    # Last 24 hours session candidates for this user
+    since = datetime.now(timezone.utc) - timedelta(hours=24)
+    user_tests = get_tests_for_user_in_range(user_email, since)
 
-    # Get evaluation data for today's session candidates
+    def _parse_created_at(value):
+        if isinstance(value, datetime):
+            dt = value
+        elif isinstance(value, str):
+            try:
+                dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
+            except (ValueError, TypeError):
+                return None
+        else:
+            return None
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt
+
+    def _created_sort_key(item):
+        dt = _parse_created_at(item.get("created_at", ""))
+        return dt or datetime.min.replace(tzinfo=timezone.utc)
+
+    user_tests_sorted = sorted(user_tests, key=_created_sort_key, reverse=True)
+    tests_by_email = {}
+    for t in user_tests_sorted:
+        email_key = str(t.get("email", "")).strip().lower()
+        if not email_key:
+            continue
+        if email_key not in tests_by_email:
+            tests_by_email[email_key] = t
+    user_emails = set(tests_by_email.keys())
+
+    # Get evaluation data for recent session candidates
     all_candidates = EvaluationAggregator.get_candidates()
-    session_candidates = [c for c in all_candidates if c["email"] in user_emails]
+    session_candidates = []
+    for c in all_candidates:
+        email_key = str(c.get("email", "")).strip().lower()
+        if email_key in user_emails:
+            c["created_at"] = tests_by_email[email_key].get("created_at", "")
+            session_candidates.append(c)
 
     # Also add test entries that don't yet have evaluation data
-    evaluated_emails = {c["email"] for c in session_candidates}
-    for t in user_tests:
-        if t["email"] not in evaluated_emails:
-            session_candidates.append({
-                "name": t["name"],
-                "email": t["email"],
-                "role": t.get("role", ""),
-                "role_key": t.get("role_key", ""),
-                "batch_id": t.get("batch_id", ""),
-                "rounds": {},
-                "results": [],
-                "summary": {
-                    "total_rounds": len(t.get("tests", {})),
-                    "attempted_rounds": 0,
-                    "passed_rounds": 0,
-                    "failed_rounds": 0,
-                },
-            })
+    evaluated_emails = {str(c.get("email", "")).strip().lower() for c in session_candidates}
+    for t in user_tests_sorted:
+        email_key = str(t.get("email", "")).strip().lower()
+        if not email_key or email_key in evaluated_emails:
+            continue
+        session_candidates.append({
+            "name": t["name"],
+            "email": t["email"],
+            "role": t.get("role", ""),
+            "role_key": t.get("role_key", ""),
+            "batch_id": t.get("batch_id", ""),
+            "created_at": t.get("created_at", ""),
+            "rounds": {},
+            "results": [],
+            "summary": {
+                "total_rounds": len(t.get("tests", {})),
+                "attempted_rounds": 0,
+                "passed_rounds": 0,
+                "failed_rounds": 0,
+            },
+        })
+        evaluated_emails.add(email_key)
 
-    # Also include DB candidates (historical)
-    try:
-        db_candidates = db_service.get_all_candidates_with_results()
-        seen_emails = {c.get("email", "") for c in session_candidates}
-        for dc in db_candidates:
-            if dc["email"] not in seen_emails:
-                session_candidates.append(dc)
-                seen_emails.add(dc["email"])
-    except Exception:
-        pass
+    session_candidates.sort(key=_created_sort_key, reverse=True)
 
     # Apply search filter if q= is present
     if q:
@@ -108,6 +137,8 @@ def reports():
 @reports_bp.route("/reports/search")
 @login_required
 def search_reports():
+    user = session.get("user", {})
+    user_email = user.get("email", "dev@aziro.com")
     query = request.args.get("q", "").strip()
     if len(query) < 2:
         return jsonify({"candidates": []})
@@ -115,49 +146,41 @@ def search_reports():
     results = []
     query_lower = query.lower()
 
-    # 1. Search in-memory generated tests (via EvaluationAggregator)
-    all_candidates = EvaluationAggregator.get_candidates()
-    for c in all_candidates:
-        if (query_lower in c.get("name", "").lower()
-                or query_lower in c.get("email", "").lower()
-                or query_lower in c.get("role", "").lower()):
-            results.append({
-                "name": c["name"],
-                "email": c["email"],
-                "role": c.get("role", "N/A"),
-                "source": "session",
-            })
+    found_emails = set()
 
-    # Also search GENERATED_TESTS that may not have evaluation data yet
-    found_emails = {r["email"] for r in results}
-    for t in GENERATED_TESTS:
-        if t["email"] not in found_emails:
-            if (query_lower in t.get("name", "").lower()
-                    or query_lower in t.get("email", "").lower()
-                    or query_lower in t.get("role", "").lower()):
-                results.append({
-                    "name": t["name"],
-                    "email": t["email"],
-                    "role": t.get("role", "N/A"),
-                    "source": "session",
-                })
-                found_emails.add(t["email"])
-
-    # 2. Search DB (historical)
+    # 1. Search DB (reports generated for any candidate - org-wide)
     try:
-        db_results = db_service.search_candidates(query)
+        db_results = db_service.search_candidates_with_reports(query)
         for r in db_results:
-            if r["email"] not in found_emails:
+            email_key = str(r.get("email", "")).strip().lower()
+            if email_key and email_key not in found_emails:
                 results.append({
-                    "name": r["name"],
-                    "email": r["email"],
+                    "name": r.get("name", ""),
+                    "email": r.get("email", ""),
                     "role": r.get("role", "N/A"),
                     "created_at": r.get("created_at", ""),
                     "source": "database",
                 })
-                found_emails.add(r["email"])
+                found_emails.add(email_key)
     except Exception:
         pass
+
+    # 2. Search this user's recent (last 24 hours) candidates (fallback)
+    since = datetime.now(timezone.utc) - timedelta(hours=24)
+    user_tests = get_tests_for_user_in_range(user_email, since)
+    for t in user_tests:
+        if (query_lower in t.get("name", "").lower()
+                or query_lower in t.get("email", "").lower()
+                or query_lower in t.get("role", "").lower()):
+            email_key = str(t.get("email", "")).strip().lower()
+            if email_key and email_key not in found_emails:
+                results.append({
+                    "name": t.get("name", ""),
+                    "email": t.get("email", ""),
+                    "role": t.get("role", "N/A"),
+                    "source": "session",
+                })
+                found_emails.add(email_key)
 
     return jsonify({"candidates": results})
 
@@ -203,12 +226,21 @@ def generate_report(email):
 
     # Generate PDF
     try:
+        user = session.get("user", {})
+        ts = None
+        try:
+            ts = db_service.ensure_candidate_session_for_report(candidate_data, user.get("email", ""))
+        except Exception:
+            ts = None
+
         filename = generate_candidate_pdf(candidate_data)
 
         # Save report record to DB
-        user = session.get("user", {})
         try:
-            db_service.save_report(email, filename, user.get("email", ""))
+            if ts and getattr(ts, "id", None):
+                db_service.save_report(ts.id, filename, user.get("email", ""))
+            else:
+                db_service.save_report(email, filename, user.get("email", ""))
         except Exception:
             pass
 
@@ -221,6 +253,51 @@ def generate_report(email):
         })
     except Exception as e:
         return jsonify({"success": False, "error": f"Failed to generate report: {str(e)}"}), 500
+
+
+@reports_bp.route("/reports/proctoring/screenshots")
+@login_required
+def list_proctoring_screenshots():
+    email = request.args.get("email", "").strip()
+    if not email:
+        return jsonify({"screenshots": [], "error": "email required"}), 400
+
+    try:
+        limit_raw = request.args.get("limit", "200")
+        limit = max(1, min(int(limit_raw), 500))
+    except (TypeError, ValueError):
+        limit = 200
+
+    records = db_service.get_proctoring_screenshots_by_email(email, limit=limit)
+    screenshots = []
+    for rec in records:
+        captured = rec.captured_at.isoformat() if rec.captured_at else ""
+        screenshots.append({
+            "id": rec.id,
+            "captured_at": captured,
+            "round_key": rec.round_key,
+            "round_label": rec.round_label,
+            "source": rec.source,
+            "event_type": rec.event_type,
+        })
+
+    return jsonify({"screenshots": screenshots})
+
+
+@reports_bp.route("/reports/proctoring/screenshot/<int:screenshot_id>")
+@login_required
+def get_proctoring_screenshot(screenshot_id):
+    rec = db_service.get_proctoring_screenshot_by_id(screenshot_id)
+    if not rec or not rec.image_bytes:
+        abort(404, description="Screenshot not found")
+
+    filename = f"proctoring_{rec.id}.png"
+    return send_file(
+        BytesIO(rec.image_bytes),
+        mimetype=rec.mime_type or "image/png",
+        download_name=filename,
+        as_attachment=False,
+    )
 
 
 @reports_bp.route("/reports/view/<path:filename>")
@@ -341,3 +418,5 @@ def generate_report_by_session():
         return jsonify({"status": "ok", "filename": pdf_filename})
     except Exception as e:
         return jsonify({"status": "error", "error": str(e)}), 500
+
+

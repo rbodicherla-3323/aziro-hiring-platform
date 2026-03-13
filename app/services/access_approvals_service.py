@@ -14,7 +14,7 @@ from app.access_config import (
     ACCESS_REQUEST_COOLDOWN_HOURS,
     ACCESS_REQUEST_NOTIFY_ENABLED,
     DEFAULT_FULL_ACCESS_EMAILS,
-    ACCESS_ADMIN_EMAIL,
+    get_access_admin_emails,
 )
 
 log = logging.getLogger(__name__)
@@ -216,7 +216,7 @@ def set_access_active(email: str, is_active: bool, approved_by: str) -> AccessAp
 def decide_access(
     email: str,
     default_full_access_emails: Iterable[str] | None = None,
-    access_admin_email: str = "",
+    access_admin_emails: Iterable[str] | None = None,
 ) -> ApprovalDecision:
     email = _normalize_email(email)
 
@@ -226,12 +226,16 @@ def decide_access(
         for e in (default_full_access_emails or DEFAULT_FULL_ACCESS_EMAILS or [])
         if _normalize_email(e)
     }
-    admin_email = _normalize_email(access_admin_email or ACCESS_ADMIN_EMAIL)
+    admin_emails = {
+        _normalize_email(e)
+        for e in (access_admin_emails or get_access_admin_emails() or [])
+        if _normalize_email(e)
+    }
 
     if not email.endswith("@aziro.com"):
         return ApprovalDecision(False, "Only @aziro.com emails are allowed.")
 
-    if email and (email in default_full_access or (admin_email and email == admin_email)):
+    if email and (email in default_full_access or email in admin_emails):
         return ApprovalDecision(True, "")
 
     row = get_approval(email)
@@ -251,8 +255,8 @@ def maybe_notify_admin_of_request(
     if not bool(ACCESS_REQUEST_NOTIFY_ENABLED):
         return False
 
-    admin_email = _normalize_email(ACCESS_ADMIN_EMAIL)
-    if not admin_email:
+    admin_emails = get_access_admin_emails()
+    if not admin_emails:
         return False
 
     requester_email = _normalize_email(requester_email)
@@ -278,21 +282,37 @@ def maybe_notify_admin_of_request(
         ]
     )
 
-    ok, _err = send_plain_email(
-        to_email=admin_email,
-        subject=subject,
-        body=body,
-        delegated_access_token=delegated_access_token,
-        delegated_sender_email=delegated_sender_email,
-    )
-    if not ok:
+    sent_any = False
+    errors = []
+    for admin_email in admin_emails:
+        ok, err = send_plain_email(
+            to_email=admin_email,
+            subject=subject,
+            body=body,
+            delegated_access_token=delegated_access_token,
+            delegated_sender_email=delegated_sender_email,
+        )
+        if ok:
+            sent_any = True
+        else:
+            errors.append(f"{admin_email}: {err}")
+
+    if not sent_any:
         log.warning(
             "Access request email send failed (to=%s, requester=%s): %s",
-            admin_email,
+            ", ".join(admin_emails),
             requester_email,
-            _err,
+            "; ".join(errors) if errors else "unknown error",
         )
         return False
+
+    if errors:
+        log.warning(
+            "Access request email partial failures (to=%s, requester=%s): %s",
+            ", ".join(admin_emails),
+            requester_email,
+            "; ".join(errors),
+        )
 
     row.last_notified_at = now
     db.session.commit()

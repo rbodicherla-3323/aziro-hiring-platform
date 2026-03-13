@@ -1,5 +1,6 @@
 import base64
 import binascii
+import copy
 import csv
 import glob
 import json
@@ -8,6 +9,7 @@ import re
 import shutil
 import subprocess
 import time as _time
+from threading import Thread
 from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
@@ -19,6 +21,7 @@ from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 from app.services.coding_submission_store import save_coding_submission
 from app.services.evaluation_store import EVALUATION_STORE
 from app.services.evaluation_service import EvaluationService
+from app.services import db_service
 from .services import CodingSessionService
 
 # -------------------------------------------------
@@ -37,6 +40,15 @@ MAX_WEBCAM_CHUNK_BYTES = 5 * 1024 * 1024
 
 def _utc_now_iso():
     return datetime.now(timezone.utc).isoformat()
+
+
+def _parse_iso_ts(ts):
+    if isinstance(ts, str) and ts:
+        try:
+            return datetime.fromisoformat(ts.replace("Z", "+00:00"))
+        except ValueError:
+            return None
+    return None
 
 
 def _extract_session_id_from_context(payload):
@@ -188,7 +200,11 @@ def start_test(session_id):
     stale_keys = [k for k in list(session.keys())
                   if k.startswith(("mcq_", "coding_"))]
     for k in stale_keys:
-        session.pop(k)
+        if k.startswith("coding_"):
+            stale_session_id = k.replace("coding_", "", 1)
+            if stale_session_id:
+                CodingSessionService.clear_session(stale_session_id)
+        session.pop(k, None)
 
     language = session_meta.get("language", "java")
 
@@ -223,6 +239,7 @@ def start_test(session_id):
             "difficulty": question.get("difficulty", "MEDIUM") if question else "MEDIUM",
         },
         candidate_name=session_meta["candidate_name"],
+        proctoring_enabled=_proctoring_enabled(),
         body_class="mcq-start-page",
     )
 
@@ -276,6 +293,7 @@ def editor(session_id):
         public_tests=formatted_tests,
         remaining_seconds=remaining,
         candidate_name=session_meta["candidate_name"],
+        proctoring_enabled=_proctoring_enabled(),
         submit_url=url_for("coding.submit", session_id=session_id),
         body_class="coding-editor-page",
     )
@@ -1098,6 +1116,106 @@ def _build_csharp_driver(code, func_info, test_inputs):
     )
 
 
+def _build_csharp_batch_driver(code, func_info, test_inputs_list):
+    signature = ""
+    class_name = "Solution"
+    if isinstance(func_info, dict):
+        signature = str(func_info.get("signature") or func_info.get("method") or "")
+        class_name = str(func_info.get("class") or "Solution")
+    else:
+        signature = str(func_info or "")
+
+    if not signature:
+        signature = "public static int solve(int n)"
+
+    _, method_name, params = _parse_function_signature(signature)
+
+    test_blocks = []
+    for inputs in test_inputs_list:
+        if len(params) != len(inputs):
+            raise ValueError(
+                f"C# test input mismatch for {method_name}: expected {len(params)} args, got {len(inputs)}"
+            )
+        args = [
+            _csharp_literal_for_param(inputs[i], params[i][0])
+            for i in range(len(params))
+        ]
+        test_blocks.append(
+            "        try {\n"
+            f"            object result = {class_name}.{method_name}({', '.join(args)});\n"
+            "            __results.Add(__wrapOk(result));\n"
+            "        } catch (Exception ex) {\n"
+            "            __results.Add(__wrapErr(ex));\n"
+            "        }\n"
+        )
+
+    test_section = "".join(test_blocks) if test_blocks else "        __results.Add(__wrapOk(null));\n"
+
+    return (
+        "using System;\n"
+        "using System.Collections;\n"
+        "using System.Collections.Generic;\n"
+        "using System.Globalization;\n"
+        "using System.Linq;\n"
+        "using System.Text;\n"
+        "using System.Text.RegularExpressions;\n\n"
+        f"{code}\n\n"
+        "public class Program {\n"
+        "    static string __esc(string s) {\n"
+        "        if (s == null) return \"\";\n"
+        "        return s.Replace(\"\\\\\", \"\\\\\\\\\")\n"
+        "                .Replace(\"\\\"\", \"\\\\\\\"\")\n"
+        "                .Replace(\"\\n\", \"\\\\n\")\n"
+        "                .Replace(\"\\r\", \"\\\\r\")\n"
+        "                .Replace(\"\\t\", \"\\\\t\");\n"
+        "    }\n\n"
+        "    static string __toJson(object obj) {\n"
+        "        if (obj == null) return \"null\";\n"
+        "        if (obj is string) return \"\\\"\" + __esc((string)obj) + \"\\\"\";\n"
+        "        if (obj is bool) return ((bool)obj) ? \"true\" : \"false\";\n"
+        "        if (obj is char) return \"\\\"\" + __esc(((char)obj).ToString()) + \"\\\"\";\n"
+        "        if (obj is byte || obj is sbyte || obj is short || obj is ushort || obj is int || obj is uint || obj is long || obj is ulong || obj is float || obj is double || obj is decimal)\n"
+        "            return Convert.ToString(obj, CultureInfo.InvariantCulture);\n"
+        "        if (obj is IDictionary) {\n"
+        "            IDictionary dict = (IDictionary)obj;\n"
+        "            var parts = new List<string>();\n"
+        "            foreach (DictionaryEntry entry in dict) {\n"
+        "                parts.Add(\"\\\"\" + __esc(Convert.ToString(entry.Key, CultureInfo.InvariantCulture)) + \"\\\":\" + __toJson(entry.Value));\n"
+        "            }\n"
+        "            return \"{\" + string.Join(\",\", parts) + \"}\";\n"
+        "        }\n"
+        "        if (obj is IEnumerable && !(obj is string)) {\n"
+        "            IEnumerable en = (IEnumerable)obj;\n"
+        "            var parts = new List<string>();\n"
+        "            foreach (var item in en) {\n"
+        "                parts.Add(__toJson(item));\n"
+        "            }\n"
+        "            return \"[\" + string.Join(\",\", parts) + \"]\";\n"
+        "        }\n"
+        "        return \"\\\"\" + __esc(Convert.ToString(obj, CultureInfo.InvariantCulture)) + \"\\\"\";\n"
+        "    }\n\n"
+        "    static string __wrapOk(object obj) {\n"
+        "        return \"{\\\"ok\\\":true,\\\"output\\\":\" + __toJson(obj) + \"}\";\n"
+        "    }\n\n"
+        "    static string __wrapErr(Exception ex) {\n"
+        "        string msg = \"Error\";\n"
+        "        if (ex != null) {\n"
+        "            msg = ex.GetType().Name;\n"
+        "            if (!string.IsNullOrWhiteSpace(ex.Message)) {\n"
+        "                msg += \": \" + ex.Message;\n"
+        "            }\n"
+        "        }\n"
+        "        return \"{\\\"ok\\\":false,\\\"error\\\":\\\"\" + __esc(msg) + \"\\\"}\";\n"
+        "    }\n\n"
+        "    public static void Main(string[] args) {\n"
+        "        var __results = new List<string>();\n"
+        f"{test_section}"
+        "        Console.Write(\"[\" + string.Join(\",\", __results) + \"]\");\n"
+        "    }\n"
+        "}\n"
+    )
+
+
 def _build_driver_code(language, code, question, test_inputs, expected_output=None):
     """Build a strict typed driver around candidate code for one test case."""
     normalized_language = str(language or "").lower()
@@ -1414,6 +1532,22 @@ def _parse_candidate_output(raw_output):
     return text
 
 
+def _parse_csharp_batch_output(raw_output):
+    text = _normalize_output(raw_output)
+    if not text:
+        return []
+
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError:
+        return None
+
+    if not isinstance(data, list):
+        return None
+
+    return data
+
+
 def _is_dynamic_syntax_error(language, stderr_text):
     lang = str(language or "").lower()
     if lang == "js":
@@ -1615,6 +1749,114 @@ def run_code(session_id):
                     "test_results": [],
                 })
 
+        # C# optimization: compile once and run all tests in a single batch.
+        if normalized_language == "csharp":
+            func_map = question.get("function", {}) or {}
+            func_info = func_map.get("csharp", {})
+            if not func_info:
+                func_info = func_map.get("java", {})
+
+            test_inputs_list = [(tc.get("input", []) or []) for tc in selected_tests]
+            try:
+                driver_code = _build_csharp_batch_driver(code, func_info, test_inputs_list)
+            except ValueError as ex:
+                return jsonify({
+                    "status": "error",
+                    "output": f"Invalid question signature/input mapping.\n{ex}",
+                    "test_results": [],
+                })
+
+            success, stdout, stderr, elapsed = _compile_and_run(
+                language, driver_code, "", work_dir
+            )
+
+            if not success and "Compilation Error" in (stderr or ""):
+                return jsonify({
+                    "status": "error",
+                    "output": stderr,
+                    "test_results": [],
+                })
+
+            batch_results = _parse_csharp_batch_output(stdout) if success else None
+            if batch_results is None:
+                batch_results = []
+
+            batch_error = ""
+            if not success:
+                batch_error = (stderr or "").strip() or "Runtime Error"
+
+            test_results = []
+            total_passed = 0
+            total_time = elapsed
+
+            for i, tc in enumerate(selected_tests):
+                tc_input_values = tc.get("input", []) or []
+                tc_expected_obj = tc.get("expected")
+                result = batch_results[i] if i < len(batch_results) else None
+
+                ok = isinstance(result, dict) and result.get("ok") is True
+                if ok:
+                    actual_obj = result.get("output")
+                    passed = _outputs_match(tc_expected_obj, actual_obj)
+                    if passed:
+                        total_passed += 1
+                    error_text = ""
+                else:
+                    passed = False
+                    error_text = ""
+                    if isinstance(result, dict):
+                        error_text = str(result.get("error") or "").strip()
+                    if not error_text:
+                        error_text = batch_error or "Runtime Error"
+                    actual_obj = "Runtime Error"
+
+                test_results.append({
+                    "index": i + 1,
+                    "passed": passed,
+                    "input": tc_input_values,
+                    "expected": _display_value(tc_expected_obj),
+                    "actual": _display_value(tc_expected_obj if passed else actual_obj),
+                    "error": error_text if (not passed and error_text) else "",
+                    "time_ms": None,
+                })
+
+            total = len(test_results)
+            suite_label = "Hidden Test Results" if run_hidden else "Test Results"
+            summary = f"{suite_label}: {total_passed}/{total} passed"
+            if total_time:
+                summary += f"  |  Total time: {total_time}ms"
+
+            output_lines = [summary, "-" * 40]
+            for tr in test_results:
+                status = "PASSED" if tr["passed"] else "FAILED"
+                output_lines.append(f"\nTest Case {tr['index']}: {status}")
+                output_lines.append(f"  Input:    {tr['input']}")
+                output_lines.append(f"  Expected: {tr['expected']}")
+                if not tr["passed"]:
+                    output_lines.append(f"  Actual:   {tr['actual']}")
+                    if tr["error"]:
+                        output_lines.append(f"  Error:    {tr['error']}")
+
+            coding_data = CodingSessionService.get_session_data(session_id)
+            if coding_data is not None:
+                coding_data["latest_run_summary"] = {
+                    "passed": total_passed,
+                    "total": total,
+                    "run_hidden": run_hidden,
+                    "time_ms": total_time,
+                    "status": "PASS" if total and total_passed == total else "FAIL",
+                }
+
+            return jsonify({
+                "status": "executed" if total_passed == total else "partial",
+                "output": "\n".join(output_lines),
+                "execution_time": f"{total_time}ms",
+                "test_results": test_results,
+                "passed": total_passed,
+                "total": total,
+                "run_hidden": run_hidden,
+            })
+
         # Run against selected test suite
         test_results = []
         total_passed = 0
@@ -1746,7 +1988,6 @@ def run_code(session_id):
                 "time_ms": total_time,
                 "status": "PASS" if total and total_passed == total else "FAIL",
             }
-            session.modified = True
 
         return jsonify({
             "status": "executed" if total_passed == total else "partial",
@@ -1791,12 +2032,13 @@ def run_code(session_id):
 # -------------------------------------------------
 # SUBMIT CONFIRMATION
 # -------------------------------------------------
-def _evaluate_and_store_coding_result(session_id):
-    session_meta = CODING_SESSION_REGISTRY.get(session_id)
+def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data=None):
+    session_meta = session_meta or CODING_SESSION_REGISTRY.get(session_id)
     if not session_meta:
         return
 
-    coding_data = CodingSessionService.get_session_data(session_id) or {}
+    if coding_data is None:
+        coding_data = CodingSessionService.get_session_data(session_id) or {}
     question = coding_data.get("question") or {}
 
     round_key = session_meta.get("round_key", "L4")
@@ -1806,6 +2048,8 @@ def _evaluate_and_store_coding_result(session_id):
     code = str(coding_data.get("code") or "")
     starter_code = str(coding_data.get("starter_code") or "")
     language = str(coding_data.get("language") or session_meta.get("language") or "java").lower()
+    if language in ("c#", "cs"):
+        language = "csharp"
     attempted = 1 if code.strip() and code.strip() != starter_code.strip() else 0
 
     hidden_tests = question.get("hidden_tests") or []
@@ -1875,27 +2119,47 @@ def _evaluate_and_store_coding_result(session_id):
     if attempted and test_suite:
         try:
             work_dir = _create_execution_work_dir()
-            for tc in test_suite:
-                tc_input_values = tc.get("input", []) or []
-                tc_expected_obj = tc.get("expected")
-
-                driver_code = _build_driver_code(
-                    language,
-                    code,
-                    question,
-                    tc_input_values,
-                    tc_expected_obj,
-                )
-
-                success, stdout, stderr, elapsed = _compile_and_run(
+            if language == "csharp":
+                func_map = question.get("function", {}) or {}
+                func_info = func_map.get("csharp", {}) or func_map.get("java", {})
+                test_inputs_list = [(tc.get("input", []) or []) for tc in test_suite]
+                driver_code = _build_csharp_batch_driver(code, func_info, test_inputs_list)
+                success, stdout, stderr, _ = _compile_and_run(
                     language, driver_code, "", work_dir
                 )
-                if not success:
-                    continue
+                if success:
+                    batch_results = _parse_csharp_batch_output(stdout) or []
+                    for idx, tc in enumerate(test_suite):
+                        if idx >= len(batch_results):
+                            continue
+                        result = batch_results[idx]
+                        if not isinstance(result, dict) or not result.get("ok"):
+                            continue
+                        actual_obj = result.get("output")
+                        if _outputs_match(tc.get("expected"), actual_obj):
+                            correct += 1
+            else:
+                for tc in test_suite:
+                    tc_input_values = tc.get("input", []) or []
+                    tc_expected_obj = tc.get("expected")
 
-                actual_obj = _parse_candidate_output(stdout)
-                if _outputs_match(tc_expected_obj, actual_obj):
-                    correct += 1
+                    driver_code = _build_driver_code(
+                        language,
+                        code,
+                        question,
+                        tc_input_values,
+                        tc_expected_obj,
+                    )
+
+                    success, stdout, stderr, elapsed = _compile_and_run(
+                        language, driver_code, "", work_dir
+                    )
+                    if not success:
+                        continue
+
+                    actual_obj = _parse_candidate_output(stdout)
+                    if _outputs_match(tc_expected_obj, actual_obj):
+                        correct += 1
         except Exception:
             # Keep evaluation non-blocking for candidate submit flow.
             correct = 0
@@ -1968,14 +2232,35 @@ def submit(session_id):
             CodingSessionService.save_code(session_id, payload["code"])
 
         CodingSessionService.mark_submitted(session_id)
-        try:
-            _evaluate_and_store_coding_result(session_id)
-        except Exception:
-            # Submission must never be blocked by evaluation bookkeeping.
-            pass
 
-        # Free cookie space immediately after submission
-        session.pop(f"coding_{session_id}", None)
+        coding_snapshot = None
+        try:
+            coding_snapshot = CodingSessionService.get_session_data(session_id) or {}
+            coding_snapshot = copy.deepcopy(coding_snapshot)
+        except Exception:
+            coding_snapshot = CodingSessionService.get_session_data(session_id) or {}
+
+        session_meta_snapshot = {}
+        try:
+            session_meta_snapshot = copy.deepcopy(session_meta)
+        except Exception:
+            session_meta_snapshot = session_meta or {}
+
+        def _run_async_eval():
+            try:
+                _evaluate_and_store_coding_result(
+                    session_id,
+                    session_meta=session_meta_snapshot,
+                    coding_data=coding_snapshot,
+                )
+            except Exception:
+                # Submission must never be blocked by evaluation bookkeeping.
+                pass
+
+        Thread(target=_run_async_eval, daemon=True).start()
+
+        # Free runtime/cookie space immediately after submission
+        CodingSessionService.clear_session(session_id)
 
         completed_url = url_for("coding.completed", session_id=session_id)
         if _is_ajax_request():
@@ -1987,6 +2272,7 @@ def submit(session_id):
         "coding/submit.html",
         session_id=session_id,
         candidate_name=session_meta.get("candidate_name", "Candidate"),
+        proctoring_enabled=_proctoring_enabled(),
         body_class="coding-start-page",
     )
 
@@ -1999,6 +2285,7 @@ def completed(session_id):
     return render_template(
         "coding/completed.html",
         candidate_name=CODING_SESSION_REGISTRY.get(session_id, {}).get("candidate_name", "Candidate"),
+        proctoring_enabled=_proctoring_enabled(),
         body_class="coding-start-page",
     )
 
@@ -2053,6 +2340,8 @@ def proctoring_screenshot():
     ts = payload.get("ts") or _utc_now_iso()
 
     screenshot_path = ""
+    image_bytes = b""
+    mime_type = "image/png"
 
     try:
         if image_data.startswith("data:image/") and "," in image_data:
@@ -2096,6 +2385,28 @@ def proctoring_screenshot():
         ts=ts,
         screenshot_path=screenshot_path,
     )
+
+    # Persist screenshot in DB for reports gallery (best-effort).
+    if image_bytes and not details.get("screenshot_rejected"):
+        try:
+            session_meta = CODING_SESSION_REGISTRY.get(session_id, {})
+            captured_at = _parse_iso_ts(ts)
+            db_service.save_proctoring_screenshot(
+                session_uuid=session_id,
+                candidate_email=session_meta.get("email", ""),
+                candidate_name=session_meta.get("candidate_name", ""),
+                round_key=session_meta.get("round_key", ""),
+                round_label=session_meta.get("round_label", ""),
+                source="coding",
+                event_type=event_type,
+                mime_type=mime_type,
+                image_bytes=image_bytes,
+                image_size=len(image_bytes),
+                captured_at=captured_at,
+                screenshot_path=screenshot_path,
+            )
+        except Exception:
+            pass
 
     return jsonify({
         "status": "logged",

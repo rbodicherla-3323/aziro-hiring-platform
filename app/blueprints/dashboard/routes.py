@@ -26,11 +26,6 @@ from app.services.question_bank.selector import (
     build_frozen_mcq_round_payload,
     should_use_enterprise_selection,
 )
-from app.services.email_service import send_candidate_test_links_email
-from app.services.user_token_store import (
-    get_valid_graph_delegated_token,
-    get_valid_graph_delegated_token_from_session,
-)
 
 APTITUDE_ENABLED_ROLE_KEYS = {"python_entry", "java_entry", "js_entry"}
 
@@ -163,15 +158,7 @@ def create_test():
     jd_files = request.files.getlist("jd[]")
 
     user_email = _current_user_email()
-    delegated_access_token = get_valid_graph_delegated_token(user_email)
-    if not delegated_access_token:
-        delegated_access_token = get_valid_graph_delegated_token_from_session(
-            session.get("oauth", {}),
-        )
-
     batch_id = f"batch_{uuid.uuid4().hex[:8]}"
-    email_success_count = 0
-    email_failures = []
 
     for i in range(len(names)):
         name = names[i].strip()
@@ -295,7 +282,6 @@ def create_test():
             }
             if frozen_payload:
                 mcq_meta.update(frozen_payload)
-
             MCQ_SESSION_REGISTRY[session_id] = mcq_meta
             db_service.save_test_link(
                 meta=mcq_meta,
@@ -337,7 +323,6 @@ def create_test():
                 "expires_at": link_expires_at.isoformat(),
                 "test_url": test_url,
             }
-
             CODING_SESSION_REGISTRY[session_id] = coding_meta
             db_service.save_test_link(
                 meta=coding_meta,
@@ -378,7 +363,6 @@ def create_test():
                 "expires_at": link_expires_at.isoformat(),
                 "test_url": test_url,
             }
-
             MCQ_SESSION_REGISTRY[session_id] = mcq_domain_meta
             db_service.save_test_link(
                 meta=mcq_domain_meta,
@@ -410,29 +394,6 @@ def create_test():
             "created_at": datetime.now(timezone.utc).isoformat(),
         })
 
-        email_sent, email_error = send_candidate_test_links_email(
-            candidate_name=name,
-            candidate_email=email,
-            role_label=role_label,
-            tests=tests,
-            delegated_access_token=delegated_access_token,
-            delegated_sender_email=user_email,
-        )
-        if email_sent:
-            email_success_count += 1
-        else:
-            email_failures.append({"email": email, "reason": email_error})
-
     flash("Test links generated successfully!", "success")
-    if email_success_count:
-        flash(f"Test links emailed to {email_success_count} candidate(s).", "success")
-    if email_failures:
-        failed_preview = ", ".join(f["email"] for f in email_failures[:3])
-        suffix = "" if len(email_failures) <= 3 else ", ..."
-        failure_reason = email_failures[0].get("reason", "Unknown error")
-        flash(
-            f"Email sending failed for {len(email_failures)} candidate(s): "
-            f"{failed_preview}{suffix}. {failure_reason}",
-            "warning",
-        )
+    flash("Emails will be sent only when 'Send Emails to Selected' is clicked.", "info")
     return redirect(url_for("tests.generated_tests"))

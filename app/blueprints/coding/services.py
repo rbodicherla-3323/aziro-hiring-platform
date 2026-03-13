@@ -6,6 +6,13 @@ import re
 import copy
 from flask import session
 
+from app.services.coding_runtime_store import (
+    clear_coding_session_data,
+    coding_session_key,
+    get_coding_session_data,
+    set_coding_session_data,
+)
+
 
 QUESTION_COUNT = 1
 DEFAULT_DURATION_MINUTES = 20
@@ -217,12 +224,19 @@ class CodingSessionService:
     @staticmethod
     def init_session(session_id, role_key, round_key, language="java", domain=None):
         """Initialize a coding session: load 1 random question for the candidate."""
-        session_key = f"coding_{session_id}"
+        session_key = coding_session_key(session_id)
         normalized_language = str(language or "java").lower()
         if normalized_language in ("c#", "cs"):
             normalized_language = "csharp"
 
-        if session_key in session:
+        if get_coding_session_data(session_id):
+            return
+
+        legacy = session.get(session_key)
+        if isinstance(legacy, dict) and "question" in legacy and "language" in legacy:
+            set_coding_session_data(session_id, legacy)
+            session[session_key] = {"runtime_store": True}
+            session.modified = True
             return
 
         questions = CodingSessionService._load_yaml_questions(normalized_language)
@@ -244,7 +258,7 @@ class CodingSessionService:
             normalized_language, func_info, question
         )
 
-        session[session_key] = {
+        data = {
             "question": question,
             "language": normalized_language,
             "starter_code": starter_code,
@@ -253,6 +267,9 @@ class CodingSessionService:
             "start_time": int(time.time()),
             "duration_seconds": DEFAULT_DURATION_MINUTES * 60,
         }
+        set_coding_session_data(session_id, data)
+        session[session_key] = {"runtime_store": True}
+        session.modified = True
 
     @staticmethod
     def _build_starter_code(language, func_info, question):
@@ -548,7 +565,7 @@ class CodingSessionService:
     @staticmethod
     def get_question(session_id):
         """Return the coding question for this session."""
-        data = session.get(f"coding_{session_id}")
+        data = CodingSessionService.get_session_data(session_id)
         if not data:
             return None
         return data["question"]
@@ -556,7 +573,7 @@ class CodingSessionService:
     @staticmethod
     def get_language(session_id):
         """Return the programming language for this session."""
-        data = session.get(f"coding_{session_id}")
+        data = CodingSessionService.get_session_data(session_id)
         if not data:
             return None
         return data["language"]
@@ -564,7 +581,7 @@ class CodingSessionService:
     @staticmethod
     def get_starter_code(session_id):
         """Return the starter code template."""
-        data = session.get(f"coding_{session_id}")
+        data = CodingSessionService.get_session_data(session_id)
         if not data:
             return ""
         return data["starter_code"]
@@ -572,7 +589,7 @@ class CodingSessionService:
     @staticmethod
     def get_code(session_id):
         """Return the currently saved code."""
-        data = session.get(f"coding_{session_id}")
+        data = CodingSessionService.get_session_data(session_id)
         if not data:
             return ""
         return data["code"]
@@ -580,25 +597,25 @@ class CodingSessionService:
     @staticmethod
     def save_code(session_id, code):
         """Save candidate's code."""
-        data = session.get(f"coding_{session_id}")
+        data = CodingSessionService.get_session_data(session_id)
         if not data:
             return
         data["code"] = code
-        session.modified = True
+        set_coding_session_data(session_id, data)
 
     @staticmethod
     def mark_submitted(session_id):
         """Mark the session as submitted."""
-        data = session.get(f"coding_{session_id}")
+        data = CodingSessionService.get_session_data(session_id)
         if not data:
             return
         data["submitted"] = True
-        session.modified = True
+        set_coding_session_data(session_id, data)
 
     @staticmethod
     def is_submitted(session_id):
         """Check if the session has been submitted."""
-        data = session.get(f"coding_{session_id}")
+        data = CodingSessionService.get_session_data(session_id)
         if not data:
             return False
         return data.get("submitted", False)
@@ -606,7 +623,7 @@ class CodingSessionService:
     @staticmethod
     def remaining_time(session_id):
         """Return remaining seconds for the coding test."""
-        data = session.get(f"coding_{session_id}")
+        data = CodingSessionService.get_session_data(session_id)
         if not data:
             return 0
         elapsed = int(time.time()) - data["start_time"]
@@ -615,7 +632,7 @@ class CodingSessionService:
     @staticmethod
     def get_public_tests(session_id):
         """Return the public test cases for the question."""
-        data = session.get(f"coding_{session_id}")
+        data = CodingSessionService.get_session_data(session_id)
         if not data:
             return []
         return data["question"].get("public_tests", [])
@@ -623,7 +640,7 @@ class CodingSessionService:
     @staticmethod
     def get_hidden_tests(session_id):
         """Return the hidden test cases for the question."""
-        data = session.get(f"coding_{session_id}")
+        data = CodingSessionService.get_session_data(session_id)
         if not data:
             return []
         return data["question"].get("hidden_tests", [])
@@ -631,4 +648,22 @@ class CodingSessionService:
     @staticmethod
     def get_session_data(session_id):
         """Return the full session data dict."""
-        return session.get(f"coding_{session_id}")
+        data = get_coding_session_data(session_id)
+        if data:
+            return data
+
+        session_key = coding_session_key(session_id)
+        legacy = session.get(session_key)
+        if isinstance(legacy, dict) and "question" in legacy and "language" in legacy:
+            set_coding_session_data(session_id, legacy)
+            session[session_key] = {"runtime_store": True}
+            session.modified = True
+            return legacy
+        return None
+
+    @staticmethod
+    def clear_session(session_id):
+        session_key = coding_session_key(session_id)
+        clear_coding_session_data(session_id)
+        session.pop(session_key, None)
+        session.modified = True
