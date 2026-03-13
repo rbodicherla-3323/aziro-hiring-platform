@@ -1,0 +1,2538 @@
+[
+  {
+    "id": "linux-linux-fundamentals-enterprise-001",
+    "question": "A production defect investigation needs clarity on the 'sticky bit' on a directory (e.g., /tmp with permissions drwxrwxrwt) accomplish?",
+    "options": [
+      "Only the file owner, directory owner, or root can delete or rename files within it, even though others have write permission to the directory",
+      "It causes files to be automatically encrypted",
+      "It prevents any new files from being created",
+      "It makes the directory read-only for all users in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "Only the file owner, directory owner, or root can delete or rename files within it, even though others have write permission to the directory",
+    "topic": "Filesystem and Permissions",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "filesystem-and-permissions"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-002",
+    "question": "You need to write a bash script that processes a CSV file, extracts the 3rd column, sorts unique values, and counts occurrences. Which pipeline accomplishes this?",
+    "options": [
+      "awk -F',' '{print $3}' file.csv | sort | uniq -c | sort -rn",
+      "cat file.csv | grep -c column3",
+      "sed 's/,/\\n/g' file.csv | head -3 in this scenario under production constraints",
+      "cut -f3 file.csv | sort | wc -l"
+    ],
+    "correct_answer": "awk -F',' '{print $3}' file.csv | sort | uniq -c | sort -rn",
+    "topic": "Shell Scripting and Automation",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "shell-scripting-and-automation"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-003",
+    "question": "During a security audit, you need to find all SUID binaries on the system. Which command accomplishes this?",
+    "options": [
+      "find / -perm -4000 -type f 2>/dev/null",
+      "chmod -R 4000 /",
+      "locate --suid",
+      "ls -la /usr/bin | grep suid in this scenario"
+    ],
+    "correct_answer": "find / -perm -4000 -type f 2>/dev/null",
+    "topic": "Networking and Security Basics",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "networking-and-security-basics",
+      "security"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-004",
+    "question": "You need to create a filesystem on /dev/sdb1, mount it at /data with noexec and nosuid options, and make it persist across reboots. What is the correct sequence?",
+    "options": [
+      "mkfs.ext4 /dev/sdb1; mkdir -p /data; mount -o noexec,nosuid /dev/sdb1 /data; add entry to /etc/fstab with options noexec,nosuid",
+      "parted /dev/sdb1 mkfs; mount /dev/sdb1 /data; crontab @reboot mount",
+      "fdisk /dev/sdb1 --format; mountpoint /data; echo mount >> /etc/rc.local in this scenario under production constraints for the stated requirement",
+      "format /dev/sdb1; mount /data; edit /etc/mtab"
+    ],
+    "correct_answer": "mkfs.ext4 /dev/sdb1; mkdir -p /data; mount -o noexec,nosuid /dev/sdb1 /data; add entry to /etc/fstab with options noexec,nosuid",
+    "topic": "Filesystem and Permissions",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "filesystem-and-permissions"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-005",
+    "question": "A production server is experiencing high load averages (15+) but CPU utilization stays under 20%. 'top' shows many processes in D (uninterruptible sleep) state. What is the most likely root cause?",
+    "options": [
+      "Processes are waiting on I/O operations (disk or NFS), causing I/O wait",
+      "The system is CPU-bound and needs more cores",
+      "The scheduler is misconfigured and needs tuning via nice values in this scenario",
+      "OOM killer is throttling processes"
+    ],
+    "correct_answer": "Processes are waiting on I/O operations (disk or NFS), causing I/O wait",
+    "topic": "Monitoring and Troubleshooting",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "monitoring-and-troubleshooting"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-006",
+    "question": "You run 'iostat -x 1' and notice that a disk has an average queue size (avgqu-sz) of 32 and %util is at 100%. The await time is 450ms. What does this indicate?",
+    "options": [
+      "The disk is saturated with high latency; requests are queuing excessively",
+      "The filesystem is corrupted and needs fsck",
+      "The disk controller firmware needs updating in this scenario under production constraints",
+      "The disk is idle and performing optimally"
+    ],
+    "correct_answer": "The disk is saturated with high latency; requests are queuing excessively",
+    "topic": "Monitoring and Troubleshooting",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "monitoring-and-troubleshooting"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-007",
+    "question": "In a production scenario, which option best describes the difference between $*, $@, \"$*\", and \"$@\" in bash when a script is called with arguments 'arg1' 'arg 2' 'arg3'?",
+    "options": [
+      "\"$@\" preserves each argument as a separate quoted word (3 args); \"$*\" combines all arguments into a single string; unquoted versions are subject to word splitting",
+      "$* preserves quotes while $@ does not",
+      "$@ only works inside functions; $* works everywhere in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "They are all identical and interchangeable"
+    ],
+    "correct_answer": "\"$@\" preserves each argument as a separate quoted word (3 args); \"$*\" combines all arguments into a single string; unquoted versions are subject to word splitting",
+    "topic": "Shell Scripting and Automation",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "shell-scripting-and-automation"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-008",
+    "question": "A Java application's response times have degraded. You notice the system's swap usage is at 6GB despite 32GB physical RAM. 'vmstat 1' shows high si/so values. What is happening and what should you check first?",
+    "options": [
+      "The system is thrashing - memory is overcommitted and pages are constantly swapping in/out; check per-process RSS with 'ps aux --sort=-rss'",
+      "The kernel is proactively caching swap; this is normal behavior",
+      "Swap is being used as additional RAM intentionally; increase swap to 12GB in this scenario under production constraints for the stated requirement",
+      "The Java application has a file descriptor leak causing swap usage"
+    ],
+    "correct_answer": "The system is thrashing - memory is overcommitted and pages are constantly swapping in/out; check per-process RSS with 'ps aux --sort=-rss'",
+    "topic": "Linux Fundamentals and CLI",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "linux-fundamentals-and-cli"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-009",
+    "question": "You need to identify which process is consuming the most disk I/O on a Linux server. Which tool gives per-process I/O statistics including read/write bytes per second?",
+    "options": [
+      "iotop",
+      "vmstat",
+      "netstat",
+      "top"
+    ],
+    "correct_answer": "iotop",
+    "topic": "Linux Debugging",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "linux",
+      "linux-debugging",
+      "operations"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-010",
+    "question": "After deploying a new application, 'dmesg' shows repeated 'Out of memory: Kill process' messages. The server has 64GB RAM but the application is configured with -Xmx48g. What kernel parameter controls how aggressively the OOM killer acts, and what value disables memory overcommit?",
+    "options": [
+      "vm.overcommit_memory=2 disables overcommit; the kernel will reject allocations exceeding physical RAM + swap",
+      "kernel.panic=1 prevents OOM situations",
+      "vm.swappiness=0 disables OOM killing entirely",
+      "vm.oom_kill_allocating_task=0 stops the OOM killer permanently in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "vm.overcommit_memory=2 disables overcommit; the kernel will reject allocations exceeding physical RAM + swap",
+    "topic": "Linux Fundamentals and CLI",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "kernel",
+      "linux-fundamentals-and-cli",
+      "memory"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-011",
+    "question": "You need to replace all occurrences of 'old_server' with 'new_server' in all.conf files under /etc/ recursively, creating backups of originals. Which command achieves this safely?",
+    "options": [
+      "find /etc -name '*.conf' -exec sed -i.bak 's/old_server/new_server/g' {} +",
+      "grep -r 'old_server' /etc/*.conf | sed 's/old_server/new_server/g' in this scenario",
+      "awk '{gsub(old_server, new_server)}' /etc/*.conf",
+      "replace old_server new_server /etc/*.conf"
+    ],
+    "correct_answer": "find /etc -name '*.conf' -exec sed -i.bak 's/old_server/new_server/g' {} +",
+    "topic": "Shell Scripting and Automation",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "shell-scripting-and-automation"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-012",
+    "question": "During architecture review, which option best describes the difference between the 'resident set size' (RSS) and 'virtual memory size' (VSZ) of a process as shown by 'ps aux'?",
+    "options": [
+      "RSS is the physical memory currently in use by the process; VSZ is the total virtual address space including mapped but not yet allocated pages",
+      "RSS includes swap usage; VSZ does not",
+      "They are identical on systems without swap enabled",
+      "VSZ is always smaller than RSS because it excludes shared libraries in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "RSS is the physical memory currently in use by the process; VSZ is the total virtual address space including mapped but not yet allocated pages",
+    "topic": "Linux Fundamentals and CLI",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "linux-fundamentals-and-cli",
+      "memory"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-013",
+    "question": "You need to restrict SSH access to only key-based authentication and disable root login. Which sshd_config directives should you set?",
+    "options": [
+      "PasswordAuthentication no, PermitRootLogin no, PubkeyAuthentication yes",
+      "AuthenticationMethods password, RootLogin disabled in this scenario under production constraints",
+      "UseSSHKeys only, DisableRoot true",
+      "AllowPassword yes, PermitRootLogin yes"
+    ],
+    "correct_answer": "PasswordAuthentication no, PermitRootLogin no, PubkeyAuthentication yes",
+    "topic": "Networking and Security Basics",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "networking-and-security-basics",
+      "operations"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-014",
+    "question": "You suspect a network issue between your application server and a database on port 5432. 'ping' works but connections fail intermittently. Which tool would help you diagnose the TCP-level connectivity and path issues?",
+    "options": [
+      "traceroute db-server && ss -tnp | grep 5432",
+      "ping -c 10 db-server in this scenario under production constraints",
+      "nslookup db-server",
+      "arp -a db-server"
+    ],
+    "correct_answer": "traceroute db-server && ss -tnp | grep 5432",
+    "topic": "Monitoring and Troubleshooting",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "monitoring-and-troubleshooting"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-015",
+    "question": "A production database server has vm.swappiness set to 60 (default). The DBA complains about unpredictable latency spikes. What tuning would you recommend and why?",
+    "options": [
+      "Set vm.swappiness=1 or lower to strongly prefer reclaiming page cache over swapping out application memory, reducing latency spikes",
+      "Set vm.swappiness=60 is optimal for all workloads; investigate elsewhere",
+      "Set vm.swappiness=100 to maximize I/O throughput",
+      "Disable swap entirely with swapoff; this is always the best approach for databases in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "Set vm.swappiness=1 or lower to strongly prefer reclaiming page cache over swapping out application memory, reducing latency spikes",
+    "topic": "Linux Fundamentals and CLI",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "linux-fundamentals-and-cli",
+      "scenario"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-016",
+    "question": "The command 'ss -tlnp' shows a process listening on 0.0.0.0:8080 but external clients cannot connect. Firewall rules (iptables -L) show no DROP rules. What else could be blocking external access?",
+    "options": [
+      "A cloud security group, network ACL, or firewalld/nftables rule is blocking inbound traffic on port 8080",
+      "The process must listen on 127.0.0.1 instead of 0.0.0.0",
+      "The ss command output is unreliable; use netstat instead in this scenario under production constraints for the stated requirement",
+      "The process is only configured for IPv6"
+    ],
+    "correct_answer": "A cloud security group, network ACL, or firewalld/nftables rule is blocking inbound traffic on port 8080",
+    "topic": "Monitoring and Troubleshooting",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "monitoring-and-troubleshooting"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-017",
+    "question": "During live operations, which option best describes the difference between iptables chains INPUT, FORWARD, and OUTPUT?",
+    "options": [
+      "INPUT processes packets destined for the local system; FORWARD handles packets being routed through; OUTPUT handles locally generated outbound packets",
+      "INPUT handles TCP; FORWARD handles UDP; OUTPUT handles ICMP",
+      "They all process the same packets but in different priority order in this scenario under production constraints for the stated requirement during incident triage",
+      "INPUT handles all packets; FORWARD and OUTPUT are aliases"
+    ],
+    "correct_answer": "INPUT processes packets destined for the local system; FORWARD handles packets being routed through; OUTPUT handles locally generated outbound packets",
+    "topic": "Monitoring and Troubleshooting",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "monitoring-and-troubleshooting",
+      "operations"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-018",
+    "question": "A server is running out of file descriptors and 'ulimit -n' shows 1024. You need to increase the limit to 65535 for a specific service running under systemd. Where should you configure this?",
+    "options": [
+      "In the systemd unit file using LimitNOFILE=65535, since systemd-managed services do not inherit limits.conf",
+      "By running 'ulimit -n 65535' in the service startup script in this scenario under production constraints for the stated requirement",
+      "Only in /etc/security/limits.conf under the user's entry",
+      "In /etc/sysctl.conf using fs.file-max=65535"
+    ],
+    "correct_answer": "In the systemd unit file using LimitNOFILE=65535, since systemd-managed services do not inherit limits.conf",
+    "topic": "Process and Service Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "process-and-service-management"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-019",
+    "question": "In a production scenario, which option best describes the 'dirty_ratio' and 'dirty_background_ratio' kernel parameters control in Linux?",
+    "options": [
+      "The threshold of dirty (modified in page cache but not written to disk) pages before processes are blocked vs. when background writeback starts",
+      "The ratio of user-space to kernel-space memory allocation",
+      "The maximum percentage of swap that can be used before OOM triggers in this scenario under production constraints for the stated requirement during incident triage",
+      "The percentage of corrupted filesystem blocks before fsck triggers"
+    ],
+    "correct_answer": "The threshold of dirty (modified in page cache but not written to disk) pages before processes are blocked vs. when background writeback starts",
+    "topic": "Linux Fundamentals and CLI",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "kernel",
+      "linux",
+      "linux-fundamentals-and-cli",
+      "scenario"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-020",
+    "question": "During architecture review, which option best describes the difference between 'systemctl restart' and 'systemctl reload' for a service?",
+    "options": [
+      "'restart' stops and starts the service (new PID); 'reload' sends a signal (typically SIGHUP) to re-read config without stopping the service",
+      "'restart' only works for enabled services; 'reload' works for all in this scenario under production constraints for the stated requirement during incident triage",
+      "They are functionally identical",
+      "'reload' always requires a reboot; 'restart' does not"
+    ],
+    "correct_answer": "'restart' stops and starts the service (new PID); 'reload' sends a signal (typically SIGHUP) to re-read config without stopping the service",
+    "topic": "Process and Service Management",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "process-and-service-management"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-021",
+    "question": "A service is in 'failed' state after a crash. You want it to automatically restart on failure with a 5-second delay. Which systemd unit directives achieve this?",
+    "options": [
+      "Restart=on-failure and RestartSec=5 in the [Service] section",
+      "ExecRestart=/bin/sleep 5 in the [Unit] section in this scenario",
+      "WatchdogSec=5 and FailureAction=restart",
+      "AutoRestart=true and Delay=5"
+    ],
+    "correct_answer": "Restart=on-failure and RestartSec=5 in the [Service] section",
+    "topic": "Process and Service Management",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "process-and-service-management"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-022",
+    "question": "You need to view the last 200 log entries for the nginx service since today, including kernel messages. Which journalctl command achieves this?",
+    "options": [
+      "journalctl -u nginx --since today -n 200",
+      "journalctl -u nginx --since today -n 200 -k",
+      "tail -200 /var/log/syslog | grep nginx",
+      "journalctl --unit=nginx --lines=200 --follow"
+    ],
+    "correct_answer": "journalctl -u nginx --since today -n 200",
+    "topic": "Process and Service Management",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "kernel",
+      "process-and-service-management"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-023",
+    "question": "You need to capture all DNS queries leaving a server to debug name resolution issues. Which tcpdump command would you use?",
+    "options": [
+      "tcpdump -i any port 53 -nn",
+      "tcpdump -i eth0 icmp",
+      "tcpdump -i lo port 53",
+      "tcpdump -i any port 80 in this scenario"
+    ],
+    "correct_answer": "tcpdump -i any port 53 -nn",
+    "topic": "Monitoring and Troubleshooting",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "debugging",
+      "monitoring-and-troubleshooting",
+      "scenario"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-024",
+    "question": "During architecture review, which option best describes 'set -euo pipefail' at the top of a bash script do, and why is it considered best practice?",
+    "options": [
+      "-e exits on any command failure; -u treats unset variables as errors; -o pipefail causes a pipeline to fail if any command in the pipe fails (not just the last one)",
+      "It enables parallel execution of commands in the script in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "It enables verbose output for debugging",
+      "It sets environment variables for Unicode support"
+    ],
+    "correct_answer": "-e exits on any command failure; -u treats unset variables as errors; -o pipefail causes a pipeline to fail if any command in the pipe fails (not just the last one)",
+    "topic": "Shell Scripting and Automation",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "shell-scripting-and-automation"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-025",
+    "question": "You need to trace all system calls made by a running process with PID 4521 without stopping it. Which command would you use?",
+    "options": [
+      "strace -p 4521 under production constraints",
+      "ltrace --pid 4521",
+      "gdb attach 4521",
+      "perf record -p 4521 under production constraints"
+    ],
+    "correct_answer": "strace -p 4521 under production constraints",
+    "topic": "Linux Fundamentals and CLI",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "linux-fundamentals-and-cli",
+      "operations"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-026",
+    "question": "A process is stuck and not responding but hasn't crashed. 'strace -p <pid>' shows it's blocked on a futex() call. What does this suggest?",
+    "options": [
+      "The process is waiting on a userspace lock (mutex/semaphore), likely a deadlock or contention issue",
+      "The filesystem is read-only",
+      "The process is performing a DNS lookup",
+      "The process has exceeded its CPU time limit in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "The process is waiting on a userspace lock (mutex/semaphore), likely a deadlock or contention issue",
+    "topic": "Linux Debugging",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux-debugging"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-027",
+    "question": "A compromised server had an attacker add a cron job. Where should you check for persistence mechanisms beyond /etc/crontab?",
+    "options": [
+      "Check /var/spool/cron/crontabs/, /etc/cron.d/, /etc/cron.{daily,weekly,monthly}/, user crontabs, systemd timers, and ~/.bashrc/.profile for backdoors",
+      "Only check /tmp for suspicious scripts",
+      "Only /etc/crontab needs to be checked",
+      "Run 'crontab -l' as root only; that shows everything in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "Check /var/spool/cron/crontabs/, /etc/cron.d/, /etc/cron.{daily,weekly,monthly}/, user crontabs, systemd timers, and ~/.bashrc/.profile for backdoors",
+    "topic": "Networking and Security Basics",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "networking-and-security-basics"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-028",
+    "question": "You need to monitor a log file and trigger an alert when more than 10 'ERROR' lines appear within any 60-second window. Which approach is most suitable?",
+    "options": [
+      "Use 'tail -f' piped to an awk script that tracks timestamps and counts ERRORs within a rolling 60s window, triggering an alert command when threshold exceeds 10",
+      "tail -f /var/log/app.log | grep ERROR | mail admin",
+      "watch -n 1 'cat /var/log/app.log | grep ERROR'",
+      "cron job every minute running 'grep -c ERROR /var/log/app.log' in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "Use 'tail -f' piped to an awk script that tracks timestamps and counts ERRORs within a rolling 60s window, triggering an alert command when threshold exceeds 10",
+    "topic": "Shell Scripting and Automation",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "shell-scripting-and-automation"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-029",
+    "question": "In a bash script, what is the difference between 'exec > /var/log/script.log 2>&1' and simply redirecting individual commands?",
+    "options": [
+      "'exec' replaces the shell's own stdout/stderr file descriptors, so ALL subsequent output in the script goes to the log file without needing per-command redirects",
+      "There is no difference; both achieve the same result in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "'exec' runs the script in a subshell",
+      "'exec' only redirects errors, not standard output"
+    ],
+    "correct_answer": "'exec' replaces the shell's own stdout/stderr file descriptors, so ALL subsequent output in the script goes to the log file without needing per-command redirects",
+    "topic": "Shell Scripting and Automation",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "shell-scripting-and-automation"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-030",
+    "question": "In systemd, what is the purpose of the 'WantedBy=multi-user.target' directive in the [Install] section?",
+    "options": [
+      "It creates a dependency so the service starts when the system reaches multi-user runlevel (runlevel 3 equivalent), i.e., when 'systemctl enable' is run",
+      "It limits the service to only run on multi-CPU systems in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "It prevents the service from starting during boot",
+      "It forces the service to run in single-user mode"
+    ],
+    "correct_answer": "It creates a dependency so the service starts when the system reaches multi-user runlevel (runlevel 3 equivalent), i.e., when 'systemctl enable' is run",
+    "topic": "Process and Service Management",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "process-and-service-management"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-031",
+    "question": "A production server shows a filesystem at 100% usage but 'du -sh /*' reports only 60% used. What could explain this discrepancy?",
+    "options": [
+      "Deleted files are still held open by running processes, consuming space not visible to du; use 'lsof +L1' to find them",
+      "The 'du' command is inaccurate on ext4 filesystems",
+      "The filesystem has bad sectors hiding the actual usage",
+      "Reserved blocks for root (typically 5%) account for 40% of disk space in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "Deleted files are still held open by running processes, consuming space not visible to du; use 'lsof +L1' to find them",
+    "topic": "Filesystem and Permissions",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "filesystem-and-permissions"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-032",
+    "question": "A colleague ran 'chmod -R 777 /' on a production server before being stopped. Beyond the obvious security implications, which critical system functionality will break?",
+    "options": [
+      "SSH will refuse to work (sshd requires strict permissions on /etc/ssh/), sudo may fail, cron jobs may not run, and any SUID/SGID binaries lose their special bits - effectively breaking authentication and privilege escalation",
+      "Only web server files are affected",
+      "The system will immediately kernel panic in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback",
+      "Only user home directories are affected"
+    ],
+    "correct_answer": "SSH will refuse to work (sshd requires strict permissions on /etc/ssh/), sudo may fail, cron jobs may not run, and any SUID/SGID binaries lose their special bits - effectively breaking authentication and privilege escalation",
+    "topic": "Networking and Security Basics",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "networking-and-security-basics",
+      "security"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-033",
+    "question": "A production defect investigation needs clarity on the key difference between ext4 and XFS filesystems in a production Linux environment?",
+    "options": [
+      "XFS excels at parallel I/O with large files and cannot be shrunk; ext4 supports both grow and shrink operations and is more versatile for general use",
+      "ext4 is deprecated in all modern distributions in favor of XFS",
+      "XFS does not support journaling while ext4 does",
+      "ext4 supports only files up to 1GB; XFS supports unlimited file sizes in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "XFS excels at parallel I/O with large files and cannot be shrunk; ext4 supports both grow and shrink operations and is more versatile for general use",
+    "topic": "Filesystem and Permissions",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "filesystem-and-permissions",
+      "linux"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-034",
+    "question": "A server has multiple network interfaces. You want a service to only listen on the 10.0.1.5 interface, not on all interfaces. How is this typically achieved?",
+    "options": [
+      "Bind the service to 10.0.1.5 instead of 0.0.0.0 in its configuration",
+      "Set the default gateway to 10.0.1.5",
+      "Remove all other network interfaces using ip link delete in this scenario",
+      "Configure iptables to block other interfaces"
+    ],
+    "correct_answer": "Bind the service to 10.0.1.5 instead of 0.0.0.0 in its configuration",
+    "topic": "Monitoring and Troubleshooting",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "monitoring-and-troubleshooting"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-035",
+    "question": "The 'ss -s' command shows 15,000 sockets in TIME_WAIT state on a high-traffic web server. What does this indicate and what kernel parameter can help?",
+    "options": [
+      "These are closed connections waiting for late packets; enable net.ipv4.tcp_tw_reuse=1 to allow reuse of TIME_WAIT sockets for new outbound connections",
+      "All 15,000 connections are actively transferring data",
+      "Increase the number of network interfaces to distribute the load in this scenario under production constraints for the stated requirement during incident triage",
+      "The server has a memory leak; restart all services"
+    ],
+    "correct_answer": "These are closed connections waiting for late packets; enable net.ipv4.tcp_tw_reuse=1 to allow reuse of TIME_WAIT sockets for new outbound connections",
+    "topic": "Monitoring and Troubleshooting",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "monitoring-and-troubleshooting"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-036",
+    "question": "You need to configure PAM to enforce password complexity: minimum 12 characters, at least 1 uppercase, 1 lowercase, 1 digit, and 1 special character. Which PAM module and configuration achieves this?",
+    "options": [
+      "pam_pwquality.so (or pam_cracklib.so) with minlen=12 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1 in /etc/pam.d/common-password or /etc/security/pwquality.conf",
+      "pam_securetty.so with min_length=12",
+      "pam_limits.so with password_length=12",
+      "pam_access.so with password_rules=complex in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "pam_pwquality.so (or pam_cracklib.so) with minlen=12 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1 in /etc/pam.d/common-password or /etc/security/pwquality.conf",
+    "topic": "Networking and Security Basics",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "networking-and-security-basics"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-037",
+    "question": "You SSH into a server and find a process using 100% of a single CPU core. 'top' shows it as a zombie process (Z state). What does this mean and how do you clean it up?",
+    "options": [
+      "A zombie is a terminated process whose exit status hasn't been collected by its parent; kill the parent process or send SIGCHLD to the parent to reap it - you cannot kill a zombie directly since it's already dead",
+      "Use 'renice -20 <pid>' to reduce its CPU usage",
+      "Reboot the server; zombies cannot be removed otherwise in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback",
+      "Kill the zombie with 'kill -9 <zombie-pid>'"
+    ],
+    "correct_answer": "A zombie is a terminated process whose exit status hasn't been collected by its parent; kill the parent process or send SIGCHLD to the parent to reap it - you cannot kill a zombie directly since it's already dead",
+    "topic": "Process and Service Management",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "process-and-service-management"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-038",
+    "question": "You run 'curl -v https://api.internal.company.com' and get 'SSL: certificate subject name does not match target host name'. The IP resolves correctly. What is the issue?",
+    "options": [
+      "The certificate's Subject Alternative Name (SAN) or Common Name (CN) does not include 'api.internal.company.com'",
+      "The CA bundle is missing on the client",
+      "The server is using HTTP/2 which is incompatible in this scenario under production constraints for the stated requirement",
+      "The SSL certificate is expired"
+    ],
+    "correct_answer": "The certificate's Subject Alternative Name (SAN) or Common Name (CN) does not include 'api.internal.company.com'",
+    "topic": "Monitoring and Troubleshooting",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "monitoring-and-troubleshooting"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-039",
+    "question": "You need to find which files a process has open, including sockets, pipes, and file descriptors. Which command provides this information?",
+    "options": [
+      "lsof -p <pid>",
+      "fuser",
+      "file /proc/<pid>/fd",
+      "stat /proc/<pid>"
+    ],
+    "correct_answer": "lsof -p <pid>",
+    "topic": "Linux Fundamentals and CLI",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "linux-fundamentals-and-cli",
+      "scenario"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-040",
+    "question": "During architecture review, which option best describes the significance of the setuid (SUID) bit on a Linux executable, and why is it a security concern?",
+    "options": [
+      "It causes the executable to run with the permissions of the file owner (often root) regardless of who executes it, creating potential privilege escalation risks",
+      "It prevents the file from being modified after creation",
+      "It allows the file to be executed by any user but with no special privileges in this scenario under production constraints for the stated requirement during incident triage",
+      "It encrypts the file contents during execution"
+    ],
+    "correct_answer": "It causes the executable to run with the permissions of the file owner (often root) regardless of who executes it, creating potential privilege escalation risks",
+    "topic": "Linux Fundamentals and CLI",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "linux",
+      "linux-fundamentals-and-cli",
+      "security"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-041",
+    "question": "During live operations, which option best describes the purpose of SELinux 'enforcing' mode and how does it differ from 'permissive' mode?",
+    "options": [
+      "Enforcing mode actively blocks policy violations and logs them; permissive mode only logs violations without blocking, useful for testing policies",
+      "Enforcing mode disables all user access; permissive mode allows root-only access",
+      "Enforcing mode logs violations but allows them; permissive mode blocks all access in this scenario under production constraints for the stated requirement",
+      "Both modes are identical in behavior"
+    ],
+    "correct_answer": "Enforcing mode actively blocks policy violations and logs them; permissive mode only logs violations without blocking, useful for testing policies",
+    "topic": "Linux Debugging",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "linux",
+      "linux-debugging",
+      "operations"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-042",
+    "question": "You need to automate a task that runs every 15 minutes during business hours (9 AM to 6 PM) on weekdays only. What is the correct crontab entry?",
+    "options": [
+      "*/15 9-17 * * 1-5 /path/to/script.sh",
+      "15 9-18 * * 1-5 /path/to/script.sh",
+      "*/15 * * * 1-5 /path/to/script.sh",
+      "0,15,30,45 9-18 * * * /path/to/script.sh"
+    ],
+    "correct_answer": "*/15 9-17 * * 1-5 /path/to/script.sh",
+    "topic": "Shell Scripting and Automation",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "shell-scripting-and-automation"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-043",
+    "question": "You need to extend a logical volume /dev/vg0/lv_data by 50GB and resize the ext4 filesystem online (without unmounting). What commands would you use?",
+    "options": [
+      "lvextend -L +50G /dev/vg0/lv_data && resize2fs /dev/vg0/lv_data",
+      "vgextend +50G vg0 && mkfs.ext4 /dev/vg0/lv_data",
+      "fdisk /dev/vg0/lv_data --resize +50G",
+      "lvresize -r -L 50G /dev/vg0/lv_data (this shrinks to 50G, not extends by 50G)"
+    ],
+    "correct_answer": "lvextend -L +50G /dev/vg0/lv_data && resize2fs /dev/vg0/lv_data",
+    "topic": "Filesystem and Permissions",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "filesystem-and-permissions",
+      "scenario"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-044",
+    "question": "During architecture review, which option best describes the difference between cron and systemd timers? When would you prefer one over the other?",
+    "options": [
+      "Systemd timers offer better logging (journalctl), dependency management, on-boot scheduling, monotonic timers, and can trigger on events; cron is simpler but lacks these features",
+      "They are identical; systemd timers are just a wrapper around cron in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "Systemd timers only work for system services, not user scripts",
+      "Cron supports millisecond precision; systemd timers do not"
+    ],
+    "correct_answer": "Systemd timers offer better logging (journalctl), dependency management, on-boot scheduling, monotonic timers, and can trigger on events; cron is simpler but lacks these features",
+    "topic": "Shell Scripting and Automation",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "shell-scripting-and-automation"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-045",
+    "question": "You need to audit all successful and failed login attempts on a server. Which log files and commands would you use?",
+    "options": [
+      "Check /var/log/auth.log (Debian/Ubuntu) or /var/log/secure (RHEL/CentOS) for SSH/PAM entries; use 'last' for successful logins, 'lastb' for failed logins, and 'journalctl -u sshd' for systemd-based systems",
+      "Check /etc/passwd for login records",
+      "Run 'who -a' to see all historical logins in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback",
+      "Only check /var/log/messages"
+    ],
+    "correct_answer": "Check /var/log/auth.log (Debian/Ubuntu) or /var/log/secure (RHEL/CentOS) for SSH/PAM entries; use 'last' for successful logins, 'lastb' for failed logins, and 'journalctl -u sshd' for systemd-based systems",
+    "topic": "Networking and Security Basics",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "networking-and-security-basics",
+      "operations"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-046",
+    "question": "What does the 'inode' represent in a Linux filesystem, and what happens when all inodes are exhausted even though disk space is available?",
+    "options": [
+      "An inode stores metadata (permissions, ownership, timestamps, block pointers) for a file; when inodes are exhausted, no new files or directories can be created despite free disk space",
+      "Inodes are network indexes; exhausting them blocks network access",
+      "Inodes store file data blocks; exhausting them corrupts existing files in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "Inodes are only relevant to NFS filesystems"
+    ],
+    "correct_answer": "An inode stores metadata (permissions, ownership, timestamps, block pointers) for a file; when inodes are exhausted, no new files or directories can be created despite free disk space",
+    "topic": "Filesystem and Permissions",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "filesystem-and-permissions",
+      "linux"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-047",
+    "question": "In a production scenario, which option best describes the command 'grep -rn --include='*.py' 'import os' /opt/app/' do?",
+    "options": [
+      "Recursively searches only.py files under /opt/app/ for 'import os', showing file names and line numbers",
+      "Creates a new file containing all Python imports",
+      "Searches only the first.py file found for 'import os'",
+      "Recursively searches all files under /opt/app for 'import os' in this scenario under production constraints"
+    ],
+    "correct_answer": "Recursively searches only.py files under /opt/app/ for 'import os', showing file names and line numbers",
+    "topic": "Shell Scripting and Automation",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "shell-scripting-and-automation"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-048",
+    "question": "What are Linux namespaces, and which namespace types are used by containers to provide isolation?",
+    "options": [
+      "Namespaces isolate kernel resources per process group: PID (process IDs), NET (network stack), MNT (mount points), UTS (hostname), IPC (inter-process communication), USER (UID/GID mapping), and CGROUP",
+      "Namespaces are DNS zones; containers use them for name resolution in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "Namespaces are filesystem partitions assigned to each container",
+      "Namespaces are only used by KVM virtual machines, not containers"
+    ],
+    "correct_answer": "Namespaces isolate kernel resources per process group: PID (process IDs), NET (network stack), MNT (mount points), UTS (hostname), IPC (inter-process communication), USER (UID/GID mapping), and CGROUP",
+    "topic": "Linux Debugging",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "linux",
+      "linux-debugging"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-049",
+    "question": "A team member ran 'iptables -F' (flush all rules) on a production server that had a default DROP policy. What happened and how do you recover?",
+    "options": [
+      "All custom ACCEPT rules were removed but the default DROP policy remained, so ALL traffic (including SSH) is now blocked; recover via out-of-band access (console/IPMI/BMC), then restore the iptables ruleset",
+      "Only ICMP traffic was affected",
+      "The server automatically reverts to ACCEPT policy after a flush",
+      "Nothing happened; the default policy ensures traffic still flows in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "All custom ACCEPT rules were removed but the default DROP policy remained, so ALL traffic (including SSH) is now blocked; recover via out-of-band access (console/IPMI/BMC), then restore the iptables ruleset",
+    "topic": "Networking and Security Basics",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "networking-and-security-basics",
+      "operations"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-050",
+    "question": "A server has a RAID-5 array with 4 disks, and one disk fails. During rebuild with a hot spare, a second disk fails. What happens?",
+    "options": [
+      "The array fails completely and data is lost; RAID-5 can tolerate only one disk failure at a time",
+      "Data is preserved because the hot spare already has a complete copy in this scenario under production constraints",
+      "The array continues operating normally with degraded performance",
+      "The array automatically switches to RAID-1 mode"
+    ],
+    "correct_answer": "The array fails completely and data is lost; RAID-5 can tolerate only one disk failure at a time",
+    "topic": "Linux Fundamentals and CLI",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "linux-fundamentals-and-cli"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-051",
+    "question": "You need to analyze an Apache access log and find the top 10 IP addresses by request count. Which command pipeline achieves this?",
+    "options": [
+      "awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -10",
+      "grep -c IP access.log | head -10",
+      "cat access.log | sort | head -10",
+      "tail -10 access.log | cut -d' ' -f1 in this scenario under production constraints"
+    ],
+    "correct_answer": "awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -10",
+    "topic": "Shell Scripting and Automation",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "shell-scripting-and-automation"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-052",
+    "question": "A security policy requires that user 'deployer' can only run '/usr/bin/systemctl restart myapp' and '/usr/bin/systemctl status myapp' via sudo, with no password prompt. What sudoers entry achieves this?",
+    "options": [
+      "deployer ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart myapp, /usr/bin/systemctl status myapp",
+      "deployer ALL=(ALL) NOPASSWD: ALL",
+      "deployer ALL=(root) PASSWD: /usr/bin/systemctl * in this scenario under production constraints for the stated requirement",
+      "deployer ALL=(ALL) ALL"
+    ],
+    "correct_answer": "deployer ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart myapp, /usr/bin/systemctl status myapp",
+    "topic": "Networking and Security Basics",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "networking-and-security-basics",
+      "security"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-053",
+    "question": "A production cgroup-v2 setup limits a container to 2 CPUs and 4GB RAM. The application inside reports seeing 32 CPUs and 64GB RAM from /proc/cpuinfo and /proc/meminfo. Why?",
+    "options": [
+      "/proc/cpuinfo and /proc/meminfo reflect the host's hardware, not cgroup limits; the application should use cgroup-aware APIs or files like /sys/fs/cgroup/memory.max",
+      "The container has broken out of its cgroup constraints",
+      "cgroup-v2 does not support CPU limits",
+      "cgroups are not working correctly; restart the container runtime in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "/proc/cpuinfo and /proc/meminfo reflect the host's hardware, not cgroup limits; the application should use cgroup-aware APIs or files like /sys/fs/cgroup/memory.max",
+    "topic": "Networking and Security Basics",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "networking-and-security-basics",
+      "operations"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-054",
+    "question": "You need to set up an NFS mount from a remote server at 10.0.1.50:/shared/data to local /mnt/data with read-write access. The mount must persist across reboots and use NFSv4. What /etc/fstab entry is correct?",
+    "options": [
+      "0.1.50:/shared/data /mnt/data nfs4 rw,hard,intr 0 0",
+      "1.50:/shared/data /mnt/data nfs4 rw,hard,intr 0 0",
+      "nfs://10.0.1.50/shared/data /mnt/data auto defaults 0 0",
+      "mount -t nfs 10.0.1.50:/shared/data /mnt/data"
+    ],
+    "correct_answer": "0.1.50:/shared/data /mnt/data nfs4 rw,hard,intr 0 0",
+    "topic": "Filesystem and Permissions",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "filesystem-and-permissions"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-055",
+    "question": "In a production scenario, which option best describes the difference between SIGTERM (signal 15), SIGKILL (signal 9), and SIGHUP (signal 1)?",
+    "options": [
+      "SIGTERM requests graceful termination (can be caught/handled); SIGKILL forces immediate termination (cannot be caught); SIGHUP traditionally signals config reload or terminal hangup (can be caught)",
+      "SIGKILL is the gentlest signal; SIGTERM is the harshest",
+      "All three signals immediately terminate the process in the same way",
+      "SIGTERM is for terminals; SIGKILL is for kernel processes; SIGHUP is for network connections in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "SIGTERM requests graceful termination (can be caught/handled); SIGKILL forces immediate termination (cannot be caught); SIGHUP traditionally signals config reload or terminal hangup (can be caught)",
+    "topic": "Linux Fundamentals and CLI",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "linux-fundamentals-and-cli",
+      "scenario"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-056",
+    "question": "You need to run a long-running process that survives after you disconnect from SSH. What are the differences between nohup, screen, tmux, and disown?",
+    "options": [
+      "nohup prevents SIGHUP on disconnect but provides no reattach; screen/tmux create persistent terminal sessions you can reattach to; disown removes a running job from the shell's job table so it won't receive SIGHUP",
+      "tmux only works on Ubuntu; screen only works on CentOS",
+      "They are all identical tools",
+      "screen is deprecated in favor of nohup on all modern systems in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback"
+    ],
+    "correct_answer": "nohup prevents SIGHUP on disconnect but provides no reattach; screen/tmux create persistent terminal sessions you can reattach to; disown removes a running job from the shell's job table so it won't receive SIGHUP",
+    "topic": "Process and Service Management",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "process-and-service-management"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-057",
+    "question": "During live operations, which option best describes the 'nice' value of a process control, and what is the range of nice values on Linux?",
+    "options": [
+      "Nice controls CPU scheduling priority; range is -20 (highest priority) to 19 (lowest priority); only root can set negative nice values",
+      "Nice controls memory allocation priority; range is 1 to 10 in this scenario under production constraints for the stated requirement during incident triage",
+      "Nice controls network bandwidth; range is -100 to 100",
+      "Nice controls I/O priority; range is 0 to 100"
+    ],
+    "correct_answer": "Nice controls CPU scheduling priority; range is -20 (highest priority) to 19 (lowest priority); only root can set negative nice values",
+    "topic": "Networking and Security Basics",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "linux",
+      "networking-and-security-basics",
+      "operations"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-058",
+    "question": "A CentOS server needs to be configured as a DNS client using systemd-resolved. After changing /etc/resolv.conf, it reverts on reboot. How should DNS servers be persistently configured?",
+    "options": [
+      "Configure DNS settings in /etc/systemd/resolved.conf or via nmcli for NetworkManager-managed interfaces, as systemd-resolved regenerates resolv.conf",
+      "Add DNS entries to /etc/hosts instead",
+      "Use 'echo nameserver 8.8.8.8 >> /etc/resolv.conf' in rc.local",
+      "Edit /etc/resolv.conf with the immutable attribute (chattr +i) in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "Configure DNS settings in /etc/systemd/resolved.conf or via nmcli for NetworkManager-managed interfaces, as systemd-resolved regenerates resolv.conf",
+    "topic": "Monitoring and Troubleshooting",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "monitoring-and-troubleshooting"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-059",
+    "question": "In a production scenario, which option best describes the purpose of Linux kernel parameter 'net.ipv4.ip_forward=1'?",
+    "options": [
+      "It enables IP packet forwarding between network interfaces, turning the system into a router; required for NAT, VPN gateways, and container networking",
+      "It forwards all traffic to localhost",
+      "It enables the system to forward ICMP echo requests only in this scenario under production constraints for the stated requirement during incident triage",
+      "It enables IPv6 compatibility mode"
+    ],
+    "correct_answer": "It enables IP packet forwarding between network interfaces, turning the system into a router; required for NAT, VPN gateways, and container networking",
+    "topic": "Linux Debugging",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "kernel",
+      "linux",
+      "linux-debugging",
+      "scenario"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-060",
+    "question": "A process forks thousands of child processes rapidly, causing the system to become unresponsive (fork bomb). How can you prevent this permanently?",
+    "options": [
+      "Set per-user process limits in /etc/security/limits.conf (e.g., 'username hard nproc 500') or use systemd's LimitNPROC",
+      "Disable the fork() system call in the kernel",
+      "Set 'MaxProcesses=100' in /etc/sysctl.conf",
+      "Run 'ulimit -u 100' once as root; it persists across reboots in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "Set per-user process limits in /etc/security/limits.conf (e.g., 'username hard nproc 500') or use systemd's LimitNPROC",
+    "topic": "Linux Fundamentals and CLI",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "api",
+      "architecture",
+      "linux-fundamentals-and-cli"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-061",
+    "question": "A production defect investigation needs clarity on the correct order of the Linux boot process?",
+    "options": [
+      "BIOS/UEFI \u2192 Bootloader (GRUB) \u2192 Kernel + initramfs \u2192 Init system (systemd/init) \u2192 Userspace services",
+      "Bootloader \u2192 BIOS \u2192 Kernel \u2192 Filesystem \u2192 Network",
+      "BIOS/UEFI \u2192 Kernel \u2192 Bootloader \u2192 Init \u2192 Userspace in this scenario under production constraints for the stated requirement",
+      "UEFI \u2192 Filesystem \u2192 Kernel \u2192 GRUB \u2192 Systemd"
+    ],
+    "correct_answer": "BIOS/UEFI \u2192 Bootloader (GRUB) \u2192 Kernel + initramfs \u2192 Init system (systemd/init) \u2192 Userspace services",
+    "topic": "Linux Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux",
+      "linux-debugging"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-062",
+    "question": "After a kernel upgrade, the system fails to boot with 'Kernel panic - not syncing: VFS: Unable to mount root fs'. What is the most likely cause?",
+    "options": [
+      "The initramfs/initrd was not generated for the new kernel, so the root filesystem driver or storage drivers are not available during early boot",
+      "The bootloader is corrupted",
+      "The hard drive has failed",
+      "The root password was changed in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "The initramfs/initrd was not generated for the new kernel, so the root filesystem driver or storage drivers are not available during early boot",
+    "topic": "Process and Service Management",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "process-and-service-management"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-063",
+    "question": "A production defect investigation needs clarity on the difference between TCP keepalive and HTTP keep-alive? How do you tune TCP keepalive on Linux?",
+    "options": [
+      "TCP keepalive is a kernel-level mechanism that sends probes on idle TCP connections to detect dead peers (tuned via net.ipv4.tcp_keepalive_time/intvl/probes); HTTP keep-alive reuses a TCP connection for multiple HTTP requests - they operate at different layers",
+      "HTTP keep-alive replaces TCP keepalive on modern systems in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback for production reliability and controlled rollback",
+      "TCP keepalive only works on UDP connections",
+      "They are the same thing; both keep connections open"
+    ],
+    "correct_answer": "TCP keepalive is a kernel-level mechanism that sends probes on idle TCP connections to detect dead peers (tuned via net.ipv4.tcp_keepalive_time/intvl/probes); HTTP keep-alive reuses a TCP connection for multiple HTTP requests - they operate at different layers",
+    "topic": "Linux Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux",
+      "linux-debugging"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-064",
+    "question": "A production defect investigation needs clarity on the purpose of the /proc/sys/net/core/somaxconn parameter, and when would you increase it?",
+    "options": [
+      "It defines the maximum length of the listen backlog queue for sockets; increase it for high-connection-rate servers (e.g., web servers) to prevent connection drops during traffic spikes",
+      "It controls the DNS cache timeout",
+      "It sets the maximum number of network interfaces",
+      "It controls the maximum number of open files per process in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "It defines the maximum length of the listen backlog queue for sockets; increase it for high-connection-rate servers (e.g., web servers) to prevent connection drops during traffic spikes",
+    "topic": "Monitoring and Troubleshooting",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "monitoring-and-troubleshooting"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-065",
+    "question": "Explain the difference between /etc/environment, /etc/profile, ~/.bashrc, and ~/.bash_profile. In which order are they sourced for a login shell?",
+    "options": [
+      "For a login shell: /etc/environment (PAM) \u2192 /etc/profile \u2192 /etc/profile.d/*.sh \u2192 ~/.bash_profile (or ~/.profile); ~/.bashrc is sourced only for non-login interactive shells (but often called from.bash_profile)",
+      "They are all sourced simultaneously",
+      "/etc/environment is only for graphical sessions",
+      "~/.bashrc is always sourced first, then /etc/profile in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback"
+    ],
+    "correct_answer": "For a login shell: /etc/environment (PAM) \u2192 /etc/profile \u2192 /etc/profile.d/*.sh \u2192 ~/.bash_profile (or ~/.profile); ~/.bashrc is sourced only for non-login interactive shells (but often called from.bash_profile)",
+    "topic": "Shell Scripting and Automation",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "shell-scripting-and-automation"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-066",
+    "question": "A production defect investigation needs clarity on the difference between a hard link and a soft (symbolic) link in Linux?",
+    "options": [
+      "A hard link is a directory entry pointing to the same inode (same data blocks); a soft link is a special file containing the path to the target - it breaks if the target is moved/deleted, and works across filesystems",
+      "Soft links share the same inode as the target; hard links create a copy in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "Hard links work across filesystems; soft links do not",
+      "There is no practical difference between them"
+    ],
+    "correct_answer": "A hard link is a directory entry pointing to the same inode (same data blocks); a soft link is a special file containing the path to the target - it breaks if the target is moved/deleted, and works across filesystems",
+    "topic": "Networking and Security Basics",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux",
+      "networking-and-security-basics"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-067",
+    "question": "A production defect investigation needs clarity on the difference between /dev/null, /dev/zero, and /dev/urandom?",
+    "options": [
+      "/dev/null discards all data written to it; /dev/zero produces an infinite stream of zero bytes (for disk wiping, file creation); /dev/urandom provides cryptographically secure pseudorandom bytes",
+      "/dev/null produces random data; /dev/zero discards data; /dev/urandom produces zeros in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "They are all identical devices that discard data",
+      "/dev/zero is for zeroing network connections; /dev/null is for zeroing disks"
+    ],
+    "correct_answer": "/dev/null discards all data written to it; /dev/zero produces an infinite stream of zero bytes (for disk wiping, file creation); /dev/urandom provides cryptographically secure pseudorandom bytes",
+    "topic": "Filesystem and Permissions",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "filesystem-and-permissions"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-068",
+    "question": "A system boots to a GRUB rescue prompt. How do you boot into single-user mode for recovery?",
+    "options": [
+      "Edit the GRUB boot entry (press 'e'), find the 'linux' line, append 'single' or 'init=/bin/bash' or 'systemd.unit=rescue.target', then boot with Ctrl+X",
+      "Press F8 repeatedly during boot",
+      "Type 'rescue' at the GRUB prompt",
+      "Boot from a USB drive and run 'grub-repair' in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "Edit the GRUB boot entry (press 'e'), find the 'linux' line, append 'single' or 'init=/bin/bash' or 'systemd.unit=rescue.target', then boot with Ctrl+X",
+    "topic": "Process and Service Management",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "process-and-service-management"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-069",
+    "question": "A production defect investigation needs clarity on the difference between 'useradd' and 'adduser' on Debian/Ubuntu systems?",
+    "options": [
+      "'useradd' is a low-level binary that creates users with minimal defaults (no home dir unless -m is specified); 'adduser' is a higher-level Perl script that interactively creates users with home directory, shell, and password prompts",
+      "'adduser' is deprecated in favor of 'useradd'",
+      "'useradd' creates system users; 'adduser' creates regular users only in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback",
+      "They are exactly the same command"
+    ],
+    "correct_answer": "'useradd' is a low-level binary that creates users with minimal defaults (no home dir unless -m is specified); 'adduser' is a higher-level Perl script that interactively creates users with home directory, shell, and password prompts",
+    "topic": "Process and Service Management",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "process-and-service-management"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-070",
+    "question": "You run 'sysctl -a | grep net.core.rmem_max' and it shows 212992 (208KB). Your application requires large UDP receive buffers of 4MB. What do you need to do?",
+    "options": [
+      "Set net.core.rmem_max=4194304 via sysctl and configure the application to request the larger buffer with SO_RCVBUF",
+      "Increase the application's thread count to handle packets faster in this scenario under production constraints for the stated requirement",
+      "Install a faster network card",
+      "Change the MTU to 9000 to increase buffer size"
+    ],
+    "correct_answer": "Set net.core.rmem_max=4194304 via sysctl and configure the application to request the larger buffer with SO_RCVBUF",
+    "topic": "Filesystem and Permissions",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "filesystem-and-permissions"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-071",
+    "question": "You need to allow only IP ranges 10.0.0.0/8 and 192.168.1.0/24 to access port 443, and block all other inbound traffic. Using iptables, what is the correct rule sequence?",
+    "options": [
+      "iptables -A INPUT -s 10.0.0.0/8 -p tcp --dport 443 -j ACCEPT; iptables -A INPUT -s 192.168.1.0/24 -p tcp --dport 443 -j ACCEPT; iptables -A INPUT -p tcp --dport 443 -j DROP",
+      "iptables -A INPUT -p tcp --dport 443 -j ACCEPT",
+      "iptables -A OUTPUT -s 10.0.0.0/8 -p tcp --dport 443 -j ACCEPT",
+      "iptables -A INPUT -j DROP; iptables -A INPUT -s 10.0.0.0/8 -p tcp --dport 443 -j ACCEPT in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "iptables -A INPUT -s 10.0.0.0/8 -p tcp --dport 443 -j ACCEPT; iptables -A INPUT -s 192.168.1.0/24 -p tcp --dport 443 -j ACCEPT; iptables -A INPUT -p tcp --dport 443 -j DROP",
+    "topic": "Linux Fundamentals and CLI",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux-fundamentals-and-cli"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-072",
+    "question": "A production defect investigation needs clarity on the purpose of the /proc/sys/kernel/core_pattern setting, and how would you configure it to capture core dumps for debugging production crashes?",
+    "options": [
+      "It defines the filename pattern and location for core dump files when a process crashes; set it to a path like '/var/coredumps/core.%e.%p.%t' to capture dumps with executable name, PID, and timestamp - also ensure ulimit -c is set to unlimited",
+      "It controls the CPU core affinity pattern for processes in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback",
+      "It controls how kernel modules are loaded",
+      "It sets the pattern for kernel boot parameters"
+    ],
+    "correct_answer": "It defines the filename pattern and location for core dump files when a process crashes; set it to a path like '/var/coredumps/core.%e.%p.%t' to capture dumps with executable name, PID, and timestamp - also ensure ulimit -c is set to unlimited",
+    "topic": "Linux Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "linux-debugging"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-073",
+    "question": "You're troubleshooting intermittent 'connection refused' errors to a service on port 8080. 'ss -tlnp' confirms the service is listening. 'conntrack -L' shows the conntrack table is full. What is likely happening?",
+    "options": [
+      "The kernel's connection tracking table (nf_conntrack) is full, causing new connections to be dropped; increase net.netfilter.nf_conntrack_max",
+      "The client is using the wrong protocol in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "The service process has crashed",
+      "Port 8080 is blocked by SELinux"
+    ],
+    "correct_answer": "The kernel's connection tracking table (nf_conntrack) is full, causing new connections to be dropped; increase net.netfilter.nf_conntrack_max",
+    "topic": "Linux Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux-debugging"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-074",
+    "question": "A production defect investigation needs clarity on the 'ldd' command do, and why should you never run it on untrusted binaries?",
+    "options": [
+      "ldd lists shared library dependencies of a binary; on some systems it may actually execute the binary's dynamic linker, potentially running malicious code in untrusted binaries",
+      "ldd checks for logical disk damage; it's always safe",
+      "ldd lists directory contents in detail; security is not a concern in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "ldd lists disk drive partitions; it's safe to run on any file"
+    ],
+    "correct_answer": "ldd lists shared library dependencies of a binary; on some systems it may actually execute the binary's dynamic linker, potentially running malicious code in untrusted binaries",
+    "topic": "Filesystem and Permissions",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "filesystem-and-permissions"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-075",
+    "question": "A server's /var/log/messages shows 'kernel: TCP: request_sock_TCP: Possible SYN flooding on port 80. Sending cookies.' What is happening and what tuning can help?",
+    "options": [
+      "The server is under a SYN flood attack or experiencing high legitimate connection rates; net.ipv4.tcp_syncookies=1 (already enabled) helps, and increasing net.ipv4.tcp_max_syn_backlog and net.core.somaxconn can handle more concurrent half-open connections",
+      "The server needs more RAM to handle TCP connections",
+      "Port 80 is blocked by the firewall",
+      "The HTTP server is misconfigured and sending bad responses in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback"
+    ],
+    "correct_answer": "The server is under a SYN flood attack or experiencing high legitimate connection rates; net.ipv4.tcp_syncookies=1 (already enabled) helps, and increasing net.ipv4.tcp_max_syn_backlog and net.core.somaxconn can handle more concurrent half-open connections",
+    "topic": "Linux Fundamentals and CLI",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "linux-fundamentals-and-cli"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-076",
+    "question": "You need to check if a remote server's port 5432 is reachable from your machine but nc/ncat/telnet are not installed. Which alternative approaches can you use?",
+    "options": [
+      "Use 'bash -c echo >/dev/tcp/server/5432' (bash built-in), 'curl -v telnet://server:5432', or 'python3 -c \"import socket; s=socket.socket(); s.connect(('server',5432))\"'",
+      "Use 'ping server:5432' to test the port",
+      "There is no way to test TCP connectivity without nc or telnet",
+      "Use 'traceroute -p 5432 server' (traceroute tests ICMP, not TCP ports) in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "Use 'bash -c echo >/dev/tcp/server/5432' (bash built-in), 'curl -v telnet://server:5432', or 'python3 -c \"import socket; s=socket.socket(); s.connect(('server',5432))\"'",
+    "topic": "Linux Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "linux-debugging"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-077",
+    "question": "In a production scenario, which option best describes the difference between a 'bind mount' and a regular mount in Linux? When would you use a bind mount?",
+    "options": [
+      "A bind mount makes an existing directory tree visible at another mount point (same filesystem, no block device); useful for exposing host paths into chroot/container environments or creating alternative access points",
+      "A bind mount encrypts the mounted directory; a regular mount does not",
+      "Bind mounts only work with NFS filesystems",
+      "A bind mount is faster than a regular mount because it skips filesystem checks in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "A bind mount makes an existing directory tree visible at another mount point (same filesystem, no block device); useful for exposing host paths into chroot/container environments or creating alternative access points",
+    "topic": "Linux Debugging",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "linux",
+      "linux-debugging",
+      "scenario"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-078",
+    "question": "You run 'perf top' on a production server and notice a kernel function '__do_page_fault' consuming 25% CPU. What does this indicate?",
+    "options": [
+      "The system is experiencing excessive page faults, likely due to memory pressure, large memory-mapped files, or an application accessing memory patterns that cause frequent TLB misses",
+      "The CPU is overheating and throttling",
+      "The network stack is processing too many packets in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "The disk is failing with bad sectors"
+    ],
+    "correct_answer": "The system is experiencing excessive page faults, likely due to memory pressure, large memory-mapped files, or an application accessing memory patterns that cause frequent TLB misses",
+    "topic": "Linux Debugging",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "kernel",
+      "linux-debugging"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-079",
+    "question": "You need to transfer a 50GB database dump between two servers. The network bandwidth is 1Gbps but rsync is only achieving 200Mbps. What could improve transfer speed?",
+    "options": [
+      "rsync's SSH encryption adds overhead; try rsync with --compress disabled (already compressed data), use a faster cipher (-e 'ssh -c aes128-gcm@openssh.com'), or use rsync daemon mode (no SSH) on a trusted network",
+      "Use scp instead; it's always faster than rsync",
+      "Use 'cp' command over NFS; it's faster than rsync in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback",
+      "Increase the server's RAM to 128GB"
+    ],
+    "correct_answer": "rsync's SSH encryption adds overhead; try rsync with --compress disabled (already compressed data), use a faster cipher (-e 'ssh -c aes128-gcm@openssh.com'), or use rsync daemon mode (no SSH) on a trusted network",
+    "topic": "Monitoring and Troubleshooting",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "monitoring-and-troubleshooting",
+      "operations"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-080",
+    "question": "What is the purpose of the /etc/nsswitch.conf file, and what does 'hosts: files dns myhostname' mean?",
+    "options": [
+      "nsswitch.conf controls the order of name resolution sources; 'hosts: files dns myhostname' means: first check /etc/hosts, then DNS servers, then the local hostname - this ordering determines how hostnames are resolved",
+      "It configures network switch VLAN settings",
+      "It controls which users can access DNS services in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback",
+      "It configures NFS switch parameters"
+    ],
+    "correct_answer": "nsswitch.conf controls the order of name resolution sources; 'hosts: files dns myhostname' means: first check /etc/hosts, then DNS servers, then the local hostname - this ordering determines how hostnames are resolved",
+    "topic": "Monitoring and Troubleshooting",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "monitoring-and-troubleshooting"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-081",
+    "question": "A server experiences a sudden disk performance drop. 'smartctl -a /dev/sda' shows 'Reallocated_Sector_Ct' increasing and 'Current_Pending_Sector' at 48. What action should you take?",
+    "options": [
+      "The disk is developing bad sectors and likely failing; plan an immediate replacement, ensure backups are current, and consider putting the RAID array into a degraded state for proactive swap",
+      "Increase the disk's write cache to improve performance in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "Reformat the disk to fix the bad sectors",
+      "Run fsck to repair the sectors"
+    ],
+    "correct_answer": "The disk is developing bad sectors and likely failing; plan an immediate replacement, ensure backups are current, and consider putting the RAID array into a degraded state for proactive swap",
+    "topic": "Filesystem and Permissions",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "filesystem-and-permissions",
+      "performance",
+      "scenario"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-082",
+    "question": "You need to configure log rotation for an application that writes to /var/log/myapp/app.log. The requirements are: rotate daily, keep 30 days, compress rotated files, and signal the application to reopen log files after rotation. Which logrotate configuration achieves this?",
+    "options": [
+      "/var/log/myapp/app.log { daily rotate 30 compress delaycompress missingok notifempty postrotate /usr/bin/systemctl reload myapp endscript }",
+      "/var/log/myapp/app.log { monthly rotate 30 nocompress } in this scenario under production constraints for the stated requirement during incident triage",
+      "crontab: 0 0 * * * gzip /var/log/myapp/app.log",
+      "/var/log/myapp/app.log { yearly rotate 1 }"
+    ],
+    "correct_answer": "/var/log/myapp/app.log { daily rotate 30 compress delaycompress missingok notifempty postrotate /usr/bin/systemctl reload myapp endscript }",
+    "topic": "Networking and Security Basics",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "networking-and-security-basics"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-083",
+    "question": "During live operations, which option best describes the difference between ACLs (Access Control Lists) and traditional Unix permissions? When would you use ACLs?",
+    "options": [
+      "ACLs extend Unix permissions by allowing fine-grained access for multiple specific users and groups on a single file - useful when the owner/group/other model is insufficient, e.g., granting read access to two different groups",
+      "ACLs replace Unix permissions entirely; you can only use one system in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback",
+      "ACLs are identical to Unix permissions but use different syntax",
+      "ACLs only work on NFS filesystems"
+    ],
+    "correct_answer": "ACLs extend Unix permissions by allowing fine-grained access for multiple specific users and groups on a single file - useful when the owner/group/other model is insufficient, e.g., granting read access to two different groups",
+    "topic": "Linux Debugging",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "linux-debugging",
+      "operations"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-084",
+    "question": "A process is stuck and not responding but hasn't crashed. 'strace -p <pid>' shows it's blocked on a futex() call. What does this suggest during a production incident with strict reliability requirements?",
+    "options": [
+      "The process is waiting on a userspace lock (mutex/semaphore), likely a deadlock or contention issue",
+      "The filesystem is read-only",
+      "The process is performing a DNS lookup",
+      "The process has exceeded its CPU time limit in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "The process is waiting on a userspace lock (mutex/semaphore), likely a deadlock or contention issue",
+    "topic": "Linux Debugging",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "linux-debugging"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-085",
+    "question": "In a production workflow, a CentOS server needs to be configured as a DNS client using systemd-resolved. After changing /etc/resolv.conf, it reverts on reboot. How should DNS servers be persistently configured during a production incident with strict reliability requirements?",
+    "options": [
+      "Configure DNS settings in /etc/systemd/resolved.conf or via nmcli for NetworkManager-managed interfaces, as systemd-resolved regenerates resolv.conf",
+      "Add DNS entries to /etc/hosts instead",
+      "Use 'echo nameserver 8.8.8.8 >> /etc/resolv.conf' in rc.local",
+      "Edit /etc/resolv.conf with the immutable attribute (chattr +i) in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "Configure DNS settings in /etc/systemd/resolved.conf or via nmcli for NetworkManager-managed interfaces, as systemd-resolved regenerates resolv.conf",
+    "topic": "Monitoring and Troubleshooting",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "monitoring-and-troubleshooting",
+      "scenario"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-086",
+    "question": "During architecture review, a process forks thousands of child processes rapidly, causing the system to become unresponsive (fork bomb). How can you prevent this permanently during a production incident with strict reliability requirements?",
+    "options": [
+      "Set per-user process limits in /etc/security/limits.conf (e.g., 'username hard nproc 500') or use systemd's LimitNPROC",
+      "Disable the fork() system call in the kernel",
+      "Set 'MaxProcesses=100' in /etc/sysctl.conf",
+      "Run 'ulimit -u 100' once as root; it persists across reboots in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "Set per-user process limits in /etc/security/limits.conf (e.g., 'username hard nproc 500') or use systemd's LimitNPROC",
+    "topic": "Process and Service Management",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "api",
+      "architecture",
+      "process-and-service-management"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-087",
+    "question": "In live operations, what are Linux namespaces, and which namespace types are used by containers to provide isolation during a production incident with strict reliability requirements?",
+    "options": [
+      "Namespaces isolate kernel resources per process group: PID (process IDs), NET (network stack), MNT (mount points), UTS (hostname), IPC (inter-process communication), USER (UID/GID mapping), and CGROUP",
+      "Namespaces are DNS zones; containers use them for name resolution in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "Namespaces are filesystem partitions assigned to each container",
+      "Namespaces are only used by KVM virtual machines, not containers"
+    ],
+    "correct_answer": "Namespaces isolate kernel resources per process group: PID (process IDs), NET (network stack), MNT (mount points), UTS (hostname), IPC (inter-process communication), USER (UID/GID mapping), and CGROUP",
+    "topic": "Linux Debugging",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "linux",
+      "linux-debugging",
+      "operations"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-088",
+    "question": "Explain the difference between /etc/environment, /etc/profile, ~/.bashrc, and ~/.bash_profile. In which order are they sourced for a login shell during a production incident with strict reliability requirements?",
+    "options": [
+      "For a login shell: /etc/environment (PAM) \u2192 /etc/profile \u2192 /etc/profile.d/*.sh \u2192 ~/.bash_profile (or ~/.profile); ~/.bashrc is sourced only for non-login interactive shells (but often called from.bash_profile)",
+      "They are all sourced simultaneously",
+      "/etc/environment is only for graphical sessions",
+      "~/.bashrc is always sourced first, then /etc/profile in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback"
+    ],
+    "correct_answer": "For a login shell: /etc/environment (PAM) \u2192 /etc/profile \u2192 /etc/profile.d/*.sh \u2192 ~/.bash_profile (or ~/.profile); ~/.bashrc is sourced only for non-login interactive shells (but often called from.bash_profile)",
+    "topic": "Shell Scripting and Automation",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "shell-scripting-and-automation"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-089",
+    "question": "In a production workflow, in a bash script, what is the difference between 'exec > /var/log/script.log 2>&1' and simply redirecting individual commands during a production incident with strict reliability requirements?",
+    "options": [
+      "'exec' replaces the shell's own stdout/stderr file descriptors, so ALL subsequent output in the script goes to the log file without needing per-command redirects",
+      "There is no difference; both achieve the same result in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "'exec' runs the script in a subshell",
+      "'exec' only redirects errors, not standard output"
+    ],
+    "correct_answer": "'exec' replaces the shell's own stdout/stderr file descriptors, so ALL subsequent output in the script goes to the log file without needing per-command redirects",
+    "topic": "Shell Scripting and Automation",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "shell-scripting-and-automation"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-090",
+    "question": "During architecture review, a production cgroup-v2 setup limits a container to 2 CPUs and 4GB RAM. The application inside reports seeing 32 CPUs and 64GB RAM from /proc/cpuinfo and /proc/meminfo. Why during a production incident with strict reliability requirements?",
+    "options": [
+      "/proc/cpuinfo and /proc/meminfo reflect the host's hardware, not cgroup limits; the application should use cgroup-aware APIs or files like /sys/fs/cgroup/memory.max",
+      "The container has broken out of its cgroup constraints",
+      "cgroup-v2 does not support CPU limits",
+      "cgroups are not working correctly; restart the container runtime in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "/proc/cpuinfo and /proc/meminfo reflect the host's hardware, not cgroup limits; the application should use cgroup-aware APIs or files like /sys/fs/cgroup/memory.max",
+    "topic": "Filesystem and Permissions",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "filesystem-and-permissions"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-091",
+    "question": "In live operations, a production server shows a filesystem at 100% usage but 'du -sh /*' reports only 60% used. What could explain this discrepancy during a production incident with strict reliability requirements?",
+    "options": [
+      "Deleted files are still held open by running processes, consuming space not visible to du; use 'lsof +L1' to find them",
+      "The 'du' command is inaccurate on ext4 filesystems",
+      "The filesystem has bad sectors hiding the actual usage",
+      "Reserved blocks for root (typically 5%) account for 40% of disk space in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "Deleted files are still held open by running processes, consuming space not visible to du; use 'lsof +L1' to find them",
+    "topic": "Filesystem and Permissions",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "filesystem-and-permissions",
+      "operations"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-092",
+    "question": "A server experiences a sudden disk performance drop. 'smartctl -a /dev/sda' shows 'Reallocated_Sector_Ct' increasing and 'Current_Pending_Sector' at 48. What action should you take during a production incident with strict reliability requirements?",
+    "options": [
+      "The disk is developing bad sectors and likely failing; plan an immediate replacement, ensure backups are current, and consider putting the RAID array into a degraded state for proactive swap",
+      "Increase the disk's write cache to improve performance in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "Reformat the disk to fix the bad sectors",
+      "Run fsck to repair the sectors"
+    ],
+    "correct_answer": "The disk is developing bad sectors and likely failing; plan an immediate replacement, ensure backups are current, and consider putting the RAID array into a degraded state for proactive swap",
+    "topic": "Filesystem and Permissions",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "filesystem-and-permissions",
+      "performance"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-093",
+    "question": "In a production workflow, a Java application's response times have degraded. You notice the system's swap usage is at 6GB despite 32GB physical RAM. 'vmstat 1' shows high si/so values. What is happening and what should you check first during a production incident with strict reliability requirements?",
+    "options": [
+      "The system is thrashing - memory is overcommitted and pages are constantly swapping in/out; check per-process RSS with 'ps aux --sort=-rss'",
+      "The kernel is proactively caching swap; this is normal behavior",
+      "Swap is being used as additional RAM intentionally; increase swap to 12GB in this scenario under production constraints for the stated requirement",
+      "The Java application has a file descriptor leak causing swap usage"
+    ],
+    "correct_answer": "The system is thrashing - memory is overcommitted and pages are constantly swapping in/out; check per-process RSS with 'ps aux --sort=-rss'",
+    "topic": "Linux Fundamentals and CLI",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "linux-fundamentals-and-cli",
+      "scenario"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-094",
+    "question": "During architecture review, a colleague ran 'chmod -R 777 /' on a production server before being stopped. Beyond the obvious security implications, which critical system functionality will break during a production incident with strict reliability requirements?",
+    "options": [
+      "SSH will refuse to work (sshd requires strict permissions on /etc/ssh/), sudo may fail, cron jobs may not run, and any SUID/SGID binaries lose their special bits - effectively breaking authentication and privilege escalation",
+      "Only web server files are affected",
+      "The system will immediately kernel panic in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback for production reliability and controlled rollback",
+      "Only user home directories are affected"
+    ],
+    "correct_answer": "SSH will refuse to work (sshd requires strict permissions on /etc/ssh/), sudo may fail, cron jobs may not run, and any SUID/SGID binaries lose their special bits - effectively breaking authentication and privilege escalation",
+    "topic": "Networking and Security Basics",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "networking-and-security-basics",
+      "security"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-095",
+    "question": "In live operations, during live operations, which option best describes 'set -euo pipefail' at the top of a bash script do, and why is it considered best practice during a production incident with strict reliability requirements?",
+    "options": [
+      "-e exits on any command failure; -u treats unset variables as errors; -o pipefail causes a pipeline to fail if any command in the pipe fails (not just the last one)",
+      "It enables parallel execution of commands in the script in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "It enables verbose output for debugging",
+      "It sets environment variables for Unicode support"
+    ],
+    "correct_answer": "-e exits on any command failure; -u treats unset variables as errors; -o pipefail causes a pipeline to fail if any command in the pipe fails (not just the last one)",
+    "topic": "Shell Scripting and Automation",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "shell-scripting-and-automation"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-096",
+    "question": "A production database server has vm.swappiness set to 60 (default). The DBA complains about unpredictable latency spikes. What tuning would you recommend and why during a production incident with strict reliability requirements?",
+    "options": [
+      "Set vm.swappiness=1 or lower to strongly prefer reclaiming page cache over swapping out application memory, reducing latency spikes",
+      "Set vm.swappiness=60 is optimal for all workloads; investigate elsewhere",
+      "Set vm.swappiness=100 to maximize I/O throughput",
+      "Disable swap entirely with swapoff; this is always the best approach for databases in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "Set vm.swappiness=1 or lower to strongly prefer reclaiming page cache over swapping out application memory, reducing latency spikes",
+    "topic": "Process and Service Management",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "process-and-service-management"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-097",
+    "question": "In a production workflow, a server has a RAID-5 array with 4 disks, and one disk fails. During rebuild with a hot spare, a second disk fails. What happens during a production incident with strict reliability requirements?",
+    "options": [
+      "The array fails completely and data is lost; RAID-5 can tolerate only one disk failure at a time",
+      "Data is preserved because the hot spare already has a complete copy in this scenario under production constraints",
+      "The array continues operating normally with degraded performance",
+      "The array automatically switches to RAID-1 mode"
+    ],
+    "correct_answer": "The array fails completely and data is lost; RAID-5 can tolerate only one disk failure at a time",
+    "topic": "Filesystem and Permissions",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "filesystem-and-permissions",
+      "scenario"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-098",
+    "question": "During architecture review, a server is running out of file descriptors and 'ulimit -n' shows 1024. You need to increase the limit to 65535 for a specific service running under systemd. Where should you configure this during a production incident with strict reliability requirements?",
+    "options": [
+      "In the systemd unit file using LimitNOFILE=65535, since systemd-managed services do not inherit limits.conf",
+      "By running 'ulimit -n 65535' in the service startup script in this scenario under production constraints for the stated requirement",
+      "Only in /etc/security/limits.conf under the user's entry",
+      "In /etc/sysctl.conf using fs.file-max=65535"
+    ],
+    "correct_answer": "In the systemd unit file using LimitNOFILE=65535, since systemd-managed services do not inherit limits.conf",
+    "topic": "Process and Service Management",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "process-and-service-management"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-099",
+    "question": "In live operations, a compromised server had an attacker add a cron job. Where should you check for persistence mechanisms beyond /etc/crontab during a production incident with strict reliability requirements?",
+    "options": [
+      "Check /var/spool/cron/crontabs/, /etc/cron.d/, /etc/cron.{daily,weekly,monthly}/, user crontabs, systemd timers, and ~/.bashrc/.profile for backdoors",
+      "Only check /tmp for suspicious scripts",
+      "Only /etc/crontab needs to be checked",
+      "Run 'crontab -l' as root only; that shows everything in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "Check /var/spool/cron/crontabs/, /etc/cron.d/, /etc/cron.{daily,weekly,monthly}/, user crontabs, systemd timers, and ~/.bashrc/.profile for backdoors",
+    "topic": "Networking and Security Basics",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "networking-and-security-basics",
+      "operations"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  },
+  {
+    "id": "linux-linux-fundamentals-enterprise-100",
+    "question": "A service is in 'failed' state after a crash. You want it to automatically restart on failure with a 5-second delay. Which systemd unit directives achieve this during a production incident with strict reliability requirements?",
+    "options": [
+      "Restart=on-failure and RestartSec=5 in the [Service] section",
+      "ExecRestart=/bin/sleep 5 in the [Unit] section in this scenario",
+      "WatchdogSec=5 and FailureAction=restart",
+      "AutoRestart=true and Delay=5"
+    ],
+    "correct_answer": "Restart=on-failure and RestartSec=5 in the [Service] section",
+    "topic": "Process and Service Management",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "process-and-service-management"
+    ],
+    "role_target": "linux_shared",
+    "round_target": "L1",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "bash"
+    ]
+  }
+]

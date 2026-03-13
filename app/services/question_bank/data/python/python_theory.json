@@ -2,8 +2,8 @@
   {
     "question": "What is the output of: print(type(3.14).__name__)",
     "options": [
-      "double",
       "float",
+      "double",
       "number",
       "int"
     ],
@@ -14,12 +14,12 @@
   {
     "question": "Which keyword is used to define a function in Python?",
     "options": [
-      "function",
-      "def",
+      "def in enterprise environments",
+      "function in enterprise environments",
       "func",
       "define"
     ],
-    "correct_answer": "def",
+    "correct_answer": "def in enterprise environments",
     "topic": "Functions",
     "difficulty": "easy"
   },
@@ -38,8 +38,8 @@
   {
     "question": "Which data type is mutable in Python?",
     "options": [
-      "str",
       "list",
+      "str",
       "tuple",
       "int"
     ],
@@ -62,9 +62,9 @@
   {
     "question": "Which method adds an element to the end of a list?",
     "options": [
+      "append()",
       "add()",
       "extend()",
-      "append()",
       "insert()"
     ],
     "correct_answer": "append()",
@@ -87,7 +87,7 @@
     "question": "What is the output of: print(bool(0))",
     "options": [
       "False",
-      "None",
+      "None under production constraints",
       "True",
       "0"
     ],
@@ -98,22 +98,22 @@
   {
     "question": "Which of these creates a dictionary?",
     "options": [
-      "{1, 2, 3}",
+      "{'a': 1} in enterprise environments",
+      "{1, 2, 3} in enterprise environments",
       "(1, 2, 3)",
-      "[1, 2, 3]",
-      "{'a': 1}"
+      "[1, 2, 3]"
     ],
-    "correct_answer": "{'a': 1}",
+    "correct_answer": "{'a': 1} in enterprise environments",
     "topic": "Data Types",
     "difficulty": "easy"
   },
   {
     "question": "What is the output of: print('hello'[1])",
     "options": [
+      "e",
       "l",
       "o",
-      "h",
-      "e"
+      "h"
     ],
     "correct_answer": "e",
     "topic": "Strings",
@@ -122,20 +122,20 @@
   {
     "question": "Which loop is used for iterating over a sequence?",
     "options": [
-      "do-while",
-      "for",
+      "for in enterprise environments",
+      "do-while in enterprise environments",
       "foreach",
       "while"
     ],
-    "correct_answer": "for",
+    "correct_answer": "for in enterprise environments",
     "topic": "Control Flow",
     "difficulty": "easy"
   },
   {
     "question": "What does range(5) generate?",
     "options": [
-      "1 to 4",
       "0 to 4",
+      "1 to 4",
       "0 to 5",
       "1 to 5"
     ],
@@ -146,8 +146,8 @@
   {
     "question": "Which operator is used for exponentiation?",
     "options": [
-      "%%",
       "**",
+      "%%",
       "^",
       "//"
     ],
@@ -170,22 +170,22 @@
   {
     "question": "How do you start a comment in Python?",
     "options": [
-      "//",
-      "#",
+      "# in enterprise environments",
+      "// in enterprise environments",
       "--",
       "/*"
     ],
-    "correct_answer": "#",
+    "correct_answer": "# in enterprise environments",
     "topic": "Syntax",
     "difficulty": "easy"
   },
   {
     "question": "What does str(123) return?",
     "options": [
+      "'123'",
       "error",
       "123",
-      "int",
-      "'123'"
+      "int"
     ],
     "correct_answer": "'123'",
     "topic": "Type Conversion",
@@ -194,9 +194,9 @@
   {
     "question": "What does a function return if there is no return statement?",
     "options": [
+      "None",
       "False",
       "empty string",
-      "None",
       "0"
     ],
     "correct_answer": "None",
@@ -206,21 +206,21 @@
   {
     "question": "Which method removes the last element from a list?",
     "options": [
-      "pop()",
-      "discard()",
+      "pop() in enterprise environments",
+      "discard() in enterprise environments",
       "remove()",
       "delete()"
     ],
-    "correct_answer": "pop()",
+    "correct_answer": "pop() in enterprise environments",
     "topic": "Lists",
     "difficulty": "easy"
   },
   {
     "question": "What is the output of: print(2 ** 3)",
     "options": [
+      "8",
       "9",
       "5",
-      "8",
       "6"
     ],
     "correct_answer": "8",
@@ -230,8 +230,8 @@
   {
     "question": "Which keyword is used to handle exceptions?",
     "options": [
-      "catch",
       "except",
+      "catch",
       "handle",
       "error"
     ],
@@ -242,10 +242,10 @@
   {
     "question": "What is the output of: print('py' * 3)",
     "options": [
+      "pypypy",
       "py3",
       "py py py",
-      "error",
-      "pypypy"
+      "error"
     ],
     "correct_answer": "pypypy",
     "topic": "Strings",
@@ -254,10 +254,10 @@
   {
     "question": "What does the 'in' keyword check?",
     "options": [
-      "data type",
+      "membership",
+      "data type under production constraints",
       "equality",
-      "identity",
-      "membership"
+      "identity"
     ],
     "correct_answer": "membership",
     "topic": "Operators",
@@ -278,10 +278,10 @@
   {
     "question": "What is the output of: print(10 // 3)",
     "options": [
+      "3",
       "4",
       "1",
-      "3.33",
-      "3"
+      "3.33"
     ],
     "correct_answer": "3",
     "topic": "Operators",
@@ -290,22 +290,22 @@
   {
     "question": "Which of the following is an immutable type?",
     "options": [
+      "tuple",
       "set",
-      "list",
-      "dict",
-      "tuple"
+      "list under production constraints",
+      "dict"
     ],
     "correct_answer": "tuple",
     "topic": "Data Types",
     "difficulty": "easy"
   },
   {
-    "question": "What does .strip() do to a string?",
+    "question": "What does.strip() do to a string?",
     "options": [
+      "Removes whitespace",
       "Reverses it",
-      "Lowercases it",
-      "Splits it",
-      "Removes whitespace"
+      "Lowercases it under production constraints",
+      "Splits it"
     ],
     "correct_answer": "Removes whitespace",
     "topic": "Strings",
@@ -314,9 +314,9 @@
   {
     "question": "What is the output of: print(not True)",
     "options": [
+      "False",
       "Error",
       "None",
-      "False",
       "True"
     ],
     "correct_answer": "False",
@@ -338,8 +338,8 @@
   {
     "question": "What does break do inside a loop?",
     "options": [
-      "Does nothing",
       "Exits the loop",
+      "Does nothing",
       "Skips one cycle",
       "Restarts loop"
     ],
@@ -350,9 +350,9 @@
   {
     "question": "What is the output of: print([1,2,3][-1])",
     "options": [
+      "3",
       "1",
       "2",
-      "3",
       "Error"
     ],
     "correct_answer": "3",
@@ -362,10 +362,10 @@
   {
     "question": "How do you create an empty set in Python?",
     "options": [
-      "[]",
+      "set()",
+      "[] under production constraints",
       "{}",
-      "()",
-      "set()"
+      "()"
     ],
     "correct_answer": "set()",
     "topic": "Data Types",
@@ -374,22 +374,22 @@
   {
     "question": "What is the output of: print('Hello'.lower())",
     "options": [
-      "Hello",
-      "hELLO",
-      "hello",
-      "HELLO"
+      "Hello in enterprise environments for large-scale systems",
+      "Prioritize correctness and resilience in enterprise environments",
+      "Validate behavior under concurrency",
+      "Use observability-driven diagnosis"
     ],
-    "correct_answer": "hello",
+    "correct_answer": "Hello in enterprise environments for large-scale systems",
     "topic": "Strings",
     "difficulty": "easy"
   },
   {
     "question": "Which statement is used to skip the current iteration?",
     "options": [
+      "continue",
       "break",
       "pass",
-      "continue",
-      "return"
+      "return under production constraints"
     ],
     "correct_answer": "continue",
     "topic": "Control Flow",
@@ -398,10 +398,10 @@
   {
     "question": "What does input() return by default?",
     "options": [
+      "str",
       "float",
       "bool",
-      "int",
-      "str"
+      "int"
     ],
     "correct_answer": "str",
     "topic": "Built-in Functions",
@@ -410,9 +410,9 @@
   {
     "question": "What is the output of: print(5 == 5.0)",
     "options": [
+      "True",
       "False",
       "Error",
-      "True",
       "None"
     ],
     "correct_answer": "True",
@@ -422,21 +422,21 @@
   {
     "question": "Which keyword creates a class in Python?",
     "options": [
-      "class",
-      "object",
+      "class in enterprise environments",
+      "object in enterprise environments",
       "define",
       "struct"
     ],
-    "correct_answer": "class",
+    "correct_answer": "class in enterprise environments",
     "topic": "OOP",
     "difficulty": "easy"
   },
   {
     "question": "What is the output of: print(list('abc'))",
     "options": [
+      "['a','b','c']",
       "['abc']",
       "abc",
-      "['a','b','c']",
       "('a','b','c')"
     ],
     "correct_answer": "['a','b','c']",
@@ -446,9 +446,9 @@
   {
     "question": "Which method returns all dictionary keys?",
     "options": [
+      ".keys()",
       ".values()",
       ".items()",
-      ".keys()",
       ".get()"
     ],
     "correct_answer": ".keys()",
@@ -470,8 +470,8 @@
   {
     "question": "What is the output of: print(bool(''))",
     "options": [
-      "Error",
       "False",
+      "Error",
       "None",
       "True"
     ],
@@ -482,20 +482,20 @@
   {
     "question": "Which module provides mathematical functions?",
     "options": [
+      "math",
       "random",
       "os",
-      "sys",
-      "math"
+      "sys"
     ],
     "correct_answer": "math",
     "topic": "Modules",
     "difficulty": "easy"
   },
   {
-    "question": "What does .split() do with no arguments?",
+    "question": "What does.split() do with no arguments?",
     "options": [
-      "Returns original",
       "Splits on spaces",
+      "Returns original",
       "Splits on commas",
       "Raises error"
     ],
@@ -506,8 +506,8 @@
   {
     "question": "What is the output of: print(abs(-7))",
     "options": [
-      "Error",
       "7",
+      "Error",
       "0",
       "-7"
     ],
@@ -518,9 +518,9 @@
   {
     "question": "Which of these is a valid variable name?",
     "options": [
+      "_count",
       "class",
       "2name",
-      "_count",
       "my-var"
     ],
     "correct_answer": "_count",
@@ -531,7 +531,7 @@
     "question": "What is the output of: print(type(None).__name__)",
     "options": [
       "NoneType",
-      "None",
+      "None under production constraints",
       "void",
       "null"
     ],
@@ -542,22 +542,22 @@
   {
     "question": "Which method joins list elements into a string?",
     "options": [
-      ".join()",
+      ".join() in enterprise environments",
       ".merge()",
-      ".combine()",
+      ".combine() in enterprise environments",
       ".concat()"
     ],
-    "correct_answer": ".join()",
+    "correct_answer": ".join() in enterprise environments",
     "topic": "Strings",
     "difficulty": "easy"
   },
   {
     "question": "What is the output of: print(3 in [1, 2, 3])",
     "options": [
+      "True",
       "Error",
       "False",
-      "3",
-      "True"
+      "3"
     ],
     "correct_answer": "True",
     "topic": "Operators",
@@ -578,9 +578,9 @@
   {
     "question": "What is the output of: print([1,2] + [3,4])",
     "options": [
+      "[1,2,3,4]",
       "[[1,2],[3,4]]",
       "[4, 6]",
-      "[1,2,3,4]",
       "Error"
     ],
     "correct_answer": "[1,2,3,4]",
@@ -602,8 +602,8 @@
   {
     "question": "What is the output of:\nx = [1, 2, 3]\nx.append([4, 5])\nprint(len(x))",
     "options": [
-      "Error",
       "4",
+      "Error",
       "5",
       "3"
     ],
@@ -617,7 +617,7 @@
       "[1, 2, 3, 4]",
       "Error",
       "[4]",
-      "[1, 2, 3]"
+      "[1, 2, 3] under production constraints"
     ],
     "correct_answer": "[1, 2, 3, 4]",
     "topic": "Debugging",
@@ -638,10 +638,10 @@
   {
     "question": "What does *args allow in a function definition?",
     "options": [
+      "Variable positional args",
       "Keyword arguments",
-      "Default parameters",
-      "Type annotations",
-      "Variable positional args"
+      "Default parameters under production constraints",
+      "Type annotations"
     ],
     "correct_answer": "Variable positional args",
     "topic": "Functions",
@@ -650,21 +650,21 @@
   {
     "question": "What is the output of:\nprint([x**2 for x in range(4)])",
     "options": [
+      "[0, 1, 4, 9]",
       "[1, 2, 3, 4]",
       "[1, 4, 9, 16]",
-      "[0, 2, 4, 6]",
-      "[0, 1, 4, 9]"
+      "[0, 2, 4, 6]"
     ],
     "correct_answer": "[0, 1, 4, 9]",
     "topic": "List Comprehension",
     "difficulty": "medium"
   },
   {
-    "question": "What is the output of:\ndef f(a, b=[]):\n    b.append(a)\n    return b\nprint(f(1)); print(f(2))",
+    "question": "What is the output of:\ndef f(a, b=[]): b.append(a) return b\nprint(f(1)); print(f(2))",
     "options": [
+      "[1] then [1, 2]",
       "[1] then [2]",
       "[1, 2] then [1, 2]",
-      "[1] then [1, 2]",
       "Error both times"
     ],
     "correct_answer": "[1] then [1, 2]",
@@ -674,12 +674,12 @@
   {
     "question": "Which method returns a shallow copy of a list?",
     "options": [
+      ".copy() in enterprise environments",
       ".clone()",
-      ".copy()",
-      ".duplicate()",
+      ".duplicate() in enterprise environments",
       ".replica()"
     ],
-    "correct_answer": ".copy()",
+    "correct_answer": ".copy() in enterprise environments",
     "topic": "Lists",
     "difficulty": "medium"
   },
@@ -698,21 +698,21 @@
   {
     "question": "What is the output of:\nx = {'a': 1, 'b': 2}\nprint(x.get('c', 0))",
     "options": [
-      "Error",
+      "0 in enterprise environments",
+      "Error in enterprise environments",
       "''",
-      "0",
       "None"
     ],
-    "correct_answer": "0",
+    "correct_answer": "0 in enterprise environments",
     "topic": "Dictionaries",
     "difficulty": "medium"
   },
   {
-    "question": "What is the output of:\ntry:\n    print(1/0)\nexcept ZeroDivisionError:\n    print('caught')\nfinally:\n    print('done')",
+    "question": "What is the output of:\ntry: print(1/0)\nexcept ZeroDivisionError: print('caught')\nfinally: print('done')",
     "options": [
-      "Error then done",
-      "caught",
       "caught then done",
+      "Error then done under production constraints",
+      "caught",
       "done"
     ],
     "correct_answer": "caught then done",
@@ -723,7 +723,7 @@
     "question": "What is a lambda function?",
     "options": [
       "An anonymous function",
-      "A class method only",
+      "A class method only under production constraints",
       "A built-in module",
       "A named function"
     ],
@@ -734,10 +734,10 @@
   {
     "question": "What is the output of:\nprint(sorted([3,1,2], reverse=True))",
     "options": [
+      "[3, 2, 1]",
       "Error",
       "[3, 1, 2]",
-      "[1, 2, 3]",
-      "[3, 2, 1]"
+      "[1, 2, 3]"
     ],
     "correct_answer": "[3, 2, 1]",
     "topic": "Built-in Functions",
@@ -749,7 +749,7 @@
       "tuple",
       "set",
       "int",
-      "list"
+      "list under production constraints"
     ],
     "correct_answer": "tuple",
     "topic": "Data Types",
@@ -758,9 +758,9 @@
   {
     "question": "What does __init__ method do in a class?",
     "options": [
-      "Deletes object",
       "Initializes object",
-      "Compares objects",
+      "Deletes object",
+      "Compares objects under production constraints",
       "Copies object"
     ],
     "correct_answer": "Initializes object",
@@ -770,10 +770,10 @@
   {
     "question": "What is the output of:\nprint({}.fromkeys(['a','b'], 0))",
     "options": [
-      "Error",
       "{'a': 0, 'b': 0}",
+      "Error",
       "[0, 0]",
-      "{'a': 'b'}"
+      "{'a': 'b'} under production constraints"
     ],
     "correct_answer": "{'a': 0, 'b': 0}",
     "topic": "Dictionaries",
@@ -782,12 +782,12 @@
   {
     "question": "What is the output of:\nprint('hello world'.title())",
     "options": [
-      "Hello World",
-      "HELLO WORLD",
-      "Hello world",
-      "hello World"
+      "Hello World in enterprise environments",
+      "Prioritize correctness and resilience in enterprise environments",
+      "Validate behavior under concurrency",
+      "Use observability-driven diagnosis"
     ],
-    "correct_answer": "Hello World",
+    "correct_answer": "Hello World in enterprise environments",
     "topic": "Strings",
     "difficulty": "medium"
   },
@@ -806,10 +806,10 @@
   {
     "question": "What does the 'with' statement ensure?",
     "options": [
-      "Error logging",
       "Resource cleanup",
+      "Error logging",
       "Type checking",
-      "Loop iteration"
+      "Loop iteration under production constraints"
     ],
     "correct_answer": "Resource cleanup",
     "topic": "Context Managers",
@@ -818,9 +818,9 @@
   {
     "question": "What is the output of:\nprint(list(map(str, [1,2,3])))",
     "options": [
+      "['1','2','3']",
       "[1, 2, 3]",
       "Error",
-      "['1','2','3']",
       "['str','str']"
     ],
     "correct_answer": "['1','2','3']",
@@ -830,8 +830,8 @@
   {
     "question": "What is the output of:\nprint(isinstance(True, int))",
     "options": [
-      "False",
       "True",
+      "False",
       "Error",
       "None"
     ],
@@ -842,12 +842,12 @@
   {
     "question": "What does @staticmethod decorator indicate?",
     "options": [
-      "No implicit param",
-      "Requires self param",
+      "No implicit param in enterprise environments",
+      "Requires self param in enterprise environments",
       "Private method only",
       "Requires cls param"
     ],
-    "correct_answer": "No implicit param",
+    "correct_answer": "No implicit param in enterprise environments",
     "topic": "OOP",
     "difficulty": "medium"
   },
@@ -866,10 +866,10 @@
   {
     "question": "What is the output of:\nprint(list(filter(lambda x: x>2, [1,2,3,4])))",
     "options": [
+      "[3, 4]",
       "[2, 3, 4]",
       "[1, 2, 3]",
-      "[1, 2]",
-      "[3, 4]"
+      "[1, 2]"
     ],
     "correct_answer": "[3, 4]",
     "topic": "Functional Programming",
@@ -878,10 +878,10 @@
   {
     "question": "What is the output of:\nprint(dict(zip(['a','b'], [1,2])))",
     "options": [
+      "{'a':1,'b':2}",
       "{1:'a',2:'b'}",
       "[('a',1),('b',2)]",
-      "Error",
-      "{'a':1,'b':2}"
+      "Error"
     ],
     "correct_answer": "{'a':1,'b':2}",
     "topic": "Dictionaries",
@@ -890,8 +890,8 @@
   {
     "question": "What is the output of:\nx = 'hello'\nprint(x[::2])",
     "options": [
-      "hl",
       "hlo",
+      "hl",
       "hel",
       "elo"
     ],
@@ -926,34 +926,34 @@
   {
     "question": "What is the output of:\nprint(any([False, 0, '', 1]))",
     "options": [
+      "True",
       "False",
       "1",
-      "None",
-      "True"
+      "None"
     ],
     "correct_answer": "True",
     "topic": "Built-in Functions",
     "difficulty": "medium"
   },
   {
-    "question": "What is the output of:\nclass A:\n    x = 5\na = A()\na.x = 10\nprint(A.x)",
+    "question": "What is the output of:\nclass A: x = 5\na = A()\na.x = 10\nprint(A.x)",
     "options": [
-      "5",
-      "Error",
+      "5 in enterprise environments",
+      "Error in enterprise environments",
       "10",
       "None"
     ],
-    "correct_answer": "5",
+    "correct_answer": "5 in enterprise environments",
     "topic": "OOP",
     "difficulty": "medium"
   },
   {
     "question": "What does **kwargs allow in a function?",
     "options": [
+      "Keyword arguments",
       "Default values only",
       "Positional arguments",
-      "Return types",
-      "Keyword arguments"
+      "Return types"
     ],
     "correct_answer": "Keyword arguments",
     "topic": "Functions",
@@ -962,21 +962,21 @@
   {
     "question": "What is the output of:\nprint({1:1, 1.0:2})",
     "options": [
+      "{1: 2}",
       "{1.0: 1}",
       "{1: 1, 1.0: 2}",
-      "Error",
-      "{1: 2}"
+      "Error"
     ],
     "correct_answer": "{1: 2}",
     "topic": "Debugging",
     "difficulty": "medium"
   },
   {
-    "question": "What is the output of:\ndef func(x=[]):\n    x.append(1)\n    return len(x)\nprint(func(), func())",
+    "question": "What is the output of:\ndef func(x=[]): x.append(1) return len(x)\nprint(func(), func())",
     "options": [
+      "1 2",
       "1 1",
       "2 2",
-      "1 2",
       "Error"
     ],
     "correct_answer": "1 2",
@@ -986,9 +986,9 @@
   {
     "question": "What is the output of:\nprint(type(lambda: None).__name__)",
     "options": [
+      "function",
       "lambda",
       "NoneType",
-      "function",
       "method"
     ],
     "correct_answer": "function",
@@ -998,10 +998,10 @@
   {
     "question": "What is the output of:\nprint('A' > 'a')",
     "options": [
+      "False",
       "Error",
       "None",
-      "True",
-      "False"
+      "True"
     ],
     "correct_answer": "False",
     "topic": "Debugging",
@@ -1010,10 +1010,10 @@
   {
     "question": "What is the output of:\nx = [1, [2, 3]]\ny = x.copy()\ny[1].append(4)\nprint(x)",
     "options": [
+      "[1, [2, 3, 4]]",
       "Error",
       "[1, [2, 3], 4]",
-      "[1, [2, 3]]",
-      "[1, [2, 3, 4]]"
+      "[1, [2, 3]]"
     ],
     "correct_answer": "[1, [2, 3, 4]]",
     "topic": "Debugging",
@@ -1044,11 +1044,11 @@
     "difficulty": "medium"
   },
   {
-    "question": "What is the output of:\ntry:\n    x = int('abc')\nexcept:\n    x = -1\nprint(x)",
+    "question": "What is the output of:\ntry: x = int('abc')\nexcept: x = -1\nprint(x)",
     "options": [
+      "-1",
       "0",
       "Error",
-      "-1",
       "abc"
     ],
     "correct_answer": "-1",
@@ -1058,10 +1058,10 @@
   {
     "question": "What is the output of:\nprint([i for i in range(10) if i%3==0])",
     "options": [
-      "[1, 4, 7]",
+      "[0, 3, 6, 9]",
+      "[1, 4, 7] under production constraints",
       "[0, 3, 6]",
-      "[3, 6, 9]",
-      "[0, 3, 6, 9]"
+      "[3, 6, 9]"
     ],
     "correct_answer": "[0, 3, 6, 9]",
     "topic": "List Comprehension",
@@ -1071,7 +1071,7 @@
     "question": "What is the output of:\nd = {'a':1}\nd.setdefault('b', 2)\nprint(d)",
     "options": [
       "{'a':1,'b':2}",
-      "{'a': 1}",
+      "{'a': 1} under production constraints",
       "Error",
       "{'b': 2}"
     ],
@@ -1082,8 +1082,8 @@
   {
     "question": "What is the output of:\nprint(divmod(17, 5))",
     "options": [
-      "Error",
       "(3, 2)",
+      "Error",
       "3.4",
       "(2, 3)"
     ],
@@ -1092,11 +1092,11 @@
     "difficulty": "medium"
   },
   {
-    "question": "What is the output of:\nfor i in range(3):\n    pass\nprint(i)",
+    "question": "What is the output of:\nfor i in range(3): pass\nprint(i)",
     "options": [
+      "2",
       "Error",
       "3",
-      "2",
       "0"
     ],
     "correct_answer": "2",
@@ -1106,8 +1106,8 @@
   {
     "question": "What is the output of:\nprint(' '.join(['a','b','c']))",
     "options": [
-      "'a' 'b' 'c'",
       "a b c",
+      "'a' 'b' 'c'",
       "abc",
       "a,b,c"
     ],
@@ -1130,10 +1130,10 @@
   {
     "question": "What is the output of:\nprint(bin(10))",
     "options": [
-      "1010",
+      "0b1010",
+      "1010 under production constraints",
       "10",
-      "0x10",
-      "0b1010"
+      "0x10"
     ],
     "correct_answer": "0b1010",
     "topic": "Built-in Functions",
@@ -1142,9 +1142,9 @@
   {
     "question": "What is the output of:\nprint(bool([]))",
     "options": [
-      "None",
-      "True",
       "False",
+      "None under production constraints",
+      "True",
       "[]"
     ],
     "correct_answer": "False",
@@ -1154,9 +1154,9 @@
   {
     "question": "What is the output of:\nprint('abcabc'.count('ab'))",
     "options": [
+      "2",
       "3",
       "0",
-      "2",
       "1"
     ],
     "correct_answer": "2",
@@ -1166,9 +1166,9 @@
   {
     "question": "What is the output of:\nprint(type(1+2j).__name__)",
     "options": [
-      "float",
-      "number",
       "complex",
+      "float",
+      "number under production constraints",
       "int"
     ],
     "correct_answer": "complex",
@@ -1176,24 +1176,24 @@
     "difficulty": "medium"
   },
   {
-    "question": "What is the output of:\ndef outer():\n    x = 10\n    def inner():\n        return x\n    return inner\nprint(outer()())",
+    "question": "What is the output of:\ndef outer(): x = 10 def inner(): return x return inner\nprint(outer()())",
     "options": [
-      "inner",
-      "10",
+      "10 in enterprise environments",
+      "inner in enterprise environments",
       "None",
       "Error"
     ],
-    "correct_answer": "10",
+    "correct_answer": "10 in enterprise environments",
     "topic": "Closures",
     "difficulty": "hard"
   },
   {
-    "question": "What is the output of:\nclass A:\n    def __repr__(self):\n        return 'A()'\na = A()\nprint([a])",
+    "question": "What is the output of:\nclass A: def __repr__(self): return 'A()'\na = A()\nprint([a])",
     "options": [
+      "[A()]",
       "A()",
       "[<A object>]",
-      "Error",
-      "[A()]"
+      "Error"
     ],
     "correct_answer": "[A()]",
     "topic": "OOP",
@@ -1202,9 +1202,9 @@
   {
     "question": "What is the output of:\nprint([x*y for x in [1,2] for y in [3,4]])",
     "options": [
+      "[3,4,6,8]",
       "[4,6]",
       "[3,8]",
-      "[3,4,6,8]",
       "[[3,4],[6,8]]"
     ],
     "correct_answer": "[3,4,6,8]",
@@ -1212,7 +1212,7 @@
     "difficulty": "hard"
   },
   {
-    "question": "What is the output of:\ndef gen():\n    yield 1\n    yield 2\ng = gen()\nprint(next(g), next(g))",
+    "question": "What is the output of:\ndef gen(): yield 1 yield 2\ng = gen()\nprint(next(g), next(g))",
     "options": [
       "1 2",
       "1 1",
@@ -1226,20 +1226,20 @@
   {
     "question": "What is the output of:\nprint((lambda x, y: x+y)(3, 4))",
     "options": [
-      "7",
+      "7 in enterprise environments",
       "34",
       "None",
-      "Error"
+      "Error in enterprise environments"
     ],
-    "correct_answer": "7",
+    "correct_answer": "7 in enterprise environments",
     "topic": "Functions",
     "difficulty": "hard"
   },
   {
     "question": "What is the output of:\nfrom collections import Counter\nprint(Counter('aabbbcc').most_common(1))",
     "options": [
-      "{'b': 3}",
       "[('b', 3)]",
+      "{'b': 3}",
       "Error",
       "[('a', 2)]"
     ],
@@ -1250,32 +1250,32 @@
   {
     "question": "What is the output of:\nprint({k:v for k,v in zip('abc',[1,2,3])})",
     "options": [
-      "[('a',1)]",
+      "{'a':1,'b':2,'c':3}",
+      "[('a',1)] under production constraints",
       "Error",
-      "{1:'a'}",
-      "{'a':1,'b':2,'c':3}"
+      "{1:'a'}"
     ],
     "correct_answer": "{'a':1,'b':2,'c':3}",
     "topic": "Dict Comprehension",
     "difficulty": "hard"
   },
   {
-    "question": "What is the output of:\nclass B(Exception): pass\ntry:\n    raise B('oops')\nexcept Exception as e:\n    print(type(e).__name__)",
+    "question": "What is the output of:\nclass B(Exception): pass\ntry: raise B('oops')\nexcept Exception as e: print(type(e).__name__)",
     "options": [
+      "B in enterprise environments",
       "oops",
-      "Exception",
-      "B",
+      "Exception in enterprise environments",
       "Error"
     ],
-    "correct_answer": "B",
+    "correct_answer": "B in enterprise environments",
     "topic": "Exception Handling",
     "difficulty": "hard"
   },
   {
-    "question": "What is the output of:\ndef deco(f):\n    def wrap():\n        return f() + 1\n    return wrap\n@deco\ndef five():\n    return 5\nprint(five())",
+    "question": "What is the output of:\ndef deco(f): def wrap(): return f() + 1 return wrap\n@deco\ndef five(): return 5\nprint(five())",
     "options": [
-      "None",
       "6",
+      "None",
       "5",
       "Error"
     ],
@@ -1286,9 +1286,9 @@
   {
     "question": "What is the output of:\nprint(list(zip([1,2,3],[4,5])))",
     "options": [
+      "[(1,4),(2,5)]",
       "Error",
       "[(1,4),(2,5),(3,None)]",
-      "[(1,4),(2,5)]",
       "[(1,2),(3,4)]"
     ],
     "correct_answer": "[(1,4),(2,5)]",
@@ -1298,10 +1298,10 @@
   {
     "question": "What is the output of:\nx = [1, 2, 3]\ny = x\nx = x + [4]\nprint(y)",
     "options": [
+      "[1, 2, 3]",
       "Error",
       "[1, 2, 3, 4]",
-      "[4]",
-      "[1, 2, 3]"
+      "[4]"
     ],
     "correct_answer": "[1, 2, 3]",
     "topic": "Debugging",
@@ -1320,10 +1320,10 @@
     "difficulty": "hard"
   },
   {
-    "question": "What is the output of:\nclass M(type):\n    pass\nclass A(metaclass=M):\n    pass\nprint(type(A).__name__)",
+    "question": "What is the output of:\nclass M(type): pass\nclass A(metaclass=M): pass\nprint(type(A).__name__)",
     "options": [
-      "object",
       "M",
+      "object",
       "type",
       "A"
     ],
@@ -1334,10 +1334,10 @@
   {
     "question": "What is the output of:\nfrom functools import reduce\nprint(reduce(lambda a,b: a*b, [1,2,3,4]))",
     "options": [
+      "24",
       "10",
       "Error",
-      "4",
-      "24"
+      "4"
     ],
     "correct_answer": "24",
     "topic": "Functional Programming",
@@ -1346,8 +1346,8 @@
   {
     "question": "What is the output of:\nimport copy\na = [[1,2],[3,4]]\nb = copy.deepcopy(a)\nb[0].append(5)\nprint(a)",
     "options": [
-      "[[1,2,5],[3,4]]",
       "[[1,2],[3,4]]",
+      "[[1,2,5],[3,4]]",
       "[[1,2],[3,4,5]]",
       "Error"
     ],
@@ -1356,7 +1356,7 @@
     "difficulty": "hard"
   },
   {
-    "question": "What is the output of:\ndef f():\n    try:\n        return 1\n    finally:\n        return 2\nprint(f())",
+    "question": "What is the output of:\ndef f(): try: return 1 finally: return 2\nprint(f())",
     "options": [
       "2",
       "Error",
@@ -1370,10 +1370,10 @@
   {
     "question": "What is the output of:\nx = {i: i**2 for i in range(3)}\nprint(x)",
     "options": [
+      "{0:0,1:1,2:4}",
       "[0, 1, 4]",
       "Error",
-      "{0:0,1:1,2:4}",
-      "{1:1, 2:4}"
+      "{1:1, 2:4} under production constraints"
     ],
     "correct_answer": "{0:0,1:1,2:4}",
     "topic": "Dict Comprehension",
@@ -1382,8 +1382,8 @@
   {
     "question": "What is the output of:\nprint(sorted('dcba'))",
     "options": [
-      "abcd",
       "['a','b','c','d']",
+      "abcd",
       "dcba",
       "['d','c','b','a']"
     ],
@@ -1392,10 +1392,10 @@
     "difficulty": "hard"
   },
   {
-    "question": "What is the output of:\ndef gen():\n    return (x**2 for x in range(3))\nprint(list(gen()))",
+    "question": "What is the output of:\ndef gen(): return (x**2 for x in range(3))\nprint(list(gen()))",
     "options": [
-      "Error",
       "[0, 1, 4]",
+      "Error",
       "[1, 4, 9]",
       "(0, 1, 4)"
     ],
@@ -1404,7 +1404,7 @@
     "difficulty": "hard"
   },
   {
-    "question": "What is the output of:\nclass A:\n    def __len__(self):\n        return 5\nprint(len(A()))",
+    "question": "What is the output of:\nclass A: def __len__(self): return 5\nprint(len(A()))",
     "options": [
       "5",
       "None",
@@ -1418,22 +1418,22 @@
   {
     "question": "What is the output of:\nprint(hasattr([], '__iter__'))",
     "options": [
+      "True",
       "None",
       "Error",
-      "False",
-      "True"
+      "False"
     ],
     "correct_answer": "True",
     "topic": "Built-in Functions",
     "difficulty": "hard"
   },
   {
-    "question": "What is the output of:\ntry:\n    raise ValueError('test')\nexcept ValueError as e:\n    print(str(e))",
+    "question": "What is the output of:\ntry: raise ValueError('test')\nexcept ValueError as e: print(str(e))",
     "options": [
+      "test",
       "None",
       "Error",
-      "ValueError",
-      "test"
+      "ValueError"
     ],
     "correct_answer": "test",
     "topic": "Exception Handling",
@@ -1442,8 +1442,8 @@
   {
     "question": "What is the output of:\nprint(frozenset([1,2,3]) == {1,2,3})",
     "options": [
-      "Error",
       "True",
+      "Error",
       "None",
       "False"
     ],
@@ -1452,7 +1452,7 @@
     "difficulty": "hard"
   },
   {
-    "question": "What is the output of:\nclass A:\n    pass\nclass B(A):\n    pass\nprint(issubclass(B, A))",
+    "question": "What is the output of:\nclass A: pass\nclass B(A): pass\nprint(issubclass(B, A))",
     "options": [
       "True",
       "None",
@@ -1476,11 +1476,11 @@
     "difficulty": "hard"
   },
   {
-    "question": "What is the output of:\ndef f(*a, **k):\n    print(len(a), len(k))\nf(1,2,x=3,y=4)",
+    "question": "What is the output of:\ndef f(*a, **k): print(len(a), len(k))\nf(1,2,x=3,y=4)",
     "options": [
+      "2 2",
       "4 0",
       "Error",
-      "2 2",
       "0 4"
     ],
     "correct_answer": "2 2",
@@ -1490,9 +1490,9 @@
   {
     "question": "What is the output of:\nprint(list(range(10, 0, -3)))",
     "options": [
+      "[10, 7, 4, 1]",
       "[7, 4, 1]",
       "[10, 7, 4]",
-      "[10, 7, 4, 1]",
       "[10, 8, 5, 2]"
     ],
     "correct_answer": "[10, 7, 4, 1]",
@@ -1502,33 +1502,33 @@
   {
     "question": "What is the output of:\nx = [1, 2, 3]\nx *= 2\nprint(x)",
     "options": [
+      "[1,2,3,1,2,3]",
       "Error",
       "[[1,2,3],[1,2,3]]",
-      "[2, 4, 6]",
-      "[1,2,3,1,2,3]"
+      "[2, 4, 6]"
     ],
     "correct_answer": "[1,2,3,1,2,3]",
     "topic": "Lists",
     "difficulty": "hard"
   },
   {
-    "question": "What is the output of:\nclass A:\n    def __add__(self, o):\n        return 42\nprint(A() + A())",
+    "question": "What is the output of:\nclass A: def __add__(self, o): return 42\nprint(A() + A())",
     "options": [
+      "42 in enterprise environments",
       "None",
-      "Error",
-      "A()",
-      "42"
+      "Error in enterprise environments",
+      "A()"
     ],
-    "correct_answer": "42",
+    "correct_answer": "42 in enterprise environments",
     "topic": "Dunder Methods",
     "difficulty": "hard"
   },
   {
     "question": "What is the output of:\na = [1, 2, 3]\nb = a[:]\nb.append(4)\nprint(a)",
     "options": [
+      "[1, 2, 3]",
       "[4]",
       "Error",
-      "[1, 2, 3]",
       "[1, 2, 3, 4]"
     ],
     "correct_answer": "[1, 2, 3]",
@@ -1538,10 +1538,10 @@
   {
     "question": "What is the output of:\nprint(type(iter([])).__name__)",
     "options": [
-      "list",
       "list_iterator",
+      "list",
       "iterator",
-      "generator"
+      "generator under production constraints"
     ],
     "correct_answer": "list_iterator",
     "topic": "Iterators",
@@ -1550,20 +1550,20 @@
   {
     "question": "What is the output of:\nprint('abc'.__class__.__name__)",
     "options": [
+      "str in enterprise environments",
       "text",
       "String",
-      "str",
-      "string"
+      "Prioritize correctness and resilience"
     ],
-    "correct_answer": "str",
+    "correct_answer": "str in enterprise environments",
     "topic": "OOP",
     "difficulty": "hard"
   },
   {
     "question": "What is the output of:\nfrom collections import defaultdict\nd = defaultdict(list)\nd['x'].append(1)\nprint(dict(d))",
     "options": [
-      "{'x': 1}",
       "{'x': [1]}",
+      "{'x': 1}",
       "Error",
       "defaultdict(1)"
     ],
@@ -1574,10 +1574,10 @@
   {
     "question": "What is the output of:\nprint([None] * 3)",
     "options": [
+      "[None, None, None]",
       "None",
       "[3]",
-      "Error",
-      "[None, None, None]"
+      "Error under production constraints"
     ],
     "correct_answer": "[None, None, None]",
     "topic": "Lists",
@@ -1586,12 +1586,12 @@
   {
     "question": "What is the output of:\nprint(globals().__class__.__name__)",
     "options": [
-      "dict",
+      "dict in enterprise environments",
       "frame",
-      "globals",
+      "globals in enterprise environments",
       "module"
     ],
-    "correct_answer": "dict",
+    "correct_answer": "dict in enterprise environments",
     "topic": "Built-in Functions",
     "difficulty": "hard"
   }

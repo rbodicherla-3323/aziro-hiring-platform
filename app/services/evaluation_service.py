@@ -6,6 +6,12 @@ from app.services.ai_generator import generate_evaluation_summary, generate_codi
 from app.services.mcq_runtime_store import get_mcq_session_data, mcq_session_key
 from app.utils.role_round_mapping import ROLE_ROUND_MAPPING
 from app.utils.round_display_mapping import ROUND_DISPLAY_MAPPING
+from app.utils.round_order import (
+    INTERNAL_ROUND_ORDER,
+    ordered_present_round_keys,
+    round_number_map,
+    round_sort_key,
+)
 from flask import session
 import logging
 import time
@@ -32,7 +38,7 @@ ROUND_PASS_PERCENTAGE = {
 }
 
 DEFAULT_PASS_PERCENTAGE = 70
-SUMMARY_ROUNDS = ("L1", "L2", "L3", "L4", "L5", "L6")
+SUMMARY_ROUNDS = INTERNAL_ROUND_ORDER
 
 
 class EvaluationService:
@@ -66,10 +72,8 @@ class EvaluationService:
 
     @staticmethod
     def _round_sort_key(round_key: str) -> tuple[int, str]:
-        value = str(round_key or "").upper()
-        if value.startswith("L") and value[1:].isdigit():
-            return int(value[1:]), value
-        return 999, value
+        sort_parts = round_sort_key(round_key)
+        return sort_parts[1], sort_parts[2]
 
     @staticmethod
     def _created_at_sort_value(value) -> float:
@@ -121,7 +125,7 @@ class EvaluationService:
         generated = EvaluationService._resolve_generated_test_entry(candidate_data)
         if generated:
             tests = generated.get("tests", {}) or {}
-            for rk in SUMMARY_ROUNDS:
+            for rk in INTERNAL_ROUND_ORDER:
                 if rk not in tests:
                     continue
                 ordered_keys.append(rk)
@@ -141,7 +145,7 @@ class EvaluationService:
                 round_labels[rk] = str(display_map.get(rk) or rk)
                 round_totals[rk] = 1 if rk in role_cfg.get("coding_rounds", []) else 15
 
-        for rk in sorted(rounds.keys(), key=EvaluationService._round_sort_key):
+        for rk in ordered_present_round_keys(rounds):
             if rk in ordered_keys:
                 continue
             ordered_keys.append(rk)
@@ -160,7 +164,9 @@ class EvaluationService:
         rounds = candidate_data.get("rounds", {}) or {}
         ordered_rounds, round_labels, round_totals = EvaluationService._resolve_round_blueprint(candidate_data)
         if not ordered_rounds:
-            ordered_rounds = sorted(rounds.keys(), key=EvaluationService._round_sort_key)
+            ordered_rounds = ordered_present_round_keys(rounds)
+
+        numbers = round_number_map(ordered_rounds)
 
         rounds_l1_l4 = {}
         for rk in ordered_rounds:
@@ -177,6 +183,7 @@ class EvaluationService:
                 "status": existing.get("status", "Not Attempted"),
                 "time_taken_seconds": existing.get("time_taken_seconds", 0),
                 "submission_details": existing.get("submission_details", {}),
+                "round_number": numbers.get(rk, 0),
             }
 
         attempted_only = [
@@ -298,7 +305,10 @@ class EvaluationService:
             summary_payload = EvaluationService._prepare_l1_l4_summary_payload(candidate_data)
             return generate_evaluation_summary(summary_payload) if summary_payload else None
 
-        ordered = sorted(all_round_results, key=lambda r: r.get("round_key", ""))
+        ordered = sorted(
+            all_round_results,
+            key=lambda r: round_sort_key(r.get("round_key", "")),
+        )
         first = ordered[0]
 
         rounds = {}

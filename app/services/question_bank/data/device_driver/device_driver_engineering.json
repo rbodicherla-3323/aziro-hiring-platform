@@ -1,0 +1,2580 @@
+[
+  {
+    "id": "device-driver-device-driver-engineering-001",
+    "question": "A production defect investigation needs clarity on the difference between top half and bottom half in interrupt handling?",
+    "options": [
+      "Top half runs immediately in interrupt context (fast); bottom half defers longer work to be done later",
+      "Top half runs in user space; bottom half in kernel space",
+      "There is no such distinction",
+      "Top half is the first half of the code; bottom half is the second half in this scenario under production constraints"
+    ],
+    "correct_answer": "Top half runs immediately in interrupt context (fast); bottom half defers longer work to be done later",
+    "topic": "Driver Reliability and Error Handling",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-reliability-and-error-handling"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-002",
+    "question": "A production defect investigation needs clarity on a device driver in Linux?",
+    "options": [
+      "A piece of kernel code that enables the OS to communicate with a hardware device",
+      "A user application to configure devices",
+      "A hardware component on the motherboard",
+      "A graphical interface for device management in this scenario under production constraints"
+    ],
+    "correct_answer": "A piece of kernel code that enables the OS to communicate with a hardware device",
+    "topic": "Driver Debugging",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-debugging",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-003",
+    "question": "A production defect investigation needs clarity on the difference between 'strcpy' and 'strncpy'?",
+    "options": [
+      "strncpy copies at most n characters, providing bounds checking; strcpy does not",
+      "strcpy is safer than strncpy",
+      "Both are identical",
+      "strncpy works only with wide characters in this scenario under production constraints"
+    ],
+    "correct_answer": "strncpy copies at most n characters, providing bounds checking; strcpy does not",
+    "topic": "Driver Reliability and Error Handling",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-reliability-and-error-handling"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-004",
+    "question": "What function is used to register an interrupt handler in the kernel?",
+    "options": [
+      "request_irq() or devm_request_irq()",
+      "set_irq_handler()",
+      "irq_register()",
+      "register_interrupt() in this scenario"
+    ],
+    "correct_answer": "request_irq() or devm_request_irq()",
+    "topic": "Interrupts and Concurrency",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "interrupts-and-concurrency",
+      "kernel"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-005",
+    "question": "What are the three main types of device drivers in Linux?",
+    "options": [
+      "Character, Block, and Network drivers",
+      "Input, Output, and Network",
+      "PCI, USB, and Serial drivers",
+      "Kernel, User, and System drivers in this scenario"
+    ],
+    "correct_answer": "Character, Block, and Network drivers",
+    "topic": "Driver Debugging",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-debugging",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-006",
+    "question": "In a production scenario, which option best describes a character device driver?",
+    "options": [
+      "A driver that provides sequential, byte-stream access to a device (e.g., serial ports, keyboards)",
+      "A driver for text file processing",
+      "A driver for character encoding",
+      "A driver that handles block-level I/O in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A driver that provides sequential, byte-stream access to a device (e.g., serial ports, keyboards)",
+    "topic": "Driver Reliability and Error Handling",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "driver-reliability-and-error-handling",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-007",
+    "question": "During architecture review, which option best describes polling vs. interrupt-driven I/O in device drivers?",
+    "options": [
+      "Polling repeatedly checks device status (wastes CPU); interrupt-driven lets the device signal when ready",
+      "Polling is always preferred in modern drivers in this scenario under production constraints for the stated requirement",
+      "They are the same approach",
+      "Interrupt-driven wastes more CPU than polling"
+    ],
+    "correct_answer": "Polling repeatedly checks device status (wastes CPU); interrupt-driven lets the device signal when ready",
+    "topic": "Driver Model and Lifecycle",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "driver-model-and-lifecycle"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-008",
+    "question": "During live operations, which option best describes the 'bus_type' structure in the Linux driver model?",
+    "options": [
+      "A structure representing a bus subsystem (PCI, USB, I2C, etc.) with match and probe logic",
+      "A structure for network bus topology in this scenario under production constraints for the stated requirement",
+      "A data type for bus addresses",
+      "A data structure for bus scheduling"
+    ],
+    "correct_answer": "A structure representing a bus subsystem (PCI, USB, I2C, etc.) with match and probe logic",
+    "topic": "Driver Model and Lifecycle",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "driver-model-and-lifecycle",
+      "linux",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-009",
+    "question": "What is a block device driver?",
+    "options": [
+      "A driver that provides random-access, fixed-size block I/O (e.g., hard disks, SSDs)",
+      "A driver that blocks I/O operations",
+      "A driver that prevents device access",
+      "A driver for blocking network connections in this scenario under production constraints"
+    ],
+    "correct_answer": "A driver that provides random-access, fixed-size block I/O (e.g., hard disks, SSDs)",
+    "topic": "Driver Model and Lifecycle",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "driver-model-and-lifecycle"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-010",
+    "question": "In a production scenario, which option best describes the purpose of the 'module_init' and 'module_exit' macros?",
+    "options": [
+      "To specify the functions called when a kernel module is loaded (init) and unloaded (exit)",
+      "To handle module errors",
+      "To define global variables",
+      "To initialize module parameters in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "To specify the functions called when a kernel module is loaded (init) and unloaded (exit)",
+    "topic": "Driver Performance and Diagnostics",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "driver-performance-and-diagnostics",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-011",
+    "question": "During architecture review, which option best describes the IRQF_SHARED flag mean when requesting an IRQ?",
+    "options": [
+      "Multiple devices can share the same IRQ line, and each handler must check if its device generated the interrupt",
+      "The IRQ is shared between top half and bottom half",
+      "The IRQ is shared among CPUs",
+      "The IRQ handler is shared between kernel and user space in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "Multiple devices can share the same IRQ line, and each handler must check if its device generated the interrupt",
+    "topic": "Interrupts and Concurrency",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "interrupts-and-concurrency"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-012",
+    "question": "During live operations, which option best describes a major number and minor number in Linux device files?",
+    "options": [
+      "Major identifies the driver; minor identifies the specific device handled by that driver",
+      "Major is the device version; minor is the revision",
+      "Major is the file size; minor is the file type",
+      "Major is for block devices; minor is for character devices in this scenario under production constraints"
+    ],
+    "correct_answer": "Major identifies the driver; minor identifies the specific device handled by that driver",
+    "topic": "Driver Performance and Diagnostics",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "driver-performance-and-diagnostics",
+      "linux",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-013",
+    "question": "What is the 'file_operations' structure in a Linux driver?",
+    "options": [
+      "A structure containing function pointers (open, read, write, ioctl, release, etc.) that define driver behavior",
+      "A structure for file I/O in user space",
+      "A structure for managing file permissions in this scenario under production constraints for the stated requirement",
+      "A structure for network file operations"
+    ],
+    "correct_answer": "A structure containing function pointers (open, read, write, ioctl, release, etc.) that define driver behavior",
+    "topic": "Driver Reliability and Error Handling",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "driver-reliability-and-error-handling",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-014",
+    "question": "In a production scenario, which option best describes the difference between MMIO and port I/O?",
+    "options": [
+      "MMIO maps device registers to memory addresses; port I/O uses special CPU instructions (inb/outb) on a separate I/O address space",
+      "MMIO is only for network devices in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "Port I/O is faster than MMIO",
+      "They are the same thing"
+    ],
+    "correct_answer": "MMIO maps device registers to memory addresses; port I/O uses special CPU instructions (inb/outb) on a separate I/O address space",
+    "topic": "Memory and DMA Handling",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "memory-and-dma-handling",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-015",
+    "question": "During architecture review, which option best describes the 'cdev' structure used for?",
+    "options": [
+      "To represent a character device within the kernel's device model",
+      "To store compile-time device information in this scenario under production constraints",
+      "To manage C development tools",
+      "To handle CD-ROM devices"
+    ],
+    "correct_answer": "To represent a character device within the kernel's device model",
+    "topic": "I/O Paths and Subsystems",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "i-o-paths-and-subsystems"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-016",
+    "question": "How do you create a device node in /dev?",
+    "options": [
+      "Using 'mknod' command or dynamically via udev with device_create()",
+      "Using 'mkdir /dev/mydevice'",
+      "Device nodes are created automatically by the compiler in this scenario",
+      "Using 'touch /dev/mydevice'"
+    ],
+    "correct_answer": "Using 'mknod' command or dynamically via udev with device_create()",
+    "topic": "Driver Model and Lifecycle",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "driver-model-and-lifecycle",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-017",
+    "question": "What is the purpose of 'register_chrdev_region' vs 'alloc_chrdev_region'?",
+    "options": [
+      "register_chrdev_region uses a specified major number; alloc_chrdev_region dynamically allocates one",
+      "alloc is for allocation; register is for registration with the network stack in this scenario under production constraints",
+      "They are the same function",
+      "register is deprecated; alloc is the only option"
+    ],
+    "correct_answer": "register_chrdev_region uses a specified major number; alloc_chrdev_region dynamically allocates one",
+    "topic": "I/O Paths and Subsystems",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "i-o-paths-and-subsystems"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-018",
+    "question": "In a production scenario, which option best describes the OOM (Out of Memory) killer in Linux?",
+    "options": [
+      "A kernel mechanism that selects and kills processes when the system runs critically low on memory",
+      "A tool to optimize memory usage",
+      "A memory leak detection tool",
+      "A user-space daemon for memory management in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A kernel mechanism that selects and kills processes when the system runs critically low on memory",
+    "topic": "Memory and DMA Handling",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "linux",
+      "memory",
+      "memory-and-dma-handling",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-019",
+    "question": "During architecture review, which option best describes the purpose of the 'probe' function in a platform driver?",
+    "options": [
+      "Called by the kernel when a matching device is found; initializes the device and allocates resources",
+      "To probe network connections",
+      "To test the driver compilation in this scenario under production constraints for the stated requirement",
+      "To probe hardware for errors"
+    ],
+    "correct_answer": "Called by the kernel when a matching device is found; initializes the device and allocates resources",
+    "topic": "I/O Paths and Subsystems",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "i-o-paths-and-subsystems"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-020",
+    "question": "During live operations, which option best describes the 'remove' function in a platform driver?",
+    "options": [
+      "Called when the device is detached or the module is unloaded; cleans up resources",
+      "A function to remove user permissions in this scenario under production constraints",
+      "A function to remove source files",
+      "A function to remove kernel logs"
+    ],
+    "correct_answer": "Called when the device is detached or the module is unloaded; cleans up resources",
+    "topic": "Driver Reliability and Error Handling",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "driver-reliability-and-error-handling",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-021",
+    "question": "A production defect investigation needs clarity on a platform device in Linux?",
+    "options": [
+      "A device that is directly connected to the CPU bus and described in the device tree or board file (not discoverable like PCI/USB)",
+      "A virtual device for testing",
+      "A device connected via USB",
+      "A cross-platform device driver in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "A device that is directly connected to the CPU bus and described in the device tree or board file (not discoverable like PCI/USB)",
+    "topic": "Driver Model and Lifecycle",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-model-and-lifecycle",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-022",
+    "question": "A production defect investigation needs clarity on the purpose of the Linux kernel's memory management unit (MMU)?",
+    "options": [
+      "To translate virtual addresses to physical addresses and enforce memory protection",
+      "To manage network memory buffers in this scenario under production constraints for the stated requirement",
+      "To compress memory data",
+      "To manage disk memory"
+    ],
+    "correct_answer": "To translate virtual addresses to physical addresses and enforce memory protection",
+    "topic": "Memory and DMA Handling",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "linux",
+      "memory",
+      "memory-and-dma-handling"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-023",
+    "question": "A production defect investigation needs clarity on the 'of_match_table' in a device driver?",
+    "options": [
+      "A table of compatible strings used to match a driver with devices described in the device tree",
+      "A table of memory offsets in this scenario under production constraints for the stated requirement",
+      "A table of kernel modules",
+      "A table of file offsets"
+    ],
+    "correct_answer": "A table of compatible strings used to match a driver with devices described in the device tree",
+    "topic": "Driver Reliability and Error Handling",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-reliability-and-error-handling"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-024",
+    "question": "A production defect investigation needs clarity on the purpose of 'ioremap' in a device driver?",
+    "options": [
+      "To map physical device memory (MMIO registers) into the kernel's virtual address space",
+      "To optimize I/O operations",
+      "To remap I/O ports to different numbers in this scenario under production constraints for the stated requirement",
+      "To remap input/output streams"
+    ],
+    "correct_answer": "To map physical device memory (MMIO registers) into the kernel's virtual address space",
+    "topic": "Driver Performance and Diagnostics",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-performance-and-diagnostics"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-025",
+    "question": "A production defect investigation needs clarity on DMA (Direct Memory Access) in the context of device drivers?",
+    "options": [
+      "A mechanism allowing hardware devices to transfer data directly to/from memory without CPU involvement",
+      "A debug mode for memory access in this scenario under production constraints for the stated requirement",
+      "A type of virtual memory",
+      "Dynamic Memory Allocation"
+    ],
+    "correct_answer": "A mechanism allowing hardware devices to transfer data directly to/from memory without CPU involvement",
+    "topic": "I/O Paths and Subsystems",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "i-o-paths-and-subsystems",
+      "memory"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-026",
+    "question": "A production defect investigation needs clarity on the difference between coherent and streaming DMA mappings?",
+    "options": [
+      "Coherent mappings are long-lived and hardware-consistent; streaming mappings are for single transfers and require explicit sync",
+      "They are identical",
+      "Streaming is faster and always preferred",
+      "Coherent is for network; streaming is for storage in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "Coherent mappings are long-lived and hardware-consistent; streaming mappings are for single transfers and require explicit sync",
+    "topic": "I/O Paths and Subsystems",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "i-o-paths-and-subsystems"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-027",
+    "question": "A production defect investigation needs clarity on an interrupt handler (ISR) in a device driver?",
+    "options": [
+      "A function registered to handle hardware interrupts from a device, executing in interrupt context",
+      "A handler for keyboard shortcuts",
+      "A signal handler in user space",
+      "A function that handles user interruptions in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A function registered to handle hardware interrupts from a device, executing in interrupt context",
+    "topic": "Driver Debugging",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-debugging"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-028",
+    "question": "A production defect investigation needs clarity on a threaded interrupt handler?",
+    "options": [
+      "An interrupt handler where the top half acknowledges the interrupt and the bottom half runs in a dedicated kernel thread (process context)",
+      "An interrupt handler for multi-core CPUs",
+      "An interrupt handler that creates new threads in this scenario under production constraints for the stated requirement during incident triage",
+      "A multi-threaded application handler"
+    ],
+    "correct_answer": "An interrupt handler where the top half acknowledges the interrupt and the bottom half runs in a dedicated kernel thread (process context)",
+    "topic": "Driver Performance and Diagnostics",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-performance-and-diagnostics"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-029",
+    "question": "A production defect investigation needs clarity on the 'devm_' prefix convention in kernel driver APIs?",
+    "options": [
+      "Managed device resource APIs that automatically free resources when the device is removed",
+      "Debug-enabled version of the function in this scenario under production constraints for the stated requirement",
+      "Deprecated version of the function",
+      "Device management prefix"
+    ],
+    "correct_answer": "Managed device resource APIs that automatically free resources when the device is removed",
+    "topic": "Driver Debugging",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "driver-debugging",
+      "kernel"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-030",
+    "question": "A production defect investigation needs clarity on a PCI device driver?",
+    "options": [
+      "A driver that communicates with devices connected via the PCI/PCIe bus (e.g., NICs, GPUs)",
+      "A driver for serial port devices",
+      "A parallel computing interface driver in this scenario under production constraints for the stated requirement",
+      "A driver for printer devices"
+    ],
+    "correct_answer": "A driver that communicates with devices connected via the PCI/PCIe bus (e.g., NICs, GPUs)",
+    "topic": "Driver Debugging",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-debugging"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-031",
+    "question": "A production defect investigation needs clarity on a softirq in the Linux kernel?",
+    "options": [
+      "A statically defined, high-priority kernel mechanism for deferred interrupt processing",
+      "A soft reset interrupt",
+      "A user-defined signal",
+      "A software application interrupt in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A statically defined, high-priority kernel mechanism for deferred interrupt processing",
+    "topic": "Interrupts and Concurrency",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "interrupts-and-concurrency",
+      "kernel",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-032",
+    "question": "A production defect investigation needs clarity on the 'pci_driver' structure used for?",
+    "options": [
+      "To define a PCI driver with probe/remove callbacks and a device ID table for matching",
+      "To configure PCI interrupt routing in this scenario under production constraints for the stated requirement",
+      "To define PCI bus configuration",
+      "To define PCI memory regions"
+    ],
+    "correct_answer": "To define a PCI driver with probe/remove callbacks and a device ID table for matching",
+    "topic": "Driver Model and Lifecycle",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-model-and-lifecycle"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-033",
+    "question": "How does a PCI driver identify its supported devices?",
+    "options": [
+      "Using a pci_device_id table containing vendor ID, device ID, and other match fields",
+      "By reading the device tree",
+      "By checking the device name string in this scenario under production constraints for the stated requirement",
+      "By scanning all PCI slots manually"
+    ],
+    "correct_answer": "Using a pci_device_id table containing vendor ID, device ID, and other match fields",
+    "topic": "Driver Model and Lifecycle",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-model-and-lifecycle"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-034",
+    "question": "A production defect investigation needs clarity on a page fault in the Linux kernel?",
+    "options": [
+      "An event triggered when a process accesses a virtual memory page not currently mapped in physical memory",
+      "A corrupted memory page",
+      "An error in the filesystem",
+      "A hardware failure in memory in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "An event triggered when a process accesses a virtual memory page not currently mapped in physical memory",
+    "topic": "Memory and DMA Handling",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "linux",
+      "memory-and-dma-handling"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-035",
+    "question": "A production defect investigation needs clarity on the slab allocator in the Linux kernel?",
+    "options": [
+      "A memory allocation mechanism optimized for frequently allocated/freed fixed-size kernel objects",
+      "A user-space memory allocator in this scenario under production constraints for the stated requirement",
+      "A network buffer allocator",
+      "A disk allocation mechanism"
+    ],
+    "correct_answer": "A memory allocation mechanism optimized for frequently allocated/freed fixed-size kernel objects",
+    "topic": "Memory and DMA Handling",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "linux",
+      "memory-and-dma-handling"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-036",
+    "question": "In a production scenario, which option best describes the purpose of 'pci_enable_device' in a PCI driver?",
+    "options": [
+      "To enable the PCI device, turn on its I/O and memory regions, and prepare it for use",
+      "To power on the PCI slot",
+      "To enable PCI passthrough in this scenario under production constraints for the stated requirement",
+      "To enable PCI debugging"
+    ],
+    "correct_answer": "To enable the PCI device, turn on its I/O and memory regions, and prepare it for use",
+    "topic": "Driver Performance and Diagnostics",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "driver-performance-and-diagnostics",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-037",
+    "question": "During architecture review, which option best describes the I2C subsystem in Linux?",
+    "options": [
+      "A bus framework in the kernel for communicating with I2C devices (sensors, EEPROMs, etc.)",
+      "An internet protocol version 2 in this scenario under production constraints for the stated requirement",
+      "A file compression system",
+      "An input control interface"
+    ],
+    "correct_answer": "A bus framework in the kernel for communicating with I2C devices (sensors, EEPROMs, etc.)",
+    "topic": "Interrupts and Concurrency",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "interrupts-and-concurrency",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-038",
+    "question": "During live operations, which option best describes the purpose of the 'i2c_driver' and 'i2c_client' structures?",
+    "options": [
+      "i2c_driver defines the driver with probe/remove; i2c_client represents a specific device on the I2C bus",
+      "They are identical structures",
+      "i2c_driver is for server; i2c_client is for client networking in this scenario under production constraints",
+      "i2c_client manages the bus; i2c_driver manages the device"
+    ],
+    "correct_answer": "i2c_driver defines the driver with probe/remove; i2c_client represents a specific device on the I2C bus",
+    "topic": "Driver Model and Lifecycle",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "driver-model-and-lifecycle",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-039",
+    "question": "What is the SPI bus and how does it differ from I2C?",
+    "options": [
+      "SPI is full-duplex with separate MOSI/MISO lines and uses chip-select; I2C is half-duplex with addressing on a shared bus",
+      "SPI uses fewer wires than I2C in this scenario under production constraints for the stated requirement during incident triage",
+      "I2C is faster than SPI",
+      "SPI and I2C are identical"
+    ],
+    "correct_answer": "SPI is full-duplex with separate MOSI/MISO lines and uses chip-select; I2C is half-duplex with addressing on a shared bus",
+    "topic": "Driver Model and Lifecycle",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "driver-model-and-lifecycle"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-040",
+    "question": "In a production scenario, which option best describes the purpose of the 'wait_queue' mechanism in device drivers?",
+    "options": [
+      "To put processes to sleep until a condition is met (e.g., data available from device)",
+      "To schedule device shutdown in this scenario under production constraints for the stated requirement",
+      "To queue user requests",
+      "To queue network packets"
+    ],
+    "correct_answer": "To put processes to sleep until a condition is met (e.g., data available from device)",
+    "topic": "Driver Reliability and Error Handling",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "driver-reliability-and-error-handling",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-041",
+    "question": "During architecture review, which option best describes the 'select' / 'poll' mechanism in device drivers?",
+    "options": [
+      "Allows user-space to wait on multiple file descriptors; drivers implement the poll file_operation to support this",
+      "A mechanism to poll hardware registers",
+      "A voting mechanism for driver selection in this scenario under production constraints for the stated requirement during incident triage",
+      "A mechanism to select the best driver"
+    ],
+    "correct_answer": "Allows user-space to wait on multiple file descriptors; drivers implement the poll file_operation to support this",
+    "topic": "Driver Reliability and Error Handling",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "driver-reliability-and-error-handling"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-042",
+    "question": "During live operations, which option best describes the purpose of 'kmalloc' vs 'vmalloc' in the kernel?",
+    "options": [
+      "kmalloc allocates physically contiguous memory; vmalloc allocates virtually contiguous but potentially physically non-contiguous memory",
+      "vmalloc is faster than kmalloc",
+      "They are identical",
+      "kmalloc is for user space; vmalloc is for kernel space in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "kmalloc allocates physically contiguous memory; vmalloc allocates virtually contiguous but potentially physically non-contiguous memory",
+    "topic": "Memory and DMA Handling",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "kernel",
+      "memory-and-dma-handling",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-043",
+    "question": "What is the purpose of 'MODULE_LICENSE' macro?",
+    "options": [
+      "To declare the module's license; affects kernel symbol access (GPL modules get full kernel API access)",
+      "To register the module with a license server in this scenario under production constraints for the stated requirement",
+      "To encrypt the module",
+      "To display the license in 'about' dialogs"
+    ],
+    "correct_answer": "To declare the module's license; affects kernel symbol access (GPL modules get full kernel API access)",
+    "topic": "Driver Debugging",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "driver-debugging"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-044",
+    "question": "In a production scenario, which option best describes the GPIO subsystem in the kernel?",
+    "options": [
+      "A framework for requesting, configuring, and controlling General Purpose I/O pins from drivers",
+      "A general protocol operations subsystem in this scenario under production constraints for the stated requirement",
+      "A group policy object subsystem",
+      "A graphics processing subsystem"
+    ],
+    "correct_answer": "A framework for requesting, configuring, and controlling General Purpose I/O pins from drivers",
+    "topic": "Interrupts and Concurrency",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "interrupts-and-concurrency",
+      "kernel",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-045",
+    "question": "During architecture review, which option best describes a kernel oops vs. a kernel panic?",
+    "options": [
+      "An oops is a non-fatal kernel error (system may continue); a panic is fatal and halts the system",
+      "A panic is non-fatal; an oops is fatal",
+      "They are the same thing",
+      "Oops occurs in user space; panic in kernel space in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "An oops is a non-fatal kernel error (system may continue); a panic is fatal and halts the system",
+    "topic": "Driver Reliability and Error Handling",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "driver-reliability-and-error-handling",
+      "kernel"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-046",
+    "question": "During live operations, which option best describes the 'regmap' API used for in device drivers?",
+    "options": [
+      "A generic API for accessing device registers over different buses (I2C, SPI, MMIO) with caching support",
+      "To manage regular expressions in this scenario under production constraints for the stated requirement during incident triage",
+      "To register memory mappings",
+      "To map kernel regions"
+    ],
+    "correct_answer": "A generic API for accessing device registers over different buses (I2C, SPI, MMIO) with caching support",
+    "topic": "Driver Performance and Diagnostics",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "api",
+      "driver-performance-and-diagnostics",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-047",
+    "question": "What is the purpose of the 'debugfs' filesystem?",
+    "options": [
+      "A RAM-based filesystem for kernel developers to expose debugging information to user space",
+      "To debug file system errors",
+      "To store debug logs permanently in this scenario under production constraints for the stated requirement",
+      "To debug network connections"
+    ],
+    "correct_answer": "A RAM-based filesystem for kernel developers to expose debugging information to user space",
+    "topic": "Interrupts and Concurrency",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "debugging",
+      "interrupts-and-concurrency"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-048",
+    "question": "In a production scenario, which option best describes the input subsystem in the Linux kernel?",
+    "options": [
+      "A framework for handling input devices (keyboard, mouse, touchscreen) with a unified event interface",
+      "A subsystem for input validation",
+      "A subsystem for importing data",
+      "A subsystem for serial input processing in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A framework for handling input devices (keyboard, mouse, touchscreen) with a unified event interface",
+    "topic": "Driver Debugging",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "driver-debugging",
+      "kernel",
+      "linux",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-049",
+    "question": "During architecture review, which option best describes the purpose of the 'miscdevice' (misc driver) in Linux?",
+    "options": [
+      "A simplified character device framework with a fixed major number (10), reducing boilerplate for simple drivers",
+      "A driver for error handling",
+      "A driver for miscellaneous file operations",
+      "A driver for device misconfiguration detection in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A simplified character device framework with a fixed major number (10), reducing boilerplate for simple drivers",
+    "topic": "Driver Debugging",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "driver-debugging",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-050",
+    "question": "During live operations, which option best describes the purpose of 'module_param' macro?",
+    "options": [
+      "To declare module parameters that can be set at load time (via insmod/modprobe) or via sysfs",
+      "To parametrize compilation",
+      "To define function parameters",
+      "To define kernel configuration options in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "To declare module parameters that can be set at load time (via insmod/modprobe) or via sysfs",
+    "topic": "Interrupts and Concurrency",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "interrupts-and-concurrency",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-051",
+    "question": "What is the USB subsystem's 'URB' (USB Request Block)?",
+    "options": [
+      "A data structure used to communicate with USB devices asynchronously, containing transfer information",
+      "A USB reset buffer",
+      "A USB recovery backup in this scenario under production constraints for the stated requirement during incident triage",
+      "A USB register block"
+    ],
+    "correct_answer": "A data structure used to communicate with USB devices asynchronously, containing transfer information",
+    "topic": "Driver Model and Lifecycle",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "driver-model-and-lifecycle"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-052",
+    "question": "In a production scenario, which option best describes the purpose of 'mmap' in the Linux kernel?",
+    "options": [
+      "To map files or devices into the process's virtual address space for memory-mapped I/O",
+      "To map MAC addresses to IP addresses in this scenario under production constraints for the stated requirement",
+      "To manage memory allocation pools",
+      "To map email addresses"
+    ],
+    "correct_answer": "To map files or devices into the process's virtual address space for memory-mapped I/O",
+    "topic": "Memory and DMA Handling",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "kernel",
+      "linux",
+      "memory-and-dma-handling",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-053",
+    "question": "During architecture review, which option best describes the difference between user-space and kernel-space device drivers?",
+    "options": [
+      "Kernel-space drivers run with full hardware access; user-space drivers (e.g., UIO, VFIO) run in user mode with limited but safer access",
+      "User-space drivers are faster",
+      "Kernel-space drivers are written in Python; user-space in C in this scenario under production constraints for the stated requirement during incident triage",
+      "There is no such distinction in Linux"
+    ],
+    "correct_answer": "Kernel-space drivers run with full hardware access; user-space drivers (e.g., UIO, VFIO) run in user mode with limited but safer access",
+    "topic": "Driver Performance and Diagnostics",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "driver-performance-and-diagnostics",
+      "kernel"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-054",
+    "question": "During live operations, which option best describes power management (PM) in device drivers?",
+    "options": [
+      "Implementing suspend/resume callbacks so devices can enter low-power states and recover properly",
+      "Managing power supply voltage in this scenario under production constraints for the stated requirement",
+      "Managing battery percentage",
+      "Controlling CPU frequency"
+    ],
+    "correct_answer": "Implementing suspend/resume callbacks so devices can enter low-power states and recover properly",
+    "topic": "Interrupts and Concurrency",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "interrupts-and-concurrency",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-055",
+    "question": "What is the 'sysfs' interface used for in device drivers?",
+    "options": [
+      "To expose device attributes as files under /sys, allowing user-space to read/write device properties",
+      "To manage system fonts",
+      "To store driver source files",
+      "To configure system firewalls in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "To expose device attributes as files under /sys, allowing user-space to read/write device properties",
+    "topic": "Driver Model and Lifecycle",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "driver-model-and-lifecycle"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-056",
+    "question": "A production defect investigation needs clarity on the purpose of 'EXPORT_SYMBOL' and 'EXPORT_SYMBOL_GPL'?",
+    "options": [
+      "To make kernel symbols available to other kernel modules; _GPL restricts to GPL-licensed modules only",
+      "To export symbols to shared libraries in this scenario under production constraints for the stated requirement",
+      "To export debug symbols for gdb",
+      "To export data to user space"
+    ],
+    "correct_answer": "To make kernel symbols available to other kernel modules; _GPL restricts to GPL-licensed modules only",
+    "topic": "Driver Reliability and Error Handling",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-reliability-and-error-handling"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-057",
+    "question": "A production defect investigation needs clarity on a network device driver's 'ndo_start_xmit' function?",
+    "options": [
+      "The function called by the kernel to transmit a packet through the network device",
+      "A function to initialize the network stack in this scenario under production constraints",
+      "A function to start network monitoring",
+      "A function to start the network daemon"
+    ],
+    "correct_answer": "The function called by the kernel to transmit a packet through the network device",
+    "topic": "Driver Performance and Diagnostics",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-performance-and-diagnostics"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-058",
+    "question": "What tool is commonly used for tracing and debugging device driver issues?",
+    "options": [
+      "ftrace, strace, perf, or dynamic debug (dyndbg)",
+      "gdb only (user-space debugger) in this scenario under production constraints",
+      "Visual Studio debugger",
+      "Wireshark"
+    ],
+    "correct_answer": "ftrace, strace, perf, or dynamic debug (dyndbg)",
+    "topic": "I/O Paths and Subsystems",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "i-o-paths-and-subsystems"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-059",
+    "question": "A production defect investigation needs clarity on the Linux kernel?",
+    "options": [
+      "The core component of the Linux OS that manages hardware, memory, processes, and system calls",
+      "A command-line shell",
+      "A Linux distribution like Ubuntu",
+      "A graphical user interface for Linux in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "The core component of the Linux OS that manages hardware, memory, processes, and system calls",
+    "topic": "I/O Paths and Subsystems",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "i-o-paths-and-subsystems",
+      "kernel",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-060",
+    "question": "A production defect investigation needs clarity on the difference between monolithic and microkernel architectures?",
+    "options": [
+      "Monolithic kernels run all services in kernel space; microkernels run most services in user space",
+      "There is no architectural difference",
+      "Microkernels are faster than monolithic kernels",
+      "Monolithic kernels are smaller than microkernels in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "Monolithic kernels run all services in kernel space; microkernels run most services in user space",
+    "topic": "Driver Model and Lifecycle",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-model-and-lifecycle",
+      "kernel"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-061",
+    "question": "A production defect investigation needs clarity on a system call in Linux?",
+    "options": [
+      "An interface through which user-space programs request services from the kernel",
+      "A function call between two user-space programs in this scenario under production constraints",
+      "A call to the system BIOS",
+      "A network RPC mechanism"
+    ],
+    "correct_answer": "An interface through which user-space programs request services from the kernel",
+    "topic": "Driver Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-debugging",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-062",
+    "question": "A production defect investigation needs clarity on the purpose of the 'init' process (PID 1) in Linux?",
+    "options": [
+      "It is the first user-space process; it initializes the system and is the ancestor of all processes",
+      "To manage network connections in this scenario under production constraints for the stated requirement",
+      "To handle interrupt requests",
+      "To compile the kernel"
+    ],
+    "correct_answer": "It is the first user-space process; it initializes the system and is the ancestor of all processes",
+    "topic": "Driver Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-debugging",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-063",
+    "question": "A production defect investigation needs clarity on the difference between kernel space and user space?",
+    "options": [
+      "Kernel space has unrestricted hardware access; user space has restricted access and must use syscalls",
+      "User space is more privileged than kernel space",
+      "There is no separation in Linux",
+      "Kernel space is for storing files; user space is for programs in this scenario under production constraints"
+    ],
+    "correct_answer": "Kernel space has unrestricted hardware access; user space has restricted access and must use syscalls",
+    "topic": "Driver Performance and Diagnostics",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-performance-and-diagnostics",
+      "kernel"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-064",
+    "question": "A production defect investigation needs clarity on a loadable kernel module (LKM)?",
+    "options": [
+      "Code that can be loaded into and unloaded from the running kernel without rebooting",
+      "A module for loading user applications",
+      "A kernel that can be loaded from a USB drive in this scenario under production constraints",
+      "A precompiled kernel binary"
+    ],
+    "correct_answer": "Code that can be loaded into and unloaded from the running kernel without rebooting",
+    "topic": "Driver Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-debugging",
+      "kernel"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-065",
+    "question": "Which commands are used to load and unload kernel modules?",
+    "options": [
+      "insmod / rmmod (or modprobe / modprobe -r)",
+      "kmod_add / kmod_remove in this scenario under production constraints",
+      "modload / modunload",
+      "load / unload"
+    ],
+    "correct_answer": "insmod / rmmod (or modprobe / modprobe -r)",
+    "topic": "Interrupts and Concurrency",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "interrupts-and-concurrency",
+      "kernel"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-066",
+    "question": "A production defect investigation needs clarity on the difference between 'insmod' and 'modprobe'?",
+    "options": [
+      "modprobe automatically handles module dependencies; insmod does not",
+      "modprobe works only for network modules",
+      "They are identical",
+      "insmod handles dependencies; modprobe does not in this scenario under production constraints"
+    ],
+    "correct_answer": "modprobe automatically handles module dependencies; insmod does not",
+    "topic": "Driver Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-debugging"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-067",
+    "question": "A production defect investigation needs clarity on the Virtual File System (VFS) in Linux?",
+    "options": [
+      "An abstraction layer that provides a uniform interface for different file systems",
+      "A file system stored entirely in RAM",
+      "A virtual disk for storing temporary files in this scenario under production constraints",
+      "A virtual machine file system"
+    ],
+    "correct_answer": "An abstraction layer that provides a uniform interface for different file systems",
+    "topic": "Interrupts and Concurrency",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "interrupts-and-concurrency",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-068",
+    "question": "A production defect investigation needs clarity on the purpose of the 'proc' filesystem (/proc)?",
+    "options": [
+      "A virtual filesystem providing process and kernel information as files",
+      "To store application configuration files in this scenario under production constraints",
+      "To store procedure definitions",
+      "To provide network protocol information"
+    ],
+    "correct_answer": "A virtual filesystem providing process and kernel information as files",
+    "topic": "Interrupts and Concurrency",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "interrupts-and-concurrency"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-069",
+    "question": "A production defect investigation needs clarity on a kernel panic?",
+    "options": [
+      "A fatal error where the kernel cannot safely continue operation and halts",
+      "A warning message in the kernel log",
+      "A kernel performance optimization",
+      "A scheduled kernel maintenance event in this scenario under production constraints"
+    ],
+    "correct_answer": "A fatal error where the kernel cannot safely continue operation and halts",
+    "topic": "Driver Performance and Diagnostics",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-performance-and-diagnostics",
+      "kernel"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-070",
+    "question": "A production defect investigation needs clarity on the difference between a process and a thread in the Linux kernel?",
+    "options": [
+      "Threads share the same address space within a process; processes have separate address spaces",
+      "Threads have separate address spaces; processes share address space in this scenario under production constraints",
+      "Threads cannot be created in the kernel",
+      "Processes and threads are identical in Linux"
+    ],
+    "correct_answer": "Threads share the same address space within a process; processes have separate address spaces",
+    "topic": "Interrupts and Concurrency",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "interrupts-and-concurrency",
+      "kernel",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-071",
+    "question": "A production defect investigation needs clarity on the GFP (Get Free Pages) flag used for in kernel memory allocation?",
+    "options": [
+      "To specify the allocation context and constraints (e.g., GFP_KERNEL, GFP_ATOMIC)",
+      "To get file permissions in this scenario under production constraints for the stated requirement",
+      "To free unused pages",
+      "To get free disk pages"
+    ],
+    "correct_answer": "To specify the allocation context and constraints (e.g., GFP_KERNEL, GFP_ATOMIC)",
+    "topic": "Memory and DMA Handling",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "memory",
+      "memory-and-dma-handling"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-072",
+    "question": "A production defect investigation needs clarity on the CFS (Completely Fair Scheduler) in Linux?",
+    "options": [
+      "The default CPU process scheduler that uses a red-black tree to fairly allocate CPU time",
+      "A file system scheduler",
+      "A disk I/O scheduler",
+      "A network packet scheduler in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "The default CPU process scheduler that uses a red-black tree to fairly allocate CPU time",
+    "topic": "Driver Model and Lifecycle",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-model-and-lifecycle",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-073",
+    "question": "A production defect investigation needs clarity on the difference between GFP_KERNEL and GFP_ATOMIC?",
+    "options": [
+      "GFP_KERNEL can sleep and is used in process context; GFP_ATOMIC cannot sleep and is used in interrupt context",
+      "GFP_KERNEL is for atomic operations in this scenario under production constraints for the stated requirement during incident triage",
+      "GFP_ATOMIC allocates more memory",
+      "No difference"
+    ],
+    "correct_answer": "GFP_KERNEL can sleep and is used in process context; GFP_ATOMIC cannot sleep and is used in interrupt context",
+    "topic": "Memory and DMA Handling",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "kernel",
+      "memory-and-dma-handling"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-074",
+    "question": "What are the states a process can be in within the Linux kernel?",
+    "options": [
+      "TASK_RUNNING, TASK_INTERRUPTIBLE, TASK_UNINTERRUPTIBLE, TASK_STOPPED, TASK_ZOMBIE, etc.",
+      "Start, Run, Stop",
+      "Running, Waiting, Terminated only in this scenario under production constraints for the stated requirement",
+      "Active, Inactive, Dead"
+    ],
+    "correct_answer": "TASK_RUNNING, TASK_INTERRUPTIBLE, TASK_UNINTERRUPTIBLE, TASK_STOPPED, TASK_ZOMBIE, etc.",
+    "topic": "I/O Paths and Subsystems",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "i-o-paths-and-subsystems",
+      "kernel",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-075",
+    "question": "A production defect investigation needs clarity on a zombie process?",
+    "options": [
+      "A terminated process whose exit status has not yet been collected by its parent via wait()",
+      "A suspended process",
+      "A process running in the background in this scenario under production constraints for the stated requirement",
+      "A process using too much CPU"
+    ],
+    "correct_answer": "A terminated process whose exit status has not yet been collected by its parent via wait()",
+    "topic": "I/O Paths and Subsystems",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "i-o-paths-and-subsystems"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-076",
+    "question": "A production defect investigation needs clarity on the purpose of the sysfs filesystem (/sys)?",
+    "options": [
+      "A virtual filesystem exposing kernel objects, device info, and driver attributes to user space",
+      "To log system events",
+      "To store system configuration files in this scenario under production constraints for the stated requirement",
+      "To manage system services"
+    ],
+    "correct_answer": "A virtual filesystem exposing kernel objects, device info, and driver attributes to user space",
+    "topic": "Driver Model and Lifecycle",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-model-and-lifecycle"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-077",
+    "question": "A production defect investigation needs clarity on a spinlock in the Linux kernel?",
+    "options": [
+      "A lock where the waiting thread continuously polls (spins) until the lock becomes available",
+      "A file locking mechanism",
+      "A lock that puts the waiting thread to sleep in this scenario under production constraints for the stated requirement",
+      "A network socket lock"
+    ],
+    "correct_answer": "A lock where the waiting thread continuously polls (spins) until the lock becomes available",
+    "topic": "Driver Performance and Diagnostics",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-performance-and-diagnostics",
+      "kernel",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-078",
+    "question": "A production defect investigation needs clarity on the difference between a spinlock and a mutex in the kernel?",
+    "options": [
+      "Spinlocks busy-wait and cannot sleep; mutexes can put the caller to sleep while waiting",
+      "Spinlocks are only for user space; mutexes are for kernel space in this scenario under production constraints",
+      "Mutexes busy-wait; spinlocks sleep",
+      "They are identical"
+    ],
+    "correct_answer": "Spinlocks busy-wait and cannot sleep; mutexes can put the caller to sleep while waiting",
+    "topic": "Driver Performance and Diagnostics",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-performance-and-diagnostics",
+      "kernel"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-079",
+    "question": "A production defect investigation needs clarity on the purpose of 'dmesg' command?",
+    "options": [
+      "To display the kernel ring buffer messages (boot and runtime kernel logs)",
+      "To send messages to other users in this scenario under production constraints",
+      "To display disk messages",
+      "To manage device messages"
+    ],
+    "correct_answer": "To display the kernel ring buffer messages (boot and runtime kernel logs)",
+    "topic": "I/O Paths and Subsystems",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "i-o-paths-and-subsystems"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-080",
+    "question": "A production defect investigation needs clarity on the purpose of 'printk' in the Linux kernel?",
+    "options": [
+      "The kernel's logging function for outputting messages to the kernel log buffer",
+      "To format print jobs",
+      "To print to the user's terminal in this scenario under production constraints for the stated requirement",
+      "To print kernel configuration"
+    ],
+    "correct_answer": "The kernel's logging function for outputting messages to the kernel log buffer",
+    "topic": "Driver Reliability and Error Handling",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "driver-reliability-and-error-handling",
+      "kernel",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-081",
+    "question": "In a production scenario, which option best describes a kernel work queue?",
+    "options": [
+      "A mechanism for deferring work to be executed later in process context by kernel threads",
+      "A print queue managed by the kernel",
+      "A queue of pending system calls",
+      "A job scheduling system for user programs in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A mechanism for deferring work to be executed later in process context by kernel threads",
+    "topic": "Driver Performance and Diagnostics",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "driver-performance-and-diagnostics",
+      "kernel",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-082",
+    "question": "During architecture review, which option best describes a tasklet in the Linux kernel?",
+    "options": [
+      "A software interrupt mechanism for deferring work from a hardware interrupt handler (runs in softirq context)",
+      "A scheduled cron task",
+      "A kernel thread",
+      "A small user-space task in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "A software interrupt mechanism for deferring work from a hardware interrupt handler (runs in softirq context)",
+    "topic": "Driver Debugging",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "driver-debugging",
+      "kernel",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-083",
+    "question": "During live operations, which option best describes a kernel namespace?",
+    "options": [
+      "A feature that isolates and virtualizes system resources (PID, network, mount, etc.) for process groups",
+      "A C++ naming convention in the kernel in this scenario under production constraints for the stated requirement",
+      "A file naming convention",
+      "A directory namespace for /proc"
+    ],
+    "correct_answer": "A feature that isolates and virtualizes system resources (PID, network, mount, etc.) for process groups",
+    "topic": "Interrupts and Concurrency",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "interrupts-and-concurrency",
+      "kernel",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-084",
+    "question": "What are cgroups (control groups) in Linux?",
+    "options": [
+      "A kernel feature to limit, account for, and isolate resource usage (CPU, memory, I/O) of process groups",
+      "A version control feature",
+      "A group policy for user accounts in this scenario under production constraints for the stated requirement",
+      "Groups of C source files"
+    ],
+    "correct_answer": "A kernel feature to limit, account for, and isolate resource usage (CPU, memory, I/O) of process groups",
+    "topic": "I/O Paths and Subsystems",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "i-o-paths-and-subsystems",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-085",
+    "question": "In a production scenario, which option best describes the purpose of the inode in the Linux filesystem?",
+    "options": [
+      "A data structure storing file metadata (size, permissions, timestamps, block pointers) but not the filename",
+      "To manage input devices in this scenario under production constraints for the stated requirement during incident triage",
+      "To index network nodes",
+      "To store file content"
+    ],
+    "correct_answer": "A data structure storing file metadata (size, permissions, timestamps, block pointers) but not the filename",
+    "topic": "Driver Reliability and Error Handling",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "driver-reliability-and-error-handling",
+      "linux",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-086",
+    "question": "During architecture review, which option best describes the difference between hard links and soft (symbolic) links?",
+    "options": [
+      "Hard links point to the same inode; soft links are separate files pointing to a path name",
+      "Hard links work across filesystems; soft links do not",
+      "They are the same thing",
+      "Soft links point to the same inode; hard links point to a path in this scenario under production constraints"
+    ],
+    "correct_answer": "Hard links point to the same inode; soft links are separate files pointing to a path name",
+    "topic": "Driver Model and Lifecycle",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "driver-model-and-lifecycle"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-087",
+    "question": "During live operations, which option best describes the difference between 'malloc' and 'calloc'?",
+    "options": [
+      "calloc initializes memory to zero, malloc does not",
+      "malloc initializes memory to zero, calloc does not",
+      "There is no difference",
+      "calloc allocates memory on the stack"
+    ],
+    "correct_answer": "calloc initializes memory to zero, malloc does not",
+    "topic": "Memory and DMA Handling",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "memory-and-dma-handling",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-088",
+    "question": "Which header file is required for dynamic memory allocation functions in C?",
+    "options": [
+      "<stdlib.h>",
+      "<memory.h>",
+      "<alloc.h>",
+      "<malloc.h>"
+    ],
+    "correct_answer": "<stdlib.h>",
+    "topic": "Memory and DMA Handling",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "memory",
+      "memory-and-dma-handling"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-089",
+    "question": "In a production scenario, which option best describes the purpose of the Linux kernel's 'kconfig' system?",
+    "options": [
+      "A configuration system (menuconfig/defconfig) that selects which features and modules to build into the kernel",
+      "To configure user account settings",
+      "To configure the bootloader",
+      "To configure kernel network settings at runtime in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A configuration system (menuconfig/defconfig) that selects which features and modules to build into the kernel",
+    "topic": "Driver Performance and Diagnostics",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "driver-performance-and-diagnostics",
+      "kernel",
+      "linux",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-090",
+    "question": "What command is used to build the Linux kernel?",
+    "options": [
+      "make (with targets like make bzImage, make modules)",
+      "gcc kernel.c",
+      "kernel-build",
+      "cmake --build in this scenario under production constraints"
+    ],
+    "correct_answer": "make (with targets like make bzImage, make modules)",
+    "topic": "Interrupts and Concurrency",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "interrupts-and-concurrency",
+      "kernel",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-091",
+    "question": "During live operations, which option best describes RCU (Read-Copy-Update) in the Linux kernel?",
+    "options": [
+      "A synchronization mechanism allowing concurrent reads without locks while updates create new copies",
+      "A registry cleanup utility",
+      "A file versioning system",
+      "A remote configuration utility in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A synchronization mechanism allowing concurrent reads without locks while updates create new copies",
+    "topic": "I/O Paths and Subsystems",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "i-o-paths-and-subsystems",
+      "kernel",
+      "linux",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-092",
+    "question": "What does 'realloc' do when called with a NULL pointer?",
+    "options": [
+      "Behaves like malloc and allocates new memory",
+      "Returns NULL",
+      "Causes undefined behavior in this scenario under production constraints",
+      "Frees the memory"
+    ],
+    "correct_answer": "Behaves like malloc and allocates new memory",
+    "topic": "Memory and DMA Handling",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "memory-and-dma-handling"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-093",
+    "question": "In a production scenario, which option best describes a memory leak in C?",
+    "options": [
+      "Allocating memory that is never freed during the program's lifetime",
+      "Accessing memory beyond allocated bounds in this scenario under production constraints",
+      "Using uninitialized variables",
+      "Writing to read-only memory"
+    ],
+    "correct_answer": "Allocating memory that is never freed during the program's lifetime",
+    "topic": "Memory and DMA Handling",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "memory",
+      "memory-and-dma-handling",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-094",
+    "question": "During architecture review, which option best describes the purpose of the device tree (DT) in Linux?",
+    "options": [
+      "A data structure describing hardware so the kernel can discover and configure devices (common on ARM)",
+      "A device driver dependency graph",
+      "To list USB device connections",
+      "A tree structure for /dev directory in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A data structure describing hardware so the kernel can discover and configure devices (common on ARM)",
+    "topic": "Driver Reliability and Error Handling",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "driver-reliability-and-error-handling",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-095",
+    "question": "During live operations, which option best describes the purpose of the 'ioctl' system call?",
+    "options": [
+      "To send device-specific control commands to a device driver that aren't covered by read/write",
+      "To optimize I/O performance",
+      "To perform I/O on regular files only in this scenario under production constraints for the stated requirement",
+      "To control I/O ports directly"
+    ],
+    "correct_answer": "To send device-specific control commands to a device driver that aren't covered by read/write",
+    "topic": "Driver Debugging",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "driver-debugging",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-096",
+    "question": "What is the copy_to_user / copy_from_user function used for?",
+    "options": [
+      "To safely transfer data between kernel space and user space, with proper validation",
+      "To copy kernel modules between servers in this scenario under production constraints",
+      "To copy files between user accounts",
+      "To duplicate user processes"
+    ],
+    "correct_answer": "To safely transfer data between kernel space and user space, with proper validation",
+    "topic": "I/O Paths and Subsystems",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "i-o-paths-and-subsystems"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-097",
+    "question": "What happens when you free a pointer twice in C?",
+    "options": [
+      "Undefined behavior (double free)",
+      "Nothing happens",
+      "The memory is freed again safely",
+      "A compiler warning is generated"
+    ],
+    "correct_answer": "Undefined behavior (double free)",
+    "topic": "Memory and DMA Handling",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "memory-and-dma-handling",
+      "scenario"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-098",
+    "question": "During architecture review, which option best describes the Linux kernel's netfilter framework?",
+    "options": [
+      "A framework of hooks in the networking stack for packet filtering, NAT, and mangling (basis of iptables/nftables)",
+      "A network monitoring tool",
+      "A network file sharing protocol in this scenario under production constraints for the stated requirement during incident triage",
+      "A DNS filtering service"
+    ],
+    "correct_answer": "A framework of hooks in the networking stack for packet filtering, NAT, and mangling (basis of iptables/nftables)",
+    "topic": "I/O Paths and Subsystems",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "i-o-paths-and-subsystems",
+      "kernel",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-099",
+    "question": "During live operations, which option best describes the purpose of the 'kthread' API in the Linux kernel?",
+    "options": [
+      "To create and manage kernel threads that run entirely in kernel space",
+      "To create user-space threads",
+      "To manage thread pools in applications in this scenario under production constraints",
+      "To kill threads"
+    ],
+    "correct_answer": "To create and manage kernel threads that run entirely in kernel space",
+    "topic": "Driver Reliability and Error Handling",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "api",
+      "driver-reliability-and-error-handling",
+      "kernel",
+      "linux",
+      "operations"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  },
+  {
+    "id": "device-driver-device-driver-engineering-100",
+    "question": "What is the Linux kernel's 'completion' mechanism?",
+    "options": [
+      "A synchronization primitive where one thread waits for another to signal that a task is complete",
+      "A file transfer completion notification in this scenario under production constraints for the stated requirement",
+      "A mechanism for code auto-completion",
+      "A process termination handler"
+    ],
+    "correct_answer": "A synchronization primitive where one thread waits for another to signal that a task is complete",
+    "topic": "Driver Debugging",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "driver-debugging",
+      "kernel",
+      "linux"
+    ],
+    "role_target": "linux_kernel_dd",
+    "round_target": "L3",
+    "version_scope": [
+      "linux",
+      "kernel6",
+      "c17"
+    ]
+  }
+]

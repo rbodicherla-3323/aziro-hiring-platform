@@ -130,3 +130,30 @@ def test_balanced_selector_supports_enterprise_aiml_debugging_quota():
 
     assert counts == {"easy": 5, "medium": 5, "hard": 5}
     assert debug_count >= 5
+
+
+def test_balanced_selector_enforces_debugging_by_difficulty_constraints():
+    questions = []
+    for difficulty in ("easy", "medium", "hard"):
+        for idx in range(7):
+            style = "debugging" if idx < 2 else "scenario"
+            questions.append(_question(f"{difficulty}-{idx}", difficulty, style=style))
+
+    selected = select_questions(
+        questions=questions,
+        total_count=15,
+        strategy="balanced_difficulty_v2",
+        rng=random.Random(91),
+        constraints={
+            "difficulty_mix": {"easy": 5, "medium": 5, "hard": 5},
+            "min_debugging_total": 3,
+            "selected_debugging_by_difficulty": {"easy": 1, "medium": 1, "hard": 1},
+        },
+    )
+
+    debug_by_diff = {"easy": 0, "medium": 0, "hard": 0}
+    for question in selected:
+        if question["style"] == "debugging":
+            debug_by_diff[question["difficulty"]] += 1
+
+    assert debug_by_diff == {"easy": 1, "medium": 1, "hard": 1}

@@ -1,0 +1,2508 @@
+[
+  {
+    "id": "bmc-bmc-firmware-engineering-001",
+    "question": "In firmware development, what is a bootloader?",
+    "options": [
+      "A program that loads the operating system kernel into memory during startup",
+      "A hardware component that boots the disk drive in this scenario under production constraints",
+      "A diagnostic tool for checking boot speed",
+      "A BIOS configuration utility"
+    ],
+    "correct_answer": "A program that loads the operating system kernel into memory during startup",
+    "topic": "Embedded C and Firmware Basics",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "embedded-c-and-firmware-basics"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-002",
+    "question": "Which protocol is most commonly used by BMC for out-of-band management?",
+    "options": [
+      "IPMI (Intelligent Platform Management Interface)",
+      "HTTP in this scenario under production constraints",
+      "FTP",
+      "MQTT"
+    ],
+    "correct_answer": "IPMI (Intelligent Platform Management Interface)",
+    "topic": "Hardware Communication and Protocols",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "hardware-communication-and-protocols"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-003",
+    "question": "A production defect investigation needs clarity on the function of the ASPEED AST2500/AST2600 chip?",
+    "options": [
+      "It is a widely used BMC SoC (System-on-Chip) with ARM core",
+      "It is a storage controller",
+      "It is a GPU for server graphics in this scenario under production constraints",
+      "It is a network switch chip"
+    ],
+    "correct_answer": "It is a widely used BMC SoC (System-on-Chip) with ARM core",
+    "topic": "Hardware Communication and Protocols",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "hardware-communication-and-protocols"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-004",
+    "question": "A production defect investigation needs clarity on BMC stand for in server management?",
+    "options": [
+      "Baseboard Management Controller",
+      "Baseboard Monitoring Circuit in this scenario",
+      "Basic Memory Controller",
+      "Bus Management Chip"
+    ],
+    "correct_answer": "Baseboard Management Controller",
+    "topic": "BMC Architecture and Interfaces",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "bmc-architecture-and-interfaces",
+      "debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-005",
+    "question": "A production defect investigation needs clarity on the chain of trust in secure boot for firmware?",
+    "options": [
+      "Each stage of boot verifies the next stage's integrity before executing it",
+      "A linked list data structure in boot code",
+      "A chain of network certificates",
+      "A trust relationship between server and client in this scenario under production constraints"
+    ],
+    "correct_answer": "Each stage of boot verifies the next stage's integrity before executing it",
+    "topic": "Boot and Initialization",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "boot-and-initialization",
+      "debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-006",
+    "question": "In a production scenario, which option best describes the primary purpose of a BMC on a server motherboard?",
+    "options": [
+      "To manage and monitor server hardware independently of the host OS",
+      "To increase network bandwidth",
+      "To accelerate graphics rendering in this scenario under production constraints",
+      "To provide additional storage"
+    ],
+    "correct_answer": "To manage and monitor server hardware independently of the host OS",
+    "topic": "BMC Architecture and Interfaces",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "bmc-architecture-and-interfaces",
+      "scenario"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-007",
+    "question": "Which interface does IPMI use to communicate between the BMC and the host system?",
+    "options": [
+      "KCS (Keyboard Controller Style) / BT / SMIC",
+      "USB",
+      "HDMI",
+      "PCIe only in this scenario under production constraints"
+    ],
+    "correct_answer": "KCS (Keyboard Controller Style) / BT / SMIC",
+    "topic": "Performance and Resource Constraints",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "performance-and-resource-constraints"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-008",
+    "question": "During live operations, which option best describes the Redfish standard in the context of BMC?",
+    "options": [
+      "A RESTful API standard for hardware management replacing IPMI",
+      "A firmware compression algorithm",
+      "A Linux kernel module for BMC",
+      "A security protocol for BMC communication in this scenario under production constraints"
+    ],
+    "correct_answer": "A RESTful API standard for hardware management replacing IPMI",
+    "topic": "Performance and Resource Constraints",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "performance-and-resource-constraints"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-009",
+    "question": "What is MCTP (Management Component Transport Protocol)?",
+    "options": [
+      "A DMTF standard for transporting management messages between components (e.g., BMC, CPU, NIC)",
+      "A microcontroller testing protocol",
+      "A multicast transport protocol for video streaming in this scenario under production constraints",
+      "A memory cache transfer protocol"
+    ],
+    "correct_answer": "A DMTF standard for transporting management messages between components (e.g., BMC, CPU, NIC)",
+    "topic": "Hardware Communication and Protocols",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "hardware-communication-and-protocols"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-010",
+    "question": "In a production scenario, which option best describes U-Boot in embedded/firmware development?",
+    "options": [
+      "A widely used open-source bootloader for embedded systems",
+      "A Ubuntu boot manager",
+      "A unified boot test framework in this scenario under production constraints",
+      "A USB boot protocol"
+    ],
+    "correct_answer": "A widely used open-source bootloader for embedded systems",
+    "topic": "Embedded C and Firmware Basics",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "embedded-c-and-firmware-basics",
+      "scenario"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-011",
+    "question": "During architecture review, which option best describes OpenBMC?",
+    "options": [
+      "An open-source Linux-based BMC firmware project",
+      "A hardware specification for BMC chips in this scenario",
+      "A proprietary BMC firmware by Intel",
+      "A cloud-based BMC management tool"
+    ],
+    "correct_answer": "An open-source Linux-based BMC firmware project",
+    "topic": "BMC Architecture and Interfaces",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "bmc-architecture-and-interfaces"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-012",
+    "question": "Which build system does OpenBMC primarily use?",
+    "options": [
+      "Yocto / BitBake",
+      "Make only in this scenario",
+      "CMake",
+      "Gradle"
+    ],
+    "correct_answer": "Yocto / BitBake",
+    "topic": "Boot and Initialization",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "boot-and-initialization",
+      "operations"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-013",
+    "question": "What is the SDR (Sensor Data Record) in IPMI?",
+    "options": [
+      "A data structure describing sensors, their types, and thresholds",
+      "A software-defined radio module in this scenario under production constraints",
+      "A debug report generated by BMC",
+      "A log of system errors"
+    ],
+    "correct_answer": "A data structure describing sensors, their types, and thresholds",
+    "topic": "Boot and Initialization",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "boot-and-initialization",
+      "concept"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-014",
+    "question": "In a production scenario, which option best describes the difference between 'strcpy' and 'strncpy'?",
+    "options": [
+      "strncpy copies at most n characters, providing bounds checking; strcpy does not",
+      "strcpy is safer than strncpy",
+      "Both are identical",
+      "strncpy works only with wide characters in this scenario under production constraints"
+    ],
+    "correct_answer": "strncpy copies at most n characters, providing bounds checking; strcpy does not",
+    "topic": "Reliability and Fault Handling",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "reliability-and-fault-handling",
+      "scenario"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-015",
+    "question": "During architecture review, which option best describes the SEL (System Event Log) in BMC?",
+    "options": [
+      "A non-volatile log that records platform events and alerts",
+      "A serial communication protocol",
+      "A system error list generated at boot in this scenario under production constraints",
+      "A software encryption layer"
+    ],
+    "correct_answer": "A non-volatile log that records platform events and alerts",
+    "topic": "Boot and Initialization",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "boot-and-initialization"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-016",
+    "question": "During live operations, which option best describes a segmentation fault?",
+    "options": [
+      "A runtime error caused by accessing memory that the process does not own",
+      "A compilation error",
+      "An arithmetic overflow in this scenario under production constraints for the stated requirement",
+      "A linker error"
+    ],
+    "correct_answer": "A runtime error caused by accessing memory that the process does not own",
+    "topic": "Reliability and Fault Handling",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "reliability-and-fault-handling"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-017",
+    "question": "What is the function of the RTC (Real-Time Clock) in BMC?",
+    "options": [
+      "To maintain accurate date and time even when the server is powered off",
+      "To control the CPU clock frequency",
+      "To schedule firmware updates",
+      "To provide real-time graphics rendering in this scenario under production constraints"
+    ],
+    "correct_answer": "To maintain accurate date and time even when the server is powered off",
+    "topic": "Hardware Communication and Protocols",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "hardware-communication-and-protocols"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-018",
+    "question": "In a production scenario, which option best describes the JTAG interface used for in BMC/firmware debugging?",
+    "options": [
+      "A hardware debug interface for testing, programming, and debugging ICs and firmware",
+      "A JSON-based test automation guide",
+      "A Java-based firmware testing framework in this scenario under production constraints",
+      "Java Testing and Grading"
+    ],
+    "correct_answer": "A hardware debug interface for testing, programming, and debugging ICs and firmware",
+    "topic": "Firmware Debugging",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "debugging",
+      "firmware-debugging",
+      "scenario"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-019",
+    "question": "During architecture review, which option best describes SOL (Serial over LAN) in IPMI?",
+    "options": [
+      "A mechanism to redirect serial port traffic over a network connection",
+      "A method of LAN-based software updates",
+      "A load-balancing protocol for serial devices in this scenario under production constraints",
+      "A protocol for streaming video over LAN"
+    ],
+    "correct_answer": "A mechanism to redirect serial port traffic over a network connection",
+    "topic": "BMC Architecture and Interfaces",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "bmc-architecture-and-interfaces"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-020",
+    "question": "During live operations, which option best describes the role of the IPMB (Intelligent Platform Management Bus)?",
+    "options": [
+      "It is an I2C-based bus connecting BMC to satellite management controllers",
+      "It connects the CPU to main memory",
+      "It provides power to the BMC chip",
+      "It is the host-to-BMC USB interface in this scenario under production constraints"
+    ],
+    "correct_answer": "It is an I2C-based bus connecting BMC to satellite management controllers",
+    "topic": "Boot and Initialization",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "boot-and-initialization",
+      "operations"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-021",
+    "question": "A production defect investigation needs clarity on a FRU (Field Replaceable Unit) in BMC context?",
+    "options": [
+      "A hardware component that stores inventory data like part number, serial number, and manufacturer",
+      "A fault-reporting unit in the BMC",
+      "A firmware recovery utility",
+      "A file upload mechanism for firmware in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A hardware component that stores inventory data like part number, serial number, and manufacturer",
+    "topic": "Reliability and Fault Handling",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "reliability-and-fault-handling"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-022",
+    "question": "A production defect investigation needs clarity on the 'assert' macro do in C?",
+    "options": [
+      "Terminates the program if the given condition is false (debug mode)",
+      "Prints a warning message in this scenario under production constraints",
+      "Logs an error to a file",
+      "Throws an exception"
+    ],
+    "correct_answer": "Terminates the program if the given condition is false (debug mode)",
+    "topic": "Firmware Debugging",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "firmware-debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-023",
+    "question": "Which bus protocol is commonly used by BMC to read temperature and voltage sensors?",
+    "options": [
+      "I2C / SMBus",
+      "CAN bus in this scenario",
+      "UART",
+      "SPI"
+    ],
+    "correct_answer": "I2C / SMBus",
+    "topic": "Reliability and Fault Handling",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "reliability-and-fault-handling"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-024",
+    "question": "A production defect investigation needs clarity on the purpose of the BMC watchdog timer?",
+    "options": [
+      "To reset the system if the host OS becomes unresponsive",
+      "To schedule firmware updates in this scenario under production constraints",
+      "To count power-on hours",
+      "To measure CPU clock speed"
+    ],
+    "correct_answer": "To reset the system if the host OS becomes unresponsive",
+    "topic": "Reliability and Fault Handling",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "reliability-and-fault-handling"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-025",
+    "question": "A production defect investigation needs clarity on PNOR (Processor NOR) flash in the context of OpenBMC/Power systems?",
+    "options": [
+      "A flash partition used to store the host firmware image",
+      "A power-on reset mechanism",
+      "A BMC network configuration file in this scenario under production constraints",
+      "A parallel NOR debug interface"
+    ],
+    "correct_answer": "A flash partition used to store the host firmware image",
+    "topic": "BMC Architecture and Interfaces",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "bmc-architecture-and-interfaces",
+      "debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-026",
+    "question": "A production defect investigation needs clarity on the typical storage medium for BMC firmware?",
+    "options": [
+      "SPI NOR flash memory",
+      "DDR RAM",
+      "Hard disk drive in this scenario",
+      "SD card"
+    ],
+    "correct_answer": "SPI NOR flash memory",
+    "topic": "Embedded C and Firmware Basics",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "embedded-c-and-firmware-basics"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-027",
+    "question": "A production defect investigation needs clarity on the D-Bus in OpenBMC?",
+    "options": [
+      "An inter-process communication (IPC) system used by OpenBMC services",
+      "A device bus for sensor connectivity in this scenario under production constraints",
+      "A debug bus for hardware testing",
+      "A data bus connecting CPU and BMC"
+    ],
+    "correct_answer": "An inter-process communication (IPC) system used by OpenBMC services",
+    "topic": "BMC Architecture and Interfaces",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "bmc-architecture-and-interfaces",
+      "debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-028",
+    "question": "A production defect investigation needs clarity on an EEPROM and how is it used in BMC?",
+    "options": [
+      "Electrically Erasable Programmable ROM; used to store FRU data and configuration",
+      "An error-correcting code module",
+      "An external expansion port",
+      "A type of RAM for fast data access in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "Electrically Erasable Programmable ROM; used to store FRU data and configuration",
+    "topic": "Hardware Communication and Protocols",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "hardware-communication-and-protocols"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-029",
+    "question": "A production defect investigation needs clarity on UEFI in the context of system firmware?",
+    "options": [
+      "Unified Extensible Firmware Interface - a modern replacement for BIOS",
+      "Universal Ethernet Firmware Interface in this scenario under production constraints",
+      "Unified External Flash Interface",
+      "Ultra-Efficient Firmware Integration"
+    ],
+    "correct_answer": "Unified Extensible Firmware Interface - a modern replacement for BIOS",
+    "topic": "Boot and Initialization",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "boot-and-initialization",
+      "debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-030",
+    "question": "A production defect investigation needs clarity on a kernel oops vs. a kernel panic?",
+    "options": [
+      "An oops is a non-fatal kernel error (system may continue); a panic is fatal and halts the system",
+      "A panic is non-fatal; an oops is fatal",
+      "They are the same thing",
+      "Oops occurs in user space; panic in kernel space in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "An oops is a non-fatal kernel error (system may continue); a panic is fatal and halts the system",
+    "topic": "Firmware Debugging",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "firmware-debugging",
+      "kernel"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-031",
+    "question": "A production defect investigation needs clarity on the purpose of phosphor-host-ipmid in OpenBMC?",
+    "options": [
+      "To handle IPMI commands from the host system",
+      "To control LED indicators",
+      "To manage the phosphor display",
+      "To manage network phosphor protocols in this scenario"
+    ],
+    "correct_answer": "To handle IPMI commands from the host system",
+    "topic": "Reliability and Fault Handling",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "reliability-and-fault-handling"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-032",
+    "question": "A production defect investigation needs clarity on an NCSI (Network Controller Sideband Interface)?",
+    "options": [
+      "A standard that allows BMC to share the host's network port for management traffic",
+      "A network protocol for cloud storage in this scenario under production constraints for the stated requirement",
+      "A serial communication interface",
+      "A CPU interconnect standard"
+    ],
+    "correct_answer": "A standard that allows BMC to share the host's network port for management traffic",
+    "topic": "Reliability and Fault Handling",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "reliability-and-fault-handling"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-033",
+    "question": "A production defect investigation needs clarity on the purpose of the PECI (Platform Environment Control Interface)?",
+    "options": [
+      "To allow BMC to read CPU thermal data and other platform information",
+      "To control PCIe lane allocation",
+      "To provide peripheral device control in this scenario under production constraints",
+      "To manage power distribution"
+    ],
+    "correct_answer": "To allow BMC to read CPU thermal data and other platform information",
+    "topic": "Performance and Resource Constraints",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-resource-constraints"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-034",
+    "question": "In firmware development, what is a device tree?",
+    "options": [
+      "A data structure describing hardware components so the OS can use them",
+      "A boot sequence diagram",
+      "A tree of connected USB devices",
+      "A directory structure for device files in this scenario under production constraints"
+    ],
+    "correct_answer": "A data structure describing hardware components so the OS can use them",
+    "topic": "Performance and Resource Constraints",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-resource-constraints"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-035",
+    "question": "A production defect investigation needs clarity on the purpose of the 'debugfs' filesystem?",
+    "options": [
+      "A RAM-based filesystem for kernel developers to expose debugging information to user space",
+      "To debug file system errors",
+      "To store debug logs permanently in this scenario under production constraints for the stated requirement",
+      "To debug network connections"
+    ],
+    "correct_answer": "A RAM-based filesystem for kernel developers to expose debugging information to user space",
+    "topic": "Firmware Debugging",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "firmware-debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-036",
+    "question": "In a production scenario, which option best describes the role of the SPI bus in BMC firmware?",
+    "options": [
+      "Reading and writing the flash memory that stores BMC firmware",
+      "Transferring audio data",
+      "Connecting keyboard and mouse",
+      "Connecting to the network interface in this scenario under production constraints"
+    ],
+    "correct_answer": "Reading and writing the flash memory that stores BMC firmware",
+    "topic": "Boot and Initialization",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "boot-and-initialization",
+      "scenario"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-037",
+    "question": "During architecture review, which option best describes IPMI over LAN?",
+    "options": [
+      "Using IPMI commands remotely over a network using UDP packets",
+      "An IPMI command for configuring LAN settings only in this scenario",
+      "A local-only IPMI interface",
+      "Connecting BMC to LAN via serial cable"
+    ],
+    "correct_answer": "Using IPMI commands remotely over a network using UDP packets",
+    "topic": "Hardware Communication and Protocols",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "hardware-communication-and-protocols"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-038",
+    "question": "What tool is commonly used for tracing and debugging device driver issues?",
+    "options": [
+      "ftrace, strace, perf, or dynamic debug (dyndbg)",
+      "gdb only (user-space debugger) in this scenario under production constraints",
+      "Visual Studio debugger",
+      "Wireshark"
+    ],
+    "correct_answer": "ftrace, strace, perf, or dynamic debug (dyndbg)",
+    "topic": "Firmware Debugging",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "debugging",
+      "firmware-debugging",
+      "operations"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-039",
+    "question": "What is the difference between in-band and out-of-band management?",
+    "options": [
+      "In-band requires the host OS to be running; out-of-band works independently of the host OS",
+      "Out-of-band requires the host OS; in-band does not",
+      "Both are the same concept",
+      "In-band uses wireless; out-of-band uses wired connections in this scenario under production constraints"
+    ],
+    "correct_answer": "In-band requires the host OS to be running; out-of-band works independently of the host OS",
+    "topic": "Reliability and Fault Handling",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "reliability-and-fault-handling"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-040",
+    "question": "In a production scenario, which option best describes firmware signing and why is it important for BMC?",
+    "options": [
+      "Cryptographically signing firmware to ensure authenticity and prevent tampering",
+      "Adding version numbers to firmware files in this scenario under production constraints",
+      "Signing firmware with a developer's name",
+      "Compressing firmware for faster boot"
+    ],
+    "correct_answer": "Cryptographically signing firmware to ensure authenticity and prevent tampering",
+    "topic": "Embedded C and Firmware Basics",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "embedded-c-and-firmware-basics",
+      "scenario"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-041",
+    "question": "During architecture review, which option best describes KVM over IP in BMC context?",
+    "options": [
+      "Remote keyboard, video, and mouse access to the server over a network",
+      "A Linux virtualization technology in this scenario under production constraints",
+      "A key-value management store",
+      "A kernel virtual machine protocol"
+    ],
+    "correct_answer": "Remote keyboard, video, and mouse access to the server over a network",
+    "topic": "Reliability and Fault Handling",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "reliability-and-fault-handling"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-042",
+    "question": "During live operations, which option best describes the GPIO (General Purpose Input/Output) used for in BMC?",
+    "options": [
+      "Controlling and monitoring hardware signals like power buttons, LEDs, and presence detection",
+      "Graphics processing output",
+      "General protocol input/output for networking in this scenario under production constraints for the stated requirement",
+      "GPU optimization"
+    ],
+    "correct_answer": "Controlling and monitoring hardware signals like power buttons, LEDs, and presence detection",
+    "topic": "Boot and Initialization",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "boot-and-initialization",
+      "operations"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-043",
+    "question": "What is a BMC firmware update mechanism typically called?",
+    "options": [
+      "Firmware flashing or firmware update",
+      "BIOS refresh",
+      "Kernel upgrade in this scenario under production constraints",
+      "Hot patching"
+    ],
+    "correct_answer": "Firmware flashing or firmware update",
+    "topic": "Hardware Communication and Protocols",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "hardware-communication-and-protocols"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-044",
+    "question": "In embedded firmware, what is a HAL (Hardware Abstraction Layer)?",
+    "options": [
+      "A software layer that provides a uniform interface to hardware, hiding details",
+      "A high-availability load balancer in this scenario under production constraints",
+      "A hardware acceleration library",
+      "A hypervisor for ARM platforms"
+    ],
+    "correct_answer": "A software layer that provides a uniform interface to hardware, hiding details",
+    "topic": "Embedded C and Firmware Basics",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "embedded-c-and-firmware-basics",
+      "scenario"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-045",
+    "question": "During architecture review, which option best describes the role of the PWM (Pulse Width Modulation) controller in BMC?",
+    "options": [
+      "To control fan speeds based on thermal readings",
+      "To manage power supply voltage in this scenario under production constraints",
+      "To control CPU clock speed",
+      "To modulate network signals"
+    ],
+    "correct_answer": "To control fan speeds based on thermal readings",
+    "topic": "Performance and Resource Constraints",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "performance-and-resource-constraints"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-046",
+    "question": "During live operations, which option best describes the DMTF (Distributed Management Task Force) role in BMC standards?",
+    "options": [
+      "It develops and maintains management standards like Redfish and IPMI",
+      "It provides BMC firmware updates in this scenario under production constraints",
+      "It audits server security",
+      "It manufactures BMC chips"
+    ],
+    "correct_answer": "It develops and maintains management standards like Redfish and IPMI",
+    "topic": "BMC Architecture and Interfaces",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "bmc-architecture-and-interfaces",
+      "operations"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-047",
+    "question": "What is the difference between IPMI 1.5 and IPMI 2.0?",
+    "options": [
+      "IPMI 2.0 adds enhanced authentication (RMCP+), SOL, and encryption support",
+      "IPMI 1.5 supports Redfish; 2.0 does not in this scenario under production constraints",
+      "IPMI 2.0 removes sensor support",
+      "No significant differences"
+    ],
+    "correct_answer": "IPMI 2.0 adds enhanced authentication (RMCP+), SOL, and encryption support",
+    "topic": "BMC Architecture and Interfaces",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "bmc-architecture-and-interfaces",
+      "concept"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-048",
+    "question": "In a production scenario, which option best describes a BMC's role during server power-on sequence?",
+    "options": [
+      "BMC initializes first, performs hardware checks, controls power sequencing, then allows host CPU to start",
+      "BMC starts only after the OS is loaded",
+      "BMC has no role during power-on",
+      "BMC only monitors temperature during power-on in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "BMC initializes first, performs hardware checks, controls power sequencing, then allows host CPU to start",
+    "topic": "Hardware Communication and Protocols",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "hardware-communication-and-protocols",
+      "scenario"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-049",
+    "question": "During architecture review, which option best describes cross-compilation in firmware development?",
+    "options": [
+      "Compiling code on one platform (host) to run on a different platform (target, e.g., ARM)",
+      "Compiling C and C++ code together",
+      "Compiling code that works across all operating systems in this scenario under production constraints",
+      "Compiling code on multiple machines simultaneously"
+    ],
+    "correct_answer": "Compiling code on one platform (host) to run on a different platform (target, e.g., ARM)",
+    "topic": "Embedded C and Firmware Basics",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "embedded-c-and-firmware-basics"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-050",
+    "question": "During live operations, which option best describes the purpose of the ADC (Analog-to-Digital Converter) in BMC?",
+    "options": [
+      "To read analog voltage levels from hardware sensors and convert them to digital values",
+      "To convert audio signals",
+      "To control display output",
+      "To accelerate data compression in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "To read analog voltage levels from hardware sensors and convert them to digital values",
+    "topic": "BMC Architecture and Interfaces",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "bmc-architecture-and-interfaces",
+      "operations"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-051",
+    "question": "What is an interrupt in embedded firmware context?",
+    "options": [
+      "A signal that causes the processor to pause current execution and handle a higher-priority event",
+      "A compiler optimization technique",
+      "A method to interrupt network traffic in this scenario under production constraints for the stated requirement",
+      "A user request to stop a program"
+    ],
+    "correct_answer": "A signal that causes the processor to pause current execution and handle a higher-priority event",
+    "topic": "Embedded C and Firmware Basics",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "embedded-c-and-firmware-basics"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-052",
+    "question": "In a production scenario, which option best describes the purpose of the Entity Manager in OpenBMC?",
+    "options": [
+      "To discover and manage hardware entities based on configuration files (JSON)",
+      "To manage user accounts",
+      "To manage network entities",
+      "To handle entity relationship databases in this scenario under production constraints"
+    ],
+    "correct_answer": "To discover and manage hardware entities based on configuration files (JSON)",
+    "topic": "Boot and Initialization",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "boot-and-initialization",
+      "scenario"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-053",
+    "question": "During architecture review, which option best describes the purpose of RMCP (Remote Management Control Protocol) in IPMI?",
+    "options": [
+      "To encapsulate IPMI messages for transmission over UDP/IP networks",
+      "To manage RAID configurations remotely in this scenario under production constraints",
+      "To manage remote cloud platforms",
+      "To control remote media playback"
+    ],
+    "correct_answer": "To encapsulate IPMI messages for transmission over UDP/IP networks",
+    "topic": "Performance and Resource Constraints",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "performance-and-resource-constraints"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-054",
+    "question": "During live operations, which option best describes the difference between volatile and non-volatile storage in firmware?",
+    "options": [
+      "Volatile storage loses data when power is removed; non-volatile retains data",
+      "There is no difference in firmware context in this scenario under production constraints",
+      "Non-volatile storage is always faster",
+      "Volatile is slower than non-volatile"
+    ],
+    "correct_answer": "Volatile storage loses data when power is removed; non-volatile retains data",
+    "topic": "Firmware Debugging",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "firmware-debugging",
+      "operations"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-055",
+    "question": "What is a Yocto layer in OpenBMC development?",
+    "options": [
+      "A collection of recipes, configurations, and metadata for building a specific component",
+      "A layer of hardware abstraction",
+      "A security layer for BMC communication in this scenario under production constraints for the stated requirement",
+      "A network overlay for BMC management"
+    ],
+    "correct_answer": "A collection of recipes, configurations, and metadata for building a specific component",
+    "topic": "Reliability and Fault Handling",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "reliability-and-fault-handling"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-056",
+    "question": "A production defect investigation needs clarity on a PEL (Platform Event Log) in OpenBMC/Power systems?",
+    "options": [
+      "A structured binary log format for recording platform errors with detailed callout information",
+      "A peripheral event listener",
+      "A performance evaluation log in this scenario under production constraints for the stated requirement",
+      "A power efficiency log"
+    ],
+    "correct_answer": "A structured binary log format for recording platform errors with detailed callout information",
+    "topic": "Reliability and Fault Handling",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "reliability-and-fault-handling"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-057",
+    "question": "A production defect investigation needs clarity on the size of an 'int' data type on most 64-bit systems using a typical C compiler?",
+    "options": [
+      "4 bytes",
+      "2 bytes",
+      "8 bytes",
+      "Depends on the compiler"
+    ],
+    "correct_answer": "4 bytes",
+    "topic": "Boot and Initialization",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "boot-and-initialization",
+      "debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-058",
+    "question": "Which of the following is NOT a valid storage class specifier in C?",
+    "options": [
+      "volatile",
+      "auto",
+      "register",
+      "static"
+    ],
+    "correct_answer": "volatile",
+    "topic": "Firmware Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "firmware-debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-059",
+    "question": "A snippet runs with the following behavior. Which output is correct? printf(\"%d\", sizeof('A')); in C?",
+    "options": [
+      "4",
+      "1",
+      "2",
+      "Depends on compiler"
+    ],
+    "correct_answer": "4",
+    "topic": "BMC Architecture and Interfaces",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "bmc-architecture-and-interfaces",
+      "debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-060",
+    "question": "A production defect investigation needs clarity on the difference between 'malloc' and 'calloc'?",
+    "options": [
+      "calloc initializes memory to zero, malloc does not",
+      "malloc initializes memory to zero, calloc does not",
+      "There is no difference",
+      "calloc allocates memory on the stack"
+    ],
+    "correct_answer": "calloc initializes memory to zero, malloc does not",
+    "topic": "Embedded C and Firmware Basics",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "embedded-c-and-firmware-basics"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-061",
+    "question": "A production defect investigation needs clarity on the 'volatile' keyword indicate in C?",
+    "options": [
+      "The variable may be changed by something outside the program's control",
+      "The variable is constant and cannot be changed in this scenario under production constraints",
+      "The variable is stored in a register",
+      "The variable is thread-safe"
+    ],
+    "correct_answer": "The variable may be changed by something outside the program's control",
+    "topic": "Embedded C and Firmware Basics",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "embedded-c-and-firmware-basics"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-062",
+    "question": "A production defect investigation needs clarity on a dangling pointer?",
+    "options": [
+      "A pointer that has been freed but still holds the address of deallocated memory",
+      "A pointer that points to a valid memory location in this scenario under production constraints",
+      "A pointer that is NULL",
+      "A pointer to a function"
+    ],
+    "correct_answer": "A pointer that has been freed but still holds the address of deallocated memory",
+    "topic": "Hardware Communication and Protocols",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "hardware-communication-and-protocols"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-063",
+    "question": "A snippet runs with the following behavior. Which output is correct? int x = 5; printf(\"%d %d %d\", x, x++, ++x);?",
+    "options": [
+      "Undefined behavior",
+      "5 5 7 in this scenario",
+      "7 6 7",
+      "5 6 7"
+    ],
+    "correct_answer": "Undefined behavior",
+    "topic": "Firmware Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "firmware-debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-064",
+    "question": "Which header file is required for dynamic memory allocation functions in C?",
+    "options": [
+      "<stdlib.h>",
+      "<memory.h>",
+      "<alloc.h>",
+      "<malloc.h>"
+    ],
+    "correct_answer": "<stdlib.h>",
+    "topic": "Reliability and Fault Handling",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "memory",
+      "reliability-and-fault-handling"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-065",
+    "question": "A production defect investigation needs clarity on the purpose of the 'static' keyword when used with a local variable inside a function?",
+    "options": [
+      "Retains the variable's value between function calls",
+      "Makes the variable global",
+      "Makes the variable constant",
+      "Allocates the variable on the heap in this scenario under production constraints"
+    ],
+    "correct_answer": "Retains the variable's value between function calls",
+    "topic": "Embedded C and Firmware Basics",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "embedded-c-and-firmware-basics"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-066",
+    "question": "A production defect investigation needs clarity on a function pointer in C?",
+    "options": [
+      "A pointer that stores the address of a function",
+      "A pointer that points to a variable in this scenario",
+      "A function that returns a pointer",
+      "A pointer to the main function only"
+    ],
+    "correct_answer": "A pointer that stores the address of a function",
+    "topic": "Hardware Communication and Protocols",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "hardware-communication-and-protocols"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-067",
+    "question": "A production defect investigation needs clarity on the 'extern' keyword do in C?",
+    "options": [
+      "Declares a variable that is defined in another file or scope",
+      "Makes a variable local to the current function in this scenario",
+      "Allocates memory for a variable",
+      "Defines a constant variable"
+    ],
+    "correct_answer": "Declares a variable that is defined in another file or scope",
+    "topic": "Hardware Communication and Protocols",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "hardware-communication-and-protocols"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-068",
+    "question": "A production defect investigation needs clarity on the result of: int *p = NULL; *p = 10;?",
+    "options": [
+      "Segmentation fault / undefined behavior",
+      "p is assigned the value 10 in this scenario",
+      "p points to address 10",
+      "Compiler error"
+    ],
+    "correct_answer": "Segmentation fault / undefined behavior",
+    "topic": "Performance and Resource Constraints",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-resource-constraints"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-069",
+    "question": "Which of the following correctly declares a pointer to an array of 10 integers?",
+    "options": [
+      "int (*p)[10];",
+      "int *p[10];",
+      "int *(p[10]);",
+      "int p[10]*;"
+    ],
+    "correct_answer": "int (*p)[10];",
+    "topic": "Boot and Initialization",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "boot-and-initialization",
+      "debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-070",
+    "question": "A production defect investigation needs clarity on the difference between a structure and a union in C?",
+    "options": [
+      "Structures allocate memory for all members; unions share memory among members",
+      "Unions allocate memory for all members; structures share memory in this scenario",
+      "There is no difference",
+      "Structures can only hold integers; unions can hold any type"
+    ],
+    "correct_answer": "Structures allocate memory for all members; unions share memory among members",
+    "topic": "Boot and Initialization",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "boot-and-initialization",
+      "debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-071",
+    "question": "A production defect investigation needs clarity on the 'restrict' keyword (C99) tell the compiler?",
+    "options": [
+      "The pointer is the only way to access the pointed-to data",
+      "The pointer cannot be modified",
+      "The pointer is constant",
+      "The pointer must point to a struct in this scenario under production constraints"
+    ],
+    "correct_answer": "The pointer is the only way to access the pointed-to data",
+    "topic": "Firmware Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "firmware-debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-072",
+    "question": "A snippet runs with the following behavior. Which output is correct? printf(\"%d\", 1 << 3);?",
+    "options": [
+      "8",
+      "3",
+      "6",
+      "4"
+    ],
+    "correct_answer": "8",
+    "topic": "Hardware Communication and Protocols",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "hardware-communication-and-protocols"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-073",
+    "question": "How do you prevent multiple inclusions of a header file?",
+    "options": [
+      "Using #ifndef / #define / #endif (include guards) or #pragma once",
+      "Using #define only",
+      "Using extern keyword in this scenario under production constraints",
+      "Using static keyword"
+    ],
+    "correct_answer": "Using #ifndef / #define / #endif (include guards) or #pragma once",
+    "topic": "BMC Architecture and Interfaces",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "bmc-architecture-and-interfaces",
+      "debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-074",
+    "question": "A production defect investigation needs clarity on the difference between #include <file.h> and #include \"file.h\"?",
+    "options": [
+      "Angle brackets search system directories first; quotes search current directory first",
+      "No difference",
+      "Quotes are for C files; angle brackets for C++ files",
+      "Angle brackets are for local files; quotes are for system files in this scenario under production constraints"
+    ],
+    "correct_answer": "Angle brackets search system directories first; quotes search current directory first",
+    "topic": "BMC Architecture and Interfaces",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "bmc-architecture-and-interfaces",
+      "debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-075",
+    "question": "A production defect investigation needs clarity on 'realloc' do when called with a NULL pointer?",
+    "options": [
+      "Behaves like malloc and allocates new memory",
+      "Returns NULL",
+      "Causes undefined behavior in this scenario under production constraints",
+      "Frees the memory"
+    ],
+    "correct_answer": "Behaves like malloc and allocates new memory",
+    "topic": "Embedded C and Firmware Basics",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "embedded-c-and-firmware-basics"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-076",
+    "question": "A production defect investigation needs clarity on a memory leak in C?",
+    "options": [
+      "Allocating memory that is never freed during the program's lifetime",
+      "Accessing memory beyond allocated bounds in this scenario under production constraints",
+      "Using uninitialized variables",
+      "Writing to read-only memory"
+    ],
+    "correct_answer": "Allocating memory that is never freed during the program's lifetime",
+    "topic": "Performance and Resource Constraints",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "memory",
+      "performance-and-resource-constraints"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-077",
+    "question": "A production defect investigation needs clarity on the purpose of the 'typedef' keyword in C?",
+    "options": [
+      "To create an alias for an existing type",
+      "To define a new data type from scratch in this scenario",
+      "To define a macro",
+      "To declare a variable as constant"
+    ],
+    "correct_answer": "To create an alias for an existing type",
+    "topic": "Embedded C and Firmware Basics",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "embedded-c-and-firmware-basics"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-078",
+    "question": "A production defect investigation needs clarity on the difference between 'const int *p' and 'int *const p'?",
+    "options": [
+      "const int *p: pointer to const int (value can't change); int *const p: const pointer to int (pointer can't change)",
+      "Both are identical",
+      "const int *p: const pointer; int *const p: pointer to const in this scenario under production constraints for the stated requirement",
+      "Neither can be modified"
+    ],
+    "correct_answer": "const int *p: pointer to const int (value can't change); int *const p: const pointer to int (pointer can't change)",
+    "topic": "Reliability and Fault Handling",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "reliability-and-fault-handling"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-079",
+    "question": "What happens when you free a pointer twice in C?",
+    "options": [
+      "Undefined behavior (double free)",
+      "Nothing happens",
+      "The memory is freed again safely",
+      "A compiler warning is generated"
+    ],
+    "correct_answer": "Undefined behavior (double free)",
+    "topic": "Embedded C and Firmware Basics",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "embedded-c-and-firmware-basics"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-080",
+    "question": "A production defect investigation needs clarity on the correct way to declare a variable-length array (VLA) in C99?",
+    "options": [
+      "int arr[n]; where n is a runtime variable",
+      "int arr[] = {n};",
+      "int *arr = n;",
+      "VLAs are not supported in C in this scenario"
+    ],
+    "correct_answer": "int arr[n]; where n is a runtime variable",
+    "topic": "Performance and Resource Constraints",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-resource-constraints"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-081",
+    "question": "In a production scenario, which option best describes the purpose of the 'enum' type in C?",
+    "options": [
+      "To define a set of named integer constants",
+      "To define floating-point constants in this scenario",
+      "To create dynamic arrays",
+      "To define string constants"
+    ],
+    "correct_answer": "To define a set of named integer constants",
+    "topic": "Boot and Initialization",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "boot-and-initialization",
+      "scenario"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-082",
+    "question": "During architecture review, which option best describes the comma operator do in C?",
+    "options": [
+      "Evaluates both operands and returns the value of the rightmost operand",
+      "Separates function parameters only in this scenario under production constraints",
+      "Performs logical AND",
+      "Creates an array of values"
+    ],
+    "correct_answer": "Evaluates both operands and returns the value of the rightmost operand",
+    "topic": "BMC Architecture and Interfaces",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "bmc-architecture-and-interfaces"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-083",
+    "question": "During live operations, which option best describes the difference between 'break' and 'continue' in C?",
+    "options": [
+      "break exits the loop; continue skips to the next iteration",
+      "Both exit the loop",
+      "continue exits the loop; break skips to the next iteration",
+      "There is no difference"
+    ],
+    "correct_answer": "break exits the loop; continue skips to the next iteration",
+    "topic": "Performance and Resource Constraints",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "performance-and-resource-constraints"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-084",
+    "question": "Which of the following causes a stack overflow?",
+    "options": [
+      "Infinite recursion without a base case",
+      "Using too many global variables in this scenario",
+      "Allocating memory with malloc",
+      "Using too many header files"
+    ],
+    "correct_answer": "Infinite recursion without a base case",
+    "topic": "Hardware Communication and Protocols",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "hardware-communication-and-protocols"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-085",
+    "question": "A snippet runs with the following behavior. Which output is correct? int a = 10; int b = a++ + ++a; printf(\"%d\", b);?",
+    "options": [
+      "Undefined behavior",
+      "21 in this scenario",
+      "22",
+      "20"
+    ],
+    "correct_answer": "Undefined behavior",
+    "topic": "Firmware Debugging",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "firmware-debugging",
+      "scenario"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-086",
+    "question": "During architecture review, which option best describes the significance of the 'void' pointer in C?",
+    "options": [
+      "It is a generic pointer that can point to any data type",
+      "It can only point to void functions in this scenario under production constraints",
+      "It points to NULL always",
+      "It cannot be dereferenced or cast"
+    ],
+    "correct_answer": "It is a generic pointer that can point to any data type",
+    "topic": "Boot and Initialization",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "boot-and-initialization"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-087",
+    "question": "During live operations, which option best describes the correct way to pass a 2D array to a function in C?",
+    "options": [
+      "void func(int arr[][COLS]); where COLS is known at compile time",
+      "void func(int arr[][]);",
+      "void func(int **arr); only",
+      "2D arrays cannot be passed to functions in this scenario under production constraints"
+    ],
+    "correct_answer": "void func(int arr[][COLS]); where COLS is known at compile time",
+    "topic": "Hardware Communication and Protocols",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "hardware-communication-and-protocols",
+      "operations"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-088",
+    "question": "What is the effect of the 'inline' keyword in C99?",
+    "options": [
+      "Suggests to the compiler to replace function calls with the function body",
+      "Forces the compiler to inline the function in this scenario under production constraints",
+      "Makes the function recursive",
+      "Makes the function static"
+    ],
+    "correct_answer": "Suggests to the compiler to replace function calls with the function body",
+    "topic": "Firmware Debugging",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "firmware-debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-089",
+    "question": "How do you swap two variables without using a temporary variable in C?",
+    "options": [
+      "Using addition and subtraction: a = a + b; b = a - b; a = a - b;",
+      "It is not possible in C",
+      "Using the swap() function from stdlib in this scenario under production constraints",
+      "Using pointer dereferencing only"
+    ],
+    "correct_answer": "Using addition and subtraction: a = a + b; b = a - b; a = a - b;",
+    "topic": "Embedded C and Firmware Basics",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "embedded-c-and-firmware-basics",
+      "scenario"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-090",
+    "question": "During architecture review, which option best describes 'sizeof' return for a struct with padding?",
+    "options": [
+      "The actual memory size including padding bytes",
+      "The sum of sizes of all members",
+      "Only the size of the largest member in this scenario",
+      "The size without padding"
+    ],
+    "correct_answer": "The actual memory size including padding bytes",
+    "topic": "Reliability and Fault Handling",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "reliability-and-fault-handling"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-091",
+    "question": "During live operations, which option best describes structure padding and why does it occur?",
+    "options": [
+      "Extra bytes inserted by the compiler for memory alignment requirements",
+      "Extra bytes added for encryption purposes",
+      "Padding occurs only in unions, not structures in this scenario under production constraints",
+      "Padding is added to prevent buffer overflow"
+    ],
+    "correct_answer": "Extra bytes inserted by the compiler for memory alignment requirements",
+    "topic": "Performance and Resource Constraints",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "performance-and-resource-constraints"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-092",
+    "question": "What is the difference between 'fgets' and 'gets' in C?",
+    "options": [
+      "fgets limits input length and is safer; gets has no bounds checking and is unsafe",
+      "gets is safer than fgets",
+      "Both are equally safe",
+      "fgets works only with files, not stdin in this scenario under production constraints"
+    ],
+    "correct_answer": "fgets limits input length and is safer; gets has no bounds checking and is unsafe",
+    "topic": "Performance and Resource Constraints",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "performance-and-resource-constraints"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-093",
+    "question": "What are bit fields in C structures?",
+    "options": [
+      "Structure members with a specified number of bits for storage",
+      "Fields that can only store 0 or 1",
+      "Fields that use bitwise operators",
+      "Fields declared with the 'bit' keyword in this scenario under production constraints"
+    ],
+    "correct_answer": "Structure members with a specified number of bits for storage",
+    "topic": "Firmware Debugging",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "firmware-debugging",
+      "scenario"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-094",
+    "question": "During architecture review, which option best describes the difference between stack and heap memory allocation?",
+    "options": [
+      "Stack is automatically managed (LIFO); heap is manually managed (malloc/free)",
+      "Stack is slower, heap is faster",
+      "Both are identical in C",
+      "Heap follows LIFO order; stack does not in this scenario under production constraints"
+    ],
+    "correct_answer": "Stack is automatically managed (LIFO); heap is manually managed (malloc/free)",
+    "topic": "Firmware Debugging",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "firmware-debugging",
+      "memory"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-095",
+    "question": "Which of the following is true about the 'switch' statement in C?",
+    "options": [
+      "Case labels must be compile-time integer constants",
+      "It can use floating-point values as case labels in this scenario",
+      "It requires a 'default' case",
+      "It supports string comparison natively"
+    ],
+    "correct_answer": "Case labels must be compile-time integer constants",
+    "topic": "Boot and Initialization",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "boot-and-initialization",
+      "operations"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-096",
+    "question": "What is the purpose of 'setjmp' and 'longjmp' in C?",
+    "options": [
+      "To perform non-local jumps, saving and restoring the execution context",
+      "To implement try-catch blocks like in C++ in this scenario under production constraints",
+      "To set and get jump tables",
+      "To implement goto with labels"
+    ],
+    "correct_answer": "To perform non-local jumps, saving and restoring the execution context",
+    "topic": "BMC Architecture and Interfaces",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "bmc-architecture-and-interfaces",
+      "concept"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-097",
+    "question": "A snippet runs with the following behavior. Which output is correct? int arr[] = {1,2,3,4,5}; printf(\"%d\", *(arr+3));?",
+    "options": [
+      "4",
+      "1",
+      "3",
+      "5"
+    ],
+    "correct_answer": "4",
+    "topic": "BMC Architecture and Interfaces",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "bmc-architecture-and-interfaces",
+      "scenario"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-098",
+    "question": "What happens when you perform arithmetic on a void pointer in standard C?",
+    "options": [
+      "It is not allowed (undefined/illegal in standard C)",
+      "It works like pointer to char",
+      "It increments by sizeof(int)",
+      "It causes a compile-time warning only in this scenario"
+    ],
+    "correct_answer": "It is not allowed (undefined/illegal in standard C)",
+    "topic": "Firmware Debugging",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "firmware-debugging"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-099",
+    "question": "During live operations, which option best describes the purpose of the 'offsetof' macro?",
+    "options": [
+      "To find the byte offset of a member within a struct",
+      "To find the offset of a file pointer in this scenario",
+      "To offset an array index",
+      "To calculate memory alignment"
+    ],
+    "correct_answer": "To find the byte offset of a member within a struct",
+    "topic": "Performance and Resource Constraints",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "performance-and-resource-constraints"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  },
+  {
+    "id": "bmc-bmc-firmware-engineering-100",
+    "question": "What is a flexible array member (C99)?",
+    "options": [
+      "An incomplete array declared as the last member of a struct with no size",
+      "An array with a variable-length specified at compile time in this scenario",
+      "A dynamic array created with malloc",
+      "An array that can change size at runtime"
+    ],
+    "correct_answer": "An incomplete array declared as the last member of a struct with no size",
+    "topic": "Performance and Resource Constraints",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "performance-and-resource-constraints"
+    ],
+    "role_target": "bmc_engineer",
+    "round_target": "L3",
+    "version_scope": [
+      "embedded-c",
+      "openbmc",
+      "redfish"
+    ]
+  }
+]

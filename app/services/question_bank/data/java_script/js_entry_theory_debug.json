@@ -1,0 +1,2502 @@
+[
+  {
+    "id": "java-script-js-entry-theory-debug-001",
+    "question": "Identify the bug:\n\nlet x = 5;\nfunction test() {\n var x = 10;\n console.log(x);\n}\ntest();\nconsole.log(x);?",
+    "options": [
+      "First logs 10, second logs 5 - var creates function scope",
+      "First logs 5, second logs 10 - var overrides global x in this scenario",
+      "Both log 5 - var is ignored inside functions",
+      "Both log 10 - var hoists to global scope"
+    ],
+    "correct_answer": "First logs 10, second logs 5 - var creates function scope",
+    "topic": "Browser and DOM Basics",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "browser-and-dom-basics",
+      "debugging"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-002",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet arr = [1, 2, 3];\narr[10] = 99;\nconsole.log(arr.length);?",
+    "options": [
+      "11 - length increases to accommodate index 10",
+      "3 - only elements 1, 2, 3 count toward length",
+      "99 - length equals the last assigned value",
+      "undefined - sparse arrays don't track length"
+    ],
+    "correct_answer": "11 - length increases to accommodate index 10",
+    "topic": "Async and Promises",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "async-and-promises",
+      "debugging"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-003",
+    "question": "Identify the bug:\n\nconst obj = { x: 1 };\nobj.x = 2;\nconsole.log(obj.x);?",
+    "options": [
+      "Outputs 2 - const prevents reassignment, not property mutation",
+      "Error - const prevents any modification",
+      "Outputs 1 - const freezes the value immediately in this scenario",
+      "Outputs undefined - obj is frozen"
+    ],
+    "correct_answer": "Outputs 2 - const prevents reassignment, not property mutation",
+    "topic": "Node.js Fundamentals",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "node-js-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-004",
+    "question": "A production defect investigation needs clarity on this code output?\n\nlet x = 1;\nif (true) {\n let x = 2;\n console.log(x);\n}\nconsole.log(x);?",
+    "options": [
+      "2 then 1 - let creates block scope, doesn't affect outer x",
+      "1 then 1 - let at block scope",
+      "2 then 2 - let creates new variable",
+      "Error - duplicate variable declaration in this scenario under production constraints"
+    ],
+    "correct_answer": "2 then 1 - let creates block scope, doesn't affect outer x",
+    "topic": "Functions and Scope",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "functions-and-scope"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-005",
+    "question": "Identify the bug:\n\nfunction add(a, b) {\n console.log(a + b);\n}\nadd(5);?",
+    "options": [
+      "Outputs NaN - b is undefined, a + undefined = NaN",
+      "Error - missing argument b",
+      "Outputs 5 - b defaults to 0",
+      "Outputs undefined - no return statement in this scenario"
+    ],
+    "correct_answer": "Outputs NaN - b is undefined, a + undefined = NaN",
+    "topic": "Browser and DOM Basics",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "browser-and-dom-basics",
+      "debugging"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-006",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet arr = [1, 2, 3];\narr.push(4);\nconsole.log(arr);?",
+    "options": [
+      "[1, 2, 3, 4] - push modifies the array",
+      "[1, 2, 3] - push returns the new length, not the array",
+      "4 - push returns the new length",
+      "Error - push is not a valid method"
+    ],
+    "correct_answer": "[1, 2, 3, 4] - push modifies the array",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "debugging-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-007",
+    "question": "Identify the bug:\n\nlet str = 'hello';\nstr.toUpperCase();\nconsole.log(str);?",
+    "options": [
+      "str is still 'hello' - strings are immutable, toUpperCase returns a new string",
+      "str is now 'HELLO' - toUpperCase modifies the string in this scenario under production constraints",
+      "Error - toUpperCase is not a valid method",
+      "str is undefined - method call fails"
+    ],
+    "correct_answer": "str is still 'hello' - strings are immutable, toUpperCase returns a new string",
+    "topic": "Browser and DOM Basics",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "browser-and-dom-basics",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-008",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet x = '5';\nlet y = 5;\nconsole.log(x == y);\nconsole.log(x === y);?",
+    "options": [
+      "true, false - == coerces types, === does not",
+      "true, true - both operators check equality",
+      "false, true - === coerces, == does not",
+      "false, false - different types always differ"
+    ],
+    "correct_answer": "true, false - == coerces types, === does not",
+    "topic": "Async and Promises",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "async-and-promises"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-009",
+    "question": "Identify the bug:\n\nfunction greet(name) {\n console.log('Hello, ' + name);\n}\ngreet();?",
+    "options": [
+      "Outputs 'Hello, undefined' - name parameter is undefined",
+      "Error - missing required argument",
+      "Outputs 'Hello, ' - undefined is coerced to empty string",
+      "No output - function requires argument"
+    ],
+    "correct_answer": "Outputs 'Hello, undefined' - name parameter is undefined",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "debugging-fundamentals",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-010",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet obj = { name: 'John' };\nlet copy = obj;\ncopy.name = 'Jane';\nconsole.log(obj.name);?",
+    "options": [
+      "'Jane' - copy and obj reference the same object",
+      "'John' - copy is a separate object",
+      "Error - cannot modify copied object in this scenario",
+      "undefined - object loses reference"
+    ],
+    "correct_answer": "'Jane' - copy and obj reference the same object",
+    "topic": "Async and Promises",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "async-and-promises",
+      "concept"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-011",
+    "question": "Identify the bug:\n\nlet arr = [1, 2, 3];\nfor (var i = 0; i < arr.length; i++) {\n setTimeout(() => console.log(i), 100);\n}\n// What logs after 100ms?",
+    "options": [
+      "3, 3, 3 - var is function-scoped, i is 3 after loop",
+      "0, 1, 2 - setTimeout captures each i value",
+      "undefined, undefined, undefined - i loses scope in this scenario",
+      "Error - cannot use var in setTimeout"
+    ],
+    "correct_answer": "3, 3, 3 - var is function-scoped, i is 3 after loop",
+    "topic": "Node.js Fundamentals",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "node-js-fundamentals",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-012",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet x = [];\nlet y = [];\nconsole.log(x == y);\nconsole.log(x === y);?",
+    "options": [
+      "false, false - different object references",
+      "true, true - arrays are equal",
+      "true, false - == compares content, === checks reference",
+      "false, true - === checks content"
+    ],
+    "correct_answer": "false, false - different object references",
+    "topic": "Async and Promises",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "async-and-promises"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-013",
+    "question": "Identify the bug:\n\nlet numbers = [1, 2, 3];\nnumbers.map(x => x * 2);\nconsole.log(numbers);?",
+    "options": [
+      "[1, 2, 3] - map returns a new array without modifying original",
+      "[2, 4, 6] - map modifies the array in this scenario under production constraints",
+      "Error - map requires a function",
+      "undefined - no return statement"
+    ],
+    "correct_answer": "[1, 2, 3] - map returns a new array without modifying original",
+    "topic": "Browser and DOM Basics",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "browser-and-dom-basics",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-014",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nfunction test() {\n console.log(x);\n var x = 5;\n}\ntest();?",
+    "options": [
+      "undefined - x is hoisted but not initialized",
+      "5 - x is hoisted and initialized in this scenario",
+      "Error - x is not defined",
+      "null - hoisting sets x to null"
+    ],
+    "correct_answer": "undefined - x is hoisted but not initialized",
+    "topic": "Async and Promises",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "async-and-promises",
+      "concept"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-015",
+    "question": "Identify the bug:\n\nlet obj = { x: 1, y: 2 };\nfor (let key in obj) {\n console.log(key);\n}?",
+    "options": [
+      "Logs 'x' then 'y' - for...in iterates over object keys",
+      "Error - cannot iterate over object properties in this scenario",
+      "Logs 1 then 2 - for...in iterates over values",
+      "No output - for...in skips objects"
+    ],
+    "correct_answer": "Logs 'x' then 'y' - for...in iterates over object keys",
+    "topic": "Async and Promises",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "async-and-promises",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-016",
+    "question": "During architecture review, which option best describes this output?\n\nlet x = 0 || 5;\nlet y = 0 && 5;\nconsole.log(x, y);?",
+    "options": [
+      "5 0 - || returns first truthy, && returns first falsy",
+      "0 5 - logical operators return operands",
+      "true false - logical operators return booleans",
+      "5 undefined - && returns undefined when first is falsy"
+    ],
+    "correct_answer": "5 0 - || returns first truthy, && returns first falsy",
+    "topic": "JavaScript Language Fundamentals",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "javascript-language-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-017",
+    "question": "Identify the bug:\n\nlet result = 10;\nif (result = 5) {\n console.log('Inside if');\n}?",
+    "options": [
+      "Outputs 'Inside if' - assignment (=) returns 5, which is truthy",
+      "No output - result is 10, condition is false in this scenario under production constraints",
+      "Error - cannot assign in if condition",
+      "result becomes 5 but condition is false"
+    ],
+    "correct_answer": "Outputs 'Inside if' - assignment (=) returns 5, which is truthy",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "debugging-fundamentals",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-018",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet x = '5' - 2;\nconsole.log(x, typeof x);?",
+    "options": [
+      "3, 'number' - string is coerced to number for subtraction",
+      "'3', 'string' - string subtraction keeps string type in this scenario",
+      "NaN, 'number' - cannot subtract from string",
+      "'52', 'string' - string concatenation happens"
+    ],
+    "correct_answer": "3, 'number' - string is coerced to number for subtraction",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "debugging-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-019",
+    "question": "Identify the bug:\n\nfunction test() {\n return\n 5;\n}\nconsole.log(test());?",
+    "options": [
+      "undefined - automatic semicolon insertion after return",
+      "5 - return on separate line still returns value in this scenario",
+      "Error - return must be on same line",
+      "null - function doesn't return a value"
+    ],
+    "correct_answer": "undefined - automatic semicolon insertion after return",
+    "topic": "Functions and Scope",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "functions-and-scope",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-020",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet x = [];\nif (x) {\n console.log('truthy');\n} else {\n console.log('falsy');\n}?",
+    "options": [
+      "logs 'truthy' - empty array is truthy",
+      "logs 'falsy' - empty array is falsy in this scenario",
+      "Error - cannot test array in if",
+      "undefined - array evaluation fails"
+    ],
+    "correct_answer": "logs 'truthy' - empty array is truthy",
+    "topic": "Data Types and Structures",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "data-types-and-structures"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-021",
+    "question": "Identify the bug:\n\nlet arr = [1, 2, 3];\nlet first = arr[0];\narr[0] = 10;\nconsole.log(first);?",
+    "options": [
+      "1 - first stores the value, not the reference",
+      "10 - first is a reference to arr[0]",
+      "undefined - first loses its value",
+      "Error - cannot reassign array elements in this scenario"
+    ],
+    "correct_answer": "1 - first stores the value, not the reference",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "debugging-fundamentals",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-022",
+    "question": "What does this output?\n\nlet x = 'hello';\nconsole.log(x[0]);\nconsole.log(x.charAt(0));?",
+    "options": [
+      "'h' then 'h' - both access first character",
+      "'h' then undefined - only charAt works",
+      "undefined then 'h' - array indexing fails in this scenario",
+      "Error - cannot index strings"
+    ],
+    "correct_answer": "'h' then 'h' - both access first character",
+    "topic": "Browser and DOM Basics",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "browser-and-dom-basics",
+      "concept"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-023",
+    "question": "In a production scenario, which option best describes this output?\n\nlet x = null;\nconsole.log(typeof x);\nconsole.log(x == undefined);\nconsole.log(x === undefined);?",
+    "options": [
+      "'object', true, false - == coerces, === does not under production constraints",
+      "'object', true, true - null and undefined are identical",
+      "'null', false, false - null is distinct from undefined",
+      "'undefined', false, false - typeof treats null as undefined under production constraints"
+    ],
+    "correct_answer": "'object', true, false - == coerces, === does not under production constraints",
+    "topic": "Data Types and Structures",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "data-types-and-structures",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-024",
+    "question": "Identify the bug:\n\nlet obj = {};\nobj['key'] = 'value';\nconsole.log(obj.key);?",
+    "options": [
+      "'value' - both notations access the same property",
+      "undefined - bracket notation and dot notation differ",
+      "Error - cannot use bracket notation",
+      "'undefined' - property doesn't exist with dot notation"
+    ],
+    "correct_answer": "'value' - both notations access the same property",
+    "topic": "Browser and DOM Basics",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "browser-and-dom-basics"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-025",
+    "question": "Identify the bug:\n\nlet str = 'hello';\nstr[0] = 'H';\nconsole.log(str);?",
+    "options": [
+      "'hello' - strings are immutable under production constraints",
+      "'Hello' - strings can be modified by index under production constraints",
+      "Error - cannot assign to string index",
+      "undefined - operation fails silently"
+    ],
+    "correct_answer": "'hello' - strings are immutable under production constraints",
+    "topic": "Async and Promises",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "async-and-promises",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-026",
+    "question": "Identify the bug:\n\nlet x = 10;\nlet y = x++;\nconsole.log(x, y);?",
+    "options": [
+      "11, 10 - post-increment returns old value, then increments",
+      "10, 10 - post-increment happens after evaluation in this scenario",
+      "11, 11 - post-increment happens immediately",
+      "10, 11 - post-increment returns new value"
+    ],
+    "correct_answer": "11, 10 - post-increment returns old value, then increments",
+    "topic": "Browser and DOM Basics",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "browser-and-dom-basics",
+      "concept"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-027",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet x = Math.max(1, 2, 3);\nconsole.log(x);?",
+    "options": [
+      "3 - returns the largest number",
+      "Error - max requires array",
+      "[1, 2, 3] - returns all numbers",
+      "undefined - max is not a function"
+    ],
+    "correct_answer": "3 - returns the largest number",
+    "topic": "Functions and Scope",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "functions-and-scope",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-028",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet arr = [1, 2, 3];\narr.splice(1, 1);\nconsole.log(arr);?",
+    "options": [
+      "[1, 3] - splice removes 1 element at index 1",
+      "[1, 2, 3] - splice doesn't modify array in this scenario",
+      "2 - splice returns removed element",
+      "Error - splice requires more parameters"
+    ],
+    "correct_answer": "[1, 3] - splice removes 1 element at index 1",
+    "topic": "Async and Promises",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "async-and-promises"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-029",
+    "question": "During live operations, which option best describes this output?\n\nlet x = 1;\nlet y = x;\nx = 2;\nconsole.log(x, y);?",
+    "options": [
+      "2, 1 - y stores the value at assignment time",
+      "2, 2 - y changes when x changes in this scenario",
+      "1, 1 - x never changes",
+      "Error - cannot reassign x"
+    ],
+    "correct_answer": "2, 1 - y stores the value at assignment time",
+    "topic": "JavaScript Language Fundamentals",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "javascript-language-fundamentals",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-030",
+    "question": "Identify the bug:\n\nlet x = function() {\n return 5;\n};\nconsole.log(x());?",
+    "options": [
+      "5 - function is called with () under production constraints",
+      "undefined - function expression doesn't return under production constraints",
+      "function() { return 5; } - the function itself",
+      "Error - cannot call function expression"
+    ],
+    "correct_answer": "5 - function is called with () under production constraints",
+    "topic": "Functions and Scope",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "functions-and-scope"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-031",
+    "question": "Identify the bug:\n\nlet obj = { x: 1, x: 2 };\nconsole.log(obj.x);?",
+    "options": [
+      "2 - last property wins under production constraints",
+      "1 - first property wins",
+      "Error - duplicate property",
+      "undefined - property is ambiguous under production constraints"
+    ],
+    "correct_answer": "2 - last property wins under production constraints",
+    "topic": "Async and Promises",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "async-and-promises",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-032",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet x = 0;\nconsole.log(x || 'default');\nconsole.log(x?? 'default');?",
+    "options": [
+      "'default', 0 - || checks truthiness,?? checks nullish",
+      "'default', 0 - || and?? both evaluate falsy values in this scenario",
+      "'default', 'default' - both return default",
+      "0, 'default' - neither uses default"
+    ],
+    "correct_answer": "'default', 0 - || checks truthiness,?? checks nullish",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "debugging-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-033",
+    "question": "Identify the bug:\n\nlet x = () => 5;\nconsole.log(x);?",
+    "options": [
+      "() => 5 - the function itself",
+      "5 - arrow function executes",
+      "Error - arrow functions don't work",
+      "undefined - function is not defined"
+    ],
+    "correct_answer": "() => 5 - the function itself",
+    "topic": "Functions and Scope",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "functions-and-scope",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-034",
+    "question": "Identify the bug:\n\nlet x = 1n + 2;\nconsole.log(x);?",
+    "options": [
+      "Error - cannot mix BigInt and number",
+      "3 - BigInt and number mix automatically",
+      "3n - result is BigInt",
+      "NaN - type mismatch"
+    ],
+    "correct_answer": "Error - cannot mix BigInt and number",
+    "topic": "Node.js Fundamentals",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "node-js-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-035",
+    "question": "In a production scenario, which option best describes this output?\n\nlet arr = Array(3);\nconsole.log(arr);\nconsole.log(arr.length);?",
+    "options": [
+      "[undefined, undefined, undefined], 3 - Array(3) creates array with 3 undefined",
+      "[3], 1 - Array(3) creates array with 3 in this scenario under production constraints",
+      "[], 0 - Array(3) creates empty array",
+      "Error - invalid array constructor"
+    ],
+    "correct_answer": "[undefined, undefined, undefined], 3 - Array(3) creates array with 3 undefined",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "debugging-fundamentals",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-036",
+    "question": "During architecture review, which option best describes this output?\n\nlet x = Math.round(4.5);\nconsole.log(x);?",
+    "options": [
+      "5 - rounds to nearest integer",
+      "4 - rounds down",
+      "5 - round doesn't work",
+      "Error - invalid function in this scenario"
+    ],
+    "correct_answer": "5 - rounds to nearest integer",
+    "topic": "Functions and Scope",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "functions-and-scope"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-037",
+    "question": "Identify the bug:\n\nlet x = parseInt('10x');\nconsole.log(x);?",
+    "options": [
+      "10 - parseInt extracts leading digits",
+      "NaN - cannot parse string with letters",
+      "'10x' - parseInt returns the string",
+      "Error - invalid input"
+    ],
+    "correct_answer": "10 - parseInt extracts leading digits",
+    "topic": "Functions and Scope",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "functions-and-scope",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-038",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet x = '10';\nlet y = x * '2';\nconsole.log(y, typeof y);?",
+    "options": [
+      "20, 'number' - both operands coerce to number",
+      "'20', 'string' - multiplication returns string",
+      "NaN, 'number' - string multiplication fails",
+      "'102', 'string' - string concatenation"
+    ],
+    "correct_answer": "20, 'number' - both operands coerce to number",
+    "topic": "Async and Promises",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "async-and-promises",
+      "concept"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-039",
+    "question": "Identify the bug:\n\nlet arr = [1, 2, 3];\nlet doubled = arr.map(x => x * 2);\nconsole.log(doubled);?",
+    "options": [
+      "[2, 4, 6] - map creates new array with doubled values",
+      "[1, 2, 3] - map doesn't modify arrays in this scenario",
+      "Error - map is not a valid method",
+      "undefined - map returns nothing"
+    ],
+    "correct_answer": "[2, 4, 6] - map creates new array with doubled values",
+    "topic": "Node.js Fundamentals",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "node-js-fundamentals",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-040",
+    "question": "Identify the bug:\n\nlet x = NaN;\nconsole.log(x === NaN);\nconsole.log(isNaN(x));?",
+    "options": [
+      "false, true - NaN!== NaN, but isNaN returns true",
+      "true, true - NaN equals itself",
+      "true, false - === works but isNaN doesn't in this scenario",
+      "Error - cannot compare NaN"
+    ],
+    "correct_answer": "false, true - NaN!== NaN, but isNaN returns true",
+    "topic": "Data Types and Structures",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "data-types-and-structures"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-041",
+    "question": "A production defect investigation needs clarity on this output?\n\nlet x = -0;\nlet y = 0;\nconsole.log(x === y);\nconsole.log(Object.is(x, y));?",
+    "options": [
+      "true, false - === sees them as equal, Object.is distinguishes",
+      "true, true - -0 and 0 are identical",
+      "false, false - they are always different in this scenario under production constraints",
+      "false, true - opposite comparison"
+    ],
+    "correct_answer": "true, false - === sees them as equal, Object.is distinguishes",
+    "topic": "Node.js Fundamentals",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "node-js-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-042",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet arr = [1, 2, 3, 4, 5];\nlet filtered = arr.filter(x => x > 2);\nconsole.log(filtered);?",
+    "options": [
+      "[3, 4, 5] - filter returns elements where condition is true",
+      "[1, 2, 3, 4, 5] - filter doesn't work",
+      "Error - filter requires different syntax",
+      "undefined - filter is not an array method in this scenario under production constraints"
+    ],
+    "correct_answer": "[3, 4, 5] - filter returns elements where condition is true",
+    "topic": "Browser and DOM Basics",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "browser-and-dom-basics",
+      "debugging"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-043",
+    "question": "Identify the bug:\n\nlet obj = { a: 1, b: 2 };\nlet { a, c } = obj;\nconsole.log(a, c);?",
+    "options": [
+      "1, undefined - c is not in obj under production constraints",
+      "1, 2 - both properties are destructured",
+      "Error - cannot destructure object",
+      "undefined, undefined - destructuring fails under production constraints"
+    ],
+    "correct_answer": "1, undefined - c is not in obj under production constraints",
+    "topic": "Node.js Fundamentals",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "node-js-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-044",
+    "question": "Identify the bug:\n\nlet arr = [1, 2, 3];\nlet result = arr.reduce((sum, x) => sum + x);\nconsole.log(result);?",
+    "options": [
+      "6 - sum of all elements under production constraints",
+      "undefined - reduce requires initial value under production constraints",
+      "[1, 2, 3] - reduce doesn't modify",
+      "Error - reduce is not valid"
+    ],
+    "correct_answer": "6 - sum of all elements under production constraints",
+    "topic": "JavaScript Language Fundamentals",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "javascript-language-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-045",
+    "question": "A production defect investigation needs clarity on this output?\n\nlet x = 'abc';\nconsole.log(x.length);\nconsole.log(x[100]);?",
+    "options": [
+      "3, undefined - length is 3, index 100 is out of bounds",
+      "3, null - out of bounds returns null",
+      "Error, undefined - cannot access string by index in this scenario",
+      "undefined, undefined - strings don't have length"
+    ],
+    "correct_answer": "3, undefined - length is 3, index 100 is out of bounds",
+    "topic": "JavaScript Language Fundamentals",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "javascript-language-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-046",
+    "question": "Identify the bug:\n\nlet x = [1, 2, 3];\nlet y = x.slice(1, 2);\nconsole.log(y);?",
+    "options": [
+      "[2] - slice returns elements from index 1 to 2 (exclusive)",
+      "[1, 2, 3] - slice doesn't modify original",
+      "[2, 3] - slice includes end index",
+      "Error - slice requires different parameters in this scenario"
+    ],
+    "correct_answer": "[2] - slice returns elements from index 1 to 2 (exclusive)",
+    "topic": "Browser and DOM Basics",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "browser-and-dom-basics",
+      "debugging"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-047",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet x = '5' + 2;\nlet y = '5' - 2;\nconsole.log(x, y);?",
+    "options": [
+      "'52', 3 - + concatenates, - subtracts",
+      "7, 3 - both operations convert to numbers",
+      "'7', 3 - concatenation and subtraction",
+      "Error - type mismatch"
+    ],
+    "correct_answer": "'52', 3 - + concatenates, - subtracts",
+    "topic": "JavaScript Language Fundamentals",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "javascript-language-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-048",
+    "question": "Identify the bug:\n\nlet obj = { x: 1 };\ndelete obj.x;\nconsole.log(obj.x);?",
+    "options": [
+      "undefined - delete removes the property",
+      "1 - delete doesn't work",
+      "Error - cannot use delete",
+      "null - property becomes null in this scenario"
+    ],
+    "correct_answer": "undefined - delete removes the property",
+    "topic": "Functions and Scope",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "functions-and-scope"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-049",
+    "question": "In a production scenario, which option best describes this output?\n\nlet x = true;\nlet y = false;\nconsole.log(!x,!y);?",
+    "options": [
+      "false, true - NOT inverts boolean",
+      "true, false - NOT doesn't change values",
+      "Error - cannot use NOT on boolean",
+      "undefined, undefined - operation fails"
+    ],
+    "correct_answer": "false, true - NOT inverts boolean",
+    "topic": "Functions and Scope",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "functions-and-scope",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-050",
+    "question": "During architecture review, which option best describes this output?\n\nlet x = '';\nif (x) {\n console.log('truthy');\n} else {\n console.log('falsy');\n}?",
+    "options": [
+      "logs 'falsy' - empty string is falsy",
+      "logs 'truthy' - empty string is truthy",
+      "Error - cannot test string",
+      "undefined - condition fails"
+    ],
+    "correct_answer": "logs 'falsy' - empty string is falsy",
+    "topic": "Data Types and Structures",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "data-types-and-structures"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-051",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet x = 0;\nwhile (x < 3) {\n console.log(x);\n x++;\n}?",
+    "options": [
+      "0, 1, 2 - loop runs while x < 3",
+      "1, 2, 3 - loop starts at x++",
+      "0, 1, 2, 3 - runs up to x == 3",
+      "infinite loop - condition is always true"
+    ],
+    "correct_answer": "0, 1, 2 - loop runs while x < 3",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "debugging-fundamentals",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-052",
+    "question": "What does this output?\n\nlet x = typeof [];\nconsole.log(x);?",
+    "options": [
+      "'object' - arrays are objects in JavaScript",
+      "'array' - typeof returns array",
+      "Error - typeof doesn't work on arrays in this scenario",
+      "undefined - type checking fails"
+    ],
+    "correct_answer": "'object' - arrays are objects in JavaScript",
+    "topic": "Data Types and Structures",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "data-types-and-structures"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-053",
+    "question": "Identify the bug:\n\nlet x = 'string'.length;\nconsole.log(x);?",
+    "options": [
+      "6 - number of characters under production constraints",
+      "Error - string doesn't have length",
+      "'string' - returns the string",
+      "undefined - length is not a property under production constraints"
+    ],
+    "correct_answer": "6 - number of characters under production constraints",
+    "topic": "JavaScript Language Fundamentals",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "javascript-language-fundamentals",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-054",
+    "question": "During architecture review, which option best describes this output?\n\nlet x = [1, 2].length;\nconsole.log(x);?",
+    "options": [
+      "2 - array has 2 elements under production constraints",
+      "undefined - arrays don't have length under production constraints",
+      "[1, 2] - returns the array",
+      "Error - cannot access length"
+    ],
+    "correct_answer": "2 - array has 2 elements under production constraints",
+    "topic": "Functions and Scope",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "functions-and-scope"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-055",
+    "question": "Identify the bug:\n\nlet x = '0';\nif (x) {\n console.log('true');\n} else {\n console.log('false');\n}?",
+    "options": [
+      "logs 'true' - non-empty string is truthy",
+      "logs 'false' - '0' is falsy in this scenario",
+      "Error - cannot test string",
+      "undefined - condition fails"
+    ],
+    "correct_answer": "logs 'true' - non-empty string is truthy",
+    "topic": "Data Types and Structures",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "data-types-and-structures",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-056",
+    "question": "Identify the bug:\n\nlet x = 'hello';\nlet y = x.toUpperCase();\nconsole.log(y);?",
+    "options": [
+      "'HELLO' - toUpperCase returns uppercase copy",
+      "'hello' - toUpperCase doesn't work in this scenario",
+      "Error - cannot convert string",
+      "undefined - method fails"
+    ],
+    "correct_answer": "'HELLO' - toUpperCase returns uppercase copy",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "debugging-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-057",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet x = [1, 2, 3, 4];\nlet y = x[x.length - 1];\nconsole.log(y);?",
+    "options": [
+      "4 - last element (length 4, index 3)",
+      "undefined - cannot use expression as index",
+      "3 - length - 1 equals 3",
+      "Error - invalid array access"
+    ],
+    "correct_answer": "4 - last element (length 4, index 3)",
+    "topic": "Node.js Fundamentals",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "node-js-fundamentals",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-058",
+    "question": "Identify the bug:\n\nlet obj = {};\nlet key = 'a';\nobj[key] = 1;\nconsole.log(obj);?",
+    "options": [
+      "{ a: 1 } - uses value of key variable",
+      "{ key: 1 } - uses 'key' as property name",
+      "Error - cannot use variable as key",
+      "undefined - assignment fails"
+    ],
+    "correct_answer": "{ a: 1 } - uses value of key variable",
+    "topic": "Data Types and Structures",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "data-types-and-structures"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-059",
+    "question": "Identify the bug:\n\nlet x = [1, 2, 3];\nx.forEach(item => console.log(item));?",
+    "options": [
+      "Logs 1, 2, 3 - forEach iterates and executes callback",
+      "No output - forEach doesn't work",
+      "Error - forEach requires different syntax in this scenario",
+      "undefined - forEach is not valid"
+    ],
+    "correct_answer": "Logs 1, 2, 3 - forEach iterates and executes callback",
+    "topic": "Async and Promises",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "async-and-promises",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-060",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet x = 5;\nlet y = x * 2 + 3;\nconsole.log(y);?",
+    "options": [
+      "13 - 5 * 2 + 3 = 13 under production constraints",
+      "16 - 5 * (2 + 3) = 25",
+      "Error - invalid expression",
+      "undefined - calculation fails under production constraints"
+    ],
+    "correct_answer": "13 - 5 * 2 + 3 = 13 under production constraints",
+    "topic": "Node.js Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "node-js-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-061",
+    "question": "Identify the bug:\n\nlet x = 'test'.indexOf('e');\nconsole.log(x);?",
+    "options": [
+      "1 - index of 'e' in 'test'",
+      "'e' - returns the character",
+      "-1 - character not found",
+      "Error - indexOf is not a method"
+    ],
+    "correct_answer": "1 - index of 'e' in 'test'",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "debugging-fundamentals",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-062",
+    "question": "During architecture review, which option best describes this output?\n\nlet x = [1, 2, 3];\nlet y = x.concat([4, 5]);\nconsole.log(y, x);?",
+    "options": [
+      "[1, 2, 3, 4, 5], [1, 2, 3] - concat returns new array",
+      "[1, 2, 3, 4, 5], [1, 2, 3, 4, 5] - both arrays change",
+      "Error - cannot concat",
+      "[4, 5], [1, 2, 3] - concat replaces"
+    ],
+    "correct_answer": "[1, 2, 3, 4, 5], [1, 2, 3] - concat returns new array",
+    "topic": "Async and Promises",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "async-and-promises"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-063",
+    "question": "Identify the bug:\n\nlet x = {};\nconsole.log(x.undefined);?",
+    "options": [
+      "undefined - property doesn't exist, returns undefined",
+      "undefined - property 'undefined' doesn't exist in this scenario",
+      "undefined - the value undefined",
+      "Error - cannot access undefined"
+    ],
+    "correct_answer": "undefined - property doesn't exist, returns undefined",
+    "topic": "Data Types and Structures",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "data-types-and-structures",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-064",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet x = 10;\nlet y = 10;\nconsole.log(x == y);\nconsole.log(x === y);?",
+    "options": [
+      "true, true - same type and value",
+      "true, false - primitives compared differently",
+      "false, false - different objects",
+      "Error - cannot compare"
+    ],
+    "correct_answer": "true, true - same type and value",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "debugging-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-065",
+    "question": "Identify the bug:\n\nlet x = Number('abc');\nconsole.log(x);?",
+    "options": [
+      "NaN - string cannot be converted to number",
+      "'abc' - cannot convert",
+      "0 - defaults to zero",
+      "Error - invalid conversion in this scenario"
+    ],
+    "correct_answer": "NaN - string cannot be converted to number",
+    "topic": "Functions and Scope",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "functions-and-scope",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-066",
+    "question": "Identify the bug:\n\nlet x = 'a', 'b';\nconsole.log(x);?",
+    "options": [
+      "'a' - comma is sequence operator, last value wins",
+      "'ab' - comma concatenates",
+      "'b' - second string assigned in this scenario under production constraints",
+      "Error - invalid syntax"
+    ],
+    "correct_answer": "'a' - comma is sequence operator, last value wins",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "debugging-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-067",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet x = [];\nx[0] = 1;\nconsole.log(x[0]);?",
+    "options": [
+      "1 - assignment creates element at index 0",
+      "undefined - cannot assign to array by index",
+      "Error - invalid array assignment",
+      "null - index 0 is protected"
+    ],
+    "correct_answer": "1 - assignment creates element at index 0",
+    "topic": "JavaScript Language Fundamentals",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "javascript-language-fundamentals",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-068",
+    "question": "What does this output?\n\nlet x = '10';\nx = x - 0;\nconsole.log(typeof x);?",
+    "options": [
+      "'number' - arithmetic operation converts",
+      "'string' - type doesn't change in this scenario",
+      "Error - type mismatch",
+      "'10' - value stays string"
+    ],
+    "correct_answer": "'number' - arithmetic operation converts",
+    "topic": "Node.js Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "node-js-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-069",
+    "question": "Identify the bug:\n\nlet x = [1, 2, 3];\nconsole.log(x.includes(2));?",
+    "options": [
+      "true - 2 is in the array",
+      "false - includes doesn't work",
+      "Error - includes is not a method",
+      "undefined - method fails"
+    ],
+    "correct_answer": "true - 2 is in the array",
+    "topic": "JavaScript Language Fundamentals",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "javascript-language-fundamentals",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-070",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet x = 1;\nif (x) { x = 2; }\nconsole.log(x);?",
+    "options": [
+      "2 - condition is truthy, x is updated",
+      "1 - if block doesn't execute in this scenario",
+      "Error - cannot assign in if",
+      "undefined - x is reassigned"
+    ],
+    "correct_answer": "2 - condition is truthy, x is updated",
+    "topic": "Node.js Fundamentals",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "node-js-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-071",
+    "question": "Identify the bug:\n\nlet x = 'hello'.substring(0, 2);\nconsole.log(x);?",
+    "options": [
+      "'he' - substring(0, 2) returns chars 0-1",
+      "'hello' - substring returns full string",
+      "Error - substring requires different args",
+      "undefined - method fails"
+    ],
+    "correct_answer": "'he' - substring(0, 2) returns chars 0-1",
+    "topic": "Functions and Scope",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "functions-and-scope",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-072",
+    "question": "What does this output?\n\nlet x = 1 + '2';\nconsole.log(x);?",
+    "options": [
+      "'12' - number converts to string for concatenation",
+      "3 - both become numbers in this scenario under production constraints",
+      "Error - type mismatch",
+      "NaN - operation fails"
+    ],
+    "correct_answer": "'12' - number converts to string for concatenation",
+    "topic": "JavaScript Language Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "javascript-language-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-073",
+    "question": "Identify the bug:\n\nlet x = { a: 1 };\nlet y = JSON.stringify(x);\nconsole.log(y);?",
+    "options": [
+      "'{\"a\":1}' - stringify returns JSON string",
+      "{ a: 1 } - stringify returns object in this scenario",
+      "Error - stringify not available",
+      "undefined - conversion fails"
+    ],
+    "correct_answer": "'{\"a\":1}' - stringify returns JSON string",
+    "topic": "Data Types and Structures",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "data-types-and-structures",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-074",
+    "question": "A snippet runs with the following behavior. Which output is correct??\n\nlet arr = [1, 2];\nlet [x, y] = arr;\nconsole.log(x, y);?",
+    "options": [
+      "1 2 - destructuring assigns variables",
+      "[1, 2], undefined - destructuring fails",
+      "Error - invalid destructuring",
+      "undefined undefined - variables empty"
+    ],
+    "correct_answer": "1 2 - destructuring assigns variables",
+    "topic": "Node.js Fundamentals",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "node-js-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-075",
+    "question": "Identify the bug:\n\nlet x = [1, 2, 3];\nx[x.length] = 4;\nconsole.log(x);?",
+    "options": [
+      "[1, 2, 3, 4] - adds element at end",
+      "[1, 2, 3] - cannot extend array",
+      "Error - invalid assignment",
+      "[1, 2, 3, undefined, 4] - creates sparse array"
+    ],
+    "correct_answer": "[1, 2, 3, 4] - adds element at end",
+    "topic": "Browser and DOM Basics",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "browser-and-dom-basics",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-076",
+    "question": "A defect report states: identify the bug:\n\nlet x = '0';\nif (x) {\n console.log('true');\n} else {\n console.log('false');\n} during a production incident with strict reliability requirements?",
+    "options": [
+      "logs 'true' - non-empty string is truthy",
+      "logs 'false' - '0' is falsy in this scenario",
+      "Error - cannot test string",
+      "undefined - condition fails"
+    ],
+    "correct_answer": "logs 'true' - non-empty string is truthy",
+    "topic": "Data Types and Structures",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "data-types-and-structures",
+      "debugging"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-077",
+    "question": "A defect report states: identify the bug:\n\nconst obj = { x: 1 };\nobj.x = 2;\nconsole.log(obj.x); during a production incident with strict reliability requirements?",
+    "options": [
+      "Outputs 2 - const prevents reassignment, not property mutation",
+      "Error - const prevents any modification",
+      "Outputs 1 - const freezes the value immediately in this scenario",
+      "Outputs undefined - obj is frozen"
+    ],
+    "correct_answer": "Outputs 2 - const prevents reassignment, not property mutation",
+    "topic": "Async and Promises",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "async-and-promises",
+      "debugging"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-078",
+    "question": "A defect report states: identify the bug:\n\nfunction add(a, b) {\n console.log(a + b);\n}\nadd(5); during a production incident with strict reliability requirements?",
+    "options": [
+      "Outputs NaN - b is undefined, a + undefined = NaN",
+      "Error - missing argument b",
+      "Outputs 5 - b defaults to 0",
+      "Outputs undefined - no return statement in this scenario"
+    ],
+    "correct_answer": "Outputs NaN - b is undefined, a + undefined = NaN",
+    "topic": "Node.js Fundamentals",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "node-js-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-079",
+    "question": "A defect report states: identify the bug:\n\nfunction greet(name) {\n console.log('Hello, ' + name);\n}\ngreet(); during a production incident with strict reliability requirements?",
+    "options": [
+      "Outputs 'Hello, undefined' - name parameter is undefined",
+      "Error - missing required argument",
+      "Outputs 'Hello, ' - undefined is coerced to empty string",
+      "No output - function requires argument"
+    ],
+    "correct_answer": "Outputs 'Hello, undefined' - name parameter is undefined",
+    "topic": "Functions and Scope",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "functions-and-scope"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-080",
+    "question": "A defect report states: identify the bug:\n\nfunction test() {\n return\n 5;\n}\nconsole.log(test()); during a production incident with strict reliability requirements?",
+    "options": [
+      "undefined - automatic semicolon insertion after return",
+      "5 - return on separate line still returns value in this scenario",
+      "Error - return must be on same line",
+      "null - function doesn't return a value"
+    ],
+    "correct_answer": "undefined - automatic semicolon insertion after return",
+    "topic": "Browser and DOM Basics",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "browser-and-dom-basics",
+      "debugging"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-081",
+    "question": "A defect report states: identify the bug:\n\nlet arr = [1, 2, 3];\nfor (var i = 0; i < arr.length; i++) {\n setTimeout(() => console.log(i), 100);\n}\n// What logs after 100ms during a production incident with strict reliability requirements?",
+    "options": [
+      "3, 3, 3 - var is function-scoped, i is 3 after loop",
+      "0, 1, 2 - setTimeout captures each i value",
+      "undefined, undefined, undefined - i loses scope in this scenario",
+      "Error - cannot use var in setTimeout"
+    ],
+    "correct_answer": "3, 3, 3 - var is function-scoped, i is 3 after loop",
+    "topic": "Browser and DOM Basics",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "browser-and-dom-basics",
+      "debugging"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-082",
+    "question": "In a production workflow, identify the bug:\n\nlet x = 1n + 2;\nconsole.log(x); during a production incident with strict reliability requirements?",
+    "options": [
+      "Error - cannot mix BigInt and number",
+      "3 - BigInt and number mix automatically",
+      "3n - result is BigInt",
+      "NaN - type mismatch"
+    ],
+    "correct_answer": "Error - cannot mix BigInt and number",
+    "topic": "Data Types and Structures",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "data-types-and-structures",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-083",
+    "question": "During architecture review, identify the bug:\n\nlet arr = [1, 2, 3];\nlet doubled = arr.map(x => x * 2);\nconsole.log(doubled); during a production incident with strict reliability requirements?",
+    "options": [
+      "[2, 4, 6] - map creates new array with doubled values",
+      "[1, 2, 3] - map doesn't modify arrays in this scenario",
+      "Error - map is not a valid method",
+      "undefined - map returns nothing"
+    ],
+    "correct_answer": "[2, 4, 6] - map creates new array with doubled values",
+    "topic": "JavaScript Language Fundamentals",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "javascript-language-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-084",
+    "question": "In live operations, identify the bug:\n\nlet x = NaN;\nconsole.log(x === NaN);\nconsole.log(isNaN(x)); during a production incident with strict reliability requirements?",
+    "options": [
+      "false, true - NaN!== NaN, but isNaN returns true",
+      "true, true - NaN equals itself",
+      "true, false - === works but isNaN doesn't in this scenario",
+      "Error - cannot compare NaN"
+    ],
+    "correct_answer": "false, true - NaN!== NaN, but isNaN returns true",
+    "topic": "Data Types and Structures",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "data-types-and-structures",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-085",
+    "question": "Identify the bug:\n\nlet x = () => 5;\nconsole.log(x); during a production incident with strict reliability requirements?",
+    "options": [
+      "() => 5 - the function itself",
+      "5 - arrow function executes",
+      "Error - arrow functions don't work",
+      "undefined - function is not defined"
+    ],
+    "correct_answer": "() => 5 - the function itself",
+    "topic": "Functions and Scope",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "functions-and-scope"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-086",
+    "question": "In a production workflow, identify the bug:\n\nlet arr = [1, 2, 3];\nlet first = arr[0];\narr[0] = 10;\nconsole.log(first); during a production incident with strict reliability requirements?",
+    "options": [
+      "1 - first stores the value, not the reference",
+      "10 - first is a reference to arr[0]",
+      "undefined - first loses its value",
+      "Error - cannot reassign array elements in this scenario"
+    ],
+    "correct_answer": "1 - first stores the value, not the reference",
+    "topic": "Browser and DOM Basics",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "browser-and-dom-basics",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-087",
+    "question": "During architecture review, identify the bug:\n\nlet arr = [1, 2, 3];\nlet result = arr.reduce((sum, x) => sum + x);\nconsole.log(result); during a production incident with strict reliability requirements?",
+    "options": [
+      "6 - sum of all elements under production constraints",
+      "undefined - reduce requires initial value under production constraints",
+      "[1, 2, 3] - reduce doesn't modify",
+      "Error - reduce is not valid"
+    ],
+    "correct_answer": "6 - sum of all elements under production constraints",
+    "topic": "Node.js Fundamentals",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "node-js-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-088",
+    "question": "In live operations, during live operations, which option best describes this output?\n\nlet x = '';\nif (x) {\n console.log('truthy');\n} else {\n console.log('falsy');\n} during a production incident with strict reliability requirements?",
+    "options": [
+      "logs 'falsy' - empty string is falsy",
+      "logs 'truthy' - empty string is truthy",
+      "Error - cannot test string",
+      "undefined - condition fails"
+    ],
+    "correct_answer": "logs 'falsy' - empty string is falsy",
+    "topic": "Data Types and Structures",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "data-types-and-structures",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-089",
+    "question": "Identify the bug:\n\nlet numbers = [1, 2, 3];\nnumbers.map(x => x * 2);\nconsole.log(numbers); during a production incident with strict reliability requirements?",
+    "options": [
+      "[1, 2, 3] - map returns a new array without modifying original",
+      "[2, 4, 6] - map modifies the array in this scenario under production constraints",
+      "Error - map requires a function",
+      "undefined - no return statement"
+    ],
+    "correct_answer": "[1, 2, 3] - map returns a new array without modifying original",
+    "topic": "Browser and DOM Basics",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "browser-and-dom-basics",
+      "concept"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-090",
+    "question": "In a production workflow, identify the bug:\n\nlet obj = { a: 1, b: 2 };\nlet { a, c } = obj;\nconsole.log(a, c); during a production incident with strict reliability requirements?",
+    "options": [
+      "1, undefined - c is not in obj under production constraints",
+      "1, 2 - both properties are destructured",
+      "Error - cannot destructure object",
+      "undefined, undefined - destructuring fails under production constraints"
+    ],
+    "correct_answer": "1, undefined - c is not in obj under production constraints",
+    "topic": "Async and Promises",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "async-and-promises",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-091",
+    "question": "During architecture review, identify the bug:\n\nlet obj = { x: 1 };\ndelete obj.x;\nconsole.log(obj.x); during a production incident with strict reliability requirements?",
+    "options": [
+      "undefined - delete removes the property",
+      "1 - delete doesn't work",
+      "Error - cannot use delete",
+      "null - property becomes null in this scenario"
+    ],
+    "correct_answer": "undefined - delete removes the property",
+    "topic": "Browser and DOM Basics",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "browser-and-dom-basics"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-092",
+    "question": "In live operations, identify the bug:\n\nlet obj = { x: 1, x: 2 };\nconsole.log(obj.x); during a production incident with strict reliability requirements?",
+    "options": [
+      "2 - last property wins under production constraints",
+      "1 - first property wins",
+      "Error - duplicate property",
+      "undefined - property is ambiguous under production constraints"
+    ],
+    "correct_answer": "2 - last property wins under production constraints",
+    "topic": "JavaScript Language Fundamentals",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "javascript-language-fundamentals",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-093",
+    "question": "Identify the bug:\n\nlet obj = { x: 1, y: 2 };\nfor (let key in obj) {\n console.log(key);\n} during a production incident with strict reliability requirements?",
+    "options": [
+      "Logs 'x' then 'y' - for...in iterates over object keys",
+      "Error - cannot iterate over object properties in this scenario",
+      "Logs 1 then 2 - for...in iterates over values",
+      "No output - for...in skips objects"
+    ],
+    "correct_answer": "Logs 'x' then 'y' - for...in iterates over object keys",
+    "topic": "JavaScript Language Fundamentals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "javascript-language-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-094",
+    "question": "In a production workflow, in a production scenario, which option best describes this output?\n\nlet x = null;\nconsole.log(typeof x);\nconsole.log(x == undefined);\nconsole.log(x === undefined); during a production incident with strict reliability requirements?",
+    "options": [
+      "'object', true, false - == coerces, === does not under production constraints",
+      "'object', true, true - null and undefined are identical",
+      "'null', false, false - null is distinct from undefined",
+      "'undefined', false, false - typeof treats null as undefined under production constraints"
+    ],
+    "correct_answer": "'object', true, false - == coerces, === does not under production constraints",
+    "topic": "Data Types and Structures",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "data-types-and-structures",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-095",
+    "question": "During architecture review, identify the bug:\n\nlet obj = {};\nlet key = 'a';\nobj[key] = 1;\nconsole.log(obj); during a production incident with strict reliability requirements?",
+    "options": [
+      "{ a: 1 } - uses value of key variable",
+      "{ key: 1 } - uses 'key' as property name",
+      "Error - cannot use variable as key",
+      "undefined - assignment fails"
+    ],
+    "correct_answer": "{ a: 1 } - uses value of key variable",
+    "topic": "Node.js Fundamentals",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "node-js-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-096",
+    "question": "In live operations, identify the bug:\n\nlet obj = {};\nobj['key'] = 'value';\nconsole.log(obj.key); during a production incident with strict reliability requirements?",
+    "options": [
+      "'value' - both notations access the same property",
+      "undefined - bracket notation and dot notation differ",
+      "Error - cannot use bracket notation",
+      "'undefined' - property doesn't exist with dot notation"
+    ],
+    "correct_answer": "'value' - both notations access the same property",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "debugging-fundamentals",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-097",
+    "question": "Identify the bug:\n\nlet result = 10;\nif (result = 5) {\n console.log('Inside if');\n} during a production incident with strict reliability requirements?",
+    "options": [
+      "Outputs 'Inside if' - assignment (=) returns 5, which is truthy",
+      "No output - result is 10, condition is false in this scenario under production constraints",
+      "Error - cannot assign in if condition",
+      "result becomes 5 but condition is false"
+    ],
+    "correct_answer": "Outputs 'Inside if' - assignment (=) returns 5, which is truthy",
+    "topic": "JavaScript Language Fundamentals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "javascript-language-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-098",
+    "question": "In a production workflow, identify the bug:\n\nlet str = 'hello';\nstr.toUpperCase();\nconsole.log(str); during a production incident with strict reliability requirements?",
+    "options": [
+      "str is still 'hello' - strings are immutable, toUpperCase returns a new string",
+      "str is now 'HELLO' - toUpperCase modifies the string in this scenario under production constraints",
+      "Error - toUpperCase is not a valid method",
+      "str is undefined - method call fails"
+    ],
+    "correct_answer": "str is still 'hello' - strings are immutable, toUpperCase returns a new string",
+    "topic": "JavaScript Language Fundamentals",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "javascript-language-fundamentals",
+      "scenario"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-099",
+    "question": "During architecture review, identify the bug:\n\nlet str = 'hello';\nstr[0] = 'H';\nconsole.log(str); during a production incident with strict reliability requirements?",
+    "options": [
+      "'hello' - strings are immutable under production constraints",
+      "'Hello' - strings can be modified by index under production constraints",
+      "Error - cannot assign to string index",
+      "undefined - operation fails silently"
+    ],
+    "correct_answer": "'hello' - strings are immutable under production constraints",
+    "topic": "Debugging Fundamentals",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "debugging-fundamentals"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  },
+  {
+    "id": "java-script-js-entry-theory-debug-100",
+    "question": "In live operations, identify the bug:\n\nlet x = 'a', 'b';\nconsole.log(x); during a production incident with strict reliability requirements?",
+    "options": [
+      "'a' - comma is sequence operator, last value wins",
+      "'ab' - comma concatenates",
+      "'b' - second string assigned in this scenario under production constraints",
+      "Error - invalid syntax"
+    ],
+    "correct_answer": "'a' - comma is sequence operator, last value wins",
+    "topic": "Async and Promises",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "async-and-promises",
+      "operations"
+    ],
+    "role_target": "js_entry",
+    "round_target": "L2",
+    "version_scope": [
+      "es2022",
+      "node20",
+      "javascript"
+    ]
+  }
+]

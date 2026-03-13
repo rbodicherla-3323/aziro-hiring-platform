@@ -1,0 +1,2506 @@
+[
+  {
+    "id": "cpp-cpp-senior-theory-debug-001",
+    "question": "A production defect investigation needs clarity on 'static_cast' vs 'dynamic_cast' vs 'reinterpret_cast'?",
+    "options": [
+      "static_cast: compile-time, no runtime check; dynamic_cast: runtime-checked polymorphic cast; reinterpret_cast: low-level bit reinterpretation",
+      "reinterpret_cast is the safest",
+      "They all do the same thing",
+      "dynamic_cast is for dynamic memory; static_cast is for static memory in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "static_cast: compile-time, no runtime check; dynamic_cast: runtime-checked polymorphic cast; reinterpret_cast: low-level bit reinterpretation",
+    "topic": "C++ Language and Type System",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "c-language-and-type-system",
+      "debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-002",
+    "question": "A production defect investigation needs clarity on the difference between 'new' and 'malloc' in C++?",
+    "options": [
+      "new calls the constructor and is type-safe; malloc only allocates raw memory without calling constructors",
+      "They are identical",
+      "new is only for arrays; malloc is for single objects in this scenario under production constraints for the stated requirement",
+      "malloc is faster than new"
+    ],
+    "correct_answer": "new calls the constructor and is type-safe; malloc only allocates raw memory without calling constructors",
+    "topic": "Memory Management and RAII",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "memory-management-and-raii"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-003",
+    "question": "A production defect investigation needs clarity on the difference between 'struct' and 'class' in C++?",
+    "options": [
+      "Members of struct are public by default; members of class are private by default",
+      "Struct cannot have member functions; class can in this scenario under production constraints",
+      "There is no difference",
+      "Class cannot be inherited; struct can"
+    ],
+    "correct_answer": "Members of struct are public by default; members of class are private by default",
+    "topic": "Practical Debugging",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "practical-debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-004",
+    "question": "A production defect investigation needs clarity on the difference between deep copy and shallow copy in C++?",
+    "options": [
+      "Deep copy duplicates the underlying data; shallow copy copies only the pointer/reference, sharing the same data",
+      "They are identical",
+      "Deep copy is only for primitive types in this scenario under production constraints for the stated requirement during incident triage",
+      "Shallow copy is safer than deep copy"
+    ],
+    "correct_answer": "Deep copy duplicates the underlying data; shallow copy copies only the pointer/reference, sharing the same data",
+    "topic": "Memory Management and RAII",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "memory-management-and-raii"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-005",
+    "question": "A production defect investigation needs clarity on a 'std::thread' in C++11?",
+    "options": [
+      "A class representing a single thread of execution for concurrent programming",
+      "A threading needle metaphor in this scenario under production constraints for the stated requirement",
+      "A deprecated C++ feature",
+      "A string of text"
+    ],
+    "correct_answer": "A class representing a single thread of execution for concurrent programming",
+    "topic": "Concurrency and Synchronization",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "concurrency-and-synchronization",
+      "debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-006",
+    "question": "A production defect investigation needs clarity on the difference between latency and throughput?",
+    "options": [
+      "Latency is the time taken for a single request; throughput is the number of requests handled per unit time",
+      "Latency measures bandwidth; throughput measures speed in this scenario under production constraints for the stated requirement",
+      "They are the same metric",
+      "Throughput is always proportional to latency"
+    ],
+    "correct_answer": "Latency is the time taken for a single request; throughput is the number of requests handled per unit time",
+    "topic": "STL and Performance",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "stl-and-performance"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-007",
+    "question": "In a production scenario, which option best describes RAII (Resource Acquisition Is Initialization) in C++?",
+    "options": [
+      "A principle where resource lifetime is tied to object lifetime - resources are acquired in the constructor and released in the destructor",
+      "An acronym for a C++ compiler optimization in this scenario under production constraints for the stated requirement during incident triage",
+      "A way to initialize arrays at runtime",
+      "A design pattern for creating singletons"
+    ],
+    "correct_answer": "A principle where resource lifetime is tied to object lifetime - resources are acquired in the constructor and released in the destructor",
+    "topic": "Build Tooling and Modern C++",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "build-tooling-and-modern-c",
+      "scenario"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-008",
+    "question": "What are smart pointers in C++?",
+    "options": [
+      "RAII-based wrapper classes (unique_ptr, shared_ptr, weak_ptr) that automatically manage dynamic memory lifetime",
+      "Pointers optimized for speed",
+      "Pointers that can point to multiple objects in this scenario under production constraints for the stated requirement",
+      "Pointers with built-in encryption"
+    ],
+    "correct_answer": "RAII-based wrapper classes (unique_ptr, shared_ptr, weak_ptr) that automatically manage dynamic memory lifetime",
+    "topic": "Practical Debugging",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "practical-debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-009",
+    "question": "During live operations, which option best describes the pimpl (Pointer to Implementation) idiom?",
+    "options": [
+      "A technique to hide implementation details by storing them behind a pointer to a private class, reducing compilation dependencies",
+      "A simple pointer pattern",
+      "A performance improvement technique",
+      "A pattern for implementing polymorphism in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "A technique to hide implementation details by storing them behind a pointer to a private class, reducing compilation dependencies",
+    "topic": "OOP and Design Patterns",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "oop-and-design-patterns",
+      "operations"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-010",
+    "question": "What is a dangling reference in C++?",
+    "options": [
+      "A reference that refers to an object that has been destroyed or gone out of scope, leading to undefined behavior",
+      "A reference that is NULL",
+      "A reference to a global variable in this scenario under production constraints for the stated requirement during incident triage",
+      "A reference to a constant value"
+    ],
+    "correct_answer": "A reference that refers to an object that has been destroyed or gone out of scope, leading to undefined behavior",
+    "topic": "Memory Management and RAII",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "memory-management-and-raii"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-011",
+    "question": "In a production scenario, which option best describes the difference between 'unique_ptr' and 'shared_ptr'?",
+    "options": [
+      "unique_ptr has exclusive ownership (non-copyable); shared_ptr uses reference counting for shared ownership",
+      "unique_ptr can be copied; shared_ptr cannot in this scenario under production constraints for the stated requirement",
+      "shared_ptr is faster than unique_ptr",
+      "They are the same"
+    ],
+    "correct_answer": "unique_ptr has exclusive ownership (non-copyable); shared_ptr uses reference counting for shared ownership",
+    "topic": "Memory Management and RAII",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "memory-management-and-raii",
+      "scenario"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-012",
+    "question": "During architecture review, which option best describes a virtual function in C++?",
+    "options": [
+      "A member function declared with 'virtual' that enables runtime polymorphism through dynamic dispatch",
+      "A function that can only be called from virtual machines in this scenario under production constraints",
+      "A function that does not exist",
+      "A function with no implementation"
+    ],
+    "correct_answer": "A member function declared with 'virtual' that enables runtime polymorphism through dynamic dispatch",
+    "topic": "STL and Performance",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "stl-and-performance"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-013",
+    "question": "During live operations, which option best describes a pure virtual function?",
+    "options": [
+      "A virtual function declared with '= 0', making the class abstract and requiring derived classes to provide an implementation",
+      "A virtual function with no side effects",
+      "A virtual function that is very efficient in this scenario under production constraints for the stated requirement during incident triage",
+      "A function that cannot be overridden"
+    ],
+    "correct_answer": "A virtual function declared with '= 0', making the class abstract and requiring derived classes to provide an implementation",
+    "topic": "Practical Debugging",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "practical-debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-014",
+    "question": "What is the 'vtable' (virtual table) in C++?",
+    "options": [
+      "A compiler-generated table of function pointers used to resolve virtual function calls at runtime",
+      "A table of variable names",
+      "A table of template parameters",
+      "A lookup table for variable types in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A compiler-generated table of function pointers used to resolve virtual function calls at runtime",
+    "topic": "Memory Management and RAII",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "memory-management-and-raii"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-015",
+    "question": "In a production scenario, which option best describes move semantics in C++11?",
+    "options": [
+      "A mechanism to transfer ownership of resources from one object to another without copying, using rvalue references (&&)",
+      "Moving objects between threads",
+      "Moving files in the filesystem",
+      "A compiler optimization for loop unrolling in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "A mechanism to transfer ownership of resources from one object to another without copying, using rvalue references (&&)",
+    "topic": "STL and Performance",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "stl-and-performance"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-016",
+    "question": "What are namespaces in C++ used for?",
+    "options": [
+      "To organize code and prevent name collisions by grouping identifiers into named scopes",
+      "To create network addresses in this scenario under production constraints for the stated requirement",
+      "To name files",
+      "To define variable types"
+    ],
+    "correct_answer": "To organize code and prevent name collisions by grouping identifiers into named scopes",
+    "topic": "C++ Language and Type System",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "c-language-and-type-system"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-017",
+    "question": "During live operations, which option best describes 'std::mutex' used for?",
+    "options": [
+      "A mutual exclusion primitive to protect shared data from concurrent access by multiple threads",
+      "To create mutable variables",
+      "To mute audio output",
+      "To manage memory usage tracking in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A mutual exclusion primitive to protect shared data from concurrent access by multiple threads",
+    "topic": "Concurrency and Synchronization",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "concurrency-and-synchronization",
+      "operations"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-018",
+    "question": "What is the difference between an lvalue and an rvalue in C++?",
+    "options": [
+      "An lvalue has a persistent address (can appear on the left of =); an rvalue is a temporary with no persistent address",
+      "lvalue is for local variables; rvalue is for remote values in this scenario under production constraints for the stated requirement",
+      "lvalue is a left-side value; rvalue is always a number",
+      "There is no difference in C++"
+    ],
+    "correct_answer": "An lvalue has a persistent address (can appear on the left of =); an rvalue is a temporary with no persistent address",
+    "topic": "Memory Management and RAII",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "memory-management-and-raii"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-019",
+    "question": "In a production scenario, which option best describes the difference between 'static_cast' and 'reinterpret_cast' in C++?",
+    "options": [
+      "static_cast performs type-safe conversions at compile time; reinterpret_cast performs low-level bit reinterpretation without type safety",
+      "They are identical in behavior",
+      "static_cast only works with pointers",
+      "reinterpret_cast is safer than static_cast in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "static_cast performs type-safe conversions at compile time; reinterpret_cast performs low-level bit reinterpretation without type safety",
+    "topic": "C++ Language and Type System",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "c-language-and-type-system",
+      "scenario"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-020",
+    "question": "During architecture review, which option best describes the microservices architecture pattern?",
+    "options": [
+      "An architecture where an application is composed of small, independent, loosely coupled services that communicate via APIs",
+      "A pattern for mobile app development in this scenario under production constraints for the stated requirement during incident triage",
+      "Using micro-controllers",
+      "Using very small functions"
+    ],
+    "correct_answer": "An architecture where an application is composed of small, independent, loosely coupled services that communicate via APIs",
+    "topic": "OOP and Design Patterns",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "oop-and-design-patterns"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-021",
+    "question": "During live operations, which option best describes 'std::lock_guard' in C++?",
+    "options": [
+      "An RAII wrapper that acquires a mutex in its constructor and releases it in its destructor, preventing lock leaks",
+      "A security guard for locks",
+      "A guard condition for loops in this scenario under production constraints for the stated requirement during incident triage",
+      "A file locking mechanism"
+    ],
+    "correct_answer": "An RAII wrapper that acquires a mutex in its constructor and releases it in its destructor, preventing lock leaks",
+    "topic": "Concurrency and Synchronization",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "concurrency-and-synchronization",
+      "operations"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-022",
+    "question": "What is 'std::atomic' used for in C++?",
+    "options": [
+      "To provide lock-free, thread-safe operations on variables without requiring mutexes",
+      "To create immutable variables",
+      "To create very small variables",
+      "To create atomic energy simulations in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "To provide lock-free, thread-safe operations on variables without requiring mutexes",
+    "topic": "Concurrency and Synchronization",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concurrency-and-synchronization"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-023",
+    "question": "In a production scenario, which option best describes 'std::move' used for in C++?",
+    "options": [
+      "To cast an lvalue to an rvalue reference, enabling move semantics",
+      "To move a thread to another CPU core in this scenario under production constraints",
+      "To physically move data in memory",
+      "To move files between directories"
+    ],
+    "correct_answer": "To cast an lvalue to an rvalue reference, enabling move semantics",
+    "topic": "Build Tooling and Modern C++",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "build-tooling-and-modern-c",
+      "scenario"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-024",
+    "question": "During architecture review, which option best describes a monolithic architecture?",
+    "options": [
+      "An architecture where all components are built, deployed, and scaled as a single unit",
+      "An architecture using only one programming language in this scenario under production constraints",
+      "An architecture with a single large stone",
+      "An architecture with only one server"
+    ],
+    "correct_answer": "An architecture where all components are built, deployed, and scaled as a single unit",
+    "topic": "OOP and Design Patterns",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "oop-and-design-patterns"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-025",
+    "question": "During live operations, which option best describes a lambda expression in C++11?",
+    "options": [
+      "An anonymous function object that can capture variables from its enclosing scope",
+      "A Greek letter used in variable names in this scenario under production constraints",
+      "A type of exception",
+      "A special template syntax"
+    ],
+    "correct_answer": "An anonymous function object that can capture variables from its enclosing scope",
+    "topic": "Practical Debugging",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "practical-debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-026",
+    "question": "A production defect investigation needs clarity on 'std::condition_variable' used for?",
+    "options": [
+      "A synchronization primitive that allows threads to wait until notified by another thread that a condition is met",
+      "To validate variable types",
+      "To check variable conditions at compile time in this scenario under production constraints for the stated requirement",
+      "To define conditional compilation"
+    ],
+    "correct_answer": "A synchronization primitive that allows threads to wait until notified by another thread that a condition is met",
+    "topic": "Concurrency and Synchronization",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "concurrency-and-synchronization",
+      "debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-027",
+    "question": "A production defect investigation needs clarity on the Rule of Five in C++?",
+    "options": [
+      "If a class defines any of destructor, copy constructor, copy assignment, move constructor, or move assignment, it should define all five",
+      "A rule about maximum function parameters",
+      "A coding style guideline about five spaces of indentation in this scenario under production constraints for the stated requirement during incident triage",
+      "A rule about maximum inheritance depth"
+    ],
+    "correct_answer": "If a class defines any of destructor, copy constructor, copy assignment, move constructor, or move assignment, it should define all five",
+    "topic": "Build Tooling and Modern C++",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "build-tooling-and-modern-c",
+      "debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-028",
+    "question": "What are the trade-offs between microservices and monolithic architectures?",
+    "options": [
+      "Microservices offer independent scaling and deployment but add complexity (networking, data consistency, debugging); monoliths are simpler but harder to scale independently",
+      "Monoliths are always better for large systems in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "There are no trade-offs",
+      "Microservices are always better"
+    ],
+    "correct_answer": "Microservices offer independent scaling and deployment but add complexity (networking, data consistency, debugging); monoliths are simpler but harder to scale independently",
+    "topic": "OOP and Design Patterns",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "oop-and-design-patterns"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-029",
+    "question": "A production defect investigation needs clarity on 'constexpr' in C++11?",
+    "options": [
+      "A keyword indicating that a function or variable can be evaluated at compile time",
+      "A keyword to make variables constant at runtime",
+      "A keyword for constant expressions in exceptions in this scenario under production constraints",
+      "A deprecated keyword"
+    ],
+    "correct_answer": "A keyword indicating that a function or variable can be evaluated at compile time",
+    "topic": "STL and Performance",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "stl-and-performance"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-030",
+    "question": "A production defect investigation needs clarity on the difference between 'const' and 'constexpr'?",
+    "options": [
+      "const means the value won't change after initialization; constexpr means the value must be computable at compile time",
+      "constexpr is for functions only; const is for variables only in this scenario under production constraints for the stated requirement",
+      "They are identical",
+      "const is C++11; constexpr is C++17"
+    ],
+    "correct_answer": "const means the value won't change after initialization; constexpr means the value must be computable at compile time",
+    "topic": "Practical Debugging",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "practical-debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-031",
+    "question": "A production defect investigation needs clarity on the primary goal of system design?",
+    "options": [
+      "To create a blueprint for a system's architecture that meets functional and non-functional requirements (scalability, reliability, etc.)",
+      "To design the user interface",
+      "To choose the programming language in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "To write the fastest code possible"
+    ],
+    "correct_answer": "To create a blueprint for a system's architecture that meets functional and non-functional requirements (scalability, reliability, etc.)",
+    "topic": "C++ Language and Type System",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "c-language-and-type-system",
+      "debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-032",
+    "question": "A production defect investigation needs clarity on template metaprogramming in C++?",
+    "options": [
+      "Using C++ templates to perform computation at compile time rather than runtime",
+      "Programming with metal templates",
+      "Using templates for dynamic typing in this scenario under production constraints",
+      "Using templates to generate HTML"
+    ],
+    "correct_answer": "Using C++ templates to perform computation at compile time rather than runtime",
+    "topic": "Practical Debugging",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "practical-debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-033",
+    "question": "A production defect investigation needs clarity on SFINAE in C++?",
+    "options": [
+      "Substitution Failure Is Not An Error - when template argument substitution fails, the template is silently discarded",
+      "A compiler optimization technique in this scenario under production constraints for the stated requirement during incident triage",
+      "A memory allocation strategy",
+      "A standard library algorithm"
+    ],
+    "correct_answer": "Substitution Failure Is Not An Error - when template argument substitution fails, the template is silently discarded",
+    "topic": "Practical Debugging",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "practical-debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-034",
+    "question": "A production defect investigation needs clarity on an API Gateway?",
+    "options": [
+      "A single entry point that routes client requests to appropriate microservices, handling authentication, rate limiting, and load balancing",
+      "A gateway for accessing APIs only in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "A database access layer",
+      "A firewall for APIs"
+    ],
+    "correct_answer": "A single entry point that routes client requests to appropriate microservices, handling authentication, rate limiting, and load balancing",
+    "topic": "OOP and Design Patterns",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "oop-and-design-patterns"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-035",
+    "question": "A production defect investigation needs clarity on the purpose of 'std::forward' in C++?",
+    "options": [
+      "To achieve perfect forwarding - preserving the value category (lvalue/rvalue) of a template argument",
+      "To forward exceptions",
+      "To forward function calls to another thread in this scenario under production constraints for the stated requirement",
+      "To forward network packets"
+    ],
+    "correct_answer": "To achieve perfect forwarding - preserving the value category (lvalue/rvalue) of a template argument",
+    "topic": "Memory Management and RAII",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "memory-management-and-raii"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-036",
+    "question": "A production defect investigation needs clarity on the difference between REST and gRPC?",
+    "options": [
+      "REST uses HTTP/JSON and is resource-oriented; gRPC uses HTTP/2 with Protocol Buffers for efficient binary serialization and supports streaming",
+      "They are the same protocol",
+      "gRPC is slower than REST",
+      "REST supports streaming; gRPC does not in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback"
+    ],
+    "correct_answer": "REST uses HTTP/JSON and is resource-oriented; gRPC uses HTTP/2 with Protocol Buffers for efficient binary serialization and supports streaming",
+    "topic": "OOP and Design Patterns",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "oop-and-design-patterns"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-037",
+    "question": "A production defect investigation needs clarity on 'auto' keyword used for in C++11?",
+    "options": [
+      "To let the compiler deduce the type of a variable from its initializer",
+      "To declare automatic storage class variables in this scenario under production constraints",
+      "To create automatic backups",
+      "To automatically optimize code"
+    ],
+    "correct_answer": "To let the compiler deduce the type of a variable from its initializer",
+    "topic": "Build Tooling and Modern C++",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "build-tooling-and-modern-c",
+      "debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-038",
+    "question": "A production defect investigation needs clarity on the CAP theorem?",
+    "options": [
+      "A distributed system can guarantee at most two of: Consistency, Availability, and Partition Tolerance simultaneously",
+      "A security theorem about capabilities",
+      "A theorem about cache performance",
+      "A theorem about CPU, ALU, and Pipeline in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "A distributed system can guarantee at most two of: Consistency, Availability, and Partition Tolerance simultaneously",
+    "topic": "C++ Language and Type System",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "c-language-and-type-system",
+      "debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-039",
+    "question": "In a production scenario, which option best describes the difference between 'override' and 'final' keywords in C++11?",
+    "options": [
+      "override ensures a function overrides a virtual base method; final prevents further overriding or inheritance",
+      "They are the same",
+      "final overrides; override finalizes",
+      "override is for variables; final is for functions in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "override ensures a function overrides a virtual base method; final prevents further overriding or inheritance",
+    "topic": "Build Tooling and Modern C++",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "build-tooling-and-modern-c",
+      "scenario"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-040",
+    "question": "During architecture review, which option best describes the diamond problem in C++ inheritance?",
+    "options": [
+      "Ambiguity when a class inherits from two classes that both inherit from the same base class, resolved with virtual inheritance",
+      "A memory leak pattern",
+      "A performance issue with multiple inheritance in this scenario under production constraints for the stated requirement during incident triage",
+      "A problem with diamond-shaped data structures"
+    ],
+    "correct_answer": "Ambiguity when a class inherits from two classes that both inherit from the same base class, resolved with virtual inheritance",
+    "topic": "Memory Management and RAII",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "memory-management-and-raii"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-041",
+    "question": "During live operations, which option best describes the Standard Template Library (STL)?",
+    "options": [
+      "A collection of generic containers, algorithms, iterators, and function objects in C++",
+      "A library for string templates",
+      "A library for SQL template queries in this scenario under production constraints for the stated requirement",
+      "A library for template emails"
+    ],
+    "correct_answer": "A collection of generic containers, algorithms, iterators, and function objects in C++",
+    "topic": "STL and Performance",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "stl-and-performance"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-042",
+    "question": "What is caching and why is it important in system design?",
+    "options": [
+      "Storing frequently accessed data in a fast storage layer (e.g., Redis, Memcached) to reduce latency and database load",
+      "Compressing data for storage",
+      "Storing data on disk for persistence in this scenario under production constraints for the stated requirement during incident triage",
+      "Creating data checksums"
+    ],
+    "correct_answer": "Storing frequently accessed data in a fast storage layer (e.g., Redis, Memcached) to reduce latency and database load",
+    "topic": "C++ Language and Type System",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "c-language-and-type-system",
+      "concept"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-043",
+    "question": "In a production scenario, which option best describes the difference between 'std::vector' and 'std::array'?",
+    "options": [
+      "vector is dynamically sized (heap allocated); array has a fixed size known at compile time (stack allocated)",
+      "vector stores only integers; array stores any type in this scenario under production constraints for the stated requirement",
+      "array is dynamic; vector is fixed",
+      "They are identical"
+    ],
+    "correct_answer": "vector is dynamically sized (heap allocated); array has a fixed size known at compile time (stack allocated)",
+    "topic": "Build Tooling and Modern C++",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "build-tooling-and-modern-c",
+      "scenario"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-044",
+    "question": "During architecture review, which option best describes 'std::async' and 'std::future' in C++?",
+    "options": [
+      "std::async launches a task asynchronously; std::future provides a mechanism to retrieve the result when ready",
+      "They are identical to std::thread in this scenario under production constraints for the stated requirement during incident triage",
+      "Asynchronous file I/O functions",
+      "Async networking primitives"
+    ],
+    "correct_answer": "std::async launches a task asynchronously; std::future provides a mechanism to retrieve the result when ready",
+    "topic": "Concurrency and Synchronization",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "async",
+      "concurrency-and-synchronization"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-045",
+    "question": "During live operations, which option best describes the difference between optimistic and pessimistic concurrency control?",
+    "options": [
+      "Optimistic assumes conflicts are rare and checks at commit time; pessimistic locks resources upfront to prevent conflicts",
+      "Optimistic uses locks; pessimistic does not",
+      "They are the same approach",
+      "Pessimistic is always better for performance in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "Optimistic assumes conflicts are rare and checks at commit time; pessimistic locks resources upfront to prevent conflicts",
+    "topic": "Concurrency and Synchronization",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "concurrency-and-synchronization",
+      "operations"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-046",
+    "question": "What is 'std::unordered_map' and how does it differ from 'std::map'?",
+    "options": [
+      "unordered_map uses a hash table (O(1) average lookup); map uses a balanced BST (O(log n) lookup, ordered keys)",
+      "unordered_map is sorted; map is unsorted in this scenario under production constraints for the stated requirement",
+      "map is faster than unordered_map",
+      "They are the same container"
+    ],
+    "correct_answer": "unordered_map uses a hash table (O(1) average lookup); map uses a balanced BST (O(log n) lookup, ordered keys)",
+    "topic": "Build Tooling and Modern C++",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "build-tooling-and-modern-c",
+      "concept"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-047",
+    "question": "In a production scenario, which option best describes exception handling in C++ using try-catch?",
+    "options": [
+      "A mechanism to handle runtime errors by throwing exceptions and catching them in catch blocks",
+      "A logging mechanism",
+      "A way to handle syntax errors",
+      "A way to catch compiler warnings in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A mechanism to handle runtime errors by throwing exceptions and catching them in catch blocks",
+    "topic": "STL and Performance",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "scenario",
+      "stl-and-performance"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-048",
+    "question": "During architecture review, which option best describes the Singleton design pattern?",
+    "options": [
+      "A creational pattern ensuring a class has only one instance and provides a global access point to it",
+      "A pattern for single inheritance",
+      "A pattern for single-threaded applications in this scenario under production constraints for the stated requirement",
+      "A pattern for single-page applications"
+    ],
+    "correct_answer": "A creational pattern ensuring a class has only one instance and provides a global access point to it",
+    "topic": "OOP and Design Patterns",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "oop-and-design-patterns"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-049",
+    "question": "During live operations, which option best describes the 'noexcept' specifier in C++?",
+    "options": [
+      "A specifier indicating a function is guaranteed not to throw exceptions, enabling compiler optimizations",
+      "A keyword to catch exceptions silently in this scenario under production constraints for the stated requirement",
+      "A debugging flag",
+      "A way to suppress all exceptions"
+    ],
+    "correct_answer": "A specifier indicating a function is guaranteed not to throw exceptions, enabling compiler optimizations",
+    "topic": "Memory Management and RAII",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "memory-management-and-raii",
+      "operations"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-050",
+    "question": "What is the copy-and-swap idiom in C++?",
+    "options": [
+      "A technique for implementing exception-safe copy assignment by creating a temporary copy and swapping",
+      "A sorting algorithm",
+      "A technique for swapping pointers",
+      "A method to copy files and swap names in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A technique for implementing exception-safe copy assignment by creating a temporary copy and swapping",
+    "topic": "Concurrency and Synchronization",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concurrency-and-synchronization"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-051",
+    "question": "In a production scenario, which option best describes the purpose of the 'explicit' keyword in C++?",
+    "options": [
+      "To prevent implicit type conversions in constructors and conversion operators",
+      "To explicitly call destructors",
+      "To explicitly allocate memory",
+      "To make variables explicitly typed in this scenario under production constraints"
+    ],
+    "correct_answer": "To prevent implicit type conversions in constructors and conversion operators",
+    "topic": "Concurrency and Synchronization",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "concurrency-and-synchronization",
+      "scenario"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-052",
+    "question": "What are variadic templates in C++11?",
+    "options": [
+      "Templates that accept a variable number of template arguments using parameter packs (...)",
+      "Templates for variable declarations in this scenario under production constraints for the stated requirement",
+      "Templates that vary at runtime",
+      "Templates with variable types"
+    ],
+    "correct_answer": "Templates that accept a variable number of template arguments using parameter packs (...)",
+    "topic": "Memory Management and RAII",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "memory-management-and-raii"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-053",
+    "question": "During live operations, which option best describes 'std::optional' (C++17)?",
+    "options": [
+      "A wrapper that may or may not contain a value, representing an optional value without using pointers or sentinel values",
+      "A nullable reference type",
+      "A way to make parameters optional in this scenario under production constraints for the stated requirement during incident triage",
+      "An optional compiler flag"
+    ],
+    "correct_answer": "A wrapper that may or may not contain a value, representing an optional value without using pointers or sentinel values",
+    "topic": "Practical Debugging",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "practical-debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-054",
+    "question": "What is 'std::variant' (C++17)?",
+    "options": [
+      "A type-safe union that can hold one of several specified types at a time",
+      "A variable-length array",
+      "A variant of the string class",
+      "A variable with multiple names in this scenario under production constraints"
+    ],
+    "correct_answer": "A type-safe union that can hold one of several specified types at a time",
+    "topic": "Concurrency and Synchronization",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concurrency-and-synchronization"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-055",
+    "question": "In a production scenario, which option best describes the Curiously Recurring Template Pattern (CRTP)?",
+    "options": [
+      "A pattern where a class derives from a template base class using itself as a template parameter, enabling static polymorphism",
+      "A pattern for creating recursive data structures in this scenario under production constraints for the stated requirement during incident triage",
+      "A bug in recursive templates",
+      "A curious naming convention"
+    ],
+    "correct_answer": "A pattern where a class derives from a template base class using itself as a template parameter, enabling static polymorphism",
+    "topic": "Concurrency and Synchronization",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "concurrency-and-synchronization",
+      "scenario"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-056",
+    "question": "During architecture review, which option best describes 'decltype' used for in C++11?",
+    "options": [
+      "To query the type of an expression at compile time",
+      "To declare types explicitly",
+      "To declare template parameters in this scenario under production constraints",
+      "To decline type checking"
+    ],
+    "correct_answer": "To query the type of an expression at compile time",
+    "topic": "Build Tooling and Modern C++",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "build-tooling-and-modern-c"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-057",
+    "question": "During live operations, which option best describes a 'std::function' in C++?",
+    "options": [
+      "A general-purpose polymorphic function wrapper that can store any callable object (functions, lambdas, functors)",
+      "A standard library function",
+      "A function that follows the standard in this scenario under production constraints for the stated requirement during incident triage",
+      "A standard way to define functions"
+    ],
+    "correct_answer": "A general-purpose polymorphic function wrapper that can store any callable object (functions, lambdas, functors)",
+    "topic": "STL and Performance",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "stl-and-performance"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-058",
+    "question": "What is eventual consistency?",
+    "options": [
+      "A consistency model where updates to a distributed system will eventually propagate to all nodes, but reads may return stale data temporarily",
+      "A consistency model only for SQL databases",
+      "A model where consistency is never achieved in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "Data is always immediately consistent"
+    ],
+    "correct_answer": "A consistency model where updates to a distributed system will eventually propagate to all nodes, but reads may return stale data temporarily",
+    "topic": "C++ Language and Type System",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "c-language-and-type-system",
+      "concept"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-059",
+    "question": "In a production scenario, which option best describes the Observer design pattern?",
+    "options": [
+      "A behavioral pattern where an object (subject) notifies a list of dependents (observers) when its state changes",
+      "A pattern for monitoring servers",
+      "A pattern for code review",
+      "A pattern for database observation in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "A behavioral pattern where an object (subject) notifies a list of dependents (observers) when its state changes",
+    "topic": "OOP and Design Patterns",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "oop-and-design-patterns",
+      "scenario"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-060",
+    "question": "During architecture review, which option best describes 'enum class' (scoped enum) in C++11?",
+    "options": [
+      "A strongly-typed enum that doesn't implicitly convert to int and has its own scope, preventing name collisions",
+      "A class that contains only enums in this scenario under production constraints for the stated requirement during incident triage",
+      "A deprecated way to define enums",
+      "An enum stored in a class file"
+    ],
+    "correct_answer": "A strongly-typed enum that doesn't implicitly convert to int and has its own scope, preventing name collisions",
+    "topic": "Concurrency and Synchronization",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "concurrency-and-synchronization"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-061",
+    "question": "A production defect investigation needs clarity on 'std::string_view' (C++17)?",
+    "options": [
+      "A lightweight, non-owning reference to a string (or substring) that avoids copying",
+      "A mutable string class",
+      "A graphical view of string data in this scenario under production constraints for the stated requirement",
+      "A string formatting view"
+    ],
+    "correct_answer": "A lightweight, non-owning reference to a string (or substring) that avoids copying",
+    "topic": "Build Tooling and Modern C++",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "build-tooling-and-modern-c",
+      "debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-062",
+    "question": "A production defect investigation needs clarity on rate limiting in system design?",
+    "options": [
+      "Controlling the number of requests a user or client can make in a given time period to prevent abuse",
+      "Limiting the CPU clock rate",
+      "Limiting database query rates",
+      "Limiting the data rate of network cables in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "Controlling the number of requests a user or client can make in a given time period to prevent abuse",
+    "topic": "C++ Language and Type System",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "c-language-and-type-system",
+      "debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-063",
+    "question": "A production defect investigation needs clarity on CRTP (Curiously Recurring Template Pattern) in C++?",
+    "options": [
+      "A pattern where a class derives from a template instantiation of itself, enabling static (compile-time) polymorphism",
+      "A pattern for creating recursive data structures",
+      "A method to cast templates at runtime",
+      "A runtime polymorphism pattern using virtual functions in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A pattern where a class derives from a template instantiation of itself, enabling static (compile-time) polymorphism",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "practical-debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-064",
+    "question": "A production defect investigation needs clarity on the 'noexcept' specifier indicate in C++?",
+    "options": [
+      "The function is guaranteed not to throw exceptions, allowing compiler optimizations",
+      "The function will retry on exception",
+      "The function will catch all exceptions internally in this scenario under production constraints",
+      "The function disables exception handling globally"
+    ],
+    "correct_answer": "The function is guaranteed not to throw exceptions, allowing compiler optimizations",
+    "topic": "Build Tooling and Modern C++",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "build-tooling-and-modern-c",
+      "debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-065",
+    "question": "A production defect investigation needs clarity on the difference between horizontal and vertical scaling?",
+    "options": [
+      "Horizontal scaling adds more machines; vertical scaling adds more resources (CPU, RAM) to an existing machine",
+      "They are the same concept",
+      "Horizontal is for databases; vertical is for applications in this scenario under production constraints for the stated requirement",
+      "Vertical scaling adds machines; horizontal adds resources"
+    ],
+    "correct_answer": "Horizontal scaling adds more machines; vertical scaling adds more resources (CPU, RAM) to an existing machine",
+    "topic": "STL and Performance",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "stl-and-performance"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-066",
+    "question": "A production defect investigation needs clarity on a load balancer?",
+    "options": [
+      "A component that distributes incoming network traffic across multiple servers to ensure no single server is overwhelmed",
+      "A memory management utility",
+      "A device that balances electrical load in this scenario under production constraints for the stated requirement during incident triage",
+      "A database optimization tool"
+    ],
+    "correct_answer": "A component that distributes incoming network traffic across multiple servers to ensure no single server is overwhelmed",
+    "topic": "Memory Management and RAII",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "memory-management-and-raii"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-067",
+    "question": "A production defect investigation needs clarity on a consistent hashing algorithm?",
+    "options": [
+      "A distributed hashing scheme that minimizes key remapping when nodes are added or removed from a cluster",
+      "A database indexing algorithm",
+      "A hashing algorithm that always produces the same hash in this scenario under production constraints for the stated requirement",
+      "A secure hashing algorithm"
+    ],
+    "correct_answer": "A distributed hashing scheme that minimizes key remapping when nodes are added or removed from a cluster",
+    "topic": "C++ Language and Type System",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "c-language-and-type-system",
+      "debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-068",
+    "question": "A production defect investigation needs clarity on a CDN (Content Delivery Network)?",
+    "options": [
+      "A geographically distributed network of servers that cache and deliver content closer to users for lower latency",
+      "A code deployment network in this scenario under production constraints for the stated requirement during incident triage",
+      "A centralized data node",
+      "A cloud database network"
+    ],
+    "correct_answer": "A geographically distributed network of servers that cache and deliver content closer to users for lower latency",
+    "topic": "Memory Management and RAII",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "memory-management-and-raii"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-069",
+    "question": "A production defect investigation needs clarity on the Factory design pattern?",
+    "options": [
+      "A creational pattern that provides an interface for creating objects without specifying the exact class",
+      "A pattern for manufacturing software in this scenario under production constraints for the stated requirement",
+      "A pattern for building APIs",
+      "A pattern for database factories"
+    ],
+    "correct_answer": "A creational pattern that provides an interface for creating objects without specifying the exact class",
+    "topic": "OOP and Design Patterns",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "oop-and-design-patterns"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-070",
+    "question": "A production defect investigation needs clarity on the difference between SQL and NoSQL databases?",
+    "options": [
+      "SQL databases are relational with structured schemas; NoSQL databases are non-relational (document, key-value, graph, columnar) with flexible schemas",
+      "They are the same with different syntax in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "SQL cannot scale horizontally",
+      "NoSQL is always faster"
+    ],
+    "correct_answer": "SQL databases are relational with structured schemas; NoSQL databases are non-relational (document, key-value, graph, columnar) with flexible schemas",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "practical-debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-071",
+    "question": "A production defect investigation needs clarity on database sharding?",
+    "options": [
+      "Splitting a database into smaller, independent shards distributed across multiple servers for horizontal scaling",
+      "Deleting old database records in this scenario under production constraints for the stated requirement during incident triage",
+      "Creating database backups",
+      "Encrypting database fields"
+    ],
+    "correct_answer": "Splitting a database into smaller, independent shards distributed across multiple servers for horizontal scaling",
+    "topic": "Memory Management and RAII",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "memory-management-and-raii"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-072",
+    "question": "A production defect investigation needs clarity on the Strategy design pattern?",
+    "options": [
+      "A behavioral pattern defining a family of algorithms, encapsulating each one, and making them interchangeable at runtime",
+      "A pattern for error handling strategies in this scenario under production constraints for the stated requirement during incident triage",
+      "A pattern for game strategy",
+      "A pattern for strategic planning"
+    ],
+    "correct_answer": "A behavioral pattern defining a family of algorithms, encapsulating each one, and making them interchangeable at runtime",
+    "topic": "OOP and Design Patterns",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "oop-and-design-patterns"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-073",
+    "question": "A production defect investigation needs clarity on database replication?",
+    "options": [
+      "Copying data from a primary database to one or more replicas for redundancy, fault tolerance, and read scaling",
+      "Duplicating database schema only",
+      "Replicating queries across databases in this scenario under production constraints for the stated requirement during incident triage",
+      "Replacing one database with another"
+    ],
+    "correct_answer": "Copying data from a primary database to one or more replicas for redundancy, fault tolerance, and read scaling",
+    "topic": "STL and Performance",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "stl-and-performance"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-074",
+    "question": "A production defect investigation needs clarity on the difference between write-through and write-back cache?",
+    "options": [
+      "Write-through writes to cache and database simultaneously; write-back writes to cache first and database asynchronously",
+      "Write-through only writes to the cache in this scenario under production constraints for the stated requirement during incident triage",
+      "Write-back is always superior",
+      "They are identical strategies"
+    ],
+    "correct_answer": "Write-through writes to cache and database simultaneously; write-back writes to cache first and database asynchronously",
+    "topic": "Concurrency and Synchronization",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "concurrency-and-synchronization",
+      "debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-075",
+    "question": "What are the SOLID principles?",
+    "options": [
+      "Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion - five OOP design principles",
+      "Five principles for solid databases",
+      "Secure, Optimal, Lightweight, Independent, Durable in this scenario under production constraints for the stated requirement during incident triage",
+      "Principles for building solid structures"
+    ],
+    "correct_answer": "Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion - five OOP design principles",
+    "topic": "OOP and Design Patterns",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "oop-and-design-patterns"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-076",
+    "question": "A production defect investigation needs clarity on a message queue and when would you use one?",
+    "options": [
+      "An asynchronous communication mechanism (e.g., RabbitMQ, Kafka) for decoupling producers and consumers",
+      "A logging mechanism",
+      "A queue for email messages only in this scenario under production constraints for the stated requirement",
+      "A database query queue"
+    ],
+    "correct_answer": "An asynchronous communication mechanism (e.g., RabbitMQ, Kafka) for decoupling producers and consumers",
+    "topic": "STL and Performance",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "stl-and-performance"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-077",
+    "question": "In a production scenario, which option best describes a reverse proxy?",
+    "options": [
+      "A server that sits in front of backend servers, forwarding client requests to them and returning responses (e.g., Nginx)",
+      "A proxy used for outbound traffic",
+      "A proxy that reverses network traffic in this scenario under production constraints for the stated requirement during incident triage",
+      "A proxy for reverse engineering"
+    ],
+    "correct_answer": "A server that sits in front of backend servers, forwarding client requests to them and returning responses (e.g., Nginx)",
+    "topic": "Build Tooling and Modern C++",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "build-tooling-and-modern-c",
+      "scenario"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-078",
+    "question": "During architecture review, which option best describes the Single Responsibility Principle (SRP)?",
+    "options": [
+      "A class should have only one reason to change, meaning it should have only one responsibility",
+      "A function should only have one parameter in this scenario under production constraints for the stated requirement",
+      "A file should contain only one class",
+      "A class should have a single constructor"
+    ],
+    "correct_answer": "A class should have only one reason to change, meaning it should have only one responsibility",
+    "topic": "STL and Performance",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "stl-and-performance"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-079",
+    "question": "During live operations, which option best describes the Dependency Inversion Principle?",
+    "options": [
+      "High-level modules should not depend on low-level modules; both should depend on abstractions",
+      "Dependencies should be inverted in the call stack in this scenario under production constraints",
+      "Dependencies should be minimized",
+      "Dependencies should always be injected"
+    ],
+    "correct_answer": "High-level modules should not depend on low-level modules; both should depend on abstractions",
+    "topic": "Concurrency and Synchronization",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "concurrency-and-synchronization",
+      "operations"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-080",
+    "question": "What is a circuit breaker pattern?",
+    "options": [
+      "A resilience pattern that prevents cascading failures by stopping calls to a failing service and returning fallback responses",
+      "A pattern for breaking circular dependencies in this scenario under production constraints for the stated requirement during incident triage",
+      "A pattern for breaking database connections",
+      "An electrical safety mechanism"
+    ],
+    "correct_answer": "A resilience pattern that prevents cascading failures by stopping calls to a failing service and returning fallback responses",
+    "topic": "OOP and Design Patterns",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "oop-and-design-patterns"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-081",
+    "question": "In a production scenario, which option best describes event-driven architecture?",
+    "options": [
+      "An architecture where components communicate by producing and consuming events asynchronously, promoting loose coupling",
+      "An architecture for GUI applications only",
+      "An architecture for event planning software in this scenario under production constraints for the stated requirement during incident triage",
+      "An architecture driven by calendar events"
+    ],
+    "correct_answer": "An architecture where components communicate by producing and consuming events asynchronously, promoting loose coupling",
+    "topic": "OOP and Design Patterns",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "oop-and-design-patterns",
+      "scenario"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-082",
+    "question": "During architecture review, which option best describes the Saga pattern in distributed systems?",
+    "options": [
+      "A pattern for managing distributed transactions as a sequence of local transactions with compensating actions for rollback",
+      "A storytelling pattern for documentation in this scenario under production constraints for the stated requirement during incident triage",
+      "A pattern for sequential API calls",
+      "A logging pattern"
+    ],
+    "correct_answer": "A pattern for managing distributed transactions as a sequence of local transactions with compensating actions for rollback",
+    "topic": "C++ Language and Type System",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "c-language-and-type-system"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-083",
+    "question": "During live operations, which option best describes CQRS (Command Query Responsibility Segregation)?",
+    "options": [
+      "A pattern that separates read (query) and write (command) operations into different models, potentially with different databases",
+      "A SQL query optimization technique in this scenario under production constraints for the stated requirement during incident triage",
+      "A caching query retrieval system",
+      "A distributed command system"
+    ],
+    "correct_answer": "A pattern that separates read (query) and write (command) operations into different models, potentially with different databases",
+    "topic": "OOP and Design Patterns",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "oop-and-design-patterns",
+      "operations"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-084",
+    "question": "What is a distributed cache?",
+    "options": [
+      "A cache spread across multiple nodes (e.g., Redis Cluster, Memcached) for shared high-speed data access in distributed systems",
+      "A browser cache",
+      "A cache stored on a single server in this scenario under production constraints for the stated requirement during incident triage",
+      "A CPU cache shared between cores"
+    ],
+    "correct_answer": "A cache spread across multiple nodes (e.g., Redis Cluster, Memcached) for shared high-speed data access in distributed systems",
+    "topic": "STL and Performance",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "stl-and-performance"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-085",
+    "question": "In a production scenario, which option best describes the purpose of heartbeat mechanisms in distributed systems?",
+    "options": [
+      "Periodic signals between nodes to detect failures and ensure liveness of distributed components",
+      "To synchronize clocks",
+      "To balance network load in this scenario under production constraints for the stated requirement",
+      "To monitor CPU health"
+    ],
+    "correct_answer": "Periodic signals between nodes to detect failures and ensure liveness of distributed components",
+    "topic": "C++ Language and Type System",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "c-language-and-type-system",
+      "scenario"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-086",
+    "question": "During architecture review, which option best describes back-pressure in system design?",
+    "options": [
+      "A flow-control mechanism where a system signals upstream to slow down when it cannot keep up with the rate of incoming data",
+      "Network bandwidth limitation",
+      "Physical pressure on hardware in this scenario under production constraints for the stated requirement during incident triage",
+      "Database compression"
+    ],
+    "correct_answer": "A flow-control mechanism where a system signals upstream to slow down when it cannot keep up with the rate of incoming data",
+    "topic": "C++ Language and Type System",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "c-language-and-type-system"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-087",
+    "question": "During live operations, which option best describes data partitioning and what strategies exist?",
+    "options": [
+      "Dividing data across nodes using strategies like range-based, hash-based, or directory-based partitioning",
+      "Splitting data into files only",
+      "Creating database views",
+      "Encrypting data into partitions in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "Dividing data across nodes using strategies like range-based, hash-based, or directory-based partitioning",
+    "topic": "Build Tooling and Modern C++",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "build-tooling-and-modern-c",
+      "operations"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-088",
+    "question": "What is the difference between leader-based and leaderless replication?",
+    "options": [
+      "Leader-based: one node accepts writes and replicates to followers; leaderless: any node accepts writes, using quorums for consistency",
+      "Leaderless is always faster",
+      "They are the same approach",
+      "Leader-based is only for SQL databases in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "Leader-based: one node accepts writes and replicates to followers; leaderless: any node accepts writes, using quorums for consistency",
+    "topic": "C++ Language and Type System",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "c-language-and-type-system",
+      "concept"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-089",
+    "question": "In a production scenario, which option best describes the difference between synchronous and asynchronous communication?",
+    "options": [
+      "Synchronous: caller waits for response before continuing; asynchronous: caller proceeds without waiting, response handled later",
+      "Asynchronous is always slower",
+      "They are the same",
+      "Synchronous is only for databases in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "Synchronous: caller waits for response before continuing; asynchronous: caller proceeds without waiting, response handled later",
+    "topic": "STL and Performance",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "async",
+      "scenario",
+      "stl-and-performance"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-090",
+    "question": "During architecture review, which option best describes service discovery in a microservices architecture?",
+    "options": [
+      "A mechanism for services to find and communicate with each other dynamically (e.g., Consul, Eureka, DNS-based)",
+      "Discovering bugs in services",
+      "Discovering new services to use",
+      "Discovering available APIs on the internet in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "A mechanism for services to find and communicate with each other dynamically (e.g., Consul, Eureka, DNS-based)",
+    "topic": "Build Tooling and Modern C++",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "build-tooling-and-modern-c"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-091",
+    "question": "During live operations, which option best describes the Adapter design pattern?",
+    "options": [
+      "A structural pattern that converts the interface of a class into another interface that clients expect, enabling incompatible classes to work together",
+      "A pattern for adapting to new programming languages in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "A pattern for adapting databases",
+      "A pattern for power adapters"
+    ],
+    "correct_answer": "A structural pattern that converts the interface of a class into another interface that clients expect, enabling incompatible classes to work together",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "practical-debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-092",
+    "question": "What is the Decorator design pattern?",
+    "options": [
+      "A structural pattern that dynamically adds behavior to objects without modifying their code, using wrapping",
+      "A pattern for decorating UIs",
+      "A Python-specific pattern",
+      "A pattern for code formatting in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "A structural pattern that dynamically adds behavior to objects without modifying their code, using wrapping",
+    "topic": "Memory Management and RAII",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "memory-management-and-raii"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-093",
+    "question": "In a production scenario, which option best describes a bloom filter?",
+    "options": [
+      "A space-efficient probabilistic data structure for testing set membership - may have false positives but never false negatives",
+      "A network packet filter",
+      "A filter for image processing in this scenario under production constraints for the stated requirement during incident triage for production reliability and controlled rollback",
+      "A database query filter"
+    ],
+    "correct_answer": "A space-efficient probabilistic data structure for testing set membership - may have false positives but never false negatives",
+    "topic": "Build Tooling and Modern C++",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "build-tooling-and-modern-c",
+      "scenario"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-094",
+    "question": "During architecture review, which option best describes the difference between a proxy and a decorator pattern?",
+    "options": [
+      "Proxy controls access to an object (security, caching, lazy loading); Decorator adds new behavior to an object",
+      "Proxy is structural; Decorator is behavioral",
+      "Proxy adds behavior; Decorator controls access in this scenario under production constraints for the stated requirement",
+      "They are the same pattern"
+    ],
+    "correct_answer": "Proxy controls access to an object (security, caching, lazy loading); Decorator adds new behavior to an object",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "practical-debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-095",
+    "question": "During live operations, which option best describes the purpose of a distributed consensus algorithm (e.g., Raft, Paxos)?",
+    "options": [
+      "To enable multiple nodes in a distributed system to agree on a single value or decision despite failures",
+      "To optimize database queries",
+      "To reach consensus on code style in this scenario under production constraints for the stated requirement",
+      "To balance network traffic"
+    ],
+    "correct_answer": "To enable multiple nodes in a distributed system to agree on a single value or decision despite failures",
+    "topic": "C++ Language and Type System",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "c-language-and-type-system",
+      "operations"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-096",
+    "question": "What is a write-ahead log (WAL)?",
+    "options": [
+      "A durability technique where changes are written to a log before being applied to the database, enabling crash recovery",
+      "A pre-written log template",
+      "A logging library",
+      "A log written before compilation in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "A durability technique where changes are written to a log before being applied to the database, enabling crash recovery",
+    "topic": "Build Tooling and Modern C++",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "build-tooling-and-modern-c",
+      "concept"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-097",
+    "question": "In a production scenario, which option best describes idempotency in API design?",
+    "options": [
+      "Making the same API call multiple times produces the same result without additional side effects",
+      "An API that can only be called once",
+      "An API design for identity verification",
+      "An API that returns identical data every time in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "Making the same API call multiple times produces the same result without additional side effects",
+    "topic": "STL and Performance",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "api",
+      "scenario",
+      "stl-and-performance"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-098",
+    "question": "During architecture review, which option best describes the purpose of a reverse proxy in a system architecture?",
+    "options": [
+      "To sit in front of backend servers and forward client requests, providing load balancing, SSL termination, and caching",
+      "To replace the need for DNS resolution",
+      "To directly serve database queries to clients in this scenario under production constraints for the stated requirement during incident triage",
+      "To encrypt data at the application layer only"
+    ],
+    "correct_answer": "To sit in front of backend servers and forward client requests, providing load balancing, SSL termination, and caching",
+    "topic": "C++ Language and Type System",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "c-language-and-type-system"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-099",
+    "question": "During live operations, which option best describes the fan-out pattern in system design?",
+    "options": [
+      "Distributing a single request/event to multiple downstream services or operations for parallel processing",
+      "A cooling mechanism",
+      "A network topology",
+      "A database indexing strategy in this scenario under production constraints for the stated requirement during incident triage"
+    ],
+    "correct_answer": "Distributing a single request/event to multiple downstream services or operations for parallel processing",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "practical-debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-senior-theory-debug-100",
+    "question": "What is the Bulkhead pattern in resilience engineering?",
+    "options": [
+      "Isolating system components so that a failure in one does not cascade to others, like compartments in a ship",
+      "A pattern for bulk data processing in this scenario under production constraints for the stated requirement during incident triage",
+      "A pattern for building databases",
+      "A pattern for building walls"
+    ],
+    "correct_answer": "Isolating system components so that a failure in one does not cascade to others, like compartments in a ship",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "practical-debugging"
+    ],
+    "role_target": "cpp_shared_senior",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp20",
+      "gcc",
+      "linux"
+    ]
+  }
+]

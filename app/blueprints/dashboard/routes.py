@@ -13,7 +13,7 @@ from app.utils.auth_decorator import login_required
 from app.utils.role_normalizer import normalize_role, ROLE_NAME_TO_KEY
 from app.utils.role_round_mapping import ROLE_ROUND_MAPPING, ROLE_CODING_LANGUAGE
 from app.utils.round_display_mapping import ROUND_DISPLAY_MAPPING
-from app.utils.round_question_mapping import ROUND_QUESTION_MAPPING
+from app.utils.round_question_mapping import DOMAIN_QUESTION_FILES
 
 from app.services.generated_tests_store import (
     GENERATED_TESTS,
@@ -25,13 +25,18 @@ from app.services.generated_tests_store import (
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 from app.services.evaluation_store import EVALUATION_STORE
+from app.services.question_bank.loader import QuestionLoader
+from app.services.question_bank.registry import QuestionRegistry
+from app.services.question_bank.selector import (
+    QuestionSelectionError,
+    build_frozen_mcq_round_payload,
+    should_use_enterprise_selection,
+)
 from app.services.email_service import send_candidate_test_links_email
 from app.services.user_token_store import (
     get_valid_graph_delegated_token,
     get_valid_graph_delegated_token_from_session,
 )
-
-APTITUDE_ENABLED_ROLE_KEYS = {"python_entry", "java_entry", "js_entry"}
 
 
 # ────────────────────────────────────────────
@@ -243,13 +248,10 @@ def create_test():
             flash(f"Unknown role: {role_label}", "warning")
             continue
 
-        aptitude_enabled = role_key in APTITUDE_ENABLED_ROLE_KEYS
         role_config = ROLE_ROUND_MAPPING.get(role_key, {})
         display_map = ROUND_DISPLAY_MAPPING.get(role_key, {})
 
         mcq_rounds = list(role_config.get("rounds", []))
-        if not aptitude_enabled:
-            mcq_rounds = [rk for rk in mcq_rounds if rk != "L1"]
         coding_rounds = role_config.get("coding_rounds", [])
         coding_language = role_config.get("coding_language", "java")
         allow_domain = role_config.get("allow_domain", False)
@@ -263,15 +265,57 @@ def create_test():
                 flash(
                     f"Coding runtime unavailable on server for {coding_language.upper()}. "
                     f"Required: {runtime_requirement}. "
-                    f"Candidate '{name}' was skipped to prevent runtime failures.",
-                    "danger",
+                    f"Coding round was skipped for candidate '{name}'.",
+                    "warning",
                 )
-                continue
+                coding_rounds = []
 
         tests = {}
+        question_loader = QuestionLoader(base_path="app/services/question_bank/data")
+        question_registry = QuestionRegistry(question_loader)
+        candidate_generation_failed = False
 
         # Generate MCQ round links
         for round_key in mcq_rounds:
+            question_files = question_registry.get_question_files(
+                role_key=role_key,
+                round_key=round_key,
+                domain=domain.lower() if domain != "None" else None,
+            )
+            questions = question_registry.get_questions(
+                role_key=role_key,
+                round_key=round_key,
+                domain=domain.lower() if domain != "None" else None,
+            )
+            if not questions:
+                flash(
+                    f"Question bank missing for role '{role_label}' round '{round_key}'. "
+                    f"Candidate '{name}' was skipped.",
+                    "danger",
+                )
+                candidate_generation_failed = True
+                break
+
+            frozen_payload = {}
+            if should_use_enterprise_selection(role_key, round_key, question_files):
+                try:
+                    frozen_payload = build_frozen_mcq_round_payload(
+                        role_key=role_key,
+                        round_key=round_key,
+                        question_files=question_files,
+                        questions=questions,
+                    )
+                except (QuestionSelectionError, ValueError) as exc:
+                    flash(
+                        f"Enterprise MCQ freeze unavailable for role '{role_label}' round '{round_key}': {exc}. "
+                        f"Using standard question selection for candidate '{name}'.",
+                        "warning",
+                    )
+                    frozen_payload = {
+                        "force_non_enterprise_selection": True,
+                        "selection_error": str(exc),
+                    }
+
             session_id = uuid.uuid4().hex
             round_label = display_map.get(round_key, f"Round {round_key}")
 
@@ -287,7 +331,10 @@ def create_test():
                 "round_label": round_label,
                 "batch_id": batch_id,
                 "domain": domain.lower() if domain != "None" else None,
+                "question_bank_files": list(question_files),
             }
+            if frozen_payload:
+                MCQ_SESSION_REGISTRY[session_id].update(frozen_payload)
 
             tests[round_key] = {
                 "session_id": session_id,
@@ -295,6 +342,8 @@ def create_test():
                 "url": test_url,
                 "type": "mcq",
             }
+        if candidate_generation_failed:
+            continue
 
         # Generate Coding round links
         for round_key in coding_rounds:
@@ -339,12 +388,14 @@ def create_test():
                 "round_label": round_label,
                 "batch_id": batch_id,
                 "domain": domain.lower(),
+                "question_bank_files": list(DOMAIN_QUESTION_FILES.get(domain.lower(), [])),
             }
 
             tests[round_key] = {
                 "session_id": session_id,
                 "label": round_label,
-                "url": test_url,                "type": "mcq",
+                "url": test_url,
+                "type": "mcq",
             }
 
         # Store in generated tests
@@ -354,7 +405,6 @@ def create_test():
             "role": role_label,
             "role_key": role_key,
             "batch_id": batch_id,
-            "aptitude_enabled": aptitude_enabled,
             "tests": tests,
             "resume_path": resume_path,
             "jd_path": jd_path,

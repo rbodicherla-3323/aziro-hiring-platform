@@ -14,6 +14,7 @@ from urllib.parse import quote
 
 import msal
 import requests
+from app.utils.round_order import ordered_present_round_keys
 
 
 DEFAULT_FROM_EMAIL = "aziro-ai-hiring@aziro.com"
@@ -30,12 +31,6 @@ def _env_bool(name: str, default: bool = False) -> bool:
     return raw.strip().lower() in {"1", "true", "yes", "on"}
 
 
-def _round_sort_key(round_key: str):
-    if round_key.startswith("L") and round_key[1:].isdigit():
-        return (0, int(round_key[1:]))
-    return (1, round_key)
-
-
 def _build_email_body(candidate_name: str, role_label: str, tests: dict) -> str:
     lines = [
         f"Hi {candidate_name},",
@@ -49,12 +44,12 @@ def _build_email_body(candidate_name: str, role_label: str, tests: dict) -> str:
         "",
     ]
 
-    for round_key in sorted(tests.keys(), key=_round_sort_key):
+    for idx, round_key in enumerate(ordered_present_round_keys(tests), start=1):
         test_info = tests.get(round_key, {})
         label = test_info.get("label", round_key)
         url = test_info.get("url", "")
         if url:
-            lines.append(f"{round_key} - {label}: {url}")
+            lines.append(f"{idx}. {label}: {url}")
 
     lines.extend([
         "",

@@ -2,10 +2,17 @@ import pytest
 
 from app import create_app
 from app.blueprints.dashboard import routes as dashboard_routes
+from app.blueprints.coding import routes as coding_routes
 from app.blueprints.mcq.services import MCQSessionService
 from app.services.generated_tests_store import GENERATED_TESTS
 from app.services.mcq_runtime_store import clear_mcq_session_data
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
+
+
+def _seed_auth_session(client):
+    with client.session_transaction() as sess:
+        sess["user"] = {"name": "QA User", "email": "qa.user@example.com"}
+        sess["oauth"] = {"graph_access_token": "test-token"}
 
 
 def test_java_mcq_generation_locks_selected_questions(monkeypatch):
@@ -27,10 +34,12 @@ def test_java_mcq_generation_locks_selected_questions(monkeypatch):
         "get_valid_graph_delegated_token_from_session",
         lambda _oauth: None,
     )
+    monkeypatch.setattr(coding_routes, "get_language_runtime_status", lambda _language: (True, "ok"))
 
     app = create_app()
     app.config["TESTING"] = True
     client = app.test_client()
+    _seed_auth_session(client)
 
     response = client.post(
         "/create-test",
@@ -48,9 +57,9 @@ def test_java_mcq_generation_locks_selected_questions(monkeypatch):
     java_sessions = [
         payload
         for payload in MCQ_SESSION_REGISTRY.values()
-        if payload.get("role_key") == "java_entry" and payload.get("round_key") in {"L2", "L3"}
+        if payload.get("role_key") == "java_entry" and payload.get("round_key") == "L2"
     ]
-    assert len(java_sessions) == 2
+    assert len(java_sessions) == 1
     for payload in java_sessions:
         assert payload["selection_strategy"] == "balanced_difficulty_v2"
         assert payload["difficulty_mix"] == {"easy": 5, "medium": 5, "hard": 5}
@@ -91,10 +100,12 @@ def test_python_aiml_l3_generation_locks_selected_questions(monkeypatch):
         "get_valid_graph_delegated_token_from_session",
         lambda _oauth: None,
     )
+    monkeypatch.setattr(coding_routes, "get_language_runtime_status", lambda _language: (True, "ok"))
 
     app = create_app()
     app.config["TESTING"] = True
     client = app.test_client()
+    _seed_auth_session(client)
 
     response = client.post(
         "/create-test",
@@ -157,10 +168,12 @@ def test_java_senior_rounds_use_shared_l2_and_role_specific_l3(monkeypatch, role
         "get_valid_graph_delegated_token_from_session",
         lambda _oauth: None,
     )
+    monkeypatch.setattr(coding_routes, "get_language_runtime_status", lambda _language: (True, "ok"))
 
     app = create_app()
     app.config["TESTING"] = True
     client = app.test_client()
+    _seed_auth_session(client)
 
     response = client.post(
         "/create-test",

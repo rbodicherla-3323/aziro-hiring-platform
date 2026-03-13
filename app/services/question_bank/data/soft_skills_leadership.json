@@ -1,602 +1,1220 @@
 [
   {
+    "id": "shared-soft-skills-leadership-001",
     "question": "A critical production issue arises outside your area of expertise. As a senior engineer, what should you do?",
     "options": [
-      "Ignore it since it's not your responsibility",
-      "Wait for the responsible team to notice and fix it",
       "Take ownership by triaging the issue, coordinating with the right people, and driving it to resolution",
+      "Ignore it since it's not your responsibility",
+      "Wait for the responsible team to notice and fix it for that enterprise scenario while meeting reliability expectations",
       "Send an email and wait for a response"
     ],
     "correct_answer": "Take ownership by triaging the issue, coordinating with the right people, and driving it to resolution",
     "topic": "Ownership",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "ownership",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-002",
     "question": "Your team is falling behind on a project deadline. As the tech lead, what is the best approach?",
     "options": [
       "Reassess priorities, communicate risks to stakeholders transparently, and work with the team to re-plan deliverables",
-      "Ask everyone to work overtime without discussion",
+      "Ask everyone to work overtime without discussion for that enterprise scenario while meeting reliability expectations",
       "Blame the team for not working hard enough",
       "Remove features without telling anyone"
     ],
     "correct_answer": "Reassess priorities, communicate risks to stakeholders transparently, and work with the team to re-plan deliverables",
     "topic": "Leadership",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "leadership",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-003",
     "question": "A junior developer on your team makes a mistake that causes a minor outage. How do you handle it?",
     "options": [
-      "Use it as a learning opportunity – conduct a blameless post-mortem and help them understand the root cause",
-      "Publicly reprimand them in the team meeting",
+      "Use it as a learning opportunity - conduct a blameless post-mortem and help them understand the root cause",
+      "Publicly reprimand them in the team meeting for that enterprise scenario while meeting reliability expectations",
       "Report them to HR",
       "Fix it yourself and never mention it"
     ],
-    "correct_answer": "Use it as a learning opportunity – conduct a blameless post-mortem and help them understand the root cause",
+    "correct_answer": "Use it as a learning opportunity - conduct a blameless post-mortem and help them understand the root cause",
     "topic": "Leadership",
-    "difficulty": "easy"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "leadership",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-004",
     "question": "You disagree with a technical decision made by your manager. What is the best approach?",
     "options": [
-      "Silently comply without voicing concerns",
+      "Present your perspective with data and reasoning, but commit to the final decision once made (disagree and commit)",
+      "Silently comply without voicing concerns for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
       "Refuse to implement the decision",
-      "Go over your manager's head immediately",
-      "Present your perspective with data and reasoning, but commit to the final decision once made (disagree and commit)"
+      "Go over your manager's head immediately"
     ],
     "correct_answer": "Present your perspective with data and reasoning, but commit to the final decision once made (disagree and commit)",
     "topic": "Communication",
-    "difficulty": "moderate"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "communication",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-005",
     "question": "You are leading a code review and notice a senior colleague's code has significant issues. What should you do?",
     "options": [
-      "Reject it without explanation",
       "Provide constructive, specific, and respectful feedback focused on the code, not the person",
-      "Complain to the manager instead",
+      "Reject it without explanation",
+      "Complain to the manager instead for that enterprise scenario while meeting reliability expectations",
       "Approve it to avoid conflict"
     ],
     "correct_answer": "Provide constructive, specific, and respectful feedback focused on the code, not the person",
     "topic": "Communication",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-006",
     "question": "Two team members have conflicting approaches to solving a problem. As a lead, how do you resolve this?",
     "options": [
+      "Facilitate a discussion where both present their approaches with trade-offs, then make a decision based on technical merit",
       "Avoid the conflict entirely",
       "Let them argue it out",
-      "Facilitate a discussion where both present their approaches with trade-offs, then make a decision based on technical merit",
-      "Pick the approach of the person you like more"
+      "Pick the approach of the person you like more for that enterprise scenario while meeting reliability expectations with accountable communication and traceability"
     ],
     "correct_answer": "Facilitate a discussion where both present their approaches with trade-offs, then make a decision based on technical merit",
     "topic": "Conflict Resolution",
-    "difficulty": "moderate"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "conflict",
+      "resolution",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-007",
     "question": "You realize your team's design approach has a fundamental flaw midway through development. What do you do?",
     "options": [
-      "Wait until someone else notices",
       "Raise the concern immediately, assess the impact, and propose alternatives even if it means rework",
+      "Wait until someone else notices",
       "Silently try to fix it without telling anyone",
-      "Continue anyway to avoid wasting the work done"
+      "Continue anyway to avoid wasting the work done for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Raise the concern immediately, assess the impact, and propose alternatives even if it means rework",
     "topic": "Ownership",
-    "difficulty": "moderate"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "ownership",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-008",
     "question": "A stakeholder requests a feature that conflicts with the team's architecture direction. How do you handle it?",
     "options": [
       "Explain the technical trade-offs, offer alternatives that align with the architecture, and negotiate a solution",
       "Refuse outright without explanation",
-      "Agree immediately to keep them happy",
+      "Agree immediately to keep them happy for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
       "Implement it but in a hacky way"
     ],
     "correct_answer": "Explain the technical trade-offs, offer alternatives that align with the architecture, and negotiate a solution",
     "topic": "Stakeholder Management",
-    "difficulty": "moderate"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "management",
+      "scenario",
+      "stakeholder"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-009",
     "question": "How do you ensure knowledge sharing within your team?",
     "options": [
       "Encourage documentation, conduct tech talks, pair programming, and maintain a culture of open knowledge sharing",
       "Only share knowledge when asked",
       "Send long emails with all the information",
-      "Keep important information to yourself for job security"
+      "Keep important information to yourself for job security for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Encourage documentation, conduct tech talks, pair programming, and maintain a culture of open knowledge sharing",
     "topic": "Leadership",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "leadership",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-010",
     "question": "You are asked to mentor a new hire. What is the most effective approach?",
     "options": [
-      "Do their work for them to help them",
-      "Give them a manual and let them figure it out",
       "Set clear expectations, provide regular check-ins, give constructive feedback, and gradually increase responsibility",
+      "Do their work for them to help them",
+      "Give them a manual and let them figure it out for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
       "Assign them only simple tasks indefinitely"
     ],
     "correct_answer": "Set clear expectations, provide regular check-ins, give constructive feedback, and gradually increase responsibility",
     "topic": "Mentoring",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "mentoring"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-011",
     "question": "Your team is experiencing low morale after a failed release. As a leader, what do you do?",
     "options": [
-      "Ignore it and focus on the next release",
-      "Punish the team for the failure",
       "Acknowledge the setback, conduct a retrospective to learn from it, celebrate small wins, and reinforce team confidence",
+      "Ignore it and focus on the next release for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
+      "Punish the team for the failure",
       "Tell them to just work harder"
     ],
     "correct_answer": "Acknowledge the setback, conduct a retrospective to learn from it, celebrate small wins, and reinforce team confidence",
     "topic": "Leadership",
-    "difficulty": "moderate"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "leadership",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-012",
     "question": "You notice technical debt is increasing in your codebase. How do you address it as a lead?",
     "options": [
-      "Blame the previous team",
       "Quantify the debt, communicate the risk to management, and allocate time in sprints for systematic remediation",
+      "Blame the previous team",
       "Rewrite everything from scratch",
-      "Ignore it; feature delivery is more important"
+      "Ignore it; feature delivery is more important for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Quantify the debt, communicate the risk to management, and allocate time in sprints for systematic remediation",
     "topic": "Ownership",
-    "difficulty": "moderate"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ownership"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-013",
     "question": "How would you handle a situation where you are given ownership of a legacy system you didn't build?",
     "options": [
-      "Immediately start rewriting it",
       "Learn the system, document your findings, identify critical risks, and create an improvement plan",
-      "Complain about the previous team's code",
+      "Immediately start rewriting it",
+      "Complain about the previous team's code for that enterprise scenario while meeting reliability expectations",
       "Refuse the ownership"
     ],
     "correct_answer": "Learn the system, document your findings, identify critical risks, and create an improvement plan",
     "topic": "Ownership",
-    "difficulty": "moderate"
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "ownership"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-014",
     "question": "A cross-team dependency is blocking your team's progress. What is the best approach?",
     "options": [
-      "Build the dependency yourself without coordination",
+      "Proactively communicate with the other team, escalate if needed, and explore workarounds to unblock your team",
+      "Build the dependency yourself without coordination for that enterprise scenario while meeting reliability expectations",
       "Complain in public channels",
-      "Wait passively for the other team to deliver",
-      "Proactively communicate with the other team, escalate if needed, and explore workarounds to unblock your team"
+      "Wait passively for the other team to deliver"
     ],
     "correct_answer": "Proactively communicate with the other team, escalate if needed, and explore workarounds to unblock your team",
     "topic": "Collaboration",
-    "difficulty": "moderate"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "collaboration",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-015",
     "question": "How do you prioritize tasks when everything seems equally important?",
     "options": [
-      "Ask your manager to decide everything",
-      "Do everything at once",
       "Assess impact and urgency, align with business goals, communicate trade-offs to stakeholders, and focus on high-impact items",
+      "Ask your manager to decide everything for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
+      "Do everything at once",
       "Work on whatever is easiest first"
     ],
     "correct_answer": "Assess impact and urgency, align with business goals, communicate trade-offs to stakeholders, and focus on high-impact items",
     "topic": "Decision Making",
-    "difficulty": "moderate"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "decision",
+      "making"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-016",
     "question": "You discover a security vulnerability in production. What is your first action?",
     "options": [
-      "Post about it on social media",
-      "Ignore it if no one has exploited it yet",
       "Immediately assess the severity, contain the exposure, notify the security team, and coordinate a fix",
+      "Post about it on social media",
+      "Ignore it if no one has exploited it yet for that enterprise scenario while meeting reliability expectations",
       "Wait for the next sprint to fix it"
     ],
     "correct_answer": "Immediately assess the severity, contain the exposure, notify the security team, and coordinate a fix",
     "topic": "Ownership",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "ownership",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-017",
     "question": "How do you handle receiving critical feedback about your work?",
     "options": [
+      "Listen actively, ask clarifying questions, reflect on the feedback, and incorporate valid points for improvement",
       "Ignore the feedback completely",
-      "Agree with everything without thinking",
-      "Get defensive and argue back",
-      "Listen actively, ask clarifying questions, reflect on the feedback, and incorporate valid points for improvement"
+      "Agree with everything without thinking for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
+      "Get defensive and argue back"
     ],
     "correct_answer": "Listen actively, ask clarifying questions, reflect on the feedback, and incorporate valid points for improvement",
     "topic": "Self-Awareness",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "awareness",
+      "concept",
+      "self"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-018",
     "question": "Your team member consistently underperforms. How do you address it?",
     "options": [
       "Have a private conversation to understand root causes, set clear improvement goals, provide support, and follow up regularly",
       "Immediately escalate to HR",
-      "Ignore the issue and hope it resolves itself",
+      "Ignore the issue and hope it resolves itself for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
       "Publicly call them out in meetings"
     ],
     "correct_answer": "Have a private conversation to understand root causes, set clear improvement goals, provide support, and follow up regularly",
     "topic": "People Management",
-    "difficulty": "moderate"
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "management",
+      "people",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-019",
     "question": "You are asked to lead a project in a technology you are not familiar with. What do you do?",
     "options": [
-      "Pretend you know the technology",
       "Accept the challenge, invest time in learning the basics, leverage team expertise, and seek mentorship from domain experts",
-      "Delegate everything and contribute nothing",
+      "Pretend you know the technology",
+      "Delegate everything and contribute nothing for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
       "Decline the opportunity"
     ],
     "correct_answer": "Accept the challenge, invest time in learning the basics, leverage team expertise, and seek mentorship from domain experts",
     "topic": "Growth Mindset",
-    "difficulty": "easy"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "growth",
+      "mindset"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-020",
     "question": "How do you make technical decisions when there is no clear right answer?",
     "options": [
+      "Gather relevant data, evaluate trade-offs, consult with the team, make a decision, document the rationale, and revisit if needed",
       "Avoid making a decision",
       "Flip a coin",
-      "Gather relevant data, evaluate trade-offs, consult with the team, make a decision, document the rationale, and revisit if needed",
-      "Always go with the newest technology"
+      "Always go with the newest technology for that enterprise scenario while meeting reliability expectations with accountable communication and traceability"
     ],
     "correct_answer": "Gather relevant data, evaluate trade-offs, consult with the team, make a decision, document the rationale, and revisit if needed",
     "topic": "Decision Making",
-    "difficulty": "moderate"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "decision",
+      "making"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-021",
     "question": "How do you balance delivering features quickly vs. maintaining code quality?",
     "options": [
-      "Let the manager decide without your input",
       "Negotiate acceptable trade-offs, maintain minimum quality standards, and plan for refactoring cycles",
-      "Always prioritize quality, even if deadlines are missed",
+      "Let the manager decide without your input",
+      "Always prioritize quality, even if deadlines are missed for that enterprise scenario while meeting reliability expectations",
       "Always prioritize speed over quality"
     ],
     "correct_answer": "Negotiate acceptable trade-offs, maintain minimum quality standards, and plan for refactoring cycles",
     "topic": "Decision Making",
-    "difficulty": "moderate"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "decision",
+      "making"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-022",
     "question": "A project you championed fails. How do you handle the aftermath?",
     "options": [
       "Take accountability, analyze what went wrong, share learnings transparently, and apply them to future projects",
-      "Pretend it didn't happen",
+      "Pretend it didn't happen for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
       "Quit the team",
       "Blame external factors"
     ],
     "correct_answer": "Take accountability, analyze what went wrong, share learnings transparently, and apply them to future projects",
     "topic": "Accountability",
-    "difficulty": "moderate"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "accountability",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-023",
     "question": "How do you delegate effectively as a tech lead?",
     "options": [
-      "Do everything yourself to ensure quality",
-      "Delegate only the tasks you don't want to do",
       "Match tasks to team members' strengths and growth areas, set clear expectations, and trust them while being available for support",
+      "Do everything yourself to ensure quality",
+      "Delegate only the tasks you don't want to do for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
       "Assign random tasks to random people"
     ],
     "correct_answer": "Match tasks to team members' strengths and growth areas, set clear expectations, and trust them while being available for support",
     "topic": "Leadership",
-    "difficulty": "moderate"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "leadership"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-024",
     "question": "You notice a process in your team is inefficient. What do you do?",
     "options": [
-      "Complain about it but take no action",
       "Propose improvements, gather team input, pilot the change, measure results, and iterate",
-      "Continue following it because 'that's how it's always been done'",
+      "Complain about it but take no action",
+      "Continue following it because 'that's how it's always been done' for that enterprise scenario",
       "Unilaterally change the process without consulting anyone"
     ],
     "correct_answer": "Propose improvements, gather team input, pilot the change, measure results, and iterate",
     "topic": "Ownership",
-    "difficulty": "moderate"
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "ownership",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-025",
     "question": "How do you communicate bad news to stakeholders?",
     "options": [
-      "Avoid telling them as long as possible",
-      "Sugarcoat the situation",
       "Communicate early, be transparent about the situation, present the impact, and come with a proposed plan",
+      "Avoid telling them as long as possible for that enterprise scenario while meeting reliability expectations",
+      "Sugarcoat the situation",
       "Let someone else deliver the message"
     ],
     "correct_answer": "Communicate early, be transparent about the situation, present the impact, and come with a proposed plan",
     "topic": "Communication",
-    "difficulty": "moderate"
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "communication",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-026",
     "question": "You are leading a distributed team across time zones. How do you ensure effective collaboration?",
     "options": [
-      "Only communicate via email",
       "Establish overlapping hours for meetings, use async communication tools, document decisions, and respect different time zones",
+      "Only communicate via email",
       "Avoid meetings entirely",
-      "Force everyone to work the same hours"
+      "Force everyone to work the same hours for that enterprise scenario while meeting reliability expectations with accountable communication and traceability"
     ],
     "correct_answer": "Establish overlapping hours for meetings, use async communication tools, document decisions, and respect different time zones",
     "topic": "Collaboration",
-    "difficulty": "moderate"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "collaboration",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-027",
     "question": "A team member wants to introduce a new technology that you are skeptical about. What do you do?",
     "options": [
+      "Ask them to present a proof of concept with pros, cons, and comparison to alternatives before making a decision",
       "Ignore the suggestion",
       "Shut down the idea immediately",
-      "Let them use it without evaluation",
-      "Ask them to present a proof of concept with pros, cons, and comparison to alternatives before making a decision"
+      "Let them use it without evaluation for that enterprise scenario while meeting reliability expectations with accountable communication and traceability"
     ],
     "correct_answer": "Ask them to present a proof of concept with pros, cons, and comparison to alternatives before making a decision",
     "topic": "Decision Making",
-    "difficulty": "moderate"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "decision",
+      "making",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-028",
     "question": "How do you handle imposter syndrome as an engineer growing into a leadership role?",
     "options": [
       "Acknowledge the feeling, focus on continuous learning, celebrate progress, and seek feedback from trusted mentors",
       "Avoid challenging situations",
       "Pretend you know everything",
-      "Step down from the leadership role"
+      "Step down from the leadership role for that enterprise scenario while meeting reliability expectations with accountable communication and traceability"
     ],
     "correct_answer": "Acknowledge the feeling, focus on continuous learning, celebrate progress, and seek feedback from trusted mentors",
     "topic": "Self-Awareness",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "awareness",
+      "concept",
+      "self"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-029",
     "question": "Your team has competing priorities from multiple stakeholders. How do you manage this?",
     "options": [
-      "Ignore all stakeholders and work on what you want",
       "Facilitate a prioritization discussion with stakeholders, align on business impact, and create a transparent roadmap",
+      "Ignore all stakeholders and work on what you want for that enterprise scenario while meeting reliability expectations",
       "Pick the stakeholder who is most senior",
       "Try to do everything simultaneously"
     ],
     "correct_answer": "Facilitate a prioritization discussion with stakeholders, align on business impact, and create a transparent roadmap",
     "topic": "Stakeholder Management",
-    "difficulty": "moderate"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "management",
+      "scenario",
+      "stakeholder"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-030",
     "question": "You need to make a decision quickly with incomplete information. What is the best approach?",
     "options": [
       "Make the best decision with available data, document assumptions, plan for course correction, and communicate the risks",
       "Let someone else decide",
       "Guess randomly",
-      "Wait until you have perfect information"
+      "Wait until you have perfect information for that enterprise scenario while meeting reliability expectations with accountable communication and traceability"
     ],
     "correct_answer": "Make the best decision with available data, document assumptions, plan for course correction, and communicate the risks",
     "topic": "Decision Making",
-    "difficulty": "moderate"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "decision",
+      "making"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-031",
     "question": "How do you foster a culture of accountability in your team?",
     "options": [
-      "Create strict penalties for mistakes",
-      "Publicly shame failures",
       "Set clear expectations, empower ownership, celebrate successes, and address issues constructively without blame",
+      "Create strict penalties for mistakes for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
+      "Publicly shame failures",
       "Micromanage everything"
     ],
     "correct_answer": "Set clear expectations, empower ownership, celebrate successes, and address issues constructively without blame",
     "topic": "Leadership",
-    "difficulty": "moderate"
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "leadership",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-032",
     "question": "You have to choose between shipping a feature with known limitations vs. delaying for a perfect solution. What do you do?",
     "options": [
+      "Evaluate the severity of limitations, ship with documented known issues if acceptable, and plan follow-up improvements",
       "Let the customer decide",
-      "Always ship regardless of limitations",
-      "Always delay for perfection",
-      "Evaluate the severity of limitations, ship with documented known issues if acceptable, and plan follow-up improvements"
+      "Always ship regardless of limitations for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
+      "Always delay for perfection"
     ],
     "correct_answer": "Evaluate the severity of limitations, ship with documented known issues if acceptable, and plan follow-up improvements",
     "topic": "Decision Making",
-    "difficulty": "moderate"
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "decision",
+      "making"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-033",
     "question": "How do you build trust with a new team you are leading?",
     "options": [
-      "Try to be everyone's friend",
-      "Change everything on day one",
       "Listen first, understand the team's challenges, be transparent, deliver on promises, and lead by example",
+      "Try to be everyone's friend",
+      "Change everything on day one for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
       "Assert authority immediately"
     ],
     "correct_answer": "Listen first, understand the team's challenges, be transparent, deliver on promises, and lead by example",
     "topic": "Leadership",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "leadership",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-034",
     "question": "A high-performing team member is leaving. How do you handle the transition?",
     "options": [
+      "Conduct thorough knowledge transfer, document critical systems, redistribute responsibilities, and maintain the relationship",
       "Let them leave without a plan",
       "Try to convince them to stay at all costs",
-      "Conduct thorough knowledge transfer, document critical systems, redistribute responsibilities, and maintain the relationship",
-      "Immediately hire a replacement without transition"
+      "Immediately hire a replacement without transition for that enterprise scenario while meeting reliability expectations with accountable communication and traceability"
     ],
     "correct_answer": "Conduct thorough knowledge transfer, document critical systems, redistribute responsibilities, and maintain the relationship",
     "topic": "People Management",
-    "difficulty": "moderate"
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "management",
+      "people",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-035",
     "question": "How do you ensure your architectural decisions are well-communicated to the team?",
     "options": [
-      "Make decisions silently and expect compliance",
+      "Write Architecture Decision Records (ADRs), present the rationale in team discussions, and invite feedback",
+      "Make decisions silently and expect compliance for that enterprise scenario while meeting reliability expectations",
       "Send a one-line Slack message",
-      "Only tell the senior members",
-      "Write Architecture Decision Records (ADRs), present the rationale in team discussions, and invite feedback"
+      "Only tell the senior members"
     ],
     "correct_answer": "Write Architecture Decision Records (ADRs), present the rationale in team discussions, and invite feedback",
     "topic": "Communication",
-    "difficulty": "moderate"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "communication",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-036",
     "question": "You observe a pattern of silos forming in your team. What action do you take?",
     "options": [
-      "Ignore it unless it causes a problem",
-      "Accept it as natural team behavior",
       "Encourage cross-functional collaboration through rotation, shared ownership, joint reviews, and open communication channels",
+      "Ignore it unless it causes a problem for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
+      "Accept it as natural team behavior",
       "Force people to change teams"
     ],
     "correct_answer": "Encourage cross-functional collaboration through rotation, shared ownership, joint reviews, and open communication channels",
     "topic": "Collaboration",
-    "difficulty": "moderate"
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "collaboration",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-037",
     "question": "How do you stay technically relevant as you move into a leadership role?",
     "options": [
-      "Take online courses but never apply the knowledge",
       "Stay hands-on through code reviews, prototyping, reading technical literature, and staying involved in key design decisions",
+      "Take online courses but never apply the knowledge for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
       "Stop coding entirely and focus on management",
       "Only rely on the team's technical input"
     ],
     "correct_answer": "Stay hands-on through code reviews, prototyping, reading technical literature, and staying involved in key design decisions",
     "topic": "Growth Mindset",
-    "difficulty": "moderate"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "growth",
+      "mindset"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-038",
     "question": "Your organization is going through a restructuring that affects your team. How do you lead through this change?",
     "options": [
       "Communicate what you know transparently, acknowledge uncertainty, support the team emotionally, and focus on what you can control",
-      "Promise everything will be fine even if you're unsure",
+      "Promise everything will be fine even if you're unsure for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
       "Encourage the team to look for other jobs",
       "Keep the team in the dark until everything is decided"
     ],
     "correct_answer": "Communicate what you know transparently, acknowledge uncertainty, support the team emotionally, and focus on what you can control",
     "topic": "Leadership",
-    "difficulty": "moderate"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "leadership",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-039",
     "question": "How do you handle a situation where your team's work is not being recognized by upper management?",
     "options": [
-      "Tell your team to advocate for themselves",
-      "Accept it and move on",
       "Actively advocate for your team by presenting their achievements, quantifying impact, and ensuring visibility at the right levels",
+      "Tell your team to advocate for themselves for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
+      "Accept it and move on",
       "Complain about management privately"
     ],
     "correct_answer": "Actively advocate for your team by presenting their achievements, quantifying impact, and ensuring visibility at the right levels",
     "topic": "Leadership",
-    "difficulty": "moderate"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "leadership",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-040",
     "question": "You need to give difficult feedback to a peer who is also a friend. How do you approach this?",
     "options": [
-      "Give vague hints instead of direct feedback",
       "Separate the professional feedback from the personal relationship, be specific and constructive, and show that you care about their growth",
-      "Avoid giving the feedback to preserve the friendship",
+      "Give vague hints instead of direct feedback",
+      "Avoid giving the feedback to preserve the friendship for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
       "Ask someone else to deliver the feedback"
     ],
     "correct_answer": "Separate the professional feedback from the personal relationship, be specific and constructive, and show that you care about their growth",
     "topic": "Communication",
-    "difficulty": "moderate"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "communication",
+      "concept"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-041",
     "question": "What does 'leading by example' mean in an engineering context?",
     "options": [
-      "Being the first to arrive and last to leave",
-      "Doing all the work yourself",
       "Demonstrating the technical practices, work ethic, communication standards, and values you expect from your team",
+      "Being the first to arrive and last to leave for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
+      "Doing all the work yourself",
       "Always having the right answer"
     ],
     "correct_answer": "Demonstrating the technical practices, work ethic, communication standards, and values you expect from your team",
     "topic": "Leadership",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "leadership"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-042",
     "question": "How do you handle scope creep in a project you are leading?",
     "options": [
-      "Add the scope silently and hope the team can absorb it",
       "Track changes against the original scope, evaluate impact on timeline and resources, and negotiate priorities with stakeholders",
+      "Add the scope silently and hope the team can absorb it for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
       "Refuse all changes",
       "Accept all additional requests"
     ],
     "correct_answer": "Track changes against the original scope, evaluate impact on timeline and resources, and negotiate priorities with stakeholders",
     "topic": "Project Management",
-    "difficulty": "moderate"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "project"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-043",
     "question": "You have an innovative idea that could significantly improve the product. How do you champion it?",
     "options": [
       "Build a prototype or proof of concept, present data-backed benefits, address concerns, and rally support from stakeholders",
       "Keep it to yourself until the right moment",
-      "Just mention it once in a meeting and hope someone notices",
+      "Just mention it once in a meeting and hope someone notices for that enterprise scenario while meeting reliability expectations",
       "Implement it without approval"
     ],
     "correct_answer": "Build a prototype or proof of concept, present data-backed benefits, address concerns, and rally support from stakeholders",
     "topic": "Innovation",
-    "difficulty": "moderate"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "innovation"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-044",
     "question": "How do you approach continuous improvement as a leader?",
     "options": [
-      "Follow the same process forever",
       "Regular retrospectives, measuring outcomes, soliciting feedback, experimenting with improvements, and iterating on processes",
+      "Follow the same process forever",
       "Only make changes when there's a crisis",
-      "Change things constantly without measuring results"
+      "Change things constantly without measuring results for that enterprise scenario while meeting reliability expectations with accountable communication and traceability"
     ],
     "correct_answer": "Regular retrospectives, measuring outcomes, soliciting feedback, experimenting with improvements, and iterating on processes",
     "topic": "Leadership",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "leadership"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-045",
     "question": "A vendor delivers a component that doesn't meet the agreed specifications. What do you do?",
     "options": [
       "Document the gaps, communicate concerns formally, negotiate corrections or alternatives, and escalate if necessary",
       "Accept it and work around the issues",
       "Blame your team for the vendor's failure",
-      "Switch vendors immediately without communication"
+      "Switch vendors immediately without communication for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Document the gaps, communicate concerns formally, negotiate corrections or alternatives, and escalate if necessary",
     "topic": "Stakeholder Management",
-    "difficulty": "moderate"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "management",
+      "stakeholder"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-046",
     "question": "How do you promote psychological safety in your engineering team?",
     "options": [
+      "Encourage open discussion, welcome diverse opinions, respond non-judgmentally to mistakes, and actively listen to all team members",
       "Discourage questions to save time in meetings",
       "Penalize team members for admitting mistakes",
-      "Only allow senior members to speak in meetings",
-      "Encourage open discussion, welcome diverse opinions, respond non-judgmentally to mistakes, and actively listen to all team members"
+      "Only allow senior members to speak in meetings for that enterprise scenario while meeting reliability expectations with accountable communication and traceability"
     ],
     "correct_answer": "Encourage open discussion, welcome diverse opinions, respond non-judgmentally to mistakes, and actively listen to all team members",
     "topic": "Leadership",
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "leadership",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-047",
     "question": "A critical production issue occurs during your vacation. What is the most appropriate response?",
     "options": [
-      "Immediately cancel your vacation and work 24/7",
       "Acknowledge the issue, ensure the on-call team is handling it, offer guidance if needed, and follow up when you return",
+      "Immediately cancel your vacation and work 24/7 for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
       "Blame the team for not preventing it",
       "Ignore it since you are on vacation"
     ],
     "correct_answer": "Acknowledge the issue, ensure the on-call team is handling it, offer guidance if needed, and follow up when you return",
     "topic": "Ownership",
-    "difficulty": "moderate"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "ownership",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-048",
     "question": "How should a technical lead handle a situation where two team members have a persistent interpersonal conflict?",
     "options": [
+      "Address it privately with each person, understand both perspectives, facilitate a constructive conversation, and set clear expectations for professional behavior",
       "Take sides with the more senior team member",
       "Ignore it and hope it resolves itself",
-      "Immediately escalate to HR without any direct intervention",
-      "Address it privately with each person, understand both perspectives, facilitate a constructive conversation, and set clear expectations for professional behavior"
+      "Immediately escalate to HR without any direct intervention for that enterprise scenario while meeting reliability expectations with accountable communication and traceability"
     ],
     "correct_answer": "Address it privately with each person, understand both perspectives, facilitate a constructive conversation, and set clear expectations for professional behavior",
     "topic": "Conflict Resolution",
-    "difficulty": "moderate"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "conflict",
+      "resolution",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-049",
     "question": "What is the best approach when you realize your initial technical decision was wrong and the team has already invested significant effort?",
     "options": [
+      "Transparently acknowledge the mistake, analyze the cost of continuing vs. pivoting, present data-driven alternatives, and make a corrective decision",
       "Blame the team for not catching the issue earlier",
       "Quietly change direction without explaining why",
-      "Transparently acknowledge the mistake, analyze the cost of continuing vs. pivoting, present data-driven alternatives, and make a corrective decision",
-      "Continue with the wrong approach to avoid admitting a mistake"
+      "Continue with the wrong approach to avoid admitting a mistake for that enterprise scenario while meeting reliability expectations with accountable communication and traceability"
     ],
     "correct_answer": "Transparently acknowledge the mistake, analyze the cost of continuing vs. pivoting, present data-driven alternatives, and make a corrective decision",
     "topic": "Ownership",
-    "difficulty": "moderate"
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "ownership",
+      "scenario"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   },
   {
+    "id": "shared-soft-skills-leadership-050",
     "question": "How do you effectively delegate tasks as a technical lead while maintaining accountability?",
     "options": [
-      "Assign tasks randomly and check results only at the deadline",
-      "Delegate everything and take no responsibility for outcomes",
       "Match tasks to team members' strengths and growth areas, set clear expectations and milestones, provide support, and review progress regularly",
+      "Assign tasks randomly and check results only at the deadline for that enterprise scenario while meeting reliability expectations with accountable communication and traceability",
+      "Delegate everything and take no responsibility for outcomes",
       "Do all critical tasks yourself to ensure quality"
     ],
     "correct_answer": "Match tasks to team members' strengths and growth areas, set clear expectations and milestones, provide support, and review progress regularly",
     "topic": "Leadership",
-    "difficulty": "moderate"
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "leadership"
+    ],
+    "role_target": "shared_soft_skills_leadership",
+    "round_target": "L5",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "soft-skills-leadership"
+    ]
   }
 ]

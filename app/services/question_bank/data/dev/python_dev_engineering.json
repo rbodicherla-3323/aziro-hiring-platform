@@ -1,0 +1,2548 @@
+[
+  {
+    "id": "dev-python-dev-engineering-001",
+    "question": "Which metric best indicates API reliability in production?",
+    "options": [
+      "Error rate and latency percentiles (e.g., p95)",
+      "Code line count",
+      "Number of endpoints",
+      "Container image size in this scenario under production constraints"
+    ],
+    "correct_answer": "Error rate and latency percentiles (e.g., p95)",
+    "topic": "Concurrency and Reliability",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "concurrency-and-reliability",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-002",
+    "question": "A team is building a large, database-heavy internal tool with admin panels, ORM, and built-in auth. Which Python web framework is most appropriate to minimize boilerplate?",
+    "options": [
+      "Django",
+      "Flask",
+      "Falcon",
+      "FastAPI"
+    ],
+    "correct_answer": "Django",
+    "topic": "Concurrency and Reliability",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "concurrency-and-reliability",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-003",
+    "question": "You need a minimal, highly customizable microservice where you will manually choose extensions for ORM, auth, and validation. Which framework fits best?",
+    "options": [
+      "Flask under production constraints",
+      "FastAPI under production constraints",
+      "Pyramid",
+      "Django"
+    ],
+    "correct_answer": "Flask under production constraints",
+    "topic": "API Design and Contracts",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "api-design-and-contracts",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-004",
+    "question": "A new Python API needs to support high-throughput async I/O with automatic OpenAPI docs generation and type hints. Which framework is most suitable?",
+    "options": [
+      "FastAPI",
+      "Bottle in this scenario",
+      "Flask",
+      "Django"
+    ],
+    "correct_answer": "FastAPI",
+    "topic": "Performance and Scalability",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "async",
+      "debugging",
+      "performance-and-scalability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-005",
+    "question": "In a RESTful API, which HTTP method should be used for an idempotent update of a full resource representation?",
+    "options": [
+      "PUT under production constraints",
+      "PATCH",
+      "DELETE under production constraints",
+      "POST"
+    ],
+    "correct_answer": "PUT under production constraints",
+    "topic": "Performance and Scalability",
+    "difficulty": "easy",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "performance-and-scalability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-006",
+    "question": "A client sends multiple identical requests to update a user's profile using PUT /users/123. What should be true about this operation in a properly designed REST API?",
+    "options": [
+      "The operation is idempotent and results in the same final state",
+      "It must return 409 Conflict each time in this scenario under production constraints",
+      "Only the first request succeeds",
+      "Each request creates a new resource"
+    ],
+    "correct_answer": "The operation is idempotent and results in the same final state",
+    "topic": "API Design and Contracts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "api",
+      "api-design-and-contracts",
+      "scenario"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-007",
+    "question": "From a browser developer tools perspective, which tab is most useful for inspecting Python API request/response payloads and headers?",
+    "options": [
+      "Network",
+      "Sources",
+      "Console only",
+      "Elements"
+    ],
+    "correct_answer": "Network",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "api",
+      "architecture",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-008",
+    "question": "Which HTTP status code is most appropriate when a client sends a well-formed request that violates business rules (e.g., duplicate email)?",
+    "options": [
+      "409 Conflict",
+      "200 OK",
+      "400 Bad Request",
+      "500 Internal Server Error"
+    ],
+    "correct_answer": "409 Conflict",
+    "topic": "Concurrency and Reliability",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "concurrency-and-reliability",
+      "operations"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-009",
+    "question": "Which is a key advantage of using an ORM like SQLAlchemy or Django ORM in a Python backend?",
+    "options": [
+      "Database-agnostic abstractions and safer parameterized queries",
+      "No need to design schemas",
+      "Automatic horizontal scaling",
+      "Guaranteed best query performance in this scenario under production constraints"
+    ],
+    "correct_answer": "Database-agnostic abstractions and safer parameterized queries",
+    "topic": "Backend Architecture",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "backend-architecture",
+      "concept"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-010",
+    "question": "A PostgreSQL table backing a Python API endpoint experiences slow SELECTs on a frequently filtered 'email' column. What is the first optimization to consider?",
+    "options": [
+      "Add an index on the email column",
+      "Switch to a NoSQL database",
+      "Increase application server threads",
+      "Use SELECT * instead of specific columns"
+    ],
+    "correct_answer": "Add an index on the email column",
+    "topic": "Data Access and ORM",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "api",
+      "data-access-and-orm",
+      "scenario"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-011",
+    "question": "A GET /users/123 endpoint is called with a non-existent user ID. Which HTTP status code is most appropriate?",
+    "options": [
+      "404 Not Found",
+      "422 Unprocessable Entity",
+      "400 Bad Request",
+      "200 OK"
+    ],
+    "correct_answer": "404 Not Found",
+    "topic": "API Design and Contracts",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "api-design-and-contracts",
+      "architecture"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-012",
+    "question": "In a MySQL-backed Django app, which issue is most likely caused by missing indexes on foreign key columns?",
+    "options": [
+      "Slow JOIN queries between related tables",
+      "Inconsistent data types",
+      "Deadlocks on writes only in this scenario",
+      "Too many connections"
+    ],
+    "correct_answer": "Slow JOIN queries between related tables",
+    "topic": "Data Access and ORM",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "data-access-and-orm",
+      "operations"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-013",
+    "question": "What is the primary purpose of unit tests?",
+    "options": [
+      "Test small isolated code units quickly",
+      "Validate whole system end-to-end in this scenario",
+      "Replace code review",
+      "Only check UI"
+    ],
+    "correct_answer": "Test small isolated code units quickly",
+    "topic": "Testing and Observability",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "testing-and-observability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-014",
+    "question": "Which SQL clause is essential to limit result size and avoid returning millions of rows to a Python API client?",
+    "options": [
+      "LIMIT/OFFSET",
+      "JOIN",
+      "WHERE",
+      "GROUP BY in this scenario"
+    ],
+    "correct_answer": "LIMIT/OFFSET",
+    "topic": "Data Access and ORM",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "api",
+      "data-access-and-orm",
+      "scenario"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-015",
+    "question": "You need to encapsulate object creation logic for different payment providers (Stripe, PayPal) in a Python backend. Which pattern is most appropriate?",
+    "options": [
+      "Factory under production constraints",
+      "Observer",
+      "Singleton under production constraints",
+      "Decorator"
+    ],
+    "correct_answer": "Factory under production constraints",
+    "topic": "Backend Architecture",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "backend-architecture"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-016",
+    "question": "Which response best demonstrates HATEOAS in a REST API returning a user resource?",
+    "options": [
+      "User JSON plus links to related actions/endpoints (e.g., update, delete, list posts)",
+      "HTML with embedded forms only",
+      "Plain text description of endpoints",
+      "Only raw JSON fields of the user without any links in this scenario under production constraints"
+    ],
+    "correct_answer": "User JSON plus links to related actions/endpoints (e.g., update, delete, list posts)",
+    "topic": "Performance and Scalability",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "api",
+      "operations",
+      "performance-and-scalability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-017",
+    "question": "A frontend developer reports that JSON responses from the Python API are not being parsed correctly due to missing Content-Type. What should the API set?",
+    "options": [
+      "Content-Type: application/json",
+      "Accept: application/json in this scenario",
+      "Content-Type: text/plain",
+      "Content-Type: json"
+    ],
+    "correct_answer": "Content-Type: application/json",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "api",
+      "concept",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-018",
+    "question": "In system design, what is the primary tradeoff when introducing aggressive caching in a Python backend?",
+    "options": [
+      "Possible data staleness vs. reduced load and latency",
+      "Harder authentication in this scenario under production constraints",
+      "Increased CPU usage",
+      "More network hops"
+    ],
+    "correct_answer": "Possible data staleness vs. reduced load and latency",
+    "topic": "Backend Architecture",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "backend-architecture",
+      "scenario"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-019",
+    "question": "What do integration tests primarily verify?",
+    "options": [
+      "Interactions between components/services",
+      "Formatting only in this scenario under production constraints",
+      "Compiler speed",
+      "Lint rule count"
+    ],
+    "correct_answer": "Interactions between components/services",
+    "topic": "Testing and Observability",
+    "difficulty": "easy",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "testing-and-observability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-020",
+    "question": "A Python service needs flexible document-like storage for user profiles with variable fields. Which database is most appropriate?",
+    "options": [
+      "MongoDB",
+      "Redis",
+      "Elasticsearch",
+      "PostgreSQL only"
+    ],
+    "correct_answer": "MongoDB",
+    "topic": "Data Access and ORM",
+    "difficulty": "easy",
+    "style": "operations",
+    "tags": [
+      "data-access-and-orm",
+      "operations"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-021",
+    "question": "A Python backend must send emails, generate PDFs, and resize images on upload. Which tasks are best suited for asynchronous processing?",
+    "options": [
+      "Sending emails and generating PDFs/images in background jobs",
+      "Simple DB reads",
+      "User authentication",
+      "Basic input validation in this scenario under production constraints"
+    ],
+    "correct_answer": "Sending emails and generating PDFs/images in background jobs",
+    "topic": "Backend Architecture",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "async",
+      "backend-architecture",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-022",
+    "question": "In Django REST Framework, what is the primary purpose of a Serializer class?",
+    "options": [
+      "Convert complex types to JSON and validate input data",
+      "Define database schema",
+      "Configure URL routing",
+      "Handle WebSocket connections in this scenario under production constraints"
+    ],
+    "correct_answer": "Convert complex types to JSON and validate input data",
+    "topic": "Performance and Scalability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-scalability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-023",
+    "question": "You need a fast in-memory cache for storing session tokens and rate-limiting counters for a Python API. Which datastore is best suited?",
+    "options": [
+      "Redis",
+      "Elasticsearch",
+      "MongoDB",
+      "MySQL"
+    ],
+    "correct_answer": "Redis",
+    "topic": "Data Access and ORM",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "data-access-and-orm",
+      "debugging",
+      "memory"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-024",
+    "question": "FastAPI relies heavily on which library for data validation and serialization?",
+    "options": [
+      "Pydantic",
+      "Cerberus",
+      "WTForms",
+      "Marshmallow"
+    ],
+    "correct_answer": "Pydantic",
+    "topic": "Performance and Scalability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "performance-and-scalability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-025",
+    "question": "A Python service must support full-text search with relevance ranking across millions of documents. Which technology is specialized for this?",
+    "options": [
+      "Elasticsearch",
+      "Redis",
+      "PostgreSQL only",
+      "SQLite"
+    ],
+    "correct_answer": "Elasticsearch",
+    "topic": "Data Access and ORM",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "data-access-and-orm",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-026",
+    "question": "A Python API supports both JSON and XML. How should the client tell the API which response format it prefers?",
+    "options": [
+      "Using the Accept header (e.g., Accept: application/json)",
+      "Using the Host header",
+      "By URL query parameter only in this scenario under production constraints",
+      "Using User-Agent header"
+    ],
+    "correct_answer": "Using the Accept header (e.g., Accept: application/json)",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-027",
+    "question": "In SQLAlchemy, what problem occurs when you iterate over a list of parent objects and access a lazy-loaded relationship inside a loop?",
+    "options": [
+      "N+1 query problem",
+      "Connection leak in this scenario",
+      "Race condition",
+      "Deadlock"
+    ],
+    "correct_answer": "N+1 query problem",
+    "topic": "Data Access and ORM",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "data-access-and-orm",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-028",
+    "question": "A Flask API returns Python datetime objects directly in JSON responses, causing serialization errors. What is the correct approach?",
+    "options": [
+      "Convert datetimes to ISO 8601 strings before serialization",
+      "Change HTTP method to POST",
+      "Use repr(datetime) in JSON",
+      "Return datetime as-is; the client should handle it in this scenario"
+    ],
+    "correct_answer": "Convert datetimes to ISO 8601 strings before serialization",
+    "topic": "Concurrency and Reliability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "concurrency-and-reliability",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-029",
+    "question": "A production defect investigation needs clarity on a good API test assertion set?",
+    "options": [
+      "Status + schema + business rules",
+      "Status only",
+      "Response time only in this scenario",
+      "Header only"
+    ],
+    "correct_answer": "Status + schema + business rules",
+    "topic": "Testing and Observability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "testing-and-observability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-030",
+    "question": "A production defect investigation needs clarity on a common cause of flaky UI tests?",
+    "options": [
+      "Timing/synchronization issues",
+      "Using assertions",
+      "Small test data",
+      "Headless browser support in this scenario"
+    ],
+    "correct_answer": "Timing/synchronization issues",
+    "topic": "Testing and Observability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "testing-and-observability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-031",
+    "question": "During debugging, a frontend engineer shows a 422 Unprocessable Entity response from a FastAPI backend. Where should the Python developer look first to understand which field failed validation?",
+    "options": [
+      "The error details in the JSON response body",
+      "The HTML source",
+      "The TLS certificate in this scenario under production constraints",
+      "The browser cache"
+    ],
+    "correct_answer": "The error details in the JSON response body",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-032",
+    "question": "A production defect investigation needs clarity on observability typically combine?",
+    "options": [
+      "Logs, metrics, and traces",
+      "Code + CSS",
+      "Only dashboards in this scenario",
+      "Only alerts"
+    ],
+    "correct_answer": "Logs, metrics, and traces",
+    "topic": "Testing and Observability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "testing-and-observability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-033",
+    "question": "A backend uses JWT for stateless authentication. Where should the server store user session state?",
+    "options": [
+      "JWT payload itself contains claims; no server-side session needed",
+      "In a local file on disk",
+      "In a database row per JWT",
+      "In server memory for each JWT in this scenario under production constraints"
+    ],
+    "correct_answer": "JWT payload itself contains claims; no server-side session needed",
+    "topic": "API Design and Contracts",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api-design-and-contracts",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-034",
+    "question": "Which OAuth2 grant type is most appropriate for a single-page application calling a Python backend API?",
+    "options": [
+      "Authorization Code Grant with PKCE",
+      "Resource Owner Password Credentials Grant",
+      "Client Credentials Grant",
+      "Implicit Grant (legacy)"
+    ],
+    "correct_answer": "Authorization Code Grant with PKCE",
+    "topic": "Performance and Scalability",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "performance-and-scalability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-035",
+    "question": "Which ORM technique helps avoid N+1 queries when loading related objects for many parents?",
+    "options": [
+      "Using eager loading (select_related/joinedload)",
+      "Using raw SQL only",
+      "Disabling transactions in this scenario under production constraints",
+      "Using autocommit"
+    ],
+    "correct_answer": "Using eager loading (select_related/joinedload)",
+    "topic": "Data Access and ORM",
+    "difficulty": "medium",
+    "style": "debugging",
+    "tags": [
+      "data-access-and-orm",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-036",
+    "question": "In a session-based Django app, what mechanism is commonly used to prevent session hijacking via network sniffing?",
+    "options": [
+      "Setting the session cookie with Secure and HttpOnly flags and using HTTPS",
+      "Storing session ID in URL query string in this scenario under production constraints",
+      "Serving over HTTP only",
+      "Disabling CSRF protection"
+    ],
+    "correct_answer": "Setting the session cookie with Secure and HttpOnly flags and using HTTPS",
+    "topic": "Concurrency and Reliability",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "concurrency-and-reliability",
+      "scenario"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-037",
+    "question": "Your API returns stack traces and SQL queries in 500 error responses in production. Which OWASP Top 10 category does this primarily violate?",
+    "options": [
+      "Security Misconfiguration",
+      "Sensitive Data Exposure in this scenario",
+      "Broken Access Control",
+      "Injection"
+    ],
+    "correct_answer": "Security Misconfiguration",
+    "topic": "Concurrency and Reliability",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "api",
+      "architecture",
+      "concurrency-and-reliability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-038",
+    "question": "A CI pipeline for a Python backend should run unit tests on every push. Where is this typically configured in GitHub Actions?",
+    "options": [
+      ".github/workflows/*.yml",
+      "Dockerfile in this scenario",
+      "setup.cfg",
+      ".gitignore"
+    ],
+    "correct_answer": ".github/workflows/*.yml",
+    "topic": "Backend Architecture",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "backend-architecture",
+      "operations"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-039",
+    "question": "A developer concatenates user input directly into an SQL string in a Django view. Which OWASP risk is this?",
+    "options": [
+      "SQL Injection under production constraints",
+      "Insecure Deserialization",
+      "Cross-Site Request Forgery (CSRF) under production constraints",
+      "Cross-Site Scripting (XSS)"
+    ],
+    "correct_answer": "SQL Injection under production constraints",
+    "topic": "API Design and Contracts",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "api-design-and-contracts",
+      "concept"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-040",
+    "question": "To prevent XSS in a Jinja2 template, what is the default and recommended behavior when rendering user-supplied strings?",
+    "options": [
+      "Escape HTML characters by default",
+      "Trust all content from the database",
+      "Disable escaping globally",
+      "Strip all tags server-side"
+    ],
+    "correct_answer": "Escape HTML characters by default",
+    "topic": "API Design and Contracts",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "api-design-and-contracts",
+      "scenario"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-041",
+    "question": "In Django, what is the primary purpose of the CSRF token added to forms?",
+    "options": [
+      "Prevent cross-site request forgery attacks",
+      "Speed up form submissions in this scenario under production constraints",
+      "Prevent SQL injection",
+      "Encrypt form fields"
+    ],
+    "correct_answer": "Prevent cross-site request forgery attacks",
+    "topic": "API Design and Contracts",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "api-design-and-contracts",
+      "architecture"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-042",
+    "question": "A Python REST API should indicate that a new resource was successfully created. Which HTTP status code is most appropriate?",
+    "options": [
+      "201 Created",
+      "200 OK",
+      "202 Accepted",
+      "204 No Content"
+    ],
+    "correct_answer": "201 Created",
+    "topic": "Concurrency and Reliability",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "api",
+      "concurrency-and-reliability",
+      "operations"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-043",
+    "question": "A Python backend uses environment variables for secrets in containers. What is a more secure alternative on AWS?",
+    "options": [
+      "AWS Secrets Manager or SSM Parameter Store with IAM access",
+      "Hard-code secrets in code",
+      "Store secrets in static JSON files in this scenario under production constraints",
+      "Pass secrets via query strings"
+    ],
+    "correct_answer": "AWS Secrets Manager or SSM Parameter Store with IAM access",
+    "topic": "Backend Architecture",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "backend-architecture",
+      "concept"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-044",
+    "question": "When a client sends an invalid JSON body that cannot be parsed, which HTTP status code is the best fit?",
+    "options": [
+      "400 Bad Request",
+      "401 Unauthorized",
+      "500 Internal Server Error",
+      "404 Not Found"
+    ],
+    "correct_answer": "400 Bad Request",
+    "topic": "Concurrency and Reliability",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "concurrency-and-reliability",
+      "scenario"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-045",
+    "question": "In FastAPI, how are request body models typically defined to enable validation and automatic documentation?",
+    "options": [
+      "Pydantic BaseModel subclasses",
+      "Marshmallow Schemas only",
+      "Custom JSONEncoder subclasses",
+      "Plain Python dicts"
+    ],
+    "correct_answer": "Pydantic BaseModel subclasses",
+    "topic": "Concurrency and Reliability",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "api",
+      "architecture",
+      "concurrency-and-reliability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-046",
+    "question": "During live operations, which option best describes 'shift-left testing' mean?",
+    "options": [
+      "Move testing earlier in development lifecycle",
+      "Run tests later in release in this scenario under production constraints",
+      "UI-only testing",
+      "Manual-only testing"
+    ],
+    "correct_answer": "Move testing earlier in development lifecycle",
+    "topic": "Testing and Observability",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "testing-and-observability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-047",
+    "question": "In Django ORM, which method best avoids N+1 queries when fetching foreign key related objects?",
+    "options": [
+      "select_related()",
+      "order_by()",
+      "all() only",
+      "values_list() in this scenario"
+    ],
+    "correct_answer": "select_related()",
+    "topic": "Data Access and ORM",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "data-access-and-orm"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-048",
+    "question": "A Python backend needs to support real-time chat between browser clients. Which technology is most appropriate?",
+    "options": [
+      "WebSockets",
+      "FTP",
+      "Long polling only",
+      "Batch REST requests"
+    ],
+    "correct_answer": "WebSockets",
+    "topic": "Backend Architecture",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "backend-architecture",
+      "scenario"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-049",
+    "question": "Django REST Framework viewsets are used primarily to:",
+    "options": [
+      "Bundle common CRUD actions (list, create, retrieve, update, destroy) for a resource",
+      "Serve static files",
+      "Configure middleware",
+      "Generate admin panels automatically in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "Bundle common CRUD actions (list, create, retrieve, update, destroy) for a resource",
+    "topic": "Concurrency and Reliability",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "concurrency-and-reliability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-050",
+    "question": "Which frontend concept is critical for API integration debugging?",
+    "options": [
+      "Browser network tab request/response inspection",
+      "DOM paint order only in this scenario under production constraints",
+      "Font loading",
+      "Favicon caching"
+    ],
+    "correct_answer": "Browser network tab request/response inspection",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "api",
+      "debugging",
+      "debugging-and-incident-response",
+      "operations"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-051",
+    "question": "A Python API uses JWTs stored in localStorage in a browser. Which security risk must be carefully mitigated?",
+    "options": [
+      "XSS allowing token theft via JavaScript",
+      "SQL injection",
+      "CSRF",
+      "Insecure deserialization in this scenario"
+    ],
+    "correct_answer": "XSS allowing token theft via JavaScript",
+    "topic": "Concurrency and Reliability",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "api",
+      "concept",
+      "concurrency-and-reliability",
+      "security"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-052",
+    "question": "In Django ORM, which method is appropriate for optimizing many-to-many relationship fetching to reduce additional queries?",
+    "options": [
+      "prefetch_related()",
+      "only()",
+      "defer()",
+      "select_related() in this scenario"
+    ],
+    "correct_answer": "prefetch_related()",
+    "topic": "Data Access and ORM",
+    "difficulty": "medium",
+    "style": "scenario",
+    "tags": [
+      "data-access-and-orm",
+      "scenario"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-053",
+    "question": "Which header is typically used to send a Bearer JWT to a Python REST API?",
+    "options": [
+      "Authorization: Bearer <token>",
+      "Cookie: jwt=<token> in this scenario",
+      "JWT-Token",
+      "Auth-Token"
+    ],
+    "correct_answer": "Authorization: Bearer <token>",
+    "topic": "Testing and Observability",
+    "difficulty": "medium",
+    "style": "architecture",
+    "tags": [
+      "api",
+      "architecture",
+      "testing-and-observability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-054",
+    "question": "Your Flask API defines multiple endpoints for the same resource but uses different nouns (e.g., /createUser, /getUser). This violates which REST principle?",
+    "options": [
+      "Uniform interface using resources and HTTP verbs",
+      "Cacheability",
+      "Statelessness",
+      "Layered system in this scenario under production constraints"
+    ],
+    "correct_answer": "Uniform interface using resources and HTTP verbs",
+    "topic": "API Design and Contracts",
+    "difficulty": "medium",
+    "style": "operations",
+    "tags": [
+      "api",
+      "api-design-and-contracts",
+      "operations"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-055",
+    "question": "In Django, when using the ORM, how can you prevent SQL injection without manually escaping values?",
+    "options": [
+      "Use ORM query methods with parameterization (e.g., filter(name=value))",
+      "Escape all user input with HTML escape in this scenario under production constraints",
+      "Build raw SQL strings carefully",
+      "Disable DEBUG mode"
+    ],
+    "correct_answer": "Use ORM query methods with parameterization (e.g., filter(name=value))",
+    "topic": "Testing and Observability",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "api",
+      "concept",
+      "testing-and-observability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-056",
+    "question": "A Python backend uses OAuth2 with scopes like 'read:orders' and 'write:orders'. What is the primary purpose of scopes?",
+    "options": [
+      "Limit the actions a token holder can perform",
+      "Validate refresh tokens in this scenario under production constraints",
+      "Identify clients",
+      "Encrypt access tokens"
+    ],
+    "correct_answer": "Limit the actions a token holder can perform",
+    "topic": "API Design and Contracts",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-design-and-contracts",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-057",
+    "question": "Which HTTP status code best indicates that authentication is required and has failed or not been provided?",
+    "options": [
+      "401 Unauthorized",
+      "403 Forbidden",
+      "400 Bad Request in this scenario",
+      "404 Not Found"
+    ],
+    "correct_answer": "401 Unauthorized",
+    "topic": "Testing and Observability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "testing-and-observability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-058",
+    "question": "Which response header is essential for allowing browser cross-origin calls?",
+    "options": [
+      "Access-Control-Allow-Origin",
+      "Powered-By",
+      "Content-Length in this scenario",
+      "Server"
+    ],
+    "correct_answer": "Access-Control-Allow-Origin",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-059",
+    "question": "A snippet runs with the following behavior. Which output is correct? a = [1, 2, 3]\nb = a\nb.append(4)\nprint(a)?",
+    "options": [
+      "[1, 2, 3, 4]",
+      "Error",
+      "[4]",
+      "[1, 2, 3] under production constraints"
+    ],
+    "correct_answer": "[1, 2, 3, 4]",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-060",
+    "question": "Which HTTP status code best indicates that the user is authenticated but not allowed to perform an action on a Python API?",
+    "options": [
+      "403 Forbidden",
+      "404 Not Found",
+      "400 Bad Request",
+      "401 Unauthorized"
+    ],
+    "correct_answer": "403 Forbidden",
+    "topic": "Performance and Scalability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "performance-and-scalability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-061",
+    "question": "To help frontend teams understand available endpoints and models, what should a Python backend provide?",
+    "options": [
+      "Interactive API documentation (Swagger/OpenAPI UI)",
+      "Source code access",
+      "Database ER diagrams only in this scenario under production constraints",
+      "Email-based docs"
+    ],
+    "correct_answer": "Interactive API documentation (Swagger/OpenAPI UI)",
+    "topic": "Backend Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "backend-architecture",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-062",
+    "question": "A FastAPI endpoint uses async def but internally calls a blocking database driver. What issue can this cause?",
+    "options": [
+      "Blocking the event loop and reducing concurrency",
+      "Type hint errors only",
+      "Increased throughput",
+      "Automatic connection pooling in this scenario under production constraints"
+    ],
+    "correct_answer": "Blocking the event loop and reducing concurrency",
+    "topic": "API Design and Contracts",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "api-design-and-contracts",
+      "async",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-063",
+    "question": "A production defect investigation needs clarity on a common way to document REST APIs in a Python backend to share with frontend teams?",
+    "options": [
+      "Swagger/OpenAPI definitions exposed via /docs",
+      "Inline comments only in this scenario under production constraints",
+      "Readme.txt files",
+      "Email descriptions"
+    ],
+    "correct_answer": "Swagger/OpenAPI definitions exposed via /docs",
+    "topic": "Performance and Scalability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "performance-and-scalability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-064",
+    "question": "In Django REST Framework, which class is typically used to restrict access to authenticated users only?",
+    "options": [
+      "IsAuthenticated",
+      "ReadOnly",
+      "IsAdminUser in this scenario",
+      "AllowAny"
+    ],
+    "correct_answer": "IsAuthenticated",
+    "topic": "Performance and Scalability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-scalability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-065",
+    "question": "A snippet runs with the following behavior. Which output is correct? def f(a, b=[]): b.append(a) return b\nprint(f(1)); print(f(2))?",
+    "options": [
+      "[1] then [1, 2]",
+      "[1] then [2]",
+      "[1, 2] then [1, 2]",
+      "Error both times"
+    ],
+    "correct_answer": "[1] then [1, 2]",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-066",
+    "question": "A snippet runs with the following behavior. Which output is correct? print(isinstance(True, int))?",
+    "options": [
+      "True",
+      "False",
+      "Error",
+      "None"
+    ],
+    "correct_answer": "True",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-067",
+    "question": "Your Python API supports conditional GETs. Which HTTP header combination is used to allow clients to cache and revalidate resources?",
+    "options": [
+      "ETag and If-None-Match",
+      "Content-Type and Accept",
+      "Authorization and Cookie",
+      "Host and User-Agent"
+    ],
+    "correct_answer": "ETag and If-None-Match",
+    "topic": "Testing and Observability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "debugging",
+      "testing-and-observability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-068",
+    "question": "A migration in Alembic/SQLAlchemy modifies a column type in production. What best practice should be followed?",
+    "options": [
+      "Test migration on a staging copy of production data first",
+      "Apply directly without backups in this scenario under production constraints",
+      "Disable foreign keys",
+      "Drop and recreate the database"
+    ],
+    "correct_answer": "Test migration on a staging copy of production data first",
+    "topic": "Data Access and ORM",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "data-access-and-orm",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-069",
+    "question": "A REST endpoint returns 200 OK but includes an 'errors' array in the body for validation failures. What is a better design choice?",
+    "options": [
+      "Use 400 Bad Request or 422 Unprocessable Entity with validation error details",
+      "Keep 200 OK and errors in body in this scenario under production constraints for the stated requirement",
+      "Use 500 Internal Server Error",
+      "Return 204 No Content"
+    ],
+    "correct_answer": "Use 400 Bad Request or 422 Unprocessable Entity with validation error details",
+    "topic": "Concurrency and Reliability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "concurrency-and-reliability",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-070",
+    "question": "Which OWASP Top 10 risk is mitigated by validating and sanitizing file upload types in a Python API?",
+    "options": [
+      "Insecure File Upload / Vulnerable Components",
+      "Security Misconfiguration in this scenario under production constraints",
+      "Injection",
+      "Broken Authentication"
+    ],
+    "correct_answer": "Insecure File Upload / Vulnerable Components",
+    "topic": "Concurrency and Reliability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "concurrency-and-reliability",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-071",
+    "question": "A React frontend running on https://frontend.local calls a FastAPI backend on http://localhost:8000 during local development. What is the cleanest way to avoid CORS issues without disabling CORS entirely?",
+    "options": [
+      "Serve the frontend through the backend's domain or configure specific CORS origins",
+      "Set Access-Control-Allow-Origin: * and Allow-Credentials: true together in this scenario",
+      "Use only HTTP instead of HTTPS",
+      "Disable CSRF protection in the backend"
+    ],
+    "correct_answer": "Serve the frontend through the backend's domain or configure specific CORS origins",
+    "topic": "Backend Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "backend-architecture",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-072",
+    "question": "A Python app stores time-series logs in PostgreSQL but queries are mostly recent data. What table design approach can help performance and manageability?",
+    "options": [
+      "Partition the table by time (e.g., monthly partitions)",
+      "Use a single huge table",
+      "Disable indexes",
+      "Store logs as JSON in a single row in this scenario under production constraints"
+    ],
+    "correct_answer": "Partition the table by time (e.g., monthly partitions)",
+    "topic": "API Design and Contracts",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-design-and-contracts",
+      "debugging",
+      "performance"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-073",
+    "question": "When designing relational schemas, which principle aims to reduce redundant data and update anomalies?",
+    "options": [
+      "Normalization (e.g., 3NF)",
+      "Denormalization in this scenario",
+      "Sharding",
+      "Indexing"
+    ],
+    "correct_answer": "Normalization (e.g., 3NF)",
+    "topic": "API Design and Contracts",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api-design-and-contracts",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-074",
+    "question": "A Python app frequently reads rarely changing configuration data from PostgreSQL. What strategy can reduce DB load?",
+    "options": [
+      "Introduce an in-memory cache or Redis layer",
+      "Use SELECT * always",
+      "Increase connection pool size in this scenario",
+      "Denormalize the schema"
+    ],
+    "correct_answer": "Introduce an in-memory cache or Redis layer",
+    "topic": "Performance and Scalability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-scalability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-075",
+    "question": "A Python backend pushes live stock price updates to a trading dashboard. Which combination provides the most efficient real-time channel?",
+    "options": [
+      "Server-Sent Events (SSE) or WebSockets",
+      "Periodic polling over REST in this scenario",
+      "FTP file drops",
+      "Email notifications"
+    ],
+    "correct_answer": "Server-Sent Events (SSE) or WebSockets",
+    "topic": "Backend Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "backend-architecture",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-076",
+    "question": "You notice long-running transactions in PostgreSQL from a Python app using SQLAlchemy. Which pattern most likely contributes to this?",
+    "options": [
+      "Opening a transaction per HTTP request and forgetting to commit/rollback",
+      "Using indexes",
+      "Limiting result sets",
+      "Using connection pooling in this scenario under production constraints for the stated requirement"
+    ],
+    "correct_answer": "Opening a transaction per HTTP request and forgetting to commit/rollback",
+    "topic": "Performance and Scalability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "performance-and-scalability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-077",
+    "question": "In SQL, what is the main purpose of a composite index (e.g., index on (user_id, created_at))?",
+    "options": [
+      "Optimize queries filtering on both columns in order",
+      "Automatically enforce foreign keys in this scenario under production constraints",
+      "Store more data in less space",
+      "Encrypt data at rest"
+    ],
+    "correct_answer": "Optimize queries filtering on both columns in order",
+    "topic": "Testing and Observability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "testing-and-observability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-078",
+    "question": "A Python analytics job needs strong consistency and complex joins for financial reporting. Which database type is most appropriate?",
+    "options": [
+      "Relational SQL database (e.g., PostgreSQL)",
+      "Document store",
+      "Key-value store",
+      "Wide-column store in this scenario under production constraints"
+    ],
+    "correct_answer": "Relational SQL database (e.g., PostgreSQL)",
+    "topic": "Testing and Observability",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "debugging",
+      "testing-and-observability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-079",
+    "question": "A JSON response from a Python API includes fields in snake_case, but the frontend uses camelCase. What is a good backend practice to ease integration?",
+    "options": [
+      "Use a serialization layer (e.g., DRF serializer or Pydantic) to map snake_case to camelCase",
+      "Rename database columns",
+      "Send both versions of each field in this scenario under production constraints for the stated requirement",
+      "Force the frontend to adapt"
+    ],
+    "correct_answer": "Use a serialization layer (e.g., DRF serializer or Pydantic) to map snake_case to camelCase",
+    "topic": "Backend Architecture",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "api",
+      "backend-architecture",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-080",
+    "question": "A Python microservice stores ephemeral rate limit counters in Redis with a TTL. What is the primary reason for using an expiration time?",
+    "options": [
+      "Automatically clear old keys and prevent unbounded growth",
+      "Improve read throughput in this scenario under production constraints",
+      "Enable transactions",
+      "Avoid serialization"
+    ],
+    "correct_answer": "Automatically clear old keys and prevent unbounded growth",
+    "topic": "Data Access and ORM",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "data-access-and-orm",
+      "debugging"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-081",
+    "question": "In SQLAlchemy, what does session.commit() actually do?",
+    "options": [
+      "Flushes pending changes to the database and commits the current transaction",
+      "Closes all connections",
+      "Clears the session cache only in this scenario under production constraints for the stated requirement",
+      "Sends a ping to the database"
+    ],
+    "correct_answer": "Flushes pending changes to the database and commits the current transaction",
+    "topic": "Performance and Scalability",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "performance-and-scalability",
+      "scenario"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-082",
+    "question": "The frontend sends large file uploads to a Python API and the browser shows network failures after 30 seconds. Which backend or infrastructure setting is most likely involved?",
+    "options": [
+      "Reverse proxy or web server request timeout (e.g., Nginx/Gunicorn timeout)",
+      "Number of workers",
+      "Database idle timeout in this scenario under production constraints for the stated requirement",
+      "DNS TTL"
+    ],
+    "correct_answer": "Reverse proxy or web server request timeout (e.g., Nginx/Gunicorn timeout)",
+    "topic": "Backend Architecture",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "api",
+      "architecture",
+      "backend-architecture"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-083",
+    "question": "When designing a schema for a high-write log table, which pattern can help avoid index bloat and improve insert performance?",
+    "options": [
+      "Minimize indexes to only necessary query patterns",
+      "Use text columns for all data in this scenario under production constraints",
+      "Use many foreign keys",
+      "Index every column"
+    ],
+    "correct_answer": "Minimize indexes to only necessary query patterns",
+    "topic": "API Design and Contracts",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "api-design-and-contracts",
+      "operations",
+      "performance"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-084",
+    "question": "A Python API defines rate limits per IP. Frontend requests are routed through a shared gateway, causing unexpected throttling. Which header can help the backend identify the originating client correctly?",
+    "options": [
+      "Forwarded-For or a similar forwarded IP header",
+      "Accept-Encoding in this scenario under production constraints",
+      "User-Agent",
+      "Referer"
+    ],
+    "correct_answer": "Forwarded-For or a similar forwarded IP header",
+    "topic": "Backend Architecture",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "api",
+      "backend-architecture",
+      "concept"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-085",
+    "question": "Which of the following raises TypeError?",
+    "options": [
+      "'3' + 4",
+      "0 + 4",
+      "3 + 4",
+      "'3' + '4'"
+    ],
+    "correct_answer": "'3' + 4",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "debugging-and-incident-response",
+      "scenario"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-086",
+    "question": "A Python startup app is small, with one team and simple requirements. Which architecture is usually best to start with?",
+    "options": [
+      "Monolith with clear modular boundaries",
+      "Event-driven microservices only",
+      "Serverless functions per endpoint only",
+      "Microservices from day one"
+    ],
+    "correct_answer": "Monolith with clear modular boundaries",
+    "topic": "API Design and Contracts",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "api-design-and-contracts",
+      "architecture"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-087",
+    "question": "A Python API frequently performs SELECT * on large tables and then filters in Python. What is a better approach?",
+    "options": [
+      "Filter and project only needed columns in SQL",
+      "Increase network bandwidth in this scenario under production constraints",
+      "Disable indexes",
+      "Add more API replicas"
+    ],
+    "correct_answer": "Filter and project only needed columns in SQL",
+    "topic": "Testing and Observability",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "api",
+      "operations",
+      "testing-and-observability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-088",
+    "question": "A snippet runs with the following behavior. Which output is correct? print({1:1, 1.0:2})?",
+    "options": [
+      "{1: 2}",
+      "{1.0: 1}",
+      "{1: 1, 1.0: 2}",
+      "Error"
+    ],
+    "correct_answer": "{1: 2}",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-089",
+    "question": "A Python application uses Django ORM and you see hundreds of queries per request in debug toolbar. What is a likely cause?",
+    "options": [
+      "N+1 query patterns on related objects",
+      "Missing migrations",
+      "Too much caching",
+      "Excessive use of select_related in this scenario"
+    ],
+    "correct_answer": "N+1 query patterns on related objects",
+    "topic": "Concurrency and Reliability",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "concurrency-and-reliability",
+      "debugging",
+      "scenario"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-090",
+    "question": "A migration fails in production because a column is dropped while the Python code still reads it. What deployment practice helps prevent this?",
+    "options": [
+      "Use backward-compatible migrations and deploy in two phases",
+      "Apply DB migrations after app deployment only in this scenario",
+      "Use raw SQL only",
+      "Drop all indexes first"
+    ],
+    "correct_answer": "Use backward-compatible migrations and deploy in two phases",
+    "topic": "Performance and Scalability",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "performance-and-scalability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-091",
+    "question": "Your OpenAPI schema for a Python backend is used by frontend teams to generate clients. What must be kept in sync to avoid breaking their builds?",
+    "options": [
+      "The OpenAPI spec and the actual implemented request/response shapes",
+      "Only log formats",
+      "Internal variable names in this scenario under production constraints",
+      "Database indexes"
+    ],
+    "correct_answer": "The OpenAPI spec and the actual implemented request/response shapes",
+    "topic": "Backend Architecture",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "api",
+      "backend-architecture",
+      "operations"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-092",
+    "question": "When should you prefer async I/O in backend services?",
+    "options": [
+      "I/O-bound high concurrency workloads",
+      "CPU-bound heavy math in this scenario",
+      "Tiny scripts only",
+      "Never in production"
+    ],
+    "correct_answer": "I/O-bound high concurrency workloads",
+    "topic": "Backend Architecture",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "async",
+      "backend-architecture",
+      "concept"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-093",
+    "question": "In Docker Compose, you want a Python web service and a PostgreSQL database to start together. What file defines these multi-container settings?",
+    "options": [
+      "docker-compose.yml",
+      "requirements.txt in this scenario",
+      "Makefile",
+      "Dockerfile"
+    ],
+    "correct_answer": "docker-compose.yml",
+    "topic": "Data Access and ORM",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "data-access-and-orm",
+      "scenario"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-094",
+    "question": "A snippet runs with the following behavior. Which output is correct? def func(x=[]): x.append(1) return len(x)\nprint(func(), func())?",
+    "options": [
+      "1 2",
+      "1 1",
+      "2 2",
+      "Error"
+    ],
+    "correct_answer": "1 2",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-095",
+    "question": "Which is a strong reason to split a Python monolith into microservices?",
+    "options": [
+      "Independent scaling and deployments for distinct bounded contexts",
+      "Small codebase",
+      "To avoid using a database",
+      "To use more programming languages in this scenario under production constraints"
+    ],
+    "correct_answer": "Independent scaling and deployments for distinct bounded contexts",
+    "topic": "Testing and Observability",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "operations",
+      "testing-and-observability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-096",
+    "question": "A snippet runs with the following behavior. Which output is correct? print('A' > 'a')?",
+    "options": [
+      "False",
+      "Error",
+      "None",
+      "True"
+    ],
+    "correct_answer": "False",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "debugging-and-incident-response"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-097",
+    "question": "A snippet runs with the following behavior. Which output is correct? x = [1, [2, 3]]\ny = x.copy()\ny[1].append(4)\nprint(x)?",
+    "options": [
+      "[1, [2, 3, 4]]",
+      "Error",
+      "[1, [2, 3], 4]",
+      "[1, [2, 3]]"
+    ],
+    "correct_answer": "[1, [2, 3, 4]]",
+    "topic": "Debugging and Incident Response",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "debugging-and-incident-response",
+      "scenario"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-098",
+    "question": "When two Python services communicate synchronously over HTTP, what is the main drawback compared to async messaging via a queue?",
+    "options": [
+      "Tighter coupling and increased latency during downstream outages",
+      "Natural backpressure",
+      "Higher throughput",
+      "Easier error handling in this scenario under production constraints"
+    ],
+    "correct_answer": "Tighter coupling and increased latency during downstream outages",
+    "topic": "API Design and Contracts",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "api-design-and-contracts",
+      "architecture",
+      "async"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-099",
+    "question": "A Python data processing script runs on schedule and occasionally needs more CPU. Which AWS offering can execute it on demand without full server management?",
+    "options": [
+      "AWS Lambda",
+      "AWS CloudTrail",
+      "Amazon S3",
+      "Amazon RDS"
+    ],
+    "correct_answer": "AWS Lambda",
+    "topic": "Data Access and ORM",
+    "difficulty": "hard",
+    "style": "operations",
+    "tags": [
+      "data-access-and-orm",
+      "operations"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "dev-python-dev-engineering-100",
+    "question": "A high-throughput Python system needs strongly-typed, low-latency service-to-service communication. Which protocol is a good choice?",
+    "options": [
+      "gRPC with Protocol Buffers",
+      "REST over HTTP/1.1",
+      "Plain text over TCP in this scenario",
+      "SOAP"
+    ],
+    "correct_answer": "gRPC with Protocol Buffers",
+    "topic": "Performance and Scalability",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "performance-and-scalability"
+    ],
+    "role_target": "python_dev",
+    "round_target": "L3",
+    "version_scope": [
+      "python311",
+      "pytest",
+      "fastapi"
+    ]
+  }
+]

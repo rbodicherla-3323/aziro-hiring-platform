@@ -1,126 +1,281 @@
 [
   {
+    "id": "shared-domain-networking-001",
     "question": "What is a computer network?",
     "options": [
+      "A collection of interconnected devices that can communicate and share resources",
       "A software application for data storage",
       "A type of operating system",
-      "A single computer with multiple processors",
-      "A collection of interconnected devices that can communicate and share resources"
+      "A single computer with multiple processors for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "A collection of interconnected devices that can communicate and share resources",
-    "topic": "Networking Fundamentals"
+    "topic": "Networking Fundamentals",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-002",
     "question": "What is the primary purpose of computer networking?",
     "options": [
+      "To enable resource sharing and communication between devices",
       "To eliminate the need for storage devices",
       "To replace standalone computers",
-      "To enable resource sharing and communication between devices",
-      "To increase the physical size of computers"
+      "To increase the physical size of computers for that enterprise scenario"
     ],
     "correct_answer": "To enable resource sharing and communication between devices",
-    "topic": "Networking Fundamentals"
+    "topic": "Networking Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-003",
     "question": "Which network type typically covers a small geographical area like a home or office building?",
     "options": [
+      "LAN",
       "WAN",
       "MAN",
-      "Internet",
-      "LAN"
+      "Internet"
     ],
     "correct_answer": "LAN",
-    "topic": "Networking Fundamentals"
+    "topic": "Networking Fundamentals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-004",
     "question": "What does WAN stand for in networking?",
     "options": [
+      "Wide Area Network for that enterprise scenario",
       "Web Access Network",
-      "Wide Area Network",
-      "Wired Application Network",
+      "Wired Application Network while meeting reliability expectations",
       "Wireless Area Network"
     ],
-    "correct_answer": "Wide Area Network",
-    "topic": "Networking Fundamentals"
+    "correct_answer": "Wide Area Network for that enterprise scenario",
+    "topic": "Networking Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-005",
     "question": "A Metropolitan Area Network (MAN) typically covers which geographical scope?",
     "options": [
-      "Only wireless devices",
+      "A city or large campus",
+      "Only wireless devices for that enterprise scenario",
       "A single room",
-      "Entire continents",
-      "A city or large campus"
+      "Entire continents"
     ],
     "correct_answer": "A city or large campus",
-    "topic": "Networking Fundamentals"
+    "topic": "Networking Fundamentals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-006",
     "question": "What is a PAN (Personal Area Network)?",
     "options": [
-      "A network only for servers",
       "A network for personal devices within a very short range",
+      "A network only for servers",
       "A network protocol",
-      "A network spanning multiple countries"
+      "A network spanning multiple countries for that enterprise scenario"
     ],
     "correct_answer": "A network for personal devices within a very short range",
-    "topic": "Networking Fundamentals"
+    "topic": "Networking Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-007",
     "question": "In a client-server network model, what is the primary role of the server?",
     "options": [
-      "To request services from clients",
+      "To provide resources and services to client machines",
+      "To request services from clients for that enterprise scenario",
       "To block all network traffic",
-      "To act as a regular workstation",
-      "To provide resources and services to client machines"
+      "To act as a regular workstation"
     ],
     "correct_answer": "To provide resources and services to client machines",
-    "topic": "Networking Fundamentals"
+    "topic": "Networking Fundamentals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-008",
     "question": "In a peer-to-peer network, how do devices interact?",
     "options": [
-      "Only through a central server",
       "Each device can act as both client and server",
-      "Only one device controls all others",
+      "Only through a central server",
+      "Only one device controls all others for that enterprise scenario",
       "Devices cannot communicate directly"
     ],
     "correct_answer": "Each device can act as both client and server",
-    "topic": "Networking Fundamentals"
+    "topic": "Networking Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-009",
     "question": "Which networking model is more suitable for small networks with minimal security requirements?",
     "options": [
-      "Client-server",
-      "Mainframe",
-      "Cloud-based",
-      "Peer-to-peer"
+      "Peer-to-peer",
+      "server",
+      "Mainframe for that enterprise scenario",
+      "based"
     ],
     "correct_answer": "Peer-to-peer",
-    "topic": "Networking Fundamentals"
+    "topic": "Networking Fundamentals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-010",
     "question": "What is a key advantage of networking?",
     "options": [
-      "Reduced need for software",
-      "Increased individual device processing power",
       "Centralized data management and resource sharing",
+      "Reduced need for software",
+      "Increased individual device processing power for that enterprise scenario",
       "Elimination of all security risks"
     ],
     "correct_answer": "Centralized data management and resource sharing",
-    "topic": "Networking Fundamentals"
+    "topic": "Networking Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-011",
     "question": "What is a potential limitation of computer networks?",
     "options": [
       "Security vulnerabilities and dependency on network infrastructure",
       "They improve efficiency",
       "They reduce costs",
-      "They enable communication"
+      "They enable communication for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Security vulnerabilities and dependency on network infrastructure",
-    "topic": "Networking Fundamentals"
+    "topic": "Networking Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-012",
     "question": "The Internet is an example of which type of network?",
     "options": [
       "WAN",
@@ -129,9 +284,23 @@
       "MAN"
     ],
     "correct_answer": "WAN",
-    "topic": "Networking Fundamentals"
+    "topic": "Networking Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-013",
     "question": "Which network topology connects all devices to a central hub or switch?",
     "options": [
       "Star topology",
@@ -140,284 +309,688 @@
       "Bus topology"
     ],
     "correct_answer": "Star topology",
-    "topic": "Networking Fundamentals"
+    "topic": "Networking Fundamentals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-014",
     "question": "In which topology does data travel in a circular path through each device?",
     "options": [
-      "Star",
       "Ring",
+      "Star",
       "Tree",
       "Bus"
     ],
     "correct_answer": "Ring",
-    "topic": "Networking Fundamentals"
+    "topic": "Networking Fundamentals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-015",
     "question": "What is mesh topology?",
     "options": [
       "Every device is connected to every other device",
       "Devices connected in a line",
       "A hierarchical structure",
-      "All devices connected to a central point"
+      "All devices connected to a central point for that enterprise scenario"
     ],
     "correct_answer": "Every device is connected to every other device",
-    "topic": "Networking Fundamentals"
+    "topic": "Networking Fundamentals",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-016",
     "question": "Which advantage does a client-server model have over peer-to-peer?",
     "options": [
-      "No need for specialized hardware",
+      "Better centralized security and administration",
+      "No need for specialized hardware for that enterprise scenario",
       "Easier to set up",
-      "Lower cost",
-      "Better centralized security and administration"
+      "Lower cost"
     ],
     "correct_answer": "Better centralized security and administration",
-    "topic": "Networking Fundamentals"
+    "topic": "Networking Fundamentals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-017",
     "question": "What does scalability in networking refer to?",
     "options": [
       "The ability to expand the network by adding more devices",
       "The color of network equipment",
       "The speed of data transfer",
-      "The physical size of network cables"
+      "The physical size of network cables for that enterprise scenario"
     ],
     "correct_answer": "The ability to expand the network by adding more devices",
-    "topic": "Networking Fundamentals"
+    "topic": "Networking Fundamentals",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "fundamentals",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-018",
     "question": "How many layers does the OSI model have?",
     "options": [
+      "7",
       "6",
       "5",
-      "8",
-      "7"
+      "8"
     ],
     "correct_answer": "7",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-019",
     "question": "Which layer of the OSI model is responsible for physical transmission of data?",
     "options": [
-      "Network Layer",
       "Physical Layer",
+      "Network Layer",
       "Data Link Layer",
       "Transport Layer"
     ],
     "correct_answer": "Physical Layer",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-020",
     "question": "What is the primary function of the Data Link Layer in the OSI model?",
     "options": [
       "Node-to-node data transfer and error detection",
+      "to-node data transfer and error detection for that enterprise scenario",
       "Establishing sessions",
-      "Routing packets",
-      "Encrypting data"
+      "Routing packets"
     ],
     "correct_answer": "Node-to-node data transfer and error detection",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-021",
     "question": "Which OSI layer is responsible for logical addressing and routing?",
     "options": [
-      "Data Link Layer",
+      "Network Layer for that enterprise scenario",
+      "Data Link Layer while meeting reliability expectations",
       "Physical Layer",
-      "Transport Layer",
-      "Network Layer"
+      "Transport Layer"
     ],
-    "correct_answer": "Network Layer",
-    "topic": "OSI & TCP/IP Models"
+    "correct_answer": "Network Layer for that enterprise scenario",
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-022",
     "question": "What is the main responsibility of the Transport Layer?",
     "options": [
       "End-to-end communication and data segmentation",
+      "to-end communication and data segmentation for that enterprise scenario",
       "User interface",
-      "Data presentation",
-      "Physical signal transmission"
+      "Data presentation"
     ],
     "correct_answer": "End-to-end communication and data segmentation",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-023",
     "question": "Which OSI layer manages dialog control and synchronization between applications?",
     "options": [
-      "Presentation Layer",
+      "Session Layer for that enterprise scenario",
+      "Presentation Layer while meeting reliability expectations",
       "Application Layer",
-      "Session Layer",
       "Transport Layer"
     ],
-    "correct_answer": "Session Layer",
-    "topic": "OSI & TCP/IP Models"
+    "correct_answer": "Session Layer for that enterprise scenario",
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-024",
     "question": "What does the Presentation Layer handle?",
     "options": [
-      "Physical connections",
+      "Data translation, encryption, and compression",
+      "Physical connections for that enterprise scenario",
       "Routing",
-      "MAC addressing",
-      "Data translation, encryption, and compression"
+      "MAC addressing"
     ],
     "correct_answer": "Data translation, encryption, and compression",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-025",
     "question": "Which is the topmost layer of the OSI model?",
     "options": [
+      "Application Layer",
       "Presentation Layer",
       "Transport Layer",
-      "Application Layer",
       "Session Layer"
     ],
     "correct_answer": "Application Layer",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-026",
     "question": "How many layers does the TCP/IP model have?",
     "options": [
+      "4",
       "7",
       "5",
-      "4",
       "3"
     ],
     "correct_answer": "4",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-027",
     "question": "Which TCP/IP layer is equivalent to the OSI Physical and Data Link layers combined?",
     "options": [
-      "Internet Layer",
-      "Application Layer",
       "Network Access Layer",
+      "Internet Layer",
+      "Application Layer for that enterprise scenario",
       "Transport Layer"
     ],
     "correct_answer": "Network Access Layer",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-028",
     "question": "What is the Internet Layer in TCP/IP model responsible for?",
     "options": [
       "Logical addressing and routing",
       "Error checking",
       "Data encryption",
-      "User authentication"
+      "User authentication for that enterprise scenario"
     ],
     "correct_answer": "Logical addressing and routing",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-029",
     "question": "Which protocols operate at the Transport Layer of the TCP/IP model?",
     "options": [
+      "TCP and UDP",
       "Ethernet and Wi-Fi",
       "IP and ICMP",
-      "TCP and UDP",
       "HTTP and FTP"
     ],
     "correct_answer": "TCP and UDP",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-030",
     "question": "The TCP/IP Application Layer corresponds to which OSI layers?",
     "options": [
-      "Physical and Data Link Layers",
-      "Transport and Network Layers",
       "Application, Presentation, and Session Layers",
+      "Physical and Data Link Layers for that enterprise scenario",
+      "Transport and Network Layers",
       "Only Application Layer"
     ],
     "correct_answer": "Application, Presentation, and Session Layers",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-031",
     "question": "What is a key difference between OSI and TCP/IP models?",
     "options": [
+      "OSI has 7 layers, TCP/IP has 4 layers",
       "TCP/IP includes more layers",
       "They are identical",
-      "OSI has 7 layers, TCP/IP has 4 layers",
       "OSI is practical, TCP/IP is theoretical"
     ],
     "correct_answer": "OSI has 7 layers, TCP/IP has 4 layers",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-032",
     "question": "Why is a layered architecture important in networking?",
     "options": [
-      "It eliminates the need for protocols",
-      "It increases complexity unnecessarily",
       "It provides modularity, easier troubleshooting, and standardization",
+      "It eliminates the need for protocols",
+      "It increases complexity unnecessarily for that enterprise scenario while meeting reliability expectations",
       "It makes networks slower"
     ],
     "correct_answer": "It provides modularity, easier troubleshooting, and standardization",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "hard",
+    "style": "architecture",
+    "tags": [
+      "architecture",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-033",
     "question": "At which OSI layer do routers primarily operate?",
     "options": [
-      "Data Link Layer",
-      "Network Layer",
+      "Network Layer for that enterprise scenario",
+      "Data Link Layer while meeting reliability expectations",
       "Transport Layer",
       "Physical Layer"
     ],
-    "correct_answer": "Network Layer",
-    "topic": "OSI & TCP/IP Models"
+    "correct_answer": "Network Layer for that enterprise scenario",
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-034",
     "question": "At which OSI layer do switches primarily operate?",
     "options": [
-      "Network Layer",
       "Data Link Layer",
+      "Network Layer",
       "Physical Layer",
       "Application Layer"
     ],
     "correct_answer": "Data Link Layer",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-035",
     "question": "What does encapsulation mean in layered networking?",
     "options": [
       "Adding layer-specific headers as data moves down the layers",
-      "Removing headers from data",
+      "Removing headers from data for that enterprise scenario while meeting reliability expectations",
       "Encrypting all data",
       "Compressing data"
     ],
     "correct_answer": "Adding layer-specific headers as data moves down the layers",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-036",
     "question": "What is the process called when headers are removed as data moves up the layers?",
     "options": [
+      "Decapsulation",
       "Encapsulation",
       "Segmentation",
-      "Decapsulation",
       "Multiplexing"
     ],
     "correct_answer": "Decapsulation",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-037",
     "question": "Which layer is responsible for converting data into a format suitable for transmission?",
     "options": [
-      "Physical Layer",
       "Presentation Layer",
-      "Transport Layer",
+      "Physical Layer",
+      "Transport Layer for that enterprise scenario",
       "Network Layer"
     ],
     "correct_answer": "Presentation Layer",
-    "topic": "OSI & TCP/IP Models"
+    "topic": "OSI & TCP/IP Models",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "ip",
+      "models",
+      "osi",
+      "tcp"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-038",
     "question": "What is the primary difference between a hub and a switch?",
     "options": [
-      "Hubs work at Network Layer, switches at Physical Layer",
-      "There is no difference",
       "Switches forward data intelligently to specific devices, hubs broadcast to all ports",
+      "Hubs work at Network Layer, switches at Physical Layer for that enterprise scenario while meeting reliability expectations",
+      "There is no difference",
       "Hubs are faster than switches"
     ],
     "correct_answer": "Switches forward data intelligently to specific devices, hubs broadcast to all ports",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-039",
     "question": "At which layer does a hub operate?",
     "options": [
       "Physical Layer",
@@ -426,262 +999,598 @@
       "Data Link Layer"
     ],
     "correct_answer": "Physical Layer",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-040",
     "question": "What is the main function of a router?",
     "options": [
-      "Amplify signals",
-      "Connect devices within the same network only",
       "Forward data packets between different networks based on IP addresses",
+      "Amplify signals",
+      "Connect devices within the same network only for that enterprise scenario",
       "Store data"
     ],
     "correct_answer": "Forward data packets between different networks based on IP addresses",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-041",
     "question": "What does a modem do?",
     "options": [
-      "Stores web pages",
-      "Routes packets between networks",
       "Converts digital signals to analog and vice versa",
+      "Stores web pages",
+      "Routes packets between networks for that enterprise scenario",
       "Filters network traffic"
     ],
     "correct_answer": "Converts digital signals to analog and vice versa",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-042",
     "question": "What is the purpose of a bridge in networking?",
     "options": [
       "To connect two network segments and filter traffic based on MAC addresses",
-      "To connect different network types",
+      "To connect different network types for that enterprise scenario while meeting reliability expectations",
       "To provide wireless connectivity",
       "To encrypt data"
     ],
     "correct_answer": "To connect two network segments and filter traffic based on MAC addresses",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-043",
     "question": "What is a gateway in networking?",
     "options": [
       "A device that connects networks using different protocols",
       "A type of cable",
       "A wireless access point",
-      "A device that amplifies signals"
+      "A device that amplifies signals for that enterprise scenario"
     ],
     "correct_answer": "A device that connects networks using different protocols",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-044",
     "question": "What is the primary function of a repeater?",
     "options": [
+      "To amplify or regenerate signals to extend network distance",
       "To route packets",
-      "To assign IP addresses",
-      "To filter traffic",
-      "To amplify or regenerate signals to extend network distance"
+      "To assign IP addresses for that enterprise scenario while meeting reliability expectations",
+      "To filter traffic"
     ],
     "correct_answer": "To amplify or regenerate signals to extend network distance",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-045",
     "question": "What is a firewall?",
     "options": [
       "A security device that monitors and controls network traffic based on rules",
       "A backup system",
-      "A physical wall in a server room",
+      "A physical wall in a server room for that enterprise scenario while meeting reliability expectations",
       "A type of router"
     ],
     "correct_answer": "A security device that monitors and controls network traffic based on rules",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-046",
     "question": "What does a load balancer do?",
     "options": [
-      "Blocks all incoming traffic",
-      "Encrypts data",
       "Distributes network traffic across multiple servers",
+      "Blocks all incoming traffic for that enterprise scenario",
+      "Encrypts data",
       "Stores data"
     ],
     "correct_answer": "Distributes network traffic across multiple servers",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-047",
     "question": "Which device operates at Layer 3 of the OSI model?",
     "options": [
+      "Router",
       "Repeater",
       "Switch",
-      "Hub",
-      "Router"
+      "Hub"
     ],
     "correct_answer": "Router",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-048",
     "question": "What makes a switch more efficient than a hub?",
     "options": [
-      "Switches are cheaper",
-      "Switches work at the Physical Layer",
       "Switches use MAC address tables to forward data only to the intended recipient",
+      "Switches are cheaper",
+      "Switches work at the Physical Layer for that enterprise scenario while meeting reliability expectations",
       "Switches broadcast to all ports"
     ],
     "correct_answer": "Switches use MAC address tables to forward data only to the intended recipient",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-049",
     "question": "Can a router connect networks with different IP addressing schemes?",
     "options": [
+      "Yes, routers can route between different IP networks",
       "Only if they use the same cable type",
       "Only for wireless networks",
-      "Yes, routers can route between different IP networks",
-      "No, networks must have identical addressing"
+      "No, networks must have identical addressing for that enterprise scenario"
     ],
     "correct_answer": "Yes, routers can route between different IP networks",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-050",
     "question": "What information does a switch use to forward frames?",
     "options": [
-      "IP addresses",
+      "MAC addresses",
+      "IP addresses for that enterprise scenario",
       "Port numbers",
-      "Domain names",
-      "MAC addresses"
+      "Domain names"
     ],
     "correct_answer": "MAC addresses",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-051",
     "question": "What information does a router use to forward packets?",
     "options": [
-      "MAC addresses",
       "IP addresses",
+      "MAC addresses",
       "Physical port locations",
       "Cable colors"
     ],
     "correct_answer": "IP addresses",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-052",
     "question": "Where is a firewall typically placed in a network?",
     "options": [
+      "Between a private network and the public Internet",
       "Inside individual computers only",
-      "Firewalls are not used in networks",
-      "Only on end-user devices",
-      "Between a private network and the public Internet"
+      "Firewalls are not used in networks for that enterprise scenario",
+      "Only on end-user devices"
     ],
     "correct_answer": "Between a private network and the public Internet",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-053",
     "question": "What is a managed switch?",
     "options": [
-      "A switch that requires no configuration",
+      "A switch that can be configured and monitored for advanced features",
+      "A switch that requires no configuration for that enterprise scenario",
       "A wireless device",
-      "A switch that only works with routers",
-      "A switch that can be configured and monitored for advanced features"
+      "A switch that only works with routers"
     ],
     "correct_answer": "A switch that can be configured and monitored for advanced features",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-054",
     "question": "What advantage does a Layer 3 switch have over a regular Layer 2 switch?",
     "options": [
-      "It operates at the Physical Layer",
+      "It can perform routing functions in addition to switching",
+      "It operates at the Physical Layer for that enterprise scenario",
       "It has fewer ports",
-      "It is cheaper",
-      "It can perform routing functions in addition to switching"
+      "It is cheaper"
     ],
     "correct_answer": "It can perform routing functions in addition to switching",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-055",
     "question": "What is the main difference between IPv4 and IPv6?",
     "options": [
-      "They are the same",
-      "IPv6 is slower than IPv4",
       "IPv6 uses 128-bit addresses while IPv4 uses 32-bit addresses",
+      "They are the same",
+      "IPv6 is slower than IPv4 for that enterprise scenario while meeting reliability expectations",
       "IPv4 is newer than IPv6"
     ],
     "correct_answer": "IPv6 uses 128-bit addresses while IPv4 uses 32-bit addresses",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-056",
     "question": "Why was IPv6 developed?",
     "options": [
-      "To slow down the Internet",
       "To address the exhaustion of IPv4 addresses",
+      "To slow down the Internet",
       "To replace routers",
-      "To eliminate the need for DNS"
+      "To eliminate the need for DNS for that enterprise scenario"
     ],
     "correct_answer": "To address the exhaustion of IPv4 addresses",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-057",
     "question": "What is a public IP address?",
     "options": [
-      "An address used only within a private network",
       "An address that is routable on the Internet",
+      "An address used only within a private network",
       "An address that changes every second",
       "A temporary address"
     ],
     "correct_answer": "An address that is routable on the Internet",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-058",
     "question": "What is a private IP address?",
     "options": [
+      "An address used within a private network and not routable on the Internet",
       "A permanent Internet address",
-      "An address visible on the Internet",
-      "An address assigned by ISPs",
-      "An address used within a private network and not routable on the Internet"
+      "An address visible on the Internet for that enterprise scenario while meeting reliability expectations",
+      "An address assigned by ISPs"
     ],
     "correct_answer": "An address used within a private network and not routable on the Internet",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-059",
     "question": "Which of the following is a private IPv4 address range?",
     "options": [
-      "8.8.8.8",
       "192.168.0.0 to 192.168.255.255",
-      "1.1.1.1",
-      "74.125.224.72"
+      "8.8.8",
+      "168.0.0 to 192.168.255.255 for that enterprise scenario",
+      "1.1.1"
     ],
     "correct_answer": "192.168.0.0 to 192.168.255.255",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-060",
     "question": "What is a static IP address?",
     "options": [
-      "An address that changes frequently",
+      "A manually configured address that remains constant",
+      "An address that changes frequently for that enterprise scenario",
       "An address assigned automatically",
-      "A temporary address",
-      "A manually configured address that remains constant"
+      "A temporary address"
     ],
     "correct_answer": "A manually configured address that remains constant",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-061",
     "question": "What is a dynamic IP address?",
     "options": [
-      "A private address only",
       "An address automatically assigned and may change over time",
+      "A private address only",
       "An address used only for servers",
-      "A fixed address that never changes"
+      "A fixed address that never changes for that enterprise scenario"
     ],
     "correct_answer": "An address automatically assigned and may change over time",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-062",
     "question": "What is the purpose of a subnet mask?",
     "options": [
-      "To increase Internet speed",
       "To distinguish the network portion from the host portion of an IP address",
+      "To increase Internet speed for that enterprise scenario while meeting reliability expectations",
       "To encrypt IP addresses",
       "To block traffic"
     ],
     "correct_answer": "To distinguish the network portion from the host portion of an IP address",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-063",
     "question": "What does CIDR stand for?",
     "options": [
       "Classless Inter-Domain Routing",
@@ -690,20 +1599,48 @@
       "Central IP Domain Registry"
     ],
     "correct_answer": "Classless Inter-Domain Routing",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-064",
     "question": "In CIDR notation, what does /24 represent?",
     "options": [
+      "24-bit network prefix",
       "24 hosts",
-      "24 subnets",
-      "24 routers",
-      "24-bit network prefix"
+      "24 subnets for that enterprise scenario",
+      "24 routers"
     ],
     "correct_answer": "24-bit network prefix",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-065",
     "question": "How many bits are in an IPv4 address?",
     "options": [
       "32",
@@ -712,130 +1649,298 @@
       "64"
     ],
     "correct_answer": "32",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-066",
     "question": "How many bits are in an IPv6 address?",
     "options": [
+      "128",
       "32",
       "256",
-      "64",
-      "128"
+      "64"
     ],
     "correct_answer": "128",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-067",
     "question": "What is the loopback address in IPv4?",
     "options": [
-      "192.168.1.1",
       "127.0.0.1",
-      "255.255.255.255",
-      "0.0.0.0"
+      "168.1.1",
+      "0.0.1",
+      "255.255.255"
     ],
     "correct_answer": "127.0.0.1",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-068",
     "question": "What is subnetting?",
     "options": [
-      "Combining multiple networks into one",
-      "Encrypting IP addresses",
       "Dividing a network into smaller sub-networks",
+      "Combining multiple networks into one for that enterprise scenario",
+      "Encrypting IP addresses",
       "Assigning static IPs"
     ],
     "correct_answer": "Dividing a network into smaller sub-networks",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-069",
     "question": "What is the broadcast address used for?",
     "options": [
       "To send data to all devices on a network",
-      "To send data to a specific device",
+      "To send data to a specific device for that enterprise scenario",
       "To route between networks",
       "To block traffic"
     ],
     "correct_answer": "To send data to all devices on a network",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-070",
     "question": "Which organization is responsible for global IP address allocation?",
     "options": [
       "IANA (Internet Assigned Numbers Authority)",
-      "IEEE",
+      "IEEE for that enterprise scenario while meeting reliability expectations",
       "W3C",
       "ISO"
     ],
     "correct_answer": "IANA (Internet Assigned Numbers Authority)",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-071",
     "question": "What does NAT (Network Address Translation) do?",
     "options": [
-      "Routes packets",
       "Translates private IP addresses to public IP addresses",
+      "Routes packets",
       "Encrypts data",
-      "Assigns IP addresses"
+      "Assigns IP addresses for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Translates private IP addresses to public IP addresses",
-    "topic": "IP Addressing"
+    "topic": "IP Addressing",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "addressing",
+      "concept",
+      "ip"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-072",
     "question": "What is the primary difference between TCP and UDP?",
     "options": [
-      "UDP is more secure",
       "TCP is connection-oriented and reliable, UDP is connectionless and faster",
-      "TCP is faster than UDP",
+      "UDP is more secure",
+      "TCP is faster than UDP for that enterprise scenario while meeting reliability expectations",
       "They are identical"
     ],
     "correct_answer": "TCP is connection-oriented and reliable, UDP is connectionless and faster",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-073",
     "question": "Which protocol is used for reliable data transmission?",
     "options": [
+      "TCP",
       "UDP",
       "ICMP",
-      "TCP",
       "ARP"
     ],
     "correct_answer": "TCP",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-074",
     "question": "Which protocol is suitable for real-time applications like video streaming?",
     "options": [
+      "UDP",
       "FTP",
       "TCP",
-      "SMTP",
-      "UDP"
+      "SMTP"
     ],
     "correct_answer": "UDP",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-075",
     "question": "What is the main difference between HTTP and HTTPS?",
     "options": [
-      "HTTPS is older",
+      "HTTPS includes encryption for secure communication",
+      "HTTPS is older for that enterprise scenario while meeting reliability expectations",
       "HTTP uses UDP",
-      "HTTP is faster",
-      "HTTPS includes encryption for secure communication"
+      "HTTP is faster"
     ],
     "correct_answer": "HTTPS includes encryption for secure communication",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-076",
     "question": "What does FTP stand for?",
     "options": [
+      "File Transfer Protocol",
       "Fast Transfer Protocol",
       "Frequency Transmission Protocol",
-      "File Transfer Protocol",
       "Firewall Transport Protocol"
     ],
     "correct_answer": "File Transfer Protocol",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-077",
     "question": "What is the primary purpose of SMTP?",
     "options": [
       "Sending emails",
@@ -844,339 +1949,773 @@
       "File downloads"
     ],
     "correct_answer": "Sending emails",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-078",
     "question": "What is POP3 used for?",
     "options": [
-      "Transferring files",
       "Retrieving emails from a server",
+      "Transferring files for that enterprise scenario",
       "Web browsing",
       "Sending emails"
     ],
     "correct_answer": "Retrieving emails from a server",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-079",
     "question": "How does IMAP differ from POP3?",
     "options": [
-      "There is no difference",
       "IMAP keeps emails on the server allowing access from multiple devices",
+      "There is no difference",
       "IMAP is for sending emails",
       "IMAP downloads and deletes emails from server, POP3 keeps them on server"
     ],
     "correct_answer": "IMAP keeps emails on the server allowing access from multiple devices",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-080",
     "question": "What is the primary function of DNS?",
     "options": [
       "Translate domain names to IP addresses",
       "Encrypt data",
       "Route packets",
-      "Assign IP addresses"
+      "Assign IP addresses for that enterprise scenario"
     ],
     "correct_answer": "Translate domain names to IP addresses",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-081",
     "question": "What does DHCP stand for?",
     "options": [
-      "Domain Host Control Protocol",
       "Dynamic Host Configuration Protocol",
-      "Digital Host Connection Protocol",
+      "Domain Host Control Protocol",
+      "Digital Host Connection Protocol for that enterprise scenario",
       "Data Host Communication Protocol"
     ],
     "correct_answer": "Dynamic Host Configuration Protocol",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-082",
     "question": "What is the main purpose of DHCP?",
     "options": [
-      "Encrypt communications",
+      "Automatically assign IP addresses to devices on a network",
+      "Encrypt communications for that enterprise scenario while meeting reliability expectations",
       "Route packets",
-      "Translate domain names",
-      "Automatically assign IP addresses to devices on a network"
+      "Translate domain names"
     ],
     "correct_answer": "Automatically assign IP addresses to devices on a network",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-083",
     "question": "Which port does HTTP typically use?",
     "options": [
+      "80",
       "25",
       "21",
-      "80",
       "443"
     ],
     "correct_answer": "80",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-084",
     "question": "Which port does HTTPS typically use?",
     "options": [
+      "443",
       "21",
       "80",
-      "8080",
-      "443"
+      "8080"
     ],
     "correct_answer": "443",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-085",
     "question": "What does ARP (Address Resolution Protocol) do?",
     "options": [
-      "Encrypts data",
       "Maps IP addresses to MAC addresses",
+      "Encrypts data",
       "Routes packets",
-      "Translates domain names to IPs"
+      "Translates domain names to IPs for that enterprise scenario"
     ],
     "correct_answer": "Maps IP addresses to MAC addresses",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-086",
     "question": "What is ICMP primarily used for?",
     "options": [
-      "Email transmission",
-      "File transfer",
       "Error reporting and diagnostic functions like ping",
+      "Email transmission for that enterprise scenario while meeting reliability expectations",
+      "File transfer",
       "Web browsing"
     ],
     "correct_answer": "Error reporting and diagnostic functions like ping",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-087",
     "question": "Does TCP perform error checking?",
     "options": [
       "Yes, it includes error checking and retransmission",
-      "No, it sends data without verification",
+      "No, it sends data without verification for that enterprise scenario",
       "Only for large files",
       "Only over wireless"
     ],
     "correct_answer": "Yes, it includes error checking and retransmission",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-088",
     "question": "What is the three-way handshake in TCP?",
     "options": [
-      "A method to close connections",
+      "A process to establish a reliable connection (SYN, SYN-ACK, ACK)",
+      "A method to close connections for that enterprise scenario while meeting reliability expectations",
       "A routing algorithm",
-      "A security protocol",
-      "A process to establish a reliable connection (SYN, SYN-ACK, ACK)"
+      "A security protocol"
     ],
     "correct_answer": "A process to establish a reliable connection (SYN, SYN-ACK, ACK)",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-089",
     "question": "What is bandwidth in networking?",
     "options": [
-      "The physical width of a cable",
-      "The number of devices connected",
       "The maximum rate of data transfer across a network",
+      "The physical width of a cable",
+      "The number of devices connected for that enterprise scenario",
       "The delay in data transmission"
     ],
     "correct_answer": "The maximum rate of data transfer across a network",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concepts",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-090",
     "question": "What is throughput?",
     "options": [
-      "The delay in transmission",
       "The actual amount of data successfully transferred in a given time",
+      "The delay in transmission",
       "The number of packets sent",
-      "The theoretical maximum speed"
+      "The theoretical maximum speed for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "The actual amount of data successfully transferred in a given time",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "concepts",
+      "networking",
+      "scenario"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-091",
     "question": "What is latency?",
     "options": [
       "The time delay between sending and receiving data",
       "The number of errors",
-      "The physical distance",
+      "The physical distance for that enterprise scenario",
       "The maximum bandwidth"
     ],
     "correct_answer": "The time delay between sending and receiving data",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "easy",
+    "style": "scenario",
+    "tags": [
+      "concepts",
+      "networking",
+      "scenario"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-092",
     "question": "What is a packet in networking?",
     "options": [
-      "A physical cable",
       "A unit of data transmitted over a network",
-      "A network topology",
+      "A physical cable",
+      "A network topology for that enterprise scenario",
       "A type of router"
     ],
     "correct_answer": "A unit of data transmitted over a network",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concepts",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-093",
     "question": "What is a frame in networking?",
     "options": [
+      "A data unit at the Data Link Layer",
       "An application message",
-      "A packet at the Network Layer",
-      "A physical connector",
-      "A data unit at the Data Link Layer"
+      "A packet at the Network Layer for that enterprise scenario",
+      "A physical connector"
     ],
     "correct_answer": "A data unit at the Data Link Layer",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concepts",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-094",
     "question": "What is a segment in networking?",
     "options": [
+      "A data unit at the Transport Layer",
       "A network device",
       "A type of cable",
-      "A data unit at the Physical Layer",
-      "A data unit at the Transport Layer"
+      "A data unit at the Physical Layer for that enterprise scenario"
     ],
     "correct_answer": "A data unit at the Transport Layer",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concepts",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-095",
     "question": "What is a MAC address?",
     "options": [
-      "A logical address assigned by software",
       "A unique hardware address assigned to a network interface",
+      "A logical address assigned by software for that enterprise scenario",
       "A domain name",
       "An IP address"
     ],
     "correct_answer": "A unique hardware address assigned to a network interface",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concepts",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-096",
     "question": "How many bits are in a MAC address?",
     "options": [
+      "48",
       "64",
       "32",
-      "128",
-      "48"
+      "128"
     ],
     "correct_answer": "48",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concepts",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-097",
     "question": "What is the difference between MAC address and IP address?",
     "options": [
+      "MAC address is physical and permanent, IP address is logical and can change",
       "They are the same",
-      "MAC address changes frequently",
-      "IP address is physical",
-      "MAC address is physical and permanent, IP address is logical and can change"
+      "MAC address changes frequently for that enterprise scenario while meeting reliability expectations",
+      "IP address is physical"
     ],
     "correct_answer": "MAC address is physical and permanent, IP address is logical and can change",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concepts",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-098",
     "question": "What is unicast transmission?",
     "options": [
-      "Sending data to all devices",
       "Sending data from one source to one destination",
+      "Sending data to all devices",
       "Broadcasting to everyone",
-      "Sending data to multiple specific devices"
+      "Sending data to multiple specific devices for that enterprise scenario"
     ],
     "correct_answer": "Sending data from one source to one destination",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concepts",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-099",
     "question": "What is multicast transmission?",
     "options": [
-      "Blocking all traffic",
       "Sending data to a specific group of devices",
-      "Broadcasting to all devices",
+      "Blocking all traffic",
+      "Broadcasting to all devices for that enterprise scenario",
       "Sending to one device"
     ],
     "correct_answer": "Sending data to a specific group of devices",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concepts",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-100",
     "question": "What is broadcast transmission?",
     "options": [
-      "Sending to one specific device",
       "Sending data to all devices on a network",
+      "Sending to one specific device for that enterprise scenario",
       "Sending to selected devices",
       "Blocking traffic"
     ],
     "correct_answer": "Sending data to all devices on a network",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concepts",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-101",
     "question": "What is a collision domain?",
     "options": [
+      "A network segment where data collisions can occur",
       "A security zone",
       "A routing protocol",
-      "A network segment where data collisions can occur",
-      "A type of IP address"
+      "A type of IP address for that enterprise scenario"
     ],
     "correct_answer": "A network segment where data collisions can occur",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concepts",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-102",
     "question": "What is a broadcast domain?",
     "options": [
-      "A type of cable",
       "A network segment where broadcast messages are propagated",
+      "A type of cable",
       "A domain name",
-      "A security feature"
+      "A security feature for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "A network segment where broadcast messages are propagated",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concepts",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-103",
     "question": "How does a switch affect collision domains?",
     "options": [
-      "It eliminates collision domains entirely",
+      "It creates separate collision domains for each port",
+      "It eliminates collision domains entirely for that enterprise scenario",
       "It has no effect",
-      "It creates one large collision domain",
-      "It creates separate collision domains for each port"
+      "It creates one large collision domain"
     ],
     "correct_answer": "It creates separate collision domains for each port",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concepts",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-104",
     "question": "How does a router affect broadcast domains?",
     "options": [
+      "It separates broadcast domains",
       "It eliminates broadcasts",
       "It has no effect on broadcast domains",
-      "It separates broadcast domains",
       "It merges all broadcast domains"
     ],
     "correct_answer": "It separates broadcast domains",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concepts",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-105",
     "question": "What is full-duplex communication?",
     "options": [
-      "No communication",
-      "One-way communication only",
       "Simultaneous two-way communication",
-      "Sequential two-way communication"
+      "No communication",
+      "way communication only",
+      "Sequential two-way communication for that enterprise scenario"
     ],
     "correct_answer": "Simultaneous two-way communication",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concepts",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-106",
     "question": "What is half-duplex communication?",
     "options": [
       "Two-way communication but not simultaneous",
+      "way communication but not simultaneous for that enterprise scenario",
       "No communication possible",
-      "One-way communication only",
-      "Simultaneous two-way communication"
+      "way communication only"
     ],
     "correct_answer": "Two-way communication but not simultaneous",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "concepts",
+      "networking"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-107",
     "question": "What is the primary purpose of a firewall?",
     "options": [
+      "To monitor and control incoming and outgoing network traffic based on security rules",
       "To assign IP addresses",
-      "To speed up network traffic",
-      "To translate domain names",
-      "To monitor and control incoming and outgoing network traffic based on security rules"
+      "To speed up network traffic for that enterprise scenario while meeting reliability expectations",
+      "To translate domain names"
     ],
     "correct_answer": "To monitor and control incoming and outgoing network traffic based on security rules",
-    "topic": "Network Security"
+    "topic": "Network Security",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "security"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-108",
     "question": "What does VPN stand for?",
     "options": [
       "Virtual Private Network",
@@ -1185,138 +2724,319 @@
       "Very Private Network"
     ],
     "correct_answer": "Virtual Private Network",
-    "topic": "Network Security"
+    "topic": "Network Security",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "security"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-109",
     "question": "What is the main purpose of a VPN?",
     "options": [
+      "To create a secure, encrypted connection over a public network",
       "To block all traffic",
-      "To increase Internet speed",
-      "To assign IP addresses",
-      "To create a secure, encrypted connection over a public network"
+      "To increase Internet speed for that enterprise scenario while meeting reliability expectations",
+      "To assign IP addresses"
     ],
     "correct_answer": "To create a secure, encrypted connection over a public network",
-    "topic": "Network Security"
+    "topic": "Network Security",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "security"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-110",
     "question": "What does HTTPS use to encrypt data?",
     "options": [
-      "DHCP",
       "SSL/TLS protocols",
+      "DHCP",
       "FTP",
-      "Plain text"
+      "Plain text for that enterprise scenario"
     ],
     "correct_answer": "SSL/TLS protocols",
-    "topic": "Network Security"
+    "topic": "Network Security",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "security"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-111",
     "question": "What is authentication in network security?",
     "options": [
       "Verifying the identity of a user or device",
-      "Granting access to resources",
+      "Granting access to resources for that enterprise scenario",
       "Blocking traffic",
       "Encrypting data"
     ],
     "correct_answer": "Verifying the identity of a user or device",
-    "topic": "Network Security"
+    "topic": "Network Security",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "security"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-112",
     "question": "What is authorization in network security?",
     "options": [
-      "Creating user accounts",
-      "Verifying identity",
       "Granting or denying access to resources based on permissions",
+      "Creating user accounts for that enterprise scenario while meeting reliability expectations",
+      "Verifying identity",
       "Encrypting data"
     ],
     "correct_answer": "Granting or denying access to resources based on permissions",
-    "topic": "Network Security"
+    "topic": "Network Security",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "security"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-113",
     "question": "What is a DDoS attack?",
     "options": [
-      "A secure protocol",
       "Distributed Denial of Service attack that overwhelms a network with traffic",
+      "A secure protocol",
       "A backup method",
-      "A type of encryption"
+      "A type of encryption for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "Distributed Denial of Service attack that overwhelms a network with traffic",
-    "topic": "Network Security"
+    "topic": "Network Security",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "security"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-114",
     "question": "What is phishing?",
     "options": [
-      "A network protocol",
       "A fraudulent attempt to obtain sensitive information by disguising as trustworthy",
+      "A network protocol",
       "A firewall feature",
-      "A legitimate email service"
+      "A legitimate email service for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "A fraudulent attempt to obtain sensitive information by disguising as trustworthy",
-    "topic": "Network Security"
+    "topic": "Network Security",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "security"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-115",
     "question": "What is malware?",
     "options": [
-      "A type of router",
       "Malicious software designed to harm or exploit devices",
-      "A network protocol",
+      "A type of router",
+      "A network protocol for that enterprise scenario while meeting reliability expectations",
       "Antivirus software"
     ],
     "correct_answer": "Malicious software designed to harm or exploit devices",
-    "topic": "Network Security"
+    "topic": "Network Security",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "security"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-116",
     "question": "What is encryption?",
     "options": [
       "Converting data into a coded format to prevent unauthorized access",
       "Backing up data",
-      "Compressing files",
+      "Compressing files for that enterprise scenario while meeting reliability expectations",
       "Deleting data"
     ],
     "correct_answer": "Converting data into a coded format to prevent unauthorized access",
-    "topic": "Network Security"
+    "topic": "Network Security",
+    "difficulty": "easy",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "security"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-117",
     "question": "What is the purpose of QoS (Quality of Service) in networking?",
     "options": [
-      "To increase the number of devices",
+      "To prioritize certain types of network traffic for better performance",
+      "To increase the number of devices for that enterprise scenario while meeting reliability expectations",
       "To assign IP addresses",
-      "To block all traffic",
-      "To prioritize certain types of network traffic for better performance"
+      "To block all traffic"
     ],
     "correct_answer": "To prioritize certain types of network traffic for better performance",
-    "topic": "Networking Concepts"
+    "topic": "Networking Concepts",
+    "difficulty": "hard",
+    "style": "scenario",
+    "tags": [
+      "concepts",
+      "networking",
+      "scenario"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-118",
     "question": "What does TTL (Time To Live) indicate in an IP packet?",
     "options": [
+      "The maximum number of hops a packet can traverse before being discarded",
       "The priority level",
       "The packet size",
-      "The creation time of the packet",
-      "The maximum number of hops a packet can traverse before being discarded"
+      "The creation time of the packet for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "The maximum number of hops a packet can traverse before being discarded",
-    "topic": "Network Protocols"
+    "topic": "Network Protocols",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "protocols"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-119",
     "question": "What is the difference between a default gateway and a router?",
     "options": [
+      "A default gateway is the router interface that serves as the exit point from a local network",
       "Router cannot be a gateway",
       "Default gateway is faster",
-      "They are completely different devices",
-      "A default gateway is the router interface that serves as the exit point from a local network"
+      "They are completely different devices for that enterprise scenario while meeting reliability expectations"
     ],
     "correct_answer": "A default gateway is the router interface that serves as the exit point from a local network",
-    "topic": "Network Devices"
+    "topic": "Network Devices",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "devices",
+      "network"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   },
   {
+    "id": "shared-domain-networking-120",
     "question": "What is an Access Control List (ACL) used for?",
     "options": [
-      "To increase network speed",
       "To define rules that permit or deny traffic based on specific criteria",
+      "To increase network speed for that enterprise scenario while meeting reliability expectations",
       "To assign MAC addresses",
       "To compress data"
     ],
     "correct_answer": "To define rules that permit or deny traffic based on specific criteria",
-    "topic": "Network Security"
+    "topic": "Network Security",
+    "difficulty": "medium",
+    "style": "concept",
+    "tags": [
+      "concept",
+      "network",
+      "security"
+    ],
+    "role_target": "shared_domain_networking",
+    "round_target": "L6",
+    "version_scope": [
+      "enterprise-shared-v1",
+      "domain-networking"
+    ]
   }
 ]

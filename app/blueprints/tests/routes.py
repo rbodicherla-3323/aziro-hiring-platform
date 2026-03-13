@@ -21,6 +21,7 @@ from app.services.document_intelligence import (
     match_role_from_jd,
     get_mime_type_for_filename,
 )
+from app.utils.round_order import INTERNAL_ROUND_ORDER
 
 
 # --------------------------------------------
@@ -229,6 +230,7 @@ def generated_tests():
     return render_template(
         "generated_tests.html",
         candidates=candidates,
+        round_order=INTERNAL_ROUND_ORDER,
     )
 
 
