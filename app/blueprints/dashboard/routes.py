@@ -6,7 +6,7 @@ import os
 import uuid
 from datetime import datetime, timezone, timedelta
 
-from flask import render_template, request, redirect, url_for, session, flash
+from flask import render_template, request, redirect, url_for, session, flash, current_app
 
 from . import dashboard_bp
 from app.utils.auth_decorator import login_required
@@ -26,6 +26,7 @@ from app.services.question_bank.selector import (
     build_frozen_mcq_round_payload,
     should_use_enterprise_selection,
 )
+from app.services.question_bank.validator import QuestionBankValidationError
 
 APTITUDE_ENABLED_ROLE_KEYS = {"python_entry", "java_entry", "js_entry"}
 
@@ -219,16 +220,31 @@ def create_test():
 
         # Generate MCQ round links
         for round_key in mcq_rounds:
-            question_files = question_registry.get_question_files(
-                role_key=role_key,
-                round_key=round_key,
-                domain=domain.lower() if domain != "None" else None,
-            )
-            questions = question_registry.get_questions(
-                role_key=role_key,
-                round_key=round_key,
-                domain=domain.lower() if domain != "None" else None,
-            )
+            try:
+                question_files = question_registry.get_question_files(
+                    role_key=role_key,
+                    round_key=round_key,
+                    domain=domain.lower() if domain != "None" else None,
+                )
+                questions = question_registry.get_questions(
+                    role_key=role_key,
+                    round_key=round_key,
+                    domain=domain.lower() if domain != "None" else None,
+                )
+            except (FileNotFoundError, ValueError) as exc:
+                current_app.logger.exception(
+                    "Failed to load question bank for role=%s round=%s domain=%s",
+                    role_key,
+                    round_key,
+                    domain,
+                )
+                flash(
+                    f"Question bank failed to load for role '{role_label}' round '{round_key}'. "
+                    f"Candidate '{name}' was skipped.",
+                    "danger",
+                )
+                candidate_generation_failed = True
+                break
             if not questions:
                 flash(
                     f"Question bank missing for role '{role_label}' round '{round_key}'. "
@@ -247,7 +263,13 @@ def create_test():
                         question_files=question_files,
                         questions=questions,
                     )
-                except (QuestionSelectionError, ValueError) as exc:
+                except (QuestionSelectionError, QuestionBankValidationError, ValueError) as exc:
+                    current_app.logger.exception(
+                        "Enterprise MCQ freeze failed for role=%s round=%s domain=%s",
+                        role_key,
+                        round_key,
+                        domain,
+                    )
                     flash(
                         f"Enterprise MCQ freeze unavailable for role '{role_label}' round '{round_key}': {exc}. "
                         f"Using standard question selection for candidate '{name}'.",
