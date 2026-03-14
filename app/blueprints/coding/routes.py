@@ -38,6 +38,38 @@ MAX_SCREENSHOT_BYTES = 2 * 1024 * 1024
 MAX_WEBCAM_CHUNK_BYTES = 5 * 1024 * 1024
 
 
+def get_language_runtime_status(language: str):
+    """
+    Check if the required runtime/compiler exists for the given language.
+    Returns (is_available: bool, requirement: str).
+    """
+    lang = str(language or "").strip().lower()
+    requirements = {
+        "python": "Python 3 runtime (python/py)",
+        "javascript": "Node.js runtime (node)",
+        "js": "Node.js runtime (node)",
+        "java": "Java JDK (javac/java)",
+        "c": "C compiler (gcc/clang)",
+        "cpp": "C++ compiler (g++/clang++)",
+        "csharp": "C# compiler/runtime (dotnet, mcs, or csc)",
+    }
+    candidates = {
+        "python": ["python", "py"],
+        "javascript": ["node"],
+        "js": ["node"],
+        "java": ["javac", "java"],
+        "c": ["gcc", "clang"],
+        "cpp": ["g++", "clang++"],
+        "csharp": ["dotnet", "mcs", "csc"],
+    }
+
+    required = requirements.get(lang, "Runtime requirement not configured")
+    for cmd in candidates.get(lang, []):
+        if shutil.which(cmd):
+            return True, required
+    return False, required
+
+
 def _utc_now_iso():
     return datetime.now(timezone.utc).isoformat()
 
