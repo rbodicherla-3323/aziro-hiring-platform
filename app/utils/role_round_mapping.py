@@ -83,6 +83,15 @@ ROLE_ROUND_MAPPING = {
         "allow_domain": True
     },
 
+    # C++ Developer (3+ Years):
+    # C++ Theory + Debugging -> Coding (C++) -> Optional Domain
+    "cpp_dev": {
+        "rounds": ["L2"],
+        "coding_rounds": ["L4"],
+        "coding_language": "cpp",
+        "allow_domain": True
+    },
+
     # C# Developer (3-6 Years):
     # C# Theory + Debugging -> Developer Foundations -> Coding (C#) -> Soft Skills
     "csharp_dev": {
@@ -107,5 +116,6 @@ ROLE_CODING_LANGUAGE = {
     "bmc_engineer": "c",
     "linux_kernel_dd": "c",
     "systems_architect_cpp": "cpp",
+    "cpp_dev": "cpp",
     "csharp_dev": "csharp",
 }

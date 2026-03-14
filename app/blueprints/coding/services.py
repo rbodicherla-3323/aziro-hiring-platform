@@ -176,8 +176,8 @@ class CodingSessionService:
     """
 
     @staticmethod
-    def _load_yaml_questions(language):
-        """Load coding questions from YAML file for the given language."""
+    def _load_yaml_questions(language, role_key=None):
+        """Load coding questions from YAML file for the given language or role."""
         normalized_language = str(language or "").lower()
         if normalized_language in ("c#", "cs"):
             normalized_language = "csharp"
@@ -193,11 +193,18 @@ class CodingSessionService:
             # Reuse Java coding bank and convert signatures for C# runtime.
             "csharp": "java",
         }
+        role_dir = str(role_key or "").strip().lower()
+        role_path = os.path.join(base, role_dir, "questions.yaml") if role_dir else ""
+
         lang_dir = lang_map.get(normalized_language)
-        if not lang_dir:
+        file_path = ""
+        if role_dir and role_path and os.path.exists(role_path):
+            file_path = role_path
+        elif lang_dir:
+            file_path = os.path.join(base, lang_dir, "questions.yaml")
+        else:
             return []
 
-        file_path = os.path.join(base, lang_dir, "questions.yaml")
         if not os.path.exists(file_path):
             return []
 
@@ -239,7 +246,7 @@ class CodingSessionService:
             session.modified = True
             return
 
-        questions = CodingSessionService._load_yaml_questions(normalized_language)
+        questions = CodingSessionService._load_yaml_questions(normalized_language, role_key=role_key)
         if not questions:
             raise ValueError(
                 f"No coding questions found for language={normalized_language}"
