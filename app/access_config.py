@@ -6,6 +6,7 @@ ACCESS_ADMIN_EMAILS = {
     "rbodicherla@aziro.com",
     "snaik@aziro.com",
     "sbhosale@aziro.com",
+    "smrao@aziro.com",
 }
 
 def _normalize_email(email: str) -> str:
