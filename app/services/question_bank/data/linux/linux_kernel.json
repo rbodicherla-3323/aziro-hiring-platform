@@ -5,7 +5,7 @@
       "A command-line shell",
       "The core component of the Linux OS that manages hardware, memory, processes, and system calls",
       "A Linux distribution like Ubuntu",
-      "A graphical user interface for Linux"
+      "A graphical user interface for Linux under stated conditions based on available context in this scenario"
     ],
     "correct_answer": "The core component of the Linux OS that manages hardware, memory, processes, and system calls",
     "topic": "Kernel Basics",
@@ -17,7 +17,7 @@
       "There is no architectural difference",
       "Monolithic kernels run all services in kernel space; microkernels run most services in user space",
       "Microkernels are faster than monolithic kernels",
-      "Monolithic kernels are smaller than microkernels"
+      "Monolithic kernels are smaller than microkernels under stated conditions based on available context"
     ],
     "correct_answer": "Monolithic kernels run all services in kernel space; microkernels run most services in user space",
     "topic": "Kernel Architecture",
@@ -27,7 +27,7 @@
     "question": "What is a system call in Linux?",
     "options": [
       "An interface through which user-space programs request services from the kernel",
-      "A function call between two user-space programs",
+      "A function call between two user-space programs under stated conditions based on available context",
       "A call to the system BIOS",
       "A network RPC mechanism"
     ],
@@ -39,7 +39,7 @@
     "question": "What is the purpose of the 'init' process (PID 1) in Linux?",
     "options": [
       "It is the first user-space process; it initializes the system and is the ancestor of all processes",
-      "To manage network connections",
+      "To manage network connections under stated conditions based on available context in this scenario for this case",
       "To handle interrupt requests",
       "To compile the kernel"
     ],
@@ -53,7 +53,7 @@
       "Kernel space has unrestricted hardware access; user space has restricted access and must use syscalls",
       "User space is more privileged than kernel space",
       "There is no separation in Linux",
-      "Kernel space is for storing files; user space is for programs"
+      "Kernel space is for storing files; user space is for programs under stated conditions based on available context"
     ],
     "correct_answer": "Kernel space has unrestricted hardware access; user space has restricted access and must use syscalls",
     "topic": "Kernel Architecture",
@@ -63,7 +63,7 @@
     "question": "What is a loadable kernel module (LKM)?",
     "options": [
       "A module for loading user applications",
-      "A kernel that can be loaded from a USB drive",
+      "A kernel that can be loaded from a USB drive under stated conditions based on available context",
       "A precompiled kernel binary",
       "Code that can be loaded into and unloaded from the running kernel without rebooting"
     ],
@@ -74,7 +74,7 @@
   {
     "question": "Which commands are used to load and unload kernel modules?",
     "options": [
-      "kmod_add / kmod_remove",
+      "kmod_add / kmod_remove under stated conditions",
       "modload / modunload",
       "load / unload",
       "insmod / rmmod (or modprobe / modprobe -r)"
@@ -89,7 +89,7 @@
       "modprobe works only for network modules",
       "modprobe automatically handles module dependencies; insmod does not",
       "They are identical",
-      "insmod handles dependencies; modprobe does not"
+      "insmod handles dependencies; modprobe does not under stated conditions"
     ],
     "correct_answer": "modprobe automatically handles module dependencies; insmod does not",
     "topic": "Kernel Modules",
@@ -100,7 +100,7 @@
     "options": [
       "A file system stored entirely in RAM",
       "An abstraction layer that provides a uniform interface for different file systems",
-      "A virtual disk for storing temporary files",
+      "A virtual disk for storing temporary files under stated conditions based on available context",
       "A virtual machine file system"
     ],
     "correct_answer": "An abstraction layer that provides a uniform interface for different file systems",
@@ -111,7 +111,7 @@
     "question": "What is the purpose of the 'proc' filesystem (/proc)?",
     "options": [
       "A virtual filesystem providing process and kernel information as files",
-      "To store application configuration files",
+      "To store application configuration files under stated conditions based on available context",
       "To store procedure definitions",
       "To provide network protocol information"
     ],
@@ -125,7 +125,7 @@
       "A warning message in the kernel log",
       "A fatal error where the kernel cannot safely continue operation and halts",
       "A kernel performance optimization",
-      "A scheduled kernel maintenance event"
+      "A scheduled kernel maintenance event under stated conditions based on available context"
     ],
     "correct_answer": "A fatal error where the kernel cannot safely continue operation and halts",
     "topic": "Kernel Debugging",
@@ -136,7 +136,7 @@
     "options": [
       "A tool to optimize memory usage",
       "A memory leak detection tool",
-      "A user-space daemon for memory management",
+      "A user-space daemon for memory management under stated conditions based on available context in this scenario",
       "A kernel mechanism that selects and kills processes when the system runs critically low on memory"
     ],
     "correct_answer": "A kernel mechanism that selects and kills processes when the system runs critically low on memory",
@@ -146,7 +146,7 @@
   {
     "question": "What is the difference between a process and a thread in the Linux kernel?",
     "options": [
-      "Threads have separate address spaces; processes share address space",
+      "Threads have separate address spaces; processes share address space under stated conditions based on available context",
       "Threads cannot be created in the kernel",
       "Threads share the same address space within a process; processes have separate address spaces",
       "Processes and threads are identical in Linux"
@@ -160,7 +160,7 @@
     "options": [
       "A file system scheduler",
       "A disk I/O scheduler",
-      "A network packet scheduler",
+      "A network packet scheduler under stated conditions based on available context in this scenario",
       "The default CPU process scheduler that uses a red-black tree to fairly allocate CPU time"
     ],
     "correct_answer": "The default CPU process scheduler that uses a red-black tree to fairly allocate CPU time",
@@ -172,7 +172,7 @@
     "options": [
       "Start, Run, Stop",
       "TASK_RUNNING, TASK_INTERRUPTIBLE, TASK_UNINTERRUPTIBLE, TASK_STOPPED, TASK_ZOMBIE, etc.",
-      "Running, Waiting, Terminated only",
+      "Running, Waiting, Terminated only under stated conditions based on available context in this scenario",
       "Active, Inactive, Dead"
     ],
     "correct_answer": "TASK_RUNNING, TASK_INTERRUPTIBLE, TASK_UNINTERRUPTIBLE, TASK_STOPPED, TASK_ZOMBIE, etc.",
@@ -183,7 +183,7 @@
     "question": "What is a zombie process?",
     "options": [
       "A suspended process",
-      "A process running in the background",
+      "A process running in the background under stated conditions based on available context in this scenario",
       "A terminated process whose exit status has not yet been collected by its parent via wait()",
       "A process using too much CPU"
     ],
@@ -196,7 +196,7 @@
     "options": [
       "To log system events",
       "A virtual filesystem exposing kernel objects, device info, and driver attributes to user space",
-      "To store system configuration files",
+      "To store system configuration files under stated conditions based on available context in this scenario",
       "To manage system services"
     ],
     "correct_answer": "A virtual filesystem exposing kernel objects, device info, and driver attributes to user space",
@@ -208,7 +208,7 @@
     "options": [
       "A lock where the waiting thread continuously polls (spins) until the lock becomes available",
       "A file locking mechanism",
-      "A lock that puts the waiting thread to sleep",
+      "A lock that puts the waiting thread to sleep under stated conditions based on available context",
       "A network socket lock"
     ],
     "correct_answer": "A lock where the waiting thread continuously polls (spins) until the lock becomes available",
@@ -218,7 +218,7 @@
   {
     "question": "What is the difference between a spinlock and a mutex in the kernel?",
     "options": [
-      "Spinlocks are only for user space; mutexes are for kernel space",
+      "Spinlocks are only for user space; mutexes are for kernel space under stated conditions",
       "Spinlocks busy-wait and cannot sleep; mutexes can put the caller to sleep while waiting",
       "Mutexes busy-wait; spinlocks sleep",
       "They are identical"
@@ -230,7 +230,7 @@
   {
     "question": "What is the purpose of 'dmesg' command?",
     "options": [
-      "To send messages to other users",
+      "To send messages to other users under stated conditions based on available context",
       "To display the kernel ring buffer messages (boot and runtime kernel logs)",
       "To display disk messages",
       "To manage device messages"
@@ -244,7 +244,7 @@
     "options": [
       "To format print jobs",
       "The kernel's logging function for outputting messages to the kernel log buffer",
-      "To print to the user's terminal",
+      "To print to the user's terminal under stated conditions based on available context",
       "To print kernel configuration"
     ],
     "correct_answer": "The kernel's logging function for outputting messages to the kernel log buffer",
@@ -257,7 +257,7 @@
       "A print queue managed by the kernel",
       "A queue of pending system calls",
       "A mechanism for deferring work to be executed later in process context by kernel threads",
-      "A job scheduling system for user programs"
+      "A job scheduling system for user programs under stated conditions based on available context"
     ],
     "correct_answer": "A mechanism for deferring work to be executed later in process context by kernel threads",
     "topic": "Kernel Mechanisms",
@@ -268,7 +268,7 @@
     "options": [
       "A scheduled cron task",
       "A kernel thread",
-      "A small user-space task",
+      "A small user-space task under stated conditions based on available context in this scenario for this case under stated conditions",
       "A software interrupt mechanism for deferring work from a hardware interrupt handler (runs in softirq context)"
     ],
     "correct_answer": "A software interrupt mechanism for deferring work from a hardware interrupt handler (runs in softirq context)",
@@ -281,7 +281,7 @@
       "Top half runs in user space; bottom half in kernel space",
       "There is no such distinction",
       "Top half runs immediately in interrupt context (fast); bottom half defers longer work to be done later",
-      "Top half is the first half of the code; bottom half is the second half"
+      "Top half is the first half of the code; bottom half is the second half under stated conditions based on available context"
     ],
     "correct_answer": "Top half runs immediately in interrupt context (fast); bottom half defers longer work to be done later",
     "topic": "Interrupts",
@@ -290,7 +290,7 @@
   {
     "question": "What is the purpose of the Linux kernel's memory management unit (MMU)?",
     "options": [
-      "To manage network memory buffers",
+      "To manage network memory buffers under stated conditions based on available context",
       "To translate virtual addresses to physical addresses and enforce memory protection",
       "To compress memory data",
       "To manage disk memory"
@@ -304,7 +304,7 @@
     "options": [
       "A corrupted memory page",
       "An error in the filesystem",
-      "A hardware failure in memory",
+      "A hardware failure in memory under stated conditions based on available context in this scenario for this case",
       "An event triggered when a process accesses a virtual memory page not currently mapped in physical memory"
     ],
     "correct_answer": "An event triggered when a process accesses a virtual memory page not currently mapped in physical memory",
@@ -314,7 +314,7 @@
   {
     "question": "What is the slab allocator in the Linux kernel?",
     "options": [
-      "A user-space memory allocator",
+      "A user-space memory allocator under stated conditions based on available context in this scenario",
       "A network buffer allocator",
       "A disk allocation mechanism",
       "A memory allocation mechanism optimized for frequently allocated/freed fixed-size kernel objects"
@@ -328,7 +328,7 @@
     "options": [
       "vmalloc is faster than kmalloc",
       "They are identical",
-      "kmalloc is for user space; vmalloc is for kernel space",
+      "kmalloc is for user space; vmalloc is for kernel space under stated conditions based on available context in this scenario for this case",
       "kmalloc allocates physically contiguous memory; vmalloc allocates virtually contiguous but potentially physically non-contiguous memory"
     ],
     "correct_answer": "kmalloc allocates physically contiguous memory; vmalloc allocates virtually contiguous but potentially physically non-contiguous memory",
@@ -338,7 +338,7 @@
   {
     "question": "What is a kernel namespace?",
     "options": [
-      "A C++ naming convention in the kernel",
+      "A C++ naming convention in the kernel under stated conditions based on available context in this scenario",
       "A feature that isolates and virtualizes system resources (PID, network, mount, etc.) for process groups",
       "A file naming convention",
       "A directory namespace for /proc"
@@ -351,7 +351,7 @@
     "question": "What are cgroups (control groups) in Linux?",
     "options": [
       "A version control feature",
-      "A group policy for user accounts",
+      "A group policy for user accounts under stated conditions based on available context in this scenario for this case",
       "A kernel feature to limit, account for, and isolate resource usage (CPU, memory, I/O) of process groups",
       "Groups of C source files"
     ],
@@ -363,7 +363,7 @@
     "question": "What is the purpose of the inode in the Linux filesystem?",
     "options": [
       "A data structure storing file metadata (size, permissions, timestamps, block pointers) but not the filename",
-      "To manage input devices",
+      "To manage input devices under stated conditions based on available context in this scenario for this case under stated conditions",
       "To index network nodes",
       "To store file content"
     ],
@@ -376,7 +376,7 @@
     "options": [
       "Hard links work across filesystems; soft links do not",
       "They are the same thing",
-      "Soft links point to the same inode; hard links point to a path",
+      "Soft links point to the same inode; hard links point to a path under stated conditions based on available context",
       "Hard links point to the same inode; soft links are separate files pointing to a path name"
     ],
     "correct_answer": "Hard links point to the same inode; soft links are separate files pointing to a path name",
@@ -389,7 +389,7 @@
       "A configuration system (menuconfig/defconfig) that selects which features and modules to build into the kernel",
       "To configure user account settings",
       "To configure the bootloader",
-      "To configure kernel network settings at runtime"
+      "To configure kernel network settings at runtime under stated conditions based on available context in this scenario"
     ],
     "correct_answer": "A configuration system (menuconfig/defconfig) that selects which features and modules to build into the kernel",
     "topic": "Kernel Build",
@@ -400,7 +400,7 @@
     "options": [
       "gcc kernel.c",
       "kernel-build",
-      "cmake --build",
+      "cmake --build under stated conditions based on available context",
       "make (with targets like make bzImage, make modules)"
     ],
     "correct_answer": "make (with targets like make bzImage, make modules)",
@@ -412,7 +412,7 @@
     "options": [
       "A soft reset interrupt",
       "A user-defined signal",
-      "A software application interrupt",
+      "A software application interrupt under stated conditions based on available context in this scenario",
       "A statically defined, high-priority kernel mechanism for deferred interrupt processing"
     ],
     "correct_answer": "A statically defined, high-priority kernel mechanism for deferred interrupt processing",
@@ -425,7 +425,7 @@
       "A synchronization mechanism allowing concurrent reads without locks while updates create new copies",
       "A registry cleanup utility",
       "A file versioning system",
-      "A remote configuration utility"
+      "A remote configuration utility under stated conditions based on available context in this scenario for this case"
     ],
     "correct_answer": "A synchronization mechanism allowing concurrent reads without locks while updates create new copies",
     "topic": "Synchronization",
@@ -437,7 +437,7 @@
       "A data structure describing hardware so the kernel can discover and configure devices (common on ARM)",
       "A device driver dependency graph",
       "To list USB device connections",
-      "A tree structure for /dev directory"
+      "A tree structure for /dev directory under stated conditions based on available context in this scenario"
     ],
     "correct_answer": "A data structure describing hardware so the kernel can discover and configure devices (common on ARM)",
     "topic": "Device Tree",
@@ -447,7 +447,7 @@
     "question": "What is the purpose of the 'ioctl' system call?",
     "options": [
       "To optimize I/O performance",
-      "To perform I/O on regular files only",
+      "To perform I/O on regular files only under stated conditions based on available context in this scenario",
       "To send device-specific control commands to a device driver that aren't covered by read/write",
       "To control I/O ports directly"
     ],
@@ -458,7 +458,7 @@
   {
     "question": "What is the purpose of 'mmap' in the Linux kernel?",
     "options": [
-      "To map MAC addresses to IP addresses",
+      "To map MAC addresses to IP addresses under stated conditions based on available context",
       "To map files or devices into the process's virtual address space for memory-mapped I/O",
       "To manage memory allocation pools",
       "To map email addresses"
@@ -470,7 +470,7 @@
   {
     "question": "What is the copy_to_user / copy_from_user function used for?",
     "options": [
-      "To copy kernel modules between servers",
+      "To copy kernel modules between servers under stated conditions based on available context",
       "To copy files between user accounts",
       "To duplicate user processes",
       "To safely transfer data between kernel space and user space, with proper validation"
@@ -483,7 +483,7 @@
     "question": "What is the GFP (Get Free Pages) flag used for in kernel memory allocation?",
     "options": [
       "To specify the allocation context and constraints (e.g., GFP_KERNEL, GFP_ATOMIC)",
-      "To get file permissions",
+      "To get file permissions under stated conditions based on available context in this scenario",
       "To free unused pages",
       "To get free disk pages"
     ],
@@ -494,7 +494,7 @@
   {
     "question": "What is the difference between GFP_KERNEL and GFP_ATOMIC?",
     "options": [
-      "GFP_KERNEL is for atomic operations",
+      "GFP_KERNEL is for atomic operations under stated conditions based on available context in this scenario for this case",
       "GFP_KERNEL can sleep and is used in process context; GFP_ATOMIC cannot sleep and is used in interrupt context",
       "GFP_ATOMIC allocates more memory",
       "No difference"
@@ -507,7 +507,7 @@
     "question": "What is the Linux kernel's netfilter framework?",
     "options": [
       "A network monitoring tool",
-      "A network file sharing protocol",
+      "A network file sharing protocol under stated conditions based on available context in this scenario for this case",
       "A DNS filtering service",
       "A framework of hooks in the networking stack for packet filtering, NAT, and mangling (basis of iptables/nftables)"
     ],
@@ -520,7 +520,7 @@
     "options": [
       "To create and manage kernel threads that run entirely in kernel space",
       "To create user-space threads",
-      "To manage thread pools in applications",
+      "To manage thread pools in applications under stated conditions based on available context",
       "To kill threads"
     ],
     "correct_answer": "To create and manage kernel threads that run entirely in kernel space",
@@ -530,7 +530,7 @@
   {
     "question": "What is the Linux kernel's 'completion' mechanism?",
     "options": [
-      "A file transfer completion notification",
+      "A file transfer completion notification under stated conditions based on available context in this scenario",
       "A synchronization primitive where one thread waits for another to signal that a task is complete",
       "A mechanism for code auto-completion",
       "A process termination handler"
@@ -544,7 +544,7 @@
     "options": [
       "A user-space device manager that dynamically creates/removes device nodes in /dev based on kernel events",
       "To monitor user activity",
-      "To update device firmware",
+      "To update device firmware under stated conditions based on available context in this scenario for this case",
       "To compile device drivers"
     ],
     "correct_answer": "A user-space device manager that dynamically creates/removes device nodes in /dev based on kernel events",
@@ -554,7 +554,7 @@
   {
     "question": "What is eBPF in the Linux kernel?",
     "options": [
-      "An embedded BIOS programming framework",
+      "An embedded BIOS programming framework under stated conditions based on available context in this scenario for this case under stated conditions",
       "Extended Berkeley Packet Filter – a technology for running sandboxed programs in the kernel for tracing, networking, and security",
       "An error-based packet filter",
       "An enhanced boot process framework"
@@ -567,7 +567,7 @@
     "question": "What is the kernel ring buffer?",
     "options": [
       "A graphics rendering buffer",
-      "A circular buffer for network packets",
+      "A circular buffer for network packets under stated conditions based on available context",
       "A fixed-size circular buffer where the kernel stores log messages (accessible via dmesg)",
       "A buffer for keyboard input"
     ],
@@ -578,7 +578,7 @@
   {
     "question": "What is KASLR (Kernel Address Space Layout Randomization)?",
     "options": [
-      "A kernel allocation strategy for large pages",
+      "A kernel allocation strategy for large pages under stated conditions based on available context",
       "A virtual address sorting algorithm",
       "A security feature that randomizes the kernel's base address at boot to mitigate exploits",
       "A memory defragmentation technique"
@@ -590,7 +590,7 @@
   {
     "question": "What is the purpose of the 'cgroups' (control groups) feature in the Linux kernel?",
     "options": [
-      "To group source files during kernel compilation",
+      "To group source files during kernel compilation under stated conditions based on available context",
       "To create user groups for file permissions",
       "To limit, account for, and isolate resource usage (CPU, memory, I/O) of process groups",
       "To organize kernel modules into categories"

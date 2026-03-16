@@ -9,6 +9,12 @@ DIFFICULTY_ALIASES = {
 
 VALID_DIFFICULTIES = {'easy', 'medium', 'hard'}
 VALID_STYLES = {'concept', 'scenario', 'debugging', 'architecture', 'operations'}
+LENGTH_BALANCE_SUFFIXES = (
+    " under stated conditions",
+    " based on available context",
+    " in this scenario",
+    " for this case",
+)
 
 
 def normalize_difficulty(value):
@@ -43,6 +49,50 @@ def question_signature(question_text):
     return text
 
 
+def _option_length(option_text):
+    return len(normalize_text(option_text))
+
+
+def rebalance_option_lengths(options, correct_answer):
+    """
+    Reduce answer-length guessing bias by ensuring the correct answer is not the
+    unique longest or unique shortest option.
+    """
+    if not isinstance(options, list) or len(options) < 2 or correct_answer not in options:
+        return options, correct_answer
+
+    balanced = list(options)
+    answer_index = balanced.index(correct_answer)
+
+    for step in range(32):
+        lengths = [_option_length(option) for option in balanced]
+        longest = max(lengths)
+        shortest = min(lengths)
+        unique_longest_correct = lengths.count(longest) == 1 and lengths[answer_index] == longest
+        unique_shortest_correct = lengths.count(shortest) == 1 and lengths[answer_index] == shortest
+
+        if not unique_longest_correct and not unique_shortest_correct:
+            break
+
+        if unique_longest_correct:
+            candidate_index = max(
+                (idx for idx in range(len(balanced)) if idx != answer_index),
+                key=lambda idx: lengths[idx],
+            )
+            suffix = LENGTH_BALANCE_SUFFIXES[step % len(LENGTH_BALANCE_SUFFIXES)]
+            if not normalize_text(balanced[candidate_index]).endswith(normalize_text(suffix)):
+                balanced[candidate_index] = f"{balanced[candidate_index]}{suffix}"
+            continue
+
+        if unique_shortest_correct:
+            suffix = LENGTH_BALANCE_SUFFIXES[step % len(LENGTH_BALANCE_SUFFIXES)]
+            if not normalize_text(balanced[answer_index]).endswith(normalize_text(suffix)):
+                balanced[answer_index] = f"{balanced[answer_index]}{suffix}"
+            correct_answer = balanced[answer_index]
+
+    return balanced, balanced[answer_index]
+
+
 def prepare_question_options(selected_questions, rng=None):
     rng = rng or random
     prepared = []
@@ -51,6 +101,10 @@ def prepare_question_options(selected_questions, rng=None):
         options = q.get('options')
         correct = q.get('correct_answer')
         if isinstance(options, list) and len(options) > 1 and correct in options:
+            balanced_options, balanced_correct = rebalance_option_lengths(options, correct)
+            q['options'] = balanced_options
+            q['correct_answer'] = balanced_correct
+            options = q['options']
             rng.shuffle(options)
         prepared.append(q)
 

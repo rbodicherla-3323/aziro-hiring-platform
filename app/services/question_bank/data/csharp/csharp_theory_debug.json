@@ -5,7 +5,7 @@
       "'var' is resolved at compile time, while 'dynamic' is resolved at runtime",
       "Both are resolved only at runtime",
       "'dynamic' is strongly typed, while 'var' is not",
-      "'var' can store any type changes at runtime automatically"
+      "'var' can store any type changes at runtime automatically under stated conditions"
     ],
     "correct_answer": "'var' is resolved at compile time, while 'dynamic' is resolved at runtime",
     "topic": "C# Fundamentals",
@@ -17,7 +17,7 @@
       "Because strings cannot contain numbers",
       "Because every modification creates a new string object",
       "Because string size is fixed by CLR metadata",
-      "Because strings are stored only on stack memory"
+      "Because strings are stored only on stack memory under stated conditions"
     ],
     "correct_answer": "Because every modification creates a new string object",
     "topic": "C# Fundamentals",
@@ -41,7 +41,7 @@
       "The value is always required",
       "The value can hold null in addition to normal value-type values",
       "The value is read-only",
-      "The value is dynamically typed"
+      "The value is dynamically typed under stated conditions based on available context"
     ],
     "correct_answer": "The value can hold null in addition to normal value-type values",
     "topic": "C# Fundamentals",
@@ -53,7 +53,7 @@
       "When you need multiple inheritance of behavior contracts",
       "When you need shared state fields",
       "When you need constructors",
-      "When you must block implementation in derived classes"
+      "When you must block implementation in derived classes under stated conditions"
     ],
     "correct_answer": "When you need multiple inheritance of behavior contracts",
     "topic": "OOP",
@@ -65,7 +65,7 @@
       "To allow only internal access",
       "To prevent inheritance from that class",
       "To force constructor injection",
-      "To make methods static automatically"
+      "To make methods static automatically under stated conditions"
     ],
     "correct_answer": "To prevent inheritance from that class",
     "topic": "OOP",
@@ -112,7 +112,7 @@
     "options": [
       "They always allocate on stack",
       "They provide value-based equality by default",
-      "They remove the need for constructors",
+      "They remove the need for constructors under stated conditions",
       "They cannot be immutable"
     ],
     "correct_answer": "They provide value-based equality by default",
@@ -122,7 +122,7 @@
   {
     "question": "What is the key difference between IEnumerable<T> and IQueryable<T>?",
     "options": [
-      "IEnumerable always executes in database; IQueryable always executes in memory",
+      "IEnumerable always executes in database; IQueryable always executes in memory under stated conditions",
       "IQueryable can translate expressions to data source queries; IEnumerable works in-memory",
       "IEnumerable supports async; IQueryable does not",
       "There is no difference"
@@ -148,17 +148,17 @@
     "options": [
       "Where(...)",
       "Select(...)",
-      "OrderBy(...)",
-      "ToList()"
+      "OrderBy(...) based on available context",
+      "ToList() under stated conditions"
     ],
-    "correct_answer": "ToList()",
+    "correct_answer": "ToList() under stated conditions",
     "topic": "LINQ",
     "difficulty": "easy"
   },
   {
     "question": "What is the difference between First() and FirstOrDefault()?",
     "options": [
-      "FirstOrDefault throws if no element exists, First returns null",
+      "FirstOrDefault throws if no element exists, First returns null under stated conditions",
       "First throws if no element exists, FirstOrDefault returns default value",
       "Both throw on empty sequence",
       "Both always return null on empty sequence"
@@ -173,7 +173,7 @@
       "Sorting multiple lists",
       "Flattening nested collections into a single sequence",
       "Grouping records by key",
-      "Removing duplicate records only"
+      "Removing duplicate records only under stated conditions"
     ],
     "correct_answer": "Flattening nested collections into a single sequence",
     "topic": "LINQ",
@@ -183,11 +183,11 @@
     "question": "For checking whether any element exists in a collection, which is usually more efficient?",
     "options": [
       "Count() > 0",
-      "Any()",
+      "Any() under stated conditions",
       "First() != null",
-      "Select(x => x).Count() > 0"
+      "Select(x => x).Count() > 0 based on available context"
     ],
-    "correct_answer": "Any()",
+    "correct_answer": "Any() under stated conditions",
     "topic": "Collections",
     "difficulty": "easy"
   },
@@ -218,7 +218,7 @@
   {
     "question": "In C#, what does the 'using' statement (or 'using var') primarily ensure?",
     "options": [
-      "Automatic garbage collection immediately",
+      "Automatic garbage collection immediately under stated conditions",
       "Object is pinned in memory",
       "IDisposable resources are disposed deterministically",
       "Code runs asynchronously"
@@ -243,7 +243,7 @@
     "question": "Which statement about finally block is correct?",
     "options": [
       "It runs only if no exception occurs",
-      "It runs only when an exception occurs",
+      "It runs only when an exception occurs under stated conditions",
       "It generally runs whether or not exception occurs",
       "It runs only for checked exceptions"
     ],
@@ -254,7 +254,7 @@
   {
     "question": "Why is catching System.Exception everywhere usually discouraged?",
     "options": [
-      "It improves performance too much",
+      "It improves performance too much under stated conditions",
       "It can hide real bugs and make handling too broad",
       "It is invalid C# syntax",
       "It prevents logging"
@@ -266,7 +266,7 @@
   {
     "question": "What does the 'throw;' statement (without exception variable) inside a catch block do?",
     "options": [
-      "Throws a new exception and resets stack trace",
+      "Throws a new exception and resets stack trace under stated conditions",
       "Rethrows original exception preserving stack trace",
       "Suppresses the exception",
       "Throws only in debug mode"
@@ -291,7 +291,7 @@
     "question": "Debug this: int result = total / count; sometimes crashes. Most likely issue?",
     "options": [
       "Overflow on all divisions",
-      "NullReferenceException always",
+      "NullReferenceException always under stated conditions",
       "DivideByZeroException when count is 0",
       "InvalidCastException always"
     ],
@@ -316,7 +316,7 @@
     "options": [
       "The loop must start at 1",
       "It should use i < arr.Length to avoid IndexOutOfRangeException",
-      "arr.Length cannot be used in loops",
+      "arr.Length cannot be used in loops under stated conditions based on available context",
       "sum must be double"
     ],
     "correct_answer": "It should use i < arr.Length to avoid IndexOutOfRangeException",
@@ -351,11 +351,11 @@
     "question": "When is 'async void' generally acceptable?",
     "options": [
       "For repository methods",
-      "For controller actions returning data",
-      "For event handlers",
+      "For controller actions returning data based on available context",
+      "For event handlers under stated conditions",
       "For all async methods"
     ],
-    "correct_answer": "For event handlers",
+    "correct_answer": "For event handlers under stated conditions",
     "topic": "Async/Await",
     "difficulty": "moderate"
   },
@@ -377,7 +377,7 @@
       "It can cause deadlocks and thread blocking",
       "It makes execution always faster",
       "It converts Task to ValueTask",
-      "It automatically retries failed tasks"
+      "It automatically retries failed tasks under stated conditions"
     ],
     "correct_answer": "It can cause deadlocks and thread blocking",
     "topic": "Async/Await",
@@ -386,7 +386,7 @@
   {
     "question": "What is the purpose of ConfigureAwait(false) in library code?",
     "options": [
-      "Forces code to resume on original context",
+      "Forces code to resume on original context under stated conditions",
       "Avoids capturing synchronization context for continuation",
       "Disables exceptions in async methods",
       "Makes task run synchronously"
@@ -401,7 +401,7 @@
       "Checks for type compatibility",
       "Returns left operand if not null, otherwise right operand",
       "Throws if left operand is null",
-      "Converts null to empty string always"
+      "Converts null to empty string always under stated conditions"
     ],
     "correct_answer": "Returns left operand if not null, otherwise right operand",
     "topic": "C# Fundamentals",
@@ -413,7 +413,7 @@
       "Always assign value to x",
       "Assign value to x only when x is null",
       "Compare x and value for equality",
-      "Assign null to x if value is null"
+      "Assign null to x if value is null under stated conditions"
     ],
     "correct_answer": "Assign value to x only when x is null",
     "topic": "C# Fundamentals",
@@ -422,7 +422,7 @@
   {
     "question": "What does the null-conditional operator '?.' do?",
     "options": [
-      "Throws NullReferenceException immediately",
+      "Throws NullReferenceException immediately under stated conditions",
       "Skips member access and returns null if left side is null",
       "Converts null into default(T)",
       "Works only on strings"
@@ -436,7 +436,7 @@
     "options": [
       "Both can be assigned at runtime anywhere",
       "const is compile-time constant; readonly is assigned at declaration or constructor",
-      "readonly is compile-time and const is runtime",
+      "readonly is compile-time and const is runtime under stated conditions based on available context",
       "They are interchangeable"
     ],
     "correct_answer": "const is compile-time constant; readonly is assigned at declaration or constructor",
@@ -446,7 +446,7 @@
   {
     "question": "What is boxing in C#?",
     "options": [
-      "Converting reference type to value type",
+      "Converting reference type to value type under stated conditions",
       "Wrapping a value type inside an object/reference",
       "Creating arrays of objects",
       "Encrypting values for heap storage"
@@ -460,7 +460,7 @@
     "options": [
       "Converting object/reference back to original value type",
       "Converting int to string",
-      "Moving object from heap to stack",
+      "Moving object from heap to stack under stated conditions",
       "Disposing a boxed object"
     ],
     "correct_answer": "Converting object/reference back to original value type",
@@ -470,7 +470,7 @@
   {
     "question": "What is the difference between casting '(T)obj' and 'obj as T'?",
     "options": [
-      "'as' throws InvalidCastException on failure",
+      "'as' throws InvalidCastException on failure under stated conditions based on available context",
       "Explicit cast returns null on failure",
       "Explicit cast throws on failure; 'as' returns null for reference/nullable types",
       "Both always return null on failure"
@@ -485,7 +485,7 @@
       "Events are just aliases with no restrictions",
       "Events expose add/remove subscription and can only be raised by declaring type",
       "Delegates cannot reference methods",
-      "Events are faster because they run on separate threads"
+      "Events are faster because they run on separate threads under stated conditions"
     ],
     "correct_answer": "Events expose add/remove subscription and can only be raised by declaring type",
     "topic": "OOP",
@@ -494,7 +494,7 @@
   {
     "question": "What is an extension method in C#?",
     "options": [
-      "A method added by inheriting from System.Object",
+      "A method added by inheriting from System.Object under stated conditions based on available context",
       "A static method that appears like an instance method via 'this' on first parameter",
       "A virtual method with default implementation",
       "A runtime-generated method by CLR only"
@@ -508,7 +508,7 @@
     "options": [
       "Load only part of class in memory",
       "Split class definition across multiple files",
-      "Create optional inheritance sections",
+      "Create optional inheritance sections under stated conditions",
       "Define private-only members"
     ],
     "correct_answer": "Split class definition across multiple files",
@@ -556,7 +556,7 @@
     "options": [
       "Invalid multiplication on int",
       "Missing base condition causes StackOverflowException",
-      "Recursion is not supported in C#",
+      "Recursion is not supported in C# under stated conditions",
       "Method must be static"
     ],
     "correct_answer": "Missing base condition causes StackOverflowException",
@@ -569,7 +569,7 @@
       "Replace Where with Select",
       "Materialize results once using ToList/ToArray when needed",
       "Use dynamic instead of var",
-      "Disable deferred execution globally"
+      "Disable deferred execution globally under stated conditions"
     ],
     "correct_answer": "Materialize results once using ToList/ToArray when needed",
     "topic": "LINQ",
@@ -581,7 +581,7 @@
       "Middleware runs alphabetically",
       "Each middleware can short-circuit or modify request/response before next one",
       "Only first middleware is executed",
-      "Middleware executes in parallel by default"
+      "Middleware executes in parallel by default under stated conditions based on available context"
     ],
     "correct_answer": "Each middleware can short-circuit or modify request/response before next one",
     "topic": "ASP.NET Core",
@@ -617,7 +617,7 @@
       "Disables SQL generation",
       "Returns entities without change tracking overhead",
       "Tracks only primary keys",
-      "Automatically saves changes"
+      "Automatically saves changes under stated conditions"
     ],
     "correct_answer": "Returns entities without change tracking overhead",
     "topic": "Entity Framework",
@@ -626,7 +626,7 @@
   {
     "question": "After modifying tracked entities in EF Core, which call persists changes to database?",
     "options": [
-      "CommitChanges()",
+      "CommitChanges() under stated conditions",
       "ApplyUpdates()",
       "SaveChanges() or SaveChangesAsync()",
       "Flush()"
@@ -640,7 +640,7 @@
     "options": [
       "Compiles C# code to IL",
       "Automatically reclaims memory of unreachable managed objects",
-      "Disposes unmanaged handles deterministically",
+      "Disposes unmanaged handles deterministically under stated conditions",
       "Prevents all memory leaks"
     ],
     "correct_answer": "Automatically reclaims memory of unreachable managed objects",
@@ -652,7 +652,7 @@
     "options": [
       "Finalizers run deterministically at scope end",
       "IDisposable is for deterministic cleanup; finalizer is nondeterministic fallback",
-      "Finalizers are preferred for database connections",
+      "Finalizers are preferred for database connections under stated conditions based on available context",
       "IDisposable is only for value types"
     ],
     "correct_answer": "IDisposable is for deterministic cleanup; finalizer is nondeterministic fallback",
@@ -674,7 +674,7 @@
   {
     "question": "What is the key difference between 'ref' and 'out' parameters?",
     "options": [
-      "'out' requires caller variable to be initialized before call",
+      "'out' requires caller variable to be initialized before call under stated conditions",
       "'ref' does not pass by reference",
       "'out' must be assigned in callee; 'ref' requires prior initialization",
       "There is no difference"
@@ -688,7 +688,7 @@
     "options": [
       "Passing parameters only by name",
       "Passing a variable number of arguments",
-      "Defining optional generic constraints",
+      "Defining optional generic constraints under stated conditions",
       "Creating readonly arrays only"
     ],
     "correct_answer": "Passing a variable number of arguments",
@@ -713,7 +713,7 @@
       "Because list is mutable",
       "Because loop variable is captured by reference-like closure semantics",
       "Because Action cannot capture local variables",
-      "Because Console.WriteLine always prints last value"
+      "Because Console.WriteLine always prints last value under stated conditions"
     ],
     "correct_answer": "Because loop variable is captured by reference-like closure semantics",
     "topic": "Debugging",
@@ -725,7 +725,7 @@
       "Use dynamic i",
       "Create a local copy inside loop, then capture that copy",
       "Use goto labels",
-      "Convert loop to while without changes"
+      "Convert loop to while without changes under stated conditions"
     ],
     "correct_answer": "Create a local copy inside loop, then capture that copy",
     "topic": "Debugging",
@@ -748,7 +748,7 @@
     "options": [
       "It is always faster by 10x",
       "'is null' is not affected by overloaded == operators",
-      "'== null' is invalid for reference types",
+      "'== null' is invalid for reference types under stated conditions",
       "'is null' works only in .NET Framework"
     ],
     "correct_answer": "'is null' is not affected by overloaded == operators",
@@ -760,7 +760,7 @@
     "options": [
       "They cannot return values",
       "They are expression-based and typically include a default arm '_'",
-      "They replace all if statements automatically",
+      "They replace all if statements automatically under stated conditions",
       "They work only with enums"
     ],
     "correct_answer": "They are expression-based and typically include a default arm '_'",
@@ -770,7 +770,7 @@
   {
     "question": "In code reviews for C# backend services, why avoid synchronous blocking calls in async flows?",
     "options": [
-      "Because synchronous calls are not supported in CLR",
+      "Because synchronous calls are not supported in CLR under stated conditions",
       "They can reduce scalability and tie up request threads",
       "Because async methods cannot throw exceptions",
       "Because Task type cannot represent results"
@@ -782,7 +782,7 @@
   {
     "question": "What is the best way to check if a string is null or empty?",
     "options": [
-      "s == null || s == \"\"",
+      "s == null || s == \"\" under stated conditions",
       "string.IsNullOrEmpty(s)",
       "s.Length == 0",
       "s.Equals(\"\")"
@@ -795,7 +795,7 @@
     "question": "What is the best way to check if a string is null, empty, or whitespace only?",
     "options": [
       "string.IsNullOrWhiteSpace(s)",
-      "string.IsNullOrEmpty(s)",
+      "string.IsNullOrEmpty(s) under stated conditions",
       "s.Trim() == \"\"",
       "s == \" \""
     ],
@@ -809,7 +809,7 @@
       "List<T>",
       "Dictionary<TKey, TValue>",
       "Queue<T>",
-      "LinkedList<T>"
+      "LinkedList<T> under stated conditions"
     ],
     "correct_answer": "Dictionary<TKey, TValue>",
     "topic": "Collections",
@@ -833,7 +833,7 @@
       "C# short-circuits && and skips second condition",
       "ToString never throws",
       "Length on null returns 0",
-      "Compiler rewrites it with try/catch"
+      "Compiler rewrites it with try/catch under stated conditions"
     ],
     "correct_answer": "C# short-circuits && and skips second condition",
     "topic": "Debugging",

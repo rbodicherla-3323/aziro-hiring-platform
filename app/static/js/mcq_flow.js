@@ -1847,6 +1847,61 @@ window.__MCQ_AJAX_FLOW = false;
         questionTextEl.innerHTML = renderQuestionTextHtml(rawText);
     }
 
+    function resetViewportToTop() {
+        if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+            try {
+                window.history.scrollRestoration = "manual";
+            } catch (_) {
+                // Ignore browser restrictions and continue with explicit top reset.
+            }
+        }
+
+        const scrollTargets = [];
+        if (document && document.documentElement) scrollTargets.push(document.documentElement);
+        if (document && document.body) scrollTargets.push(document.body);
+        if (page) scrollTargets.push(page);
+        try {
+            const shell = document && document.getElementById("mcqQuestionView");
+            if (shell) scrollTargets.push(shell);
+        } catch (_) {
+            // Ignore lookup failures.
+        }
+
+        const applyTop = () => {
+            try {
+                window.scrollTo(0, 0);
+            } catch (_) {
+                // Ignore if browser blocks programmatic scrolling.
+            }
+            scrollTargets.forEach((node) => {
+                try {
+                    node.scrollTop = 0;
+                } catch (_) {
+                    // Ignore non-scrollable targets.
+                }
+            });
+
+            try {
+                const active = document && document.activeElement;
+                if (active && typeof active.blur === "function") {
+                    active.blur();
+                }
+            } catch (_) {
+                // Ignore blur errors.
+            }
+        };
+
+        applyTop();
+        if (typeof window !== "undefined" && typeof window.requestAnimationFrame === "function") {
+            window.requestAnimationFrame(applyTop);
+        } else {
+            setTimeout(applyTop, 0);
+        }
+        setTimeout(applyTop, 60);
+        setTimeout(applyTop, 180);
+        setTimeout(applyTop, 360);
+    }
+
     function rememberAnswer(questionData) {
         if (questionData && questionData.selected_answer) {
             state.answeredQuestions.add(Number(questionData.q_index));
@@ -1930,6 +1985,7 @@ window.__MCQ_AJAX_FLOW = false;
         bindQuestionForm();
         bindPaletteEvents();
         updateReviewButtonLabel();
+        resetViewportToTop();
 
         if (proctoringEnabled && typeof window.setupExamProctoring === "function") {
             window.setupExamProctoring();
@@ -1987,6 +2043,7 @@ window.__MCQ_AJAX_FLOW = false;
 </div>`;
 
         history.replaceState({}, "", state.submitUrl);
+        resetViewportToTop();
 
         const backBtn = document.getElementById("mcqBackToTestBtn");
         const submitBtn = document.getElementById("mcqConfirmSubmitBtn");
@@ -2285,6 +2342,7 @@ window.__MCQ_AJAX_FLOW = false;
         startOrSyncTimer(Number(view.dataset.remainingSeconds || 0));
         bindQuestionForm();
         bindPaletteEvents();
+        resetViewportToTop();
     }
 
     function bootstrapFromSubmitPage() {
