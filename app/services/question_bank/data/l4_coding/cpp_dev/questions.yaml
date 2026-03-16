@@ -778,32 +778,6 @@
   - input: [4]
     expected: ["   *","  * *"," *   *","*******"," *   *","  * *","   *"]
 
-- id: 48
-  title: nCr Modulo 1e9+7
-  difficulty: MEDIUM
-  description: >
-    Compute C(n, r) modulo 1,000,000,007.
-  function:
-    cpp: 'int solve(int n, int r)'
-  public_tests:
-  - input: [5,2]
-    expected: 10
-  - input: [10,3]
-    expected: 120
-  - input: [0,0]
-    expected: 1
-  hidden_tests:
-  - input: [6,0]
-    expected: 1
-  - input: [6,6]
-    expected: 1
-  - input: [6,1]
-    expected: 6
-  - input: [30,15]
-    expected: 155117520
-  - input: [50,1]
-    expected: 50
-
 - id: 49
   title: Top K Frequent Words
   difficulty: MEDIUM
