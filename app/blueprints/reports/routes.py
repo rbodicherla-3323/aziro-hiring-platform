@@ -4,7 +4,7 @@ Reports page — recent session candidates + historical report search.
 """
 from datetime import datetime, timezone, timedelta
 from io import BytesIO
-from flask import Blueprint, render_template, request, session, jsonify, send_file, abort
+from flask import Blueprint, render_template, request, session, jsonify, send_file, abort, current_app
 
 from app.utils.auth_decorator import login_required
 from app.services.generated_tests_store import get_tests_for_user_in_range, SESSION_RETENTION_DAYS
@@ -118,7 +118,11 @@ def reports():
             candidate["report_filename"] = ""
             candidate["report_id"] = None
             return
-        info = db_service.get_latest_report_for_email(email_key)
+        try:
+            info = db_service.get_latest_report_for_email(email_key)
+        except Exception as exc:
+            current_app.logger.exception("Report lookup failed for %s: %s", email_key, exc)
+            info = None
         candidate["has_report"] = bool(info)
         candidate["report_filename"] = info.get("filename") if info else ""
         candidate["report_id"] = info.get("id") if info else None
@@ -136,8 +140,16 @@ def reports():
             or q_lower in c.get("role", "").lower()
         ]
 
-    summaries_by_email = build_proctoring_summary_by_email({c.get("email", "") for c in session_candidates})
-    plagiarism_by_email = build_plagiarism_summary_by_candidates(session_candidates)
+    try:
+        summaries_by_email = build_proctoring_summary_by_email({c.get("email", "") for c in session_candidates})
+    except Exception as exc:
+        current_app.logger.exception("Failed to build proctoring summaries: %s", exc)
+        summaries_by_email = {}
+    try:
+        plagiarism_by_email = build_plagiarism_summary_by_candidates(session_candidates)
+    except Exception as exc:
+        current_app.logger.exception("Failed to build plagiarism summaries: %s", exc)
+        plagiarism_by_email = {}
     for candidate in session_candidates:
         email_key = str(candidate.get("email", "")).strip().lower()
         candidate["proctoring_summary"] = summaries_by_email.get(email_key, blank_proctoring_summary())
@@ -192,7 +204,10 @@ def search_reports():
                 or query_lower in t.get("role", "").lower()):
             email_key = str(t.get("email", "")).strip().lower()
             if email_key and email_key not in found_emails:
-                info = db_service.get_latest_report_for_email(email_key)
+                try:
+                    info = db_service.get_latest_report_for_email(email_key)
+                except Exception:
+                    info = None
                 results.append({
                     "name": t.get("name", ""),
                     "email": t.get("email", ""),
