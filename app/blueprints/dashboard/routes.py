@@ -169,13 +169,14 @@ def create_test():
     auto_send_enabled = str(os.getenv("AUTO_SEND_TEST_EMAILS", "true")).strip().lower() not in {
         "0", "false", "no"
     }
-    delegated_access_token = ""
-    if auto_send_enabled:
-        delegated_access_token = get_valid_graph_delegated_token(user_email)
-        if not delegated_access_token:
-            delegated_access_token = get_valid_graph_delegated_token_from_session(
-                session.get("oauth", {}),
-            )
+    delegated_access_token = get_valid_graph_delegated_token(user_email)
+    if not delegated_access_token:
+        delegated_access_token = get_valid_graph_delegated_token_from_session(
+            session.get("oauth", {}),
+        )
+    if delegated_access_token and not auto_send_enabled:
+        # Outlook login should still auto-send even if env toggle is off.
+        auto_send_enabled = True
 
     auto_sent = 0
     auto_failures = []
