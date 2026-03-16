@@ -2278,13 +2278,16 @@ def submit(session_id):
         except Exception:
             session_meta_snapshot = session_meta or {}
 
+        app = current_app._get_current_object()
+
         def _run_async_eval():
             try:
-                _evaluate_and_store_coding_result(
-                    session_id,
-                    session_meta=session_meta_snapshot,
-                    coding_data=coding_snapshot,
-                )
+                with app.app_context():
+                    _evaluate_and_store_coding_result(
+                        session_id,
+                        session_meta=session_meta_snapshot,
+                        coding_data=coding_snapshot,
+                    )
             except Exception:
                 # Submission must never be blocked by evaluation bookkeeping.
                 pass

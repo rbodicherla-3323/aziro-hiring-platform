@@ -26,6 +26,13 @@ def _normalize_email(email: str) -> str:
 def _now_utc() -> datetime:
     return datetime.now(timezone.utc)
 
+def _ensure_aware_utc(value: datetime | None) -> datetime | None:
+    if not value:
+        return None
+    if value.tzinfo is None:
+        return value.replace(tzinfo=timezone.utc)
+    return value.astimezone(timezone.utc)
+
 def _access_approvals_has_team() -> bool:
     try:
         bind = db.session.get_bind()
@@ -266,7 +273,8 @@ def maybe_notify_admin_of_request(
     row = upsert_access_request(requester_email)
     cooldown_hours = max(1, int(ACCESS_REQUEST_COOLDOWN_HOURS))
     now = _now_utc()
-    if row.last_notified_at and row.last_notified_at >= (now - timedelta(hours=cooldown_hours)):
+    last_notified_at = _ensure_aware_utc(row.last_notified_at)
+    if last_notified_at and last_notified_at >= (now - timedelta(hours=cooldown_hours)):
         return False
 
     subject = f"Access Request: {requester_email}"
