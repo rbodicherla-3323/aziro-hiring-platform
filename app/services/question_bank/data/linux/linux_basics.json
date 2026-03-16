@@ -3,7 +3,7 @@
     "question": "A production server is experiencing high load averages (15+) but CPU utilization stays under 20%. 'top' shows many processes in D (uninterruptible sleep) state. What is the most likely root cause?",
     "options": [
       "The system is CPU-bound and needs more cores",
-      "The scheduler is misconfigured and needs tuning via nice values",
+      "The scheduler is misconfigured and needs tuning via nice values under stated conditions",
       "OOM killer is throttling processes",
       "Processes are waiting on I/O operations (disk or NFS), causing I/O wait"
     ],
@@ -15,7 +15,7 @@
     "options": [
       "The disk is saturated with high latency; requests are queuing excessively",
       "The filesystem is corrupted and needs fsck",
-      "The disk controller firmware needs updating",
+      "The disk controller firmware needs updating under stated conditions based on available context",
       "The disk is idle and performing optimally"
     ],
     "correct_answer": "The disk is saturated with high latency; requests are queuing excessively",
@@ -26,7 +26,7 @@
     "options": [
       "The system is thrashing — memory is overcommitted and pages are constantly swapping in/out; check per-process RSS with 'ps aux --sort=-rss'",
       "The kernel is proactively caching swap; this is normal behavior",
-      "Swap is being used as additional RAM intentionally; increase swap to 12GB",
+      "Swap is being used as additional RAM intentionally; increase swap to 12GB under stated conditions based on available context in this scenario",
       "The Java application has a file descriptor leak causing swap usage"
     ],
     "correct_answer": "The system is thrashing — memory is overcommitted and pages are constantly swapping in/out; check per-process RSS with 'ps aux --sort=-rss'",
@@ -48,7 +48,7 @@
     "options": [
       "kernel.panic=1 prevents OOM situations",
       "vm.swappiness=0 disables OOM killing entirely",
-      "vm.oom_kill_allocating_task=0 stops the OOM killer permanently",
+      "vm.oom_kill_allocating_task=0 stops the OOM killer permanently under stated conditions based on available context",
       "vm.overcommit_memory=2 disables overcommit; the kernel will reject allocations exceeding physical RAM + swap"
     ],
     "correct_answer": "vm.overcommit_memory=2 disables overcommit; the kernel will reject allocations exceeding physical RAM + swap",
@@ -60,7 +60,7 @@
       "RSS is the physical memory currently in use by the process; VSZ is the total virtual address space including mapped but not yet allocated pages",
       "RSS includes swap usage; VSZ does not",
       "They are identical on systems without swap enabled",
-      "VSZ is always smaller than RSS because it excludes shared libraries"
+      "VSZ is always smaller than RSS because it excludes shared libraries under stated conditions based on available context in this scenario for this case"
     ],
     "correct_answer": "RSS is the physical memory currently in use by the process; VSZ is the total virtual address space including mapped but not yet allocated pages",
     "topic": "Kernel & Memory Management"
@@ -71,7 +71,7 @@
       "Set vm.swappiness=60 is optimal for all workloads; investigate elsewhere",
       "Set vm.swappiness=1 or lower to strongly prefer reclaiming page cache over swapping out application memory, reducing latency spikes",
       "Set vm.swappiness=100 to maximize I/O throughput",
-      "Disable swap entirely with swapoff; this is always the best approach for databases"
+      "Disable swap entirely with swapoff; this is always the best approach for databases under stated conditions based on available context"
     ],
     "correct_answer": "Set vm.swappiness=1 or lower to strongly prefer reclaiming page cache over swapping out application memory, reducing latency spikes",
     "topic": "Kernel & Memory Management"
@@ -81,7 +81,7 @@
     "options": [
       "The threshold of dirty (modified in page cache but not written to disk) pages before processes are blocked vs. when background writeback starts",
       "The ratio of user-space to kernel-space memory allocation",
-      "The maximum percentage of swap that can be used before OOM triggers",
+      "The maximum percentage of swap that can be used before OOM triggers under stated conditions based on available context in this scenario for this case",
       "The percentage of corrupted filesystem blocks before fsck triggers"
     ],
     "correct_answer": "The threshold of dirty (modified in page cache but not written to disk) pages before processes are blocked vs. when background writeback starts",
@@ -91,11 +91,11 @@
     "question": "You need to trace all system calls made by a running process with PID 4521 without stopping it. Which command would you use?",
     "options": [
       "ltrace --pid 4521",
-      "strace -p 4521",
+      "strace -p 4521 under stated conditions",
       "gdb attach 4521",
-      "perf record -p 4521"
+      "perf record -p 4521 based on available context"
     ],
-    "correct_answer": "strace -p 4521",
+    "correct_answer": "strace -p 4521 under stated conditions",
     "topic": "Debugging & Tracing"
   },
   {
@@ -104,7 +104,7 @@
       "The filesystem is read-only",
       "The process is waiting on a userspace lock (mutex/semaphore), likely a deadlock or contention issue",
       "The process is performing a DNS lookup",
-      "The process has exceeded its CPU time limit"
+      "The process has exceeded its CPU time limit under stated conditions based on available context in this scenario"
     ],
     "correct_answer": "The process is waiting on a userspace lock (mutex/semaphore), likely a deadlock or contention issue",
     "topic": "Debugging & Tracing"
@@ -123,7 +123,7 @@
   {
     "question": "A server is running out of file descriptors and 'ulimit -n' shows 1024. You need to increase the limit to 65535 for a specific service running under systemd. Where should you configure this?",
     "options": [
-      "By running 'ulimit -n 65535' in the service startup script",
+      "By running 'ulimit -n 65535' in the service startup script under stated conditions based on available context",
       "Only in /etc/security/limits.conf under the user's entry",
       "In the systemd unit file using LimitNOFILE=65535, since systemd-managed services do not inherit limits.conf",
       "In /etc/sysctl.conf using fs.file-max=65535"
@@ -134,7 +134,7 @@
   {
     "question": "What is the difference between 'systemctl restart' and 'systemctl reload' for a service?",
     "options": [
-      "'restart' only works for enabled services; 'reload' works for all",
+      "'restart' only works for enabled services; 'reload' works for all under stated conditions based on available context in this scenario for this case",
       "They are functionally identical",
       "'reload' always requires a reboot; 'restart' does not",
       "'restart' stops and starts the service (new PID); 'reload' sends a signal (typically SIGHUP) to re-read config without stopping the service"
@@ -146,7 +146,7 @@
     "question": "A service is in 'failed' state after a crash. You want it to automatically restart on failure with a 5-second delay. Which systemd unit directives achieve this?",
     "options": [
       "Restart=on-failure and RestartSec=5 in the [Service] section",
-      "ExecRestart=/bin/sleep 5 in the [Unit] section",
+      "ExecRestart=/bin/sleep 5 in the [Unit] section under stated conditions",
       "WatchdogSec=5 and FailureAction=restart",
       "AutoRestart=true and Delay=5"
     ],
@@ -168,7 +168,7 @@
     "question": "In systemd, what is the purpose of the 'WantedBy=multi-user.target' directive in the [Install] section?",
     "options": [
       "It creates a dependency so the service starts when the system reaches multi-user runlevel (runlevel 3 equivalent), i.e., when 'systemctl enable' is run",
-      "It limits the service to only run on multi-CPU systems",
+      "It limits the service to only run on multi-CPU systems under stated conditions based on available context in this scenario for this case under stated conditions",
       "It prevents the service from starting during boot",
       "It forces the service to run in single-user mode"
     ],
@@ -178,7 +178,7 @@
   {
     "question": "You suspect a network issue between your application server and a database on port 5432. 'ping' works but connections fail intermittently. Which tool would help you diagnose the TCP-level connectivity and path issues?",
     "options": [
-      "ping -c 10 db-server",
+      "ping -c 10 db-server under stated conditions",
       "nslookup db-server",
       "traceroute db-server && ss -tnp | grep 5432",
       "arp -a db-server"
@@ -190,7 +190,7 @@
     "question": "The command 'ss -tlnp' shows a process listening on 0.0.0.0:8080 but external clients cannot connect. Firewall rules (iptables -L) show no DROP rules. What else could be blocking external access?",
     "options": [
       "The process must listen on 127.0.0.1 instead of 0.0.0.0",
-      "The ss command output is unreliable; use netstat instead",
+      "The ss command output is unreliable; use netstat instead under stated conditions based on available context",
       "A cloud security group, network ACL, or firewalld/nftables rule is blocking inbound traffic on port 8080",
       "The process is only configured for IPv6"
     ],
@@ -201,7 +201,7 @@
     "question": "What is the difference between iptables chains INPUT, FORWARD, and OUTPUT?",
     "options": [
       "INPUT handles TCP; FORWARD handles UDP; OUTPUT handles ICMP",
-      "They all process the same packets but in different priority order",
+      "They all process the same packets but in different priority order under stated conditions based on available context in this scenario for this case under stated conditions",
       "INPUT processes packets destined for the local system; FORWARD handles packets being routed through; OUTPUT handles locally generated outbound packets",
       "INPUT handles all packets; FORWARD and OUTPUT are aliases"
     ],
@@ -214,7 +214,7 @@
       "tcpdump -i any port 53 -nn",
       "tcpdump -i eth0 icmp",
       "tcpdump -i lo port 53",
-      "tcpdump -i any port 80"
+      "tcpdump -i any port 80 under stated conditions"
     ],
     "correct_answer": "tcpdump -i any port 53 -nn",
     "topic": "Networking & Troubleshooting"
@@ -224,7 +224,7 @@
     "options": [
       "Bind the service to 10.0.1.5 instead of 0.0.0.0 in its configuration",
       "Set the default gateway to 10.0.1.5",
-      "Remove all other network interfaces using ip link delete",
+      "Remove all other network interfaces using ip link delete under stated conditions",
       "Configure iptables to block other interfaces"
     ],
     "correct_answer": "Bind the service to 10.0.1.5 instead of 0.0.0.0 in its configuration",
@@ -235,7 +235,7 @@
     "options": [
       "All 15,000 connections are actively transferring data",
       "These are closed connections waiting for late packets; enable net.ipv4.tcp_tw_reuse=1 to allow reuse of TIME_WAIT sockets for new outbound connections",
-      "Increase the number of network interfaces to distribute the load",
+      "Increase the number of network interfaces to distribute the load under stated conditions based on available context in this scenario for this case under stated conditions",
       "The server has a memory leak; restart all services"
     ],
     "correct_answer": "These are closed connections waiting for late packets; enable net.ipv4.tcp_tw_reuse=1 to allow reuse of TIME_WAIT sockets for new outbound connections",
@@ -245,7 +245,7 @@
     "question": "You run 'curl -v https://api.internal.company.com' and get 'SSL: certificate subject name does not match target host name'. The IP resolves correctly. What is the issue?",
     "options": [
       "The CA bundle is missing on the client",
-      "The server is using HTTP/2 which is incompatible",
+      "The server is using HTTP/2 which is incompatible under stated conditions based on available context in this scenario",
       "The certificate's Subject Alternative Name (SAN) or Common Name (CN) does not include 'api.internal.company.com'",
       "The SSL certificate is expired"
     ],
@@ -257,7 +257,7 @@
     "options": [
       "It causes the executable to run with the permissions of the file owner (often root) regardless of who executes it, creating potential privilege escalation risks",
       "It prevents the file from being modified after creation",
-      "It allows the file to be executed by any user but with no special privileges",
+      "It allows the file to be executed by any user but with no special privileges under stated conditions based on available context in this scenario for this case under stated conditions",
       "It encrypts the file contents during execution"
     ],
     "correct_answer": "It causes the executable to run with the permissions of the file owner (often root) regardless of who executes it, creating potential privilege escalation risks",
@@ -268,7 +268,7 @@
     "options": [
       "chmod -R 4000 /",
       "locate --suid",
-      "ls -la /usr/bin | grep suid",
+      "ls -la /usr/bin | grep suid under stated conditions",
       "find / -perm -4000 -type f 2>/dev/null"
     ],
     "correct_answer": "find / -perm -4000 -type f 2>/dev/null",
@@ -277,7 +277,7 @@
   {
     "question": "You need to restrict SSH access to only key-based authentication and disable root login. Which sshd_config directives should you set?",
     "options": [
-      "AuthenticationMethods password, RootLogin disabled",
+      "AuthenticationMethods password, RootLogin disabled under stated conditions",
       "PasswordAuthentication no, PermitRootLogin no, PubkeyAuthentication yes",
       "UseSSHKeys only, DisableRoot true",
       "AllowPassword yes, PermitRootLogin yes"
@@ -291,7 +291,7 @@
       "It causes files to be automatically encrypted",
       "Only the file owner, directory owner, or root can delete or rename files within it, even though others have write permission to the directory",
       "It prevents any new files from being created",
-      "It makes the directory read-only for all users"
+      "It makes the directory read-only for all users under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "Only the file owner, directory owner, or root can delete or rename files within it, even though others have write permission to the directory",
     "topic": "Security & Hardening"
@@ -301,7 +301,7 @@
     "options": [
       "Only check /tmp for suspicious scripts",
       "Only /etc/crontab needs to be checked",
-      "Run 'crontab -l' as root only; that shows everything",
+      "Run 'crontab -l' as root only; that shows everything under stated conditions based on available context in this scenario for this case under stated conditions",
       "Check /var/spool/cron/crontabs/, /etc/cron.d/, /etc/cron.{daily,weekly,monthly}/, user crontabs, systemd timers, and ~/.bashrc/.profile for backdoors"
     ],
     "correct_answer": "Check /var/spool/cron/crontabs/, /etc/cron.d/, /etc/cron.{daily,weekly,monthly}/, user crontabs, systemd timers, and ~/.bashrc/.profile for backdoors",
@@ -312,7 +312,7 @@
     "options": [
       "Enforcing mode actively blocks policy violations and logs them; permissive mode only logs violations without blocking, useful for testing policies",
       "Enforcing mode disables all user access; permissive mode allows root-only access",
-      "Enforcing mode logs violations but allows them; permissive mode blocks all access",
+      "Enforcing mode logs violations but allows them; permissive mode blocks all access under stated conditions based on available context in this scenario",
       "Both modes are identical in behavior"
     ],
     "correct_answer": "Enforcing mode actively blocks policy violations and logs them; permissive mode only logs violations without blocking, useful for testing policies",
@@ -322,7 +322,7 @@
     "question": "You need to create a filesystem on /dev/sdb1, mount it at /data with noexec and nosuid options, and make it persist across reboots. What is the correct sequence?",
     "options": [
       "parted /dev/sdb1 mkfs; mount /dev/sdb1 /data; crontab @reboot mount",
-      "fdisk /dev/sdb1 --format; mountpoint /data; echo mount >> /etc/rc.local",
+      "fdisk /dev/sdb1 --format; mountpoint /data; echo mount >> /etc/rc.local under stated conditions based on available context in this scenario",
       "mkfs.ext4 /dev/sdb1; mkdir -p /data; mount -o noexec,nosuid /dev/sdb1 /data; add entry to /etc/fstab with options noexec,nosuid",
       "format /dev/sdb1; mount /data; edit /etc/mtab"
     ],
@@ -335,7 +335,7 @@
       "Deleted files are still held open by running processes, consuming space not visible to du; use 'lsof +L1' to find them",
       "The 'du' command is inaccurate on ext4 filesystems",
       "The filesystem has bad sectors hiding the actual usage",
-      "Reserved blocks for root (typically 5%) account for 40% of disk space"
+      "Reserved blocks for root (typically 5%) account for 40% of disk space under stated conditions based on available context"
     ],
     "correct_answer": "Deleted files are still held open by running processes, consuming space not visible to du; use 'lsof +L1' to find them",
     "topic": "Storage & Filesystems"
@@ -346,7 +346,7 @@
       "ext4 is deprecated in all modern distributions in favor of XFS",
       "XFS does not support journaling while ext4 does",
       "XFS excels at parallel I/O with large files and cannot be shrunk; ext4 supports both grow and shrink operations and is more versatile for general use",
-      "ext4 supports only files up to 1GB; XFS supports unlimited file sizes"
+      "ext4 supports only files up to 1GB; XFS supports unlimited file sizes under stated conditions based on available context in this scenario for this case"
     ],
     "correct_answer": "XFS excels at parallel I/O with large files and cannot be shrunk; ext4 supports both grow and shrink operations and is more versatile for general use",
     "topic": "Storage & Filesystems"
@@ -367,7 +367,7 @@
     "options": [
       "An inode stores metadata (permissions, ownership, timestamps, block pointers) for a file; when inodes are exhausted, no new files or directories can be created despite free disk space",
       "Inodes are network indexes; exhausting them blocks network access",
-      "Inodes store file data blocks; exhausting them corrupts existing files",
+      "Inodes store file data blocks; exhausting them corrupts existing files under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "Inodes are only relevant to NFS filesystems"
     ],
     "correct_answer": "An inode stores metadata (permissions, ownership, timestamps, block pointers) for a file; when inodes are exhausted, no new files or directories can be created despite free disk space",
@@ -376,7 +376,7 @@
   {
     "question": "A server has a RAID-5 array with 4 disks, and one disk fails. During rebuild with a hot spare, a second disk fails. What happens?",
     "options": [
-      "Data is preserved because the hot spare already has a complete copy",
+      "Data is preserved because the hot spare already has a complete copy under stated conditions based on available context",
       "The array fails completely and data is lost; RAID-5 can tolerate only one disk failure at a time",
       "The array continues operating normally with degraded performance",
       "The array automatically switches to RAID-1 mode"
@@ -389,7 +389,7 @@
     "options": [
       "awk -F',' '{print $3}' file.csv | sort | uniq -c | sort -rn",
       "cat file.csv | grep -c column3",
-      "sed 's/,/\\n/g' file.csv | head -3",
+      "sed 's/,/\\n/g' file.csv | head -3 under stated conditions based on available context",
       "cut -f3 file.csv | sort | wc -l"
     ],
     "correct_answer": "awk -F',' '{print $3}' file.csv | sort | uniq -c | sort -rn",
@@ -399,7 +399,7 @@
     "question": "What is the difference between $*, $@, \"$*\", and \"$@\" in bash when a script is called with arguments 'arg1' 'arg 2' 'arg3'?",
     "options": [
       "$* preserves quotes while $@ does not",
-      "$@ only works inside functions; $* works everywhere",
+      "$@ only works inside functions; $* works everywhere under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "They are all identical and interchangeable",
       "\"$@\" preserves each argument as a separate quoted word (3 args); \"$*\" combines all arguments into a single string; unquoted versions are subject to word splitting"
     ],
@@ -409,7 +409,7 @@
   {
     "question": "You need to replace all occurrences of 'old_server' with 'new_server' in all .conf files under /etc/ recursively, creating backups of originals. Which command achieves this safely?",
     "options": [
-      "grep -r 'old_server' /etc/*.conf | sed 's/old_server/new_server/g'",
+      "grep -r 'old_server' /etc/*.conf | sed 's/old_server/new_server/g' under stated conditions",
       "find /etc -name '*.conf' -exec sed -i.bak 's/old_server/new_server/g' {} +",
       "awk '{gsub(old_server, new_server)}' /etc/*.conf",
       "replace old_server new_server /etc/*.conf"
@@ -420,7 +420,7 @@
   {
     "question": "What does 'set -euo pipefail' at the top of a bash script do, and why is it considered best practice?",
     "options": [
-      "It enables parallel execution of commands in the script",
+      "It enables parallel execution of commands in the script under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "It enables verbose output for debugging",
       "-e exits on any command failure; -u treats unset variables as errors; -o pipefail causes a pipeline to fail if any command in the pipe fails (not just the last one)",
       "It sets environment variables for Unicode support"
@@ -434,7 +434,7 @@
       "tail -f /var/log/app.log | grep ERROR | mail admin",
       "watch -n 1 'cat /var/log/app.log | grep ERROR'",
       "Use 'tail -f' piped to an awk script that tracks timestamps and counts ERRORs within a rolling 60s window, triggering an alert command when threshold exceeds 10",
-      "cron job every minute running 'grep -c ERROR /var/log/app.log'"
+      "cron job every minute running 'grep -c ERROR /var/log/app.log' under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "Use 'tail -f' piped to an awk script that tracks timestamps and counts ERRORs within a rolling 60s window, triggering an alert command when threshold exceeds 10",
     "topic": "Shell Scripting & Text Processing"
@@ -442,7 +442,7 @@
   {
     "question": "In a bash script, what is the difference between 'exec > /var/log/script.log 2>&1' and simply redirecting individual commands?",
     "options": [
-      "There is no difference; both achieve the same result",
+      "There is no difference; both achieve the same result under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "'exec' runs the script in a subshell",
       "'exec' replaces the shell's own stdout/stderr file descriptors, so ALL subsequent output in the script goes to the log file without needing per-command redirects",
       "'exec' only redirects errors, not standard output"
@@ -456,7 +456,7 @@
       "/proc/cpuinfo and /proc/meminfo reflect the host's hardware, not cgroup limits; the application should use cgroup-aware APIs or files like /sys/fs/cgroup/memory.max",
       "The container has broken out of its cgroup constraints",
       "cgroup-v2 does not support CPU limits",
-      "cgroups are not working correctly; restart the container runtime"
+      "cgroups are not working correctly; restart the container runtime under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "/proc/cpuinfo and /proc/meminfo reflect the host's hardware, not cgroup limits; the application should use cgroup-aware APIs or files like /sys/fs/cgroup/memory.max",
     "topic": "Containers & Namespaces"
@@ -464,7 +464,7 @@
   {
     "question": "What are Linux namespaces, and which namespace types are used by containers to provide isolation?",
     "options": [
-      "Namespaces are DNS zones; containers use them for name resolution",
+      "Namespaces are DNS zones; containers use them for name resolution under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario",
       "Namespaces are filesystem partitions assigned to each container",
       "Namespaces isolate kernel resources per process group: PID (process IDs), NET (network stack), MNT (mount points), UTS (hostname), IPC (inter-process communication), USER (UID/GID mapping), and CGROUP",
       "Namespaces are only used by KVM virtual machines, not containers"
@@ -476,7 +476,7 @@
     "question": "You SSH into a server and find a process using 100% of a single CPU core. 'top' shows it as a zombie process (Z state). What does this mean and how do you clean it up?",
     "options": [
       "Use 'renice -20 <pid>' to reduce its CPU usage",
-      "Reboot the server; zombies cannot be removed otherwise",
+      "Reboot the server; zombies cannot be removed otherwise under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case",
       "A zombie is a terminated process whose exit status hasn't been collected by its parent; kill the parent process or send SIGCHLD to the parent to reap it — you cannot kill a zombie directly since it's already dead",
       "Kill the zombie with 'kill -9 <zombie-pid>'"
     ],
@@ -489,7 +489,7 @@
       "SIGKILL is the gentlest signal; SIGTERM is the harshest",
       "SIGTERM requests graceful termination (can be caught/handled); SIGKILL forces immediate termination (cannot be caught); SIGHUP traditionally signals config reload or terminal hangup (can be caught)",
       "All three signals immediately terminate the process in the same way",
-      "SIGTERM is for terminals; SIGKILL is for kernel processes; SIGHUP is for network connections"
+      "SIGTERM is for terminals; SIGKILL is for kernel processes; SIGHUP is for network connections under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "SIGTERM requests graceful termination (can be caught/handled); SIGKILL forces immediate termination (cannot be caught); SIGHUP traditionally signals config reload or terminal hangup (can be caught)",
     "topic": "Process Management"
@@ -500,7 +500,7 @@
       "tmux only works on Ubuntu; screen only works on CentOS",
       "They are all identical tools",
       "nohup prevents SIGHUP on disconnect but provides no reattach; screen/tmux create persistent terminal sessions you can reattach to; disown removes a running job from the shell's job table so it won't receive SIGHUP",
-      "screen is deprecated in favor of nohup on all modern systems"
+      "screen is deprecated in favor of nohup on all modern systems under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case"
     ],
     "correct_answer": "nohup prevents SIGHUP on disconnect but provides no reattach; screen/tmux create persistent terminal sessions you can reattach to; disown removes a running job from the shell's job table so it won't receive SIGHUP",
     "topic": "Process Management"
@@ -508,7 +508,7 @@
   {
     "question": "What does the 'nice' value of a process control, and what is the range of nice values on Linux?",
     "options": [
-      "Nice controls memory allocation priority; range is 1 to 10",
+      "Nice controls memory allocation priority; range is 1 to 10 under stated conditions based on available context in this scenario for this case",
       "Nice controls network bandwidth; range is -100 to 100",
       "Nice controls CPU scheduling priority; range is -20 (highest priority) to 19 (lowest priority); only root can set negative nice values",
       "Nice controls I/O priority; range is 0 to 100"
@@ -522,7 +522,7 @@
       "Disable the fork() system call in the kernel",
       "Set per-user process limits in /etc/security/limits.conf (e.g., 'username hard nproc 500') or use systemd's LimitNPROC",
       "Set 'MaxProcesses=100' in /etc/sysctl.conf",
-      "Run 'ulimit -u 100' once as root; it persists across reboots"
+      "Run 'ulimit -u 100' once as root; it persists across reboots under stated conditions based on available context in this scenario"
     ],
     "correct_answer": "Set per-user process limits in /etc/security/limits.conf (e.g., 'username hard nproc 500') or use systemd's LimitNPROC",
     "topic": "Process Management"
@@ -542,7 +542,7 @@
     "question": "What is the difference between a hard link and a soft (symbolic) link in Linux?",
     "options": [
       "A hard link is a directory entry pointing to the same inode (same data blocks); a soft link is a special file containing the path to the target — it breaks if the target is moved/deleted, and works across filesystems",
-      "Soft links share the same inode as the target; hard links create a copy",
+      "Soft links share the same inode as the target; hard links create a copy under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario",
       "Hard links work across filesystems; soft links do not",
       "There is no practical difference between them"
     ],
@@ -555,7 +555,7 @@
       "Configure DNS settings in /etc/systemd/resolved.conf or via nmcli for NetworkManager-managed interfaces, as systemd-resolved regenerates resolv.conf",
       "Add DNS entries to /etc/hosts instead",
       "Use 'echo nameserver 8.8.8.8 >> /etc/resolv.conf' in rc.local",
-      "Edit /etc/resolv.conf with the immutable attribute (chattr +i)"
+      "Edit /etc/resolv.conf with the immutable attribute (chattr +i) under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "Configure DNS settings in /etc/systemd/resolved.conf or via nmcli for NetworkManager-managed interfaces, as systemd-resolved regenerates resolv.conf",
     "topic": "Networking & Troubleshooting"
@@ -566,7 +566,7 @@
       "It controls the DNS cache timeout",
       "It defines the maximum length of the listen backlog queue for sockets; increase it for high-connection-rate servers (e.g., web servers) to prevent connection drops during traffic spikes",
       "It sets the maximum number of network interfaces",
-      "It controls the maximum number of open files per process"
+      "It controls the maximum number of open files per process under stated conditions based on available context in this scenario for this case under stated conditions based on available context"
     ],
     "correct_answer": "It defines the maximum length of the listen backlog queue for sockets; increase it for high-connection-rate servers (e.g., web servers) to prevent connection drops during traffic spikes",
     "topic": "Networking & Troubleshooting"
@@ -577,7 +577,7 @@
       "iptables -A INPUT -p tcp --dport 443 -j ACCEPT",
       "iptables -A OUTPUT -s 10.0.0.0/8 -p tcp --dport 443 -j ACCEPT",
       "iptables -A INPUT -s 10.0.0.0/8 -p tcp --dport 443 -j ACCEPT; iptables -A INPUT -s 192.168.1.0/24 -p tcp --dport 443 -j ACCEPT; iptables -A INPUT -p tcp --dport 443 -j DROP",
-      "iptables -A INPUT -j DROP; iptables -A INPUT -s 10.0.0.0/8 -p tcp --dport 443 -j ACCEPT"
+      "iptables -A INPUT -j DROP; iptables -A INPUT -s 10.0.0.0/8 -p tcp --dport 443 -j ACCEPT under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "iptables -A INPUT -s 10.0.0.0/8 -p tcp --dport 443 -j ACCEPT; iptables -A INPUT -s 192.168.1.0/24 -p tcp --dport 443 -j ACCEPT; iptables -A INPUT -p tcp --dport 443 -j DROP",
     "topic": "Networking & Troubleshooting"
@@ -587,7 +587,7 @@
     "options": [
       "It forwards all traffic to localhost",
       "It enables IP packet forwarding between network interfaces, turning the system into a router; required for NAT, VPN gateways, and container networking",
-      "It enables the system to forward ICMP echo requests only",
+      "It enables the system to forward ICMP echo requests only under stated conditions based on available context in this scenario for this case under stated conditions",
       "It enables IPv6 compatibility mode"
     ],
     "correct_answer": "It enables IP packet forwarding between network interfaces, turning the system into a router; required for NAT, VPN gateways, and container networking",
@@ -596,7 +596,7 @@
   {
     "question": "You're troubleshooting intermittent 'connection refused' errors to a service on port 8080. 'ss -tlnp' confirms the service is listening. 'conntrack -L' shows the conntrack table is full. What is likely happening?",
     "options": [
-      "The client is using the wrong protocol",
+      "The client is using the wrong protocol under stated conditions based on available context in this scenario for this case under stated conditions",
       "The service process has crashed",
       "Port 8080 is blocked by SELinux",
       "The kernel's connection tracking table (nf_conntrack) is full, causing new connections to be dropped; increase net.netfilter.nf_conntrack_max"
@@ -618,7 +618,7 @@
   {
     "question": "What is the difference between cron and systemd timers? When would you prefer one over the other?",
     "options": [
-      "They are identical; systemd timers are just a wrapper around cron",
+      "They are identical; systemd timers are just a wrapper around cron under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "Systemd timers only work for system services, not user scripts",
       "Systemd timers offer better logging (journalctl), dependency management, on-boot scheduling, monotonic timers, and can trigger on events; cron is simpler but lacks these features",
       "Cron supports millisecond precision; systemd timers do not"
@@ -632,7 +632,7 @@
       "The bootloader is corrupted",
       "The hard drive has failed",
       "The initramfs/initrd was not generated for the new kernel, so the root filesystem driver or storage drivers are not available during early boot",
-      "The root password was changed"
+      "The root password was changed under stated conditions based on available context in this scenario for this case under stated conditions based on available context"
     ],
     "correct_answer": "The initramfs/initrd was not generated for the new kernel, so the root filesystem driver or storage drivers are not available during early boot",
     "topic": "Boot Process & Recovery"
@@ -643,7 +643,7 @@
       "Press F8 repeatedly during boot",
       "Type 'rescue' at the GRUB prompt",
       "Edit the GRUB boot entry (press 'e'), find the 'linux' line, append 'single' or 'init=/bin/bash' or 'systemd.unit=rescue.target', then boot with Ctrl+X",
-      "Boot from a USB drive and run 'grub-repair'"
+      "Boot from a USB drive and run 'grub-repair' under stated conditions based on available context in this scenario for this case under stated conditions based on available context"
     ],
     "correct_answer": "Edit the GRUB boot entry (press 'e'), find the 'linux' line, append 'single' or 'init=/bin/bash' or 'systemd.unit=rescue.target', then boot with Ctrl+X",
     "topic": "Boot Process & Recovery"
@@ -653,7 +653,7 @@
     "options": [
       "Bootloader → BIOS → Kernel → Filesystem → Network",
       "BIOS/UEFI → Bootloader (GRUB) → Kernel + initramfs → Init system (systemd/init) → Userspace services",
-      "BIOS/UEFI → Kernel → Bootloader → Init → Userspace",
+      "BIOS/UEFI → Kernel → Bootloader → Init → Userspace under stated conditions based on available context",
       "UEFI → Filesystem → Kernel → GRUB → Systemd"
     ],
     "correct_answer": "BIOS/UEFI → Bootloader (GRUB) → Kernel + initramfs → Init system (systemd/init) → Userspace services",
@@ -663,7 +663,7 @@
     "question": "A colleague ran 'chmod -R 777 /' on a production server before being stopped. Beyond the obvious security implications, which critical system functionality will break?",
     "options": [
       "Only web server files are affected",
-      "The system will immediately kernel panic",
+      "The system will immediately kernel panic under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "Only user home directories are affected",
       "SSH will refuse to work (sshd requires strict permissions on /etc/ssh/), sudo may fail, cron jobs may not run, and any SUID/SGID binaries lose their special bits — effectively breaking authentication and privilege escalation"
     ],
@@ -675,7 +675,7 @@
     "options": [
       "pam_securetty.so with min_length=12",
       "pam_limits.so with password_length=12",
-      "pam_access.so with password_rules=complex",
+      "pam_access.so with password_rules=complex under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "pam_pwquality.so (or pam_cracklib.so) with minlen=12 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1 in /etc/pam.d/common-password or /etc/security/pwquality.conf"
     ],
     "correct_answer": "pam_pwquality.so (or pam_cracklib.so) with minlen=12 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1 in /etc/pam.d/common-password or /etc/security/pwquality.conf",
@@ -687,7 +687,7 @@
       "Creates a new file containing all Python imports",
       "Searches only the first .py file found for 'import os'",
       "Recursively searches only .py files under /opt/app/ for 'import os', showing file names and line numbers",
-      "Recursively searches all files under /opt/app for 'import os'"
+      "Recursively searches all files under /opt/app for 'import os' under stated conditions based on available context"
     ],
     "correct_answer": "Recursively searches only .py files under /opt/app/ for 'import os', showing file names and line numbers",
     "topic": "Shell Scripting & Text Processing"
@@ -698,7 +698,7 @@
       "grep -c IP access.log | head -10",
       "cat access.log | sort | head -10",
       "awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -10",
-      "tail -10 access.log | cut -d' ' -f1"
+      "tail -10 access.log | cut -d' ' -f1 under stated conditions based on available context"
     ],
     "correct_answer": "awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -10",
     "topic": "Shell Scripting & Text Processing"
@@ -706,7 +706,7 @@
   {
     "question": "What is the difference between /dev/null, /dev/zero, and /dev/urandom?",
     "options": [
-      "/dev/null produces random data; /dev/zero discards data; /dev/urandom produces zeros",
+      "/dev/null produces random data; /dev/zero discards data; /dev/urandom produces zeros under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "They are all identical devices that discard data",
       "/dev/zero is for zeroing network connections; /dev/null is for zeroing disks",
       "/dev/null discards all data written to it; /dev/zero produces an infinite stream of zero bytes (for disk wiping, file creation); /dev/urandom provides cryptographically secure pseudorandom bytes"
@@ -720,7 +720,7 @@
       "They are all sourced simultaneously",
       "For a login shell: /etc/environment (PAM) → /etc/profile → /etc/profile.d/*.sh → ~/.bash_profile (or ~/.profile); ~/.bashrc is sourced only for non-login interactive shells (but often called from .bash_profile)",
       "/etc/environment is only for graphical sessions",
-      "~/.bashrc is always sourced first, then /etc/profile"
+      "~/.bashrc is always sourced first, then /etc/profile under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case"
     ],
     "correct_answer": "For a login shell: /etc/environment (PAM) → /etc/profile → /etc/profile.d/*.sh → ~/.bash_profile (or ~/.profile); ~/.bashrc is sourced only for non-login interactive shells (but often called from .bash_profile)",
     "topic": "System Internals"
@@ -728,7 +728,7 @@
   {
     "question": "You run 'sysctl -a | grep net.core.rmem_max' and it shows 212992 (208KB). Your application requires large UDP receive buffers of 4MB. What do you need to do?",
     "options": [
-      "Increase the application's thread count to handle packets faster",
+      "Increase the application's thread count to handle packets faster under stated conditions based on available context",
       "Install a faster network card",
       "Change the MTU to 9000 to increase buffer size",
       "Set net.core.rmem_max=4194304 via sysctl and configure the application to request the larger buffer with SO_RCVBUF"
@@ -740,7 +740,7 @@
     "question": "What does the 'ldd' command do, and why should you never run it on untrusted binaries?",
     "options": [
       "ldd checks for logical disk damage; it's always safe",
-      "ldd lists directory contents in detail; security is not a concern",
+      "ldd lists directory contents in detail; security is not a concern under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "ldd lists shared library dependencies of a binary; on some systems it may actually execute the binary's dynamic linker, potentially running malicious code in untrusted binaries",
       "ldd lists disk drive partitions; it's safe to run on any file"
     ],
@@ -753,7 +753,7 @@
       "The server is under a SYN flood attack or experiencing high legitimate connection rates; net.ipv4.tcp_syncookies=1 (already enabled) helps, and increasing net.ipv4.tcp_max_syn_backlog and net.core.somaxconn can handle more concurrent half-open connections",
       "The server needs more RAM to handle TCP connections",
       "Port 80 is blocked by the firewall",
-      "The HTTP server is misconfigured and sending bad responses"
+      "The HTTP server is misconfigured and sending bad responses under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context"
     ],
     "correct_answer": "The server is under a SYN flood attack or experiencing high legitimate connection rates; net.ipv4.tcp_syncookies=1 (already enabled) helps, and increasing net.ipv4.tcp_max_syn_backlog and net.core.somaxconn can handle more concurrent half-open connections",
     "topic": "Networking & Troubleshooting"
@@ -764,7 +764,7 @@
       "Use 'ping server:5432' to test the port",
       "There is no way to test TCP connectivity without nc or telnet",
       "Use 'bash -c echo >/dev/tcp/server/5432' (bash built-in), 'curl -v telnet://server:5432', or 'python3 -c \"import socket; s=socket.socket(); s.connect(('server',5432))\"'",
-      "Use 'traceroute -p 5432 server' (traceroute tests ICMP, not TCP ports)"
+      "Use 'traceroute -p 5432 server' (traceroute tests ICMP, not TCP ports) under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "Use 'bash -c echo >/dev/tcp/server/5432' (bash built-in), 'curl -v telnet://server:5432', or 'python3 -c \"import socket; s=socket.socket(); s.connect(('server',5432))\"'",
     "topic": "Networking & Troubleshooting"
@@ -775,7 +775,7 @@
       "A bind mount makes an existing directory tree visible at another mount point (same filesystem, no block device); useful for exposing host paths into chroot/container environments or creating alternative access points",
       "A bind mount encrypts the mounted directory; a regular mount does not",
       "Bind mounts only work with NFS filesystems",
-      "A bind mount is faster than a regular mount because it skips filesystem checks"
+      "A bind mount is faster than a regular mount because it skips filesystem checks under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario"
     ],
     "correct_answer": "A bind mount makes an existing directory tree visible at another mount point (same filesystem, no block device); useful for exposing host paths into chroot/container environments or creating alternative access points",
     "topic": "Storage & Filesystems"
@@ -784,7 +784,7 @@
     "question": "You run 'perf top' on a production server and notice a kernel function '__do_page_fault' consuming 25% CPU. What does this indicate?",
     "options": [
       "The CPU is overheating and throttling",
-      "The network stack is processing too many packets",
+      "The network stack is processing too many packets under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario",
       "The system is experiencing excessive page faults, likely due to memory pressure, large memory-mapped files, or an application accessing memory patterns that cause frequent TLB misses",
       "The disk is failing with bad sectors"
     ],
@@ -795,7 +795,7 @@
     "question": "What is the purpose of the /etc/nsswitch.conf file, and what does 'hosts: files dns myhostname' mean?",
     "options": [
       "It configures network switch VLAN settings",
-      "It controls which users can access DNS services",
+      "It controls which users can access DNS services under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "nsswitch.conf controls the order of name resolution sources; 'hosts: files dns myhostname' means: first check /etc/hosts, then DNS servers, then the local hostname — this ordering determines how hostnames are resolved",
       "It configures NFS switch parameters"
     ],
@@ -806,7 +806,7 @@
     "question": "A server experiences a sudden disk performance drop. 'smartctl -a /dev/sda' shows 'Reallocated_Sector_Ct' increasing and 'Current_Pending_Sector' at 48. What action should you take?",
     "options": [
       "The disk is developing bad sectors and likely failing; plan an immediate replacement, ensure backups are current, and consider putting the RAID array into a degraded state for proactive swap",
-      "Increase the disk's write cache to improve performance",
+      "Increase the disk's write cache to improve performance under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario",
       "Reformat the disk to fix the bad sectors",
       "Run fsck to repair the sectors"
     ],
@@ -816,7 +816,7 @@
   {
     "question": "You need to configure log rotation for an application that writes to /var/log/myapp/app.log. The requirements are: rotate daily, keep 30 days, compress rotated files, and signal the application to reopen log files after rotation. Which logrotate configuration achieves this?",
     "options": [
-      "/var/log/myapp/app.log { monthly rotate 30 nocompress }",
+      "/var/log/myapp/app.log { monthly rotate 30 nocompress } under stated conditions based on available context in this scenario for this case under stated conditions",
       "/var/log/myapp/app.log { daily rotate 30 compress delaycompress missingok notifempty postrotate /usr/bin/systemctl reload myapp endscript }",
       "crontab: 0 0 * * * gzip /var/log/myapp/app.log",
       "/var/log/myapp/app.log { yearly rotate 1 }"
@@ -827,7 +827,7 @@
   {
     "question": "What is the difference between TCP keepalive and HTTP keep-alive? How do you tune TCP keepalive on Linux?",
     "options": [
-      "HTTP keep-alive replaces TCP keepalive on modern systems",
+      "HTTP keep-alive replaces TCP keepalive on modern systems under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "TCP keepalive is a kernel-level mechanism that sends probes on idle TCP connections to detect dead peers (tuned via net.ipv4.tcp_keepalive_time/intvl/probes); HTTP keep-alive reuses a TCP connection for multiple HTTP requests — they operate at different layers",
       "TCP keepalive only works on UDP connections",
       "They are the same thing; both keep connections open"
@@ -840,7 +840,7 @@
     "options": [
       "Check /etc/passwd for login records",
       "Check /var/log/auth.log (Debian/Ubuntu) or /var/log/secure (RHEL/CentOS) for SSH/PAM entries; use 'last' for successful logins, 'lastb' for failed logins, and 'journalctl -u sshd' for systemd-based systems",
-      "Run 'who -a' to see all historical logins",
+      "Run 'who -a' to see all historical logins under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case",
       "Only check /var/log/messages"
     ],
     "correct_answer": "Check /var/log/auth.log (Debian/Ubuntu) or /var/log/secure (RHEL/CentOS) for SSH/PAM entries; use 'last' for successful logins, 'lastb' for failed logins, and 'journalctl -u sshd' for systemd-based systems",
@@ -852,7 +852,7 @@
       "All custom ACCEPT rules were removed but the default DROP policy remained, so ALL traffic (including SSH) is now blocked; recover via out-of-band access (console/IPMI/BMC), then restore the iptables ruleset",
       "Only ICMP traffic was affected",
       "The server automatically reverts to ACCEPT policy after a flush",
-      "Nothing happened; the default policy ensures traffic still flows"
+      "Nothing happened; the default policy ensures traffic still flows under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario"
     ],
     "correct_answer": "All custom ACCEPT rules were removed but the default DROP policy remained, so ALL traffic (including SSH) is now blocked; recover via out-of-band access (console/IPMI/BMC), then restore the iptables ruleset",
     "topic": "Security & Hardening"
@@ -860,7 +860,7 @@
   {
     "question": "What is the purpose of the /proc/sys/kernel/core_pattern setting, and how would you configure it to capture core dumps for debugging production crashes?",
     "options": [
-      "It controls the CPU core affinity pattern for processes",
+      "It controls the CPU core affinity pattern for processes under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "It controls how kernel modules are loaded",
       "It sets the pattern for kernel boot parameters",
       "It defines the filename pattern and location for core dump files when a process crashes; set it to a path like '/var/coredumps/core.%e.%p.%t' to capture dumps with executable name, PID, and timestamp — also ensure ulimit -c is set to unlimited"
@@ -873,7 +873,7 @@
     "options": [
       "rsync's SSH encryption adds overhead; try rsync with --compress disabled (already compressed data), use a faster cipher (-e 'ssh -c aes128-gcm@openssh.com'), or use rsync daemon mode (no SSH) on a trusted network",
       "Use scp instead; it's always faster than rsync",
-      "Use 'cp' command over NFS; it's faster than rsync",
+      "Use 'cp' command over NFS; it's faster than rsync under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case",
       "Increase the server's RAM to 128GB"
     ],
     "correct_answer": "rsync's SSH encryption adds overhead; try rsync with --compress disabled (already compressed data), use a faster cipher (-e 'ssh -c aes128-gcm@openssh.com'), or use rsync daemon mode (no SSH) on a trusted network",
@@ -883,7 +883,7 @@
     "question": "What is the difference between 'useradd' and 'adduser' on Debian/Ubuntu systems?",
     "options": [
       "'adduser' is deprecated in favor of 'useradd'",
-      "'useradd' creates system users; 'adduser' creates regular users only",
+      "'useradd' creates system users; 'adduser' creates regular users only under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case",
       "They are exactly the same command",
       "'useradd' is a low-level binary that creates users with minimal defaults (no home dir unless -m is specified); 'adduser' is a higher-level Perl script that interactively creates users with home directory, shell, and password prompts"
     ],
@@ -895,7 +895,7 @@
     "options": [
       "deployer ALL=(ALL) NOPASSWD: ALL",
       "deployer ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart myapp, /usr/bin/systemctl status myapp",
-      "deployer ALL=(root) PASSWD: /usr/bin/systemctl *",
+      "deployer ALL=(root) PASSWD: /usr/bin/systemctl * under stated conditions based on available context",
       "deployer ALL=(ALL) ALL"
     ],
     "correct_answer": "deployer ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart myapp, /usr/bin/systemctl status myapp",
@@ -904,7 +904,7 @@
   {
     "question": "What is the difference between ACLs (Access Control Lists) and traditional Unix permissions? When would you use ACLs?",
     "options": [
-      "ACLs replace Unix permissions entirely; you can only use one system",
+      "ACLs replace Unix permissions entirely; you can only use one system under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case",
       "ACLs are identical to Unix permissions but use different syntax",
       "ACLs extend Unix permissions by allowing fine-grained access for multiple specific users and groups on a single file — useful when the owner/group/other model is insufficient, e.g., granting read access to two different groups",
       "ACLs only work on NFS filesystems"

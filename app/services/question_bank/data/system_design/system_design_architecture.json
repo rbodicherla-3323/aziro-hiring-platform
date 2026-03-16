@@ -4,7 +4,7 @@
     "options": [
       "To create a blueprint for a system's architecture that meets functional and non-functional requirements (scalability, reliability, etc.)",
       "To design the user interface",
-      "To choose the programming language",
+      "To choose the programming language under stated conditions based on available context in this scenario for this case under stated conditions",
       "To write the fastest code possible"
     ],
     "correct_answer": "To create a blueprint for a system's architecture that meets functional and non-functional requirements (scalability, reliability, etc.)",
@@ -16,7 +16,7 @@
     "options": [
       "Horizontal scaling adds more machines; vertical scaling adds more resources (CPU, RAM) to an existing machine",
       "They are the same concept",
-      "Horizontal is for databases; vertical is for applications",
+      "Horizontal is for databases; vertical is for applications under stated conditions based on available context in this scenario",
       "Vertical scaling adds machines; horizontal adds resources"
     ],
     "correct_answer": "Horizontal scaling adds more machines; vertical scaling adds more resources (CPU, RAM) to an existing machine",
@@ -27,7 +27,7 @@
     "question": "What is a load balancer?",
     "options": [
       "A memory management utility",
-      "A device that balances electrical load",
+      "A device that balances electrical load under stated conditions based on available context in this scenario for this case",
       "A database optimization tool",
       "A component that distributes incoming network traffic across multiple servers to ensure no single server is overwhelmed"
     ],
@@ -38,7 +38,7 @@
   {
     "question": "What is a CDN (Content Delivery Network)?",
     "options": [
-      "A code deployment network",
+      "A code deployment network under stated conditions based on available context in this scenario for this case under stated conditions",
       "A geographically distributed network of servers that cache and deliver content closer to users for lower latency",
       "A centralized data node",
       "A cloud database network"
@@ -52,7 +52,7 @@
     "options": [
       "A security theorem about capabilities",
       "A theorem about cache performance",
-      "A theorem about CPU, ALU, and Pipeline",
+      "A theorem about CPU, ALU, and Pipeline under stated conditions based on available context in this scenario for this case",
       "A distributed system can guarantee at most two of: Consistency, Availability, and Partition Tolerance simultaneously"
     ],
     "correct_answer": "A distributed system can guarantee at most two of: Consistency, Availability, and Partition Tolerance simultaneously",
@@ -62,7 +62,7 @@
   {
     "question": "What is the difference between SQL and NoSQL databases?",
     "options": [
-      "They are the same with different syntax",
+      "They are the same with different syntax under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "SQL databases are relational with structured schemas; NoSQL databases are non-relational (document, key-value, graph, columnar) with flexible schemas",
       "SQL cannot scale horizontally",
       "NoSQL is always faster"
@@ -74,7 +74,7 @@
   {
     "question": "What is database sharding?",
     "options": [
-      "Deleting old database records",
+      "Deleting old database records under stated conditions based on available context in this scenario for this case under stated conditions",
       "Creating database backups",
       "Splitting a database into smaller, independent shards distributed across multiple servers for horizontal scaling",
       "Encrypting database fields"
@@ -87,7 +87,7 @@
     "question": "What is database replication?",
     "options": [
       "Duplicating database schema only",
-      "Replicating queries across databases",
+      "Replicating queries across databases under stated conditions based on available context in this scenario for this case",
       "Copying data from a primary database to one or more replicas for redundancy, fault tolerance, and read scaling",
       "Replacing one database with another"
     ],
@@ -99,7 +99,7 @@
     "question": "What is caching and why is it important in system design?",
     "options": [
       "Compressing data for storage",
-      "Storing data on disk for persistence",
+      "Storing data on disk for persistence under stated conditions based on available context in this scenario for this case",
       "Creating data checksums",
       "Storing frequently accessed data in a fast storage layer (e.g., Redis, Memcached) to reduce latency and database load"
     ],
@@ -110,7 +110,7 @@
   {
     "question": "What is the difference between write-through and write-back cache?",
     "options": [
-      "Write-through only writes to the cache",
+      "Write-through only writes to the cache under stated conditions based on available context in this scenario for this case",
       "Write-back is always superior",
       "Write-through writes to cache and database simultaneously; write-back writes to cache first and database asynchronously",
       "They are identical strategies"
@@ -124,7 +124,7 @@
     "options": [
       "An asynchronous communication mechanism (e.g., RabbitMQ, Kafka) for decoupling producers and consumers",
       "A logging mechanism",
-      "A queue for email messages only",
+      "A queue for email messages only under stated conditions based on available context in this scenario for this case",
       "A database query queue"
     ],
     "correct_answer": "An asynchronous communication mechanism (e.g., RabbitMQ, Kafka) for decoupling producers and consumers",
@@ -135,7 +135,7 @@
     "question": "What is the microservices architecture pattern?",
     "options": [
       "An architecture where an application is composed of small, independent, loosely coupled services that communicate via APIs",
-      "A pattern for mobile app development",
+      "A pattern for mobile app development under stated conditions based on available context in this scenario for this case under stated conditions",
       "Using micro-controllers",
       "Using very small functions"
     ],
@@ -146,7 +146,7 @@
   {
     "question": "What is a monolithic architecture?",
     "options": [
-      "An architecture using only one programming language",
+      "An architecture using only one programming language under stated conditions based on available context",
       "An architecture where all components are built, deployed, and scaled as a single unit",
       "An architecture with a single large stone",
       "An architecture with only one server"
@@ -158,7 +158,7 @@
   {
     "question": "What are the trade-offs between microservices and monolithic architectures?",
     "options": [
-      "Monoliths are always better for large systems",
+      "Monoliths are always better for large systems under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "There are no trade-offs",
       "Microservices are always better",
       "Microservices offer independent scaling and deployment but add complexity (networking, data consistency, debugging); monoliths are simpler but harder to scale independently"
@@ -170,7 +170,7 @@
   {
     "question": "What is an API Gateway?",
     "options": [
-      "A gateway for accessing APIs only",
+      "A gateway for accessing APIs only under stated conditions based on available context in this scenario for this case under stated conditions",
       "A database access layer",
       "A single entry point that routes client requests to appropriate microservices, handling authentication, rate limiting, and load balancing",
       "A firewall for APIs"
@@ -184,7 +184,7 @@
     "options": [
       "They are the same protocol",
       "gRPC is slower than REST",
-      "REST supports streaming; gRPC does not",
+      "REST supports streaming; gRPC does not under stated conditions based on available context in this scenario for this case under stated conditions",
       "REST uses HTTP/JSON and is resource-oriented; gRPC uses HTTP/2 with Protocol Buffers for efficient binary serialization and supports streaming"
     ],
     "correct_answer": "REST uses HTTP/JSON and is resource-oriented; gRPC uses HTTP/2 with Protocol Buffers for efficient binary serialization and supports streaming",
@@ -196,7 +196,7 @@
     "options": [
       "A consistency model only for SQL databases",
       "A consistency model where updates to a distributed system will eventually propagate to all nodes, but reads may return stale data temporarily",
-      "A model where consistency is never achieved",
+      "A model where consistency is never achieved under stated conditions based on available context in this scenario for this case under stated conditions",
       "Data is always immediately consistent"
     ],
     "correct_answer": "A consistency model where updates to a distributed system will eventually propagate to all nodes, but reads may return stale data temporarily",
@@ -207,7 +207,7 @@
     "question": "What is a reverse proxy?",
     "options": [
       "A proxy used for outbound traffic",
-      "A proxy that reverses network traffic",
+      "A proxy that reverses network traffic under stated conditions based on available context in this scenario for this case under stated conditions",
       "A proxy for reverse engineering",
       "A server that sits in front of backend servers, forwarding client requests to them and returning responses (e.g., Nginx)"
     ],
@@ -220,7 +220,7 @@
     "options": [
       "A creational pattern ensuring a class has only one instance and provides a global access point to it",
       "A pattern for single inheritance",
-      "A pattern for single-threaded applications",
+      "A pattern for single-threaded applications under stated conditions based on available context in this scenario",
       "A pattern for single-page applications"
     ],
     "correct_answer": "A creational pattern ensuring a class has only one instance and provides a global access point to it",
@@ -233,7 +233,7 @@
       "A pattern for monitoring servers",
       "A behavioral pattern where an object (subject) notifies a list of dependents (observers) when its state changes",
       "A pattern for code review",
-      "A pattern for database observation"
+      "A pattern for database observation under stated conditions based on available context in this scenario for this case"
     ],
     "correct_answer": "A behavioral pattern where an object (subject) notifies a list of dependents (observers) when its state changes",
     "topic": "Design Patterns",
@@ -242,7 +242,7 @@
   {
     "question": "What is the Factory design pattern?",
     "options": [
-      "A pattern for manufacturing software",
+      "A pattern for manufacturing software under stated conditions based on available context in this scenario",
       "A pattern for building APIs",
       "A creational pattern that provides an interface for creating objects without specifying the exact class",
       "A pattern for database factories"
@@ -254,7 +254,7 @@
   {
     "question": "What is the Strategy design pattern?",
     "options": [
-      "A pattern for error handling strategies",
+      "A pattern for error handling strategies under stated conditions based on available context in this scenario for this case",
       "A pattern for game strategy",
       "A behavioral pattern defining a family of algorithms, encapsulating each one, and making them interchangeable at runtime",
       "A pattern for strategic planning"
@@ -267,7 +267,7 @@
     "question": "What are the SOLID principles?",
     "options": [
       "Five principles for solid databases",
-      "Secure, Optimal, Lightweight, Independent, Durable",
+      "Secure, Optimal, Lightweight, Independent, Durable under stated conditions based on available context in this scenario for this case",
       "Principles for building solid structures",
       "Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion – five OOP design principles"
     ],
@@ -279,7 +279,7 @@
     "question": "What is the Single Responsibility Principle (SRP)?",
     "options": [
       "A class should have only one reason to change, meaning it should have only one responsibility",
-      "A function should only have one parameter",
+      "A function should only have one parameter under stated conditions based on available context in this scenario",
       "A file should contain only one class",
       "A class should have a single constructor"
     ],
@@ -290,7 +290,7 @@
   {
     "question": "What is the Dependency Inversion Principle?",
     "options": [
-      "Dependencies should be inverted in the call stack",
+      "Dependencies should be inverted in the call stack under stated conditions based on available context",
       "Dependencies should be minimized",
       "High-level modules should not depend on low-level modules; both should depend on abstractions",
       "Dependencies should always be injected"
@@ -305,7 +305,7 @@
       "Controlling the number of requests a user or client can make in a given time period to prevent abuse",
       "Limiting the CPU clock rate",
       "Limiting database query rates",
-      "Limiting the data rate of network cables"
+      "Limiting the data rate of network cables under stated conditions based on available context in this scenario"
     ],
     "correct_answer": "Controlling the number of requests a user or client can make in a given time period to prevent abuse",
     "topic": "System Design",
@@ -314,7 +314,7 @@
   {
     "question": "What is a circuit breaker pattern?",
     "options": [
-      "A pattern for breaking circular dependencies",
+      "A pattern for breaking circular dependencies under stated conditions based on available context in this scenario for this case",
       "A resilience pattern that prevents cascading failures by stopping calls to a failing service and returning fallback responses",
       "A pattern for breaking database connections",
       "An electrical safety mechanism"
@@ -328,7 +328,7 @@
     "options": [
       "A distributed hashing scheme that minimizes key remapping when nodes are added or removed from a cluster",
       "A database indexing algorithm",
-      "A hashing algorithm that always produces the same hash",
+      "A hashing algorithm that always produces the same hash under stated conditions based on available context",
       "A secure hashing algorithm"
     ],
     "correct_answer": "A distributed hashing scheme that minimizes key remapping when nodes are added or removed from a cluster",
@@ -339,7 +339,7 @@
     "question": "What is the difference between latency and throughput?",
     "options": [
       "Latency is the time taken for a single request; throughput is the number of requests handled per unit time",
-      "Latency measures bandwidth; throughput measures speed",
+      "Latency measures bandwidth; throughput measures speed under stated conditions based on available context in this scenario",
       "They are the same metric",
       "Throughput is always proportional to latency"
     ],
@@ -352,7 +352,7 @@
     "options": [
       "An architecture for GUI applications only",
       "An architecture where components communicate by producing and consuming events asynchronously, promoting loose coupling",
-      "An architecture for event planning software",
+      "An architecture for event planning software under stated conditions based on available context in this scenario for this case",
       "An architecture driven by calendar events"
     ],
     "correct_answer": "An architecture where components communicate by producing and consuming events asynchronously, promoting loose coupling",
@@ -362,7 +362,7 @@
   {
     "question": "What is CQRS (Command Query Responsibility Segregation)?",
     "options": [
-      "A SQL query optimization technique",
+      "A SQL query optimization technique under stated conditions based on available context in this scenario for this case under stated conditions",
       "A caching query retrieval system",
       "A pattern that separates read (query) and write (command) operations into different models, potentially with different databases",
       "A distributed command system"
@@ -374,7 +374,7 @@
   {
     "question": "What is the Saga pattern in distributed systems?",
     "options": [
-      "A storytelling pattern for documentation",
+      "A storytelling pattern for documentation under stated conditions based on available context in this scenario for this case",
       "A pattern for sequential API calls",
       "A logging pattern",
       "A pattern for managing distributed transactions as a sequence of local transactions with compensating actions for rollback"
@@ -388,7 +388,7 @@
     "options": [
       "A cache spread across multiple nodes (e.g., Redis Cluster, Memcached) for shared high-speed data access in distributed systems",
       "A browser cache",
-      "A cache stored on a single server",
+      "A cache stored on a single server under stated conditions based on available context in this scenario for this case under stated conditions",
       "A CPU cache shared between cores"
     ],
     "correct_answer": "A cache spread across multiple nodes (e.g., Redis Cluster, Memcached) for shared high-speed data access in distributed systems",
@@ -401,7 +401,7 @@
       "Dividing data across nodes using strategies like range-based, hash-based, or directory-based partitioning",
       "Splitting data into files only",
       "Creating database views",
-      "Encrypting data into partitions"
+      "Encrypting data into partitions under stated conditions based on available context in this scenario for this case"
     ],
     "correct_answer": "Dividing data across nodes using strategies like range-based, hash-based, or directory-based partitioning",
     "topic": "Databases",
@@ -413,7 +413,7 @@
       "Synchronous: caller waits for response before continuing; asynchronous: caller proceeds without waiting, response handled later",
       "Asynchronous is always slower",
       "They are the same",
-      "Synchronous is only for databases"
+      "Synchronous is only for databases under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "Synchronous: caller waits for response before continuing; asynchronous: caller proceeds without waiting, response handled later",
     "topic": "Communication Patterns",
@@ -425,7 +425,7 @@
       "Discovering bugs in services",
       "A mechanism for services to find and communicate with each other dynamically (e.g., Consul, Eureka, DNS-based)",
       "Discovering new services to use",
-      "Discovering available APIs on the internet"
+      "Discovering available APIs on the internet under stated conditions based on available context in this scenario"
     ],
     "correct_answer": "A mechanism for services to find and communicate with each other dynamically (e.g., Consul, Eureka, DNS-based)",
     "topic": "Microservices",
@@ -434,7 +434,7 @@
   {
     "question": "What is the Adapter design pattern?",
     "options": [
-      "A pattern for adapting to new programming languages",
+      "A pattern for adapting to new programming languages under stated conditions based on available context in this scenario for this case under stated conditions",
       "A pattern for adapting databases",
       "A structural pattern that converts the interface of a class into another interface that clients expect, enabling incompatible classes to work together",
       "A pattern for power adapters"
@@ -449,7 +449,7 @@
       "A pattern for decorating UIs",
       "A Python-specific pattern",
       "A structural pattern that dynamically adds behavior to objects without modifying their code, using wrapping",
-      "A pattern for code formatting"
+      "A pattern for code formatting under stated conditions based on available context in this scenario for this case"
     ],
     "correct_answer": "A structural pattern that dynamically adds behavior to objects without modifying their code, using wrapping",
     "topic": "Design Patterns",
@@ -460,7 +460,7 @@
     "options": [
       "Proxy controls access to an object (security, caching, lazy loading); Decorator adds new behavior to an object",
       "Proxy is structural; Decorator is behavioral",
-      "Proxy adds behavior; Decorator controls access",
+      "Proxy adds behavior; Decorator controls access under stated conditions based on available context in this scenario",
       "They are the same pattern"
     ],
     "correct_answer": "Proxy controls access to an object (security, caching, lazy loading); Decorator adds new behavior to an object",
@@ -473,7 +473,7 @@
       "Making the same API call multiple times produces the same result without additional side effects",
       "An API that can only be called once",
       "An API design for identity verification",
-      "An API that returns identical data every time"
+      "An API that returns identical data every time under stated conditions based on available context"
     ],
     "correct_answer": "Making the same API call multiple times produces the same result without additional side effects",
     "topic": "API Design",
@@ -484,7 +484,7 @@
     "options": [
       "A network packet filter",
       "A space-efficient probabilistic data structure for testing set membership – may have false positives but never false negatives",
-      "A filter for image processing",
+      "A filter for image processing under stated conditions based on available context in this scenario for this case under stated conditions",
       "A database query filter"
     ],
     "correct_answer": "A space-efficient probabilistic data structure for testing set membership – may have false positives but never false negatives",
@@ -497,7 +497,7 @@
       "A pre-written log template",
       "A durability technique where changes are written to a log before being applied to the database, enabling crash recovery",
       "A logging library",
-      "A log written before compilation"
+      "A log written before compilation under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "A durability technique where changes are written to a log before being applied to the database, enabling crash recovery",
     "topic": "Databases",
@@ -507,7 +507,7 @@
     "question": "What is the purpose of heartbeat mechanisms in distributed systems?",
     "options": [
       "To synchronize clocks",
-      "To balance network load",
+      "To balance network load under stated conditions based on available context in this scenario for this case",
       "To monitor CPU health",
       "Periodic signals between nodes to detect failures and ensure liveness of distributed components"
     ],
@@ -521,7 +521,7 @@
       "A cooling mechanism",
       "A network topology",
       "Distributing a single request/event to multiple downstream services or operations for parallel processing",
-      "A database indexing strategy"
+      "A database indexing strategy under stated conditions based on available context in this scenario for this case"
     ],
     "correct_answer": "Distributing a single request/event to multiple downstream services or operations for parallel processing",
     "topic": "Architecture Patterns",
@@ -531,7 +531,7 @@
     "question": "What is back-pressure in system design?",
     "options": [
       "Network bandwidth limitation",
-      "Physical pressure on hardware",
+      "Physical pressure on hardware under stated conditions based on available context in this scenario for this case under stated conditions",
       "Database compression",
       "A flow-control mechanism where a system signals upstream to slow down when it cannot keep up with the rate of incoming data"
     ],
@@ -545,7 +545,7 @@
       "Leaderless is always faster",
       "They are the same approach",
       "Leader-based: one node accepts writes and replicates to followers; leaderless: any node accepts writes, using quorums for consistency",
-      "Leader-based is only for SQL databases"
+      "Leader-based is only for SQL databases under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "Leader-based: one node accepts writes and replicates to followers; leaderless: any node accepts writes, using quorums for consistency",
     "topic": "Distributed Systems",
@@ -554,7 +554,7 @@
   {
     "question": "What is the Bulkhead pattern in resilience engineering?",
     "options": [
-      "A pattern for bulk data processing",
+      "A pattern for bulk data processing under stated conditions based on available context in this scenario for this case",
       "A pattern for building databases",
       "Isolating system components so that a failure in one does not cascade to others, like compartments in a ship",
       "A pattern for building walls"
@@ -568,7 +568,7 @@
     "options": [
       "To enable multiple nodes in a distributed system to agree on a single value or decision despite failures",
       "To optimize database queries",
-      "To reach consensus on code style",
+      "To reach consensus on code style under stated conditions based on available context in this scenario for this case",
       "To balance network traffic"
     ],
     "correct_answer": "To enable multiple nodes in a distributed system to agree on a single value or decision despite failures",
@@ -581,7 +581,7 @@
       "Optimistic uses locks; pessimistic does not",
       "They are the same approach",
       "Optimistic assumes conflicts are rare and checks at commit time; pessimistic locks resources upfront to prevent conflicts",
-      "Pessimistic is always better for performance"
+      "Pessimistic is always better for performance under stated conditions based on available context in this scenario for this case"
     ],
     "correct_answer": "Optimistic assumes conflicts are rare and checks at commit time; pessimistic locks resources upfront to prevent conflicts",
     "topic": "Concurrency",
@@ -591,7 +591,7 @@
     "question": "What is the purpose of a reverse proxy in a system architecture?",
     "options": [
       "To replace the need for DNS resolution",
-      "To directly serve database queries to clients",
+      "To directly serve database queries to clients under stated conditions based on available context in this scenario for this case",
       "To sit in front of backend servers and forward client requests, providing load balancing, SSL termination, and caching",
       "To encrypt data at the application layer only"
     ],

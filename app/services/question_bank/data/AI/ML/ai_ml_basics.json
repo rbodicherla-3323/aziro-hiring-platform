@@ -3,7 +3,7 @@
     "question": "You trained a gradient-boosted tree model that achieves 99.2% accuracy on the training set but only 74% on the validation set. The dataset has 50 features and 10,000 samples. What is the most likely issue and appropriate fix?",
     "options": [
       "The dataset needs more features to capture the pattern",
-      "The model is underfitting; increase tree depth and number of estimators",
+      "The model is underfitting; increase tree depth and number of estimators under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "Switch to a linear model since tree models cannot generalize",
       "The model is severely overfitting; reduce max_depth, increase min_samples_leaf, use fewer features via feature selection, or add regularization (learning_rate reduction with more estimators)"
     ],
@@ -16,7 +16,7 @@
       "The imbalanced dataset makes AUC unreliable; use accuracy instead",
       "The high AUC shows good ranking ability, but the low precision at the current threshold means many false positives — adjust the decision threshold, use precision-recall AUC instead, or apply class-weight balancing/SMOTE",
       "The model is broken and should be retrained from scratch",
-      "AUC of 0.95 means the model is performing excellently; precision doesn't matter"
+      "AUC of 0.95 means the model is performing excellently; precision doesn't matter under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario"
     ],
     "correct_answer": "The high AUC shows good ranking ability, but the low precision at the current threshold means many false positives — adjust the decision threshold, use precision-recall AUC instead, or apply class-weight balancing/SMOTE",
     "topic": "Model Evaluation & Debugging"
@@ -24,7 +24,7 @@
   {
     "question": "During k-fold cross-validation, you notice that performance varies drastically across folds (e.g., F1 scores: 0.92, 0.45, 0.88, 0.51, 0.90). What is the most likely cause?",
     "options": [
-      "K-fold cross-validation is unreliable and should be replaced with a single train/test split",
+      "K-fold cross-validation is unreliable and should be replaced with a single train/test split under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "There is significant data heterogeneity across folds, possibly due to temporal/group structure in the data that random k-fold doesn't respect — consider stratified k-fold, group k-fold, or time-series split",
       "The learning rate is too high",
       "The model is underfitting consistently"
@@ -35,7 +35,7 @@
   {
     "question": "You're training a neural network and observe that training loss decreases for 10 epochs, then starts oscillating wildly while validation loss increases steadily. What should you try first?",
     "options": [
-      "Remove all regularization to let the model learn freely",
+      "Remove all regularization to let the model learn freely under stated conditions based on available context in this scenario for this case under stated conditions",
       "Add more layers to increase model capacity",
       "Increase the learning rate to escape local minima",
       "Reduce the learning rate and/or implement learning rate scheduling (e.g., ReduceLROnPlateau), and add early stopping based on validation loss"
@@ -47,7 +47,7 @@
     "question": "What is the key difference between L1 (Lasso) and L2 (Ridge) regularization in terms of their effect on model weights?",
     "options": [
       "L1 only works with linear models; L2 works with all models",
-      "L1 and L2 are identical but use different mathematical notation",
+      "L1 and L2 are identical but use different mathematical notation under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "L1 drives some weights to exactly zero (producing sparse models/feature selection); L2 shrinks weights toward zero but rarely to exactly zero (reduces magnitude uniformly)",
       "L2 produces sparse models; L1 produces dense models"
     ],
@@ -58,7 +58,7 @@
     "question": "You're building a recommendation system and computing cosine similarity between user embedding vectors. Two users have cosine similarity of 0.98. However, one user has rated 500 items and the other only 3. Why might this high similarity be misleading?",
     "options": [
       "The user with 500 ratings is an outlier and should be removed",
-      "Cosine similarity cannot be computed on vectors of different magnitudes",
+      "Cosine similarity cannot be computed on vectors of different magnitudes under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "Cosine similarity of 0.98 always indicates identical preferences",
       "With only 3 ratings, the sparse user's embedding is poorly estimated and the high similarity is unreliable — cold start problem; consider incorporating confidence weighting or popularity bias correction"
     ],
@@ -69,7 +69,7 @@
     "question": "In the context of gradient descent, what problem does the Adam optimizer solve that vanilla SGD does not?",
     "options": [
       "Adam guarantees finding the global minimum",
-      "Adam eliminates the need for a learning rate hyperparameter entirely",
+      "Adam eliminates the need for a learning rate hyperparameter entirely under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case",
       "Adam maintains per-parameter adaptive learning rates using first moment (mean) and second moment (uncentered variance) estimates of gradients, handling sparse gradients and different feature scales better than fixed-rate SGD",
       "Adam uses second-order derivatives (Hessian) for optimization"
     ],
@@ -81,7 +81,7 @@
     "options": [
       "Apply gradient clipping (e.g., torch.nn.utils.clip_grad_norm_ with max_norm) to cap gradient magnitudes before the optimizer step",
       "Increase batch size to 10,000",
-      "Switch from ReLU to Sigmoid activation to bound outputs",
+      "Switch from ReLU to Sigmoid activation to bound outputs under stated conditions based on available context in this scenario for this case",
       "Remove all batch normalization layers"
     ],
     "correct_answer": "Apply gradient clipping (e.g., torch.nn.utils.clip_grad_norm_ with max_norm) to cap gradient magnitudes before the optimizer step",
@@ -90,7 +90,7 @@
   {
     "question": "What is the 'dying ReLU' problem, and which activation function was designed to address it?",
     "options": [
-      "ReLU outputs become too large; Sigmoid fixes this by bounding output",
+      "ReLU outputs become too large; Sigmoid fixes this by bounding output under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario",
       "ReLU is computationally expensive; Tanh is faster",
       "ReLU causes memory leaks in GPU training; GELU fixes this",
       "Neurons with ReLU can get stuck outputting zero for all inputs if they enter the negative regime permanently (gradient becomes zero); Leaky ReLU (or variants like PReLU, ELU) allows small gradients for negative inputs"
@@ -103,7 +103,7 @@
     "options": [
       "Use model distillation to train a smaller/faster model that mimics the ensemble, prune trees, quantize weights, or use ONNX Runtime for optimized inference",
       "Train with a larger learning rate to make the model simpler",
-      "Run inference on a GPU; tree models always benefit from GPU acceleration",
+      "Run inference on a GPU; tree models always benefit from GPU acceleration under stated conditions based on available context in this scenario for this case under stated conditions",
       "Cache all possible predictions in a lookup table"
     ],
     "correct_answer": "Use model distillation to train a smaller/faster model that mimics the ensemble, prune trees, quantize weights, or use ONNX Runtime for optimized inference",
@@ -115,7 +115,7 @@
       "A bug was introduced in the prediction API",
       "The model weights have decayed over time in storage",
       "Data drift — the distribution of input features in production has shifted from the training data distribution, making the model's learned patterns less relevant",
-      "The evaluation metric calculation has a rounding error"
+      "The evaluation metric calculation has a rounding error under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "Data drift — the distribution of input features in production has shifted from the training data distribution, making the model's learned patterns less relevant",
     "topic": "MLOps & Production"
@@ -124,7 +124,7 @@
     "question": "You're setting up an A/B test for a new ML model. The control group uses Model A (current) and the treatment uses Model B (new). After 2 days, Model B shows 3% higher conversion rate with p-value=0.04. Your manager wants to ship Model B immediately. What is the concern?",
     "options": [
       "The test may have insufficient sample size for reliable results, early stopping inflates false positive rates (peeking problem), and the effect size should be evaluated against practical significance — run the test for the pre-determined duration with proper power analysis",
-      "A/B tests are unreliable for ML models; use offline evaluation only",
+      "A/B tests are unreliable for ML models; use offline evaluation only under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "A p-value of 0.04 is always sufficient to ship",
       "Model B should be rolled back since 3% improvement is too small"
     ],
@@ -137,7 +137,7 @@
       "It stores raw data files before preprocessing",
       "It is a database for storing A/B test results",
       "A feature store provides a centralized repository for feature definitions and computed feature values, ensuring consistency between training (offline) and serving (online) features, reducing feature computation skew and duplication across teams",
-      "It stores trained model weights for version control"
+      "It stores trained model weights for version control under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context"
     ],
     "correct_answer": "A feature store provides a centralized repository for feature definitions and computed feature values, ensuring consistency between training (offline) and serving (online) features, reducing feature computation skew and duplication across teams",
     "topic": "MLOps & Production"
@@ -148,7 +148,7 @@
       "Multiple attention heads allow the model to jointly attend to information from different representation subspaces at different positions — each head can learn different types of relationships (syntactic, semantic, positional)",
       "Multi-head attention is only used during inference, not training",
       "Multi-head attention reduces computational cost compared to single-head",
-      "Multiple heads enable the model to process multiple languages simultaneously"
+      "Multiple heads enable the model to process multiple languages simultaneously under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario"
     ],
     "correct_answer": "Multiple attention heads allow the model to jointly attend to information from different representation subspaces at different positions — each head can learn different types of relationships (syntactic, semantic, positional)",
     "topic": "Deep Learning & Advanced Architectures"
@@ -157,7 +157,7 @@
     "question": "What is the computational complexity of self-attention in a standard Transformer with respect to sequence length n and embedding dimension d?",
     "options": [
       "O(n² · d) — quadratic in sequence length due to the attention score matrix computation between all token pairs",
-      "O(log n · d) — logarithmic in sequence length",
+      "O(log n · d) — logarithmic in sequence length under stated conditions based on available context in this scenario",
       "O(n) — linear in sequence length",
       "O(n · d²) — quadratic in embedding dimension"
     ],
@@ -170,7 +170,7 @@
       "With only 5,000 samples, BERT may be overfitting — try freezing early layers and fine-tuning only the last few layers, use a lower learning rate (2e-5 to 5e-5), add dropout, or use a smaller model variant like DistilBERT",
       "TF-IDF is fundamentally superior to transformer models",
       "BERT cannot be fine-tuned on domain-specific data",
-      "BERT is always better than classical models; the evaluation is incorrect"
+      "BERT is always better than classical models; the evaluation is incorrect under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario"
     ],
     "correct_answer": "With only 5,000 samples, BERT may be overfitting — try freezing early layers and fine-tuning only the last few layers, use a lower learning rate (2e-5 to 5e-5), add dropout, or use a smaller model variant like DistilBERT",
     "topic": "Deep Learning & Advanced Architectures"
@@ -179,7 +179,7 @@
     "question": "What is the difference between target encoding and one-hot encoding for high-cardinality categorical features (e.g., ZIP codes with 40,000 unique values)?",
     "options": [
       "Target encoding cannot be used for classification tasks",
-      "They produce identical results but with different column names",
+      "They produce identical results but with different column names under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "One-hot encoding creates 40,000 sparse binary columns (dimensionality explosion); target encoding replaces each category with the mean target value, reducing to a single column — but target encoding risks target leakage and requires regularization/smoothing",
       "One-hot encoding is always preferred regardless of cardinality"
     ],
@@ -192,7 +192,7 @@
       "Create a binary indicator feature for missingness alongside imputation (mean/median/model-based), since the missingness pattern itself carries predictive information about the target",
       "Fill all missing values with zero",
       "Drop all rows with missing values",
-      "Remove the feature entirely since it has too many missing values"
+      "Remove the feature entirely since it has too many missing values under stated conditions based on available context in this scenario for this case under stated conditions based on available context"
     ],
     "correct_answer": "Create a binary indicator feature for missingness alongside imputation (mean/median/model-based), since the missingness pattern itself carries predictive information about the target",
     "topic": "Feature Engineering & Data Processing"
@@ -200,7 +200,7 @@
   {
     "question": "You're building a time-series forecasting model. Your colleague applies StandardScaler to the entire dataset before splitting into train/test sets. What is the problem with this approach?",
     "options": [
-      "StandardScaler should not be used for time-series data under any circumstances",
+      "StandardScaler should not be used for time-series data under any circumstances under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario",
       "There is no problem; this is the standard approach",
       "This causes data leakage — the scaler computes mean/std using future data (test set), biasing the training process; the scaler should be fit only on the training set and then applied to transform both train and test",
       "StandardScaler is only for classification tasks, not regression"
@@ -212,7 +212,7 @@
     "question": "What is the purpose of batch normalization in deep neural networks, and where is it typically placed?",
     "options": [
       "It reduces the batch size during training to save memory",
-      "It is only used in the final output layer to normalize predictions",
+      "It is only used in the final output layer to normalize predictions under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "It normalizes the input dataset before training begins",
       "It normalizes the inputs to each layer (or mini-batch) to have zero mean and unit variance, reducing internal covariate shift, stabilizing training, and allowing higher learning rates — placed between the linear/conv layer and the activation function"
     ],
@@ -225,7 +225,7 @@
       "The generator produces only a limited variety of outputs, ignoring large portions of the target distribution; address with techniques like Wasserstein loss (WGAN), spectral normalization, minibatch discrimination, or progressive training",
       "Both networks have converged to optimal solutions",
       "The training data has too many unique modes to learn",
-      "The discriminator is too weak and accepts all generated samples"
+      "The discriminator is too weak and accepts all generated samples under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "The generator produces only a limited variety of outputs, ignoring large portions of the target distribution; address with techniques like Wasserstein loss (WGAN), spectral normalization, minibatch discrimination, or progressive training",
     "topic": "Deep Learning & Advanced Architectures"
@@ -235,7 +235,7 @@
     "options": [
       "Skip connections reduce the number of parameters in the network",
       "Skip connections allow gradients to flow directly through shortcut paths during backpropagation, mitigating the vanishing gradient problem; the network learns residual mappings F(x) = H(x) - x rather than full mappings, making it easier to learn identity-like transformations",
-      "Skip connections randomly skip layers during training (like dropout)",
+      "Skip connections randomly skip layers during training (like dropout) under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "Skip connections eliminate the need for batch normalization"
     ],
     "correct_answer": "Skip connections allow gradients to flow directly through shortcut paths during backpropagation, mitigating the vanishing gradient problem; the network learns residual mappings F(x) = H(x) - x rather than full mappings, making it easier to learn identity-like transformations",
@@ -246,7 +246,7 @@
     "options": [
       "XGBoost is generally the better choice for tabular data — it handles mixed feature types natively, requires less hyperparameter tuning, is faster to train on CPU, more interpretable, and empirically outperforms neural networks on most tabular benchmarks",
       "Neither can handle mixed data types",
-      "Use a simple logistic regression; 200 features is too many for tree models",
+      "Use a simple logistic regression; 200 features is too many for tree models under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "Always use the neural network; deep learning is superior for all tasks"
     ],
     "correct_answer": "XGBoost is generally the better choice for tabular data — it handles mixed feature types natively, requires less hyperparameter tuning, is faster to train on CPU, more interpretable, and empirically outperforms neural networks on most tabular benchmarks",
@@ -256,7 +256,7 @@
     "question": "What is the difference between bagging (e.g., Random Forest) and boosting (e.g., XGBoost) in terms of how they reduce error?",
     "options": [
       "Bagging trains independent models on bootstrap samples and averages predictions to reduce variance; boosting trains sequential models where each corrects the errors of the previous one, primarily reducing bias",
-      "They are identical ensemble techniques with different names",
+      "They are identical ensemble techniques with different names under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario",
       "Bagging reduces bias; boosting reduces variance",
       "Bagging is for classification; boosting is for regression"
     ],
@@ -268,7 +268,7 @@
     "options": [
       "Use global feature importance; it explains individual predictions",
       "Use SHAP (SHapley Additive exPlanations) values to provide per-feature contribution scores for individual predictions, showing which features pushed the decision toward rejection and by how much",
-      "Print the model weights (Random Forest doesn't have interpretable weights)",
+      "Print the model weights (Random Forest doesn't have interpretable weights) under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "Retrain with a linear model and use those coefficients instead"
     ],
     "correct_answer": "Use SHAP (SHapley Additive exPlanations) values to provide per-feature contribution scores for individual predictions, showing which features pushed the decision toward rejection and by how much",
@@ -277,7 +277,7 @@
   {
     "question": "What is the difference between SHAP values and LIME for model interpretability?",
     "options": [
-      "SHAP is for global explanation; LIME is for local explanation only",
+      "SHAP is for global explanation; LIME is for local explanation only under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "SHAP provides mathematically consistent (additive) feature attributions based on Shapley values from game theory; LIME approximates the model locally with an interpretable surrogate model — SHAP has stronger theoretical guarantees but can be slower for large models",
       "SHAP and LIME produce identical explanations",
       "LIME works only for deep learning; SHAP works only for tree models"
@@ -291,7 +291,7 @@
       "BPE always treats 'New York' as a single token",
       "BPE breaks words into frequent subword units, handling unknown/rare words gracefully by decomposing them into known subwords — 'New York' might be ['New', 'ĠYork'] while rare words get split into character-level pieces, avoiding OOV (out-of-vocabulary) issues",
       "BPE only works for Asian languages with character-based writing",
-      "BPE and word-level tokenization produce identical results for English text"
+      "BPE and word-level tokenization produce identical results for English text under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "BPE breaks words into frequent subword units, handling unknown/rare words gracefully by decomposing them into known subwords — 'New York' might be ['New', 'ĠYork'] while rare words get split into character-level pieces, avoiding OOV (out-of-vocabulary) issues",
     "topic": "NLP & Text Processing"
@@ -301,7 +301,7 @@
     "options": [
       "Q represents what a token is looking for, K represents what a token offers to match against, V represents the actual information; attention score = softmax(QK^T / √d_k) · V — high Q-K dot product means the query attends strongly to that key's value",
       "Q, K, V are just different names for the same input matrix",
-      "Q is the question, K is the keyword, V is the vocabulary — they form a search engine",
+      "Q is the question, K is the keyword, V is the vocabulary — they form a search engine under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case",
       "Q, K, V are used only during inference, not training"
     ],
     "correct_answer": "Q represents what a token is looking for, K represents what a token offers to match against, V represents the actual information; attention score = softmax(QK^T / √d_k) · V — high Q-K dot product means the query attends strongly to that key's value",
@@ -310,7 +310,7 @@
   {
     "question": "Your image classification CNN achieves 95% accuracy on ImageNet validation but only 60% on your real-world deployment images (photos from factory floor cameras). What is this gap called and how do you address it?",
     "options": [
-      "Accuracy is the wrong metric; use F1-score instead",
+      "Accuracy is the wrong metric; use F1-score instead under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "ImageNet is too easy; switch to a harder benchmark",
       "The model has a bug in the prediction pipeline",
       "This is a domain shift (distribution mismatch) between training and deployment data; address via domain adaptation, fine-tuning on factory images, data augmentation simulating factory conditions, or transfer learning with your domain-specific data"
@@ -323,7 +323,7 @@
     "options": [
       "Data augmentation is only useful when you have millions of samples",
       "Data augmentation creates transformed versions of training data (rotation, flipping, cropping, color jitter) to improve generalization and reduce overfitting; pitfalls include applying augmentations that are invalid for the domain (e.g., vertical flips for text OCR, or color changes for medical imaging where color is diagnostic)",
-      "Data augmentation increases the dataset size by collecting more real data",
+      "Data augmentation increases the dataset size by collecting more real data under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "Data augmentation replaces the need for a validation set"
     ],
     "correct_answer": "Data augmentation creates transformed versions of training data (rotation, flipping, cropping, color jitter) to improve generalization and reduce overfitting; pitfalls include applying augmentations that are invalid for the domain (e.g., vertical flips for text OCR, or color changes for medical imaging where color is diagnostic)",
@@ -332,7 +332,7 @@
   {
     "question": "What is the vanishing gradient problem in RNNs, and how do LSTMs address it?",
     "options": [
-      "The vanishing gradient only occurs in networks deeper than 100 layers",
+      "The vanishing gradient only occurs in networks deeper than 100 layers under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case",
       "Gradients become too large in RNNs; LSTMs clip them automatically",
       "During backpropagation through time, gradients multiply through many time steps and shrink exponentially, preventing learning of long-range dependencies; LSTMs use a gating mechanism (forget, input, output gates) with a cell state that allows gradients to flow unchanged through the additive cell state update",
       "RNNs don't have gradient problems; LSTMs are just faster"
@@ -343,7 +343,7 @@
   {
     "question": "You're building a fraud detection system. The dataset has 10 million transactions with 0.1% fraud rate. A model that always predicts 'not fraud' achieves 99.9% accuracy. What evaluation metrics and strategies should you use instead?",
     "options": [
-      "Use MSE (mean squared error) for fraud detection evaluation",
+      "Use MSE (mean squared error) for fraud detection evaluation under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "Use precision, recall, F1-score, AUC-PR (area under precision-recall curve); apply cost-sensitive learning (assign higher misclassification cost to fraud), SMOTE/ADASYN for oversampling minorities, or anomaly detection approaches",
       "Randomly oversample non-fraud to balance at 50/50",
       "Accuracy is the correct metric; 99.9% is excellent"
@@ -357,7 +357,7 @@
       "Bias is always more important than variance",
       "High variance means the model is too simple",
       "Bias is error from overly simplistic assumptions (underfitting); variance is sensitivity to training data fluctuations (overfitting); as model complexity increases, bias decreases but variance increases — optimal complexity minimizes total error (bias² + variance + irreducible noise)",
-      "Bias and variance are independent of model complexity"
+      "Bias and variance are independent of model complexity under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario"
     ],
     "correct_answer": "Bias is error from overly simplistic assumptions (underfitting); variance is sensitivity to training data fluctuations (overfitting); as model complexity increases, bias decreases but variance increases — optimal complexity minimizes total error (bias² + variance + irreducible noise)",
     "topic": "Core Algorithms & Optimization"
@@ -365,7 +365,7 @@
   {
     "question": "You're implementing a model monitoring pipeline. What is the difference between data drift, concept drift, and prediction drift?",
     "options": [
-      "Concept drift is when the model code changes",
+      "Concept drift is when the model code changes under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario",
       "Data drift is a change in input feature distributions (P(X)); concept drift is a change in the relationship between features and target (P(Y|X)); prediction drift is a change in model output distribution — each requires different detection and response strategies",
       "Data drift only occurs in streaming data",
       "They all refer to the same phenomenon"
@@ -378,7 +378,7 @@
     "options": [
       "Random sampling is always sufficient for any dataset",
       "Stratified sampling ensures each split maintains the same class distribution as the original dataset — critical for imbalanced datasets where random splits might leave rare classes underrepresented or absent in some splits",
-      "Stratified sampling requires at least 1 million samples",
+      "Stratified sampling requires at least 1 million samples under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "Stratified sampling is only for time-series data"
     ],
     "correct_answer": "Stratified sampling ensures each split maintains the same class distribution as the original dataset — critical for imbalanced datasets where random splits might leave rare classes underrepresented or absent in some splits",
@@ -390,7 +390,7 @@
       "Use a multilingual pre-trained model (like mBERT or XLM-RoBERTa) and fine-tune on your small French dataset, leveraging cross-lingual transfer from the shared multilingual representations",
       "Retrain from scratch on French data only",
       "Train a French tokenizer and attach it to the English model",
-      "Translate all French data to English using Google Translate and use the English model"
+      "Translate all French data to English using Google Translate and use the English model under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "Use a multilingual pre-trained model (like mBERT or XLM-RoBERTa) and fine-tune on your small French dataset, leveraging cross-lingual transfer from the shared multilingual representations",
     "topic": "NLP & Text Processing"
@@ -401,7 +401,7 @@
       "Temperature controls the training learning rate",
       "Temperature determines the maximum sequence length",
       "Temperature scales the logits before softmax — lower temperature (→0) makes the distribution peakier (more deterministic/greedy); higher temperature (→∞) makes it more uniform (more random/creative); T=1.0 uses raw probabilities",
-      "Temperature controls the number of attention heads used"
+      "Temperature controls the number of attention heads used under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "Temperature scales the logits before softmax — lower temperature (→0) makes the distribution peakier (more deterministic/greedy); higher temperature (→∞) makes it more uniform (more random/creative); T=1.0 uses raw probabilities",
     "topic": "NLP & Text Processing"
@@ -411,7 +411,7 @@
     "options": [
       "A large 'teacher' model's soft probability outputs (logits) are used to train a smaller 'student' model — the student learns from the teacher's dark knowledge (inter-class similarities), producing a compact model suitable for deployment with minimal accuracy loss",
       "Knowledge distillation is a data cleaning technique",
-      "It means compressing the training dataset to its essential samples",
+      "It means compressing the training dataset to its essential samples under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "Knowledge distillation means extracting rules from a trained model"
     ],
     "correct_answer": "A large 'teacher' model's soft probability outputs (logits) are used to train a smaller 'student' model — the student learns from the teacher's dark knowledge (inter-class similarities), producing a compact model suitable for deployment with minimal accuracy loss",
@@ -422,7 +422,7 @@
     "options": [
       "PCA maximizes variance, not predictive power — important discriminative features with low variance may be discarded; tree-based models handle high dimensionality well with built-in feature selection and don't benefit from PCA's linear variance maximization",
       "The PCA implementation has a bug",
-      "50 components is too many; use 5 instead",
+      "50 components is too many; use 5 instead under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario",
       "PCA always improves model performance"
     ],
     "correct_answer": "PCA maximizes variance, not predictive power — important discriminative features with low variance may be discarded; tree-based models handle high dimensionality well with built-in feature selection and don't benefit from PCA's linear variance maximization",
@@ -434,7 +434,7 @@
       "Batch retraining is always superior",
       "Online learning updates the model continuously with each new data point (adapts quickly to drift but can be unstable); batch retraining periodically retrains on accumulated data (more stable but slower to adapt) — prefer online for rapidly changing patterns (e.g., ads), batch for stable domains",
       "They are identical approaches to model updating",
-      "Online learning only works for deep learning models"
+      "Online learning only works for deep learning models under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case"
     ],
     "correct_answer": "Online learning updates the model continuously with each new data point (adapts quickly to drift but can be unstable); batch retraining periodically retrains on accumulated data (more stable but slower to adapt) — prefer online for rapidly changing patterns (e.g., ads), batch for stable domains",
     "topic": "MLOps & Production"
@@ -445,7 +445,7 @@
       "Dropout is a data augmentation technique applied to inputs",
       "During training, dropout randomly zeros out neurons with probability p, forcing the network to learn redundant representations and preventing co-adaptation; during inference, all neurons are active but weights are scaled by (1-p) to maintain expected output magnitude",
       "Dropout removes the worst-performing neurons permanently",
-      "Dropout speeds up training by reducing computation; inference doesn't need speedup"
+      "Dropout speeds up training by reducing computation; inference doesn't need speedup under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "During training, dropout randomly zeros out neurons with probability p, forcing the network to learn redundant representations and preventing co-adaptation; during inference, all neurons are active but weights are scaled by (1-p) to maintain expected output magnitude",
     "topic": "Deep Learning & Training"
@@ -453,7 +453,7 @@
   {
     "question": "You're deploying a model using a REST API. The model takes 200ms for inference, but under load (100 concurrent requests), response times spike to 5 seconds. What architectural patterns can help?",
     "options": [
-      "Increase model complexity to make better predictions",
+      "Increase model complexity to make better predictions under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "Use asynchronous inference with a message queue (e.g., Redis/RabbitMQ), model serving frameworks with batching (e.g., TensorFlow Serving, Triton), horizontal scaling with load balancing, and consider model caching for repeated inputs",
       "Run the model on a single large GPU instance",
       "Switch to synchronous processing for all requests"
@@ -465,7 +465,7 @@
     "question": "What is the purpose of positional encoding in Transformer models, and why is it necessary?",
     "options": [
       "Positional encoding is optional and only used for long sequences",
-      "Positional encoding encodes the geographic position of training data",
+      "Positional encoding encodes the geographic position of training data under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "Since self-attention is permutation-invariant (order-agnostic), positional encodings inject sequence position information using sinusoidal functions or learned embeddings, allowing the model to distinguish between different word orderings",
       "Positional encoding helps the model understand grammar rules"
     ],
@@ -475,7 +475,7 @@
   {
     "question": "You're implementing Retrieval-Augmented Generation (RAG). The system retrieves documents but the LLM still hallucinates incorrect facts. What could improve faithfulness?",
     "options": [
-      "Use a larger context window so the model sees more documents",
+      "Use a larger context window so the model sees more documents under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "Improve retrieval quality (better embeddings, re-ranking), use chunk overlap for context continuity, implement citation verification, constrain generation to retrieved context via prompting, and add a separate fact-checking/grounding step",
       "Remove the retrieval component entirely",
       "Increase the LLM's temperature for more creative responses"
@@ -488,7 +488,7 @@
     "options": [
       "Quantization reduces the precision of model weights (e.g., FP32→INT8), shrinking memory footprint and enabling faster integer arithmetic; pruning removes less-important weights/neurons/layers entirely, reducing model size and computation — they can be combined",
       "Pruning increases model size by adding more connections",
-      "Quantization only works for CNN models; pruning only for RNNs",
+      "Quantization only works for CNN models; pruning only for RNNs under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "They are the same technique with different names"
     ],
     "correct_answer": "Quantization reduces the precision of model weights (e.g., FP32→INT8), shrinking memory footprint and enabling faster integer arithmetic; pruning removes less-important weights/neurons/layers entirely, reducing model size and computation — they can be combined",
@@ -499,7 +499,7 @@
     "options": [
       "The kernel trick implicitly maps data to a higher-dimensional feature space where a linear separator exists, without explicitly computing the transformation — using kernel functions (RBF, polynomial) to compute dot products in the high-dimensional space efficiently",
       "The kernel trick is a method for handling missing data",
-      "The kernel trick speeds up training by reducing the dataset size",
+      "The kernel trick speeds up training by reducing the dataset size under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "The kernel trick replaces the loss function with a simpler one"
     ],
     "correct_answer": "The kernel trick implicitly maps data to a higher-dimensional feature space where a linear separator exists, without explicitly computing the transformation — using kernel functions (RBF, polynomial) to compute dot products in the high-dimensional space efficiently",
@@ -509,7 +509,7 @@
     "question": "You're training a multi-task learning model with two loss functions: L_classification and L_regression. L_classification is ~0.5 while L_regression is ~1000. Simply summing them causes the model to optimize primarily for regression. How do you handle this?",
     "options": [
       "Use loss balancing via uncertainty weighting (learned task-specific weights), gradient normalization (GradNorm), or manual scaling to ensure both tasks contribute equally to parameter updates",
-      "Train separate models; multi-task learning doesn't work when losses differ in scale",
+      "Train separate models; multi-task learning doesn't work when losses differ in scale under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "Only use the classification loss and ignore regression",
       "Always use the same loss function for all tasks"
     ],
@@ -522,7 +522,7 @@
       "UMAP is a supervised method; t-SNE is unsupervised",
       "t-SNE and UMAP produce identical visualizations",
       "Both preserve local structure, but UMAP also better preserves global structure, runs significantly faster, scales to larger datasets, and supports embedding new data points (out-of-sample extension) — t-SNE is quadratic in complexity and results are transductive only",
-      "t-SNE works only on image data; UMAP works only on text data"
+      "t-SNE works only on image data; UMAP works only on text data under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context"
     ],
     "correct_answer": "Both preserve local structure, but UMAP also better preserves global structure, runs significantly faster, scales to larger datasets, and supports embedding new data points (out-of-sample extension) — t-SNE is quadratic in complexity and results are transductive only",
     "topic": "Feature Engineering & Data Processing"
@@ -531,7 +531,7 @@
     "question": "You built a logistic regression model and the coefficient for feature 'income' is 2.5. Can you directly interpret this as 'income is 2.5x more important than other features'?",
     "options": [
       "No — the coefficient represents the change in log-odds per unit change in income; its magnitude depends on the feature's scale, so you must standardize features before comparing coefficients, and consider multicollinearity which inflates coefficients",
-      "The coefficient 2.5 means income contributes exactly 2.5% to the prediction",
+      "The coefficient 2.5 means income contributes exactly 2.5% to the prediction under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "Yes, logistic regression coefficients directly indicate feature importance",
       "Coefficients in logistic regression are always normalized"
     ],
@@ -543,7 +543,7 @@
     "options": [
       "They always produce the same result",
       "Micro-averaging computes F1 globally by counting total TP, FP, FN across all classes (favors majority classes); macro-averaging computes F1 independently for each class and takes the unweighted mean (treats all classes equally regardless of size)",
-      "Macro-averaging weights by class frequency; micro does not",
+      "Macro-averaging weights by class frequency; micro does not under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "Micro is for binary; macro is for multi-class only"
     ],
     "correct_answer": "Micro-averaging computes F1 globally by counting total TP, FP, FN across all classes (favors majority classes); macro-averaging computes F1 independently for each class and takes the unweighted mean (treats all classes equally regardless of size)",
@@ -553,7 +553,7 @@
     "question": "You're using word2vec embeddings and notice that the vector for 'king' - 'man' + 'woman' ≈ 'queen'. But when you check gender bias, 'computer_programmer' - 'man' + 'woman' ≈ 'homemaker'. What does this reveal and how can you address it?",
     "options": [
       "Word embeddings capture and amplify societal biases present in training data; address with debiasing techniques like projection-based debiasing (removing gender direction), counterfactual data augmentation, or using debiased pre-trained embeddings",
-      "The embeddings are performing correctly; this reflects reality",
+      "The embeddings are performing correctly; this reflects reality under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "Word2vec is broken; switch to TF-IDF instead",
       "This is a training error; retrain with more data"
     ],
@@ -566,7 +566,7 @@
       "Contrastive learning contrasts two different datasets",
       "Contrastive learning trains models to pull similar (positive) pairs closer and push dissimilar (negative) pairs apart in embedding space; it enables learning powerful representations from unlabeled data by defining augmentation-based positive pairs, achieving near-supervised performance (e.g., SimCLR, MoCo, CLIP)",
       "Contrastive learning only works for tabular data",
-      "Contrastive learning is another name for adversarial training"
+      "Contrastive learning is another name for adversarial training under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions"
     ],
     "correct_answer": "Contrastive learning trains models to pull similar (positive) pairs closer and push dissimilar (negative) pairs apart in embedding space; it enables learning powerful representations from unlabeled data by defining augmentation-based positive pairs, achieving near-supervised performance (e.g., SimCLR, MoCo, CLIP)",
     "topic": "Deep Learning & Advanced Architectures"
@@ -575,7 +575,7 @@
     "question": "What is the difference between model parallelism and data parallelism in distributed deep learning training?",
     "options": [
       "Data parallelism replicates the model on multiple GPUs, each processing a different data batch, and synchronizes gradients; model parallelism splits the model itself across GPUs when it doesn't fit in one GPU's memory — they can be combined (hybrid parallelism)",
-      "Model parallelism is only for inference; data parallelism is for training",
+      "Model parallelism is only for inference; data parallelism is for training under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "Data parallelism splits the data; model parallelism splits the optimizer",
       "They are the same thing"
     ],
@@ -587,7 +587,7 @@
     "options": [
       "It uses 8-bit integers for all computations",
       "Mixed precision uses FP16 for forward/backward passes (faster, less memory) and FP32 for gradient accumulation and weight updates (maintains numerical stability) — enabled via loss scaling to prevent underflow; reduces GPU memory by ~50% and leverages Tensor Cores for 2-3x speedup",
-      "Mixed precision uses different precisions for different datasets",
+      "Mixed precision uses different precisions for different datasets under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario",
       "Mixed precision means training on mixed CPU and GPU"
     ],
     "correct_answer": "Mixed precision uses FP16 for forward/backward passes (faster, less memory) and FP32 for gradient accumulation and weight updates (maintains numerical stability) — enabled via loss scaling to prevent underflow; reduces GPU memory by ~50% and leverages Tensor Cores for 2-3x speedup",
@@ -596,7 +596,7 @@
   {
     "question": "What is LoRA (Low-Rank Adaptation), and why is it preferred for fine-tuning large language models?",
     "options": [
-      "LoRA is a data augmentation technique for language models",
+      "LoRA is a data augmentation technique for language models under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "LoRA is only applicable to computer vision models",
       "LoRA freezes pre-trained weights and injects trainable low-rank decomposition matrices (A and B) into attention layers, reducing trainable parameters by ~10,000x while achieving comparable performance to full fine-tuning — enabling LLM adaptation on consumer GPUs",
       "LoRA replaces the attention mechanism with convolutions"
@@ -610,7 +610,7 @@
       "K-Means is deterministic; results should not vary",
       "K-Means uses random centroid initialization; different starting points lead to different local optima — use K-Means++ initialization (smarter seeding), run multiple times with n_init parameter, or switch to more robust algorithms like HDBSCAN for non-spherical clusters",
       "The dataset is too small for K-Means",
-      "The silhouette score is unreliable; use accuracy instead"
+      "The silhouette score is unreliable; use accuracy instead under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context"
     ],
     "correct_answer": "K-Means uses random centroid initialization; different starting points lead to different local optima — use K-Means++ initialization (smarter seeding), run multiple times with n_init parameter, or switch to more robust algorithms like HDBSCAN for non-spherical clusters",
     "topic": "Core Algorithms & Optimization"
@@ -618,7 +618,7 @@
   {
     "question": "You notice that a feature engineered from 'age' (binned into categories: young, middle, senior) performs worse than using raw 'age' in a gradient-boosted model but better in a logistic regression. Why?",
     "options": [
-      "Logistic regression cannot use continuous features",
+      "Logistic regression cannot use continuous features under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "Binning always improves model performance",
       "Gradient boosting requires categorical inputs only",
       "Tree-based models can learn arbitrary non-linear splits on continuous features natively, so binning loses information; logistic regression is linear and benefits from binning because it cannot capture non-linear age effects without manual feature engineering"
@@ -630,7 +630,7 @@
     "question": "What is the difference between transductive and inductive learning, and which does standard supervised learning fall under?",
     "options": [
       "Inductive learning learns a general function from training data that can predict on any unseen data (standard supervised learning); transductive learning makes predictions specifically for given unlabeled data points seen during training, without learning a general function (e.g., graph-based semi-supervised methods)",
-      "Inductive learning only works for regression; transductive only for classification",
+      "Inductive learning only works for regression; transductive only for classification under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case",
       "Transductive and inductive learning are identical",
       "Transductive is another name for transfer learning"
     ],
@@ -641,7 +641,7 @@
     "question": "Your production ML pipeline processes 10TB of data daily. Training takes 8 hours on a single machine. What infrastructure and pipeline design considerations are critical?",
     "options": [
       "Process data on a laptop and upload results to cloud",
-      "Buy a bigger machine; distributed processing is unnecessary for 10TB",
+      "Buy a bigger machine; distributed processing is unnecessary for 10TB under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "Use distributed data processing (Spark/Dask), implement incremental/online learning to avoid full retraining, version datasets and models (DVC/MLflow), set up automated validation gates, implement canary deployments, and monitor for data quality issues upstream",
       "Reduce the dataset to 1GB by random sampling"
     ],
@@ -653,7 +653,7 @@
     "options": [
       "Transformers are smaller models than RNNs",
       "Transformers use less memory than RNNs",
-      "RNNs were never used for sequence modeling",
+      "RNNs were never used for sequence modeling under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case",
       "Transformers process all positions in parallel via self-attention (not sequential like RNNs), enabling much better GPU utilization and scalability; they capture long-range dependencies directly without information bottlenecks, and the architecture scales efficiently with compute and data"
     ],
     "correct_answer": "Transformers process all positions in parallel via self-attention (not sequential like RNNs), enabling much better GPU utilization and scalability; they capture long-range dependencies directly without information bottlenecks, and the architecture scales efficiently with compute and data",
@@ -662,7 +662,7 @@
   {
     "question": "What is cross-entropy loss, and why is it preferred over MSE for classification tasks?",
     "options": [
-      "Cross-entropy and MSE are interchangeable for classification",
+      "Cross-entropy and MSE are interchangeable for classification under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "Cross-entropy only works for binary classification",
       "Cross-entropy measures the divergence between predicted probability distribution and true distribution; it provides stronger gradients for incorrect confident predictions than MSE (which has vanishing gradients near 0 and 1 for sigmoid outputs), leading to faster and more stable convergence for classification",
       "MSE is always preferred; cross-entropy is outdated"
@@ -674,7 +674,7 @@
     "question": "You're building a model that must satisfy fairness constraints — equal false positive rates across demographic groups. Your base model has 3x higher FPR for one group. What techniques can you apply?",
     "options": [
       "Remove the demographic feature; this guarantees fairness",
-      "Fairness and accuracy are independent; optimize accuracy first",
+      "Fairness and accuracy are independent; optimize accuracy first under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "Train separate models for each demographic group",
       "Apply post-processing calibration (equalized odds), in-processing constraints (adversarial debiasing), or pre-processing data rebalancing; removing the demographic feature alone doesn't help due to correlated proxy features — use fairness metrics and trade-off analysis"
     ],
@@ -684,7 +684,7 @@
   {
     "question": "What is the difference between generative and discriminative models? Give examples of each.",
     "options": [
-      "Discriminative models generate data; generative models classify",
+      "Discriminative models generate data; generative models classify under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case",
       "The distinction only applies to deep learning models",
       "Generative models are always better than discriminative models",
       "Generative models learn the joint probability P(X,Y) or P(X) to generate data (e.g., Naive Bayes, VAE, GAN, GPT); discriminative models learn the decision boundary P(Y|X) directly (e.g., Logistic Regression, SVM, Random Forest) — discriminative models typically have better classification accuracy"
@@ -695,7 +695,7 @@
   {
     "question": "A colleague uses train accuracy to select the best hyperparameters via grid search, then reports test accuracy as the final model performance. What is wrong with this approach?",
     "options": [
-      "Grid search is deprecated; use Bayesian optimization",
+      "Grid search is deprecated; use Bayesian optimization under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario",
       "Nothing is wrong; this is standard practice",
       "Hyperparameters must be selected using validation data (or cross-validation), not training data — using train accuracy for selection leads to overfitting to the training set; the test set must remain untouched until final evaluation to get an unbiased performance estimate",
       "Grid search should use random search instead"
@@ -707,7 +707,7 @@
     "question": "What is the 'curse of dimensionality' and how does it affect distance-based algorithms like KNN?",
     "options": [
       "The curse of dimensionality only affects neural networks",
-      "It means you need exponentially more features for better accuracy",
+      "It means you need exponentially more features for better accuracy under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "As dimensionality increases, data becomes increasingly sparse — distances between all points converge (become nearly equal), making distance-based similarity measures unreliable; KNN performance degrades because the concept of 'nearest' becomes meaningless — address with dimensionality reduction or feature selection",
       "It means high-dimensional datasets always need more labels"
     ],
@@ -719,7 +719,7 @@
     "options": [
       "Faster R-CNN is a two-stage detector (region proposal + classification) with higher accuracy but slower inference; YOLO is a single-stage detector that processes the entire image in one pass, achieving real-time speed at slightly lower accuracy — choose based on latency vs. accuracy requirements",
       "YOLO is always better than Faster R-CNN",
-      "They are architecturally identical with the same speed",
+      "They are architecturally identical with the same speed under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case",
       "Faster R-CNN only detects one object class"
     ],
     "correct_answer": "Faster R-CNN is a two-stage detector (region proposal + classification) with higher accuracy but slower inference; YOLO is a single-stage detector that processes the entire image in one pass, achieving real-time speed at slightly lower accuracy — choose based on latency vs. accuracy requirements",
@@ -730,7 +730,7 @@
     "options": [
       "When a neural network is trained on new tasks sequentially, it overwrites weights important for previous tasks, losing prior knowledge; addressed by elastic weight consolidation (EWC), progressive neural networks, experience replay, or parameter isolation methods",
       "It refers to the model forgetting its hyperparameters",
-      "Catastrophic forgetting is a database issue, not an ML issue",
+      "Catastrophic forgetting is a database issue, not an ML issue under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "It only occurs when the model runs out of GPU memory"
     ],
     "correct_answer": "When a neural network is trained on new tasks sequentially, it overwrites weights important for previous tasks, losing prior knowledge; addressed by elastic weight consolidation (EWC), progressive neural networks, experience replay, or parameter isolation methods",
@@ -739,7 +739,7 @@
   {
     "question": "What is the difference between semantic segmentation, instance segmentation, and panoptic segmentation in computer vision?",
     "options": [
-      "Instance segmentation only works on videos; semantic segmentation on images",
+      "Instance segmentation only works on videos; semantic segmentation on images under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case",
       "They all produce the same output — pixel classifications",
       "Panoptic segmentation is an older, less accurate technique",
       "Semantic segmentation classifies each pixel into a class (no instance distinction); instance segmentation detects and segments individual object instances (separates overlapping objects); panoptic segmentation combines both — all pixels are classified and countable objects are distinguished as individual instances"
@@ -752,7 +752,7 @@
     "options": [
       "The optimizer has found the global optimum; accept the result",
       "6 hours is a normal training time; don't worry about it",
-      "Bayesian optimization always finds impractical hyperparameters",
+      "Bayesian optimization always finds impractical hyperparameters under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case",
       "The search space may be too broad, the optimizer may be exploiting a marginal improvement with impractical training cost, or the surrogate model is poorly calibrated — add constraints on training time, use early stopping rounds, narrow the search space, or increase the number of initial random trials"
     ],
     "correct_answer": "The search space may be too broad, the optimizer may be exploiting a marginal improvement with impractical training cost, or the surrogate model is poorly calibrated — add constraints on training time, use early stopping rounds, narrow the search space, or increase the number of initial random trials",
@@ -762,7 +762,7 @@
     "question": "What is the difference between label smoothing and temperature scaling as calibration techniques?",
     "options": [
       "Both are applied only during inference",
-      "Label smoothing is for regression; temperature scaling is for classification",
+      "Label smoothing is for regression; temperature scaling is for classification under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "Label smoothing softens training labels from hard 0/1 to α/(1-α) (e.g., 0.9/0.1), preventing overconfident predictions during training; temperature scaling is a post-hoc calibration method that divides logits by a learned temperature T to calibrate confidence of already-trained models",
       "They are the same technique applied at different stages"
     ],
@@ -772,7 +772,7 @@
   {
     "question": "In a Variational Autoencoder (VAE), what is the role of the KL divergence term in the loss function?",
     "options": [
-      "It measures the distance between input and output images",
+      "It measures the distance between input and output images under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario",
       "KL divergence measures reconstruction quality",
       "KL divergence is only used in GAN training",
       "The KL divergence term regularizes the learned latent distribution to be close to a prior (typically standard normal N(0,1)), ensuring a smooth, continuous latent space that enables meaningful sampling and interpolation — balancing with reconstruction loss via β controls the trade-off"
@@ -783,7 +783,7 @@
   {
     "question": "What is the 'training-serving skew' problem in ML systems, and how does it manifest?",
     "options": [
-      "Training-serving skew means the model trains faster than it serves",
+      "Training-serving skew means the model trains faster than it serves under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "It occurs when features are computed differently during training and inference (e.g., different preprocessing code, different data sources, stale features, timestamp handling) — the model receives different feature distributions at serving time than training, causing degraded performance without any apparent code change",
       "Training-serving skew only affects deep learning models",
       "It means the training data is larger than the serving data"
@@ -794,7 +794,7 @@
   {
     "question": "You're using DBSCAN for clustering and it finds one large cluster containing 90% of points and marks the rest as noise. What parameter tuning would help?",
     "options": [
-      "Run DBSCAN multiple times; it will give different results",
+      "Run DBSCAN multiple times; it will give different results under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context",
       "Decrease the eps (epsilon/neighborhood radius) parameter to create tighter clusters, and/or decrease min_samples to allow smaller clusters; use the k-distance plot (elbow method) to choose eps — the current eps is too large, merging distinct clusters",
       "DBSCAN parameters cannot be tuned; use K-Means instead",
       "Increase eps to 1000 to find more clusters"
@@ -806,7 +806,7 @@
     "question": "What are Graph Neural Networks (GNNs), and what types of problems are they uniquely suited for?",
     "options": [
       "GNNs can only perform node classification, not link prediction",
-      "GNNs are neural networks that only work on grid-structured data",
+      "GNNs are neural networks that only work on grid-structured data under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "GNNs operate on graph-structured data by passing messages between nodes to learn representations that capture both node features and graph topology — suited for social networks, molecular property prediction, recommendation systems, fraud detection, knowledge graphs, and any data with explicit relational structure",
       "GNNs are just CNNs applied to graph visualizations"
     ],
@@ -819,7 +819,7 @@
       "SFT trains on curated input-output pairs (what to generate); RLHF trains a reward model from human preference comparisons, then uses PPO/DPO to optimize the policy to maximize the reward — RLHF captures nuanced quality preferences that are hard to express as explicit demonstrations",
       "RLHF does not use any human data",
       "SFT is always superior to RLHF for alignment",
-      "RLHF and SFT are identical training approaches"
+      "RLHF and SFT are identical training approaches under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case"
     ],
     "correct_answer": "SFT trains on curated input-output pairs (what to generate); RLHF trains a reward model from human preference comparisons, then uses PPO/DPO to optimize the policy to maximize the reward — RLHF captures nuanced quality preferences that are hard to express as explicit demonstrations",
     "topic": "NLP & Text Processing"
@@ -829,7 +829,7 @@
     "options": [
       "Use a held-out evaluation set with stratified sampling, compute task-specific metrics (not just accuracy), include confidence intervals via bootstrap resampling, test on diverse subgroups/edge cases, and compare against a simple baseline — do not use all 500 for prompt engineering and evaluation simultaneously",
       "500 samples is not enough; don't evaluate",
-      "Use cross-validation with the API model as you would with any model",
+      "Use cross-validation with the API model as you would with any model under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case",
       "Just check if the first 10 outputs look correct"
     ],
     "correct_answer": "Use a held-out evaluation set with stratified sampling, compute task-specific metrics (not just accuracy), include confidence intervals via bootstrap resampling, test on diverse subgroups/edge cases, and compare against a simple baseline — do not use all 500 for prompt engineering and evaluation simultaneously",
@@ -840,7 +840,7 @@
     "options": [
       "Encoder and decoder are architecturally identical",
       "The encoder processes the full input sequence with bidirectional self-attention; the decoder generates output tokens autoregressively with masked (causal) self-attention (can only attend to previous tokens) plus cross-attention to encoder outputs — encoder captures context, decoder generates conditioned on that context",
-      "Only the decoder uses attention; the encoder uses convolutions",
+      "Only the decoder uses attention; the encoder uses convolutions under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "The encoder generates text; the decoder classifies text"
     ],
     "correct_answer": "The encoder processes the full input sequence with bidirectional self-attention; the decoder generates output tokens autoregressively with masked (causal) self-attention (can only attend to previous tokens) plus cross-attention to encoder outputs — encoder captures context, decoder generates conditioned on that context",
@@ -851,7 +851,7 @@
     "options": [
       "Consider: latency requirements (API calls are slower), cost at scale (inference cost vs. training cost), accuracy needs (task-specific models often outperform few-shot on narrow tasks), data privacy constraints, model customization needs, and maintenance burden — few-shot is great for prototyping, task-specific for production at scale",
       "The decision should only be based on which approach is newer",
-      "Always train a task-specific model; foundation models are unreliable",
+      "Always train a task-specific model; foundation models are unreliable under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions based on available context in this scenario for this case under stated conditions",
       "Always use the foundation model; labeled data is worthless"
     ],
     "correct_answer": "Consider: latency requirements (API calls are slower), cost at scale (inference cost vs. training cost), accuracy needs (task-specific models often outperform few-shot on narrow tasks), data privacy constraints, model customization needs, and maintenance burden — few-shot is great for prototyping, task-specific for production at scale",
