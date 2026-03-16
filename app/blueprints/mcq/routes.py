@@ -2,6 +2,8 @@ import base64
 import binascii
 import csv
 import json
+import hashlib
+import random
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -36,6 +38,29 @@ def _parse_iso_ts(ts):
         except ValueError:
             return None
     return None
+
+
+
+
+def _shuffled_options(session_id, q_index, options):
+    if not isinstance(options, list) or len(options) < 2:
+        return list(options or [])
+
+    seed = hashlib.sha256(f"{session_id}:{q_index}".encode("utf-8")).digest()
+    rng = random.Random(seed)
+
+    shuffled = list(options)
+    rng.shuffle(shuffled)
+    return shuffled
+
+
+def _prepare_question_for_view(session_id, q_index, question):
+    if not isinstance(question, dict):
+        return question
+
+    view_question = dict(question)
+    view_question["options"] = _shuffled_options(session_id, q_index, question.get("options", []))
+    return view_question
 
 
 def _extract_session_id_from_context(payload):
@@ -169,7 +194,7 @@ def _question_payload(session_id, q_index):
         "total_questions": MCQSessionService.total_questions(session_id),
         "remaining_seconds": MCQSessionService.remaining_time(session_id),
         "question_text": question.get("question") or question.get("text") or "",
-        "options": question.get("options", []),
+        "options": _shuffled_options(session_id, q_index, question.get("options", [])),
         "selected_answer": MCQSessionService.get_answer(session_id, q_index),
         "question_url": url_for("mcq.question", session_id=session_id, q=q_index),
         "submit_url": url_for("mcq.submit", session_id=session_id),
@@ -304,9 +329,11 @@ def question(session_id):
             "question": payload
         })
 
+    question_view = _prepare_question_for_view(session_id, q_index, question)
+
     return render_template(
         "mcq/question.html",
-        question=question,
+        question=question_view,
         q_index=q_index,
         total_questions=MCQSessionService.total_questions(session_id),
         remaining_seconds=MCQSessionService.remaining_time(session_id),

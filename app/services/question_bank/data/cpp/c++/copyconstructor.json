@@ -1,0 +1,324 @@
+[
+  {
+    "id": "cpp-cpp-dev-l2-336",
+    "question": "Given the code:\\nstruct A {\r\n    A() = default;\r\n    A(A&);\r\n};\r\nconst A ca;\r\nA b(ca);\\nWhat is the most accurate diagnosis?",
+    "options": [
+      "Can't bind const to A&; use const A&.",
+      "OK: const binds to A& in copy ctor.",
+      "Copy ctors cannot take references in C++.",
+      "Move ctor is selected automatically here."
+    ],
+    "correct_answer": "Can't bind const to A&; use const A&.",
+    "topic": "Copy and Move Semantics",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "copy_constructor",
+      "const_correctness"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-337",
+    "question": "Which of the following constructors is NOT a copy constructor (i.e., does not count as the copy constructor for special member generation)?",
+    "options": [
+      "X(X) (pass-by-value; not copy ctor).",
+      "X(const X&) (copy ctor).",
+      "X(X&) (copy ctor).",
+      "X(const volatile X&) (copy ctor form)."
+    ],
+    "correct_answer": "X(X) (pass-by-value; not copy ctor).",
+    "topic": "Copy and Move Semantics",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "copy_constructor",
+      "special_members"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-338",
+    "question": "Given the code (C++11 and later):\\nstruct A {\r\n    explicit A(const A&);\r\n};\r\nA a;\r\nA b = a;\r\nA c(a);\\nWhich statement is correct?",
+    "options": [
+      "b=a fails; c(a) works with explicit.",
+      "Both work; explicit is ignored here.",
+      "Both fail; explicit copy ctors are illegal.",
+      "c(a) fails; b=a works."
+    ],
+    "correct_answer": "b=a fails; c(a) works with explicit.",
+    "topic": "Copy and Move Semantics",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "copy_constructor",
+      "explicit",
+      "initialization"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-339",
+    "question": "In C++11 and later, what is the effect of declaring a user-defined destructor on implicit move operations?\\nstruct S {\r\n    ~S();\r\n    int x;\r\n};",
+    "options": [
+      "User dtor blocks implicit move ops.",
+      "User dtor deletes copy ops too (Rule of 3/5).",
+      "User dtor makes type trivially movable.",
+      "No effect on implicit moves."
+    ],
+    "correct_answer": "User dtor blocks implicit move ops.",
+    "topic": "Copy and Move Semantics",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "rule_of_five",
+      "move_semantics",
+      "special_members"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-340",
+    "question": "Assume C++17 or later. Given:\\nstruct A {\r\n    A();\r\n    A(const A&);\r\n};\r\nA make() { return A{}; }\r\nA x = make();\\nHow many times is A(const A&) called?",
+    "options": [
+      "0 (C++17 guaranteed elision).",
+      "1 (copy from return temporary).",
+      "2 (copy return, then copy into x).",
+      "Depends on optimization flags."
+    ],
+    "correct_answer": "0 (C++17 guaranteed elision).",
+    "topic": "Copy and Move Semantics",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "copy_elision",
+      "copy_constructor",
+      "cpp17"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-341",
+    "question": "Given:\\n#include <memory>\\nstruct S {\r\n    std::unique_ptr<int> p;\r\n};\\nWhich statement is correct about S?",
+    "options": [
+      "Copy deleted; move OK (no custom dtor).",
+      "Copy OK; unique_ptr deep-copies by default.",
+      "Copy OK; move disabled by unique_ptr.",
+      "Neither works: any pointer member blocks moves."
+    ],
+    "correct_answer": "Copy deleted; move OK (no custom dtor).",
+    "topic": "Copy and Move Semantics",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "copy_constructor",
+      "move_semantics",
+      "unique_ptr"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-342",
+    "question": "Given:\\ntemplate <class T>\r\nstruct Box {\r\n    template <class U>\r\n    Box(const Box<U>&);\r\n};\\nWhich statement is correct about Box<T>'s copy constructor?",
+    "options": [
+      "Template ctor isn't copy ctor; implicit copy may exist.",
+      "Template ctor is copy ctor; implicit copy not declared.",
+      "Any ctor template deletes all special members.",
+      "Templates never help copying."
+    ],
+    "correct_answer": "Template ctor isn't copy ctor; implicit copy may exist.",
+    "topic": "Copy and Move Semantics",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "copy_constructor",
+      "templates",
+      "special_members"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-343",
+    "question": "Given:\\nstruct Base {\r\n    Base() = delete;\r\n    Base(const Base&) = default;\r\n};\r\nstruct Derived : Base {\r\n    Derived() = delete;\r\n    Derived(const Derived& other) { /* empty */ }\r\n};\\nWhat is the issue?",
+    "options": [
+      "Base() deleted; Derived must init Base(other).",
+      "OK: Base is copied even if omitted in init list.",
+      "Only runtime slicing problem.",
+      "Base copy cannot be defaulted."
+    ],
+    "correct_answer": "Base() deleted; Derived must init Base(other).",
+    "topic": "Copy and Move Semantics",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "cpp_dev",
+      "copy_constructor",
+      "inheritance",
+      "special_members"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-344",
+    "question": "Given:\\nstruct Base { virtual ~Base() = default; int b = 0; };\r\nstruct Derived : Base { int d = 0; };\r\nstd::vector<Base> v;\r\nv.push_back(Derived{});\\nWhat happens and what is the typical fix?",
+    "options": [
+      "Slicing into vector<Base>; use pointers/clone().",
+      "Deep copy occurs because Base has a virtual destructor.",
+      "Ill-formed: vector cannot store polymorphic bases.",
+      "dynamic_cast is used during copy."
+    ],
+    "correct_answer": "Slicing into vector<Base>; use pointers/clone().",
+    "topic": "Copy and Move Semantics",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "copy_constructor",
+      "slicing",
+      "std_vector"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-345",
+    "question": "During std::vector reallocation, which situation commonly causes the vector to COPY elements instead of MOVE them (when both are available)?",
+    "options": [
+      "Move not noexcept; vector may copy for safety.",
+      "Noexcept move exists; vector still copies always.",
+      "Movable-only types are copied via memcpy on realloc.",
+      "Copy is always preferred."
+    ],
+    "correct_answer": "Move not noexcept; vector may copy for safety.",
+    "topic": "Copy and Move Semantics",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "noexcept",
+      "move_semantics",
+      "std_vector"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-346",
+    "question": "Consider copy-and-swap assignment:\\nstruct T {\r\n    friend void swap(T&, T&) noexcept;\r\n    T(const T&);\r\n    T(T&&) noexcept;\r\n    T& operator=(T other) { swap(*this, other); return *this; }\r\n};\\nWhat is a key property of this operator= implementation?",
+    "options": [
+      "Strong guarantee if swap noexcept; self-assign safe.",
+      "operator= must take const T& only in C++ by the standard.",
+      "Pass-by-value disables copy and move.",
+      "Always shallow-copies."
+    ],
+    "correct_answer": "Strong guarantee if swap noexcept; self-assign safe.",
+    "topic": "Copy and Move Semantics",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "copy_constructor",
+      "exception_safety",
+      "copy_and_swap"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-347",
+    "question": "Why is a constructor of the form T(T other) almost always a bug when intended as a copy constructor?",
+    "options": [
+      "Pass-by-value isn't copy ctor; needs copy/move first.",
+      "Best copy ctor; always faster than const& in practice.",
+      "Required for C++17 copy elision to work.",
+      "It disables the destructor."
+    ],
+    "correct_answer": "Pass-by-value isn't copy ctor; needs copy/move first.",
+    "topic": "Copy and Move Semantics",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "copy_constructor",
+      "special_members",
+      "performance"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  }
+]
