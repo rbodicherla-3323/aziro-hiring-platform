@@ -9,6 +9,7 @@ import zipfile
 import zlib
 import base64
 import time
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
 from xml.etree import ElementTree
 
 from app.services.ai_generator import _get_ai_client
@@ -55,6 +56,36 @@ _NOISE_LINE_PATTERNS = (
 
 _MIN_TEXT_QUALITY_FOR_DETERMINISTIC = 0.14
 _AI_TEMP_UNAVAILABLE_UNTIL = 0.0
+def _get_float_env(name: str, default: float) -> float:
+    try:
+        return float(os.getenv(name, default))
+    except Exception:
+        return float(default)
+
+
+def _get_int_env(name: str, default: int) -> int:
+    try:
+        return int(os.getenv(name, default))
+    except Exception:
+        return int(default)
+
+
+_AI_RESUME_TEXT_TIMEOUT = _get_float_env("AI_RESUME_TEXT_TIMEOUT", 8.0)
+_AI_RESUME_DOC_TIMEOUT = _get_float_env("AI_RESUME_DOC_TIMEOUT", 10.0)
+_AI_RESUME_DOC_MAX_BYTES = _get_int_env("AI_RESUME_DOC_MAX_BYTES", 1500000)
+_AI_EXECUTOR = ThreadPoolExecutor(max_workers=4)
+
+
+def _run_with_timeout(fn, timeout_seconds: float, *args, **kwargs):
+    if not timeout_seconds or timeout_seconds <= 0:
+        return fn(*args, **kwargs)
+    future = _AI_EXECUTOR.submit(fn, *args, **kwargs)
+    try:
+        return future.result(timeout=timeout_seconds)
+    except FutureTimeout:
+        return None
+    except Exception:
+        return None
 
 
 def allowed_file_extension(filename: str) -> bool:
@@ -1120,7 +1151,7 @@ def extract_resume_identity(
 
     used_ai = False
     if use_ai_fallback and can_use_deterministic and ((not name) or (not email) or name_conf < 0.7):
-        ai_data = _ai_resume_extraction(text)
+        ai_data = _run_with_timeout(_ai_resume_extraction, _AI_RESUME_TEXT_TIMEOUT, text)
         if ai_data:
             used_ai = True
             ai_name = ai_data.get("name")
@@ -1134,13 +1165,19 @@ def extract_resume_identity(
                 email = ai_email
                 email_conf = ai_email_conf
         else:
-            warnings.append("AI resume text fallback returned no result.")
+            warnings.append("AI resume text fallback returned no result or timed out.")
 
     if use_ai_fallback and source_file_bytes and ((not name) or (not email)):
-        ai_doc_data = _ai_resume_extraction_from_document(
-            source_file_bytes,
-            source_mime_type or get_mime_type_for_filename(filename),
-        )
+        if _AI_RESUME_DOC_MAX_BYTES and len(source_file_bytes) > _AI_RESUME_DOC_MAX_BYTES:
+            warnings.append("Resume file too large for AI document fallback; skipping AI pass.")
+            ai_doc_data = None
+        else:
+            ai_doc_data = _run_with_timeout(
+                _ai_resume_extraction_from_document,
+                _AI_RESUME_DOC_TIMEOUT,
+                source_file_bytes,
+                source_mime_type or get_mime_type_for_filename(filename),
+            )
         if ai_doc_data:
             used_ai = True
             ai_name = ai_doc_data.get("name")
@@ -1154,7 +1191,7 @@ def extract_resume_identity(
                 email = ai_email
                 email_conf = max(email_conf, ai_email_conf)
         else:
-            warnings.append("AI resume document fallback returned no result.")
+            warnings.append("AI resume document fallback returned no result or timed out.")
             warnings.append(
                 "AI service unavailable or unreachable. Verify GEMINI_API_KEY and outbound access to Gemini API."
             )
