@@ -73,6 +73,9 @@ def _get_int_env(name: str, default: int) -> int:
 _AI_RESUME_TEXT_TIMEOUT = _get_float_env("AI_RESUME_TEXT_TIMEOUT", 8.0)
 _AI_RESUME_DOC_TIMEOUT = _get_float_env("AI_RESUME_DOC_TIMEOUT", 10.0)
 _AI_RESUME_DOC_MAX_BYTES = _get_int_env("AI_RESUME_DOC_MAX_BYTES", 1500000)
+_PDF_EXTRACT_TIMEOUT = _get_float_env("PDF_EXTRACT_TIMEOUT", 6.0)
+_PDF_BASIC_TIMEOUT = _get_float_env("PDF_BASIC_TIMEOUT", 4.0)
+_PDF_FAST_MAX_BYTES = _get_int_env("PDF_FAST_MAX_BYTES", 900000)
 _AI_EXECUTOR = ThreadPoolExecutor(max_workers=4)
 
 
@@ -571,7 +574,7 @@ def _extract_pdf_text_pdfminer(file_bytes: bytes):
     return _repair_fragmented_pdf_text(text.strip()), "pdfminer", warnings
 
 
-def _extract_pdf_text(file_bytes: bytes):
+def _extract_pdf_text(file_bytes: bytes, fast_mode: bool = False):
     def _extract_pdf_text_basic(raw_pdf_bytes: bytes):
         def _decode_stream_variants(stream_data: bytes):
             variants = []
@@ -650,18 +653,48 @@ def _extract_pdf_text(file_bytes: bytes):
 
     attempts = []
 
-    text_pdfplumber, method_pdfplumber, warn_pdfplumber = _extract_pdf_text_pdfplumber(file_bytes)
+    def _attempt(name: str, func, timeout: float):
+        result = _run_with_timeout(func, timeout, file_bytes)
+        if not result:
+            return "", f"{name}_timeout", [f"{name} extraction timed out."]
+        return result
+
+    def _accept(text: str):
+        score = _text_quality_score(text)
+        return bool(text) and score >= _MIN_TEXT_QUALITY_FOR_DETERMINISTIC
+
+    # Always try pdfplumber first (fast for text-based PDFs).
+    text_pdfplumber, method_pdfplumber, warn_pdfplumber = _attempt(
+        "pdfplumber",
+        _extract_pdf_text_pdfplumber,
+        _PDF_EXTRACT_TIMEOUT,
+    )
     attempts.append((text_pdfplumber, method_pdfplumber, warn_pdfplumber))
+    if _accept(text_pdfplumber):
+        return text_pdfplumber, method_pdfplumber, list(warn_pdfplumber or [])
 
-    text_pdfminer, method_pdfminer, warn_pdfminer = _extract_pdf_text_pdfminer(file_bytes)
-    attempts.append((text_pdfminer, method_pdfminer, warn_pdfminer))
+    # In fast mode, skip extra heavy attempts unless needed.
+    if not fast_mode:
+        text_pdfminer, method_pdfminer, warn_pdfminer = _attempt(
+            "pdfminer",
+            _extract_pdf_text_pdfminer,
+            _PDF_EXTRACT_TIMEOUT,
+        )
+        attempts.append((text_pdfminer, method_pdfminer, warn_pdfminer))
+        if _accept(text_pdfminer):
+            return text_pdfminer, method_pdfminer, list(warn_pdfminer or [])
 
-    text_basic = _extract_pdf_text_basic(file_bytes)
-    attempts.append((text_basic, "pdf_basic", ["Used dependency-free PDF parser fallback."] if text_basic else []))
+    text_basic = _run_with_timeout(_extract_pdf_text_basic, _PDF_BASIC_TIMEOUT, file_bytes)
+    if text_basic is None:
+        attempts.append(("", "pdf_basic_timeout", ["pdf_basic extraction timed out."]))
+    else:
+        attempts.append((text_basic, "pdf_basic", ["Used dependency-free PDF parser fallback."] if text_basic else []))
+        if _accept(text_basic):
+            return text_basic, "pdf_basic", ["Used dependency-free PDF parser fallback."]
 
     best_text = ""
     best_method = "pdf_unknown"
-    best_score = 0.0
+    best_score = -1.0
     best_warnings = []
 
     for text, method, warn in attempts:
@@ -767,7 +800,7 @@ def _extract_doc_text(file_bytes: bytes):
     return text, f"doc_best_effort_{encoding}", warnings
 
 
-def extract_text_from_file(filename: str, file_bytes: bytes):
+def extract_text_from_file(filename: str, file_bytes: bytes, fast_mode: bool = False):
     ext = get_file_extension(filename)
     if ext not in ALLOWED_EXTENSIONS:
         return {
@@ -785,7 +818,9 @@ def extract_text_from_file(filename: str, file_bytes: bytes):
     method = "unknown"
 
     if ext == "pdf":
-        text, method, warnings = _extract_pdf_text(file_bytes)
+        size_hint = len(file_bytes or b"")
+        use_fast = bool(fast_mode) or (bool(_PDF_FAST_MAX_BYTES) and size_hint >= _PDF_FAST_MAX_BYTES)
+        text, method, warnings = _extract_pdf_text(file_bytes, fast_mode=use_fast)
     elif ext == "docx":
         text, method, warnings = _extract_docx_text(file_bytes)
     elif ext == "txt":
