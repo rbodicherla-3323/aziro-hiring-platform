@@ -315,6 +315,7 @@ def send_candidate_test_links_email(
     tests: dict,
     delegated_access_token: str = "",
     delegated_sender_email: str = "",
+    force_delegated: bool = False,
 ) -> Tuple[bool, str]:
     """
     Send generated test links to one candidate.
@@ -339,6 +340,19 @@ def send_candidate_test_links_email(
     body = _build_email_body(candidate_name, role_label, tests)
 
     # Prefer logged-in user's mailbox whenever a delegated token is available.
+    if force_delegated:
+        if not delegated_access_token:
+            return False, "Delegated Graph token is missing or expired. Please sign in with Microsoft again."
+        delegated_ok, delegated_err = _send_via_graph_delegated(
+            candidate_email=candidate_email,
+            role_label=role_label,
+            body=body,
+            delegated_access_token=delegated_access_token,
+            delegated_sender_email=delegated_sender_email,
+        )
+        if delegated_ok:
+            return True, ""
+        return False, delegated_err
     if delegated_access_token:
         delegated_ok, delegated_err = _send_via_graph_delegated(
             candidate_email=candidate_email,

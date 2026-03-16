@@ -4,8 +4,24 @@ In-memory store for generated test entries (per-server session).
 Each entry tracks: name, email, role, tests dict, created_by, created_at.
 """
 from datetime import datetime, timezone, timedelta
+import os
 
 GENERATED_TESTS = []
+
+
+def _get_int_env(name: str, default: int) -> int:
+    try:
+        return int(os.getenv(name, default))
+    except Exception:
+        return int(default)
+
+
+SESSION_RETENTION_DAYS = _get_int_env("SESSION_RETENTION_DAYS", 7)
+
+
+def _within_retention(dt: datetime) -> bool:
+    now = datetime.now(timezone.utc)
+    return dt >= (now - timedelta(days=SESSION_RETENTION_DAYS))
 
 
 def add_generated_test(entry: dict):
@@ -66,8 +82,7 @@ def add_generated_test(entry: dict):
 
 
 def get_tests_for_user_today(user_email: str):
-    """Return test entries created by a specific user today."""
-    today = datetime.now(timezone.utc).date()
+    """Return test entries created by a specific user in the retention window."""
     results = []
     for t in GENERATED_TESTS:
         if t.get("created_by", "").lower() != user_email.lower():
@@ -82,14 +97,13 @@ def get_tests_for_user_today(user_email: str):
             dt = created
         else:
             continue
-        if dt.date() == today:
+        if _within_retention(dt):
             results.append(t)
     return results
 
 
 def get_all_tests_today():
-    """Return all test entries created today (all users)."""
-    today = datetime.now(timezone.utc).date()
+    """Return all test entries created in the retention window (all users)."""
     results = []
     for t in GENERATED_TESTS:
         created = t.get("created_at", "")
@@ -102,7 +116,7 @@ def get_all_tests_today():
             dt = created
         else:
             continue
-        if dt.date() == today:
+        if _within_retention(dt):
             results.append(t)
     return results
 
