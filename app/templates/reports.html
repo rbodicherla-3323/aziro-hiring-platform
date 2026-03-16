@@ -219,7 +219,7 @@
     </div>
     <div class="session-section">
         <div class="section-title">
-            <i class="fas fa-clock" style="color:var(--az-primary);"></i> Last 24 Hours
+            <i class="fas fa-clock" style="color:var(--az-primary);"></i> Last {{ recent_days }} Days
             <span class="badge bg-primary ms-2" style="font-size:0.7rem; background:var(--az-primary) !important;">{{ session_candidates|length }} candidates</span>
         </div>
         {% if session_candidates %}
@@ -232,7 +232,13 @@
                     </div>
                     <div class="d-flex align-items-center gap-3">
                         <div class="report-actions" id="actions-{{ loop.index }}">
-                            <button class="icon-btn btn-gen" onclick="generateReport('{{ cand.email }}', 'actions-{{ loop.index }}')" title="Generate Report"><i class="fas fa-file-pdf"></i></button>
+                            {% if cand.has_report and cand.report_filename %}
+                                <a href="/reports/view/{{ cand.report_filename }}" target="_blank" class="icon-btn btn-view" title="View"><i class="fas fa-eye"></i></a>
+                                <a href="/reports/download-file/{{ cand.report_filename }}" class="icon-btn btn-dl" title="Download"><i class="fas fa-download"></i></a>
+                                <button class="icon-btn btn-regen" onclick="generateReport('{{ cand.email }}', 'actions-{{ loop.index }}')" title="Regenerate"><i class="fas fa-redo"></i></button>
+                            {% else %}
+                                <button class="icon-btn btn-gen" onclick="generateReport('{{ cand.email }}', 'actions-{{ loop.index }}')" title="Generate Report"><i class="fas fa-file-pdf"></i></button>
+                            {% endif %}
                             <button class="icon-btn btn-gallery" onclick="openProctoringGallery('{{ cand.email }}')" title="View Proctoring Screenshots"><i class="fas fa-images"></i></button>
                         </div>
                     </div>
@@ -242,7 +248,7 @@
         {% else %}
             <div class="empty-state">
                 <i class="fas fa-inbox d-block"></i>
-                <p class="mb-1" style="font-weight:500;">No candidates in the last 24 hours</p>
+                <p class="mb-1" style="font-weight:500;">No candidates in the last {{ recent_days }} days</p>
                 <p style="font-size:0.8rem;">Create tests from the <a href="{{ url_for('dashboard.create_test') }}" style="color:var(--az-primary);">Create Test</a> page to see candidates here.</p>
             </div>
         {% endif %}
@@ -332,13 +338,24 @@ function searchCandidates(forcedQuery, showWarning) {
                 let h = '';
                 data.candidates.forEach((c, i) => {
                     const aid = 'sr-' + i;
+                    const hasReport = !!(c.has_report && c.report_filename);
+                    let actions = '';
+                    if (hasReport) {
+                        const viewUrl = '/reports/view/' + encodeURIComponent(c.report_filename);
+                        const downloadUrl = '/reports/download-file/' + encodeURIComponent(c.report_filename);
+                        actions += '<a href="' + viewUrl + '" target="_blank" class="icon-btn btn-view" title="View"><i class="fas fa-eye"></i></a>'
+                            + '<a href="' + downloadUrl + '" class="icon-btn btn-dl" title="Download"><i class="fas fa-download"></i></a>'
+                            + '<button class="icon-btn btn-regen" onclick="generateReport(\\'' + c.email + '\\',\\'' + aid + '\\')" title="Regenerate"><i class="fas fa-redo"></i></button>';
+                    } else {
+                        actions += '<button class="icon-btn btn-gen" onclick="generateReport(\\'' + c.email + '\\',\\'' + aid + '\\')" title="Generate Report"><i class="fas fa-file-pdf"></i></button>';
+                    }
+                    actions += '<button class="icon-btn btn-gallery" onclick="openProctoringGallery(\\'' + c.email + '\\')" title="View Proctoring Screenshots"><i class="fas fa-images"></i></button>';
                     h += '<div class="d-flex align-items-center justify-content-between p-2 border-bottom">'
                        + '<div><span style="font-weight:500; color:var(--az-slate-900);">' + c.name + '</span>'
                        + ' <span class="badge-role ms-1">' + (c.role||'N/A') + '</span>'
                        + '<div style="font-size:0.78rem;color:var(--az-slate-500);">' + c.email + '</div></div>'
                        + '<div class="report-actions" id="' + aid + '">'
-                       + '<button class="icon-btn btn-gen" onclick="generateReport(\'' + c.email + '\',\'' + aid + '\')" title="Generate Report"><i class="fas fa-file-pdf"></i></button>'
-                       + '<button class="icon-btn btn-gallery" onclick="openProctoringGallery(\'' + c.email + '\')" title="View Proctoring Screenshots"><i class="fas fa-images"></i></button>'
+                       + actions
                        + '</div></div>';
                 });
                 searchResultsList.innerHTML = h;

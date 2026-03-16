@@ -7,7 +7,7 @@ from io import BytesIO
 from flask import Blueprint, render_template, request, session, jsonify, send_file, abort
 
 from app.utils.auth_decorator import login_required
-from app.services.generated_tests_store import get_tests_for_user_in_range
+from app.services.generated_tests_store import get_tests_for_user_in_range, SESSION_RETENTION_DAYS
 from app.services.evaluation_aggregator import EvaluationAggregator
 from app.services import db_service
 from app.services.evaluation_service import EvaluationService
@@ -44,8 +44,8 @@ def reports():
     user_email = user.get("email", "dev@aziro.com")
     q = request.args.get("q", "").strip()
 
-    # Last 24 hours session candidates for this user
-    since = datetime.now(timezone.utc) - timedelta(hours=24)
+    # Recent session candidates for this user (retention window)
+    since = datetime.now(timezone.utc) - timedelta(days=SESSION_RETENTION_DAYS)
     user_tests = get_tests_for_user_in_range(user_email, since)
 
     def _parse_created_at(value):
@@ -111,6 +111,21 @@ def reports():
 
     session_candidates.sort(key=_created_sort_key, reverse=True)
 
+    def _attach_report_info(candidate):
+        email_key = str(candidate.get("email", "")).strip().lower()
+        if not email_key:
+            candidate["has_report"] = False
+            candidate["report_filename"] = ""
+            candidate["report_id"] = None
+            return
+        info = db_service.get_latest_report_for_email(email_key)
+        candidate["has_report"] = bool(info)
+        candidate["report_filename"] = info.get("filename") if info else ""
+        candidate["report_id"] = info.get("id") if info else None
+
+    for cand in session_candidates:
+        _attach_report_info(cand)
+
     # Apply search filter if q= is present
     if q:
         q_lower = q.lower()
@@ -131,6 +146,7 @@ def reports():
     return render_template(
         "reports.html",
         session_candidates=session_candidates,
+        recent_days=SESSION_RETENTION_DAYS,
     )
 
 
@@ -160,13 +176,15 @@ def search_reports():
                     "role": r.get("role", "N/A"),
                     "created_at": r.get("created_at", ""),
                     "source": "database",
+                    "has_report": True,
+                    "report_filename": r.get("report_filename", ""),
                 })
                 found_emails.add(email_key)
     except Exception:
         pass
 
-    # 2. Search this user's recent (last 24 hours) candidates (fallback)
-    since = datetime.now(timezone.utc) - timedelta(hours=24)
+    # 2. Search this user's recent candidates (fallback)
+    since = datetime.now(timezone.utc) - timedelta(days=SESSION_RETENTION_DAYS)
     user_tests = get_tests_for_user_in_range(user_email, since)
     for t in user_tests:
         if (query_lower in t.get("name", "").lower()
@@ -174,11 +192,14 @@ def search_reports():
                 or query_lower in t.get("role", "").lower()):
             email_key = str(t.get("email", "")).strip().lower()
             if email_key and email_key not in found_emails:
+                info = db_service.get_latest_report_for_email(email_key)
                 results.append({
                     "name": t.get("name", ""),
                     "email": t.get("email", ""),
                     "role": t.get("role", "N/A"),
                     "source": "session",
+                    "has_report": bool(info),
+                    "report_filename": info.get("filename") if info else "",
                 })
                 found_emails.add(email_key)
 

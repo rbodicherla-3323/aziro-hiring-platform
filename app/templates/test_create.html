@@ -279,7 +279,7 @@
     </div>
     <div id="candidateContainer">
         <div class="candidate-card candidate-row">
-            <button type="button" class="remove-btn d-none removeCandidateBtn" title="Remove candidate"><i class="fas fa-times"></i></button>
+            <button type="button" class="remove-btn removeCandidateBtn" title="Remove candidate"><i class="fas fa-times"></i></button>
             <div class="section-label"><i class="fas fa-cloud-upload-alt"></i> Step 1  Upload Documents <span class="section-line"></span></div>
             <div class="row g-3 mb-4">
                 <div class="col-md-6">
@@ -446,7 +446,7 @@ function updateRemoveButtons() {
     document.querySelectorAll(".candidate-row").forEach((row, index) => {
         const removeButton = row.querySelector(".removeCandidateBtn");
         if (removeButton) {
-            removeButton.classList.toggle("d-none", index === 0 || !multiMode.checked);
+            removeButton.classList.remove("d-none");
         }
     });
 }
@@ -471,29 +471,47 @@ multiMode.addEventListener("change", () => {
 
 addCandidateBtn.addEventListener("click", () => {
     const newRow = candidateContainer.firstElementChild.cloneNode(true);
-    newRow.querySelectorAll("input[type='text'],input[type='email']").forEach((node) => {
-        node.value = "";
-    });
-    newRow.querySelectorAll("input[type='file']").forEach((node) => {
-        node.value = "";
-    });
-    newRow.querySelectorAll("select").forEach((node) => {
-        node.selectedIndex = 0;
-    });
-    newRow.querySelectorAll(".upload-zone").forEach((zone) => resetUploadZone(zone));
-    newRow.querySelectorAll(".auto-fill-badge").forEach((node) => node.classList.remove("visible"));
-    newRow.querySelectorAll(".extract-spinner").forEach((node) => node.classList.remove("active"));
-    newRow.querySelectorAll(".field-error").forEach((node) => {
-        node.textContent = "";
-    });
-
+    resetCandidateRow(newRow);
     setupFileInputListeners(newRow);
-    newRow.querySelector(".removeCandidateBtn").addEventListener("click", function () {
-        this.closest(".candidate-row").remove();
-        updateRemoveButtons();
-    });
     candidateContainer.appendChild(newRow);
     updateRemoveButtons();
+});
+
+function resetCandidateRow(row) {
+    if (!row) return;
+    row.querySelectorAll("input[type='text'],input[type='email']").forEach((node) => {
+        node.value = "";
+    });
+    row.querySelectorAll("input[type='file']").forEach((node) => {
+        node.value = "";
+    });
+    row.querySelectorAll("select").forEach((node) => {
+        node.selectedIndex = 0;
+    });
+    row.querySelectorAll(".upload-zone").forEach((zone) => resetUploadZone(zone));
+    row.querySelectorAll(".auto-fill-badge").forEach((node) => node.classList.remove("visible"));
+    row.querySelectorAll(".extract-spinner").forEach((node) => node.classList.remove("active"));
+    row.querySelectorAll(".field-error").forEach((node) => {
+        node.textContent = "";
+    });
+}
+
+function removeCandidateRow(row) {
+    if (!row) return;
+    const rows = candidateContainer.querySelectorAll(".candidate-row");
+    if (rows.length <= 1) {
+        resetCandidateRow(row);
+        return;
+    }
+    row.remove();
+    updateRemoveButtons();
+}
+
+candidateContainer.addEventListener("click", (event) => {
+    const btn = event.target.closest(".removeCandidateBtn");
+    if (!btn) return;
+    const row = btn.closest(".candidate-row");
+    removeCandidateRow(row);
 });
 
 function parseJsonResponse(response) {
@@ -783,8 +801,7 @@ document.addEventListener("input", (event) => {
             if (!removeButton) {
                 return;
             }
-            var hide = index === 0 || !multiModeInput.checked;
-            removeButton.classList.toggle("d-none", hide);
+            removeButton.classList.remove("d-none");
         });
     }
 

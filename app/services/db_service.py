@@ -10,7 +10,7 @@ from app.models import Candidate, TestSession, RoundResult, Report, ProctoringSc
 
 log = logging.getLogger(__name__)
 
-TEST_LINK_TTL_HOURS = 12
+TEST_LINK_TTL_HOURS = 168
 
 
 def _now_utc() -> datetime:
@@ -392,6 +392,8 @@ def search_candidates_with_reports(query: str, role_filter: str = ""):
             "role": role,
             "created_at": created_at,
             "test_session_id": test_session_id,
+            "report_filename": report.filename if report else "",
+            "report_id": report.id if report else None,
         })
         seen_emails.add(email)
     return results
@@ -419,6 +421,39 @@ def has_report_for_email(email: str) -> bool:
         .first()
     )
     return linked is not None
+
+
+def get_latest_report_for_email(email: str) -> dict | None:
+    """Return latest report info for a candidate email (filename/id/created_at)."""
+    if not email:
+        return None
+    email_lc = email.strip().lower()
+
+    report = (
+        Report.query
+        .filter(db.func.lower(Report.candidate_email) == email_lc)
+        .order_by(Report.created_at.desc())
+        .first()
+    )
+
+    if not report:
+        report = (
+            db.session.query(Report)
+            .join(TestSession, Report.test_session_id == TestSession.id)
+            .join(Candidate, TestSession.candidate_id == Candidate.id)
+            .filter(db.func.lower(Candidate.email) == email_lc)
+            .order_by(Report.created_at.desc())
+            .first()
+        )
+
+    if not report:
+        return None
+
+    return {
+        "id": report.id,
+        "filename": report.filename,
+        "created_at": report.created_at,
+    }
 
 
 def get_candidate_report_data(email: str) -> dict:

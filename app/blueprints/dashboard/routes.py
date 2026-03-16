@@ -16,6 +16,11 @@ from app.utils.round_display_mapping import ROUND_DISPLAY_MAPPING
 from app.utils.round_question_mapping import DOMAIN_QUESTION_FILES
 
 from app.services.generated_tests_store import add_generated_test
+from app.services.email_service import send_candidate_test_links_email
+from app.services.user_token_store import (
+    get_valid_graph_delegated_token,
+    get_valid_graph_delegated_token_from_session,
+)
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 from app.services import db_service
@@ -160,6 +165,21 @@ def create_test():
 
     user_email = _current_user_email()
     batch_id = f"batch_{uuid.uuid4().hex[:8]}"
+
+    auto_send_enabled = str(os.getenv("AUTO_SEND_TEST_EMAILS", "true")).strip().lower() not in {
+        "0", "false", "no"
+    }
+    delegated_access_token = ""
+    if auto_send_enabled:
+        delegated_access_token = get_valid_graph_delegated_token(user_email)
+        if not delegated_access_token:
+            delegated_access_token = get_valid_graph_delegated_token_from_session(
+                session.get("oauth", {}),
+            )
+
+    auto_sent = 0
+    auto_failures = []
+    auto_send_blocked = auto_send_enabled and not delegated_access_token
 
     for i in range(len(names)):
         name = names[i].strip()
@@ -416,6 +436,31 @@ def create_test():
             "created_at": datetime.now(timezone.utc).isoformat(),
         })
 
+        if auto_send_enabled and delegated_access_token and tests:
+            sent, error = send_candidate_test_links_email(
+                candidate_name=name,
+                candidate_email=email,
+                role_label=role_label,
+                tests=tests,
+                delegated_access_token=delegated_access_token,
+                delegated_sender_email=user_email,
+                force_delegated=True,
+            )
+            if sent:
+                auto_sent += 1
+            else:
+                auto_failures.append({"email": email, "reason": error or "Send failed."})
+
     flash("Test links generated successfully!", "success")
-    flash("Emails will be sent only when 'Send Emails to Selected' is clicked.", "info")
+    if auto_send_enabled:
+        if auto_sent:
+            flash(f"Auto emails sent to {auto_sent} candidate(s) from {user_email}.", "success")
+        if auto_send_blocked:
+            flash(
+                "Auto email sending is enabled but your Microsoft delegated token is missing or expired. "
+                "Please sign in again to send from your mailbox.",
+                "warning",
+            )
+        if auto_failures:
+            flash(f"{len(auto_failures)} email(s) failed to send. Check Generated Tests for retry.", "warning")
     return redirect(url_for("tests.generated_tests"))

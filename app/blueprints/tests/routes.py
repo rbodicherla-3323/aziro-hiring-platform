@@ -221,7 +221,7 @@ def extract_jd_role_endpoint():
 
 
 # --------------------------------------------
-# Generated Tests — scoped to current user
+# Generated Tests — scoped to current user (retention window)
 # --------------------------------------------
 @tests_bp.route("/generated-tests")
 @login_required
@@ -290,6 +290,7 @@ def send_generated_tests_emails():
             tests=candidate.get("tests", {}),
             delegated_access_token=delegated_access_token,
             delegated_sender_email=user_email,
+            force_delegated=True,
         )
         if sent:
             sent_count += 1
