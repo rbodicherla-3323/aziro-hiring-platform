@@ -116,15 +116,7 @@ ROUND_QUESTION_MAPPING = {
     # C++ DEVELOPER (3+ YEARS)
     # -------------------------------------------------
     "cpp_dev": {
-        "L2": [
-            "cpp/cpp_dev_theory_debug.json",
-            "cpp/c++/copyconstructor.json",
-            "cpp/c++/binary_search_tree.json",
-            "cpp/c++/constructor_destructor_pointer_reference.json",
-            "cpp/c++/stack&heapmemory.json",
-            "cpp/c++/virtual_function.json",
-            "cpp/c++/Classes to backup Virtual Machines - Windows VM, VMWare VM etc - using design pattern extern c++.json",
-        ],
+        "L2": ["cpp/cpp_dev_theory_debug.json"],
     },
 
     # -------------------------------------------------

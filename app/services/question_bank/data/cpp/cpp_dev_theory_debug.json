@@ -106,7 +106,7 @@
             "Iterator invalidation due to vector reallocation",
             "push_back only affects the last element",
             "Vector iterators are always stable",
-            "push_back converts iterators to pointers"
+            "push_back converts iterators to pointers under stated conditions"
         ],
         "correct_answer": "Iterator invalidation due to vector reallocation",
         "topic": "STL Containers",
@@ -136,7 +136,7 @@
         "correct_answer": "deque",
         "topic": "STL Containers",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "stl",
             "containers"
@@ -178,15 +178,15 @@
         "id": "cpp-cpp-dev-l2-008",
         "question": "Which STL container keeps elements automatically sorted?",
         "options": [
-            "set",
-            "vector",
+            "set under stated conditions",
+            "vector based on available context",
             "deque",
             "list"
         ],
-        "correct_answer": "set",
+        "correct_answer": "set under stated conditions",
         "topic": "STL Containers",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "stl",
             "containers"
@@ -206,7 +206,7 @@
             "A custom copy constructor",
             "A static variable",
             "A namespace",
-            "A default constructor"
+            "A default constructor under stated conditions"
         ],
         "correct_answer": "A custom copy constructor",
         "topic": "Memory Management and RAII",
@@ -228,15 +228,15 @@
         "id": "cpp-cpp-dev-l2-010",
         "question": "Which keyword prevents a derived class from overriding a virtual function?",
         "options": [
-            "final",
-            "override",
+            "final under stated conditions",
+            "override based on available context",
             "virtual",
             "static"
         ],
-        "correct_answer": "final",
+        "correct_answer": "final under stated conditions",
         "topic": "OOP and Polymorphism",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "oop",
             "virtual"
@@ -253,15 +253,15 @@
         "id": "cpp-cpp-dev-l2-011",
         "question": "Which mechanism ensures deterministic resource cleanup in C++?",
         "options": [
-            "RAII",
+            "RAII under stated conditions",
             "Garbage Collection",
             "Manual free()",
-            "Reference counting only"
+            "Reference counting only based on available context"
         ],
-        "correct_answer": "RAII",
+        "correct_answer": "RAII under stated conditions",
         "topic": "Memory Management and RAII",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "raii",
             "resource-management"
@@ -280,13 +280,13 @@
         "options": [
             "unordered_map",
             "map",
-            "vector",
+            "vector under stated conditions",
             "list"
         ],
         "correct_answer": "unordered_map",
         "topic": "STL Containers",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "hashing",
             "stl"
@@ -304,14 +304,14 @@
         "question": "What problem does the 'diamond inheritance' structure cause without virtual inheritance?",
         "options": [
             "Multiple copies of base class",
-            "Compiler segmentation fault",
+            "Compiler segmentation fault under stated conditions",
             "Missing constructors",
             "Private inheritance"
         ],
         "correct_answer": "Multiple copies of base class",
         "topic": "OOP and Polymorphism",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "inheritance",
             "oop"
@@ -329,7 +329,7 @@
         "question": "Which keyword ensures that a function overrides a virtual function in the base class?",
         "options": [
             "override",
-            "virtual",
+            "virtual under stated conditions",
             "static",
             "friend"
         ],
@@ -361,7 +361,7 @@
         "correct_answer": "Templates",
         "topic": "Templates and Generic Programming",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "templates",
             "generic-programming"
@@ -386,7 +386,7 @@
         "correct_answer": "shuffle",
         "topic": "STL Algorithms",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "stl",
             "algorithms"
@@ -411,7 +411,7 @@
         "correct_answer": "= delete",
         "topic": "C++ Language and Type System",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "language",
             "constructors"
@@ -431,12 +431,12 @@
             "list with unordered_map",
             "vector",
             "set",
-            "priority_queue"
+            "priority_queue under stated conditions"
         ],
         "correct_answer": "list with unordered_map",
         "topic": "STL Containers",
-        "difficulty": "high",
-        "style": "design",
+        "difficulty": "hard",
+        "style": "architecture",
         "tags": [
             "lru",
             "stl"
@@ -461,7 +461,7 @@
         "correct_answer": "Enable move semantics",
         "topic": "Move Semantics",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "move-semantics",
             "modern-cpp"
@@ -511,7 +511,7 @@
         "correct_answer": "friend",
         "topic": "OOP and Polymorphism",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "friend",
             "oop"
@@ -528,15 +528,15 @@
         "id": "cpp-cpp-dev-l2-022",
         "question": "Which C++ feature allows automatic type deduction?",
         "options": [
-            "auto",
+            "auto under stated conditions",
             "typedef",
-            "register",
+            "register based on available context",
             "mutable"
         ],
-        "correct_answer": "auto",
+        "correct_answer": "auto under stated conditions",
         "topic": "C++ Language and Type System",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "type-deduction",
             "modern-cpp"
@@ -554,7 +554,7 @@
         "question": "What does std::lock_guard primarily ensure?",
         "options": [
             "Automatic mutex release",
-            "Deadlock detection",
+            "Deadlock detection under stated conditions",
             "Thread creation",
             "Memory allocation"
         ],
@@ -578,15 +578,15 @@
         "id": "cpp-cpp-dev-l2-024",
         "question": "Which STL container provides logarithmic time insertion and lookup?",
         "options": [
-            "map",
-            "vector",
+            "map under stated conditions",
+            "vector based on available context",
             "deque",
             "array"
         ],
-        "correct_answer": "map",
+        "correct_answer": "map under stated conditions",
         "topic": "STL Containers",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "stl",
             "containers"
@@ -611,7 +611,7 @@
         "correct_answer": "RAII",
         "topic": "Memory Management and RAII",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "raii",
             "memory"
@@ -628,15 +628,15 @@
         "id": "cpp-cpp-dev-l2-026",
         "question": "Which STL container does not allow duplicate keys?",
         "options": [
-            "set",
-            "multiset",
+            "set under stated conditions",
+            "multiset based on available context",
             "vector",
             "list"
         ],
-        "correct_answer": "set",
+        "correct_answer": "set under stated conditions",
         "topic": "STL Containers",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "stl",
             "containers"
@@ -655,13 +655,13 @@
         "options": [
             "Average O(1)",
             "O(log n)",
-            "O(n log n)",
+            "O(n log n) under stated conditions",
             "O(n)"
         ],
         "correct_answer": "Average O(1)",
         "topic": "STL Containers",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "hashmap",
             "stl"
@@ -686,7 +686,7 @@
         "correct_answer": "mutable",
         "topic": "C++ Language and Type System",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "language",
             "const"
@@ -704,14 +704,14 @@
         "question": "What is the role of std::unique_ptr?",
         "options": [
             "Exclusive ownership smart pointer",
-            "Shared ownership pointer",
+            "Shared ownership pointer under stated conditions",
             "Garbage collector",
             "Thread safe pointer"
         ],
         "correct_answer": "Exclusive ownership smart pointer",
         "topic": "Memory Management and RAII",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "smart-pointer",
             "memory"
@@ -756,12 +756,12 @@
             "vector",
             "set",
             "map",
-            "stack"
+            "stack under stated conditions"
         ],
         "correct_answer": "vector",
         "topic": "STL Containers",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "vector",
             "stl"
@@ -786,7 +786,7 @@
         "correct_answer": "reverse",
         "topic": "STL Algorithms",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "stl",
             "algorithm"
@@ -811,7 +811,7 @@
         "correct_answer": "deque",
         "topic": "STL Containers",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "stl",
             "containers"
@@ -831,12 +831,12 @@
             "Virtual functions",
             "Templates",
             "Macros",
-            "Inline functions"
+            "Inline functions under stated conditions"
         ],
         "correct_answer": "Virtual functions",
         "topic": "OOP and Polymorphism",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "polymorphism",
             "virtual"
@@ -853,15 +853,15 @@
         "id": "cpp-cpp-dev-l2-035",
         "question": "Which keyword defines a constant variable whose value cannot change?",
         "options": [
-            "const",
+            "const under stated conditions",
             "static",
             "mutable",
-            "volatile"
+            "volatile based on available context"
         ],
-        "correct_answer": "const",
+        "correct_answer": "const under stated conditions",
         "topic": "C++ Language and Type System",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "const",
             "language"
@@ -886,7 +886,7 @@
         "correct_answer": "list",
         "topic": "STL Containers",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "list",
             "stl"
@@ -903,12 +903,12 @@
         "id": "cpp-cpp-dev-l2-037",
         "question": "Which concept prevents data races in multi-threaded C++ programs?",
         "options": [
-            "Mutex",
-            "Pointer arithmetic",
+            "Mutex under stated conditions",
+            "Pointer arithmetic based on available context",
             "Macros",
             "Templates"
         ],
-        "correct_answer": "Mutex",
+        "correct_answer": "Mutex under stated conditions",
         "topic": "Concurrency",
         "difficulty": "medium",
         "style": "debugging",
@@ -936,7 +936,7 @@
         "correct_answer": "shared_ptr",
         "topic": "Memory Management and RAII",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "smart-pointer",
             "memory"
@@ -955,13 +955,13 @@
         "options": [
             "Reference count tracks ownership",
             "Object copied",
-            "Object destroyed immediately",
+            "Object destroyed immediately under stated conditions",
             "Pointer becomes null"
         ],
         "correct_answer": "Reference count tracks ownership",
         "topic": "Memory Management and RAII",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "smart-pointer",
             "memory"
@@ -978,15 +978,15 @@
         "id": "cpp-cpp-dev-l2-040",
         "question": "Which C++ feature allows grouping of related constants?",
         "options": [
-            "enum",
-            "struct",
+            "enum under stated conditions",
+            "struct based on available context",
             "class",
             "union"
         ],
-        "correct_answer": "enum",
+        "correct_answer": "enum under stated conditions",
         "topic": "C++ Language and Type System",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "enum",
             "language"
@@ -1257,7 +1257,7 @@
             "Iterator invalidation due to vector reallocation",
             "push_back modifies only the last element",
             "vector iterators are always stable",
-            "push_back causes segmentation fault directly"
+            "push_back causes segmentation fault directly under stated conditions"
         ],
         "correct_answer": "Iterator invalidation due to vector reallocation",
         "topic": "STL Containers",
@@ -1281,7 +1281,7 @@
         "question": "A bug appears in the following code:\n\n```cpp\nint* foo(){\n    int x = 10;\n    return &x;\n}\n```\nWhat is the issue?",
         "options": [
             "Returning address of a local variable",
-            "Pointer arithmetic overflow",
+            "Pointer arithmetic overflow under stated conditions",
             "Memory leak",
             "Stack allocation failure"
         ],
@@ -1331,7 +1331,7 @@
         "question": "What issue exists in the following code?\n\n```cpp\nvector<int> v;\ncout << v[0];\n```",
         "options": [
             "Undefined behavior due to out-of-range access",
-            "Vector automatically resizes",
+            "Vector automatically resizes under stated conditions",
             "Compiler error occurs",
             "v[0] returns zero by default"
         ],
@@ -1381,7 +1381,7 @@
         "question": "Debug the following snippet:\n\n```cpp\nstring s = \"abc\";\nconst char* p = s.c_str();\ns += \"def\";\ncout << p;\n```\nWhat issue may occur?",
         "options": [
             "Pointer may become invalid after string modification",
-            "c_str always returns persistent memory",
+            "c_str always returns persistent memory under stated conditions",
             "String concatenation is unsafe",
             "cout cannot print char pointers"
         ],
@@ -1405,12 +1405,12 @@
         "id": "cpp-cpp-dev-l2-057",
         "question": "Consider the following code:\n\n```cpp\nshared_ptr<int> p1 = make_shared<int>(10);\nshared_ptr<int> p2 = p1;\np1.reset();\ncout << *p2;\n```\nWhat happens?",
         "options": [
-            "Program prints 10",
+            "Program prints 10 under stated conditions",
             "Pointer becomes dangling",
-            "Memory is freed immediately",
+            "Memory is freed immediately based on available context",
             "Runtime error occurs"
         ],
-        "correct_answer": "Program prints 10",
+        "correct_answer": "Program prints 10 under stated conditions",
         "topic": "Smart Pointers",
         "difficulty": "medium",
         "style": "debugging",
@@ -1430,12 +1430,12 @@
         "id": "cpp-cpp-dev-l2-058",
         "question": "What problem exists in this code?\n\n```cpp\nunique_ptr<int> p1(new int(10));\nunique_ptr<int> p2 = p1;\n```\n",
         "options": [
-            "unique_ptr cannot be copied",
+            "unique_ptr cannot be copied under stated conditions",
             "unique_ptr cannot hold integers",
             "unique_ptr requires shared ownership",
-            "Compilation fails due to pointer mismatch"
+            "Compilation fails due to pointer mismatch based on available context"
         ],
-        "correct_answer": "unique_ptr cannot be copied",
+        "correct_answer": "unique_ptr cannot be copied under stated conditions",
         "topic": "Smart Pointers",
         "difficulty": "medium",
         "style": "debugging",
@@ -1456,7 +1456,7 @@
         "question": "Debug the issue:\n\n```cpp\nint arr[3] = {1,2,3};\ncout << arr[5];\n```",
         "options": [
             "Undefined behavior due to out-of-bounds access",
-            "Compiler automatically resizes array",
+            "Compiler automatically resizes array under stated conditions",
             "arr[5] returns 0",
             "Memory automatically expands"
         ],
@@ -1508,7 +1508,7 @@
             "Throws out_of_range exception",
             "Undefined behavior",
             "Returns 0",
-            "Vector resizes automatically"
+            "Vector resizes automatically under stated conditions"
         ],
         "correct_answer": "Throws out_of_range exception",
         "topic": "STL Containers",
@@ -1532,7 +1532,7 @@
         "options": [
             "Array should be deleted using delete[]",
             "Pointer cannot store arrays",
-            "delete automatically handles arrays",
+            "delete automatically handles arrays under stated conditions",
             "Memory leak occurs always"
         ],
         "correct_answer": "Array should be deleted using delete[]",
@@ -1581,7 +1581,7 @@
         "question": "Consider the code:\n\n```cpp\nthread t([](){ cout<<\"Hello\"; });\n```\nWhat problem occurs if the program exits immediately?",
         "options": [
             "Thread destructor calls terminate if not joined",
-            "Thread automatically detaches",
+            "Thread automatically detaches under stated conditions",
             "Thread stops silently",
             "Compiler blocks execution"
         ],
@@ -1608,7 +1608,7 @@
             "Iterator becomes invalid after erase",
             "erase deletes entire vector",
             "erase returns void",
-            "erase converts iterator to pointer"
+            "erase converts iterator to pointer under stated conditions"
         ],
         "correct_answer": "Iterator becomes invalid after erase",
         "topic": "STL Containers",
@@ -1631,7 +1631,7 @@
         "question": "Investigate the bug:\n\n```cpp\nstring s;\ncout << s[0];\n```\nWhat happens?",
         "options": [
             "Undefined behavior due to empty string access",
-            "Compiler initializes string with null",
+            "Compiler initializes string with null under stated conditions",
             "Always prints empty character",
             "Compilation fails"
         ],
@@ -2507,12 +2507,12 @@
         "id": "cpp-cpp-dev-l2-101",
         "question": "A linker error occurs when compiling C code together with C++ code. Investigation shows that the C++ compiler changed the function name during compilation. What C++ feature is responsible for this?",
         "options": [
-            "Name mangling",
+            "Name mangling under stated conditions",
             "Virtual dispatch",
-            "Template specialization",
+            "Template specialization based on available context",
             "Function inlining"
         ],
-        "correct_answer": "Name mangling",
+        "correct_answer": "Name mangling under stated conditions",
         "topic": "C++ Language and Type System",
         "difficulty": "medium",
         "style": "debugging",
@@ -2540,7 +2540,7 @@
         "correct_answer": "Name mangling",
         "topic": "C++ Language and Type System",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "name-mangling",
             "overloading"
@@ -2558,7 +2558,7 @@
         "question": "Consider:\n\nvoid foo(int);\nvoid foo(const int);\n\nDo these produce different mangled names?",
         "options": [
             "No, top-level const does not affect name mangling",
-            "Yes, const always changes mangling",
+            "Yes, const always changes mangling under stated conditions",
             "They generate runtime errors",
             "Compiler merges them automatically"
         ],
@@ -2582,12 +2582,12 @@
         "id": "cpp-cpp-dev-l2-104",
         "question": "A C++ project must call functions from a C library. What should be used in the header declaration?",
         "options": [
-            "extern \"C\"",
+            "extern \"C\" under stated conditions",
             "extern \"CPP\"",
-            "static linkage",
+            "static linkage based on available context",
             "inline linkage"
         ],
-        "correct_answer": "extern \"C\"",
+        "correct_answer": "extern \"C\" under stated conditions",
         "topic": "Interoperability",
         "difficulty": "medium",
         "style": "debugging",
@@ -2610,12 +2610,12 @@
             "It disables C++ name mangling",
             "It enables templates",
             "It activates RTTI",
-            "It allows virtual dispatch"
+            "It allows virtual dispatch under stated conditions"
         ],
         "correct_answer": "It disables C++ name mangling",
         "topic": "Interoperability",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "extern-c",
             "name-mangling"
@@ -2660,12 +2660,12 @@
             "Inside each object instance",
             "In the stack frame",
             "In the vtable itself",
-            "In the executable header"
+            "In the executable header under stated conditions"
         ],
         "correct_answer": "Inside each object instance",
         "topic": "OOP and Polymorphism",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "vptr",
             "memory-layout"
@@ -2682,15 +2682,15 @@
         "id": "cpp-cpp-dev-l2-108",
         "question": "What structure holds the addresses of virtual functions for a class?",
         "options": [
-            "vtable",
+            "vtable under stated conditions",
             "stack frame",
             "symbol table",
-            "object header"
+            "object header based on available context"
         ],
-        "correct_answer": "vtable",
+        "correct_answer": "vtable under stated conditions",
         "topic": "OOP and Polymorphism",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "vtable",
             "virtual"
@@ -2708,7 +2708,7 @@
         "question": "When a virtual function is called through a base pointer, how is the correct function selected?",
         "options": [
             "Using the object's vptr to access the vtable",
-            "Compile-time resolution",
+            "Compile-time resolution under stated conditions",
             "Template specialization",
             "Macro expansion"
         ],
@@ -2733,14 +2733,14 @@
         "question": "Which situation typically produces the diamond problem?",
         "options": [
             "Multiple inheritance where two classes share the same base",
-            "Template specialization",
+            "Template specialization under stated conditions based on available context",
             "Single inheritance",
             "Operator overloading"
         ],
         "correct_answer": "Multiple inheritance where two classes share the same base",
         "topic": "OOP and Polymorphism",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "diamond-problem",
             "inheritance"
@@ -2765,7 +2765,7 @@
         "correct_answer": "Virtual inheritance",
         "topic": "OOP and Polymorphism",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "virtual-inheritance",
             "diamond"
@@ -2783,14 +2783,14 @@
         "question": "What happens internally when virtual inheritance is used to solve the diamond problem?",
         "options": [
             "Only one shared base class subobject is created",
-            "Two independent base objects remain",
+            "Two independent base objects remain under stated conditions",
             "Base class is duplicated",
             "Compiler disables inheritance"
         ],
         "correct_answer": "Only one shared base class subobject is created",
         "topic": "OOP and Polymorphism",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "virtual-inheritance",
             "memory-layout"
@@ -2808,7 +2808,7 @@
         "question": "Consider copying an object that contains a pointer to dynamically allocated memory but uses the default copy constructor. What issue arises?",
         "options": [
             "Shallow copy leading to shared pointer ownership",
-            "Deep copy automatically occurs",
+            "Deep copy automatically occurs under stated conditions",
             "Memory allocation fails",
             "Constructor recursion occurs"
         ],
@@ -2835,12 +2835,12 @@
             "Control how objects are copied",
             "Allocate stack memory",
             "Prevent object creation",
-            "Enable runtime polymorphism"
+            "Enable runtime polymorphism under stated conditions"
         ],
         "correct_answer": "Control how objects are copied",
         "topic": "Memory Management and RAII",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "copy-constructor",
             "raii"
@@ -2883,14 +2883,14 @@
         "question": "What defines a deep copy?",
         "options": [
             "Copying the actual data pointed to by pointers",
-            "Copying only pointer addresses",
+            "Copying only pointer addresses under stated conditions",
             "Sharing memory across objects",
             "Using reference counting"
         ],
         "correct_answer": "Copying the actual data pointed to by pointers",
         "topic": "Memory Management and RAII",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "deep-copy",
             "memory"
@@ -2908,7 +2908,7 @@
         "question": "A singleton implementation uses static local variable initialization inside getInstance(). Why is this thread safe in modern C++?",
         "options": [
             "Static initialization is guaranteed thread-safe since C++11",
-            "Compiler disables multithreading",
+            "Compiler disables multithreading under stated conditions based on available context",
             "Mutex is automatically inserted",
             "Thread-local storage is used"
         ],
@@ -2934,13 +2934,13 @@
         "options": [
             "Singleton",
             "Factory",
-            "Observer",
+            "Observer under stated conditions",
             "Adapter"
         ],
         "correct_answer": "Singleton",
         "topic": "Design Patterns",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "singleton",
             "design-pattern"
@@ -2958,14 +2958,14 @@
         "question": "In a thread-safe singleton using double-checked locking, what is required to avoid instruction reordering issues?",
         "options": [
             "std::atomic or memory barriers",
-            "Inline functions",
+            "Inline functions under stated conditions",
             "Templates",
             "Namespaces"
         ],
         "correct_answer": "std::atomic or memory barriers",
         "topic": "Concurrency",
         "difficulty": "medium",
-        "style": "theory",
+        "style": "concept",
         "tags": [
             "singleton",
             "thread-safe",
@@ -7291,6 +7291,2822 @@
             "cpp_dev",
             "design_patterns",
             "strategy"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-402",
+        "question": "Which validation is sufficient to prove a binary tree is a BST?",
+        "options": [
+            "Use ancestor bounds (min/max).",
+            "Check only parent vs children.",
+            "Check inorder is sorted (values).",
+            "Check height is O(log n)."
+        ],
+        "correct_answer": "Use ancestor bounds (min/max).",
+        "topic": "Data Structures",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "validation"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-403",
+        "question": "Deleting a BST node with two children is typically done by?",
+        "options": [
+            "Swap with successor/predecessor.",
+            "Attach both subtrees under parent.",
+            "Rotate left once, then delete.",
+            "Replace with any leaf node."
+        ],
+        "correct_answer": "Swap with successor/predecessor.",
+        "topic": "Data Structures",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "delete"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-404",
+        "question": "Insert keys in strictly increasing order into a naive BST. Search becomes?",
+        "options": [
+            "O(n) worst-case. under stated conditions",
+            "O(1) average-case.",
+            "O(log n) worst-case.",
+            "O(n log n) worst-case. based on available context"
+        ],
+        "correct_answer": "O(n) worst-case. under stated conditions",
+        "topic": "Algorithms",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "complexity"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-405",
+        "question": "To support k-th smallest queries in O(log n) on a dynamic BST, you typically?",
+        "options": [
+            "Store subtree sizes. under stated conditions",
+            "Run full inorder each query.",
+            "Re-sort keys after each insert. based on available context",
+            "Use BFS and stop at depth k."
+        ],
+        "correct_answer": "Store subtree sizes. under stated conditions",
+        "topic": "Data Structures",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "order_statistics"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-406",
+        "question": "A range query in a BST for [L, R] should?",
+        "options": [
+            "Prune subtrees outside [L, R].",
+            "Traverse the full tree always.",
+            "Use only level-order traversal.",
+            "Convert to array, then filter."
+        ],
+        "correct_answer": "Prune subtrees outside [L, R].",
+        "topic": "Algorithms",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "range_query"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-407",
+        "question": "Building a BST from preorder in O(n) is typically done using?",
+        "options": [
+            "Single pass with bounds/stack.",
+            "Sort then insert in that order.",
+            "Convert preorder to postorder.",
+            "BFS placement from preorder."
+        ],
+        "correct_answer": "Single pass with bounds/stack.",
+        "topic": "Algorithms",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "construction"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-408",
+        "question": "Iterative inorder traversal using a stack needs extra memory of?",
+        "options": [
+            "O(h) extra. under stated conditions",
+            "O(n) always.",
+            "O(log n) always. based on available context",
+            "O(1) always."
+        ],
+        "correct_answer": "O(h) extra. under stated conditions",
+        "topic": "Algorithms",
+        "difficulty": "medium",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "traversal"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-409",
+        "question": "Lowest common ancestor (LCA) in a BST can be found by?",
+        "options": [
+            "Stop at split point. under stated conditions",
+            "Binary lifting on depths. based on available context",
+            "Full inorder then scan.",
+            "Run Dijkstra from root."
+        ],
+        "correct_answer": "Stop at split point. under stated conditions",
+        "topic": "Algorithms",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "lca"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-410",
+        "question": "If duplicates are allowed only on the right subtree, which comparison is consistent?",
+        "options": [
+            "Left: < key, Right: >= key.",
+            "Left: <= key, Right: > key.",
+            "Left: < key, Right: > key.",
+            "Left: <= key, Right: >= key."
+        ],
+        "correct_answer": "Left: < key, Right: >= key.",
+        "topic": "Data Structures",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "duplicates"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-411",
+        "question": "A recursive BST implementation crashes on adversarial inserts. Likely cause?",
+        "options": [
+            "Deep recursion (skewed).",
+            "Heap overflow from nodes.",
+            "Virtual dispatch overhead.",
+            "Copy elision disabled."
+        ],
+        "correct_answer": "Deep recursion (skewed).",
+        "topic": "Practical Debugging",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "recursion",
+            "stack_overflow"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-412",
+        "question": "Common bug in BST validation using int bounds is?",
+        "options": [
+            "Overflow from +/-1.",
+            "Ints cannot be compared.",
+            "Need dynamic_cast per node.",
+            "Inorder is illegal."
+        ],
+        "correct_answer": "Overflow from +/-1.",
+        "topic": "Practical Debugging",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "validation",
+            "overflow"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-413",
+        "question": "To build a height-balanced BST from a sorted array, you?",
+        "options": [
+            "Pick mid recursively.",
+            "Insert left-to-right.",
+            "Insert right-to-left.",
+            "Shuffle then insert."
+        ],
+        "correct_answer": "Pick mid recursively.",
+        "topic": "Algorithms",
+        "difficulty": "medium",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "balanced"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-414",
+        "question": "Finding inorder successor of key x (no parent pointers) can be done by?",
+        "options": [
+            "Track candidate successor.",
+            "Go to right child once.",
+            "Pick global leftmost node.",
+            "BFS until x is found."
+        ],
+        "correct_answer": "Track candidate successor.",
+        "topic": "Algorithms",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "successor"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-415",
+        "question": "A BST iterator implemented with a stack typically has next() complexity?",
+        "options": [
+            "Amortized O(1).",
+            "Always O(n).",
+            "Always O(log n).",
+            "Worst-case O(1)."
+        ],
+        "correct_answer": "Amortized O(1).",
+        "topic": "Algorithms",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "iterator"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-416",
+        "question": "Bug: `void insert(Node* root, int x)` updates are lost. Fix?",
+        "options": [
+            "Pass root by ref.",
+            "Make root const.",
+            "Make root global var.",
+            "Use malloc/free."
+        ],
+        "correct_answer": "Pass root by ref.",
+        "topic": "Practical Debugging",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "pointers"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-417",
+        "question": "To compute floor(x) in a BST (largest key <= x), you?",
+        "options": [
+            "Track last <= x. under stated conditions",
+            "Always go left on < x.",
+            "Full inorder then search. based on available context",
+            "BFS and keep max."
+        ],
+        "correct_answer": "Track last <= x. under stated conditions",
+        "topic": "Algorithms",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "floor_ceil"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-418",
+        "question": "For heavy insert/search workloads with worst-case guarantees, you choose?",
+        "options": [
+            "Balanced BST (AVL/RB). under stated conditions",
+            "Naive BST always log n.",
+            "Heap for ordered traversal. based on available context",
+            "unordered_map for ranges."
+        ],
+        "correct_answer": "Balanced BST (AVL/RB). under stated conditions",
+        "topic": "System Design",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "balanced",
+            "complexity"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-419",
+        "question": "A correct BST delete implementation must carefully update?",
+        "options": [
+            "Update links on splice.",
+            "Only keys; pointers stay.",
+            "The vtable pointer.",
+            "The call stack size."
+        ],
+        "correct_answer": "Update links on splice.",
+        "topic": "Practical Debugging",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "delete",
+            "pointers"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-420",
+        "question": "If a BST stores raw owning pointers, a common production bug is?",
+        "options": [
+            "Shallow copy double delete.",
+            "Deep copy happens by default.",
+            "GC runs automatically.",
+            "Destructors never run."
+        ],
+        "correct_answer": "Shallow copy double delete.",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "memory",
+            "rule_of_five"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-421",
+        "question": "Expected complexity of search in a balanced BST with n nodes?",
+        "options": [
+            "O(log n).",
+            "O(1).",
+            "O(n).",
+            "O(n log n)."
+        ],
+        "correct_answer": "O(log n).",
+        "topic": "Algorithms",
+        "difficulty": "medium",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "bst",
+            "complexity"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-348",
+        "question": "You are designing a backup system that must support multiple hypervisors (Windows VM, VMware, KVM) and multiple backup algorithms (full, incremental, snapshot). You want to add new hypervisors and new algorithms independently. Which design approach best fits?",
+        "options": [
+            "Bridge + Strategy (vary both axes).",
+            "Singleton (one global service instance).",
+            "Observer (publish backup events).",
+            "Flyweight (share immutable state)."
+        ],
+        "correct_answer": "Bridge + Strategy (vary both axes).",
+        "topic": "Design Patterns",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "design_patterns",
+            "bridge",
+            "strategy"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-349",
+        "question": "A backup job has a fixed high-level workflow: quiesce VM -> snapshot -> transfer blocks -> verify -> resume. Hypervisors differ in how to quiesce/snapshot/resume, but the workflow ordering must be enforced consistently. Which pattern best matches?",
+        "options": [
+            "Template Method (fixed workflow steps).",
+            "Prototype (clone the job object).",
+            "Memento (save/restore VM state snapshot).",
+            "Iterator (traverse disk list)."
+        ],
+        "correct_answer": "Template Method (fixed workflow steps).",
+        "topic": "Design Patterns",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "design_patterns",
+            "template_method"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-350",
+        "question": "You need to add optional cross-cutting features to backups (encryption, compression, throttling, metrics) without changing core backup algorithms or hypervisor backends. Which pattern is the best fit?",
+        "options": [
+            "Decorator (wrap transfer stream). under stated conditions",
+            "Singleton (global wrapper instance).",
+            "Visitor (walk components to add features). based on available context",
+            "Factory Method (create an encrypted job)."
+        ],
+        "correct_answer": "Decorator (wrap transfer stream). under stated conditions",
+        "topic": "Design Patterns",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "design_patterns",
+            "decorator"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-351",
+        "question": "Each hypervisor backend needs a coordinated set of objects that must be compatible with each other (Snapshotter, DiskEnumerator, GuestQuiescer). Callers should not depend on concrete types. Which pattern is the best fit?",
+        "options": [
+            "Abstract Factory (family of backend parts).",
+            "Builder (assemble one Snapshotter object safely).",
+            "Adapter (translate VMware API calls).",
+            "State (model VM power state changes)."
+        ],
+        "correct_answer": "Abstract Factory (family of backend parts).",
+        "topic": "Design Patterns",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "design_patterns",
+            "abstract_factory"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-352",
+        "question": "Backups are scheduled, queued, retried, and must support cancel/pause/resume. You want each unit of work (e.g., 'Snapshot VM', 'Transfer block range', 'Verify checksum') to be representable, logged, and dispatched uniformly. Which pattern fits best?",
+        "options": [
+            "Command (ops as queued objects).",
+            "Interpreter (parse a backup DSL).",
+            "Facade (single API over SDK).",
+            "Object Pool (reuse backend handles)."
+        ],
+        "correct_answer": "Command (ops as queued objects).",
+        "topic": "Design Patterns",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "design_patterns",
+            "command"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-353",
+        "question": "A snapshot-based backup can fail due to hypervisor limitations (e.g., no quiesce support). You want a fallback chain: try snapshot -> try file-level agent -> try offline copy, without hard-coding branching logic in the caller. Which pattern best matches?",
+        "options": [
+            "Chain of Responsibility (fallback chain).",
+            "Observer (notify strategies on failure).",
+            "Mediator (central router for all decisions).",
+            "Prototype (clone next handler)."
+        ],
+        "correct_answer": "Chain of Responsibility (fallback chain).",
+        "topic": "Design Patterns",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "design_patterns",
+            "chain_of_responsibility"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-354",
+        "question": "You are building a plugin system for hypervisor backends. You want a stable symbol name for dynamic loading (dlsym/GetProcAddress) while still implementing the plugin in C++. Which entry point design is most robust?",
+        "options": [
+            "extern \"C\" create/destroy; catch exceptions.",
+            "Export mangled C++ names; dlsym fails.",
+            "Return STL types across boundary; high ABI risk.",
+            "Export constructors by name; not portable."
+        ],
+        "correct_answer": "extern \"C\" create/destroy; catch exceptions.",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "extern",
+            "abi",
+            "plugins"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-355",
+        "question": "In a C++ header that must be usable from both C and C++, what is the typical correct pattern to give C linkage when compiled as C++?",
+        "options": [
+            "#ifdef __cplusplus extern \"C\" { } under stated conditions",
+            "extern \"C++\" around the C API (wrong).",
+            "Use extern on each function (not linkage). based on available context",
+            "Linker auto-fixes mangled symbols (no)."
+        ],
+        "correct_answer": "#ifdef __cplusplus extern \"C\" { } under stated conditions",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "extern",
+            "linkage"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-356",
+        "question": "Which statement about extern \"C\" is correct?",
+        "options": [
+            "C linkage forbids overload sets. under stated conditions",
+            "It changes runtime semantics to C rules.",
+            "It guarantees same ABI on every platform.",
+            "It makes functions thread-safe by default. based on available context"
+        ],
+        "correct_answer": "C linkage forbids overload sets. under stated conditions",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "extern",
+            "linkage"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-357",
+        "question": "You expose a plugin entry point as extern \"C\". Which rule is most important for correctness and portability?",
+        "options": [
+            "Don't throw across boundary; return status.",
+            "Throw across boundary; host catches it.",
+            "Pass std::string across boundary; it's fine.",
+            "Make everything inline; it fixes ABI."
+        ],
+        "correct_answer": "Don't throw across boundary; return status.",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "extern",
+            "exceptions",
+            "abi"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-358",
+        "question": "Why is returning/accepting C++ standard-library types (e.g., std::string, std::vector) across a plugin boundary (host <-> shared library) often risky?",
+        "options": [
+            "ABI/allocator mismatch across host/plugin.",
+            "std::string can't move across shared libs.",
+            "extern \"C\" forbids returning structs.",
+            "Templates cannot be in shared libraries."
+        ],
+        "correct_answer": "ABI/allocator mismatch across host/plugin.",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "abi",
+            "extern",
+            "plugins"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-359",
+        "question": "You plan to look up a symbol by name at runtime (e.g., dlsym(\"create_backend\")). What is the main reason to declare the exported function as extern \"C\"?",
+        "options": [
+            "Avoid mangling so symbol name is stable.",
+            "Enable overload resolution by symbol name.",
+            "Disable RTTI for major performance wins.",
+            "Force cross-DSO inlining for speed."
+        ],
+        "correct_answer": "Avoid mangling so symbol name is stable.",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "extern",
+            "name_mangling",
+            "plugins"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-360",
+        "question": "What does extern \"C++\" do in practice in a typical C++ source/header?",
+        "options": [
+            "Default C++ linkage; cancels extern \"C\".",
+            "Forces C symbols for that declaration only.",
+            "Disables mangling entirely for the TU.",
+            "Forces dynamic linking at link time."
+        ],
+        "correct_answer": "Default C++ linkage; cancels extern \"C\".",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "extern",
+            "linkage"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-361",
+        "question": "Which statement best distinguishes 'extern' (storage/class specifier) from extern \"C\"/extern \"C++\" (language linkage)?",
+        "options": [
+            "extern declares; extern \"C\" picks linkage. under stated conditions",
+            "extern means dynamic; extern \"C\" means static. based on available context",
+            "extern \"C\" changes storage duration to static.",
+            "extern and extern \"C\" are identical keywords."
+        ],
+        "correct_answer": "extern declares; extern \"C\" picks linkage. under stated conditions",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "extern",
+            "linkage",
+            "abi"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-382",
+        "question": "Delete Derived via `Base*` but Base has no virtual destructor. Outcome?",
+        "options": [
+            "UB: Derived dtor may not run. under stated conditions",
+            "Defined: both dtors always run.",
+            "Only a leak; behavior is defined.",
+            "Compile error: delete needs virtual dtor. based on available context"
+        ],
+        "correct_answer": "UB: Derived dtor may not run. under stated conditions",
+        "topic": "OOP Internals",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "destructor",
+            "polymorphism",
+            "ub"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-383",
+        "question": "A class has a reference data member. What must constructors do?",
+        "options": [
+            "Init it in init-list. under stated conditions",
+            "Assign it in the ctor body.",
+            "Leave it default-initialized. based on available context",
+            "Make the reference `mutable`."
+        ],
+        "correct_answer": "Init it in init-list. under stated conditions",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "reference",
+            "construction",
+            "initialization"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-384",
+        "question": "Member initialization order is determined by?",
+        "options": [
+            "Declaration order in the class.",
+            "Order in the initializer list.",
+            "Reverse declaration order.",
+            "Optimizer; order is unspecified."
+        ],
+        "correct_answer": "Declaration order in the class.",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "constructor",
+            "initialization_order"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-385",
+        "question": "Why avoid virtual calls from constructors/destructors?",
+        "options": [
+            "No dispatch; base version runs.",
+            "Always calls most-derived override.",
+            "Guaranteed stack overflow.",
+            "Virtual calls are ill-formed."
+        ],
+        "correct_answer": "No dispatch; base version runs.",
+        "topic": "OOP Internals",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "constructor",
+            "destructor"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-386",
+        "question": "A pure virtual destructor is declared. What else is required?",
+        "options": [
+            "Provide a definition for it.",
+            "No definition; pure means none.",
+            "Mark it `final`.",
+            "Make it `= delete`."
+        ],
+        "correct_answer": "Provide a definition for it.",
+        "topic": "OOP Internals",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "destructor",
+            "pure_virtual"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-387",
+        "question": "Why mark a single-arg constructor `explicit`?",
+        "options": [
+            "Blocks implicit conversions.",
+            "Blocks all constructions.",
+            "Makes it constexpr by default.",
+            "Forces heap allocation."
+        ],
+        "correct_answer": "Blocks implicit conversions.",
+        "topic": "Modern C++",
+        "difficulty": "medium",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "constructor",
+            "explicit"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-388",
+        "question": "Returning a reference to a local variable is what bug?",
+        "options": [
+            "Dangling reference (UAR).",
+            "Heap leak (lost pointer).",
+            "Stack overflow (deep recursion).",
+            "Data race (no mutex)."
+        ],
+        "correct_answer": "Dangling reference (UAR).",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "reference",
+            "lifetime",
+            "dangling_reference"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-389",
+        "question": "Returning `T*` that points into a local array causes?",
+        "options": [
+            "Dangling pointer after return.",
+            "Auto heap-promotion of the array.",
+            "Only a memory leak.",
+            "It becomes thread_local storage."
+        ],
+        "correct_answer": "Dangling pointer after return.",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "pointer",
+            "lifetime",
+            "dangling_pointer"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-390",
+        "question": "Freeing memory from `new` using `free()` is?",
+        "options": [
+            "UB: mismatched allocators.",
+            "Same as `delete`.",
+            "Only slower; still defined.",
+            "A guaranteed exception."
+        ],
+        "correct_answer": "UB: mismatched allocators.",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "pointer",
+            "heap",
+            "ub"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-391",
+        "question": "Why prefer `T&` over `T*` for a required parameter?",
+        "options": [
+            "Expresses non-null requirement.",
+            "Always faster than a pointer.",
+            "References can be null safely.",
+            "Fixes lifetime issues automatically."
+        ],
+        "correct_answer": "Expresses non-null requirement.",
+        "topic": "Modern C++",
+        "difficulty": "medium",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "pointer",
+            "reference",
+            "api_design"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-392",
+        "question": "Owning raw pointers + default copy operations often leads to?",
+        "options": [
+            "Shallow copy double-deletes.",
+            "Safe deep copy by default.",
+            "Destructor runs twice safely.",
+            "Compiler adds atomic refcount."
+        ],
+        "correct_answer": "Shallow copy double-deletes.",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "pointer",
+            "copy",
+            "double_delete"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-393",
+        "question": "`new T[n]` deallocated with `delete` results in?",
+        "options": [
+            "UB: must use `delete[]`.",
+            "Defined: delete handles arrays.",
+            "Only a memory leak.",
+            "Only slower; still defined."
+        ],
+        "correct_answer": "UB: must use `delete[]`.",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "pointer",
+            "new_delete",
+            "ub"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-394",
+        "question": "Object slicing typically happens when you?",
+        "options": [
+            "Copy Derived into Base by value.",
+            "Use a virtual destructor in Base.",
+            "Store `Base*` to Derived objects.",
+            "Use dynamic_cast with RTTI."
+        ],
+        "correct_answer": "Copy Derived into Base by value.",
+        "topic": "OOP",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "inheritance",
+            "slicing"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-395",
+        "question": "Why prefer `make_unique<T>(...)` over `unique_ptr<T>(new T(...))`?",
+        "options": [
+            "Stronger exception safety. under stated conditions",
+            "Avoids heap allocation entirely. based on available context",
+            "Disables destructors for speed.",
+            "Makes T trivially destructible."
+        ],
+        "correct_answer": "Stronger exception safety. under stated conditions",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "pointer",
+            "raii",
+            "exception_safety"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-396",
+        "question": "If a destructor throws during stack unwinding, what happens?",
+        "options": [
+            "std::terminate is called.",
+            "The exception is ignored.",
+            "It becomes a warning only.",
+            "It is converted to error_code."
+        ],
+        "correct_answer": "std::terminate is called.",
+        "topic": "Practical Debugging",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "destructor",
+            "exceptions",
+            "terminate"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-397",
+        "question": "Use a reference parameter when?",
+        "options": [
+            "Null is not a valid value.",
+            "You need reseating semantics.",
+            "You need optional output.",
+            "You plan to store it long-term."
+        ],
+        "correct_answer": "Null is not a valid value.",
+        "topic": "Modern C++",
+        "difficulty": "medium",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "reference",
+            "api_design"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-398",
+        "question": "What does `delete nullptr;` do?",
+        "options": [
+            "No-op (does nothing).",
+            "Undefined behavior.",
+            "Throws std::bad_alloc.",
+            "Crashes by design."
+        ],
+        "correct_answer": "No-op (does nothing).",
+        "topic": "Modern C++",
+        "difficulty": "medium",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "pointer",
+            "delete"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-399",
+        "question": "Returning `const T&` to a temporary can?",
+        "options": [
+            "Dangle after expression ends.",
+            "Force a heap allocation.",
+            "Extend lifetime to program end.",
+            "Turn it into a static object."
+        ],
+        "correct_answer": "Dangle after expression ends.",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "reference",
+            "lifetime",
+            "dangling_reference"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-400",
+        "question": "User-declared destructor (C++11+) commonly implies what for implicit moves?",
+        "options": [
+            "Moves not auto-declared.",
+            "Move ops always generated.",
+            "Copy ops always deleted.",
+            "Type becomes trivially movable."
+        ],
+        "correct_answer": "Moves not auto-declared.",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "destructor",
+            "move_semantics",
+            "rule_of_five"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-401",
+        "question": "Safe rule for RAII destructors?",
+        "options": [
+            "Don't throw (noexcept). under stated conditions",
+            "Throw on failure to signal.",
+            "Allocate memory in destructor.",
+            "Call virtual functions in dtor. based on available context"
+        ],
+        "correct_answer": "Don't throw (noexcept). under stated conditions",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "destructor",
+            "raii",
+            "noexcept"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-336",
+        "question": "Given the code:\\nstruct A {\r\n    A() = default;\r\n    A(A&);\r\n};\r\nconst A ca;\r\nA b(ca);\\nWhat is the most accurate diagnosis?",
+        "options": [
+            "Can't bind const to A&; use const A&.",
+            "OK: const binds to A& in copy ctor.",
+            "Copy ctors cannot take references in C++.",
+            "Move ctor is selected automatically here."
+        ],
+        "correct_answer": "Can't bind const to A&; use const A&.",
+        "topic": "Copy and Move Semantics",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "copy_constructor",
+            "const_correctness"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-337",
+        "question": "Which of the following constructors is NOT a copy constructor (i.e., does not count as the copy constructor for special member generation)?",
+        "options": [
+            "X(X) (pass-by-value; not copy ctor).",
+            "X(const X&) (copy ctor).",
+            "X(X&) (copy ctor).",
+            "X(const volatile X&) (copy ctor form)."
+        ],
+        "correct_answer": "X(X) (pass-by-value; not copy ctor).",
+        "topic": "Copy and Move Semantics",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "copy_constructor",
+            "special_members"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-338",
+        "question": "Given the code (C++11 and later):\\nstruct A {\r\n    explicit A(const A&);\r\n};\r\nA a;\r\nA b = a;\r\nA c(a);\\nWhich statement is correct?",
+        "options": [
+            "b=a fails; c(a) works with explicit.",
+            "Both work; explicit is ignored here.",
+            "Both fail; explicit copy ctors are illegal.",
+            "c(a) fails; b=a works."
+        ],
+        "correct_answer": "b=a fails; c(a) works with explicit.",
+        "topic": "Copy and Move Semantics",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "copy_constructor",
+            "explicit",
+            "initialization"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-339",
+        "question": "In C++11 and later, what is the effect of declaring a user-defined destructor on implicit move operations?\\nstruct S {\r\n    ~S();\r\n    int x;\r\n};",
+        "options": [
+            "User dtor blocks implicit move ops.",
+            "User dtor deletes copy ops too (Rule of 3/5).",
+            "User dtor makes type trivially movable.",
+            "No effect on implicit moves."
+        ],
+        "correct_answer": "User dtor blocks implicit move ops.",
+        "topic": "Copy and Move Semantics",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "rule_of_five",
+            "move_semantics",
+            "special_members"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-340",
+        "question": "Assume C++17 or later. Given:\\nstruct A {\r\n    A();\r\n    A(const A&);\r\n};\r\nA make() { return A{}; }\r\nA x = make();\\nHow many times is A(const A&) called?",
+        "options": [
+            "0 (C++17 guaranteed elision). under stated conditions",
+            "1 (copy from return temporary).",
+            "2 (copy return, then copy into x). based on available context",
+            "Depends on optimization flags."
+        ],
+        "correct_answer": "0 (C++17 guaranteed elision). under stated conditions",
+        "topic": "Copy and Move Semantics",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "copy_elision",
+            "copy_constructor",
+            "cpp17"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-341",
+        "question": "Given:\\n#include <memory>\\nstruct S {\r\n    std::unique_ptr<int> p;\r\n};\\nWhich statement is correct about S?",
+        "options": [
+            "Copy deleted; move OK (no custom dtor).",
+            "Copy OK; unique_ptr deep-copies by default.",
+            "Copy OK; move disabled by unique_ptr.",
+            "Neither works: any pointer member blocks moves."
+        ],
+        "correct_answer": "Copy deleted; move OK (no custom dtor).",
+        "topic": "Copy and Move Semantics",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "copy_constructor",
+            "move_semantics",
+            "unique_ptr"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-342",
+        "question": "Given:\\ntemplate <class T>\r\nstruct Box {\r\n    template <class U>\r\n    Box(const Box<U>&);\r\n};\\nWhich statement is correct about Box<T>'s copy constructor?",
+        "options": [
+            "Template ctor isn't copy ctor; implicit copy may exist.",
+            "Template ctor is copy ctor; implicit copy not declared.",
+            "Any ctor template deletes all special members.",
+            "Templates never help copying."
+        ],
+        "correct_answer": "Template ctor isn't copy ctor; implicit copy may exist.",
+        "topic": "Copy and Move Semantics",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "copy_constructor",
+            "templates",
+            "special_members"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-343",
+        "question": "Given:\\nstruct Base {\r\n    Base() = delete;\r\n    Base(const Base&) = default;\r\n};\r\nstruct Derived : Base {\r\n    Derived() = delete;\r\n    Derived(const Derived& other) { /* empty */ }\r\n};\\nWhat is the issue?",
+        "options": [
+            "Base() deleted; Derived must init Base(other).",
+            "OK: Base is copied even if omitted in init list.",
+            "Only runtime slicing problem.",
+            "Base copy cannot be defaulted."
+        ],
+        "correct_answer": "Base() deleted; Derived must init Base(other).",
+        "topic": "Copy and Move Semantics",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "copy_constructor",
+            "inheritance",
+            "special_members"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-344",
+        "question": "Given:\\nstruct Base { virtual ~Base() = default; int b = 0; };\r\nstruct Derived : Base { int d = 0; };\r\nstd::vector<Base> v;\r\nv.push_back(Derived{});\\nWhat happens and what is the typical fix?",
+        "options": [
+            "Slicing into vector<Base>; use pointers/clone().",
+            "Deep copy occurs because Base has a virtual destructor.",
+            "Ill-formed: vector cannot store polymorphic bases.",
+            "dynamic_cast is used during copy."
+        ],
+        "correct_answer": "Slicing into vector<Base>; use pointers/clone().",
+        "topic": "Copy and Move Semantics",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "copy_constructor",
+            "slicing",
+            "std_vector"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-345",
+        "question": "During std::vector reallocation, which situation commonly causes the vector to COPY elements instead of MOVE them (when both are available)?",
+        "options": [
+            "Move not noexcept; vector may copy for safety.",
+            "Noexcept move exists; vector still copies always.",
+            "Movable-only types are copied via memcpy on realloc.",
+            "Copy is always preferred."
+        ],
+        "correct_answer": "Move not noexcept; vector may copy for safety.",
+        "topic": "Copy and Move Semantics",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "noexcept",
+            "move_semantics",
+            "std_vector"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-346",
+        "question": "Consider copy-and-swap assignment:\\nstruct T {\r\n    friend void swap(T&, T&) noexcept;\r\n    T(const T&);\r\n    T(T&&) noexcept;\r\n    T& operator=(T other) { swap(*this, other); return *this; }\r\n};\\nWhat is a key property of this operator= implementation?",
+        "options": [
+            "Strong guarantee if swap noexcept; self-assign safe.",
+            "operator= must take const T& only in C++ by the standard.",
+            "Pass-by-value disables copy and move.",
+            "Always shallow-copies."
+        ],
+        "correct_answer": "Strong guarantee if swap noexcept; self-assign safe.",
+        "topic": "Copy and Move Semantics",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "copy_constructor",
+            "exception_safety",
+            "copy_and_swap"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-347",
+        "question": "Why is a constructor of the form T(T other) almost always a bug when intended as a copy constructor?",
+        "options": [
+            "Pass-by-value isn't copy ctor; needs copy/move first.",
+            "Best copy ctor; always faster than const& in practice.",
+            "Required for C++17 copy elision to work.",
+            "It disables the destructor."
+        ],
+        "correct_answer": "Pass-by-value isn't copy ctor; needs copy/move first.",
+        "topic": "Copy and Move Semantics",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "copy_constructor",
+            "special_members",
+            "performance"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-362",
+        "question": "A function returns `const char*` from a local `std::string s`. What is the bug?",
+        "options": [
+            "Dangling pointer after return. under stated conditions",
+            "Leak from `c_str()` allocation.",
+            "`c_str()` must be freed manually.",
+            "Stack overflow from `std::string`. based on available context"
+        ],
+        "correct_answer": "Dangling pointer after return. under stated conditions",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "stack",
+            "lifetime",
+            "dangling_pointer"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-363",
+        "question": "Which allocation is guaranteed to have automatic storage duration?",
+        "options": [
+            "Local non-static object.",
+            "`new T` stored locally.",
+            "`make_unique<T>()` result.",
+            "`malloc()` result stored."
+        ],
+        "correct_answer": "Local non-static object.",
+        "topic": "Memory Management",
+        "difficulty": "medium",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "stack",
+            "storage_duration"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-364",
+        "question": "`p` was allocated with `new T[n]` but freed with `delete p;`. Impact?",
+        "options": [
+            "UB: need `delete[]`.",
+            "Defined; same as `delete[]`.",
+            "Only a memory leak.",
+            "Only slower deallocation."
+        ],
+        "correct_answer": "UB: need `delete[]`.",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "heap",
+            "new_delete",
+            "ub"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-365",
+        "question": "What does `std::unique_ptr<T>` primarily prevent?",
+        "options": [
+            "Leaks/double delete. under stated conditions",
+            "All heap fragmentation.",
+            "Stack overflow in recursion. based on available context",
+            "Need for destructors."
+        ],
+        "correct_answer": "Leaks/double delete. under stated conditions",
+        "topic": "Modern C++",
+        "difficulty": "medium",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "heap",
+            "raii",
+            "unique_ptr"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-366",
+        "question": "`vector<int> v; int* p=v.data(); v.push_back(x);` Risk?",
+        "options": [
+            "p may dangle. under stated conditions",
+            "p becomes stack-invalid. based on available context",
+            "`data()` must be freed.",
+            "`data()` never changes."
+        ],
+        "correct_answer": "p may dangle. under stated conditions",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "heap",
+            "vector",
+            "dangling_pointer"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-367",
+        "question": "On exceptions: what happens to stack vs heap objects?",
+        "options": [
+            "Stack dtors run; heap doesn't.",
+            "Heap is auto-freed on throw.",
+            "Stack dtors never run on throw.",
+            "Both are always auto-cleaned."
+        ],
+        "correct_answer": "Stack dtors run; heap doesn't.",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "stack",
+            "exceptions",
+            "raii"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-368",
+        "question": "A function has `char buf[10'000'000];` and crashes. Likely cause?",
+        "options": [
+            "Stack overflow (huge frame).",
+            "Heap overflow (arrays use heap).",
+            "Compile error (array too big).",
+            "Dangling pointer to `buf`."
+        ],
+        "correct_answer": "Stack overflow (huge frame).",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "stack",
+            "stack_overflow"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-369",
+        "question": "Correct statement: `malloc/free` vs `new/delete` in C++?",
+        "options": [
+            "`new/delete` run ctors/dtors.",
+            "`malloc` runs constructors.",
+            "`free` runs destructors.",
+            "`new` returns raw bytes only."
+        ],
+        "correct_answer": "`new/delete` run ctors/dtors.",
+        "topic": "Memory Management",
+        "difficulty": "medium",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "heap",
+            "new_delete",
+            "malloc"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-370",
+        "question": "Calling `free(p)` when `p` came from `new` is?",
+        "options": [
+            "UB: wrong deallocator.",
+            "Equivalent to `delete`.",
+            "Only a memory leak.",
+            "A guaranteed exception."
+        ],
+        "correct_answer": "UB: wrong deallocator.",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "heap",
+            "allocator_mismatch",
+            "ub"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-371",
+        "question": "Why can an arena allocator outperform many small `new` calls?",
+        "options": [
+            "Less overhead + locality. under stated conditions",
+            "Moves allocations to stack. based on available context",
+            "Auto-frees on scope always.",
+            "Eliminates all memory bugs."
+        ],
+        "correct_answer": "Less overhead + locality. under stated conditions",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "heap",
+            "allocators",
+            "performance"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-372",
+        "question": "Returning a reference to a local variable usually causes?",
+        "options": [
+            "Dangling reference.",
+            "Guaranteed heap allocation.",
+            "Infinite recursion.",
+            "Automatic lifetime extension."
+        ],
+        "correct_answer": "Dangling reference.",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "stack",
+            "dangling_reference"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-373",
+        "question": "Placement-new is mainly about?",
+        "options": [
+            "Construct at address.",
+            "Allocating from the stack.",
+            "Skipping constructors.",
+            "Auto-calling delete."
+        ],
+        "correct_answer": "Construct at address.",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "placement_new",
+            "lifetime"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-374",
+        "question": "Two `unique_ptr<T>` are built from the same raw pointer. Outcome?",
+        "options": [
+            "Double delete (UB).",
+            "Shared ownership.",
+            "One becomes null.",
+            "Ref-counted delete."
+        ],
+        "correct_answer": "Double delete (UB).",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "heap",
+            "unique_ptr",
+            "double_delete"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-375",
+        "question": "A recursive function crashes only with deep input. Likely cause?",
+        "options": [
+            "Stack exhaustion.",
+            "Heap exhaustion.",
+            "Deadlock in malloc.",
+            "Recursion is illegal."
+        ],
+        "correct_answer": "Stack exhaustion.",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "stack",
+            "recursion",
+            "stack_overflow"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-376",
+        "question": "Main reason to prefer `make_unique` over raw `new` with unique_ptr?",
+        "options": [
+            "Exception safety.",
+            "Allocates on stack.",
+            "Disables destructors.",
+            "Avoids RTTI."
+        ],
+        "correct_answer": "Exception safety.",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "heap",
+            "raii",
+            "exception_safety"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-377",
+        "question": "ASan: \"stack-use-after-scope\" usually means?",
+        "options": [
+            "Ptr/ref used after scope.",
+            "Heap used after free().",
+            "Read of global after exit.",
+            "Integer overflow in calc."
+        ],
+        "correct_answer": "Ptr/ref used after scope.",
+        "topic": "Practical Debugging",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "asan",
+            "stack",
+            "debugging"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-378",
+        "question": "When is a function-local `static` destroyed?",
+        "options": [
+            "At program exit.",
+            "At block exit.",
+            "At thread exit always.",
+            "After last use."
+        ],
+        "correct_answer": "At program exit.",
+        "topic": "Memory Management",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "static_storage",
+            "lifetime"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-379",
+        "question": "Downside of heavy heap allocation in low-latency code?",
+        "options": [
+            "Tail latency from allocator.",
+            "Heap cannot be freed in C++.",
+            "Exceptions always leak heap.",
+            "Heap is always slower."
+        ],
+        "correct_answer": "Tail latency from allocator.",
+        "topic": "System Design",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "heap",
+            "performance",
+            "latency"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-380",
+        "question": "Most accurate: stack vs heap lifetime?",
+        "options": [
+            "Stack scope; heap manual.",
+            "Stack manual; heap scope.",
+            "Stack outlives its thread.",
+            "Heap dies at return."
+        ],
+        "correct_answer": "Stack scope; heap manual.",
+        "topic": "Memory Management",
+        "difficulty": "medium",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "stack",
+            "heap",
+            "lifetime"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-381",
+        "question": "Using `shared_ptr` everywhere: common hidden risk?",
+        "options": [
+            "Cycles leak. under stated conditions",
+            "Destructors never run. based on available context",
+            "Objects move to stack.",
+            "No allocations happen."
+        ],
+        "correct_answer": "Cycles leak. under stated conditions",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "heap",
+            "shared_ptr",
+            "weak_ptr"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-422",
+        "question": "What happens if you delete a derived object via `Base*` when Base has no virtual destructor?",
+        "options": [
+            "Undefined behavior.",
+            "Both dtors always run.",
+            "Only a leak; defined.",
+            "Compile error."
+        ],
+        "correct_answer": "Undefined behavior.",
+        "topic": "OOP Internals",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "destructor",
+            "ub"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-423",
+        "question": "Why is `override` valuable on virtual functions?",
+        "options": [
+            "Override check.",
+            "Makes it virtual (no).",
+            "Enables RTTI.",
+            "Forces inlining."
+        ],
+        "correct_answer": "Override check.",
+        "topic": "Modern C++",
+        "difficulty": "medium",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "override"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-424",
+        "question": "Default arguments with virtual functions are bound?",
+        "options": [
+            "Statically (by static type).",
+            "Dynamically (by dynamic type).",
+            "At link time.",
+            "Randomly (ABI-dependent)."
+        ],
+        "correct_answer": "Statically (by static type).",
+        "topic": "OOP Internals",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "default_args"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-425",
+        "question": "In constructors/destructors, virtual calls typically dispatch to?",
+        "options": [
+            "Base part only.",
+            "Most-derived override.",
+            "Random override.",
+            "Compile error."
+        ],
+        "correct_answer": "Base part only.",
+        "topic": "OOP Internals",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "constructor",
+            "destructor"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-426",
+        "question": "What does `final` on a virtual function do?",
+        "options": [
+            "No further overrides.",
+            "Makes it pure virtual.",
+            "Forces inlining.",
+            "Disables vtables."
+        ],
+        "correct_answer": "No further overrides.",
+        "topic": "Modern C++",
+        "difficulty": "medium",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "final"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-427",
+        "question": "Derived defines `void f(int)` while base has `virtual void f(double)`. Calling `f(1)` on Derived picks?",
+        "options": [
+            "Derived::f(int) (hides).",
+            "Base::f(double) via vtable.",
+            "Always ambiguous.",
+            "Runtime overload selection."
+        ],
+        "correct_answer": "Derived::f(int) (hides).",
+        "topic": "OOP Internals",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "overload",
+            "name_hiding"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-428",
+        "question": "Which is true about `dynamic_cast` on pointers?",
+        "options": [
+            "Needs polymorphic base.",
+            "Works on any class type.",
+            "Never returns null.",
+            "Does not use RTTI."
+        ],
+        "correct_answer": "Needs polymorphic base.",
+        "topic": "OOP Internals",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "rtti",
+            "dynamic_cast"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-429",
+        "question": "A `virtual` call can still be inlined when?",
+        "options": [
+            "If devirtualized.",
+            "It is marked virtual.",
+            "It is in a .cpp file.",
+            "RTTI is enabled."
+        ],
+        "correct_answer": "If devirtualized.",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "devirtualization",
+            "performance"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-430",
+        "question": "What is the practical risk of calling a pure virtual function from a base constructor?",
+        "options": [
+            "UB: pure-virtual call.",
+            "Dispatches to derived safely.",
+            "Optimized away.",
+            "Forces heap allocation."
+        ],
+        "correct_answer": "UB: pure-virtual call.",
+        "topic": "Practical Debugging",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "pure_virtual",
+            "constructor"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-431",
+        "question": "Covariant return types allow an override to return?",
+        "options": [
+            "Derived* / Derived&.",
+            "Any unrelated type.",
+            "Only void.",
+            "Only exact same type."
+        ],
+        "correct_answer": "Derived* / Derived&.",
+        "topic": "OOP Internals",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "covariant"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-432",
+        "question": "Which statement about `virtual` and templates is correct?",
+        "options": [
+            "Function templates cannot be virtual.",
+            "Virtual functions must be templates.",
+            "Templates disable virtual dispatch.",
+            "Virtual functions can be specialized."
+        ],
+        "correct_answer": "Function templates cannot be virtual.",
+        "topic": "Modern C++",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "templates"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-433",
+        "question": "Base: `virtual void f() const;` Derived: `void f();` What happens?",
+        "options": [
+            "No override; hides.",
+            "Overrides; const ignored.",
+            "Linker error only.",
+            "Runtime UB."
+        ],
+        "correct_answer": "No override; hides.",
+        "topic": "OOP Internals",
+        "difficulty": "hard",
+        "style": "debugging",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "override",
+            "const"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-434",
+        "question": "Multiple inheritance most directly complicates virtual dispatch by?",
+        "options": [
+            "Adjusting this pointer.",
+            "Disabling vtables.",
+            "Forcing GC.",
+            "Making RTTI impossible."
+        ],
+        "correct_answer": "Adjusting this pointer.",
+        "topic": "OOP Internals",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "multiple_inheritance"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-435",
+        "question": "Virtual inheritance primarily solves?",
+        "options": [
+            "Diamond base sharing.",
+            "Override ambiguity only.",
+            "Need for virtual dtors.",
+            "Name mangling issues."
+        ],
+        "correct_answer": "Diamond base sharing.",
+        "topic": "OOP Internals",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "virtual_inheritance"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-436",
+        "question": "Object slicing occurs when you?",
+        "options": [
+            "Copy into base.",
+            "Use base pointers.",
+            "Use virtual functions.",
+            "Enable RTTI."
+        ],
+        "correct_answer": "Copy into base.",
+        "topic": "OOP",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "slicing"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-437",
+        "question": "Marking a method `= 0` makes it?",
+        "options": [
+            "Pure virtual. under stated conditions",
+            "Deleted function. based on available context",
+            "Inline function.",
+            "Static function."
+        ],
+        "correct_answer": "Pure virtual. under stated conditions",
+        "topic": "OOP Basics",
+        "difficulty": "medium",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "pure_virtual"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-438",
+        "question": "A pure virtual destructor in an abstract base?",
+        "options": [
+            "Still needs a definition.",
+            "Must never be defined.",
+            "Prevents delete via base*.",
+            "Makes it non-polymorphic."
+        ],
+        "correct_answer": "Still needs a definition.",
+        "topic": "OOP Internals",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "destructor",
+            "pure_virtual"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-439",
+        "question": "For polymorphic cloning, the common pattern is?",
+        "options": [
+            "Virtual `clone()` method.",
+            "Copy base object by value.",
+            "memcpy the bytes.",
+            "dynamic_cast then copy."
+        ],
+        "correct_answer": "Virtual `clone()` method.",
+        "topic": "Design Patterns",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "polymorphism",
+            "clone"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-440",
+        "question": "What is the main effect of `virtual` on a class layout?",
+        "options": [
+            "Adds vptr/vtable.",
+            "Forces heap allocation.",
+            "Disables copying.",
+            "Forces POD."
+        ],
+        "correct_answer": "Adds vptr/vtable.",
+        "topic": "OOP Internals",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "vtable"
+        ],
+        "role_target": "cpp_dev",
+        "round_target": "L2",
+        "version_scope": [
+            "cpp17",
+            "gcc",
+            "linux"
+        ]
+    },
+    {
+        "id": "cpp-cpp-dev-l2-441",
+        "question": "What does `dynamic_cast<Derived&>(base_ref)` do on failure?",
+        "options": [
+            "Throws std::bad_cast.",
+            "Returns null.",
+            "Undefined behavior.",
+            "Returns default Derived."
+        ],
+        "correct_answer": "Throws std::bad_cast.",
+        "topic": "OOP Internals",
+        "difficulty": "hard",
+        "style": "concept",
+        "tags": [
+            "cpp_dev",
+            "virtual",
+            "rtti",
+            "dynamic_cast"
         ],
         "role_target": "cpp_dev",
         "round_target": "L2",
