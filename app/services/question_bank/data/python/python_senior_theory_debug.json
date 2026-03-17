@@ -128,12 +128,12 @@
     "id": "python-python-senior-theory-debug-006",
     "question": "A snippet runs with the following behavior. Which output is correct? a = [1, 2, 3]\nb = a\nb.append(4)\nprint(a)?",
     "options": [
-      "[1, 2, 3, 4]",
-      "Error",
-      "[4]",
-      "[1, 2, 3] under production constraints"
+      "Prints [1, 2, 3, 4]",
+      "Prints [1, 2, 3] only",
+      "Raises error",
+      "Prints [4]"
     ],
-    "correct_answer": "[1, 2, 3, 4]",
+    "correct_answer": "Prints [1, 2, 3, 4]",
     "topic": "Practical Debugging",
     "difficulty": "easy",
     "style": "debugging",
@@ -228,12 +228,12 @@
     "id": "python-python-senior-theory-debug-010",
     "question": "A snippet runs with the following behavior. Which output is correct? print(bool(0))?",
     "options": [
-      "False",
-      "None under production constraints",
-      "True",
-      "0"
+      "Prints True",
+      "Prints False",
+      "Prints 0",
+      "Raises error"
     ],
-    "correct_answer": "False",
+    "correct_answer": "Prints False",
     "topic": "Data Structures and Performance",
     "difficulty": "easy",
     "style": "concept",
@@ -253,12 +253,12 @@
     "id": "python-python-senior-theory-debug-011",
     "question": "Which keyword is used to define a function in Python?",
     "options": [
-      "def in enterprise environments",
-      "function in enterprise environments",
-      "func",
-      "define"
+      "keyword: def",
+      "keyword: fn",
+      "keyword: func",
+      "keyword: function"
     ],
-    "correct_answer": "def in enterprise environments",
+    "correct_answer": "keyword: def",
     "topic": "Concurrency and Asyncio",
     "difficulty": "easy",
     "style": "scenario",
@@ -278,12 +278,12 @@
     "id": "python-python-senior-theory-debug-012",
     "question": "Which of these creates a dictionary?",
     "options": [
-      "{'a': 1} in enterprise environments",
-      "{1, 2, 3} in enterprise environments",
-      "(1, 2, 3)",
-      "[1, 2, 3]"
+      "Creates dict: {'a': 1}.",
+      "Creates list: [1, 2, 3].",
+      "Creates tuple: (1, 2, 3).",
+      "Creates set: {1, 2, 3}."
     ],
-    "correct_answer": "{'a': 1} in enterprise environments",
+    "correct_answer": "Creates dict: {'a': 1}.",
     "topic": "Data Structures and Performance",
     "difficulty": "easy",
     "style": "architecture",
@@ -353,12 +353,12 @@
     "id": "python-python-senior-theory-debug-015",
     "question": "Which loop is used for iterating over a sequence?",
     "options": [
-      "for in enterprise environments",
-      "do-while in enterprise environments",
-      "foreach",
-      "while"
+      "Use for-loop",
+      "Use while-loop",
+      "Use foreach",
+      "Use do-while"
     ],
-    "correct_answer": "for in enterprise environments",
+    "correct_answer": "Use for-loop",
     "topic": "API and Backend Patterns",
     "difficulty": "easy",
     "style": "scenario",
@@ -528,12 +528,12 @@
     "id": "python-python-senior-theory-debug-022",
     "question": "How do you start a comment in Python?",
     "options": [
-      "# in enterprise environments",
-      "// in enterprise environments",
-      "--",
-      "/*"
+      "Write # comment",
+      "Write //comment",
+      "Write --comment",
+      "Write /* */comment"
     ],
-    "correct_answer": "# in enterprise environments",
+    "correct_answer": "Write # comment",
     "topic": "Concurrency and Asyncio",
     "difficulty": "easy",
     "style": "concept",
@@ -604,12 +604,12 @@
     "id": "python-python-senior-theory-debug-025",
     "question": "Which keyword creates a class in Python?",
     "options": [
-      "class in enterprise environments",
-      "object in enterprise environments",
-      "define",
-      "struct"
+      "keyword: class",
+      "keyword: super",
+      "keyword: struct",
+      "keyword: object"
     ],
-    "correct_answer": "class in enterprise environments",
+    "correct_answer": "keyword: class",
     "topic": "Python Language and Runtime",
     "difficulty": "easy",
     "style": "operations",
@@ -1085,12 +1085,12 @@
     "id": "python-python-senior-theory-debug-044",
     "question": "Which method removes the last element from a list?",
     "options": [
-      "pop() in enterprise environments",
-      "discard() in enterprise environments",
-      "remove()",
-      "delete()"
+      "Use list.pop()",
+      "Use list.remove()",
+      "Use del item",
+      "Use set.discard()"
     ],
-    "correct_answer": "pop() in enterprise environments",
+    "correct_answer": "Use list.pop()",
     "topic": "Concurrency and Asyncio",
     "difficulty": "medium",
     "style": "architecture",
@@ -1561,12 +1561,12 @@
     "id": "python-python-senior-theory-debug-063",
     "question": "A snippet runs with the following behavior. Which output is correct? print('Hello'.lower())?",
     "options": [
-      "Hello in enterprise environments for large-scale systems",
-      "Prioritize correctness and resilience in enterprise environments",
-      "Validate behavior under concurrency",
-      "Use observability-driven diagnosis"
+      "hello",
+      "Hello!",
+      "HELLO?",
+      "Error"
     ],
-    "correct_answer": "Hello in enterprise environments for large-scale systems",
+    "correct_answer": "hello",
     "topic": "API and Backend Patterns",
     "difficulty": "hard",
     "style": "debugging",
@@ -1711,12 +1711,12 @@
     "id": "python-python-senior-theory-debug-069",
     "question": "A snippet runs with the following behavior. Which output is correct? print(type(None).__name__)?",
     "options": [
-      "NoneType",
-      "None under production constraints",
-      "void",
-      "null"
+      "Prints NoneType",
+      "Prints NullType",
+      "Prints None",
+      "Prints void"
     ],
-    "correct_answer": "NoneType",
+    "correct_answer": "Prints NoneType",
     "topic": "Data Structures and Performance",
     "difficulty": "hard",
     "style": "debugging",
@@ -1736,12 +1736,12 @@
     "id": "python-python-senior-theory-debug-070",
     "question": "A snippet runs with the following behavior. Which output is correct? x = (1,)\nprint(type(x).__name__)?",
     "options": [
-      "tuple",
-      "set",
-      "int",
-      "list under production constraints"
+      "Prints tuple",
+      "Prints int",
+      "Prints set",
+      "Prints list."
     ],
-    "correct_answer": "tuple",
+    "correct_answer": "Prints tuple",
     "topic": "Data Structures and Performance",
     "difficulty": "hard",
     "style": "debugging",
@@ -1862,12 +1862,12 @@
     "id": "python-python-senior-theory-debug-075",
     "question": "A snippet runs with the following behavior. Which output is correct? print(type(1+2j).__name__)?",
     "options": [
-      "complex",
-      "float",
-      "number under production constraints",
-      "int"
+      "Prints complex",
+      "Prints float64",
+      "Prints int",
+      "Prints str"
     ],
-    "correct_answer": "complex",
+    "correct_answer": "Prints complex",
     "topic": "Data Structures and Performance",
     "difficulty": "hard",
     "style": "debugging",
@@ -2395,9 +2395,9 @@
     "question": "Which of these is a valid variable name?",
     "options": [
       "_count",
-      "class",
       "2name",
-      "my-var"
+      "my_var",
+      "class"
     ],
     "correct_answer": "_count",
     "topic": "Testing and Reliability",
@@ -2419,12 +2419,12 @@
     "id": "python-python-senior-theory-debug-097",
     "question": "Which method joins list elements into a string?",
     "options": [
-      ".join() in enterprise environments",
-      ".merge()",
-      ".combine() in enterprise environments",
-      ".concat()"
+      "Use ''.join().",
+      "Use ''.merge()",
+      "Use ''.concat()",
+      "Use ''.combine()"
     ],
-    "correct_answer": ".join() in enterprise environments",
+    "correct_answer": "Use ''.join().",
     "topic": "Concurrency and Asyncio",
     "difficulty": "hard",
     "style": "scenario",
