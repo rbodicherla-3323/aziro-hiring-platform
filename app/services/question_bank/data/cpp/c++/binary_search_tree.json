@@ -1,0 +1,527 @@
+[
+  {
+    "id": "cpp-cpp-dev-l2-402",
+    "question": "Which validation is sufficient to prove a binary tree is a BST?",
+    "options": [
+      "Use ancestor bounds (min/max).",
+      "Check only parent vs children.",
+      "Check inorder is sorted (values).",
+      "Check height is O(log n)."
+    ],
+    "correct_answer": "Use ancestor bounds (min/max).",
+    "topic": "Data Structures",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "validation"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-403",
+    "question": "Deleting a BST node with two children is typically done by?",
+    "options": [
+      "Swap with successor/predecessor.",
+      "Attach both subtrees under parent.",
+      "Rotate left once, then delete.",
+      "Replace with any leaf node."
+    ],
+    "correct_answer": "Swap with successor/predecessor.",
+    "topic": "Data Structures",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "delete"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-404",
+    "question": "Insert keys in strictly increasing order into a naive BST. Search becomes?",
+    "options": [
+      "O(n) worst-case.",
+      "O(1) average-case.",
+      "O(log n) worst-case.",
+      "O(n log n) worst-case."
+    ],
+    "correct_answer": "O(n) worst-case.",
+    "topic": "Algorithms",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "complexity"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-405",
+    "question": "To support k-th smallest queries in O(log n) on a dynamic BST, you typically?",
+    "options": [
+      "Store subtree sizes.",
+      "Run full inorder each query.",
+      "Re-sort keys after each insert.",
+      "Use BFS and stop at depth k."
+    ],
+    "correct_answer": "Store subtree sizes.",
+    "topic": "Data Structures",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "order_statistics"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-406",
+    "question": "A range query in a BST for [L, R] should?",
+    "options": [
+      "Prune subtrees outside [L, R].",
+      "Traverse the full tree always.",
+      "Use only level-order traversal.",
+      "Convert to array, then filter."
+    ],
+    "correct_answer": "Prune subtrees outside [L, R].",
+    "topic": "Algorithms",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "range_query"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-407",
+    "question": "Building a BST from preorder in O(n) is typically done using?",
+    "options": [
+      "Single pass with bounds/stack.",
+      "Sort then insert in that order.",
+      "Convert preorder to postorder.",
+      "BFS placement from preorder."
+    ],
+    "correct_answer": "Single pass with bounds/stack.",
+    "topic": "Algorithms",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "construction"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-408",
+    "question": "Iterative inorder traversal using a stack needs extra memory of?",
+    "options": [
+      "O(h) extra.",
+      "O(n) always.",
+      "O(log n) always.",
+      "O(1) always."
+    ],
+    "correct_answer": "O(h) extra.",
+    "topic": "Algorithms",
+    "difficulty": "moderate",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "traversal"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-409",
+    "question": "Lowest common ancestor (LCA) in a BST can be found by?",
+    "options": [
+      "Stop at split point.",
+      "Binary lifting on depths.",
+      "Full inorder then scan.",
+      "Run Dijkstra from root."
+    ],
+    "correct_answer": "Stop at split point.",
+    "topic": "Algorithms",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "lca"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-410",
+    "question": "If duplicates are allowed only on the right subtree, which comparison is consistent?",
+    "options": [
+      "Left: < key, Right: >= key.",
+      "Left: <= key, Right: > key.",
+      "Left: < key, Right: > key.",
+      "Left: <= key, Right: >= key."
+    ],
+    "correct_answer": "Left: < key, Right: >= key.",
+    "topic": "Data Structures",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "duplicates"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-411",
+    "question": "A recursive BST implementation crashes on adversarial inserts. Likely cause?",
+    "options": [
+      "Deep recursion (skewed).",
+      "Heap overflow from nodes.",
+      "Virtual dispatch overhead.",
+      "Copy elision disabled."
+    ],
+    "correct_answer": "Deep recursion (skewed).",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "recursion",
+      "stack_overflow"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-412",
+    "question": "Common bug in BST validation using int bounds is?",
+    "options": [
+      "Overflow from +/-1.",
+      "Ints cannot be compared.",
+      "Need dynamic_cast per node.",
+      "Inorder is illegal."
+    ],
+    "correct_answer": "Overflow from +/-1.",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "validation",
+      "overflow"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-413",
+    "question": "To build a height-balanced BST from a sorted array, you?",
+    "options": [
+      "Pick mid recursively.",
+      "Insert left-to-right.",
+      "Insert right-to-left.",
+      "Shuffle then insert."
+    ],
+    "correct_answer": "Pick mid recursively.",
+    "topic": "Algorithms",
+    "difficulty": "moderate",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "balanced"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-414",
+    "question": "Finding inorder successor of key x (no parent pointers) can be done by?",
+    "options": [
+      "Track candidate successor.",
+      "Go to right child once.",
+      "Pick global leftmost node.",
+      "BFS until x is found."
+    ],
+    "correct_answer": "Track candidate successor.",
+    "topic": "Algorithms",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "successor"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-415",
+    "question": "A BST iterator implemented with a stack typically has next() complexity?",
+    "options": [
+      "Amortized O(1).",
+      "Always O(n).",
+      "Always O(log n).",
+      "Worst-case O(1)."
+    ],
+    "correct_answer": "Amortized O(1).",
+    "topic": "Algorithms",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "iterator"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-416",
+    "question": "Bug: `void insert(Node* root, int x)` updates are lost. Fix?",
+    "options": [
+      "Pass root by ref.",
+      "Make root const.",
+      "Make root global var.",
+      "Use malloc/free."
+    ],
+    "correct_answer": "Pass root by ref.",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "pointers"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-417",
+    "question": "To compute floor(x) in a BST (largest key <= x), you?",
+    "options": [
+      "Track last <= x.",
+      "Always go left on < x.",
+      "Full inorder then search.",
+      "BFS and keep max."
+    ],
+    "correct_answer": "Track last <= x.",
+    "topic": "Algorithms",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "floor_ceil"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-418",
+    "question": "For heavy insert/search workloads with worst-case guarantees, you choose?",
+    "options": [
+      "Balanced BST (AVL/RB).",
+      "Naive BST always log n.",
+      "Heap for ordered traversal.",
+      "unordered_map for ranges."
+    ],
+    "correct_answer": "Balanced BST (AVL/RB).",
+    "topic": "System Design",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "balanced",
+      "complexity"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-419",
+    "question": "A correct BST delete implementation must carefully update?",
+    "options": [
+      "Update links on splice.",
+      "Only keys; pointers stay.",
+      "The vtable pointer.",
+      "The call stack size."
+    ],
+    "correct_answer": "Update links on splice.",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "delete",
+      "pointers"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-420",
+    "question": "If a BST stores raw owning pointers, a common production bug is?",
+    "options": [
+      "Shallow copy double delete.",
+      "Deep copy happens by default.",
+      "GC runs automatically.",
+      "Destructors never run."
+    ],
+    "correct_answer": "Shallow copy double delete.",
+    "topic": "Memory Management",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "memory",
+      "rule_of_five"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-421",
+    "question": "Expected complexity of search in a balanced BST with n nodes?",
+    "options": [
+      "O(log n).",
+      "O(1).",
+      "O(n).",
+      "O(n log n)."
+    ],
+    "correct_answer": "O(log n).",
+    "topic": "Algorithms",
+    "difficulty": "moderate",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "bst",
+      "complexity"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  }
+]
