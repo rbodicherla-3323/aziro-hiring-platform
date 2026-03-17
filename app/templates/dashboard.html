@@ -26,6 +26,105 @@
     .overview-mini .mini-stat { text-align: center; flex: 1; }
     .overview-mini .mini-value { font-size: 1.1rem; font-weight: 600; }
     .overview-mini .mini-label { font-size: 0.7rem; opacity: 0.65; }
+     /* ── Banner shell ── */
+  .savings-banner {
+    background: linear-gradient(135deg, var(--az-slate-800) 0%, var(--az-slate-900) 100%);
+    border-radius: 12px;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    box-shadow: var(--az-shadow-md);
+    position: relative;
+    overflow: hidden;
+  }
+  /* subtle decorative circle */
+  .savings-banner::after {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+    pointer-events: none;
+  }
+
+  /* ── Left headline area ── */
+  .savings-left { flex: 1; min-width: 160px; }
+  .savings-pill {
+    display: inline-flex;
+    align-items: center;
+    background: var(--az-primary);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+  }
+  .savings-tagline {
+    color: var(--az-slate-400);
+    font-size: 0.78rem;
+    margin: 0;
+    line-height: 1.45;
+    max-width: 200px;
+  }
+
+  /* ── Vertical divider ── */
+  .savings-divider {
+    width: 1px;
+    align-self: stretch;
+    background: rgba(255,255,255,0.1);
+    flex-shrink: 0;
+  }
+
+  /* ── Individual stat block ── */
+  .savings-stat {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+    min-width: 140px;
+  }
+  .savings-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .savings-icon-gold {
+    background: rgba(251, 191, 36, 0.18) !important;
+    color: #fbbf24 !important;
+  }
+  .savings-value {
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -0.5px;
+  }
+  .savings-value-gold { color: #fbbf24; }
+  .savings-label {
+    font-size: 0.73rem;
+    color: rgba(255,255,255,0.75);
+    font-weight: 500;
+    margin-top: 3px;
+  }
+  .savings-sublabel {
+    font-size: 0.65rem;
+    color: var(--az-slate-500);
+    margin-top: 1px;
+  }
+
+  /* ── Responsive: stack on small screens ── */
+  @media (max-width: 640px) {
+    .savings-banner { flex-direction: column; gap: 16px; }
+    .savings-divider { width: 100%; height: 1px; align-self: auto; }
+  }
 </style>
 {% endblock %}
 {% block content %}
@@ -64,6 +163,66 @@
             </div>
         </div>
     </div>
+    <div class="row mb-4">
+  <div class="col-12">
+    <div class="savings-banner">
+
+      <!-- Left: headline -->
+      <div class="savings-left">
+        <div class="savings-pill">
+          <i class="fas fa-piggy-bank me-1"></i> Cost Savings
+        </div>
+        <p class="savings-tagline">
+          Every interview on Aziro replaces a paid third-party screening tool.
+        </p>
+      </div>
+
+      <!-- Divider -->
+      <div class="savings-divider"></div>
+
+      <!-- Stat: Total interviews -->
+      <div class="savings-stat">
+        <div class="savings-icon" style="background: rgba(255,255,255,0.12);">
+          <i class="fas fa-user-check"></i>
+        </div>
+        <div>
+          <div class="savings-value" id="stat-total-interviews">—</div>
+          <div class="savings-label">Interviews Conducted</div>
+          <div class="savings-sublabel">All time · across all roles</div>
+        </div>
+      </div>
+
+      <!-- Stat: Cost per interview -->
+      <div class="savings-stat">
+        <div class="savings-icon" style="background: rgba(255,255,255,0.12);">
+          <i class="fas fa-tag"></i>
+        </div>
+        <div>
+          <div class="savings-value">₹<span id="stat-cost-per">400</span></div>
+          <div class="savings-label">Saved Per Interview</div>
+          <div class="savings-sublabel">vs. paid screening tools</div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="savings-divider"></div>
+
+      <!-- Stat: Total savings -->
+      <div class="savings-stat savings-total">
+        <div class="savings-icon savings-icon-gold">
+          <i class="fas fa-indian-rupee-sign"></i>
+        </div>
+        <div>
+          <div class="savings-value savings-value-gold">
+            ₹<span id="stat-total-saved">—</span>
+          </div>
+          <div class="savings-label">Total Cost Saved</div>
+          <div class="savings-sublabel">Estimated cumulative savings</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
     <div class="row mb-4">
         <div class="col-12">
             <div class="card">
@@ -138,4 +297,55 @@
         </div>
     </div>
 </div>
+<script>
+(function () {
+  // ── CONFIG ──────────────────────────────────────────────
+  const COST_PER_INTERVIEW = 400;   // $ saved per interview — change freely
+  const FALLBACK_COUNT     = 0;   // used if API call fails (set to a real number if no backend route)
+  // ────────────────────────────────────────────────────────
+
+  function animateCount(el, target, prefix, duration) {
+    if (!el) return;
+    const start = performance.now();
+    const from  = 0;
+    function step(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(from + (target - from) * eased);
+      el.textContent = prefix
+        ? current.toLocaleString()
+        : current.toLocaleString();
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function render(totalInterviews) {
+    const totalSaved = totalInterviews * COST_PER_INTERVIEW;
+    document.getElementById('stat-cost-per').textContent =
+      COST_PER_INTERVIEW.toLocaleString();
+
+    animateCount(
+      document.getElementById('stat-total-interviews'),
+      totalInterviews, '', 1200
+    );
+    animateCount(
+      document.getElementById('stat-total-saved'),
+      totalSaved, '', 1400
+    );
+  }
+
+  // Try to fetch live count from backend; fall back gracefully
+  fetch('/api/dashboard-lifetime')
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      const count = data && typeof data.total_interviews === 'number'
+        ? data.total_interviews
+        : FALLBACK_COUNT;
+      render(count);
+    })
+    .catch(() => render(FALLBACK_COUNT));
+})();
+</script>
 {% endblock %}
