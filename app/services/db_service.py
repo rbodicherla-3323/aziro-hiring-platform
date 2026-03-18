@@ -131,7 +131,7 @@ def save_round_result(test_session_id: int, round_key: str, round_label: str,
     existing = RoundResult.query.filter_by(
         test_session_id=test_session_id,
         round_key=round_key,
-    ).first()
+    ).order_by(RoundResult.created_at.desc()).first()
 
     if existing:
         existing.round_label = round_label
@@ -476,7 +476,7 @@ def get_candidate_report_data(email: str) -> dict:
     round_results = (
         RoundResult.query
         .filter_by(test_session_id=ts.id)
-        .order_by(RoundResult.round_key)
+        .order_by(RoundResult.round_key, RoundResult.created_at)
         .all()
     )
     for rr in round_results:

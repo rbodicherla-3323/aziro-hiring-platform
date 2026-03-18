@@ -1,0 +1,532 @@
+[
+  {
+    "id": "cpp-cpp-dev-l2-422",
+    "question": "What happens if you delete a derived object via `Base*` when Base has no virtual destructor?",
+    "options": [
+      "Undefined behavior.",
+      "Both dtors always run.",
+      "Only a leak; defined.",
+      "Compile error."
+    ],
+    "correct_answer": "Undefined behavior.",
+    "topic": "OOP Internals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "destructor",
+      "ub"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-423",
+    "question": "Why is `override` valuable on virtual functions?",
+    "options": [
+      "Override check.",
+      "Makes it virtual (no).",
+      "Enables RTTI.",
+      "Forces inlining."
+    ],
+    "correct_answer": "Override check.",
+    "topic": "Modern C++",
+    "difficulty": "moderate",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "override"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-424",
+    "question": "Default arguments with virtual functions are bound?",
+    "options": [
+      "Statically (by static type).",
+      "Dynamically (by dynamic type).",
+      "At link time.",
+      "Randomly (ABI-dependent)."
+    ],
+    "correct_answer": "Statically (by static type).",
+    "topic": "OOP Internals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "default_args"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-425",
+    "question": "In constructors/destructors, virtual calls typically dispatch to?",
+    "options": [
+      "Base part only.",
+      "Most-derived override.",
+      "Random override.",
+      "Compile error."
+    ],
+    "correct_answer": "Base part only.",
+    "topic": "OOP Internals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "constructor",
+      "destructor"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-426",
+    "question": "What does `final` on a virtual function do?",
+    "options": [
+      "No further overrides.",
+      "Makes it pure virtual.",
+      "Forces inlining.",
+      "Disables vtables."
+    ],
+    "correct_answer": "No further overrides.",
+    "topic": "Modern C++",
+    "difficulty": "moderate",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "final"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-427",
+    "question": "Derived defines `void f(int)` while base has `virtual void f(double)`. Calling `f(1)` on Derived picks?",
+    "options": [
+      "Derived::f(int) (hides).",
+      "Base::f(double) via vtable.",
+      "Always ambiguous.",
+      "Runtime overload selection."
+    ],
+    "correct_answer": "Derived::f(int) (hides).",
+    "topic": "OOP Internals",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "overload",
+      "name_hiding"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-428",
+    "question": "Which is true about `dynamic_cast` on pointers?",
+    "options": [
+      "Needs polymorphic base.",
+      "Works on any class type.",
+      "Never returns null.",
+      "Does not use RTTI."
+    ],
+    "correct_answer": "Needs polymorphic base.",
+    "topic": "OOP Internals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "rtti",
+      "dynamic_cast"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-429",
+    "question": "A `virtual` call can still be inlined when?",
+    "options": [
+      "If devirtualized.",
+      "It is marked virtual.",
+      "It is in a .cpp file.",
+      "RTTI is enabled."
+    ],
+    "correct_answer": "If devirtualized.",
+    "topic": "Modern C++",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "devirtualization",
+      "performance"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-430",
+    "question": "What is the practical risk of calling a pure virtual function from a base constructor?",
+    "options": [
+      "UB: pure-virtual call.",
+      "Dispatches to derived safely.",
+      "Optimized away.",
+      "Forces heap allocation."
+    ],
+    "correct_answer": "UB: pure-virtual call.",
+    "topic": "Practical Debugging",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "pure_virtual",
+      "constructor"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-431",
+    "question": "Covariant return types allow an override to return?",
+    "options": [
+      "Derived* / Derived&.",
+      "Any unrelated type.",
+      "Only void.",
+      "Only exact same type."
+    ],
+    "correct_answer": "Derived* / Derived&.",
+    "topic": "OOP Internals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "covariant"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-432",
+    "question": "Which statement about `virtual` and templates is correct?",
+    "options": [
+      "Function templates cannot be virtual.",
+      "Virtual functions must be templates.",
+      "Templates disable virtual dispatch.",
+      "Virtual functions can be specialized."
+    ],
+    "correct_answer": "Function templates cannot be virtual.",
+    "topic": "Modern C++",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "templates"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-433",
+    "question": "Base: `virtual void f() const;` Derived: `void f();` What happens?",
+    "options": [
+      "No override; hides.",
+      "Overrides; const ignored.",
+      "Linker error only.",
+      "Runtime UB."
+    ],
+    "correct_answer": "No override; hides.",
+    "topic": "OOP Internals",
+    "difficulty": "hard",
+    "style": "debugging",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "override",
+      "const"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-434",
+    "question": "Multiple inheritance most directly complicates virtual dispatch by?",
+    "options": [
+      "Adjusting this pointer.",
+      "Disabling vtables.",
+      "Forcing GC.",
+      "Making RTTI impossible."
+    ],
+    "correct_answer": "Adjusting this pointer.",
+    "topic": "OOP Internals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "multiple_inheritance"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-435",
+    "question": "Virtual inheritance primarily solves?",
+    "options": [
+      "Diamond base sharing.",
+      "Override ambiguity only.",
+      "Need for virtual dtors.",
+      "Name mangling issues."
+    ],
+    "correct_answer": "Diamond base sharing.",
+    "topic": "OOP Internals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "virtual_inheritance"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-436",
+    "question": "Object slicing occurs when you?",
+    "options": [
+      "Copy into base.",
+      "Use base pointers.",
+      "Use virtual functions.",
+      "Enable RTTI."
+    ],
+    "correct_answer": "Copy into base.",
+    "topic": "OOP",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "slicing"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-437",
+    "question": "Marking a method `= 0` makes it?",
+    "options": [
+      "Pure virtual.",
+      "Deleted function.",
+      "Inline function.",
+      "Static function."
+    ],
+    "correct_answer": "Pure virtual.",
+    "topic": "OOP Basics",
+    "difficulty": "moderate",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "pure_virtual"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-438",
+    "question": "A pure virtual destructor in an abstract base?",
+    "options": [
+      "Still needs a definition.",
+      "Must never be defined.",
+      "Prevents delete via base*.",
+      "Makes it non-polymorphic."
+    ],
+    "correct_answer": "Still needs a definition.",
+    "topic": "OOP Internals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "destructor",
+      "pure_virtual"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-439",
+    "question": "For polymorphic cloning, the common pattern is?",
+    "options": [
+      "Virtual `clone()` method.",
+      "Copy base object by value.",
+      "memcpy the bytes.",
+      "dynamic_cast then copy."
+    ],
+    "correct_answer": "Virtual `clone()` method.",
+    "topic": "Design Patterns",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "polymorphism",
+      "clone"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-440",
+    "question": "What is the main effect of `virtual` on a class layout?",
+    "options": [
+      "Adds vptr/vtable.",
+      "Forces heap allocation.",
+      "Disables copying.",
+      "Forces POD."
+    ],
+    "correct_answer": "Adds vptr/vtable.",
+    "topic": "OOP Internals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "vtable"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  },
+  {
+    "id": "cpp-cpp-dev-l2-441",
+    "question": "What does `dynamic_cast<Derived&>(base_ref)` do on failure?",
+    "options": [
+      "Throws std::bad_cast.",
+      "Returns null.",
+      "Undefined behavior.",
+      "Returns default Derived."
+    ],
+    "correct_answer": "Throws std::bad_cast.",
+    "topic": "OOP Internals",
+    "difficulty": "hard",
+    "style": "concept",
+    "tags": [
+      "cpp_dev",
+      "virtual",
+      "rtti",
+      "dynamic_cast"
+    ],
+    "role_target": "cpp_dev",
+    "round_target": "L2",
+    "version_scope": [
+      "cpp17",
+      "gcc",
+      "linux"
+    ]
+  }
+]

@@ -64,9 +64,13 @@ def _send_access_revoked_admin_email(revoked_email: str, existed: bool) -> tuple
     delegated_token = str(oauth.get("graph_access_token", "") or "")
     delegated_sender = _current_user_email()
 
+    # Skip the revoker — they get a dedicated confirmation email separately.
+    revoker_email = _current_user_email()
     sent_any = False
     errors = []
     for admin_email in admin_emails:
+        if admin_email == revoker_email:
+            continue
         ok, err = send_plain_email(
             to_email=admin_email,
             subject=subject,
@@ -79,9 +83,45 @@ def _send_access_revoked_admin_email(revoked_email: str, existed: bool) -> tuple
         else:
             errors.append(f"{admin_email}: {err}")
 
+    if not admin_emails or all(e == revoker_email for e in admin_emails):
+        # All admins are the revoker — nothing extra to send; not a failure.
+        return True, ""
     if not sent_any:
         return False, "; ".join(errors) if errors else "Failed to notify admin."
     return True, ""
+
+
+def _send_access_revoked_revoker_email(revoked_email: str) -> tuple[bool, str]:
+    revoked_email = _normalize_email(revoked_email)
+    revoker_email = _current_user_email()
+    if not revoker_email:
+        return False, "Missing revoker email."
+
+    subject = "Access Revoked (Confirmation)"
+    body = "\n".join(
+        [
+            "You revoked access in Access Management.",
+            "",
+            f"User: {revoked_email or 'N/A'}",
+            f"Revoked by: {revoker_email}",
+            "",
+            f"Manage here: {url_for('access.access_management_page', _external=True)}",
+        ]
+    )
+
+    oauth = session.get("oauth", {}) if isinstance(session.get("oauth"), dict) else {}
+    delegated_token = str(oauth.get("graph_access_token", "") or "")
+    delegated_sender = revoker_email
+
+    return send_plain_email(
+        to_email=revoker_email,
+        subject=subject,
+        body=body,
+        delegated_access_token=delegated_token,
+        delegated_sender_email=delegated_sender,
+    )
+
+
 def _send_access_approved_user_email(approved_email: str) -> tuple[bool, str]:
     approved_email = _normalize_email(approved_email)
     if not approved_email:
@@ -251,19 +291,33 @@ def access_management_revoke():
     existed = bool(get_approval(email))
     deleted = delete_approval(email)
 
-    # Notify admin (even if it was already missing).
-    notify_ok, notify_err = _send_access_revoked_admin_email(email, existed=existed)
+    # Notify revoker (dedicated confirmation) and other admins.
+    revoker_ok, revoker_err = _send_access_revoked_revoker_email(email)
+    admin_ok, admin_err = _send_access_revoked_admin_email(email, existed=existed)
 
+    all_ok = revoker_ok and admin_ok
     if deleted:
-        if notify_ok:
-            flash(f"Revoked access for {email}. Entry deleted. Admin notified.", "warning")
+        if all_ok:
+            flash(f"Revoked access for {email}. Entry deleted. Notifications sent.", "warning")
         else:
-            flash(f"Revoked access for {email}. Entry deleted, but notification failed: {notify_err}", "warning")
+            parts = []
+            if not revoker_ok:
+                parts.append(f"revoker email failed: {revoker_err}")
+            if not admin_ok:
+                parts.append(f"admin email failed: {admin_err}")
+            detail = "; ".join(p for p in parts if p)
+            flash(f"Revoked access for {email}. Entry deleted, but notifications had issues: {detail}", "warning")
     else:
-        if notify_ok:
-            flash(f"No approval entry found for {email}. Admin notified.", "warning")
+        if all_ok:
+            flash(f"No approval entry found for {email}. Notifications sent.", "warning")
         else:
-            flash(f"No approval entry found for {email}. Notification failed: {notify_err}", "warning")
+            parts = []
+            if not revoker_ok:
+                parts.append(f"revoker email failed: {revoker_err}")
+            if not admin_ok:
+                parts.append(f"admin email failed: {admin_err}")
+            detail = "; ".join(p for p in parts if p)
+            flash(f"No approval entry found for {email}. Notifications had issues: {detail}", "warning")
 
 
 
