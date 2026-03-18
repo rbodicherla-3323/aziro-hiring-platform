@@ -38,7 +38,13 @@ class MCQSessionService:
         session_key = mcq_session_key(session_id)
 
         if force_reset:
-            clear_mcq_session_data(session_id)
+            # Reset timer so it starts fresh each time the candidate opens the test,
+            # but preserve questions and answers.
+            existing = get_mcq_session_data(session_id)
+            if existing:
+                existing["start_time"] = int(time.time())
+                set_mcq_session_data(session_id, existing)
+                return
             session.pop(session_key, None)
 
         if get_mcq_session_data(session_id):
