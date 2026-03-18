@@ -585,15 +585,16 @@ def _persist_cached_index(fingerprint, index):
         "cached_at": datetime.now(timezone.utc).isoformat(),
         "index": index,
     }
-    PLAGIARISM_CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
     temp_path = PLAGIARISM_CACHE_FILE.with_suffix(".tmp")
     try:
+        PLAGIARISM_CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
         with temp_path.open("w", encoding="utf-8") as handle:
             json.dump(payload, handle, ensure_ascii=False)
         temp_path.replace(PLAGIARISM_CACHE_FILE)
     except OSError:
         try:
-            temp_path.unlink(missing_ok=True)
+            if temp_path.exists():
+                temp_path.unlink()
         except OSError:
             pass
 
@@ -616,7 +617,10 @@ def _get_index(force_refresh=False):
                 _MEMORY_CACHE["data"] = index
                 return index
 
-        index = _compute_plagiarism_index()
+        try:
+            index = _compute_plagiarism_index()
+        except Exception:
+            index = {"by_email": {}}
         _persist_cached_index(fingerprint, index)
         _MEMORY_CACHE["fingerprint"] = fingerprint
         _MEMORY_CACHE["data"] = index

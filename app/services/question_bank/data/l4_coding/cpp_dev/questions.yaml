@@ -1,168 +1,910 @@
-- id: 1
-  title: Even/Odd Thread Sequencing
-  difficulty: HARD
-  description: Two threads must print numbers from 1 to N in order. Thread A prints only odd numbers, Thread B prints only even numbers. Implement solve(n) to return the correct ordered sequence 1..N. (In an interview, use condition_variable + mutex; here we validate the resulting order.)
+- id: 5
+  title: Balanced Parentheses
+  difficulty: MEDIUM
+  description: >
+    Given a string consisting only of characters (), {}, and [], determine
+    whether the parentheses are balanced. A string is balanced if every opening
+    bracket has a corresponding closing bracket and the pairs are properly nested.
   function:
-    cpp: 'vector<int> solve(int n)'
+    cpp: 'string solve(string s)'
   public_tests:
-  - input:
-    - 5
-    expected:
-    - 1
-    - 2
-    - 3
-    - 4
-    - 5
-  - input:
-    - 1
-    expected:
-    - 1
+  - input: ["()[]{}"]
+    expected: "YES"
+  - input: ["([)]"]
+    expected: "NO"
+  - input: ["{[()]}"]
+    expected: "YES"
   hidden_tests:
-  - input:
-    - 10
-    expected:
-    - 1
-    - 2
-    - 3
-    - 4
-    - 5
-    - 6
-    - 7
-    - 8
-    - 9
-    - 10
+  - input: ["("]
+    expected: "NO"
+  - input: [")"]
+    expected: "NO"
+  - input: ["((()))"]
+    expected: "YES"
+  - input: ["({[]})"]
+    expected: "YES"
+  - input: ["({[})"]
+    expected: "NO"
+  - input: ["[]"]
+    expected: "YES"
+  - input: ["{[}"]
+    expected: "NO"
+  - input: ["()"]
+    expected: "YES"
+  - input: ["((())"]
+    expected: "NO"
+  - input: ["(()())"]
+    expected: "YES"
+  - input: ["[{()}]"]
+    expected: "YES"
+  - input: ["{[(])}"]
+    expected: "NO"
+  - input: ["{{{{}}}}"]
+    expected: "YES"
+  - input: ["[[]"]
+    expected: "NO"
+  - input: ["([]{})"]
+    expected: "YES"
 
-- id: 2
-  title: BST Level Finder
-  difficulty: HARD
-  description: Insert the given values into a BST in order. Return the level (root = 0) at which target appears. Return -1 if not present.
+- id: 6
+  title: Longest Consecutive Sequence
+  difficulty: MEDIUM
+  description: >
+    Given an unsorted array of integers, return the length of the longest
+    consecutive sequence. The sequence elements must be consecutive numbers.
+    The algorithm must run in O(n) time complexity.
   function:
-    cpp: 'int solve(vector<int> values, int target)'
+    cpp: 'int solve(vector<int> nums)'
   public_tests:
-  - input:
-    - - 50
-      - 30
-      - 70
-      - 20
-      - 40
-      - 60
-      - 80
-    - 60
-    expected: 2
-  - input:
-    - - 10
-      - 5
-      - 15
-      - 3
-      - 7
-      - 12
-      - 18
-    - 12
-    expected: 2
+  - input: [[100,4,200,1,3,2]]
+    expected: 4
+  - input: [[0,3,7,2,5,8,4,6,0,1]]
+    expected: 9
+  - input: [[1,2,0,1]]
+    expected: 3
   hidden_tests:
-  - input:
-    - - 25
-      - 10
-      - 35
-      - 5
-      - 15
-      - 30
-      - 40
-    - 17
+  - input: [[1]]
+    expected: 1
+  - input: [[1,2]]
+    expected: 2
+  - input: [[10,5,6,7]]
+    expected: 3
+  - input: [[1,9,3,10,4,20,2]]
+    expected: 4
+  - input: [[5,4,3,2,1]]
+    expected: 5
+  - input: [[1,3,5,7]]
+    expected: 1
+  - input: [[8,7,6,5,4,3,2,1]]
+    expected: 8
+  - input: [[2,2,2]]
+    expected: 1
+  - input: [[1,2,3,4,5,6]]
+    expected: 6
+  - input: [[10,30,20]]
+    expected: 1
+  - input: [[100,101,102]]
+    expected: 3
+  - input: [[9,1,4,7,3,-1,0,5,8,-1,6]]
+    expected: 7
+  - input: [[0]]
+    expected: 1
+  - input: [[-1,-2,-3,-4]]
+    expected: 4
+  - input: [[1,100,2,3,4]]
+    expected: 4
+
+- id: 7
+  title: Kth Largest Element
+  difficulty: MEDIUM
+  description: >
+    Given an integer array and an integer k, return the kth largest element
+    in the array. It is the kth largest element in sorted order.
+  function:
+    cpp: 'int solve(vector<int> nums, int k)'
+  public_tests:
+  - input: [[3,2,1,5,6,4],2]
+    expected: 5
+  - input: [[3,2,3,1,2,4,5,5,6],4]
+    expected: 4
+  - input: [[1],1]
+    expected: 1
+  hidden_tests:
+  - input: [[5,4,3,2,1],1]
+    expected: 5
+  - input: [[5,4,3,2,1],5]
+    expected: 1
+  - input: [[7,10,4,3,20,15],3]
+    expected: 10
+  - input: [[1,2,3,4],2]
+    expected: 3
+  - input: [[10,9,8,7],1]
+    expected: 10
+  - input: [[1,1,1,1],2]
+    expected: 1
+  - input: [[6,5,4,3,2,1],4]
+    expected: 3
+  - input: [[2,3,1,5,6,4],3]
+    expected: 4
+  - input: [[9,8,7],2]
+    expected: 8
+  - input: [[4,5,6,7,8],5]
+    expected: 4
+  - input: [[1,3,5,7,9],1]
+    expected: 9
+  - input: [[1,3,5,7,9],5]
+    expected: 1
+  - input: [[10,20,30],2]
+    expected: 20
+  - input: [[11,22,33,44],3]
+    expected: 22
+  - input: [[100,200],1]
+    expected: 200
+
+- id: 8
+  title: Find Level of Node in BST
+  difficulty: MEDIUM
+  description: >
+    Given an insertion order of values into a Binary Search Tree (BST),
+    construct the tree and return the level of a given node value.
+    The root node is considered level 1. Return -1 if the value does not exist.
+  function:
+    cpp: 'int solve(vector<int> nums, int x)'
+  public_tests:
+  - input: [[10,5,20,3,7],3]
+    expected: 3
+  - input: [[10,5,20,3,7],10]
+    expected: 1
+  - input: [[10,5,20,3,7],100]
+    expected: -1
+  hidden_tests:
+  - input: [[5,3,7,2,4,6,8],4]
+    expected: 3
+  - input: [[5,3,7,2,4,6,8],8]
+    expected: 3
+  - input: [[5,3,7,2,4,6,8],5]
+    expected: 1
+  - input: [[1,2,3,4,5],5]
+    expected: 5
+  - input: [[10,5,1],1]
+    expected: 3
+  - input: [[10,20,30],30]
+    expected: 3
+  - input: [[8,4,12,2,6,10,14],10]
+    expected: 3
+  - input: [[8,4,12,2,6,10,14],15]
+    expected: -1
+  - input: [[7],7]
+    expected: 1
+  - input: [[7],5]
+    expected: -1
+  - input: [[20,10,30,5,15],15]
+    expected: 3
+  - input: [[20,10,30,5,15],20]
+    expected: 1
+  - input: [[15,10,20,8,12],12]
+    expected: 3
+  - input: [[15,10,20,8,12],8]
+    expected: 3
+  - input: [[15,10,20,8,12],50]
     expected: -1
 
-- id: 3
-  title: Detect Diamond Inheritance
-  difficulty: HARD
-  description: Classes are labeled 0..n-1. Each edge [child, parent] means child inherits from parent. Return 1 if any class has two distinct inheritance paths to the same ancestor (diamond), else 0.
-  function:
-    cpp: 'int solve(int n, vector<vector<int>> edges)'
-  public_tests:
-  - input:
-    - 4
-    - - - 1
-        - 0
-      - - 2
-        - 0
-      - - 3
-        - 1
-      - - 3
-        - 2
-    expected: 1
-  - input:
-    - 3
-    - - - 1
-        - 0
-      - - 2
-        - 1
-    expected: 0
-  hidden_tests:
-  - input:
-    - 5
-    - - - 1
-        - 0
-      - - 2
-        - 0
-      - - 3
-        - 1
-      - - 4
-        - 2
-    expected: 0
-
-- id: 4
-  title: Name Mangling Collision Count
+- id: 10
+  title: Subarray Sum Equals K
   difficulty: MEDIUM
-  description: Each signature is a C++ function declaration like "foo(int)". If all were forced to C linkage (extern "C"), overloading is not allowed. Return the number of base names that collide (appear more than once).
+  description: >
+    Given an integer array nums and an integer k, return the number
+    of continuous subarrays whose sum equals k.
   function:
-    cpp: 'int solve(vector<string> signatures)'
+    cpp: 'int solve(vector<int> nums, int k)'
   public_tests:
-  - input:
-    - - foo(int)
-      - foo(const char*)
-      - bar()
-      - baz(double)
-      - baz(int)
+  - input: [[1,1,1],2]
     expected: 2
-  - input:
-    - - init()
-      - shutdown()
-      - reset()
-    expected: 0
-  hidden_tests:
-  - input:
-    - - log_event(int)
-      - log_event(int, const char*)
-      - log_event(const char*)
-      - start()
+  - input: [[1,2,3],3]
+    expected: 2
+  - input: [[1],1]
     expected: 1
-
-- id: 5
-  title: Thread-Safe Singleton Winner
-  difficulty: MEDIUM
-  description: Each pair [thread_id, time] represents an attempt to initialize a singleton. Return the thread_id that wins (smallest time; if tie, first in input order). This simulates std::call_once behavior.
-  function:
-    cpp: 'int solve(vector<vector<int>> attempts)'
-  public_tests:
-  - input:
-    - - - 7
-        - 12
-      - - 3
-        - 5
-      - - 9
-        - 9
+  hidden_tests:
+  - input: [[1,2,1,2,1],3]
+    expected: 4
+  - input: [[0,0,0],0]
+    expected: 6
+  - input: [[2,2,2],4]
+    expected: 2
+  - input: [[3,4,7,2,-3,1,4,2],7]
+    expected: 4
+  - input: [[1,2,3,4],5]
+    expected: 1
+  - input: [[1,-1,0],0]
     expected: 3
-  - input:
-    - - - 2
-        - 4
-      - - 5
-        - 4
-      - - 8
-        - 10
+  - input: [[5,5,5],5]
+    expected: 3
+  - input: [[10,2,-2,-20,10],-10]
+    expected: 3
+  - input: [[1,1,1,1],2]
+    expected: 3
+  - input: [[1,2,3],7]
+    expected: 0
+  - input: [[0],0]
+    expected: 1
+  - input: [[2,-2,2,-2],0]
+    expected: 4
+  - input: [[1,2,1,3],3]
     expected: 2
+  - input: [[3,3,3],6]
+    expected: 2
+  - input: [[4,1,2,1],3]
+    expected: 2
+
+- id: 35
+  title: Longest Substring Without Repeating Characters
+  difficulty: MEDIUM
+  description: >
+    Given a string s, return the length of the longest substring
+    that contains no repeating characters.
+  function:
+    cpp: 'int solve(string s)'
+  public_tests:
+  - input: ["abcabcbb"]
+    expected: 3
+  - input: ["bbbbb"]
+    expected: 1
+  - input: ["pwwkew"]
+    expected: 3
   hidden_tests:
-  - input:
-    - - - 11
-        - 1
-      - - 12
-        - 2
+  - input: [""]
+    expected: 0
+  - input: ["a"]
+    expected: 1
+  - input: ["ab"]
+    expected: 2
+  - input: ["abba"]
+    expected: 2
+  - input: ["abcdef"]
+    expected: 6
+  - input: ["dvdf"]
+    expected: 3
+  - input: ["anviaj"]
+    expected: 5
+  - input: ["abcdeafgh"]
+    expected: 8
+  - input: ["aaaaab"]
+    expected: 2
+  - input: ["abcabcabc"]
+    expected: 3
+  - input: ["tmmzuxt"]
+    expected: 5
+  - input: ["abcad"]
+    expected: 4
+  - input: ["abbaac"]
+    expected: 2
+  - input: ["abcddef"]
+    expected: 4
+  - input: ["xyzxyzxyz"]
+    expected: 3
+
+- id: 36
+  title: Product of Array Except Self
+  difficulty: MEDIUM
+  description: >
+    Given an integer array nums, return an array output such that
+    output[i] is equal to the product of all elements of nums except nums[i].
+    Division operator is not allowed.
+  function:
+    cpp: 'vector<long long> solve(vector<int> nums)'
+  public_tests:
+  - input: [[1,2,3,4]]
+    expected: [24,12,8,6]
+  - input: [[2,3,4,5]]
+    expected: [60,40,30,24]
+  - input: [[5,1,4]]
+    expected: [4,20,5]
+  hidden_tests:
+  - input: [[1]]
+    expected: [1]
+  - input: [[1,2]]
+    expected: [2,1]
+  - input: [[0,1,2,3]]
+    expected: [6,0,0,0]
+  - input: [[2,0,4]]
+    expected: [0,8,0]
+  - input: [[3,3,3]]
+    expected: [9,9,9]
+  - input: [[10,20,30]]
+    expected: [600,300,200]
+  - input: [[1,1,1,1]]
+    expected: [1,1,1,1]
+  - input: [[4,5,6]]
+    expected: [30,24,20]
+  - input: [[9,8,7]]
+    expected: [56,63,72]
+  - input: [[2,3,5,7]]
+    expected: [105,70,42,30]
+  - input: [[6,2,3]]
+    expected: [6,18,12]
+  - input: [[0,0,2]]
+    expected: [0,0,0]
+  - input: [[5,0,0]]
+    expected: [0,0,0]
+  - input: [[2,4,6,8]]
+    expected: [192,96,64,48]
+  - input: [[3,1,2,5]]
+    expected: [10,30,15,6]
+
+- id: 37
+  title: Longest Palindromic Substring Length
+  difficulty: MEDIUM
+  description: >
+    Given a string s, return the length of the longest substring
+    which is a palindrome.
+  function:
+    cpp: 'int solve(string s)'
+  public_tests:
+  - input: ["babad"]
+    expected: 3
+  - input: ["cbbd"]
+    expected: 2
+  - input: ["abba"]
+    expected: 4
+  hidden_tests:
+  - input: ["a"]
+    expected: 1
+  - input: ["aa"]
+    expected: 2
+  - input: ["abc"]
+    expected: 1
+  - input: ["racecar"]
+    expected: 7
+  - input: ["banana"]
+    expected: 5
+  - input: ["level"]
+    expected: 5
+  - input: ["abcdefgfedcba"]
+    expected: 13
+  - input: ["abcd"]
+    expected: 1
+  - input: ["abbaabba"]
+    expected: 8
+  - input: ["noon"]
+    expected: 4
+  - input: ["madam"]
+    expected: 5
+  - input: ["xyz"]
+    expected: 1
+  - input: ["aba"]
+    expected: 3
+  - input: ["abacdfgdcaba"]
+    expected: 3
+  - input: ["aabbaa"]
+    expected: 6
+
+- id: 38
+  title: Group Anagrams Count
+  difficulty: MEDIUM
+  description: >
+    Given a list of strings, group the anagrams together.
+    Return the number of distinct groups formed.
+  function:
+    cpp: 'int solve(vector<string> words)'
+  public_tests:
+  - input: [["eat","tea","tan","ate","nat","bat"]]
+    expected: 3
+  - input: [["abc","bca","cab"]]
+    expected: 1
+  - input: [["a","b","c"]]
+    expected: 3
+  hidden_tests:
+  - input: [["ab","ba"]]
+    expected: 1
+  - input: [["ab","cd"]]
+    expected: 2
+  - input: [["abc","def","ghi"]]
+    expected: 3
+  - input: [["listen","silent","enlist"]]
+    expected: 1
+  - input: [["rat","tar","art","car"]]
+    expected: 2
+  - input: [["abc","acb","bac","bca","cab","cba"]]
+    expected: 1
+  - input: [["a"]]
+    expected: 1
+  - input: [["ab","ba","abc"]]
+    expected: 2
+  - input: [["a","aa","aaa"]]
+    expected: 3
+  - input: [["abc","bcd","cde"]]
+    expected: 3
+  - input: [["dust","stud"]]
+    expected: 1
+  - input: [["evil","vile","veil","live"]]
+    expected: 1
+  - input: [["loop","pool","lopo"]]
+    expected: 1
+  - input: [["abc","def","abc"]]
+    expected: 2
+  - input: [["abcd","dcba","bcda"]]
+    expected: 1
+
+- id: 39
+  title: Minimum Window Length Containing All Characters
+  difficulty: MEDIUM
+  description: >
+    Given two strings s and t, return the length of the smallest substring
+    in s that contains all characters of t. If no such substring exists return 0.
+  function:
+    cpp: 'int solve(string s, string t)'
+  public_tests:
+  - input: ["ADOBECODEBANC","ABC"]
+    expected: 4
+  - input: ["a","a"]
+    expected: 1
+  - input: ["a","aa"]
+    expected: 0
+  hidden_tests:
+  - input: ["ab","a"]
+    expected: 1
+  - input: ["abc","ac"]
+    expected: 3
+  - input: ["abcde","bd"]
+    expected: 3
+  - input: ["aaabbb","ab"]
+    expected: 2
+  - input: ["abcdef","f"]
+    expected: 1
+  - input: ["abcdef","z"]
+    expected: 0
+  - input: ["aabdec","abc"]
+    expected: 3
+  - input: ["abdabca","abc"]
+    expected: 3
+  - input: ["bba","ab"]
+    expected: 2
+  - input: ["cabwefgewcwaefgcf","cae"]
+    expected: 4
+  - input: ["abc","abc"]
+    expected: 3
+  - input: ["abac","ac"]
+    expected: 2
+  - input: ["xyz","xy"]
+    expected: 2
+  - input: ["xyz","yz"]
+    expected: 2
+  - input: ["abcdef","ace"]
+    expected: 5
+
+- id: 40
+  title: Rotate Array by K Positions
+  difficulty: MEDIUM
+  description: >
+    Rotate an array to the right by k steps.
+    Elements shifted beyond the end appear at the beginning.
+  function:
+    cpp: 'vector<int> solve(vector<int> nums, int k)'
+  public_tests:
+  - input: [[1,2,3,4,5],2]
+    expected: [4,5,1,2,3]
+  - input: [[1,2,3],1]
+    expected: [3,1,2]
+  - input: [[1],5]
+    expected: [1]
+  hidden_tests:
+  - input: [[1,2],1]
+    expected: [2,1]
+  - input: [[1,2,3,4],4]
+    expected: [1,2,3,4]
+  - input: [[1,2,3,4],5]
+    expected: [4,1,2,3]
+  - input: [[5,6,7],2]
+    expected: [6,7,5]
+  - input: [[9,8,7,6],1]
+    expected: [6,9,8,7]
+  - input: [[3,4,5],3]
+    expected: [3,4,5]
+  - input: [[10,20,30],4]
+    expected: [30,10,20]
+  - input: [[1,1,1],2]
+    expected: [1,1,1]
+  - input: [[2,4,6,8],3]
+    expected: [4,6,8,2]
+  - input: [[7,8,9],6]
+    expected: [7,8,9]
+  - input: [[1,2,3,4,5,6],3]
+    expected: [4,5,6,1,2,3]
+  - input: [[2,3,4],0]
+    expected: [2,3,4]
+  - input: [[5,4,3,2,1],2]
+    expected: [2,1,5,4,3]
+  - input: [[9],10]
+    expected: [9]
+  - input: [[4,3,2,1],3]
+    expected: [3,2,1,4]
+
+- id: 41
+  title: Majority Element
+  difficulty: MEDIUM
+  description: >
+    Given an array nums, return the element that appears more than n/2 times.
+    It is guaranteed such an element exists.
+  function:
+    cpp: 'int solve(vector<int> nums)'
+  public_tests:
+  - input: [[3,2,3]]
+    expected: 3
+  - input: [[2,2,1,1,1,2,2]]
+    expected: 2
+  - input: [[1]]
+    expected: 1
+  hidden_tests:
+  - input: [[5,5,5,2,2]]
+    expected: 5
+  - input: [[7,7,7,7]]
+    expected: 7
+  - input: [[1,2,1]]
+    expected: 1
+  - input: [[9,9,8,9]]
+    expected: 9
+  - input: [[10,10,10,1,2]]
+    expected: 10
+  - input: [[4,4,4,3]]
+    expected: 4
+  - input: [[6,6,6,6,6]]
+    expected: 6
+  - input: [[8,8,7,8,6]]
+    expected: 8
+  - input: [[3,3,4]]
+    expected: 3
+  - input: [[2,2,2,1]]
+    expected: 2
+  - input: [[1,1,2]]
+    expected: 1
+  - input: [[5,5,5,5,2,3]]
+    expected: 5
+  - input: [[11,11,11,10]]
     expected: 11
+  - input: [[13,13,14]]
+    expected: 13
+  - input: [[21,21,21,1]]
+    expected: 21
+
+- id: 42
+  title: Check if Array Contains Duplicate Within K Distance
+  difficulty: MEDIUM
+  description: >
+    Given an array and an integer k, determine if there exist two equal
+    elements such that their indices differ by at most k.
+  function:
+    cpp: 'bool solve(vector<int> nums, int k)'
+  public_tests:
+  - input: [[1,2,3,1],3]
+    expected: true
+  - input: [[1,0,1,1],1]
+    expected: true
+  - input: [[1,2,3,1,2,3],2]
+    expected: false
+  hidden_tests:
+  - input: [[1,2,3],1]
+    expected: false
+  - input: [[1,1],1]
+    expected: true
+  - input: [[1,2,1],2]
+    expected: true
+  - input: [[1,2,3,4,5],3]
+    expected: false
+  - input: [[5,6,7,5],3]
+    expected: true
+  - input: [[9,8,7,6,5,9],5]
+    expected: true
+  - input: [[2,3,4,5,6],1]
+    expected: false
+  - input: [[1,2,3,4,1],3]
+    expected: false
+  - input: [[1,2,3,4,1],4]
+    expected: true
+  - input: [[8,8,8],1]
+    expected: true
+  - input: [[3,4,5,6,7,8],2]
+    expected: false
+  - input: [[1,2,3,2],2]
+    expected: true
+  - input: [[1,2,3,2],1]
+    expected: false
+  - input: [[9,9],1]
+    expected: true
+  - input: [[5,6,7,8],3]
+    expected: false
+
+- id: 43
+  title: Maximum Sum Subarray
+  difficulty: MEDIUM
+  description: >
+    Given an integer array nums, find the contiguous subarray
+    with the maximum possible sum and return that sum.
+  function:
+    cpp: 'int solve(vector<int> nums)'
+  public_tests:
+  - input: [[-2,1,-3,4,-1,2,1,-5,4]]
+    expected: 6
+  - input: [[1]]
+    expected: 1
+  - input: [[5,4,-1,7,8]]
+    expected: 23
+  hidden_tests:
+  - input: [[-1]]
+    expected: -1
+  - input: [[1,2,3]]
+    expected: 6
+  - input: [[-2,-3,-1]]
+    expected: -1
+  - input: [[4,-1,2,1]]
+    expected: 6
+  - input: [[3,-2,5,-1]]
+    expected: 6
+  - input: [[2,-1,2,3,4,-5]]
+    expected: 10
+  - input: [[-2,1]]
+    expected: 1
+  - input: [[1,-1,1]]
+    expected: 1
+  - input: [[5,-2,3,4]]
+    expected: 10
+  - input: [[-1,-2,-3]]
+    expected: -1
+  - input: [[7,-3,4,-2,1]]
+    expected: 7
+  - input: [[1,2,-5,4,6]]
+    expected: 10
+  - input: [[9,-1,-2,10]]
+    expected: 16
+  - input: [[8,-19,5,-4,20]]
+    expected: 21
+  - input: [[-2,-1]]
+    expected: -1
+
+- id: 44
+  title: Frequency Sort String
+  difficulty: MEDIUM
+  description: >
+    Given a string, sort it in decreasing order based on the frequency
+    of characters. If frequencies tie, preserve the order of first appearance
+    of each character in the original string.
+  function:
+    cpp: 'string solve(string s)'
+  public_tests:
+  - input: ["tree"]
+    expected: "eetr"
+  - input: ["cccaaa"]
+    expected: "cccaaa"
+  - input: ["Aabb"]
+    expected: "bbAa"
+  hidden_tests:
+  - input: ["a"]
+    expected: "a"
+  - input: ["aa"]
+    expected: "aa"
+  - input: ["ab"]
+    expected: "ab"
+  - input: ["bbbaa"]
+    expected: "bbbaa"
+  - input: ["xyz"]
+    expected: "xyz"
+  - input: ["zzzyyyxxx"]
+    expected: "zzzyyyxxx"
+  - input: ["aabbcc"]
+    expected: "aabbcc"
+  - input: ["mississippi"]
+    expected: "iiiissssppm"
+  - input: ["hello"]
+    expected: "llheo"
+  - input: ["banana"]
+    expected: "aaannb"
+  - input: ["programming"]
+    expected: "rrggmmpoain"
+  - input: ["abcd"]
+    expected: "abcd"
+  - input: ["ppqqrr"]
+    expected: "ppqqrr"
+  - input: ["ccbbbaa"]
+    expected: "bbbccaa"
+  - input: ["z"]
+    expected: "z"
+
+- id: 45
+  title: Prime Count in Range
+  difficulty: MEDIUM
+  description: >
+    Given two integers l and r, return the count of prime numbers in the
+    inclusive range [l, r].
+  function:
+    cpp: 'int solve(int l, int r)'
+  public_tests:
+  - input: [1,10]
+    expected: 4
+  - input: [10,20]
+    expected: 4
+  - input: [24,28]
+    expected: 0
+  hidden_tests:
+  - input: [2,2]
+    expected: 1
+  - input: [3,3]
+    expected: 1
+  - input: [4,4]
+    expected: 0
+  - input: [1,2]
+    expected: 1
+  - input: [100,130]
+    expected: 6
+
+- id: 46
+  title: Largest Prime Factor
+  difficulty: MEDIUM
+  description: >
+    Given n, return its largest prime factor.
+  function:
+    cpp: 'long long solve(long long n)'
+  public_tests:
+  - input: [13195]
+    expected: 29
+  - input: [17]
+    expected: 17
+  - input: [12]
+    expected: 3
+  hidden_tests:
+  - input: [2]
+    expected: 2
+  - input: [27]
+    expected: 3
+  - input: [84]
+    expected: 7
+  - input: [99991]
+    expected: 99991
+
+- id: 47
+  title: Hollow Diamond Pattern
+  difficulty: MEDIUM
+  description: >
+    Print a hollow diamond of height 2n-1 using '*' and spaces.
+    Return the pattern as a list of strings.
+  function:
+    cpp: 'vector<string> solve(int n)'
+  public_tests:
+  - input: [1]
+    expected: ["*"]
+  - input: [2]
+    expected: [" *","***"," *"]
+  - input: [3]
+    expected: ["  *"," * *","*****"," * *","  *"]
+  hidden_tests:
+  - input: [4]
+    expected: ["   *","  * *"," *   *","*******"," *   *","  * *","   *"]
+
+- id: 49
+  title: Top K Frequent Words
+  difficulty: MEDIUM
+  description: >
+    Given a list of words, return the k most frequent words ordered by
+    descending frequency. If frequencies tie, order lexicographically.
+  function:
+    cpp: 'vector<string> solve(vector<string> words, int k)'
+  public_tests:
+  - input: [["i","love","leetcode","i","love","coding"],2]
+    expected: ["i","love"]
+  - input: [["the","day","is","sunny","the","the","the","sunny","is","is"],3]
+    expected: ["the","is","sunny"]
+  - input: [["a","b","c"],2]
+    expected: ["a","b"]
+  hidden_tests:
+  - input: [["bob","alice","bob","bob","alice","z"],2]
+    expected: ["bob","alice"]
+  - input: [["x","y","x","z","y","x"],1]
+    expected: ["x"]
+
+- id: 50
+  title: Longest Subarray with At Most K Distinct
+  difficulty: MEDIUM
+  description: >
+    Given an integer array, return the length of the longest subarray
+    containing at most k distinct values.
+  function:
+    cpp: 'int solve(vector<int> nums, int k)'
+  public_tests:
+  - input: [[1,2,1,2,3],2]
+    expected: 4
+  - input: [[1,2,3,4,5],1]
+    expected: 1
+  - input: [[4,4,4],1]
+    expected: 3
+  hidden_tests:
+  - input: [[1,2],0]
+    expected: 0
+  - input: [[1,2,1,2,3,3,2],2]
+    expected: 4
+  - input: [[1],1]
+    expected: 1
+  - input: [[1,2,1,2,1],2]
+    expected: 5
+
+- id: 51
+  title: Count Subarrays with Sum Divisible by K
+  difficulty: MEDIUM
+  description: >
+    Given an array and an integer k, return the number of subarrays
+    whose sum is divisible by k.
+  function:
+    cpp: 'int solve(vector<int> nums, int k)'
+  public_tests:
+  - input: [[4,5,0,-2,-3,1],5]
+    expected: 7
+  - input: [[5],5]
+    expected: 1
+  - input: [[1,2,3],3]
+    expected: 3
+  hidden_tests:
+  - input: [[1,2],5]
+    expected: 0
+  - input: [[0,0],3]
+    expected: 3
+  - input: [[7,-7],7]
+    expected: 3
+
+- id: 52
+  title: Merge Overlapping Intervals
+  difficulty: MEDIUM
+  description: >
+    Given a list of intervals, merge all overlapping intervals and
+    return the resulting list.
+  function:
+    cpp: 'vector<vector<int>> solve(vector<vector<int>> intervals)'
+  public_tests:
+  - input: [[[1,3],[2,6],[8,10],[15,18]]]
+    expected: [[1,6],[8,10],[15,18]]
+  - input: [[[1,4],[4,5]]]
+    expected: [[1,5]]
+  - input: [[[1,4]]]
+    expected: [[1,4]]
+  hidden_tests:
+  - input: [[[1,2],[3,4]]]
+    expected: [[1,2],[3,4]]
+  - input: [[[1,10],[2,3],[4,5],[6,7]]]
+    expected: [[1,10]]
+  - input: [[[5,7],[1,2],[3,6]]]
+    expected: [[1,7]]
+
+- id: 53
+  title: Evaluate Postfix Expression
+  difficulty: MEDIUM
+  description: >
+    Evaluate an expression in Reverse Polish Notation (postfix).
+    Supported operators: +, -, *, / (integer division truncates toward zero).
+  function:
+    cpp: 'long long solve(vector<string> tokens)'
+  public_tests:
+  - input: [["2","1","+","3","*"]]
+    expected: 9
+  - input: [["4","13","5","/","+"]]
+    expected: 6
+  - input: [["10","6","9","3","+","-11","*","/","*","17","+","5","+"]]
+    expected: 22
+  hidden_tests:
+  - input: [["3","4","+"]]
+    expected: 7
+  - input: [["5","1","2","+","4","*","+","3","-"]]
+    expected: 14
+
+- id: 54
+  title: Rotate Matrix 90 Degrees
+  difficulty: MEDIUM
+  description: >
+    Rotate a matrix 90 degrees clockwise. The matrix may be non-square.
+  function:
+    cpp: 'vector<vector<int>> solve(vector<vector<int>> mat)'
+  public_tests:
+  - input: [[[1,2,3],[4,5,6],[7,8,9]]]
+    expected: [[7,4,1],[8,5,2],[9,6,3]]
+  - input: [[[1]]]
+    expected: [[1]]
+  - input: [[[1,2],[3,4]]]
+    expected: [[3,1],[4,2]]
+  hidden_tests:
+  - input: [[[1,2,3,4],[5,6,7,8]]]
+    expected: [[5,1],[6,2],[7,3],[8,4]]

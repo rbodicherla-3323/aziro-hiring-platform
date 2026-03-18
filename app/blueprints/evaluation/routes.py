@@ -22,7 +22,7 @@ def evaluation():
     user = session.get("user", {})
     user_email = user.get("email", "dev@aziro.com")
 
-    # Get today's candidates for this user
+    # Get recent candidates for this user (retention window)
     user_tests = get_tests_for_user_today(user_email)
     user_emails = {t["email"] for t in user_tests}
 
