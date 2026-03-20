@@ -465,3 +465,15 @@ def create_test():
         if auto_failures:
             flash(f"{len(auto_failures)} email(s) failed to send. Check Generated Tests for retry.", "warning")
     return redirect(url_for("tests.generated_tests"))
+
+
+@dashboard_bp.route("/api/dashboard-lifetime")
+@login_required
+def dashboard_lifetime():
+    from app.models import Candidate
+    from flask import jsonify
+    try:
+        total = Candidate.query.count()
+    except Exception:
+        total = 0
+    return jsonify({"total_interviews": total})
