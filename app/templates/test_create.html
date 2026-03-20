@@ -3,369 +3,777 @@
 {% block breadcrumb %}Create Test{% endblock %}
 
 {% block head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+    .sidebar,
+    .az-topbar,
     .create-test-page {
-        --az-brand: #0f766e;
-        --az-brand-2: #14b8a6;
-        --az-soft: #f0fdfa;
-        --az-ink: #0f172a;
-        --az-muted: #64748b;
-        --az-card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
-        --az-card-border: #e2e8f0;
-                border-radius: 10px;
-        padding-top: 6px;
-        padding-bottom: 14px;
+        font-family: "Poppins", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+        font-style: normal;
+        letter-spacing: 0;
     }
-    .page-header { margin-bottom: 20px; }
-    .page-header h4 {
-        font-weight: 600;
-        color: var(--az-brand);
-        margin-bottom: 6px;
-        letter-spacing: 0.2px;
+
+    .create-test-page {
+        --page-border: #e7ebf6;
+        --page-muted: #6b7388;
+        --panel-bg: #ffffff;
+        --panel-shadow: 0 10px 26px rgba(39, 64, 124, 0.06);
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(180deg, #f8f8ff 0%, #f2f0fb 100%);
+        border-radius: 14px;
+        padding-top: 8px;
+        padding-bottom: 18px;
     }
-    .page-header p {
-        color: var(--az-muted);
-        font-size: 0.92rem;
-        margin-bottom: 0;
+    .create-test-page::before {
+        content: "";
+        position: absolute;
+        top: 16px;
+        right: 0;
+        width: 576px;
+        height: 130px;
+        pointer-events: none;
+        z-index: 0;
+        background:
+            linear-gradient(to right, rgba(248, 244, 253, 0.98) 0%, rgba(248, 244, 253, 0) 20%),
+            linear-gradient(to top, rgba(248, 244, 253, 0.96) 0%, rgba(248, 244, 253, 0) 24%),
+            linear-gradient(to bottom, rgba(248, 244, 253, 0.78) 0%, rgba(248, 244, 253, 0) 16%),
+            url('{{ url_for("static", filename="images/create_test_cloud_patch_step1.png") }}');
+        background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+        background-position: 0 0, 0 0, 0 0, center;
+        background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+        opacity: 1;
     }
-    .mode-card {
-        border: 1px solid var(--az-card-border);
-        border-radius: 10px;
-        box-shadow: var(--az-card-shadow);
-        background: #ffffff;
+    .create-test-page::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 140px;
+        pointer-events: none;
+        background: linear-gradient(180deg, rgba(240, 239, 251, 0) 0%, rgba(226, 224, 245, 0.58) 100%);
     }
-    .mode-option {
+    .create-test-page > * {
+        position: relative;
+        z-index: 1;
+    }
+    .az-topbar {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(180deg, #f9f9ff 0%, #f4f4fd 100%);
+    }
+    .az-topbar > * {
+        position: relative;
+        z-index: 1;
+    }
+    .breadcrumb {
+        display: none;
+    }
+    .create-breadcrumb {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 10px 20px;
-        border-radius: 999px;
-        border: 1px solid #e2e8f0;
-        background: #fff;
-        cursor: pointer;
-        transition: all 0.24s ease;
-        font-size: 0.85rem;
-        font-weight: 500;
-        color: #4b5563;
+        gap: 6px;
+        color: #8a92a6;
+        font-size: 0.8rem;
+        margin-bottom: 8px;
     }
-    .mode-option:hover {
-        transform: translateY(-1px);
-        border-color: var(--az-brand-2);
-        color: var(--az-brand);
-        box-shadow: 0 2px 8px rgba(15,118,110,0.10);
-    }
-    .mode-option.active {
-        background: var(--az-brand);
-        color: #fff;
-        border-color: transparent;
-        box-shadow: 0 1px 3px rgba(15,118,110,0.15);
-    }
-    .mode-option input[type="radio"] { display: none; }
-    .candidate-card {
-        border: 1px solid var(--az-card-border);
-        border-radius: 10px;
-        padding: 24px;
-        margin-bottom: 16px;
-        position: relative;
-        background: #ffffff;
-        transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
-        box-shadow: var(--az-card-shadow);
-    }
-    .candidate-card:hover {
-        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        border-color: #cbd5e1;
-        transform: translateY(-2px);
-    }
-    .upload-field-title {
-        font-size: 0.72rem;
+    .create-breadcrumb .active {
+        color: #4c5c86;
         font-weight: 600;
-        color: #334155;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 6px;
     }
-    .upload-zone {
-        border: 1px solid #e2e8f0;
+    .page-header {
+        margin-bottom: 14px;
+    }
+    .page-header h4 {
+        font-size: 2.02rem;
+        color: #2f4372;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    .page-header p {
+        color: var(--page-muted);
+        font-size: 1.01rem;
+        margin-bottom: 13px;
+    }
+    .mode-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 11px;
+        margin-bottom: 16px;
+        border: 1px solid #e7eaf4;
         border-radius: 12px;
-        padding: 8px 10px;
-        text-align: left;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        background: #fff;
-        position: relative;
+        background: #ffffff;
+        padding: 11px;
+        box-shadow: var(--panel-shadow);
+    }
+    .mode-tile {
+        border: 1px solid #d8def0;
+        border-radius: 10px;
+        background: #fdfefe;
+        padding: 14px 16px;
+        min-height: 88px;
         display: flex;
         align-items: center;
-        gap: 8px;
-        min-height: 42px;
+        cursor: pointer;
+        position: relative;
+        transition: border-color 0.18s ease, box-shadow 0.18s ease;
     }
-    .upload-zone:hover {
-        border-color: var(--az-brand-2);
-        box-shadow: 0 2px 8px rgba(15,118,110,0.10);
-        transform: translateY(-1px);
+    .mode-tile input[type="radio"] {
+        display: none;
     }
-    .upload-zone.has-file {
-        border-color: #1e9e56;
-        background: #f4fff7;
-        border-style: solid;
-        box-shadow: 0 2px 6px rgba(30,158,86,0.10);
+    .mode-tile h6 {
+        margin: 0;
+        font-size: 1.03rem;
+        font-weight: 600;
+        color: #2f4679;
     }
-    .upload-zone .upload-icon {
-        width: 26px;
-        height: 26px;
-        border-radius: 8px;
+    .mode-tile p {
+        margin: 0 0 4px;
+        color: #687495;
+        font-size: 0.84rem;
+    }
+    .mode-tile ul {
+        margin: 0;
+        padding-left: 18px;
+        color: #5d6a8d;
+        font-size: 0.82rem;
+        line-height: 1.45;
+    }
+    .mode-tile li {
+        margin-bottom: 2px;
+    }
+    .mode-tile li::marker {
+        color: #5f8fd7;
+    }
+    .mode-tile.active {
+        border-color: #8bb8f2;
+        background: #eef6ff;
+        box-shadow: inset 0 0 0 1px rgba(89, 155, 230, 0.12);
+    }
+    #multiModeLabel {
+        border-color: #efd2b8;
+        background: #fffaf4;
+    }
+    #multiModeLabel h6 {
+        color: #d16e2a;
+    }
+    #multiModeLabel li::marker {
+        color: #e68a4d;
+    }
+    #multiModeLabel.active {
+        border-color: #efb47d;
+        background: #fff5e9;
+        box-shadow: inset 0 0 0 1px rgba(237, 136, 48, 0.16);
+    }
+    .mode-check {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 30px;
+        height: 28px;
+        border-bottom-left-radius: 10px;
+        border-top-right-radius: 10px;
+        background: #2f8cff;
+        color: #ffffff;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-size: 0.78rem;
-        color: #64748b;
-        background: #f0fdfa;
-        margin-bottom: 0;
-        flex: 0 0 26px;
+        font-size: 0.76rem;
+        opacity: 0;
     }
-    .upload-zone.has-file .upload-icon {
-        color: #1e9e56;
-        background: #e7f7ed;
+    .mode-tile.active .mode-check {
+        opacity: 1;
     }
-    .upload-zone .upload-label {
-        font-size: 0.73rem;
+    .details-panel {
+        border: 1px solid var(--page-border);
+        border-radius: 12px;
+        background: var(--panel-bg);
+        box-shadow: var(--panel-shadow);
+        padding: 12px 12px 0;
+        overflow: hidden;
+    }
+    .workflow-steps {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px 12px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid #e6eaf5;
+    }
+    .workflow-step {
+        display: inline-flex;
+        align-items: center;
+        color: #8b92a8;
+        font-size: 0.94rem;
+        font-weight: 500;
+        white-space: nowrap;
+        flex: 1 1 0;
+    }
+    .workflow-step::after {
+        content: "";
+        flex: 1;
+        min-width: 16px;
+        height: 2px;
+        margin-left: 12px;
+        background: #d6dcee;
+    }
+    .workflow-step:last-child::after {
+        display: none;
+    }
+    .workflow-step.is-done {
+        color: #2f4f8e;
         font-weight: 600;
-        color: #1f2937;
-        text-transform: uppercase;
-        letter-spacing: 0.4px;
+    }
+    .workflow-step.is-done::after {
+        background: #2f8cff;
+    }
+    .workflow-step.is-active {
+        color: #dd7b2e;
+        font-weight: 600;
+    }
+    .workflow-step .dot {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.83rem;
+        font-weight: 600;
+        background: #d4d9e8;
+        color: #ffffff;
+    }
+    .workflow-step.is-done .dot {
+        background: #2f8cff;
+        font-size: 0;
+    }
+    .workflow-step.is-done .dot::before {
+        content: "\f00c";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        font-size: 0.74rem;
+    }
+    .workflow-step.is-active .dot {
+        background: linear-gradient(135deg, #ffa53e 0%, #f97d1b 100%);
+    }
+    .upload-section {
+        border: 1px solid #e4e8f4;
+        border-radius: 10px;
+        padding: 14px 14px 12px;
+        background: #fdfdff;
+        margin-bottom: 15px;
+    }
+    .upload-section-title {
+        margin: 0 0 6px;
+        color: #2f4678;
+        font-size: 1.01rem;
+        font-weight: 600;
+    }
+    .upload-section-subtitle {
+        margin: 0 0 12px;
+        color: #697493;
+        font-size: 0.87rem;
+    }
+    .upload-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+    .upload-field {
+        border: 1px solid #e8ebf4;
+        border-radius: 9px;
+        background: #ffffff;
+        padding: 9px;
+    }
+    .upload-field-full {
+        margin-bottom: 11px;
+    }
+    .upload-field-label {
+        color: #304673;
+        font-size: 0.94rem;
+        font-weight: 600;
+        margin-bottom: 7px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .upload-zone {
+        position: relative;
+        min-height: 42px;
+        border: 1px solid #dfe5f2;
+        border-radius: 9px;
+        background: #f8faff;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 11px;
+        cursor: pointer;
+        transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+    .upload-zone:hover {
+        border-color: #aec4ee;
+    }
+    .upload-zone.has-file {
+        border-color: #8bb8f2;
+        box-shadow: 0 0 0 2px rgba(87, 145, 227, 0.14);
+        background: #f3f8ff;
+    }
+    .upload-zone input[type="file"] {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+    .upload-icon {
+        width: 20px;
+        color: #6e83ad;
+        font-size: 0.84rem;
         flex: 0 0 auto;
     }
-    .upload-zone .file-name {
-        font-size: 0.78rem;
-        color: #4b5563;
-        font-weight: 600;
-        margin-top: 0;
+    .upload-label {
+        color: #2f4679;
+        font-size: 0.79rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.2px;
+        flex: 0 0 auto;
+    }
+    .file-name {
+        font-size: 0.8rem;
+        color: #8a94ac;
         min-width: 0;
         flex: 1 1 auto;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
     }
-    .upload-zone .file-name:empty::before {
+    .file-name:empty::before {
         content: "No file selected";
-        color: #8091a7;
+    }
+    .upload-hint {
+        margin-top: 6px;
+        color: #7985a4;
+        font-size: 0.78rem;
+    }
+    .candidate-details-section {
+        padding-top: 2px;
+    }
+    .candidate-details-subtitle {
+        margin: 0 0 13px;
+        color: #6f7792;
+        font-size: 0.95rem;
+    }
+    .candidate-details-title {
+        margin: 0 0 10px;
+        color: #2f4678;
+        font-size: 1.02rem;
+        font-weight: 600;
+    }
+    .ghost-label {
+        opacity: 0;
+        pointer-events: none;
+    }
+    .review-section {
+        border: 1px solid #e4e8f4;
+        border-radius: 10px;
+        background: #fdfdff;
+        padding: 14px 14px 12px;
+    }
+    .review-title {
+        margin: 0 0 6px;
+        color: #2f4678;
+        font-size: 1.02rem;
+        font-weight: 600;
+    }
+    .review-subtitle {
+        margin: 0 0 13px;
+        color: #6f7792;
+        font-size: 0.95rem;
+    }
+    .review-card {
+        border: 1px solid #e4e8f4;
+        border-radius: 10px;
+        background: #ffffff;
+        overflow: hidden;
+    }
+    .review-card-title {
+        margin: 0;
+        padding: 12px 16px 10px;
+        color: #2f4678;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border-bottom: 1px solid #e9edf7;
+    }
+    .review-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .review-table th,
+    .review-table td {
+        border: 1px solid #e9edf7;
+        padding: 9px 14px;
+        text-align: left;
+    }
+    .review-table th {
+        color: #3c4f78;
+        font-size: 0.96rem;
+        font-weight: 600;
+        background: #f9fbff;
+    }
+    .review-table td {
+        color: #4f5f84;
+        font-size: 0.97rem;
         font-weight: 500;
     }
-    .upload-zone.has-file .file-name { color: #1e9e56; }
-    .upload-hint {
-        font-size: 0.7rem;
-        color: #8091a7;
-        margin-top: 4px;
-        padding-left: 2px;
-        line-height: 1.2;
+    .candidate-row[data-current-step="1"] .upload-section {
+        display: block;
     }
-    .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-    .auto-fill-badge { font-size: 0.65rem; padding: 2px 8px; border-radius: 10px; background: #e6f4ea; color: #137333; font-weight: 600; margin-left: 6px; display: none; }
-    .auto-fill-badge.visible { display: inline; }
-    .section-label {
-        font-size: 0.82rem;
-        font-weight: 600;
-        color: var(--az-brand);
-        text-transform: uppercase;
-        letter-spacing: 0.75px;
-        margin-bottom: 12px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
+    .candidate-row[data-current-step="2"] .candidate-details-section {
+        display: block;
     }
-    .section-label .section-line {
-        flex: 1;
-        height: 2px;
-        background: #e2e8f0;
-        border-radius: 999px;
+    .candidate-row[data-current-step="3"] .review-section {
+        display: block;
+    }
+    .candidate-row .upload-section,
+    .candidate-row .candidate-details-section,
+    .candidate-row .review-section {
+        display: none;
+    }
+    .candidate-card {
+        border: 1px solid #e2e6f2;
+        border-radius: 10px;
+        padding: 12px 12px 10px;
+        background: #fbfcff;
+        margin-bottom: 10px;
+        position: relative;
     }
     .remove-btn {
         position: absolute;
-        top: 12px;
-        right: 12px;
-        width: 30px;
-        height: 30px;
+        top: 8px;
+        right: 8px;
+        width: 24px;
+        height: 24px;
         border-radius: 50%;
         border: none;
         background: #fde8e8;
         color: #c53030;
-        display: flex;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: all 0.2s;
-        font-size: 0.8rem;
+        transition: background 0.2s ease, color 0.2s ease;
+        font-size: 0.72rem;
     }
-    .remove-btn:hover { background: #c53030; color: #fff; }
-    .action-bar {
-        background: #ffffff;
-        border: 1px solid var(--az-card-border);
-        border-radius: 10px;
-        box-shadow: var(--az-card-shadow);
-        padding: 16px 24px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .remove-btn:hover {
+        background: #c53030;
+        color: #fff;
     }
-    .action-bar .btn {
-        border-radius: 12px;
+    .create-test-page .form-label {
         font-weight: 500;
-        letter-spacing: 0.1px;
-        padding: 9px 20px;
+        color: #4a5878;
+        font-size: 0.94rem;
+        margin-bottom: 5px;
     }
-    .action-bar .btn-primary {
-        background: var(--az-brand);
-        border: none;
-        box-shadow: 0 1px 3px rgba(15,118,110,0.15);
-    }
-    .action-bar .btn-primary:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 2px 6px rgba(15,118,110,0.20);
-    }
-    .create-test-page .form-label { font-weight: 500; color: #334155; }
     .create-test-page .form-control,
     .create-test-page .form-select {
-        border-radius: 12px;
-        border: 1px solid #e2e8f0;
-        min-height: 46px;
-        font-size: 0.95rem;
+        min-height: 44px;
+        border: 1px solid #dde2ef;
+        border-radius: 9px;
+        font-size: 1rem;
+        color: #45557b;
+        background-color: #ffffff;
+    }
+    .create-test-page .form-control::placeholder {
+        color: #9ea8bf;
     }
     .create-test-page .form-control:focus,
     .create-test-page .form-select:focus {
-        border-color: var(--az-brand-2);
-        box-shadow: 0 0 0 0.2rem rgba(15,118,110,0.14);
+        border-color: #7ea9e9;
+        box-shadow: 0 0 0 2px rgba(126, 169, 233, 0.18);
     }
-    .extract-spinner { display: none; width: 14px; height: 14px; border: 2px solid #dee2e6; border-top-color: var(--az-brand); border-radius: 50%; animation: spin 0.6s linear infinite; margin-left: 6px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .extract-spinner.active { display: inline-block; }
     .field-error {
         display: block;
         min-height: 16px;
         font-size: 0.72rem;
         font-weight: 600;
         color: #dc3545;
-        margin-top: 4px;
+        margin-top: 3px;
         line-height: 1.2;
     }
+    .auto-fill-badge,
+    .extract-spinner {
+        display: none !important;
+    }
+    .action-bar {
+        margin-top: 0;
+        border-top: 1px solid var(--page-border);
+        background: rgba(255, 255, 255, 0.94);
+        padding: 12px 12px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+    .action-bar .btn {
+        border-radius: 8px;
+        padding: 8px 20px;
+        min-height: 40px;
+        font-size: 0.99rem;
+        font-weight: 500;
+    }
+    .btn-back {
+        border-color: #d4dae9;
+        color: #5d6a87;
+        background: #f3f5fb;
+    }
+    .btn-save {
+        border-color: #d2dbee;
+        color: #4b5c85;
+        background: #f7f9ff;
+    }
+    .btn-generate {
+        border: none;
+        color: #fff;
+        background: linear-gradient(135deg, #ff9a2f 0%, #f97316 100%);
+        box-shadow: 0 8px 18px rgba(249, 115, 22, 0.22);
+        min-width: 172px;
+    }
+    #addCandidateWrapper {
+        margin-top: 4px;
+        margin-bottom: 6px;
+    }
+    .btn-add-candidate {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: 8px;
+        border: 1px solid #bfd0ee;
+        background: linear-gradient(180deg, #f6f9ff 0%, #edf3ff 100%);
+        color: #2f4f8e;
+        font-size: 0.84rem;
+        font-weight: 600;
+        line-height: 1;
+        letter-spacing: 0;
+        padding: 8px 16px;
+        box-shadow: 0 5px 12px rgba(59, 95, 171, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease, color 0.16s ease;
+    }
+    .btn-add-candidate i {
+        color: #3f74ce;
+        font-size: 0.72rem;
+    }
+    .btn-add-candidate:hover {
+        border-color: #9fbce9;
+        background: linear-gradient(180deg, #eef5ff 0%, #e6efff 100%);
+        color: #2b467d;
+        box-shadow: 0 7px 14px rgba(59, 95, 171, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.92);
+    }
+    .btn-add-candidate:focus-visible {
+        outline: none;
+        border-color: #89aee8;
+        box-shadow: 0 0 0 3px rgba(95, 140, 222, 0.24);
+    }
+    .create-test-page[data-step="2"] .mode-grid,
+    .create-test-page[data-step="3"] .mode-grid {
+        display: none;
+    }
     @media (max-width: 992px) {
-        .action-bar {
-            flex-direction: column;
-            align-items: stretch;
-            gap: 12px;
+        .mode-grid {
+            grid-template-columns: 1fr;
         }
-        .action-bar > .d-flex {
-            width: 100%;
-            justify-content: flex-end;
+        .upload-grid {
+            grid-template-columns: 1fr;
+        }
+        .action-bar {
             flex-wrap: wrap;
+            justify-content: stretch;
+        }
+        .action-bar .btn {
+            flex: 1 1 100%;
         }
     }
 </style>
 {% endblock %}
 
+{% block page_instructions %}
+<p class="mb-2">Use this page to create and send candidate assessments.</p>
+<ol class="mb-0 ps-3">
+    <li><strong>Upload Documents:</strong> Add resume/JD files to auto-fill candidate details.</li>
+    <li><strong>Candidate Details:</strong> Verify name, email, role, and optional domain.</li>
+    <li><strong>Review &amp; Generate:</strong> Confirm details and click <strong>Generate Test</strong>.</li>
+</ol>
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid create-test-page">
+    <div class="create-breadcrumb">
+        <i class="bi bi-house"></i>
+        <span>&#8250;</span>
+        <span class="active">Create Test</span>
+        <span>&#8250;</span>
+        <span>Generate Candidate Test</span>
+    </div>
     <div class="page-header">
-        <h4><i class="fas fa-plus-circle me-2"></i>Generate Candidate Test</h4>
-        <p>Create assessment links for candidates. Upload resume &amp; JD to auto-fill details and match roles.</p>
+        <h4>Test Setup Summary</h4>
+        <p>Create assessment links to assign tests for single or multiple candidates.</p>
     </div>
+
     <form method="POST" id="generateForm" enctype="multipart/form-data" data-persist="off">
-    <div class="mode-card card mb-4">
-        <div class="card-body py-3 px-4">
-            <div class="d-flex align-items-center gap-3">
-                <span class="text-muted" style="font-size:0.82rem; font-weight:600;"><i class="fas fa-users me-1"></i> Mode:</span>
-                <label class="mode-option active" id="singleModeLabel"><input type="radio" name="candidate_mode" id="single_mode" checked><i class="fas fa-user"></i> Single Candidate</label>
-                <label class="mode-option" id="multiModeLabel"><input type="radio" name="candidate_mode" id="multi_mode"><i class="fas fa-user-friends"></i> Multiple Candidates</label>
-            </div>
+        <div class="mode-grid">
+            <label class="mode-tile active" id="singleModeLabel">
+                <input type="radio" name="candidate_mode" id="single_mode" checked>
+                <span class="mode-check"><i class="fas fa-check"></i></span>
+                <h6><i class="bi bi-person me-1"></i>Single Candidate</h6>
+            </label>
+            <label class="mode-tile" id="multiModeLabel">
+                <input type="radio" name="candidate_mode" id="multi_mode">
+                <span class="mode-check"><i class="fas fa-check"></i></span>
+                <h6><i class="bi bi-people me-1"></i>Bulk Candidates</h6>
+            </label>
         </div>
-    </div>
-    <div id="candidateContainer">
-        <div class="candidate-card candidate-row">
-            <button type="button" class="remove-btn removeCandidateBtn" title="Remove candidate"><i class="fas fa-times"></i></button>
-            <div class="section-label"><i class="fas fa-cloud-upload-alt"></i> Step 1  Upload Documents <span class="section-line"></span></div>
-            <div class="row g-3 mb-4">
-                <div class="col-md-6">
-                    <div class="upload-field-title">Resume</div>
-                    <div class="upload-zone">
-                        <input type="file" class="resume-upload" name="resume[]" accept=".pdf,.doc,.docx,.txt">
-                        <div class="upload-icon" data-default-icon="fa-file-pdf"><i class="fas fa-file-pdf"></i></div>
-                        <div class="upload-label">Choose File</div>
-                        <div class="file-name"></div>
+
+        <div class="details-panel">
+            <div class="workflow-steps">
+                <div class="workflow-step" data-step="1"><span class="dot" data-step-num="1">1</span>Upload Documents</div>
+                <div class="workflow-step" data-step="2"><span class="dot" data-step-num="2">2</span>Candidate Details</div>
+                <div class="workflow-step" data-step="3"><span class="dot" data-step-num="3">3</span>Review &amp; Generate</div>
+            </div>
+            <div id="candidateContainer">
+                <div class="candidate-card candidate-row">
+                    <button type="button" class="remove-btn removeCandidateBtn d-none" title="Remove candidate"><i class="fas fa-times"></i></button>
+                    <div class="upload-section">
+                        <h6 class="upload-section-title">Step 1: Upload Documents</h6>
+                        <p class="upload-section-subtitle">Upload the candidate's resume and job description document (optional).</p>
+                        <div class="upload-field upload-field-full">
+                            <div class="upload-field-label"><i class="fas fa-cloud-upload-alt"></i>Resume</div>
+                            <div class="upload-grid">
+                                <div class="upload-zone">
+                                    <input type="file" class="resume-upload" name="resume[]" accept=".pdf,.doc,.docx,.txt">
+                                    <div class="upload-icon" data-default-icon="fa-file-pdf"><i class="fas fa-file-pdf"></i></div>
+                                    <div class="upload-label">Choose File</div>
+                                    <div class="file-name"></div>
+                                </div>
+                                <div class="upload-zone upload-zone-secondary">
+                                    <input type="file" class="supporting-upload" accept=".pdf,.doc,.docx,.txt">
+                                    <div class="upload-icon" data-default-icon="fa-file-alt"><i class="fas fa-file-alt"></i></div>
+                                    <div class="upload-label">Choose File</div>
+                                    <div class="file-name"></div>
+                                </div>
+                            </div>
+                            <div class="upload-hint">PDF, DOC, DOCX, TXT Auto-extracts name &amp; email</div>
+                        </div>
+                        <div class="upload-field upload-field-full">
+                            <div class="upload-field-label"><i class="fas fa-briefcase"></i>Job Description (JD)</div>
+                            <div class="upload-zone">
+                                <input type="file" class="jd-upload" name="jd[]" accept=".pdf,.doc,.docx,.txt">
+                                <div class="upload-icon" data-default-icon="fa-file-alt"><i class="fas fa-file-alt"></i></div>
+                                <div class="upload-label">Choose File</div>
+                                <div class="file-name"></div>
+                            </div>
+                            <div class="upload-hint">PDF, DOC, TXT Auto-matches role from JD</div>
+                        </div>
                     </div>
-                    <div class="upload-hint">PDF, DOC, DOCX, TXT  Auto-extracts name &amp; email</div>
-                </div>
-                <div class="col-md-6">
-                    <div class="upload-field-title">Job Description (JD)</div>
-                    <div class="upload-zone">
-                        <input type="file" class="jd-upload" name="jd[]" accept=".pdf,.doc,.docx,.txt">
-                        <div class="upload-icon" data-default-icon="fa-file-alt"><i class="fas fa-file-alt"></i></div>
-                        <div class="upload-label">Choose File</div>
-                        <div class="file-name"></div>
+                    <div class="candidate-details-section">
+                        <h6 class="candidate-details-title">Step 2: Candidate Details</h6>
+                        <p class="candidate-details-subtitle">Enter the candidate's information to generate test link specific to their role.</p>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label"><i class="fas fa-user me-1"></i>Full Name <span class="auto-fill-badge">Auto-filled</span></label>
+                                <input type="text" class="form-control candidate-name" name="name[]" placeholder="John Doe" required>
+                                <span class="field-error name-error"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label ghost-label">Email</label>
+                                <input type="email" class="form-control candidate-email" name="email[]" placeholder="john.doe@email.com" required>
+                                <span class="field-error email-error"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><i class="fas fa-briefcase me-1"></i>Role <span class="auto-fill-badge">Auto-matched</span></label>
+                                <select class="form-select candidate-role" name="role[]" required>
+                                    <option value="">Select role</option>
+                                    <optgroup label="Entry Level (0-2 Years)">
+                                        <option>Python Entry Level (0-2 Years)</option>
+                                        <option>Java Entry Level (0-2 Years)</option>
+                                        <option>JavaScript Entry Level (0-2 Years)</option>
+                                    </optgroup>
+                                    <optgroup label="Mid / Senior Level (2-5 Years)">
+                                        <option>BMC Engineer (2-5 Years)</option>
+                                        <option>Staff Engineer - Linux Kernel &amp; Device Driver (3-5 Years)</option>
+                                        <option>Systems Architect - C++ (3-5 Years)</option>
+                                    </optgroup>
+                                    <optgroup label="Mid / Senior Level (3-6 Years)">
+                                        <option>C++ Developer (3-6 Years)</option>
+                                        <option>C# Developer (3-6 Years)</option>
+                                    </optgroup>
+                                    <optgroup label="Experienced (4+ Years)">
+                                        <option>Python QA / System / Linux (4+ Years)</option>
+                                        <option>Python QA (4+ Years)</option>
+                                        <option>Python Development (4+ Years)</option>
+                                        <option>Python + AI/ML (4+ Years)</option>
+                                        <option>Java + AWS Development (5+ Years)</option>
+                                        <option>Java QA (5+ Years)</option>
+                                    </optgroup>
+                                </select>
+                                <div class="upload-hint">PDF, DOC, DOCX, TXT Auto-matches role from JD</div>
+                                <span class="field-error role-error"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><i class="fas fa-map-signs me-1"></i>Domain <small class="text-muted">(Optional)</small></label>
+                                <select class="form-select" name="domain[]">
+                                    <option selected>None</option>
+                                    <option>Virtualization</option>
+                                    <option>Networking</option>
+                                    <option>Storage</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="upload-hint">PDF, DOC, TXT  Auto-matches role from JD</div>
+                    <div class="review-section">
+                        <h6 class="review-title">Step 3: Review &amp; Generate</h6>
+                        <p class="review-subtitle">Verify the candidate information and generate the test link.</p>
+                        <div class="review-card">
+                            <h6 class="review-card-title">Candidate Details</h6>
+                            <table class="review-table">
+                                <tbody>
+                                    <tr>
+                                        <th>Full Name</th>
+                                        <th>Email</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="review-name-value">John Doe</td>
+                                        <td class="review-email-value">john.doe@email.com</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Role</th>
+                                        <th>Domain</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="review-role-value">Select role</td>
+                                        <td class="review-domain-value">None</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="section-label"><i class="fas fa-user-edit"></i> Step 2  Candidate Details <span class="extract-spinner"></span><span class="section-line"></span></div>
-            <div class="row g-3">
-                <div class="col-md-3">
-                    <label class="form-label">Full Name <span class="auto-fill-badge">Auto-filled</span></label>
-                    <input type="text" class="form-control candidate-name" name="name[]" placeholder="John Doe" required>
-                    <span class="field-error name-error"></span>
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Email <span class="auto-fill-badge">Auto-filled</span></label>
-                    <input type="email" class="form-control candidate-email" name="email[]" placeholder="john.doe@email.com" required>
-                    <span class="field-error email-error"></span>
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Role <span class="auto-fill-badge">Auto-matched</span></label>
-                    <select class="form-select candidate-role" name="role[]" required>
-                        <option value="">Select role</option>
-                        <optgroup label="Entry Level (0-2 Years)">
-                            <option>Python Entry Level (0-2 Years)</option>
-                            <option>Java Entry Level (0-2 Years)</option>
-                            <option>JavaScript Entry Level (0-2 Years)</option>
-                        </optgroup>
-                        <optgroup label="Mid / Senior Level (2-5 Years)">
-                            <option>BMC Engineer (2-5 Years)</option>
-                            <option>Staff Engineer - Linux Kernel &amp; Device Driver (3-5 Years)</option>
-                            <option>Systems Architect - C++ (3-5 Years)</option>
-                        </optgroup>
-                        <optgroup label="Mid / Senior Level (3-6 Years)">
-                            <option>C++ Developer (3-6 Years)</option>
-                            <option>C# Developer (3-6 Years)</option>
-                        </optgroup>
-                        <optgroup label="Experienced (4+ Years)">
-                            <option>Python QA / System / Linux (4+ Years)</option>
-                            <option>Python QA (4+ Years)</option>
-                            <option>Python Development (4+ Years)</option>
-                            <option>Python + AI/ML (4+ Years)</option>
-                            <option>Java + AWS Development (5+ Years)</option>
-                            <option>Java QA (5+ Years)</option>
-                        </optgroup>
-                    </select>
-                    <span class="field-error role-error"></span>
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Domain <small class="text-muted">(Optional)</small></label>
-                    <select class="form-select" name="domain[]">
-                        <option selected>None</option>
-                        <option>Virtualization</option>
-                        <option>Networking</option>
-                        <option>Storage</option>
-                    </select>
-                </div>
+            <div class="text-center mt-2 mb-2 d-none" id="addCandidateWrapper">
+                <button type="button" class="btn btn-add-candidate" id="addCandidateBtn">
+                    <i class="fas fa-plus me-1"></i>Add Another Candidate
+                </button>
             </div>
         </div>
-    </div>
-    <div class="text-center mt-2 mb-4 d-none" id="addCandidateWrapper">
-        <button type="button" class="btn btn-outline-primary btn-sm" id="addCandidateBtn" style="border-radius:20px; padding: 6px 20px; font-weight:600;"><i class="fas fa-plus me-1"></i> Add Another Candidate</button>
-    </div>
-    <div class="action-bar mt-3">
-        <a href="/dashboard" class="btn btn-outline-secondary" style="border-radius:10px;"><i class="fas fa-arrow-left me-1"></i> Cancel</a>
-        <div class="d-flex gap-2 align-items-center">
-            <a href="/generated-tests" class="btn btn-outline-primary" style="border-radius:10px;"><i class="fas fa-list me-1"></i> View Generated Tests</a>
-            <button type="submit" class="btn btn-primary" id="generateBtn" style="border-radius:10px; padding: 8px 24px;"><i class="fas fa-bolt me-1"></i> Generate Test</button>
+
+        <div class="action-bar">
+            <a href="/dashboard" class="btn btn-outline-secondary btn-back" id="backToDashboardBtn"><i class="fas fa-arrow-left me-1"></i>Back</a>
+            <button type="button" class="btn btn-outline-secondary btn-back d-none" id="prevStepBtn"><i class="fas fa-angle-left me-1"></i>Previous</button>
+            <a href="/generated-tests" class="btn btn-outline-secondary btn-save" id="viewGeneratedTestsBtn"><i class="fas fa-list me-1"></i>View Generated Tests</a>
+            <button type="button" class="btn btn-primary btn-generate" id="nextStepBtn"><i class="fas fa-arrow-right me-1"></i>Next</button>
+            <button type="submit" class="btn btn-primary btn-generate d-none" id="generateBtn">Generate Test</button>
         </div>
-    </div>
     </form>
 </div>
 <div id="loadingOverlay" class="loading-overlay d-none">
@@ -383,6 +791,158 @@ const multiLabel = document.getElementById("multiModeLabel");
 const addCandidateWrapper = document.getElementById("addCandidateWrapper");
 const addCandidateBtn = document.getElementById("addCandidateBtn");
 const candidateContainer = document.getElementById("candidateContainer");
+const workflowSteps = Array.from(document.querySelectorAll(".workflow-step"));
+const form = document.getElementById("generateForm");
+const overlay = document.getElementById("loadingOverlay");
+const generateBtn = document.getElementById("generateBtn");
+const nextStepBtn = document.getElementById("nextStepBtn");
+const prevStepBtn = document.getElementById("prevStepBtn");
+const backToDashboardBtn = document.getElementById("backToDashboardBtn");
+const viewGeneratedTestsBtn = document.getElementById("viewGeneratedTestsBtn");
+const createTestPage = document.querySelector(".create-test-page");
+let currentStep = 1;
+
+function validateRequiredFields() {
+    const nameInputs = document.querySelectorAll('input[name="name[]"]');
+    const emailInputs = document.querySelectorAll('input[name="email[]"]');
+    const roleSelects = document.querySelectorAll('select[name="role[]"]');
+
+    let valid = true;
+    nameInputs.forEach((input, index) => {
+        if (!input.value.trim() || !emailInputs[index].value.trim() || !roleSelects[index].value) {
+            valid = false;
+            if (!input.value.trim()) input.classList.add("is-invalid");
+            if (!emailInputs[index].value.trim()) emailInputs[index].classList.add("is-invalid");
+            if (!roleSelects[index].value) roleSelects[index].classList.add("is-invalid");
+        }
+    });
+
+    if (!valid && typeof showToast === "function") {
+        showToast("Please fill all required fields", "warning");
+    }
+    return valid;
+}
+
+function getFieldDisplayValue(field, fallback) {
+    if (!field) return fallback;
+    const value = String(field.value || "").trim();
+    return value || fallback;
+}
+
+function getSelectedOptionText(selectField, fallback) {
+    if (!selectField) return fallback;
+    const selectedIndex = Number(selectField.selectedIndex);
+    if (selectedIndex >= 0 && selectField.options[selectedIndex]) {
+        const text = String(selectField.options[selectedIndex].text || "").trim();
+        if (text) return text;
+    }
+    return getFieldDisplayValue(selectField, fallback);
+}
+
+function syncReviewForRow(row) {
+    if (!row) return;
+
+    const nameField = row.querySelector(".candidate-name");
+    const emailField = row.querySelector(".candidate-email");
+    const roleField = row.querySelector(".candidate-role");
+    const domainField = row.querySelector('select[name="domain[]"]');
+
+    const nameCell = row.querySelector(".review-name-value");
+    const emailCell = row.querySelector(".review-email-value");
+    const roleCell = row.querySelector(".review-role-value");
+    const domainCell = row.querySelector(".review-domain-value");
+
+    if (nameCell) nameCell.textContent = getFieldDisplayValue(nameField, "John Doe");
+    if (emailCell) emailCell.textContent = getFieldDisplayValue(emailField, "john.doe@email.com");
+    if (roleCell) roleCell.textContent = getSelectedOptionText(roleField, "Select role");
+    if (domainCell) domainCell.textContent = getSelectedOptionText(domainField, "None");
+}
+
+function populateReviewPanel() {
+    document.querySelectorAll(".candidate-row").forEach((row) => {
+        syncReviewForRow(row);
+    });
+}
+
+function bindReviewSyncForRow(row) {
+    if (!row) return;
+
+    const watchSelectors = [
+        ".candidate-name",
+        ".candidate-email",
+        ".candidate-role",
+        'select[name="domain[]"]',
+    ];
+
+    watchSelectors.forEach((selector) => {
+        const field = row.querySelector(selector);
+        if (!field || field.hasAttribute("data-review-sync-bound")) return;
+        field.setAttribute("data-review-sync-bound", "1");
+        field.addEventListener("input", () => syncReviewForRow(row));
+        field.addEventListener("change", () => syncReviewForRow(row));
+    });
+}
+
+function syncStepPanels(step) {
+    document.querySelectorAll(".candidate-row").forEach((row) => {
+        row.setAttribute("data-current-step", String(step));
+    });
+}
+
+function syncWorkflow(step) {
+    workflowSteps.forEach((item) => {
+        const stepNo = Number(item.getAttribute("data-step"));
+        item.classList.remove("is-active", "is-done");
+        if (stepNo === 1) {
+            item.classList.add("is-done");
+        }
+        if (stepNo === step && stepNo > 1) {
+            item.classList.add("is-active");
+        }
+        if (step === 1 && stepNo === 1) {
+            item.classList.add("is-done");
+        }
+    });
+}
+
+function syncActionBar(step) {
+    if (step === 1) {
+        backToDashboardBtn.classList.remove("d-none");
+        if (viewGeneratedTestsBtn) viewGeneratedTestsBtn.classList.remove("d-none");
+        prevStepBtn.classList.add("d-none");
+        nextStepBtn.classList.remove("d-none");
+        generateBtn.classList.add("d-none");
+        return;
+    }
+
+    backToDashboardBtn.classList.add("d-none");
+    if (viewGeneratedTestsBtn) viewGeneratedTestsBtn.classList.add("d-none");
+    prevStepBtn.classList.remove("d-none");
+    prevStepBtn.innerHTML = step === 2
+        ? '<i class="fas fa-angle-left me-1"></i>Previous'
+        : '<i class="fas fa-angle-left me-1"></i>Back';
+
+    if (step === 3) {
+        nextStepBtn.classList.add("d-none");
+        generateBtn.classList.remove("d-none");
+    } else {
+        nextStepBtn.classList.remove("d-none");
+        generateBtn.classList.add("d-none");
+    }
+}
+
+function setStep(step) {
+    currentStep = Math.max(1, Math.min(3, Number(step) || 1));
+    if (createTestPage) {
+        createTestPage.setAttribute("data-step", String(currentStep));
+    }
+    if (currentStep === 3) {
+        populateReviewPanel();
+    }
+    syncStepPanels(currentStep);
+    syncWorkflow(currentStep);
+    syncActionBar(currentStep);
+}
 
 function normalizeRoleLabel(value) {
     return String(value || "")
@@ -443,10 +1003,12 @@ function findRoleOption(selectEl, targetRole) {
 }
 
 function updateRemoveButtons() {
-    document.querySelectorAll(".candidate-row").forEach((row, index) => {
+    const rows = document.querySelectorAll(".candidate-row");
+    const shouldShow = multiMode.checked && rows.length > 1;
+    rows.forEach((row) => {
         const removeButton = row.querySelector(".removeCandidateBtn");
         if (removeButton) {
-            removeButton.classList.remove("d-none");
+            removeButton.classList.toggle("d-none", !shouldShow);
         }
     });
 }
@@ -460,6 +1022,7 @@ singleMode.addEventListener("change", () => {
         if (index > 0) row.remove();
     });
     updateRemoveButtons();
+    setStep(1);
 });
 
 multiMode.addEventListener("change", () => {
@@ -467,11 +1030,13 @@ multiMode.addEventListener("change", () => {
     singleLabel.classList.remove("active");
     addCandidateWrapper.classList.remove("d-none");
     updateRemoveButtons();
+    setStep(1);
 });
 
 addCandidateBtn.addEventListener("click", () => {
     const newRow = candidateContainer.firstElementChild.cloneNode(true);
     resetCandidateRow(newRow);
+    newRow.setAttribute("data-current-step", String(currentStep));
     setupFileInputListeners(newRow);
     candidateContainer.appendChild(newRow);
     updateRemoveButtons();
@@ -494,6 +1059,14 @@ function resetCandidateRow(row) {
     row.querySelectorAll(".field-error").forEach((node) => {
         node.textContent = "";
     });
+    const reviewName = row.querySelector(".review-name-value");
+    const reviewEmail = row.querySelector(".review-email-value");
+    const reviewRole = row.querySelector(".review-role-value");
+    const reviewDomain = row.querySelector(".review-domain-value");
+    if (reviewName) reviewName.textContent = "John Doe";
+    if (reviewEmail) reviewEmail.textContent = "john.doe@email.com";
+    if (reviewRole) reviewRole.textContent = "Select role";
+    if (reviewDomain) reviewDomain.textContent = "None";
 }
 
 function removeCandidateRow(row) {
@@ -532,7 +1105,6 @@ function applyResumeResponse(row, payload) {
     }
     if (payload.email_found && payload.email && emailField && !emailField.value.trim()) {
         emailField.value = payload.email;
-        showBadge(badges[1], true);
     }
 
     const nameMsg = (payload.messages && payload.messages.name) || "Name not found in resume.";
@@ -559,7 +1131,7 @@ function applyJdResponse(row, payload) {
         const matched = findRoleOption(roleField, payload.role);
         if (matched) {
             roleField.value = matched.value;
-            showBadge(badges[2], true);
+            showBadge(badges[1], true);
             clearFieldError(row, ".role-error");
             return;
         }
@@ -574,6 +1146,7 @@ function applyJdResponse(row, payload) {
 function setupFileInputListeners(row) {
     const resumeInput = row.querySelector(".resume-upload");
     const jdInput = row.querySelector(".jd-upload");
+    const supportingInputs = row.querySelectorAll(".supporting-upload");
     const spinner = row.querySelector(".extract-spinner");
 
     const nameField = row.querySelector(".candidate-name");
@@ -589,6 +1162,22 @@ function setupFileInputListeners(row) {
     if (roleField) {
         roleField.addEventListener("change", () => clearFieldError(row, ".role-error"));
     }
+    bindReviewSyncForRow(row);
+
+    supportingInputs.forEach((input) => {
+        input.addEventListener("change", function () {
+            const zone = this.closest(".upload-zone");
+            if (!zone) return;
+            if (this.files.length > 0) {
+                const file = this.files[0];
+                zone.classList.add("has-file");
+                zone.querySelector(".file-name").textContent = file.name;
+                zone.querySelector(".upload-icon").innerHTML = '<i class="fas fa-check-circle"></i>';
+            } else {
+                resetUploadZone(zone);
+            }
+        });
+    });
 
     if (resumeInput) {
         resumeInput.addEventListener("change", function () {
@@ -623,6 +1212,7 @@ function setupFileInputListeners(row) {
                             return;
                         }
                         applyResumeResponse(row, data || {});
+                        syncReviewForRow(row);
                     })
                     .catch(() => {
                         const msg = "Unable to parse resume.";
@@ -669,6 +1259,7 @@ function setupFileInputListeners(row) {
                             return;
                         }
                         applyJdResponse(row, data || {});
+                        syncReviewForRow(row);
                     })
                     .catch(() => {
                         if (!roleField || !roleField.value) {
@@ -688,38 +1279,33 @@ function setupFileInputListeners(row) {
 document.addEventListener("DOMContentLoaded", () => {
     const firstRow = candidateContainer.querySelector(".candidate-row");
     if (firstRow) setupFileInputListeners(firstRow);
+    updateRemoveButtons();
+    setStep(1);
 });
 
-const form = document.getElementById("generateForm");
-const overlay = document.getElementById("loadingOverlay");
-const button = document.getElementById("generateBtn");
+nextStepBtn.addEventListener("click", () => {
+    if (currentStep === 2 && !validateRequiredFields()) {
+        return;
+    }
+    if (currentStep === 2) {
+        populateReviewPanel();
+    }
+    setStep(currentStep + 1);
+});
+
+prevStepBtn.addEventListener("click", () => {
+    setStep(currentStep - 1);
+});
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
-
-    const nameInputs = document.querySelectorAll('input[name="name[]"]');
-    const emailInputs = document.querySelectorAll('input[name="email[]"]');
-    const roleSelects = document.querySelectorAll('select[name="role[]"]');
-
-    let valid = true;
-    nameInputs.forEach((input, index) => {
-        if (!input.value.trim() || !emailInputs[index].value.trim() || !roleSelects[index].value) {
-            valid = false;
-            if (!input.value.trim()) input.classList.add("is-invalid");
-            if (!emailInputs[index].value.trim()) emailInputs[index].classList.add("is-invalid");
-            if (!roleSelects[index].value) roleSelects[index].classList.add("is-invalid");
-        }
-    });
-
-    if (!valid) {
-        if (typeof showToast === "function") {
-            showToast("Please fill all required fields", "warning");
-        }
+    if (currentStep !== 3) {
         return;
     }
+    if (!validateRequiredFields()) return;
 
-    button.disabled = true;
-    button.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Generating';
+    generateBtn.disabled = true;
+    generateBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Generating';
     overlay.classList.remove("d-none");
 
     setTimeout(() => {
@@ -796,12 +1382,13 @@ document.addEventListener("input", (event) => {
 
     function syncRemoveButtons() {
         var rows = getRows();
-        rows.forEach(function (row, index) {
+        var shouldShow = multiModeInput.checked && rows.length > 1;
+        rows.forEach(function (row) {
             var removeButton = row.querySelector(".removeCandidateBtn");
             if (!removeButton) {
                 return;
             }
-            removeButton.classList.remove("d-none");
+            removeButton.classList.toggle("d-none", !shouldShow);
         });
     }
 

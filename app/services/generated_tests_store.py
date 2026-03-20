@@ -140,3 +140,80 @@ def get_tests_for_user_in_range(user_email: str, since: datetime):
         if dt >= since:
             results.append(t)
     return results
+
+
+def delete_generated_tests_for_user(user_email: str, items: list[dict]) -> int:
+    """Delete generated test entries for a user and return removed count.
+
+    Each item may include: email (required), role (optional), created_at (optional).
+    Matching priority:
+    1) created_by + email + role + created_at
+    2) created_by + email + role
+    3) created_by + email
+    """
+    if not isinstance(items, list):
+        return 0
+
+    removed = 0
+    user_key = str(user_email or "").strip().lower()
+
+    for raw_item in items:
+        if not isinstance(raw_item, dict):
+            continue
+
+        email_key = str(raw_item.get("email", "")).strip().lower()
+        if not email_key:
+            continue
+
+        role_key = str(raw_item.get("role", "")).strip().lower()
+        created_at_key = str(raw_item.get("created_at", "")).strip()
+
+        target_idx = None
+
+        for idx in range(len(GENERATED_TESTS) - 1, -1, -1):
+            entry = GENERATED_TESTS[idx]
+            if str(entry.get("created_by", "")).strip().lower() != user_key:
+                continue
+            if str(entry.get("email", "")).strip().lower() != email_key:
+                continue
+
+            entry_role = str(entry.get("role", "")).strip().lower()
+            entry_created = str(entry.get("created_at", "")).strip()
+
+            if role_key and entry_role != role_key:
+                continue
+            if created_at_key and entry_created != created_at_key:
+                continue
+
+            target_idx = idx
+            break
+
+        # Fallback when created_at doesn't match exactly but email/role do.
+        if target_idx is None and role_key:
+            for idx in range(len(GENERATED_TESTS) - 1, -1, -1):
+                entry = GENERATED_TESTS[idx]
+                if str(entry.get("created_by", "")).strip().lower() != user_key:
+                    continue
+                if str(entry.get("email", "")).strip().lower() != email_key:
+                    continue
+                if str(entry.get("role", "")).strip().lower() != role_key:
+                    continue
+                target_idx = idx
+                break
+
+        # Last fallback by email only.
+        if target_idx is None:
+            for idx in range(len(GENERATED_TESTS) - 1, -1, -1):
+                entry = GENERATED_TESTS[idx]
+                if str(entry.get("created_by", "")).strip().lower() != user_key:
+                    continue
+                if str(entry.get("email", "")).strip().lower() != email_key:
+                    continue
+                target_idx = idx
+                break
+
+        if target_idx is not None:
+            GENERATED_TESTS.pop(target_idx)
+            removed += 1
+
+    return removed

@@ -280,6 +280,116 @@ def get_test_link_stats(
     }
 
 
+def _month_start_utc(value: datetime) -> datetime:
+    return datetime(value.year, value.month, 1, tzinfo=timezone.utc)
+
+
+def _add_months_utc(value: datetime, delta_months: int) -> datetime:
+    total = value.year * 12 + (value.month - 1) + delta_months
+    year = total // 12
+    month = total % 12 + 1
+    return datetime(year, month, 1, tzinfo=timezone.utc)
+
+
+def get_test_link_monthly_series(
+    *,
+    points: int = 6,
+    created_by: str | None = None,
+) -> list[dict]:
+    """
+    Return monthly test activity series.
+    Each item: {"key": "YYYY-MM", "label": "Mon", "tests": int, "completed": int}
+    """
+    points = max(2, int(points or 6))
+    now = _now_utc()
+    current_month = _month_start_utc(now)
+
+    buckets = []
+    index_by_key = {}
+    for idx in range(points):
+        start = _add_months_utc(current_month, -(points - 1 - idx))
+        end = _add_months_utc(start, 1)
+        key = f"{start.year:04d}-{start.month:02d}"
+        buckets.append(
+            {
+                "key": key,
+                "label": start.strftime("%b"),
+                "start": start,
+                "end": end,
+                "tests": 0,
+                "completed": 0,
+            }
+        )
+        index_by_key[key] = idx
+
+    query = (
+        TestLink.query
+        .with_entities(TestLink.session_id, TestLink.created_at)
+        .filter(TestLink.created_at >= buckets[0]["start"])
+        .filter(TestLink.created_at < buckets[-1]["end"])
+    )
+    if created_by:
+        query = query.filter(db.func.lower(TestLink.created_by) == created_by.strip().lower())
+
+    links = query.all()
+    if not links:
+        return [
+            {
+                "key": b["key"],
+                "label": b["label"],
+                "tests": 0,
+                "completed": 0,
+            }
+            for b in buckets
+        ]
+
+    link_entries = []
+    session_ids = set()
+    for row in links:
+        session_id = str(getattr(row, "session_id", "") or "").strip().lower()
+        created_at = getattr(row, "created_at", None)
+        if not session_id or not created_at:
+            continue
+        if created_at.tzinfo is None:
+            created_at = created_at.replace(tzinfo=timezone.utc)
+        key = f"{created_at.year:04d}-{created_at.month:02d}"
+        bucket_idx = index_by_key.get(key)
+        if bucket_idx is None:
+            continue
+        buckets[bucket_idx]["tests"] += 1
+        session_ids.add(session_id)
+        link_entries.append((session_id, bucket_idx))
+
+    completed_ids = set()
+    if session_ids:
+        completed_rows = (
+            db.session.query(db.func.lower(RoundResult.session_uuid))
+            .filter(db.func.lower(RoundResult.session_uuid).in_(session_ids))
+            .filter(RoundResult.status.in_(("PASS", "FAIL")))
+            .distinct()
+            .all()
+        )
+        completed_ids = {
+            str(r[0]).strip().lower()
+            for r in completed_rows
+            if r and r[0]
+        }
+
+    for session_id, bucket_idx in link_entries:
+        if session_id in completed_ids:
+            buckets[bucket_idx]["completed"] += 1
+
+    return [
+        {
+            "key": b["key"],
+            "label": b["label"],
+            "tests": int(b["tests"]),
+            "completed": int(b["completed"]),
+        }
+        for b in buckets
+    ]
+
+
 def search_candidates(query: str, role_filter: str = ""):
     """Search candidates by name, email, or role."""
     like_query = f"%{query}%"

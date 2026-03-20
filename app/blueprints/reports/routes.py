@@ -168,7 +168,7 @@ def search_reports():
     user = session.get("user", {})
     user_email = user.get("email", "dev@aziro.com")
     query = request.args.get("q", "").strip()
-    if len(query) < 2:
+    if len(query) < 1:
         return jsonify({"candidates": []})
 
     results = []
@@ -218,7 +218,53 @@ def search_reports():
                 })
                 found_emails.add(email_key)
 
-    return jsonify({"candidates": results})
+    def _normalize_for_search(value: str) -> str:
+        raw = str(value or "").lower()
+        cleaned = "".join(ch if ch.isalnum() or ch in "+.#@_-" else " " for ch in raw)
+        return " ".join(cleaned.split())
+
+    query_tokens = [tok for tok in _normalize_for_search(query).split(" ") if tok]
+
+    def _score_candidate(item: dict, index: int):
+        name = _normalize_for_search(item.get("name", ""))
+        email = _normalize_for_search(item.get("email", ""))
+        role = _normalize_for_search(item.get("role", ""))
+        hay = " ".join(part for part in (name, email, role) if part).strip()
+        if query_tokens and not all(tok in hay for tok in query_tokens):
+            return (-1, index)
+
+        score = 0
+        for token in query_tokens:
+            if email == token:
+                score += 120
+            if name == token:
+                score += 90
+            if role == token:
+                score += 50
+            if email.startswith(token):
+                score += 40
+            if name.startswith(token):
+                score += 30
+            if role.startswith(token):
+                score += 18
+            if f" {token}" in hay:
+                score += 8
+            if token in hay:
+                score += 4
+        if item.get("has_report"):
+            score += 2
+        return (score, index)
+
+    scored = []
+    for idx, item in enumerate(results):
+        score, original_index = _score_candidate(item, idx)
+        if score < 0:
+            continue
+        scored.append((score, original_index, item))
+    scored.sort(key=lambda row: (-row[0], row[1]))
+
+    ranked_results = [row[2] for row in scored[:60]]
+    return jsonify({"candidates": ranked_results})
 
 
 @reports_bp.route("/reports/generate/<path:email>")

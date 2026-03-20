@@ -78,6 +78,8 @@ def _resolve_date_range(filter_type: str, specific_date: str = ""):
         return start, end
     if filter_type == "24h":
         return now - timedelta(hours=24), now
+    if filter_type == "28d":
+        return now - timedelta(days=28), now
     if filter_type == "2d":
         return now - timedelta(days=2), now
     if filter_type == "7d":
@@ -91,6 +93,23 @@ def _resolve_date_range(filter_type: str, specific_date: str = ""):
         except ValueError:
             return None, None
     return None, None
+
+
+def _percentage_delta(current: int | float, previous: int | float) -> float:
+    current = float(current or 0)
+    previous = float(previous or 0)
+    if previous <= 0:
+        return 100.0 if current > 0 else 0.0
+    return ((current - previous) / previous) * 100.0
+
+
+def _trend_payload(current: int | float, previous: int | float) -> dict:
+    raw = _percentage_delta(current, previous)
+    return {
+        "raw": round(raw, 1),
+        "pct": round(abs(raw), 1),
+        "is_up": raw >= 0,
+    }
 
 
 # --------------------------------------------
@@ -109,19 +128,16 @@ def dashboard():
     if specific_date:
         date_filter = "date"
 
-    # Today's stats (all users)
+    # Today's stats scoped to current user.
     today_start, today_end = _resolve_date_range("today")
     today_stats = db_service.get_test_link_stats(
         since=today_start,
         until=today_end,
-    )
-
-    # My today stats
-    my_today_stats = db_service.get_test_link_stats(
-        since=today_start,
-        until=today_end,
         created_by=user_email,
     )
+
+    # Kept for template compatibility.
+    my_today_stats = today_stats
 
     # My stats with date filter
     range_start, range_end = _resolve_date_range(date_filter, specific_date)
@@ -131,6 +147,79 @@ def dashboard():
         created_by=user_email,
     )
 
+    # Previous-period stats (same duration) for real trend percentages.
+    prev_stats = {"total_candidates": 0, "total_tests": 0, "completed": 0, "pending": 0}
+    if range_start and range_end and range_end > range_start:
+        window = range_end - range_start
+        prev_stats = db_service.get_test_link_stats(
+            since=range_start - window,
+            until=range_start,
+            created_by=user_email,
+        )
+
+    tests_trend = _trend_payload(my_stats.get("total_tests", 0), prev_stats.get("total_tests", 0))
+    pending_trend = _trend_payload(my_stats.get("pending", 0), prev_stats.get("pending", 0))
+    completed_trend = _trend_payload(my_stats.get("completed", 0), prev_stats.get("completed", 0))
+
+    # Real monthly chart series for this user.
+    performance_series = db_service.get_test_link_monthly_series(
+        points=6,
+        created_by=user_email,
+    )
+    series_count = len(performance_series)
+    chart_top = 32.0
+    chart_bottom = 184.0
+    chart_left = 40.0
+    chart_right = 338.0
+    chart_height = chart_bottom - chart_top
+    chart_width = chart_right - chart_left
+    chart_max = max(
+        1,
+        max((pt.get("tests", 0) for pt in performance_series), default=0),
+        max((pt.get("completed", 0) for pt in performance_series), default=0),
+    )
+
+    chart_points = []
+    for idx, point in enumerate(performance_series):
+        x = chart_left
+        if series_count > 1:
+            x = chart_left + (chart_width * idx / (series_count - 1))
+        tests_value = int(point.get("tests", 0) or 0)
+        completed_value = int(point.get("completed", 0) or 0)
+        y_tests = chart_bottom - (tests_value / chart_max) * chart_height
+        y_completed = chart_bottom - (completed_value / chart_max) * chart_height
+        chart_points.append(
+            {
+                "label": point.get("label", ""),
+                "x": round(x, 1),
+                "tests": tests_value,
+                "completed": completed_value,
+                "y_tests": round(y_tests, 1),
+                "y_completed": round(y_completed, 1),
+            }
+        )
+
+    chart_tests_polyline = " ".join(f"{p['x']},{p['y_tests']}" for p in chart_points)
+    chart_completed_polyline = " ".join(f"{p['x']},{p['y_completed']}" for p in chart_points)
+
+    y_tick_values = [chart_max, chart_max * 0.75, chart_max * 0.5, chart_max * 0.25, 0]
+    chart_y_ticks = []
+    for tick_value in y_tick_values:
+        y_pos = chart_bottom
+        if chart_max > 0:
+            y_pos = chart_bottom - (tick_value / chart_max) * chart_height
+        chart_y_ticks.append(
+            {
+                "value": int(round(tick_value)),
+                "y": round(y_pos, 1),
+            }
+        )
+
+    latest_point = chart_points[-1] if chart_points else {"tests": 0, "completed": 0}
+    previous_point = chart_points[-2] if len(chart_points) > 1 else {"tests": 0, "completed": 0}
+    chart_tests_trend = _trend_payload(latest_point.get("tests", 0), previous_point.get("tests", 0))
+    chart_completed_trend = _trend_payload(latest_point.get("completed", 0), previous_point.get("completed", 0))
+
     return render_template(
         "dashboard.html",
         user_name=user_name,
@@ -138,8 +227,20 @@ def dashboard():
         today_stats=today_stats,
         my_today_stats=my_today_stats,
         my_stats=my_stats,
+        prev_stats=prev_stats,
+        tests_trend=tests_trend,
+        pending_trend=pending_trend,
+        completed_trend=completed_trend,
         date_filter=date_filter,
         specific_date=specific_date,
+        performance_series=performance_series,
+        chart_points=chart_points,
+        chart_y_ticks=chart_y_ticks,
+        chart_tests_polyline=chart_tests_polyline,
+        chart_completed_polyline=chart_completed_polyline,
+        chart_latest=latest_point,
+        chart_tests_trend=chart_tests_trend,
+        chart_completed_trend=chart_completed_trend,
     )
 
 

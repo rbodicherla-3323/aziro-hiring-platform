@@ -69,59 +69,104 @@
     });
   }
 
+  function normalizeForSearch(value) {
+    return String(value || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9+.#@_-]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function fetchCandidateMatches(query) {
+    const q = String(query || "").trim();
+    if (!q) return Promise.resolve([]);
+    const tokens = normalizeForSearch(q).split(" ").filter(Boolean);
+    return fetchJson("/reports/search?q=" + encodeURIComponent(q)).then((data) => {
+      const items = Array.isArray(data && data.candidates) ? data.candidates : [];
+      const scored = items.map((item, idx) => {
+        const name = normalizeForSearch(item && item.name);
+        const email = normalizeForSearch(item && item.email);
+        const role = normalizeForSearch(item && item.role);
+        const hay = [name, email, role].join(" ").trim();
+        const allMatch = tokens.every((token) => hay.includes(token));
+        if (!allMatch) return null;
+        let score = 0;
+        tokens.forEach((token) => {
+          if (email === token) score += 60;
+          if (name === token) score += 45;
+          if (email.startsWith(token)) score += 28;
+          if (name.startsWith(token)) score += 22;
+          if (role.startsWith(token)) score += 14;
+          if (hay.includes(" " + token)) score += 8;
+          if (hay.includes(token)) score += 4;
+        });
+        if (item && item.has_report) score += 2;
+        return { item, score, idx };
+      }).filter(Boolean);
+      scored.sort((a, b) => b.score - a.score || a.idx - b.idx);
+      return scored.map((entry) => entry.item).slice(0, 50);
+    });
+  }
+
+  function renderSearchResults(items) {
+    if (!searchResultsList) return;
+    if (!items.length) {
+      searchResultsList.innerHTML =
+        '<div class="text-center py-3 text-muted"><i class="fas fa-search me-1"></i>No candidates found</div>';
+      return;
+    }
+    let html = "";
+    items.forEach((c, i) => {
+      const aid = "sr-" + i;
+      const safeName = escapeHtml(c.name || "");
+      const safeEmail = escapeHtml(c.email || "");
+      const safeRole = escapeHtml(c.role || "N/A");
+      const hasReport = !!(c.has_report && c.report_filename);
+      let actions = "";
+      if (hasReport) {
+        const viewUrl = "/reports/view/" + encodeURIComponent(c.report_filename);
+        const downloadUrl = "/reports/download-file/" + encodeURIComponent(c.report_filename);
+        actions += '<a href="' + viewUrl + '" target="_blank" class="icon-btn btn-view" title="View"><i class="fas fa-eye"></i></a>';
+        actions += '<a href="' + downloadUrl + '" class="icon-btn btn-dl" title="Download"><i class="fas fa-download"></i></a>';
+        actions += '<button class="icon-btn btn-regen js-generate-report" data-email="' + safeEmail + '" data-container="' + aid + '" title="Regenerate"><i class="fas fa-redo"></i></button>';
+      } else {
+        actions += '<button class="icon-btn btn-gen js-generate-report" data-email="' + safeEmail + '" data-container="' + aid + '" title="Generate Report"><i class="fas fa-file-pdf"></i></button>';
+      }
+      actions += '<button class="icon-btn btn-gallery js-open-proctoring" data-email="' + safeEmail + '" title="View Proctoring Screenshots"><i class="fas fa-images"></i></button>';
+      html += '<div class="d-flex align-items-center justify-content-between p-2 border-bottom">';
+      html += '<div><span style="font-weight:500; color:var(--az-slate-900);">' + safeName + '</span>';
+      html += ' <span class="badge-role ms-1">' + safeRole + "</span>";
+      html += '<div style="font-size:0.78rem;color:var(--az-slate-500);">' + safeEmail + "</div></div>";
+      html += '<div class="report-actions" id="' + aid + '" data-email="' + safeEmail + '">';
+      html += actions;
+      html += "</div></div>";
+    });
+    searchResultsList.innerHTML = html;
+  }
+
   function searchCandidates(forcedQuery, showWarning) {
-    if (!searchInput || !searchResults || !searchResultsList) return;
+    if (!searchInput || !searchResults || !searchResultsList) return Promise.resolve([]);
     const q = (forcedQuery !== undefined ? forcedQuery : searchInput.value).trim();
-    if (q.length < 2) {
+    if (q.length < 1) {
       if (showWarning && typeof showToast === "function") {
-        showToast("Enter at least 2 characters", "warning");
+        showToast("Enter at least 1 character", "warning");
       }
       searchResults.classList.remove("active");
       searchResultsList.innerHTML = "";
-      return;
+      return Promise.resolve([]);
     }
     searchResultsList.innerHTML =
       '<div class="text-center py-3"><div class="spinner-border spinner-border-sm" style="color:var(--az-primary);"></div><span class="ms-2 text-muted">Searching...</span></div>';
     searchResults.classList.add("active");
-    fetchJson("/reports/search?q=" + encodeURIComponent(q))
-      .then((data) => {
-        const items = (data && data.candidates) ? data.candidates : [];
-        if (!items.length) {
-          searchResultsList.innerHTML =
-            '<div class="text-center py-3 text-muted"><i class="fas fa-search me-1"></i>No candidates found</div>';
-          return;
-        }
-        let html = "";
-        items.forEach((c, i) => {
-          const aid = "sr-" + i;
-          const safeName = escapeHtml(c.name || "");
-          const safeEmail = escapeHtml(c.email || "");
-          const safeRole = escapeHtml(c.role || "N/A");
-          const hasReport = !!(c.has_report && c.report_filename);
-          let actions = "";
-          if (hasReport) {
-            const viewUrl = "/reports/view/" + encodeURIComponent(c.report_filename);
-            const downloadUrl = "/reports/download-file/" + encodeURIComponent(c.report_filename);
-            actions += '<a href="' + viewUrl + '" target="_blank" class="icon-btn btn-view" title="View"><i class="fas fa-eye"></i></a>';
-            actions += '<a href="' + downloadUrl + '" class="icon-btn btn-dl" title="Download"><i class="fas fa-download"></i></a>';
-            actions += '<button class="icon-btn btn-regen js-generate-report" data-email="' + safeEmail + '" data-container="' + aid + '" title="Regenerate"><i class="fas fa-redo"></i></button>';
-          } else {
-            actions += '<button class="icon-btn btn-gen js-generate-report" data-email="' + safeEmail + '" data-container="' + aid + '" title="Generate Report"><i class="fas fa-file-pdf"></i></button>';
-          }
-          actions += '<button class="icon-btn btn-gallery js-open-proctoring" data-email="' + safeEmail + '" title="View Proctoring Screenshots"><i class="fas fa-images"></i></button>';
-          html += '<div class="d-flex align-items-center justify-content-between p-2 border-bottom">';
-          html += '<div><span style="font-weight:500; color:var(--az-slate-900);">' + safeName + '</span>';
-          html += ' <span class="badge-role ms-1">' + safeRole + "</span>";
-          html += '<div style="font-size:0.78rem;color:var(--az-slate-500);">' + safeEmail + "</div></div>";
-          html += '<div class="report-actions" id="' + aid + '" data-email="' + safeEmail + '">';
-          html += actions;
-          html += "</div></div>";
-        });
-        searchResultsList.innerHTML = html;
+    return fetchCandidateMatches(q)
+      .then((items) => {
+        renderSearchResults(items);
+        return items;
       })
       .catch(() => {
         searchResultsList.innerHTML =
           '<div class="text-center py-3 text-danger"><i class="fas fa-exclamation-circle me-1"></i>Search failed</div>';
+        return [];
       });
   }
 
@@ -267,14 +312,20 @@
     searchInput.addEventListener("input", function () {
       const q = searchInput.value.trim();
       window.clearTimeout(searchTimer);
-      if (q.length < 2) {
+      if (q.length < 1) {
         if (searchResults) searchResults.classList.remove("active");
         if (searchResultsList) searchResultsList.innerHTML = "";
         return;
       }
       searchTimer = window.setTimeout(function () {
         searchCandidates(q, false);
-      }, 250);
+      }, 220);
+    });
+    searchInput.addEventListener("change", function () {
+      const q = searchInput.value.trim();
+      if (q.length >= 1) {
+        searchCandidates(q, false);
+      }
     });
   }
 

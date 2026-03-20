@@ -2,84 +2,999 @@
 {% block title %}Access Management{% endblock %}
 {% block breadcrumb %}Access Management{% endblock %}
 
-{% block content %}
-<div class="d-flex align-items-center justify-content-between mb-3">
-  <div>
-    <h4 class="mb-1"><i class="bi bi-shield-check me-2" style="color:var(--az-primary);"></i>Access Management</h4>
-    <div class="text-muted small">Only <strong>{{ access_admin_email }}</strong> can approve, revoke, or add access.</div>
-  </div>
-</div>
+{% block head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .access-replica {
+    --am-blue: #1f61de;
+    --am-blue-deep: #184fb8;
+    --am-orange: #ff7b1a;
+    --am-orange-deep: #f26400;
+    font-family: "Poppins", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(780px 270px at -8% -10%, rgba(31, 97, 222, 0.18) 0%, rgba(31, 97, 222, 0) 70%),
+      radial-gradient(560px 240px at 100% -4%, rgba(255, 123, 26, 0.14) 0%, rgba(255, 123, 26, 0) 72%),
+      linear-gradient(180deg, #f8f9ff 0%, #f1f4fc 100%);
+    border: 1px solid #dde5f7;
+    border-radius: 20px;
+    padding: 18px 0 14px;
+    color: #152a59;
+    font-size: 14px;
+  }
 
-<div class="card">
-  <div class="card-body">
-    <form method="post" action="{{ url_for('access.access_management_add') }}" class="row g-2 align-items-end mb-3" autocomplete="off" data-persist="off">
-      <div class="col-12 col-md-6">
-        <label class="form-label small text-muted">Add user (direct approve)</label>
-        <input type="email" name="email" class="form-control form-control-sm" placeholder="user@aziro.com" required autocomplete="off" autocapitalize="none" spellcheck="false">
-      </div>
-      <div class="col-12 col-md-auto">
-        <button class="btn btn-sm btn-primary" type="submit"><i class="bi bi-person-plus me-1"></i>Add User</button>
-      </div>
-    </form>
+  .breadcrumb {
+    display: none;
+  }
 
-    <div class="d-flex align-items-center justify-content-between mb-2">
-      <h6 class="mb-0">Requests and Approvals</h6>
-      <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('access.access_management_page') }}"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</a>
-    </div>
+  .am-inner {
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 18px;
+  }
 
-    <div class="table-responsive">
-      <table class="table table-sm align-middle">
-        <thead>
-          <tr>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Requested</th>
-            <th>Approved By</th>
-            <th>Approved At</th>
-            <th class="text-end">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for a in approvals %}
-          <tr>
-            <td><code>{{ a.email }}</code></td>
-            <td>
-              {% if a.is_active %}
-                <span class="badge text-bg-success">Approved</span>
-              {% elif a.requested_at %}
-                <span class="badge text-bg-warning">Pending</span>
-              {% else %}
-                <span class="badge text-bg-secondary">Revoked</span>
-              {% endif %}
-            </td>
-            <td class="small text-muted">{{ a.requested_at or "" }}</td>
-            <td class="small text-muted">{{ a.approved_by or "" }}</td>
-            <td class="small text-muted">{{ a.approved_at or "" }}</td>
-            <td class="text-end">
-              <div class="d-flex justify-content-end gap-2">
-                <form method="post" action="{{ url_for('access.access_management_approve') }}">
-                  <input type="hidden" name="email" value="{{ a.email }}">
-                  <button class="btn btn-sm btn-outline-success" type="submit"><i class="bi bi-check2 me-1"></i>Approve</button>
-                </form>
-                <form method="post" action="{{ url_for('access.access_management_revoke') }}">
-                  <input type="hidden" name="email" value="{{ a.email }}">
-                  <button class="btn btn-sm btn-outline-danger" type="submit"><i class="bi bi-x-circle me-1"></i>Revoke</button>
-                </form>
-              </div>
-            </td>
-          </tr>
-          {% endfor %}
-          {% if approvals|length == 0 %}
-          <tr>
-            <td colspan="6" class="text-muted small">No access requests yet.</td>
-          </tr>
-          {% endif %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+  .am-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #223b73;
+    margin: 2px 8px 8px;
+  }
+
+  .am-breadcrumb .current {
+    color: #29334b;
+    font-weight: 500;
+  }
+
+  .am-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 4px 8px 10px;
+  }
+
+  .am-title-row i {
+    color: #1f61de;
+    font-size: 24px;
+  }
+
+  .am-title-row h1 {
+    margin: 0;
+    font-size: 34px;
+    line-height: 1.08;
+    font-weight: 700;
+    color: #152a59;
+    letter-spacing: -0.02em;
+  }
+
+  .am-subtitle {
+    margin: 0 8px 18px;
+    font-size: 14px;
+    color: #3f4f74;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+
+  .am-subtitle strong {
+    color: #14295a;
+    font-weight: 700;
+  }
+
+  .am-surface {
+    background: #ffffff;
+    border: 1px solid #dfe6f7;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 26px rgba(28, 43, 86, 0.08);
+  }
+
+  .am-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 16px 22px;
+    border-bottom: 1px solid #dfe7f8;
+    background:
+      linear-gradient(90deg, rgba(31, 97, 222, 0.06) 0%, rgba(31, 97, 222, 0) 40%),
+      linear-gradient(270deg, rgba(255, 123, 26, 0.08) 0%, rgba(255, 123, 26, 0) 45%),
+      linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+  }
+
+  .am-stats {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .am-stat {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 16px 8px 10px;
+    min-height: 84px;
+    flex: 1 1 0;
+    border-right: 1px solid #e7ebf6;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+
+  .am-stat:last-child {
+    border-right: none;
+  }
+
+  .am-stat-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .am-stat-label {
+    color: #5e6c8f;
+    font-size: 13px;
+    line-height: 1.1;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .am-stat-value {
+    color: #1a2e5f;
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .am-stat-total .am-stat-icon {
+    background: #e8f0ff;
+    color: var(--am-blue);
+  }
+
+  .am-stat-approved .am-stat-icon {
+    background: #e8f0ff;
+    color: var(--am-blue);
+  }
+
+  .am-stat-approved .am-stat-value {
+    color: var(--am-blue);
+  }
+
+  .am-stat-pending .am-stat-icon {
+    background: #fff0d8;
+    color: var(--am-orange-deep);
+  }
+
+  .am-stat-pending .am-stat-value {
+    color: var(--am-orange-deep);
+  }
+
+  .am-stat-revoked .am-stat-icon {
+    background: #ffe6e5;
+    color: #f04141;
+  }
+
+  .am-stat-revoked .am-stat-value {
+    color: #dc2d2d;
+  }
+
+  .am-top-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .am-btn {
+    border: 1px solid #d8e1f4;
+    background: #ffffff;
+    color: #1a2f5d;
+    border-radius: 10px;
+    height: 44px;
+    padding: 0 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .am-btn i {
+    font-size: 16px;
+  }
+
+  .am-btn:hover {
+    background: #f5f8ff;
+    color: #1a2f5d;
+  }
+
+  .am-btn-primary {
+    border-color: var(--am-blue);
+    background: linear-gradient(135deg, var(--am-blue) 0%, var(--am-blue-deep) 100%);
+    color: #ffffff;
+    box-shadow: 0 10px 18px rgba(27, 88, 209, 0.28);
+  }
+
+  .am-btn-primary:hover {
+    background: linear-gradient(135deg, #2e70e8 0%, var(--am-blue) 100%);
+    color: #ffffff;
+  }
+
+  .am-btn-icon {
+    width: 44px;
+    min-width: 44px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .am-invite-panel {
+    display: none;
+    padding: 12px 18px;
+    border-top: 1px solid #e4eaf8;
+    border-bottom: 1px solid #e4eaf8;
+    background:
+      linear-gradient(90deg, rgba(31, 97, 222, 0.06) 0%, rgba(31, 97, 222, 0) 45%),
+      #f7fbff;
+  }
+
+  .am-invite-panel.show {
+    display: block;
+  }
+
+  .am-invite-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .am-invite-input {
+    width: min(440px, 100%);
+    height: 44px;
+    border: 1px solid #d7e1f5;
+    border-radius: 10px;
+    padding: 0 14px;
+    font-size: 13px;
+    color: #2a3c66;
+    outline: none;
+  }
+
+  .am-invite-input:focus {
+    border-color: var(--am-blue);
+    box-shadow: 0 0 0 3px rgba(31, 97, 222, 0.14);
+  }
+
+  .am-bulk-bar {
+    padding: 14px 22px;
+    background:
+      linear-gradient(90deg, rgba(31, 97, 222, 0.07) 0%, rgba(31, 97, 222, 0) 45%),
+      linear-gradient(180deg, #fafdff 0%, #f7faff 100%);
+    border-bottom: 1px solid #e0e7f8;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .am-selection {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #1a2f5d;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .am-checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #afbddc;
+    border-radius: 7px;
+    appearance: none;
+    -webkit-appearance: none;
+    background: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .am-checkbox:checked {
+    border-color: var(--am-blue);
+    background: var(--am-blue);
+  }
+
+  .am-checkbox:checked::after {
+    content: "\2713";
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .am-bulk-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .am-btn-outline-blue {
+    color: var(--am-blue);
+    border-color: #c8d9fb;
+    background: #f4f9ff;
+  }
+
+  .am-btn-outline-red {
+    color: #e33939;
+    border-color: #f2caca;
+    background: #fff8f8;
+  }
+
+  .am-btn-outline-blue:hover {
+    background: #eaf3ff;
+    color: var(--am-blue);
+  }
+
+  .am-btn-outline-red:hover {
+    background: #fff1f1;
+    color: #e33939;
+  }
+
+  .am-table-wrap {
+    overflow-x: auto;
+  }
+
+  .am-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1100px;
+    table-layout: auto;
+  }
+
+  .am-table thead th {
+    background:
+      linear-gradient(90deg, rgba(31, 97, 222, 0.06) 0%, rgba(31, 97, 222, 0) 48%),
+      linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+    color: #1c2f5f;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: left;
+    padding: 14px 16px;
+    border-bottom: 1px solid #e1e8f8;
+    white-space: nowrap;
+  }
+
+  .am-table tbody td {
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #203360;
+    border-bottom: 1px solid #edf0f8;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .am-table th.am-check-col,
+  .am-table td.am-check-col {
+    width: 54px;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .am-data-row.is-selected {
+    background:
+      linear-gradient(90deg, rgba(31, 97, 222, 0.08) 0%, rgba(31, 97, 222, 0) 60%),
+      #f7faff;
+  }
+
+  .am-data-row.status-locked {
+    background: #f3f6ff;
+  }
+
+  .am-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    line-height: 1;
+  }
+
+  .am-status-pill i {
+    font-size: 15px;
+  }
+
+  .am-status-approved {
+    color: var(--am-blue);
+    background: #e9f1ff;
+  }
+
+  .am-status-pending {
+    color: var(--am-orange-deep);
+    background: #fff0de;
+  }
+
+  .am-status-revoked {
+    color: #ea3636;
+    background: #ffe8e8;
+  }
+
+  .am-status-locked {
+    color: #223a6f;
+    background: #e4e9f7;
+  }
+
+  .am-row-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .am-action-btn {
+    min-width: 46px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid #d8e1f2;
+    background: #fbfdff;
+    color: #1c2f5f;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 0 11px;
+    font-size: 13px;
+    font-weight: 600;
+    gap: 8px;
+  }
+
+  .am-action-btn i {
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .am-action-btn:hover {
+    background: #f4f8ff;
+    color: #1c2f5f;
+  }
+
+  .am-action-btn.approve {
+    color: var(--am-blue);
+    border-color: #c7d8fb;
+    background: #f3f8ff;
+  }
+
+  .am-action-btn.reject,
+  .am-action-btn.revoke,
+  .am-action-btn.delete {
+    color: #e33939;
+    border-color: #f0c9c9;
+    background: #fff7f7;
+  }
+
+  .am-more {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .am-more summary {
+    list-style: none;
+  }
+
+  .am-more summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .am-more-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 6px);
+    min-width: 170px;
+    border: 1px solid #dfe6f6;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 12px 24px rgba(30, 44, 86, 0.14);
+    padding: 8px;
+    z-index: 20;
+  }
+
+  .am-menu-btn {
+    width: 100%;
+    height: 36px;
+    border: none;
+    border-radius: 8px;
+    background: #fff;
+    color: #1f315d;
+    text-align: left;
+    padding: 0 10px;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .am-menu-btn:hover {
+    background: #f3f7ff;
+  }
+
+  .am-menu-btn.danger {
+    color: #dd2f2f;
+  }
+
+  .am-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px 22px;
+    background:
+      linear-gradient(90deg, rgba(31, 97, 222, 0.05) 0%, rgba(31, 97, 222, 0) 46%),
+      #fff;
+  }
+
+  .am-foot-text {
+    font-size: 13px;
+    color: #3a4b71;
+    font-weight: 500;
+  }
+
+  .am-pager {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .am-per-page {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #d8e1f4;
+    border-radius: 11px;
+    height: 44px;
+    padding: 0 14px;
+    color: #2a3f6b;
+    font-size: 13px;
+    font-weight: 500;
+    background: #fff;
+  }
+
+  .am-per-page select {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 700;
+    color: #12295d;
+  }
+
+  .am-page-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .am-page-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    border: 1px solid #d8e1f4;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #1b2f5f;
+    background: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .am-page-btn:hover {
+    background: #f3f7ff;
+    color: #1b2f5f;
+  }
+
+  .am-page-btn.active {
+    border-color: var(--am-blue);
+    background: var(--am-blue);
+    color: #fff;
+  }
+
+  .am-empty {
+    padding: 32px 16px;
+    text-align: center;
+    color: #6a7696;
+    font-size: 13px;
+  }
+
+  @media (max-width: 1200px) {
+    .am-title-row h1 {
+      font-size: 28px;
+    }
+    .am-stat-value {
+      font-size: 24px;
+    }
+  }
+
+  @media (max-width: 992px) {
+    .access-replica {
+      padding: 12px 0 10px;
+    }
+    .am-topbar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+    .am-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .am-stat {
+      border-right: none;
+      border: 1px solid #edf1fa;
+      border-radius: 10px;
+    }
+    .am-bulk-bar {
+      grid-template-columns: 1fr;
+      align-items: flex-start;
+      padding: 12px 14px;
+    }
+    .am-footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .am-pager {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+</style>
 {% endblock %}
 
+{% block content %}
+<div class="access-replica">
+  <div class="am-inner">
+    <div class="am-breadcrumb">
+      <i class="bi bi-house"></i>
+      <span>Create Test</span>
+      <i class="bi bi-chevron-right"></i>
+      <span class="current">Generate Candidate Test</span>
+    </div>
 
+    <div class="am-title-row">
+      <i class="bi bi-shield-check"></i>
+      <h1>Access Management</h1>
+    </div>
+    <p class="am-subtitle">Manage and control access requests &nbsp;&middot;&nbsp; Only <strong>{{ access_admin_email }}</strong> can approve or revoke access.</p>
 
+    <section class="am-surface">
+      <div class="am-topbar">
+        <div class="am-stats">
+          <div class="am-stat am-stat-total">
+            <span class="am-stat-icon"><i class="bi bi-clipboard-check"></i></span>
+            <div>
+              <div class="am-stat-label">Total Requests</div>
+              <div class="am-stat-value">{{ total_requests | int }}</div>
+            </div>
+          </div>
+          <div class="am-stat am-stat-approved">
+            <span class="am-stat-icon"><i class="bi bi-check-circle"></i></span>
+            <div>
+              <div class="am-stat-label">Approved</div>
+              <div class="am-stat-value">{{ approved_count | int }}</div>
+            </div>
+          </div>
+          <div class="am-stat am-stat-pending">
+            <span class="am-stat-icon"><i class="bi bi-hourglass-split"></i></span>
+            <div>
+              <div class="am-stat-label">Pending</div>
+              <div class="am-stat-value">{{ pending_count | int }}</div>
+            </div>
+          </div>
+          <div class="am-stat am-stat-revoked">
+            <span class="am-stat-icon"><i class="bi bi-slash-circle"></i></span>
+            <div>
+              <div class="am-stat-label">Revoked</div>
+              <div class="am-stat-value">{{ revoked_count | int }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="am-top-actions">
+          <button type="button" class="am-btn am-btn-primary" id="amInviteToggle">
+            <i class="bi bi-plus-lg"></i>
+            Invite User
+          </button>
+        </div>
+      </div>
+
+      <div class="am-invite-panel" id="amInvitePanel">
+        <form method="post" action="{{ url_for('access.access_management_add') }}" class="am-invite-form" autocomplete="off" data-persist="off">
+          <input class="am-invite-input" type="email" name="email" placeholder="user@aziro.com" required autocomplete="off" autocapitalize="none" spellcheck="false">
+          <button type="submit" class="am-btn am-btn-primary">
+            <i class="bi bi-send"></i>
+            Send Invite
+          </button>
+        </form>
+      </div>
+
+      <div class="am-bulk-bar">
+        <div class="am-selection">
+          <input type="checkbox" id="amSelectAll" class="am-checkbox">
+          <span><span id="amSelectedCount">0</span> users selected</span>
+          <button type="button" class="am-btn am-btn-icon" id="amClearSelection" aria-label="Clear selection">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+        <div class="am-bulk-actions">
+          <button type="button" class="am-btn am-btn-outline-blue am-bulk-action" data-action="approve"><i class="bi bi-check-lg"></i>Approve</button>
+          <button type="button" class="am-btn am-btn-outline-red am-bulk-action" data-action="reject"><i class="bi bi-trash3"></i>Reject</button>
+          <button type="button" class="am-btn am-btn-outline-red am-bulk-action" data-action="revoke"><i class="bi bi-bag-x"></i>Revoke</button>
+          <button type="button" class="am-btn am-btn-outline-red am-bulk-action" data-action="delete"><i class="bi bi-trash"></i>Delete</button>
+        </div>
+        <button type="button" class="am-btn" id="amCancelBulk">Cancel</button>
+      </div>
+
+      <div class="am-table-wrap">
+        <table class="am-table">
+          <thead>
+            <tr>
+              <th class="am-check-col">
+                <input type="checkbox" class="am-checkbox" id="amHeadSelectAll">
+              </th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Requested On</th>
+              <th>Approved By</th>
+              <th style="text-align:right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for a in approvals %}
+            <tr class="am-data-row status-{{ a.status_key }}" data-email="{{ a.email }}">
+              <td class="am-check-col">
+                <input type="checkbox" class="am-checkbox am-row-check" value="{{ a.email }}">
+              </td>
+              <td>{{ a.email }}</td>
+              <td>
+                <span class="am-status-pill am-status-{{ a.status_key }}">
+                  {% if a.status_key == 'approved' %}
+                    <i class="bi bi-check-circle-fill"></i>
+                  {% elif a.status_key == 'pending' %}
+                    <i class="bi bi-hourglass-split"></i>
+                  {% elif a.status_key == 'revoked' %}
+                    <i class="bi bi-slash-circle"></i>
+                  {% else %}
+                    <i class="bi bi-lock"></i>
+                  {% endif %}
+                  {{ a.status_label }}
+                </span>
+              </td>
+              <td>{{ a.requested_on or "-" }}</td>
+              <td>{{ a.approved_by }}</td>
+              <td style="text-align:right;">
+                <div class="am-row-actions">
+                  {% if a.status_key in ['pending', 'locked'] %}
+                    <form method="post" action="{{ url_for('access.access_management_approve') }}">
+                      <input type="hidden" name="email" value="{{ a.email }}">
+                      <button type="submit" class="am-action-btn approve"><i class="bi bi-check-lg"></i>{% if a.status_key == 'locked' %}Approve{% endif %}</button>
+                    </form>
+                    <form method="post" action="{{ url_for('access.access_management_reject') }}">
+                      <input type="hidden" name="email" value="{{ a.email }}">
+                      <button type="submit" class="am-action-btn reject"><i class="bi bi-x-lg"></i>{% if a.status_key == 'locked' %}Reject{% endif %}</button>
+                    </form>
+                  {% elif a.status_key == 'revoked' %}
+                    <button type="button" class="am-action-btn" title="View"><i class="bi bi-eye"></i></button>
+                    <form method="post" action="{{ url_for('access.access_management_approve') }}">
+                      <input type="hidden" name="email" value="{{ a.email }}">
+                      <button type="submit" class="am-action-btn" title="Restore"><i class="bi bi-arrow-clockwise"></i></button>
+                    </form>
+                  {% else %}
+                    <button type="button" class="am-action-btn" title="View"><i class="bi bi-eye"></i></button>
+                    <a class="am-action-btn" href="mailto:{{ a.email }}" title="Email"><i class="bi bi-envelope"></i></a>
+                  {% endif %}
+
+                  <details class="am-more">
+                    <summary class="am-action-btn" title="More"><i class="bi bi-three-dots"></i></summary>
+                    <div class="am-more-menu">
+                      <form method="post" action="{{ url_for('access.access_management_approve') }}">
+                        <input type="hidden" name="email" value="{{ a.email }}">
+                        <button type="submit" class="am-menu-btn"><i class="bi bi-check-lg"></i>Approve</button>
+                      </form>
+                      <form method="post" action="{{ url_for('access.access_management_reject') }}">
+                        <input type="hidden" name="email" value="{{ a.email }}">
+                        <button type="submit" class="am-menu-btn"><i class="bi bi-x-lg"></i>Reject</button>
+                      </form>
+                      <form method="post" action="{{ url_for('access.access_management_revoke') }}">
+                        <input type="hidden" name="email" value="{{ a.email }}">
+                        <button type="submit" class="am-menu-btn"><i class="bi bi-bag-x"></i>Revoke</button>
+                      </form>
+                      <form method="post" action="{{ url_for('access.access_management_delete') }}">
+                        <input type="hidden" name="email" value="{{ a.email }}">
+                        <button type="submit" class="am-menu-btn danger"><i class="bi bi-trash"></i>Delete</button>
+                      </form>
+                    </div>
+                  </details>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        {% if approvals|length == 0 %}
+          <div class="am-empty">No access requests yet.</div>
+        {% endif %}
+      </div>
+
+      <div class="am-footer">
+        <div class="am-foot-text">Showing {{ range_start }}-{{ range_end }} of {{ total_requests }} requests</div>
+        <div class="am-pager">
+          <form method="get" action="{{ url_for('access.access_management_page') }}" class="am-per-page">
+            <span>Rows per page:</span>
+            <input type="hidden" name="page" value="1">
+            <select name="per_page" onchange="this.form.submit()">
+              {% for opt in [6, 10, 20, 50] %}
+                <option value="{{ opt }}" {% if per_page == opt %}selected{% endif %}>{{ opt }}</option>
+              {% endfor %}
+            </select>
+          </form>
+
+          <div class="am-page-nav">
+            <a class="am-page-btn" href="{{ url_for('access.access_management_page', page=(page - 1 if page > 1 else 1), per_page=per_page) }}" aria-label="Previous">
+              <i class="bi bi-chevron-left"></i>
+            </a>
+            {% for p in page_numbers %}
+              <a class="am-page-btn {% if p == page %}active{% endif %}" href="{{ url_for('access.access_management_page', page=p, per_page=per_page) }}">{{ p }}</a>
+            {% endfor %}
+            <a class="am-page-btn" href="{{ url_for('access.access_management_page', page=(page + 1 if page < total_pages else total_pages), per_page=per_page) }}" aria-label="Next">
+              <i class="bi bi-chevron-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<form id="amBulkForm" method="post" action="{{ url_for('access.access_management_bulk') }}" style="display:none;">
+  <input type="hidden" name="bulk_action" id="amBulkAction">
+  <div id="amBulkEmails"></div>
+</form>
+{% endblock %}
+
+{% block page_instructions %}
+<p class="mb-2">Use this page to approve, reject, revoke, and remove access requests.</p>
+<p class="mb-0 text-muted small">You can select multiple users and run bulk actions from the top action bar.</p>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  var selectAll = document.getElementById("amSelectAll");
+  var headSelectAll = document.getElementById("amHeadSelectAll");
+  var rowChecks = Array.prototype.slice.call(document.querySelectorAll(".am-row-check"));
+  var selectedCount = document.getElementById("amSelectedCount");
+  var clearBtn = document.getElementById("amClearSelection");
+  var cancelBtn = document.getElementById("amCancelBulk");
+  var bulkButtons = Array.prototype.slice.call(document.querySelectorAll(".am-bulk-action"));
+  var bulkForm = document.getElementById("amBulkForm");
+  var bulkAction = document.getElementById("amBulkAction");
+  var bulkEmails = document.getElementById("amBulkEmails");
+  var inviteToggle = document.getElementById("amInviteToggle");
+  var invitePanel = document.getElementById("amInvitePanel");
+
+  function selectedRows() {
+    return rowChecks.filter(function (cb) { return cb.checked; });
+  }
+
+  function refreshSelectionState() {
+    var selected = selectedRows();
+    var total = rowChecks.length;
+    var count = selected.length;
+
+    if (selectedCount) {
+      selectedCount.textContent = String(count);
+    }
+    if (selectAll) {
+      selectAll.checked = total > 0 && count === total;
+      selectAll.indeterminate = count > 0 && count < total;
+    }
+    if (headSelectAll) {
+      headSelectAll.checked = total > 0 && count === total;
+      headSelectAll.indeterminate = count > 0 && count < total;
+    }
+
+    rowChecks.forEach(function (cb) {
+      var row = cb.closest(".am-data-row");
+      if (!row) { return; }
+      if (cb.checked) {
+        row.classList.add("is-selected");
+      } else {
+        row.classList.remove("is-selected");
+      }
+    });
+  }
+
+  function setAll(value) {
+    rowChecks.forEach(function (cb) { cb.checked = !!value; });
+    refreshSelectionState();
+  }
+
+  if (selectAll) {
+    selectAll.addEventListener("change", function () { setAll(selectAll.checked); });
+  }
+  if (headSelectAll) {
+    headSelectAll.addEventListener("change", function () { setAll(headSelectAll.checked); });
+  }
+  rowChecks.forEach(function (cb) {
+    cb.addEventListener("change", refreshSelectionState);
+  });
+
+  if (clearBtn) {
+    clearBtn.addEventListener("click", function () { setAll(false); });
+  }
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", function () { setAll(false); });
+  }
+
+  bulkButtons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var selected = selectedRows();
+      if (!bulkForm || !bulkAction || !bulkEmails) {
+        return;
+      }
+      if (selected.length === 0) {
+        if (typeof showToast === "function") {
+          showToast("Select at least one user.", "warning");
+        }
+        return;
+      }
+
+      bulkAction.value = btn.getAttribute("data-action") || "";
+      bulkEmails.innerHTML = "";
+      selected.forEach(function (cb) {
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "emails";
+        input.value = cb.value;
+        bulkEmails.appendChild(input);
+      });
+      bulkForm.submit();
+    });
+  });
+
+  if (inviteToggle && invitePanel) {
+    inviteToggle.addEventListener("click", function () {
+      invitePanel.classList.toggle("show");
+    });
+  }
+
+  refreshSelectionState();
+})();
+</script>
+{% endblock %}
