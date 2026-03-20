@@ -7,6 +7,8 @@
     .evaluation-page {
         --ev-brand: #0f766e;
         --ev-brand-2: #14b8a6;
+        --ev-az-blue: #2050a0;
+        --ev-az-orange: #f06000;
         --ev-ink: #0f172a;
         --ev-muted: #64748b;
         --ev-border: #e2e8f0;
@@ -15,26 +17,94 @@
         padding: 8px 0 14px;
     }
 
-    /* ===== Evaluation Page Styles ===== */
-    .eval-header {
-        background: var(--ev-brand);
-        color: white;
+    .eval-page-title {
+        margin: 0 0 18px 2px;
+        font-size: 2.2rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: #0f172a;
+        line-height: 1.15;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Navbar tools (search + help) */
+    .eval-top-tools {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: 10px;
+    }
+    .eval-top-search {
+        position: relative;
+        width: 320px;
+    }
+    .eval-top-search input {
+        width: 100%;
+        padding: 8px 16px 8px 34px;
+        border: 1px solid #dbe3ec;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        background: #fff;
+        color: #0f172a;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .eval-top-search input:focus {
+        border-color: #2050a0;
+        box-shadow: 0 0 0 3px rgba(32,80,160,0.12);
+    }
+    .eval-top-search .search-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #94a3b8;
+        font-size: 0.8rem;
+        pointer-events: none;
+    }
+    .help-btn-wrap { position: relative; }
+    .help-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        background: #cbd5e1;
+        color: #334155;
+        border-radius: 50%;
+        font-size: 0.76rem;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        line-height: 1;
+    }
+    .help-btn:hover { background: #0f766e; color: #fff; }
+    .help-tooltip-box {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 30px;
+        width: 290px;
+        background: #1e293b;
+        color: #e2e8f0;
         border-radius: 10px;
-        padding: 26px 30px;
-        margin-bottom: 24px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        padding: 14px 18px;
+        font-size: 0.78rem;
+        z-index: 9999;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
     }
-    .eval-header h4 {
-        margin: 0;
-        font-weight: 600;
-        font-size: 1.5rem;
-        letter-spacing: -0.01em;
+    .help-btn-wrap:hover .help-tooltip-box { display: block; }
+    .help-tooltip-box-title {
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 8px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid rgba(255,255,255,0.12);
     }
-    .eval-header p {
-        margin: 8px 0 0 0;
-        opacity: 0.92;
-        font-size: 0.95rem;
-    }
+    .help-tooltip-box ol { margin: 0; padding-left: 16px; }
+    .help-tooltip-box li { margin-bottom: 5px; }
 
     /* Candidate selector */
     .candidate-selector {
@@ -289,9 +359,9 @@
         font-weight: 500;
     }
     .plagiarism-chip.risk-high {
-        border-color: #f5c6cb;
-        background: #fdecef;
-        color: #a71d2a;
+        border-color: #ffd7b8;
+        background: #fff2e8;
+        color: var(--ev-az-orange);
     }
     .plagiarism-chip.risk-medium {
         border-color: #ffe2b5;
@@ -344,26 +414,76 @@
     .evaluation-page .btn-primary {
         border: 0;
         border-radius: 8px;
-        font-weight: 500;
+        font-weight: 600;
         padding: 11px 24px;
-        background: var(--ev-brand);
-        box-shadow: 0 1px 3px rgba(15,118,110,0.15);
+        background: var(--ev-az-blue);
+        box-shadow: 0 1px 3px rgba(32,80,160,0.25);
     }
 
     .evaluation-page .btn-primary:hover {
-        background: #0d6963;
+        background: #1b458c;
         transform: translateY(-1px);
-        box-shadow: 0 2px 6px rgba(15,118,110,0.20);    }
+        box-shadow: 0 2px 6px rgba(32,80,160,0.30);
+    }
+
+    .stat-pill.pass {
+        background: var(--ev-az-blue);
+        border-color: var(--ev-az-blue);
+        color: #ffffff;
+    }
+    .stat-pill.fail {
+        background: var(--ev-az-orange);
+        border-color: var(--ev-az-orange);
+        color: #ffffff;
+    }
+    .stat-pill.pass .stat-value,
+    .stat-pill.fail .stat-value,
+    .stat-pill.pass .stat-label,
+    .stat-pill.fail .stat-label {
+        color: #ffffff !important;
+    }
+
+    @media (max-width: 992px) {
+        .eval-top-search { width: 240px; }
+    }
+    @media (max-width: 768px) {
+        .eval-top-tools { display: none; }
+    }
 </style>
+{% endblock %}
+
+{% block navbar_left_extra %}
+<div class="eval-top-tools">
+    <div class="eval-top-search">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" id="candidateSearch" placeholder="Search by name, email or role..." oninput="filterCards()">
+    </div>
+</div>
+{% endblock %}
+
+{% block navbar_right_extra %}
+<span class="help-btn-wrap">
+    <button class="help-btn">?</button>
+    <div class="help-tooltip-box">
+        <div class="help-tooltip-box-title">How to Evaluate a Candidate</div>
+        <ol>
+            <li>Click <strong>"Select Candidates"</strong> dropdown</li>
+            <li>Check one or more candidates from the list</li>
+            <li>Click <strong>"Evaluate Selected"</strong> button</li>
+            <li>View each candidate's round scores, proctoring summary and code similarity</li>
+            <li>Green <strong>PASS</strong> means they met the pass threshold</li>
+            <li>A candidate is <strong>Selected</strong> only if they pass all rounds</li>
+        </ol>
+    </div>
+</span>
 {% endblock %}
 
 {% block content %}
 <div class="evaluation-page">
-<!-- ===== PAGE HEADER ===== -->
-<div class="eval-header">
-    <h4><i class="bi bi-clipboard-data me-2"></i>Candidate Evaluation</h4>
-    <p>Evaluate MCQ round scores per candidate. Select candidates below to view detailed results.</p>
-</div>
+<h2 class="eval-page-title">
+    <i class="bi bi-clipboard-data" style="color:#0f766e;"></i>
+    Candidate Evaluation
+</h2>
 
 <!-- ===== PASS THRESHOLD LEGEND ===== -->
 <div class="card shadow-sm mb-4">
@@ -467,9 +587,17 @@
 <!-- ===== EVALUATION RESULTS ===== -->
 {% if filtered_candidates %}
 
+    <div id="noSearchResults" style="display:none; text-align:center; padding:40px; color:#94a3b8; font-size:0.9rem;">
+        <i class="bi bi-search" style="font-size:2rem; display:block; margin-bottom:10px;"></i>
+        No candidates match your search.
+    </div>
+
     {% for c in filtered_candidates %}
 
-    <div class="candidate-result-card">
+    <div class="candidate-result-card"
+         data-name="{{ c.name | lower }}"
+         data-email="{{ c.email | lower }}"
+         data-role="{{ c.role | lower }}">
         <!-- Candidate Header -->
         <div class="candidate-result-header" style="background: #f8fafc;">
 
@@ -486,12 +614,12 @@
 
             <!-- Summary pills: rounds passed/failed/attempted only -->
             <div class="d-flex gap-3">
-                <div class="stat-pill" style="padding:8px 14px;">
-                    <div class="stat-value text-success" style="font-size:1.1rem;">{{ c.summary.passed_rounds }}</div>
+                <div class="stat-pill pass" style="padding:8px 14px;">
+                    <div class="stat-value" style="font-size:1.1rem;">{{ c.summary.passed_rounds }}</div>
                     <div class="stat-label">Passed</div>
                 </div>
-                <div class="stat-pill" style="padding:8px 14px;">
-                    <div class="stat-value text-danger" style="font-size:1.1rem;">{{ c.summary.failed_rounds }}</div>
+                <div class="stat-pill fail" style="padding:8px 14px;">
+                    <div class="stat-value" style="font-size:1.1rem;">{{ c.summary.failed_rounds }}</div>
                     <div class="stat-label">Failed</div>
                 </div>
                 <div class="stat-pill" style="padding:8px 14px;">
@@ -599,21 +727,14 @@
                             <div class="d-flex align-items-center gap-2">
                                 <div class="score-progress flex-grow-1">
                                     <div class="score-progress-bar"
-                                         style="width: {{ r.percentage }}%;
-                                                background:
-                                                {% if r.percentage >= r.pass_threshold %}
-                                                    linear-gradient(90deg, #2a9d8f, #52c7b8)
-                                                {% elif r.percentage >= (r.pass_threshold - 10) %}
-                                                    linear-gradient(90deg, #f4a261, #f7c99e)
-                                                {% else %}
-                                                    linear-gradient(90deg, #d62828, #e76f51)
-                                                {% endif %};"></div>
+                                         data-pct="{{ r.percentage }}"
+                                         data-threshold="{{ r.pass_threshold }}"
+                                         style="width:0%;"></div>
                                 </div>
-                                <span class="fw-semibold" style="min-width:45px;
-                                    color:
-                                    {% if r.percentage >= r.pass_threshold %}#2a9d8f
-                                    {% elif r.percentage >= (r.pass_threshold - 10) %}#e67e22
-                                    {% else %}#d62828{% endif %};">
+                                <span class="fw-semibold pct-label"
+                                      data-pct="{{ r.percentage }}"
+                                      data-threshold="{{ r.pass_threshold }}"
+                                      style="min-width:45px;">
                                     {{ r.percentage }}%
                                 </span>
                             </div>
@@ -695,6 +816,47 @@
 
 
 <script>
+// ----- Score colors / widths -----
+document.querySelectorAll('.score-progress-bar').forEach(function(bar) {
+    const pct = parseFloat(bar.dataset.pct || '0') || 0;
+    const thr = parseFloat(bar.dataset.threshold || '70') || 70;
+    const label = bar.closest('.d-flex')?.querySelector('.pct-label');
+
+    bar.style.width = pct + '%';
+    if (pct >= thr) {
+        bar.style.background = 'linear-gradient(90deg, #2a9d8f, #52c7b8)';
+        if (label) label.style.color = '#2a9d8f';
+    } else if (pct >= (thr - 10)) {
+        bar.style.background = 'linear-gradient(90deg, #f4a261, #f7c99e)';
+        if (label) label.style.color = '#e67e22';
+    } else {
+        bar.style.background = 'linear-gradient(90deg, #d62828, #e76f51)';
+        if (label) label.style.color = '#d62828';
+    }
+});
+
+// ----- Search -----
+function filterCards() {
+    const input = document.getElementById('candidateSearch');
+    const query = (input ? input.value : '').toLowerCase().trim();
+    const cards = document.querySelectorAll('.candidate-result-card');
+    const noResults = document.getElementById('noSearchResults');
+    let visibleCount = 0;
+
+    cards.forEach(function(card) {
+        const name = (card.dataset.name || '').toLowerCase();
+        const email = (card.dataset.email || '').toLowerCase();
+        const role = (card.dataset.role || '').toLowerCase();
+        const match = name.includes(query) || email.includes(query) || role.includes(query);
+        card.style.display = match ? '' : 'none';
+        if (match) visibleCount++;
+    });
+
+    if (noResults) {
+        noResults.style.display = (visibleCount === 0 && query !== '') ? 'block' : 'none';
+    }
+}
+
 // ----- Dropdown toggle -----
 const selector = document.getElementById('candidateSelector');
 const toggle = document.getElementById('candidateDropdownToggle');
