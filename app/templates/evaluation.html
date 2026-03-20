@@ -4,730 +4,436 @@
 
 {% block head %}
 <style>
-    .evaluation-page {
-        --ev-brand: #0f766e;
-        --ev-brand-2: #14b8a6;
-        --ev-ink: #0f172a;
-        --ev-muted: #64748b;
-        --ev-border: #e2e8f0;
-        --ev-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
-                border-radius: 10px;
-        padding: 8px 0 14px;
-    }
+:root {
+    --ev-brand: #0f766e;
+    --ev-az-blue: #2050a0;
+    --ev-az-orange: #f06000;
+    --ev-ink: #0f172a;
+    --ev-muted: #64748b;
+    --ev-border: #e2e8f0;
+    --ev-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+    --ev-bg: #f5f7fa;
+}
+.evaluation-page { padding: 8px 0 24px; background: var(--ev-bg); min-height: 100vh; }
+.eval-breadcrumb { font-size: 0.78rem; color: var(--ev-muted); margin-bottom: 4px; }
+.eval-breadcrumb a { color: var(--ev-brand); text-decoration: none; font-weight: 500; }
+.eval-breadcrumb a:hover { text-decoration: underline; }
+.eval-title-bar { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px; flex-wrap: wrap; gap: 10px; }
+.eval-title-h4 { font-size: 1.45rem; font-weight: 700; color: var(--ev-ink); margin: 0; letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px; line-height: 1.3; }
+.help-btn-wrap { display: inline-block; position: relative; vertical-align: middle; }
+.help-btn { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: #cbd5e1; color: #334155; border-radius: 50%; font-size: 0.72rem; font-weight: 700; cursor: pointer; border: none; font-family: sans-serif; line-height: 1; padding: 0; margin: 0; flex-shrink: 0; transition: background 0.2s, color 0.2s; }
+.help-btn:hover { background: var(--ev-brand); color: #fff; }
+.help-tooltip-box { display: none; position: absolute; right: 0; top: 30px; background: #1e293b; color: #e2e8f0; border-radius: 10px; padding: 14px 18px; width: 290px; font-size: 0.78rem; font-weight: 400; box-shadow: 0 8px 24px rgba(0,0,0,0.2); z-index: 9999; line-height: 1.5; white-space: normal; }
+.help-btn-wrap:hover .help-tooltip-box { display: block; }
+.help-tooltip-box-title { font-weight: 700; font-size: 0.8rem; color: #fff; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.help-tooltip-box ol { margin: 0; padding-left: 16px; }
+.help-tooltip-box ol li { margin-bottom: 5px; color: #cbd5e1; }
+.help-tooltip-box ol li:last-child { margin-bottom: 0; }
+.eval-top-tools { display: flex; align-items: center; gap: 10px; margin-left: 6px; }
+.eval-top-search { position: relative; width: 320px; margin-left: 0; }
+.eval-top-search input { width: 100%; padding: 8px 16px 8px 34px; border: 1px solid var(--ev-border); border-radius: 999px; font-size: 0.82rem; background: #fff; color: var(--ev-ink); outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+.eval-top-search input:focus { border-color: var(--ev-az-blue); box-shadow: 0 0 0 3px rgba(32,80,160,0.12); }
+.eval-top-search .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 0.8rem; pointer-events: none; }
+.eval-top-search input::placeholder { color: #94a3b8; }
+.eval-top-help .help-tooltip-box { right: 0; left: auto; top: 30px; }
+.threshold-legend { background: #fff; border: 1px solid var(--ev-border); border-radius: 10px; padding: 12px 20px; margin-bottom: 20px; display: flex; align-items: center; flex-wrap: wrap; gap: 14px; box-shadow: var(--ev-shadow); }
+.threshold-item { display: inline-flex; align-items: center; gap: 6px; font-size: 0.79rem; color: var(--ev-muted); }
+.threshold-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.candidate-selector { border: 1px solid var(--ev-border); border-radius: 10px; background: #fff; box-shadow: var(--ev-shadow); margin-bottom: 20px; transition: border-color 0.2s; }
+.candidate-selector:hover { border-color: var(--ev-brand); }
+.toggle-bar { padding: 15px 20px; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border-radius: 9px; font-weight: 500; color: #334155; }
+.toggle-bar:hover { background: #f1f5f9; }
+.toggle-bar .arrow { transition: transform 0.3s; font-size: 0.85rem; color: var(--ev-brand); }
+.candidate-selector.open .arrow { transform: rotate(180deg); }
+.candidate-list { max-height: 300px; overflow-y: auto; padding: 12px 18px; }
+.candidate-list .form-check { padding: 11px 0 11px 30px; border-bottom: 1px solid #f1f5f9; }
+.candidate-list .form-check:last-child { border-bottom: none; }
+.select-all-bar { padding: 8px 0; border-bottom: 2px solid #e2e8f0; margin-bottom: 4px; }
+.candidate-result-card { background: #fff; border: 1px solid var(--ev-border); border-radius: 14px; overflow: hidden; margin-bottom: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.candidate-result-header { padding: 22px 26px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid var(--ev-border); background: #fff; }
+.candidate-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #0f766e, #14b8a6); color: #fff; font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; letter-spacing: 0.5px; }
+.candidate-info-wrap { display: flex; align-items: center; gap: 14px; }
+.candidate-name { font-size: 1.15rem; font-weight: 700; color: var(--ev-ink); margin: 0; line-height: 1.2; }
+.candidate-email { font-size: 0.82rem; color: var(--ev-muted); margin: 3px 0 6px; }
+.role-badge { display: inline-block; background: #e0f2fe; color: #0369a1; font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; letter-spacing: 0.2px; }
+.result-pills { display: flex; gap: 10px; flex-shrink: 0; }
+.result-pill { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 68px; padding: 10px 14px; border-radius: 10px; text-align: center; }
+.result-pill .pill-value { font-size: 1.35rem; font-weight: 700; line-height: 1; }
+.result-pill .pill-label { font-size: 0.67rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 4px; }
+.pill-pass { background: var(--ev-az-blue); color: #fff; }
+.pill-fail { background: var(--ev-az-orange); color: #ffffff; }
+.pill-attempted { background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; }
+.summary-row { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--ev-border); }
+@media (max-width: 768px) { .summary-row { grid-template-columns: 1fr; } }
+.summary-panel { padding: 16px 22px; }
+.summary-panel:first-child { border-right: 1px solid var(--ev-border); }
+.summary-panel-title { display: flex; align-items: center; gap: 7px; font-size: 0.78rem; font-weight: 700; color: #334155; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+.summary-panel-title .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.chips-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 6px; font-size: 0.74rem; font-weight: 500; background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+.chip.alert-chip { background: var(--ev-az-orange); color: #ffffff; border-color: var(--ev-az-orange); }
+.chip.risk-high { background: var(--ev-az-orange); color: #ffffff; border-color: var(--ev-az-orange); }
+.chip.risk-medium { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+.chip.risk-low { background: #f0fdf4; color: #166534; border-color: #bbf7d0; }
+.score-table { margin: 0; font-size: 0.875rem; width: 100%; }
+.score-table thead th { background: #1e293b; color: #e2e8f0; font-weight: 600; padding: 13px 18px; border: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.6px; white-space: nowrap; }
+.score-table tbody td { padding: 14px 18px; vertical-align: middle; border-bottom: 1px solid #f1f5f9; color: #334155; }
+.score-table tbody tr:last-child td { border-bottom: none; }
+.score-table tbody tr:hover { background: #f8fafc; }
+.round-name { font-weight: 600; color: #0f172a; font-size: 0.88rem; }
+.round-key-badge { display: inline-block; background: #f1f5f9; color: #64748b; font-size: 0.67rem; font-weight: 600; padding: 1px 6px; border-radius: 4px; margin-top: 3px; letter-spacing: 0.3px; }
+.score-progress { height: 7px; border-radius: 4px; background: #e9ecef; overflow: hidden; min-width: 80px; }
+.score-progress-bar { height: 100%; border-radius: 4px; transition: width 0.7s ease; }
+.status-pill { padding: 4px 13px; border-radius: 20px; font-weight: 600; font-size: 0.73rem; display: inline-block; text-transform: uppercase; letter-spacing: 0.4px; }
+.status-pass { background: rgba(32,80,160,0.14); color: var(--ev-az-blue); }
+.status-fail { background: var(--ev-az-orange); color: #ffffff; }
+.status-pending { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+.card-footer-note { padding: 12px 22px; background: #f8fafc; border-top: 1px solid var(--ev-border); font-size: 0.77rem; color: var(--ev-muted); }
+.rounds-section-title { font-size: 0.88rem; font-weight: 700; color: #0f172a; margin-bottom: 0; letter-spacing: -0.1px; padding: 16px 22px 12px; }
+.eval-empty-state { text-align: center; padding: 60px 22px; border: 1.5px dashed #cbd5e1; border-radius: 12px; background: #fff; }
+.eval-empty-state .empty-icon { font-size: 2.8rem; color: #cbd5e1; margin-bottom: 14px; }
+.eval-empty-state h5 { color: #64748b; font-weight: 600; }
+.eval-empty-state p { color: #94a3b8; font-size: 0.88rem; }
+.btn-evaluate { background: var(--ev-az-blue); color: #fff; border: none; border-radius: 8px; padding: 10px 26px; font-weight: 600; font-size: 0.88rem; cursor: pointer; transition: background 0.2s, transform 0.15s, box-shadow 0.15s; box-shadow: 0 1px 3px rgba(32,80,160,0.25); }
+.btn-evaluate:hover { background: #1b458c; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(32,80,160,0.3); color: #fff; }
+.btn-evaluate:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-    /* ===== Evaluation Page Styles ===== */
-    .eval-header {
-        background: var(--ev-brand);
-        color: white;
-        border-radius: 10px;
-        padding: 26px 30px;
-        margin-bottom: 24px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    }
-    .eval-header h4 {
-        margin: 0;
-        font-weight: 600;
-        font-size: 1.5rem;
-        letter-spacing: -0.01em;
-    }
-    .eval-header p {
-        margin: 8px 0 0 0;
-        opacity: 0.92;
-        font-size: 0.95rem;
-    }
+@media (max-width: 992px) {
+    .eval-top-tools { margin-left: 10px; }
+    .eval-top-search { width: 240px; }
+}
 
-    /* Candidate selector */
-    .candidate-selector {
-        border: 1px solid var(--ev-border);
-        border-radius: 10px;
-        background: #ffffff;
-        transition: border-color 0.2s, box-shadow 0.2s;
-        box-shadow: var(--ev-shadow);
-    }
-    .candidate-selector:hover {
-        border-color: var(--ev-brand);
-        box-shadow: 0 2px 8px rgba(15,118,110,0.10);
-    }
-    .candidate-selector .toggle-bar {
-        padding: 16px 20px;
-        cursor: pointer;
-        user-select: none;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #f8fafc;
-        border-radius: 9px;
-        font-weight: 500;
-        color: #334155;
-    }
-    .candidate-selector .toggle-bar:hover {
-        background: #f1f5f9;
-    }
-    .candidate-selector .toggle-bar .arrow {
-        transition: transform 0.3s;
-        font-size: 0.85rem;
-        color: var(--ev-brand);
-    }
-    .candidate-selector.open .arrow {
-        transform: rotate(180deg);
-    }
-    .candidate-list {
-        max-height: 300px;
-        overflow-y: auto;
-        padding: 12px 18px;
-    }
-    .candidate-list .form-check {
-        padding: 12px 0 12px 30px;
-        border-bottom: 1px solid #f1f5f9;
-    }
-    .candidate-list .form-check:last-child {
-        border-bottom: none;
-    }
-
-    /* Candidate result card */
-    .candidate-result-card {
-        border: 1px solid var(--ev-border);
-        border-radius: 10px;
-        overflow: hidden;
-        margin-bottom: 28px;
-        box-shadow: var(--ev-shadow);
-        background: #ffffff;
-    }
-    .candidate-result-header {
-        padding: 20px 24px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 12px;
-    }
-    .candidate-info .candidate-name {
-        font-size: 1.15rem;
-        font-weight: 600;
-        color: #0f172a;
-    }
-    .candidate-info .candidate-meta {
-        font-size: 0.87rem;
-        color: #64748b;
-        margin-top: 2px;
-    }
-    /* Stat pills (header summary) */
-    .stat-pill {
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-        border-radius: 8px;
-        padding: 10px 18px;
-        text-align: center;
-        flex: 1;
-        min-width: 120px;
-    }
-    .stat-pill .stat-value {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: #0f172a;
-    }
-    .stat-pill .stat-label {
-        font-size: 0.75rem;
-        color: #94a3b8;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-top: 2px;
-    }
-
-    /* Score table */
-    .score-table {
-        margin: 0;
-        font-size: 0.88rem;
-    }
-    .score-table thead th {
-        background: #1e293b;
-        color: white;
-        font-weight: 500;
-        padding: 12px 16px;
-        border: none;
-        white-space: nowrap;
-        font-size: 0.82rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    .score-table tbody td {
-        padding: 14px 16px;
-        vertical-align: middle;
-        border-bottom: 1px solid #f1f5f9;
-    }
-    .score-table tbody tr:last-child td {
-        border-bottom: none;
-    }
-    .score-table tbody tr:hover {
-        background: #f8fafc;
-    }
-
-    /* Progress bar for percentage */
-    .score-progress {
-        height: 8px;
-        border-radius: 4px;
-        background: #e9ecef;
-        overflow: hidden;
-        min-width: 80px;
-    }
-    .score-progress-bar {
-        height: 100%;
-        border-radius: 4px;
-        transition: width 0.6s ease;
-    }
-
-    /* Status pills in table */
-    .status-pill {
-        padding: 4px 14px;
-        border-radius: 20px;
-        font-weight: 500;
-        font-size: 0.78rem;
-        display: inline-block;
-        text-transform: uppercase;
-        letter-spacing: 0.3px;
-    }
-    .status-pass {
-        background: #d4edda;
-        color: #155724;
-    }
-    .status-fail {
-        background: #f8d7da;
-        color: #721c24;
-    }
-    .status-not-attempted {
-        background: #e2e3e5;
-        color: #383d41;
-    }
-
-    /* Threshold info */
-    .threshold-info {
-        padding: 16px 24px;
-        background: #f8fafc;
-        border-top: 1px solid #e2e8f0;
-    }
-    .threshold-item {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        margin-right: 20px;
-        font-size: 0.8rem;
-        color: #64748b;
-    }
-    .threshold-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        display: inline-block;
-    }
-
-    /* Proctoring summary */
-    .proctoring-summary {
-        padding: 12px 24px;
-        background: #fffdf6;
-        border-top: 1px solid #f4ead0;
-        border-bottom: 1px solid #f4ead0;
-    }
-    .proctoring-title {
-        display: block;
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: #7a5a11;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-bottom: 8px;
-    }
-    .proctoring-chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-    .proctoring-chip {
-        display: inline-flex;
-        align-items: center;
-        padding: 4px 10px;
-        border-radius: 999px;
-        border: 1px solid #e7dcbf;
-        background: #fff8e8;
-        color: #5f4a18;
-        font-size: 0.76rem;
-        font-weight: 500;
-    }
-    .proctoring-chip.alert {
-        border-color: #f5c6cb;
-        background: #fdecef;
-        color: #a71d2a;
-    }
-    .plagiarism-summary {
-        padding: 12px 24px;
-        background: #f8fafc;
-        border-top: 1px solid #e2e8f0;
-        border-bottom: 1px solid #e2e8f0;
-    }
-    .plagiarism-title {
-        display: block;
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: #334155;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-bottom: 8px;
-    }
-    .plagiarism-chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-    .plagiarism-chip {
-        display: inline-flex;
-        align-items: center;
-        padding: 4px 10px;
-        border-radius: 999px;
-        border: 1px solid #e2e8f0;
-        background: #f1f5f9;
-        color: #334155;
-        font-size: 0.76rem;
-        font-weight: 500;
-    }
-    .plagiarism-chip.risk-high {
-        border-color: #f5c6cb;
-        background: #fdecef;
-        color: #a71d2a;
-    }
-    .plagiarism-chip.risk-medium {
-        border-color: #ffe2b5;
-        background: #fff4df;
-        color: #8a4c00;
-    }
-    .plagiarism-chip.risk-low {
-        border-color: #c5e8d0;
-        background: #eaf8ef;
-        color: #1f6b3a;
-    }
-
-    /* Empty state */
-    .eval-empty-state {
-        text-align: center;
-        padding: 64px 22px;
-        border: 1px dashed #cbd5e1;
-        border-radius: 10px;
-        background: #ffffff;
-        box-shadow: var(--ev-shadow);
-    }
-    .eval-empty-state .empty-icon {
-        font-size: 3rem;
-        color: #cbd5e1;
-        margin-bottom: 16px;
-    }
-    .eval-empty-state h5 {
-        color: #64748b;
-        font-weight: 600;
-    }
-    .eval-empty-state p {
-        color: #94a3b8;
-        font-size: 0.9rem;
-    }
-
-    /* Select all */
-    .select-all-bar {
-        padding: 8px 0;
-        border-bottom: 2px solid #e2e8f0;
-        margin-bottom: 4px;
-    }
-
-    .evaluation-page .card {
-        border: 1px solid var(--ev-border);
-        border-radius: 10px;
-        box-shadow: var(--ev-shadow);
-        background: #ffffff;
-    }
-
-    .evaluation-page .btn-primary {
-        border: 0;
-        border-radius: 8px;
-        font-weight: 500;
-        padding: 11px 24px;
-        background: var(--ev-brand);
-        box-shadow: 0 1px 3px rgba(15,118,110,0.15);
-    }
-
-    .evaluation-page .btn-primary:hover {
-        background: #0d6963;
-        transform: translateY(-1px);
-        box-shadow: 0 2px 6px rgba(15,118,110,0.20);    }
+@media (max-width: 768px) {
+    .eval-top-tools { display: none; }
+}
 </style>
+{% endblock %}
+
+{% block navbar_left_extra %}
+<div class="eval-top-tools">
+    <div class="eval-top-search">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" id="candidateSearch" placeholder="Search by name, email or role..." oninput="filterCards()">
+    </div>
+</div>
+{% endblock %}
+
+{% block navbar_right_extra %}
+<span class="help-btn-wrap eval-top-help">
+    <button class="help-btn">?</button>
+    <div class="help-tooltip-box">
+        <div class="help-tooltip-box-title">How to Evaluate a Candidate</div>
+        <ol>
+            <li>Click <strong>"Select Candidates"</strong> dropdown</li>
+            <li>Check one or more candidates from the list</li>
+            <li>Click <strong>"Evaluate Selected"</strong> button</li>
+            <li>View each candidate's round scores, proctoring summary and code similarity</li>
+            <li>Green <strong>PASS</strong> means they met the pass threshold</li>
+            <li>A candidate is <strong>Selected</strong> only if they pass all rounds</li>
+        </ol>
+    </div>
+</span>
 {% endblock %}
 
 {% block content %}
 <div class="evaluation-page">
-<!-- ===== PAGE HEADER ===== -->
-<div class="eval-header">
-    <h4><i class="bi bi-clipboard-data me-2"></i>Candidate Evaluation</h4>
-    <p>Evaluate MCQ round scores per candidate. Select candidates below to view detailed results.</p>
-</div>
 
-<!-- ===== PASS THRESHOLD LEGEND ===== -->
-<div class="card shadow-sm mb-4">
-    <div class="card-body py-3">
-        <div class="d-flex align-items-center flex-wrap gap-3">
-            <span class="fw-medium text-muted" style="font-size:0.82rem;">
-                <i class="bi bi-info-circle me-1"></i> Pass Thresholds:
-            </span>
-            <span class="threshold-item">
-                <span class="threshold-dot" style="background:#0f766e;"></span>
-                Aptitude: {{ pass_thresholds.get('L1', default_threshold) }}%
-            </span>
-            <span class="threshold-item">
-                <span class="threshold-dot" style="background:#6610f2;"></span>
-                Technical: {{ pass_thresholds.get('L2', default_threshold) }}%
-            </span>
-            <span class="threshold-item">
-                <span class="threshold-dot" style="background:#e76f51;"></span>
-                Practical: {{ pass_thresholds.get('L3', default_threshold) }}%
-            </span>
-            <span class="threshold-item">
-                <span class="threshold-dot" style="background:#2a9d8f;"></span>
-                Soft Skills: {{ pass_thresholds.get('L5', default_threshold) }}%
-            </span>
-            <span class="threshold-item">
-                <span class="threshold-dot" style="background:#f4a261;"></span>
-                Domain: {{ pass_thresholds.get('L6', default_threshold) }}%
-            </span>
+    <div class="eval-title-bar">
+        <div>
+            <div class="eval-breadcrumb">
+                <a href="/dashboard">Dashboard</a>
+                <span class="mx-1">&rsaquo;</span>
+                <span>Candidate Evaluation</span>
+            </div>
+            <div class="eval-title-h4">
+                <i class="bi bi-clipboard-data" style="color:#0f766e;"></i>
+                Candidate Evaluation
+            </div>
         </div>
     </div>
-</div>
 
-
-<!-- ===== CANDIDATE SELECTOR FORM ===== -->
-<form method="POST">
-
-<div class="candidate-selector mb-4" id="candidateSelector">
-    <div class="toggle-bar" id="candidateDropdownToggle">
-        <span>
-            <i class="bi bi-people me-2"></i>
-            <span class="fw-medium">Select Candidates</span>
-            {% if candidates %}
-                <span class="text-muted ms-2" style="font-size:0.85rem;">({{ candidates|length }} available)</span>
-            {% endif %}
+    <div class="threshold-legend">
+        <span style="font-size:0.78rem; font-weight:600; color:#334155;">
+            <i class="bi bi-info-circle me-1" style="color:#0f766e;"></i> Pass Thresholds:
         </span>
-        <span class="arrow"><i class="bi bi-chevron-down"></i></span>
+        <span class="threshold-item"><span class="threshold-dot" style="background:#0f766e;"></span>Aptitude: {{ pass_thresholds.get('L1', default_threshold) }}%</span>
+        <span class="threshold-item"><span class="threshold-dot" style="background:#6610f2;"></span>Technical: {{ pass_thresholds.get('L2', default_threshold) }}%</span>
+        <span class="threshold-item"><span class="threshold-dot" style="background:#e76f51;"></span>Practical: {{ pass_thresholds.get('L3', default_threshold) }}%</span>
+        <span class="threshold-item"><span class="threshold-dot" style="background:#2a9d8f;"></span>Soft Skills: {{ pass_thresholds.get('L5', default_threshold) }}%</span>
+        <span class="threshold-item"><span class="threshold-dot" style="background:#f4a261;"></span>Domain: {{ pass_thresholds.get('L6', default_threshold) }}%</span>
     </div>
 
-    <div id="candidateSelectContainer" class="d-none">
-
-        {% if candidates %}
-        <!-- Select All -->
-        <div class="select-all-bar px-3 pt-2">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="selectAllCandidates">
-                <label class="form-check-label fw-medium" for="selectAllCandidates"
-                       style="font-size:0.9rem; color:#334155;">
-                    Select All
-                </label>
+    <form method="POST">
+        <div class="candidate-selector mb-3" id="candidateSelector">
+            <div class="toggle-bar" id="candidateDropdownToggle">
+                <span>
+                    <i class="bi bi-people me-2"></i>
+                    <span class="fw-medium">Select Candidates</span>
+                    {% if candidates %}<span class="text-muted ms-2" style="font-size:0.85rem;">({{ candidates|length }} available)</span>{% endif %}
+                </span>
+                <span class="arrow"><i class="bi bi-chevron-down"></i></span>
             </div>
-        </div>
-        {% endif %}
-
-        <div class="candidate-list">
-            {% for c in candidates %}
-            <div class="form-check">
-                <input class="form-check-input candidate-checkbox"
-                       type="checkbox"
-                       name="candidates"
-                       value="{{ c.email }}"
-                       id="cand_{{ loop.index }}"
-                       {% if c.email in selected_emails %}checked{% endif %}>
-                <label class="form-check-label" for="cand_{{ loop.index }}">
-                    <span class="fw-semibold" style="color:#0f172a;">{{ c.name }}</span>
-                    <div style="font-size:0.82rem; color:#64748b;">
-                        {{ c.email }} &nbsp;&middot;&nbsp; <span style="color:var(--ev-brand);">{{ c.role }}</span>
+            <div id="candidateSelectContainer" class="d-none">
+                {% if candidates %}
+                <div class="select-all-bar px-3 pt-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="selectAllCandidates">
+                        <label class="form-check-label fw-medium" for="selectAllCandidates" style="font-size:0.9rem; color:#334155;">Select All</label>
                     </div>
-                </label>
-            </div>
-            {% endfor %}
-
-            {% if not candidates %}
-            <div class="text-center text-muted py-4">
-                <i class="bi bi-inbox" style="font-size:1.5rem;"></i>
-                <div class="mt-2" style="font-size:0.9rem;">No candidates found. Create tests first.</div>
-            </div>
-            {% endif %}
-        </div>
-    </div>
-</div>
-
-<div class="d-flex justify-content-end mb-4">
-    <button class="btn btn-primary px-4 py-2" {% if not candidates %}disabled{% endif %}>
-        <i class="bi bi-search me-1"></i> Evaluate Selected
-    </button>
-</div>
-
-</form>
-
-
-<!-- ===== EVALUATION RESULTS ===== -->
-{% if filtered_candidates %}
-
-    {% for c in filtered_candidates %}
-
-    <div class="candidate-result-card">
-        <!-- Candidate Header -->
-        <div class="candidate-result-header" style="background: #f8fafc;">
-
-            <div class="candidate-info">
-                <div class="candidate-name">
-                    <i class="bi bi-person-fill me-1"></i> {{ c.name }}
                 </div>
-                <div class="candidate-meta">
-                    <i class="bi bi-envelope me-1"></i> {{ c.email }}
-                    &nbsp;&middot;&nbsp;
-                    <i class="bi bi-briefcase me-1"></i> {{ c.role }}
-                </div>
-            </div>
-
-            <!-- Summary pills: rounds passed/failed/attempted only -->
-            <div class="d-flex gap-3">
-                <div class="stat-pill" style="padding:8px 14px;">
-                    <div class="stat-value text-success" style="font-size:1.1rem;">{{ c.summary.passed_rounds }}</div>
-                    <div class="stat-label">Passed</div>
-                </div>
-                <div class="stat-pill" style="padding:8px 14px;">
-                    <div class="stat-value text-danger" style="font-size:1.1rem;">{{ c.summary.failed_rounds }}</div>
-                    <div class="stat-label">Failed</div>
-                </div>
-                <div class="stat-pill" style="padding:8px 14px;">
-                    <div class="stat-value" style="font-size:1.1rem;">{{ c.summary.attempted_rounds }} / {{ c.summary.total_rounds }}</div>
-                    <div class="stat-label">Attempted</div>
-                </div>
-            </div>
-        </div>
-
-        {% set ps = c.proctoring_summary or {} %}
-        <div class="proctoring-summary">
-            <span class="proctoring-title">Proctoring Summary</span>
-            <div class="proctoring-chips">
-                <span class="proctoring-chip">Tab Switches: {{ ps.tab_switches or 0 }}</span>
-                <span class="proctoring-chip">Multiple Face Events: {{ ps.multi_face_events or 0 }}</span>
-                <span class="proctoring-chip">No Face Events: {{ ps.no_face_events or 0 }}</span>
-                <span class="proctoring-chip">No Face Duration: {{ '%.1f'|format(ps.no_face_duration_seconds or 0) }}s</span>
-                <span class="proctoring-chip">Attention Deviations: {{ ps.attention_deviation_count or 0 }}</span>
-                <span class="proctoring-chip">Keyboard Shortcuts Blocked: {{ ps.keyboard_shortcuts_blocked or 0 }}</span>
-                <span class="proctoring-chip">Copy/Paste Blocks: {{ ps.copy_paste_blocks or 0 }}</span>
-                <span class="proctoring-chip">Screenshots Captured: {{ ps.screenshot_captures or 0 }}</span>
-                <span class="proctoring-chip">Suspicion Score: {{ ps.suspicion_score or 0 }}</span>
-                <span class="proctoring-chip {% if ps.suspicion_threshold_exceeded %}alert{% endif %}">
-                    Suspicion Threshold Exceeded: {% if ps.suspicion_threshold_exceeded %}Yes{% else %}No{% endif %}{% if ps.suspicion_threshold_event_count %} ({{ ps.suspicion_threshold_event_count }}){% endif %}
-                </span>
-            </div>
-        </div>
-
-        {% set pl = c.plagiarism_summary or {} %}
-        {% set top_match = pl.top_matches|default([])|first %}
-        <div class="plagiarism-summary">
-            <span class="plagiarism-title">Code Similarity Summary</span>
-            <div class="plagiarism-chips">
-                <span class="plagiarism-chip {% if (pl.risk_level or 'LOW') == 'HIGH' %}risk-high{% elif (pl.risk_level or 'LOW') == 'MEDIUM' %}risk-medium{% else %}risk-low{% endif %}">
-                    Risk: {{ pl.risk_level or 'LOW' }}
-                </span>
-                <span class="plagiarism-chip">Risk Score: {{ '%.2f'|format(pl.risk_score or 0) }}</span>
-                <span class="plagiarism-chip">Max Similarity: {{ '%.2f'|format(pl.max_similarity or 0) }}%</span>
-                <span class="plagiarism-chip">Matches: {{ pl.matched_submissions or 0 }}/{{ pl.compared_submissions or 0 }}</span>
-                {% if top_match %}
-                <span class="plagiarism-chip">Top Match: {{ top_match.email }} ({{ '%.2f'|format(top_match.similarity or 0) }}%)</span>
                 {% endif %}
+                <div class="candidate-list">
+                    {% for c in candidates %}
+                    <div class="form-check">
+                        <input class="form-check-input candidate-checkbox" type="checkbox" name="candidates" value="{{ c.email }}" id="cand_{{ loop.index }}" {% if c.email in selected_emails %}checked{% endif %}>
+                        <label class="form-check-label" for="cand_{{ loop.index }}">
+                            <span class="fw-semibold" style="color:#0f172a;">{{ c.name }}</span>
+                            <div style="font-size:0.82rem; color:#64748b;">{{ c.email }} &nbsp;&middot;&nbsp; <span style="color:#0f766e;">{{ c.role }}</span></div>
+                        </label>
+                    </div>
+                    {% endfor %}
+                    {% if not candidates %}
+                    <div class="text-center text-muted py-4">
+                        <i class="bi bi-inbox" style="font-size:1.5rem;"></i>
+                        <div class="mt-2" style="font-size:0.9rem;">No candidates found. Create tests first.</div>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
+        <div class="d-flex justify-content-end mb-4">
+            <button class="btn-evaluate" {% if not candidates %}disabled{% endif %}>
+                <i class="bi bi-search me-1"></i> Evaluate Selected
+            </button>
+        </div>
+    </form>
 
-        <!-- Score Table -->
-        <div class="table-responsive">
-        <table class="table score-table align-middle mb-0">
+    {% if filtered_candidates %}
 
-            <thead>
-            <tr>
-                <th style="width:6%;">No.</th>
-                <th style="width:22%;">Round</th>
-                <th style="width:10%;">Score</th>
-                <th style="width:24%;">Percentage</th>
-                <th style="width:12%;">Pass Mark</th>
-                <th style="width:10%;">Attempted</th>
-                <th style="width:12%;">Time</th>
-                <th style="width:10%;">Status</th>
-            </tr>
-            </thead>
+        <div id="noSearchResults" style="display:none; text-align:center; padding:40px; color:#94a3b8; font-size:0.9rem;">
+            <i class="bi bi-search" style="font-size:2rem; display:block; margin-bottom:10px;"></i>
+            No candidates match your search.
+        </div>
 
-            <tbody>
-            {% for rk, r in c.rounds.items() %}
+        {% for c in filtered_candidates %}
+        {% set name_parts = c.name.split() %}
+        {% if name_parts|length >= 2 %}{% set initials = name_parts[0][0] ~ name_parts[1][0] %}{% else %}{% set initials = c.name[:2] %}{% endif %}
 
-                {% if r.status == "Not Attempted" %}
+        <div class="candidate-result-card" data-name="{{ c.name | lower }}" data-email="{{ c.email | lower }}" data-role="{{ c.role | lower }}">
 
-                    <tr>
-                        <td>
-                            <span class="fw-medium">{{ r.round_number or loop.index }}</span>
-                        </td>
-                        <td>
-                            <span class="fw-medium" style="color:#334155;">
-                                {{ r.round_label }}
-                            </span>
-                        </td>
-                        <td colspan="5" class="text-center text-muted" style="font-style:italic;">
-                            <i class="bi bi-dash-circle me-1"></i> Not Attempted
-                        </td>
-                        <td>
-                            <span class="status-pill status-not-attempted">Pending</span>
-                        </td>
-                    </tr>
+            <div class="candidate-result-header">
+                <div class="candidate-info-wrap">
+                    <div class="candidate-avatar">{{ initials | upper }}</div>
+                    <div>
+                        <div class="candidate-name">{{ c.name }}</div>
+                        <div class="candidate-email"><i class="bi bi-envelope me-1"></i>{{ c.email }}</div>
+                        <span class="role-badge">{{ c.role }}</span>
+                    </div>
+                </div>
+                <div class="result-pills">
+                    <div class="result-pill pill-pass">
+                        <div class="pill-value">{{ c.summary.passed_rounds }}</div>
+                        <div class="pill-label">Passed</div>
+                    </div>
+                    <div class="result-pill pill-fail">
+                        <div class="pill-value">{{ c.summary.failed_rounds }}</div>
+                        <div class="pill-label">Failed</div>
+                    </div>
+                    <div class="result-pill pill-attempted">
+                        <div class="pill-value">{{ c.summary.attempted_rounds }} / {{ c.summary.total_rounds }}</div>
+                        <div class="pill-label">Attempted</div>
+                    </div>
+                </div>
+            </div>
 
-                {% else %}
+            {% set ps = c.proctoring_summary or {} %}
+            {% set pl = c.plagiarism_summary or {} %}
+            {% set top_match = pl.top_matches|default([])|first %}
+            <div class="summary-row">
+                <div class="summary-panel">
+                    <div class="summary-panel-title">
+                        <span class="dot" style="background:#f59e0b;"></span> Proctoring Summary
+                    </div>
+                    <div class="chips-wrap">
+                        <span class="chip">Tab Switches: {{ ps.tab_switches or 0 }}</span>
+                        <span class="chip">Multiple Face Events: {{ ps.multi_face_events or 0 }}</span>
+                        <span class="chip">No Face Events: {{ ps.no_face_events or 0 }}</span>
+                        <span class="chip">No Face Duration: {{ '%.1f'|format(ps.no_face_duration_seconds or 0) }}s</span>
+                        <span class="chip">Attention Deviations: {{ ps.attention_deviation_count or 0 }}</span>
+                        <span class="chip">Keyboard Shortcuts Blocked: {{ ps.keyboard_shortcuts_blocked or 0 }}</span>
+                        <span class="chip">Copy/Paste Blocks: {{ ps.copy_paste_blocks or 0 }}</span>
+                        <span class="chip">Screenshots Captured: {{ ps.screenshot_captures or 0 }}</span>
+                        <span class="chip">Suspicion Score: {{ ps.suspicion_score or 0 }}</span>
+                        <span class="chip {% if ps.suspicion_threshold_exceeded %}alert-chip{% endif %}">
+                            Suspicion Threshold Exceeded: {% if ps.suspicion_threshold_exceeded %}Yes{% else %}No{% endif %}{% if ps.suspicion_threshold_event_count %} ({{ ps.suspicion_threshold_event_count }}){% endif %}
+                        </span>
+                    </div>
+                </div>
+                <div class="summary-panel">
+                    <div class="summary-panel-title">
+                        <span class="dot" style="background:#f59e0b;"></span> Code Similarity Summary
+                    </div>
+                    <div class="chips-wrap">
+                        <span class="chip {% if (pl.risk_level or 'LOW') == 'HIGH' %}risk-high{% elif (pl.risk_level or 'LOW') == 'MEDIUM' %}risk-medium{% else %}risk-low{% endif %}">Risk: {{ pl.risk_level or 'LOW' }}</span>
+                        <span class="chip">Risk Score: {{ '%.2f'|format(pl.risk_score or 0) }}</span>
+                        <span class="chip">Max Similarity: {{ '%.2f'|format(pl.max_similarity or 0) }}%</span>
+                        <span class="chip">Matches: {{ pl.matched_submissions or 0 }}/{{ pl.compared_submissions or 0 }}</span>
+                        {% if top_match %}<span class="chip">Top Match: {{ top_match.email }} ({{ '%.2f'|format(top_match.similarity or 0) }}%)</span>{% endif %}
+                    </div>
+                </div>
+            </div>
 
-                    <tr>
-                        <td>
-                            <span class="fw-medium">{{ r.round_number or loop.index }}</span>
-                        </td>
-                        <td>
-                            <span class="fw-medium" style="color:#334155;">
-                                {{ r.round_label }}
-                            </span>
-                        </td>
-
-                        <td>
-                            <span class="fw-semibold" style="font-size:1rem; color:#0f172a;">
-                                {{ r.correct }}
-                            </span>
-                            <span class="text-muted">/ {{ r.total }}</span>
-                        </td>
-
-                        <td>
-                            <div class="d-flex align-items-center gap-2">
-                                <div class="score-progress flex-grow-1">
-                                    <div class="score-progress-bar"
-                                         style="width: {{ r.percentage }}%;
-                                                background:
-                                                {% if r.percentage >= r.pass_threshold %}
-                                                    linear-gradient(90deg, #2a9d8f, #52c7b8)
-                                                {% elif r.percentage >= (r.pass_threshold - 10) %}
-                                                    linear-gradient(90deg, #f4a261, #f7c99e)
-                                                {% else %}
-                                                    linear-gradient(90deg, #d62828, #e76f51)
-                                                {% endif %};"></div>
+            <div class="rounds-section-title">Evaluation Rounds</div>
+            <div class="table-responsive">
+                <table class="table score-table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th style="width:5%;">No.</th>
+                            <th style="width:21%;">Round</th>
+                            <th style="width:10%;">Score</th>
+                            <th style="width:22%;">Percentage</th>
+                            <th style="width:11%;">Pass Mark</th>
+                            <th style="width:10%;">Attempted</th>
+                            <th style="width:11%;">Time</th>
+                            <th style="width:10%;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for rk, r in c.rounds.items() %}
+                        {% if r.status == "Not Attempted" %}
+                        <tr>
+                            <td><span class="fw-medium text-muted">{{ r.round_number or loop.index }}</span></td>
+                            <td><div class="round-name">{{ r.round_label }}</div><span class="round-key-badge">{{ rk }}</span></td>
+                            <td colspan="4" class="text-center text-muted" style="font-style:italic; font-size:0.82rem;"><i class="bi bi-dash-circle me-1"></i> Not Attempted</td>
+                            <td class="text-muted">&mdash;</td>
+                            <td><span class="status-pill status-pending">Pending</span></td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td><span class="fw-medium text-muted">{{ r.round_number or loop.index }}</span></td>
+                            <td><div class="round-name">{{ r.round_label }}</div><span class="round-key-badge">{{ rk }}</span></td>
+                            <td><span class="fw-semibold" style="font-size:1rem; color:#0f172a;">{{ r.correct }}</span><span class="text-muted"> / {{ r.total }}</span></td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="score-progress flex-grow-1">
+                                        <div class="score-progress-bar" data-pct="{{ r.percentage }}" style="width:0%;"></div>
+                                    </div>
+                                    <span class="fw-semibold pct-label" data-pct="{{ r.percentage }}" data-threshold="{{ r.pass_threshold }}">{{ r.percentage }}%</span>
                                 </div>
-                                <span class="fw-semibold" style="min-width:45px;
-                                    color:
-                                    {% if r.percentage >= r.pass_threshold %}#2a9d8f
-                                    {% elif r.percentage >= (r.pass_threshold - 10) %}#e67e22
-                                    {% else %}#d62828{% endif %};">
-                                    {{ r.percentage }}%
-                                </span>
-                            </div>
-                        </td>
+                            </td>
+                            <td><span class="text-muted fw-medium">&ge; {{ r.pass_threshold }}%</span></td>
+                            <td><span style="color:#334155;">{{ r.attempted }} / {{ r.total }}</span></td>
+                            <td><span style="color:#64748b; font-size:0.82rem;"><i class="bi bi-clock me-1"></i>{{ (r.time_taken_seconds // 60) }}m {{ (r.time_taken_seconds % 60) }}s</span></td>
+                            <td>
+                                {% if r.status == 'PASS' %}
+                                    <span class="status-pill status-pass"><i class="bi bi-check2 me-1"></i>Pass</span>
+                                {% else %}
+                                    <span class="status-pill status-fail"><i class="bi bi-x-lg me-1"></i>Fail</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
-                        <td>
-                            <span class="text-muted fw-medium">&ge; {{ r.pass_threshold }}%</span>
-                        </td>
+            <div class="card-footer-note">
+                <i class="bi bi-lightbulb me-1" style="color:#0f766e;"></i>
+                Each round has its own pass threshold. A candidate is <strong>Selected</strong> only if they pass <strong>all</strong> rounds.
+            </div>
 
-                        <td>
-                            <span style="color:#334155;">{{ r.attempted }} / {{ r.total }}</span>
-                        </td>
-
-                        <td>
-                            <span style="color:#e76f51; font-weight:500;">
-                                <i class="bi bi-clock me-1"></i>
-                                {{ (r.time_taken_seconds // 60) }}m {{ (r.time_taken_seconds % 60) }}s
-                            </span>
-                        </td>
-
-                        <td>
-                            {% if r.status == 'PASS' %}
-                                <span class="status-pill status-pass">
-                                    <i class="bi bi-check2"></i> Pass
-                                </span>
-                            {% else %}
-                                <span class="status-pill status-fail">
-                                    <i class="bi bi-x-lg"></i> Fail
-                                </span>
-                            {% endif %}
-                        </td>
-                    </tr>
-
-                {% endif %}
-
-            {% endfor %}
-            </tbody>
-        </table>
         </div>
+        {% endfor %}
 
-        <!-- Threshold Legend (per card) -->
-        <div class="threshold-info">
-            <small class="text-muted">
-                <i class="bi bi-lightbulb me-1"></i>
-                Each round has its own pass threshold.
-                A candidate is <strong>Selected</strong> only if they pass <strong>all</strong> rounds.
-            </small>
+    {% elif request.method == 'POST' and selected_emails %}
+        <div class="eval-empty-state">
+            <div class="empty-icon"><i class="bi bi-search"></i></div>
+            <h5>No results found</h5>
+            <p>The selected candidates don't have any evaluation data yet.</p>
         </div>
+    {% elif not candidates %}
+        <div class="eval-empty-state">
+            <div class="empty-icon"><i class="bi bi-inbox"></i></div>
+            <h5>No Candidates Available</h5>
+            <p>Create tests for candidates first from the <a href="/create-test">Create Test</a> page.</p>
+        </div>
+    {% else %}
+        <div class="eval-empty-state">
+            <div class="empty-icon"><i class="bi bi-hand-index-thumb"></i></div>
+            <h5>Select Candidates to Evaluate</h5>
+            <p>Choose one or more candidates from the dropdown above and click <strong>Evaluate Selected</strong>.</p>
+        </div>
+    {% endif %}
 
-    </div>
-
-    {% endfor %}
-
-{% elif request.method == 'POST' and selected_emails %}
-
-    <div class="eval-empty-state">
-        <div class="empty-icon"><i class="bi bi-search"></i></div>
-        <h5>No results found</h5>
-        <p>The selected candidates don't have any evaluation data yet.</p>
-    </div>
-
-{% elif not candidates %}
-
-    <div class="eval-empty-state">
-        <div class="empty-icon"><i class="bi bi-inbox"></i></div>
-        <h5>No Candidates Available</h5>
-        <p>Create tests for candidates first from the <a href="/create-test">Create Test</a> page.</p>
-    </div>
-
-{% else %}
-
-    <div class="eval-empty-state">
-        <div class="empty-icon"><i class="bi bi-hand-index-thumb"></i></div>
-        <h5>Select Candidates to Evaluate</h5>
-        <p>Choose one or more candidates from the dropdown above and click <strong>Evaluate Selected</strong>.</p>
-    </div>
-
-{% endif %}
-
+</div>
 
 <script>
-// ----- Dropdown toggle -----
-const selector = document.getElementById('candidateSelector');
-const toggle = document.getElementById('candidateDropdownToggle');
-const container = document.getElementById('candidateSelectContainer');
+// Color progress bars after page loads (avoids Jinja in style attributes)
+document.querySelectorAll('.score-progress-bar').forEach(function(bar) {
+    var row = bar.closest('tr');
+    var label = row ? row.querySelector('.pct-label') : null;
+    if (!label) return;
+    var pct = parseFloat(bar.dataset.pct || label.dataset.pct) || 0;
+    var thr = parseFloat(label.dataset.threshold) || 70;
+    bar.style.width = pct + '%';
+    if (pct >= thr) {
+        bar.style.background = 'linear-gradient(90deg,#0f766e,#14b8a6)';
+        label.style.color = '#0f766e';
+    } else if (pct >= thr - 10) {
+        bar.style.background = 'linear-gradient(90deg,#f59e0b,#fcd34d)';
+        label.style.color = '#d97706';
+    } else {
+        bar.style.background = 'linear-gradient(90deg,#f06000,#f06000)';
+        label.style.color = '#f06000';
+    }
+});
 
+// Dropdown toggle
+var selector  = document.getElementById('candidateSelector');
+var toggle    = document.getElementById('candidateDropdownToggle');
+var container = document.getElementById('candidateSelectContainer');
 toggle.addEventListener('click', function() {
     container.classList.toggle('d-none');
     selector.classList.toggle('open');
 });
 
-// ----- Select All -----
-const selectAll = document.getElementById('selectAllCandidates');
+// Select All
+var selectAll = document.getElementById('selectAllCandidates');
 if (selectAll) {
-    const checkboxes = document.querySelectorAll('.candidate-checkbox');
-
+    var checkboxes = document.querySelectorAll('.candidate-checkbox');
     selectAll.addEventListener('change', function() {
-        checkboxes.forEach(cb => cb.checked = selectAll.checked);
+        checkboxes.forEach(function(cb) { cb.checked = selectAll.checked; });
     });
-
-    // Update "Select All" state when individual checkboxes change
-    checkboxes.forEach(cb => {
+    checkboxes.forEach(function(cb) {
         cb.addEventListener('change', function() {
-            selectAll.checked = [...checkboxes].every(c => c.checked);
-            selectAll.indeterminate = !selectAll.checked && [...checkboxes].some(c => c.checked);
+            selectAll.checked = Array.from(checkboxes).every(function(c) { return c.checked; });
+            selectAll.indeterminate = !selectAll.checked && Array.from(checkboxes).some(function(c) { return c.checked; });
         });
     });
-
-    // Set initial state
     if (checkboxes.length > 0) {
-        selectAll.checked = [...checkboxes].every(c => c.checked);
-        selectAll.indeterminate = !selectAll.checked && [...checkboxes].some(c => c.checked);
+        selectAll.checked = Array.from(checkboxes).every(function(c) { return c.checked; });
+        selectAll.indeterminate = !selectAll.checked && Array.from(checkboxes).some(function(c) { return c.checked; });
+    }
+}
+
+// Search
+function filterCards() {
+    var query = document.getElementById('candidateSearch').value.toLowerCase().trim();
+    var cards = document.querySelectorAll('.candidate-result-card');
+    var noResults = document.getElementById('noSearchResults');
+    var visibleCount = 0;
+    cards.forEach(function(card) {
+        var name  = card.dataset.name  || '';
+        var email = card.dataset.email || '';
+        var role  = card.dataset.role  || '';
+        var match = name.includes(query) || email.includes(query) || role.includes(query);
+        card.style.display = match ? '' : 'none';
+        if (match) visibleCount++;
+    });
+    if (noResults) {
+        noResults.style.display = visibleCount === 0 && query !== '' ? 'block' : 'none';
     }
 }
 </script>
-</div>
 {% endblock %}
