@@ -92,9 +92,23 @@
         margin-bottom: 16px;
     }
 
+    .dash-breadcrumb {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: #8a92a6;
+        font-size: var(--az-fs-label);
+        margin-bottom: 8px;
+    }
+
+    .dash-breadcrumb .active {
+        color: #4c5c86;
+        font-weight: 600;
+    }
+
     .dash-greeting {
         margin: 0;
-        font-size: 2.35rem;
+        font-size: var(--az-fs-page-title);
         line-height: 1.15;
         font-weight: 600;
         color: var(--dash-title);
@@ -107,7 +121,7 @@
 
     .dash-subtitle {
         margin: 8px 0 0;
-        font-size: 0.98rem;
+        font-size: var(--az-fs-page-subtitle);
         font-weight: 500;
         color: var(--dash-text);
     }
@@ -149,7 +163,7 @@
     .dash-section-title {
         margin: 0;
         color: #1f315c;
-        font-size: 1.42rem;
+        font-size: var(--az-fs-heading);
         font-weight: 600;
     }
 
@@ -170,9 +184,9 @@
     .dash-download-btn {
         height: 34px;
         border-radius: 11px;
-        border: 1px solid #d1dcf5;
-        background: #f8fbff;
-        color: #355083;
+        border: 1px solid transparent;
+        background: linear-gradient(135deg, var(--dash-blue) 0%, var(--dash-blue-deep) 100%);
+        color: #ffffff;
         font-size: 0.73rem;
         font-weight: 600;
         line-height: 1;
@@ -180,6 +194,7 @@
         display: inline-flex;
         align-items: center;
         gap: 7px;
+        box-shadow: 0 9px 18px rgba(40, 93, 207, 0.24);
     }
 
     .dash-week-btn i,
@@ -189,21 +204,42 @@
 
     .dash-week-btn:hover,
     .dash-download-btn:hover {
-        background: #eaf2ff;
-        border-color: #aac1ee;
-    }
-
-    .dash-download-btn {
-        border-color: transparent;
-        background: linear-gradient(135deg, var(--dash-blue) 0%, var(--dash-blue-deep) 100%);
-        color: #ffffff;
-        box-shadow: 0 9px 18px rgba(40, 93, 207, 0.24);
-    }
-
-    .dash-download-btn:hover {
         background: linear-gradient(135deg, #3d79e8 0%, #2a57c6 100%);
         color: #ffffff;
         border-color: transparent;
+    }
+
+    .dash-overview-filter {
+        position: relative;
+    }
+
+    .dash-overview-menu {
+        border: 1px solid #d7e0f4;
+        border-radius: 10px;
+        padding: 6px;
+        min-width: 188px;
+        background: linear-gradient(180deg, #ffffff 0%, #f4f9ff 100%);
+        box-shadow: 0 14px 30px rgba(41, 62, 116, 0.14);
+    }
+
+    .dash-overview-menu .dropdown-item {
+        border-radius: 8px;
+        color: #2b3f6b;
+        font-size: 0.8rem;
+        font-weight: 500;
+        padding: 8px 10px;
+    }
+
+    .dash-overview-menu .dropdown-item:hover,
+    .dash-overview-menu .dropdown-item:focus {
+        background: #e7f0ff;
+        color: #214f9f;
+    }
+
+    .dash-overview-menu .dropdown-item.active,
+    .dash-overview-menu .dropdown-item:active {
+        background: linear-gradient(135deg, #ff952f 0%, #f26400 100%);
+        color: #ffffff;
     }
 
     .dash-overview-cards {
@@ -479,6 +515,11 @@
         color: #214f9f;
     }
 
+    .dash-nav-btn.disabled {
+        opacity: 0.45;
+        pointer-events: none;
+    }
+
     .dash-stat-grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -708,7 +749,7 @@
 
     @media (max-width: 1450px) {
         .dash-greeting {
-            font-size: 2.1rem;
+            font-size: 1.9rem;
         }
     }
 
@@ -771,9 +812,44 @@
 {% else %}
     {% set my_productivity = 0 %}
 {% endif %}
-{% set active_sessions = my_today_stats.total_candidates | int %}
+{% set overview_total = overall_stats.total_tests | int %}
+{% set overview_completed = overall_stats.completed | int %}
+{% set overview_pending = overall_stats.pending | int %}
+{% if overview_total > 0 %}
+    {% set overview_productivity = (overview_completed * 100.0) / overview_total %}
+{% else %}
+    {% set overview_productivity = 0 %}
+{% endif %}
+{% if date_filter == 'today' %}
+    {% set overview_label = 'Today' %}
+{% elif date_filter == '24h' %}
+    {% set overview_label = 'Last 24 Hours' %}
+{% elif date_filter == '7d' %}
+    {% set overview_label = 'Last 7 Days' %}
+{% elif date_filter == '28d' %}
+    {% set overview_label = 'Last 28 Days' %}
+{% elif date_filter == 'date' and specific_date %}
+    {% set overview_label = specific_date %}
+{% else %}
+    {% set overview_label = 'Today' %}
+{% endif %}
+{% set prev_offset = (date_offset | int) - 1 %}
+{% set next_offset = (date_offset | int) + 1 %}
+{% set next_disabled = (date_offset | int) >= 0 %}
+{% if date_filter == 'date' and specific_date %}
+    {% set prev_period_url = url_for('dashboard.dashboard', filter='date', date=specific_date, offset=prev_offset) %}
+    {% set next_period_url = url_for('dashboard.dashboard', filter='date', date=specific_date, offset=next_offset) %}
+{% else %}
+    {% set prev_period_url = url_for('dashboard.dashboard', filter=date_filter, offset=prev_offset) %}
+    {% set next_period_url = url_for('dashboard.dashboard', filter=date_filter, offset=next_offset) %}
+{% endif %}
 
 <div class="dashboard-replica">
+    <div class="dash-breadcrumb">
+        <i class="bi bi-house"></i>
+        <span>&#8250;</span>
+        <span class="active">Dashboard</span>
+    </div>
     <section class="dash-hero">
         <h1 class="dash-greeting">Good afternoon, {{ user_name }} <span class="wave">&#128075;</span></h1>
         <p class="dash-subtitle">Manage your hiring process efficiently with easy-to-use tools.</p>
@@ -783,39 +859,54 @@
         <article class="dash-panel dash-today-panel">
             <div class="dash-today-head">
                 <div>
-                    <h2 class="dash-section-title">Today Overview</h2>
-                    <p class="dash-section-subtitle">Lorem ipsum is simply dummy text of the printing</p>
+                    <h2 class="dash-section-title">{{ overview_label }} Overview</h2>
+                    <p class="dash-section-subtitle">Summary metrics for the selected dashboard period</p>
                 </div>
                 <div class="dash-today-controls">
-                    <button type="button" class="dash-week-btn">
-                        Week
-                        <i class="bi bi-chevron-down"></i>
-                    </button>
-                    <button type="button" class="dash-download-btn">
-                        <i class="bi bi-download"></i>
-                        Download Report
-                    </button>
+                    <div class="dropdown dash-overview-filter">
+                        <button
+                            type="button"
+                            class="dash-week-btn"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            {{ overview_label }}
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end dash-overview-menu">
+                            <li><a href="{{ url_for('dashboard.dashboard', filter='today') }}" class="dropdown-item {% if date_filter == 'today' %}active{% endif %}">Today</a></li>
+                            <li><a href="{{ url_for('dashboard.dashboard', filter='24h') }}" class="dropdown-item {% if date_filter == '24h' %}active{% endif %}">Last 24 Hours</a></li>
+                            <li><a href="{{ url_for('dashboard.dashboard', filter='7d') }}" class="dropdown-item {% if date_filter == '7d' %}active{% endif %}">Last 7 Days</a></li>
+                            <li><a href="{{ url_for('dashboard.dashboard', filter='28d') }}" class="dropdown-item {% if date_filter == '28d' %}active{% endif %}">Last 28 Days</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><button type="button" id="dashOverviewCustomDateBtn" class="dropdown-item {% if date_filter == 'date' %}active{% endif %}">{% if specific_date %}{{ specific_date }}{% else %}Custom Date{% endif %}</button></li>
+                        </ul>
+                        <form class="d-none" method="get" action="{{ url_for('dashboard.dashboard') }}">
+                            <input type="hidden" name="filter" value="date">
+                            <input id="dashOverviewCustomDateInput" class="dash-hidden-date" type="date" name="date" value="{{ specific_date }}">
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="dash-overview-cards">
                 <div class="dash-mini-card mini-tone-blue">
                     <div class="mini-label">Total Tests</div>
-                    <div class="mini-value">{{ today_total }}</div>
+                    <div class="mini-value">{{ overview_total }}</div>
                     <span class="dash-mini-icon"><i class="bi bi-briefcase"></i></span>
                 </div>
                 <div class="dash-mini-card mini-tone-green">
                     <div class="mini-label">Completed</div>
-                    <div class="mini-value">{{ today_completed }}</div>
+                    <div class="mini-value">{{ overview_completed }}</div>
                     <span class="dash-mini-icon"><i class="bi bi-check2"></i></span>
                 </div>
                 <div class="dash-mini-card mini-tone-purple">
                     <div class="mini-label">Pending</div>
-                    <div class="mini-value">{{ today_pending }}</div>
+                    <div class="mini-value">{{ overview_pending }}</div>
                     <span class="dash-mini-icon"><i class="bi bi-hourglass-split"></i></span>
                 </div>
                 <div class="dash-mini-card mini-tone-sky">
                     <div class="mini-label">Productivity</div>
-                    <div class="mini-value">{{ "%.1f"|format(today_productivity) }}%</div>
+                    <div class="mini-value">{{ "%.1f"|format(overview_productivity) }}%</div>
                     <span class="dash-mini-icon"><i class="bi bi-graph-up-arrow"></i></span>
                 </div>
             </div>
@@ -890,8 +981,8 @@
                     </form>
                 </div>
                 <div class="dash-filter-nav">
-                    <button type="button" class="dash-nav-btn" aria-label="Previous period"><i class="bi bi-chevron-left"></i></button>
-                    <button type="button" class="dash-nav-btn" aria-label="Next period"><i class="bi bi-chevron-right"></i></button>
+                    <a href="{{ prev_period_url }}" class="dash-nav-btn" aria-label="Previous period"><i class="bi bi-chevron-left"></i></a>
+                    <a href="{{ next_period_url }}" class="dash-nav-btn {% if next_disabled %}disabled{% endif %}" aria-label="Next period"><i class="bi bi-chevron-right"></i></a>
                 </div>
             </div>
         </header>
@@ -957,33 +1048,43 @@
 {% endblock %}
 
 {% block page_instructions %}
-<p class="mb-2">Use this dashboard to monitor tests created, completion status, and pending candidate activity.</p>
-<p class="mb-0 text-muted small">You can change the time window with the filter pills, open quick actions, and review session details.</p>
+<p class="mb-2">Follow these steps to use the Dashboard efficiently:</p>
+<ol class="mb-0 ps-3">
+    <li><strong>Set timeframe:</strong> Use date pills (or custom date) to load metrics for the period you want.</li>
+    <li><strong>Read KPI cards:</strong> Review totals for tests created, completed attempts, pending attempts, and active sessions.</li>
+    <li><strong>Check candidate activity:</strong> Inspect the session table for each candidate's status and recent progression.</li>
+    <li><strong>Take action quickly:</strong> Use Quick Actions to jump to Create Test, Generated Tests, Evaluation, or Reports.</li>
+    <li><strong>Validate session scope:</strong> Confirm account/server details in Session Info before sharing operational updates.</li>
+</ol>
 {% endblock %}
 
 {% block scripts %}
 <script>
 (function () {
-    var btn = document.getElementById("dashCustomDateBtn");
-    var input = document.getElementById("dashCustomDateInput");
-    if (!btn || !input) {
-        return;
+    function bindCustomDatePicker(triggerId, inputId) {
+        var btn = document.getElementById(triggerId);
+        var input = document.getElementById(inputId);
+        if (!btn || !input || !input.form) {
+            return;
+        }
+
+        btn.addEventListener("click", function (event) {
+            event.preventDefault();
+            if (typeof input.showPicker === "function") {
+                input.showPicker();
+            } else {
+                input.focus();
+                input.click();
+            }
+        });
+
+        input.addEventListener("change", function () {
+            input.form.submit();
+        });
     }
 
-    btn.addEventListener("click", function () {
-        if (typeof input.showPicker === "function") {
-            input.showPicker();
-        } else {
-            input.focus();
-            input.click();
-        }
-    });
-
-    input.addEventListener("change", function () {
-        if (input.form) {
-            input.form.submit();
-        }
-    });
+    bindCustomDatePicker("dashCustomDateBtn", "dashCustomDateInput");
+    bindCustomDatePicker("dashOverviewCustomDateBtn", "dashOverviewCustomDateInput");
 })();
 </script>
 {% endblock %}

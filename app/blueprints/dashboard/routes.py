@@ -70,24 +70,32 @@ def _build_test_url(endpoint, **values):
     return f"{scheme}://{host}{path}"
 
 
-def _resolve_date_range(filter_type: str, specific_date: str = ""):
+def _resolve_date_range(filter_type: str, specific_date: str = "", offset: int = 0):
     now = datetime.now(timezone.utc)
+    offset = int(offset or 0)
+    # Future windows are not allowed for dashboard stats navigation.
+    if offset > 0:
+        offset = 0
     if filter_type == "today":
-        start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        start = now.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=offset)
         end = start + timedelta(days=1)
         return start, end
     if filter_type == "24h":
-        return now - timedelta(hours=24), now
+        end = now + timedelta(hours=24 * offset)
+        return end - timedelta(hours=24), end
     if filter_type == "28d":
-        return now - timedelta(days=28), now
+        end = now + timedelta(days=28 * offset)
+        return end - timedelta(days=28), end
     if filter_type == "2d":
-        return now - timedelta(days=2), now
+        end = now + timedelta(days=2 * offset)
+        return end - timedelta(days=2), end
     if filter_type == "7d":
-        return now - timedelta(days=7), now
+        end = now + timedelta(days=7 * offset)
+        return end - timedelta(days=7), end
     if filter_type == "date" and specific_date:
         try:
             d = datetime.strptime(specific_date, "%Y-%m-%d")
-            start = d.replace(tzinfo=timezone.utc)
+            start = d.replace(tzinfo=timezone.utc) + timedelta(days=offset)
             end = start + timedelta(days=1)
             return start, end
         except ValueError:
@@ -125,6 +133,12 @@ def dashboard():
     # Date filter
     date_filter = request.args.get("filter", "today")
     specific_date = request.args.get("date", "")
+    try:
+        date_offset = int(request.args.get("offset", "0"))
+    except (TypeError, ValueError):
+        date_offset = 0
+    if date_offset > 0:
+        date_offset = 0
     if specific_date:
         date_filter = "date"
 
@@ -138,9 +152,18 @@ def dashboard():
 
     # Kept for template compatibility.
     my_today_stats = today_stats
+    active_sessions = db_service.get_active_test_session_count(
+        created_by=user_email,
+        since=today_start,
+        until=today_end,
+    )
 
     # My stats with date filter
-    range_start, range_end = _resolve_date_range(date_filter, specific_date)
+    range_start, range_end = _resolve_date_range(date_filter, specific_date, date_offset)
+    overall_stats = db_service.get_test_link_stats(
+        since=range_start,
+        until=range_end,
+    )
     my_stats = db_service.get_test_link_stats(
         since=range_start,
         until=range_end,
@@ -226,6 +249,7 @@ def dashboard():
         user_email=user_email,
         today_stats=today_stats,
         my_today_stats=my_today_stats,
+        overall_stats=overall_stats,
         my_stats=my_stats,
         prev_stats=prev_stats,
         tests_trend=tests_trend,
@@ -233,6 +257,7 @@ def dashboard():
         completed_trend=completed_trend,
         date_filter=date_filter,
         specific_date=specific_date,
+        date_offset=date_offset,
         performance_series=performance_series,
         chart_points=chart_points,
         chart_y_ticks=chart_y_ticks,
@@ -241,6 +266,7 @@ def dashboard():
         chart_latest=latest_point,
         chart_tests_trend=chart_tests_trend,
         chart_completed_trend=chart_completed_trend,
+        active_sessions=active_sessions,
     )
 
 

@@ -22,29 +22,36 @@
         --panel-shadow: 0 10px 26px rgba(39, 64, 124, 0.06);
         position: relative;
         overflow: hidden;
-        background: linear-gradient(180deg, #f8f8ff 0%, #f2f0fb 100%);
-        border-radius: 14px;
-        padding-top: 8px;
-        padding-bottom: 18px;
+        border: 1px solid #dfe6f7;
+        border-radius: 20px;
+        padding: 16px 18px 18px;
+        background:
+            radial-gradient(760px 280px at -6% -10%, rgba(45, 99, 218, 0.19) 0%, rgba(45, 99, 218, 0) 69%),
+            radial-gradient(520px 220px at 92% 0%, rgba(255, 122, 26, 0.16) 0%, rgba(255, 122, 26, 0) 71%),
+            linear-gradient(180deg, #fafbff 0%, #f4f3fc 62%, #efedf9 100%);
+        font-weight: 500;
+        font-style: normal;
+        letter-spacing: 0;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: geometricPrecision;
     }
     .create-test-page::before {
         content: "";
         position: absolute;
-        top: 16px;
-        right: 0;
-        width: 576px;
-        height: 130px;
+        top: 154px;
+        right: -20px;
+        width: 560px;
+        height: 170px;
         pointer-events: none;
         z-index: 0;
         background:
-            linear-gradient(to right, rgba(248, 244, 253, 0.98) 0%, rgba(248, 244, 253, 0) 20%),
-            linear-gradient(to top, rgba(248, 244, 253, 0.96) 0%, rgba(248, 244, 253, 0) 24%),
-            linear-gradient(to bottom, rgba(248, 244, 253, 0.78) 0%, rgba(248, 244, 253, 0) 16%),
-            url('{{ url_for("static", filename="images/create_test_cloud_patch_step1.png") }}');
-        background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
-        background-position: 0 0, 0 0, 0 0, center;
-        background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
-        opacity: 1;
+            radial-gradient(ellipse at 8% 70%, rgba(229, 237, 255, 0.82) 0, rgba(229, 237, 255, 0.82) 24%, transparent 26%),
+            radial-gradient(ellipse at 24% 72%, rgba(223, 232, 253, 0.84) 0, rgba(223, 232, 253, 0.84) 24%, transparent 26%),
+            radial-gradient(ellipse at 40% 70%, rgba(220, 230, 251, 0.82) 0, rgba(220, 230, 251, 0.82) 24%, transparent 26%),
+            radial-gradient(ellipse at 56% 72%, rgba(214, 224, 248, 0.78) 0, rgba(214, 224, 248, 0.78) 24%, transparent 26%),
+            radial-gradient(ellipse at 72% 70%, rgba(210, 221, 247, 0.76) 0, rgba(210, 221, 247, 0.76) 24%, transparent 26%),
+            radial-gradient(ellipse at 88% 70%, rgba(207, 218, 244, 0.7) 0, rgba(207, 218, 244, 0.7) 24%, transparent 26%);
+        opacity: 0.92;
     }
     .create-test-page::after {
         content: "";
@@ -52,9 +59,9 @@
         left: 0;
         right: 0;
         bottom: 0;
-        height: 140px;
+        height: 180px;
         pointer-events: none;
-        background: linear-gradient(180deg, rgba(240, 239, 251, 0) 0%, rgba(226, 224, 245, 0.58) 100%);
+        background: linear-gradient(180deg, rgba(240, 239, 251, 0) 0%, rgba(225, 231, 248, 0.58) 100%);
     }
     .create-test-page > * {
         position: relative;
@@ -77,7 +84,7 @@
         align-items: center;
         gap: 6px;
         color: #8a92a6;
-        font-size: 0.8rem;
+        font-size: var(--az-fs-label);
         margin-bottom: 8px;
     }
     .create-breadcrumb .active {
@@ -88,14 +95,14 @@
         margin-bottom: 14px;
     }
     .page-header h4 {
-        font-size: 2.02rem;
+        font-size: var(--az-fs-page-title);
         color: #2f4372;
         font-weight: 600;
         margin-bottom: 5px;
     }
     .page-header p {
         color: var(--page-muted);
-        font-size: 1.01rem;
+        font-size: var(--az-fs-page-subtitle);
         margin-bottom: 13px;
     }
     .mode-grid {
@@ -599,11 +606,14 @@
 {% endblock %}
 
 {% block page_instructions %}
-<p class="mb-2">Use this page to create and send candidate assessments.</p>
+<p class="mb-2">Use this page in the following order:</p>
 <ol class="mb-0 ps-3">
-    <li><strong>Upload Documents:</strong> Add resume/JD files to auto-fill candidate details.</li>
-    <li><strong>Candidate Details:</strong> Verify name, email, role, and optional domain.</li>
-    <li><strong>Review &amp; Generate:</strong> Confirm details and click <strong>Generate Test</strong>.</li>
+    <li><strong>Choose mode:</strong> Select <strong>Single Candidate</strong> or <strong>Bulk Candidates</strong> at the top.</li>
+    <li><strong>Upload documents:</strong> Add Resume and optional JD to auto-fill fields and role context.</li>
+    <li><strong>Verify candidate details:</strong> Confirm name, email, role, difficulty, and any optional settings.</li>
+    <li><strong>Add all required candidates:</strong> In bulk mode, use <strong>Add Candidate</strong> until your list is complete.</li>
+    <li><strong>Review before submission:</strong> Ensure mandatory fields are valid and attachments are correct.</li>
+    <li><strong>Generate tests:</strong> Click <strong>Generate Test</strong>, then verify links and email delivery from <strong>Generated Tests</strong>.</li>
 </ol>
 {% endblock %}
 
@@ -621,7 +631,7 @@
         <p>Create assessment links to assign tests for single or multiple candidates.</p>
     </div>
 
-    <form method="POST" id="generateForm" enctype="multipart/form-data" data-persist="off">
+    <form method="POST" id="generateForm" enctype="multipart/form-data" data-persist="off" novalidate>
         <div class="mode-grid">
             <label class="mode-tile active" id="singleModeLabel">
                 <input type="radio" name="candidate_mode" id="single_mode" checked>
@@ -801,6 +811,7 @@ const backToDashboardBtn = document.getElementById("backToDashboardBtn");
 const viewGeneratedTestsBtn = document.getElementById("viewGeneratedTestsBtn");
 const createTestPage = document.querySelector(".create-test-page");
 let currentStep = 1;
+let isSubmitting = false;
 
 function validateRequiredFields() {
     const nameInputs = document.querySelectorAll('input[name="name[]"]');
@@ -1299,18 +1310,24 @@ prevStepBtn.addEventListener("click", () => {
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
-    if (currentStep !== 3) {
+
+    if (isSubmitting) {
         return;
     }
-    if (!validateRequiredFields()) return;
+
+    if (currentStep !== 3) {
+        setStep(3);
+        return;
+    }
+    if (!validateRequiredFields()) {
+        return;
+    }
+    isSubmitting = true;
 
     generateBtn.disabled = true;
     generateBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Generating';
-    overlay.classList.remove("d-none");
-
-    setTimeout(() => {
-        form.submit();
-    }, 800);
+    if (overlay) overlay.classList.remove("d-none");
+    window.setTimeout(() => form.submit(), 120);
 });
 
 document.addEventListener("input", (event) => {

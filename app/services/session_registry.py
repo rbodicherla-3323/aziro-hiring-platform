@@ -77,6 +77,9 @@ class PersistentSessionRegistry:
     def pop(self, session_id, default=None):
         return self._cache.pop(session_id, default)
 
+    def clear(self):
+        self._cache.clear()
+
     def items(self):
         return self._cache.items()
 

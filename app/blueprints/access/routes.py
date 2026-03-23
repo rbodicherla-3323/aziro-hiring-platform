@@ -257,6 +257,41 @@ def access_management_page():
     )
 
 
+@access_bp.route("/access-management/view")
+@login_required
+def access_management_view():
+    denied = _require_access_admin_page()
+    if denied:
+        return denied
+
+    email = _normalize_email(request.args.get("email", ""))
+    if not email or not email.endswith("@aziro.com"):
+        flash("Only @aziro.com emails are allowed.", "danger")
+        return redirect(url_for("access.access_management_page"))
+
+    approval = get_approval(email)
+    if not approval:
+        flash(f"No approval entry found for {email}.", "warning")
+        return redirect(url_for("access.access_management_page"))
+
+    status_key, status_label = _status_payload(approval)
+    detail = {
+        "email": approval.email,
+        "status_key": status_key,
+        "status_label": status_label,
+        "requested_on": _format_dt(approval.requested_at) or "-",
+        "approved_by": approval.approved_by or "-",
+        "approved_at": _format_dt(approval.approved_at) or "-",
+        "is_active": bool(approval.is_active),
+    }
+
+    return render_template(
+        "access_view.html",
+        access_admin_email=_access_admin_display(),
+        detail=detail,
+    )
+
+
 @access_bp.route("/access-management/add", methods=["POST"])
 @login_required
 def access_management_add():

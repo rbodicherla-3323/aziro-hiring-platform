@@ -280,6 +280,58 @@ def get_test_link_stats(
     }
 
 
+def get_active_test_session_count(
+    *,
+    created_by: str | None = None,
+    since: datetime | None = None,
+    until: datetime | None = None,
+    as_of: datetime | None = None,
+) -> int:
+    """
+    Count active test sessions from real DB state.
+    A session is considered active when:
+    - its test link is not expired, and
+    - it does not yet have a PASS/FAIL round result.
+    """
+    as_of = as_of or _now_utc()
+
+    query = TestLink.query
+    if created_by:
+        query = query.filter(db.func.lower(TestLink.created_by) == created_by.strip().lower())
+    if since:
+        query = query.filter(TestLink.created_at >= since)
+    if until:
+        query = query.filter(TestLink.created_at < until)
+
+    query = query.filter(
+        db.or_(TestLink.expires_at.is_(None), TestLink.expires_at > as_of)
+    )
+
+    session_rows = query.with_entities(TestLink.session_id).all()
+    session_ids = {
+        str(row[0]).strip().lower()
+        for row in session_rows
+        if row and row[0]
+    }
+    if not session_ids:
+        return 0
+
+    completed_rows = (
+        db.session.query(db.func.lower(RoundResult.session_uuid))
+        .filter(db.func.lower(RoundResult.session_uuid).in_(session_ids))
+        .filter(RoundResult.status.in_(("PASS", "FAIL")))
+        .distinct()
+        .all()
+    )
+    completed_ids = {
+        str(row[0]).strip().lower()
+        for row in completed_rows
+        if row and row[0]
+    }
+
+    return max(0, len(session_ids - completed_ids))
+
+
 def _month_start_utc(value: datetime) -> datetime:
     return datetime(value.year, value.month, 1, tzinfo=timezone.utc)
 

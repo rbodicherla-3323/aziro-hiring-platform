@@ -45,17 +45,34 @@
     --aziro-dark-blue: var(--az-slate-900);
     --bg-light: var(--az-bg);
     --text-dark: var(--az-slate-900);
+
+    /* Unified typography scale (admin pages) */
+    --az-fs-page-title: 2.05rem;
+    --az-fs-page-subtitle: 0.94rem;
+    --az-fs-heading: 1.03rem;
+    --az-fs-body: 0.82rem;
+    --az-fs-label: 0.8rem;
+    --az-fs-btn: 0.79rem;
+    --az-fs-meta: 0.77rem;
 }
 
 /* ================= BASE ================= */
 body {
-    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-family: "Poppins", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
     margin: 0;
     color: var(--az-slate-800);
     background-color: var(--az-bg);
     font-size: 13.5px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
 }
 
 /* ================= TYPOGRAPHY ================= */
@@ -213,8 +230,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .az-topbar {
+    position: relative;
+    overflow: hidden;
     align-items: center;
     gap: 16px;
+    background: linear-gradient(180deg, #f9f9ff 0%, #f4f4fd 100%);
+}
+
+.az-topbar > * {
+    position: relative;
+    z-index: 1;
 }
 
 .topbar-search-wrap {

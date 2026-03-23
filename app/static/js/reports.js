@@ -1,419 +1,739 @@
 (function () {
-  const searchInput = document.getElementById("searchInput");
-  const searchResults = document.getElementById("searchResults");
-  const searchResultsList = document.getElementById("searchResultsList");
-  const proctoringModal = document.getElementById("proctoringModal");
-  const proctoringGallery = document.getElementById("proctoringGallery");
-  const proctoringGalleryMeta = document.getElementById("proctoringGalleryMeta");
-  const proctoringModalTitle = document.getElementById("proctoringModalTitle");
-  const proctoringViewer = document.getElementById("proctoringViewer");
-  const proctoringViewerImage = document.getElementById("proctoringViewerImage");
-  const proctoringViewerMeta = document.getElementById("proctoringViewerMeta");
-  const proctoringPrevBtn = document.getElementById("proctoringPrevBtn");
-  const proctoringNextBtn = document.getElementById("proctoringNextBtn");
+  var filterForm = document.getElementById("reportsFilterForm");
+  var roleSelect = document.getElementById("reportsRoleSelect");
+  var periodSelect = document.getElementById("reportsPeriodSelect");
+  var dateInput = document.getElementById("reportsDateInput");
+  var searchInput = document.getElementById("reportsSearchInput");
+  var pageInput = document.getElementById("reportsPageInput");
+  var perPageInput = document.getElementById("reportsPerPageInput");
+  var perPageSelect = document.getElementById("reportsPerPageSelect");
+  var offsetInput = document.getElementById("reportsOffsetInput");
 
-  let proctoringShots = [];
-  let proctoringShotIndex = -1;
-  let searchTimer = null;
+  var galleryModal = document.getElementById("reportsGalleryModal");
+  var galleryTitle = document.getElementById("reportsGalleryTitle");
+  var galleryMeta = document.getElementById("reportsGalleryMeta");
+  var galleryGrid = document.getElementById("reportsGalleryGrid");
 
-  function escapeHtml(value) {
-    return String(value || "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#39;");
-  }
-
-  function formatGalleryTimestamp(ts) {
-    if (!ts) return "";
-    try {
-      const date = new Date(ts);
-      if (Number.isNaN(date.getTime())) return ts;
-      return date.toLocaleString();
-    } catch (_) {
-      return ts;
-    }
-  }
+  var searchTimer = null;
+  var activeGalleryEmail = "";
 
   function fetchJson(url, options) {
-    const opts = Object.assign({ credentials: "same-origin" }, options || {});
-    return fetch(url, opts).then(async (response) => {
-      const contentType = (response.headers.get("content-type") || "").toLowerCase();
-      const isJson = contentType.includes("application/json");
+    return fetch(url, options || { credentials: "same-origin" }).then(async function (response) {
+      var contentType = (response.headers.get("content-type") || "").toLowerCase();
+      var isJson = contentType.indexOf("application/json") >= 0;
       if (!response.ok) {
-        let message = `Request failed (${response.status})`;
+        var message = "Request failed (" + response.status + ")";
         try {
           if (isJson) {
-            const data = await response.json();
+            var data = await response.json();
             message = data.error || data.message || message;
           } else {
-            const text = await response.text();
+            var text = await response.text();
             if (text) message = text;
           }
         } catch (_) {
-          // ignore parse errors
+          // no-op
         }
         throw new Error(message);
       }
-      if (isJson) {
-        return response.json();
-      }
-      const text = await response.text();
-      if (!text) return {};
-      try {
-        return JSON.parse(text);
-      } catch (_) {
-        throw new Error("Unexpected response.");
-      }
+      if (isJson) return response.json();
+      return {};
     });
   }
 
-  function normalizeForSearch(value) {
-    return String(value || "")
-      .toLowerCase()
-      .replace(/[^a-z0-9+.#@_-]+/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
+  function buildReportLinks(payload, fallbackFilename) {
+    var filename = "";
+    if (payload && payload.filename) {
+      filename = String(payload.filename);
+    } else if (fallbackFilename) {
+      filename = String(fallbackFilename);
+    }
+
+    var viewUrl = (payload && payload.view_url) || (filename ? ("/reports/view/" + encodeURIComponent(filename)) : "#");
+    var downloadUrl = (payload && payload.download_url) || (filename ? ("/reports/download-file/" + encodeURIComponent(filename)) : "#");
+    return {
+      filename: filename,
+      viewUrl: viewUrl,
+      downloadUrl: downloadUrl,
+    };
   }
 
-  function fetchCandidateMatches(query) {
-    const q = String(query || "").trim();
-    if (!q) return Promise.resolve([]);
-    const tokens = normalizeForSearch(q).split(" ").filter(Boolean);
-    return fetchJson("/reports/search?q=" + encodeURIComponent(q)).then((data) => {
-      const items = Array.isArray(data && data.candidates) ? data.candidates : [];
-      const scored = items.map((item, idx) => {
-        const name = normalizeForSearch(item && item.name);
-        const email = normalizeForSearch(item && item.email);
-        const role = normalizeForSearch(item && item.role);
-        const hay = [name, email, role].join(" ").trim();
-        const allMatch = tokens.every((token) => hay.includes(token));
-        if (!allMatch) return null;
-        let score = 0;
-        tokens.forEach((token) => {
-          if (email === token) score += 60;
-          if (name === token) score += 45;
-          if (email.startsWith(token)) score += 28;
-          if (name.startsWith(token)) score += 22;
-          if (role.startsWith(token)) score += 14;
-          if (hay.includes(" " + token)) score += 8;
-          if (hay.includes(token)) score += 4;
-        });
-        if (item && item.has_report) score += 2;
-        return { item, score, idx };
-      }).filter(Boolean);
-      scored.sort((a, b) => b.score - a.score || a.idx - b.idx);
-      return scored.map((entry) => entry.item).slice(0, 50);
-    });
+  function makeActionElement(config) {
+    var node = config.href ? document.createElement("a") : document.createElement("button");
+    var label = String(config.label || "");
+    var iconOnly = Boolean(config.iconOnly);
+    if (!config.href) {
+      node.type = "button";
+    }
+    node.className = config.className || "";
+    if (iconOnly) {
+      node.classList.add("icon-only");
+    }
+    if (config.action) {
+      node.setAttribute("data-action", config.action);
+    }
+    if (config.email) {
+      node.setAttribute("data-email", config.email);
+    }
+    if (config.name) {
+      node.setAttribute("data-name", config.name);
+    }
+    if (config.href) {
+      node.href = config.href;
+      if (config.target) {
+        node.target = config.target;
+      }
+      if (config.rel) {
+        node.rel = config.rel;
+      }
+    }
+    if (config.disabled) {
+      if (node.tagName === "BUTTON") {
+        node.disabled = true;
+      }
+      node.classList.add("disabled");
+      node.setAttribute("aria-disabled", "true");
+    }
+
+    if (iconOnly) {
+      if (label) {
+        node.title = label;
+        node.setAttribute("aria-label", label);
+      }
+      node.innerHTML = config.icon || "";
+      return node;
+    }
+
+    if (label) {
+      node.setAttribute("aria-label", label);
+    }
+    node.innerHTML = (config.icon || "") + (label ? " " + label : "");
+    return node;
   }
 
-  function renderSearchResults(items) {
-    if (!searchResultsList) return;
-    if (!items.length) {
-      searchResultsList.innerHTML =
-        '<div class="text-center py-3 text-muted"><i class="fas fa-search me-1"></i>No candidates found</div>';
+  function renderRowActions(card, hasReport, links) {
+    var rowActions = card ? card.querySelector(".row-actions") : null;
+    if (!rowActions) return;
+
+    var email = String(card.getAttribute("data-candidate-email") || "");
+    var name = String(card.getAttribute("data-candidate-name") || "");
+
+    rowActions.innerHTML = "";
+
+    rowActions.appendChild(makeActionElement({
+      className: "row-action-btn gallery js-open-gallery",
+      action: "view-screenshots",
+      email: email,
+      name: name,
+      icon: '<i class="bi bi-images"></i>',
+      label: "View Screenshots",
+      iconOnly: true,
+    }));
+
+    if (hasReport) {
+      rowActions.appendChild(makeActionElement({
+        className: "row-action-btn view",
+        href: links.viewUrl,
+        target: "_blank",
+        rel: "noopener",
+        icon: '<i class="bi bi-eye-fill"></i>',
+        label: "View Report",
+        iconOnly: true,
+      }));
+      rowActions.appendChild(makeActionElement({
+        className: "row-action-btn",
+        href: links.downloadUrl,
+        icon: '<i class="bi bi-download"></i>',
+        label: "Download PDF",
+        iconOnly: true,
+      }));
+      rowActions.appendChild(makeActionElement({
+        className: "row-action-btn generate js-generate-report",
+        action: "regenerate-report",
+        email: email,
+        icon: '<i class="bi bi-arrow-repeat"></i>',
+        label: "Regenerate Report",
+        iconOnly: true,
+      }));
       return;
     }
-    let html = "";
-    items.forEach((c, i) => {
-      const aid = "sr-" + i;
-      const safeName = escapeHtml(c.name || "");
-      const safeEmail = escapeHtml(c.email || "");
-      const safeRole = escapeHtml(c.role || "N/A");
-      const hasReport = !!(c.has_report && c.report_filename);
-      let actions = "";
-      if (hasReport) {
-        const viewUrl = "/reports/view/" + encodeURIComponent(c.report_filename);
-        const downloadUrl = "/reports/download-file/" + encodeURIComponent(c.report_filename);
-        actions += '<a href="' + viewUrl + '" target="_blank" class="icon-btn btn-view" title="View"><i class="fas fa-eye"></i></a>';
-        actions += '<a href="' + downloadUrl + '" class="icon-btn btn-dl" title="Download"><i class="fas fa-download"></i></a>';
-        actions += '<button class="icon-btn btn-regen js-generate-report" data-email="' + safeEmail + '" data-container="' + aid + '" title="Regenerate"><i class="fas fa-redo"></i></button>';
-      } else {
-        actions += '<button class="icon-btn btn-gen js-generate-report" data-email="' + safeEmail + '" data-container="' + aid + '" title="Generate Report"><i class="fas fa-file-pdf"></i></button>';
-      }
-      actions += '<button class="icon-btn btn-gallery js-open-proctoring" data-email="' + safeEmail + '" title="View Proctoring Screenshots"><i class="fas fa-images"></i></button>';
-      html += '<div class="d-flex align-items-center justify-content-between p-2 border-bottom">';
-      html += '<div><span style="font-weight:500; color:var(--az-slate-900);">' + safeName + '</span>';
-      html += ' <span class="badge-role ms-1">' + safeRole + "</span>";
-      html += '<div style="font-size:0.78rem;color:var(--az-slate-500);">' + safeEmail + "</div></div>";
-      html += '<div class="report-actions" id="' + aid + '" data-email="' + safeEmail + '">';
-      html += actions;
-      html += "</div></div>";
-    });
-    searchResultsList.innerHTML = html;
+
+    rowActions.appendChild(makeActionElement({
+      className: "row-action-btn generate js-generate-report",
+      action: "generate-report",
+      email: email,
+      icon: '<i class="bi bi-file-earmark-pdf-fill"></i>',
+      label: "Generate Report",
+      iconOnly: true,
+    }));
   }
 
-  function searchCandidates(forcedQuery, showWarning) {
-    if (!searchInput || !searchResults || !searchResultsList) return Promise.resolve([]);
-    const q = (forcedQuery !== undefined ? forcedQuery : searchInput.value).trim();
-    if (q.length < 1) {
-      if (showWarning && typeof showToast === "function") {
-        showToast("Enter at least 1 character", "warning");
-      }
-      searchResults.classList.remove("active");
-      searchResultsList.innerHTML = "";
-      return Promise.resolve([]);
+  function renderActionHub(card, hasReport, links) {
+    var actionGrid = card ? card.querySelector(".insight-actions") : null;
+    if (!actionGrid) return;
+
+    var email = String(card.getAttribute("data-candidate-email") || "");
+    var name = String(card.getAttribute("data-candidate-name") || "");
+
+    actionGrid.innerHTML = "";
+
+    if (hasReport) {
+      actionGrid.appendChild(makeActionElement({
+        className: "insight-action primary js-view-report",
+        action: "view-report",
+        href: links.viewUrl,
+        target: "_blank",
+        rel: "noopener",
+        icon: '<i class="bi bi-eye-fill"></i>',
+        label: "View Report",
+      }));
+      actionGrid.appendChild(makeActionElement({
+        className: "insight-action report-download js-download-report",
+        action: "download-report",
+        href: links.downloadUrl,
+        icon: '<i class="bi bi-download"></i>',
+        label: "Download PDF",
+      }));
+    } else {
+      actionGrid.appendChild(makeActionElement({
+        className: "insight-action report-generate js-generate-report",
+        action: "generate-report",
+        email: email,
+        icon: '<i class="bi bi-file-earmark-pdf-fill"></i>',
+        label: "Generate Report",
+      }));
+      actionGrid.appendChild(makeActionElement({
+        className: "insight-action report-download js-download-report disabled",
+        action: "download-report",
+        icon: '<i class="bi bi-download"></i>',
+        label: "Download PDF",
+        disabled: true,
+      }));
     }
-    searchResultsList.innerHTML =
-      '<div class="text-center py-3"><div class="spinner-border spinner-border-sm" style="color:var(--az-primary);"></div><span class="ms-2 text-muted">Searching...</span></div>';
-    searchResults.classList.add("active");
-    return fetchCandidateMatches(q)
-      .then((items) => {
-        renderSearchResults(items);
-        return items;
+
+    actionGrid.appendChild(makeActionElement({
+      className: "insight-action js-open-gallery",
+      action: "view-screenshots",
+      email: email,
+      name: name,
+      icon: '<i class="bi bi-images"></i>',
+      label: "View Screenshots",
+    }));
+
+    actionGrid.appendChild(makeActionElement({
+      className: "insight-action report-regenerate js-generate-report" + (hasReport ? "" : " disabled"),
+      action: "regenerate-report",
+      email: email,
+      icon: '<i class="bi bi-arrow-repeat"></i>',
+      label: "Regenerate Report",
+      disabled: !hasReport,
+    }));
+  }
+
+  function applyReportReadyState(card, payload) {
+    if (!card) return;
+    var fallbackFilename = card.getAttribute("data-report-filename") || "";
+    var links = buildReportLinks(payload || {}, fallbackFilename);
+
+    card.setAttribute("data-has-report", "1");
+    if (links.filename) {
+      card.setAttribute("data-report-filename", links.filename);
+    }
+
+    renderRowActions(card, true, links);
+    renderActionHub(card, true, links);
+  }
+
+  function generateReport(email, button, card) {
+    if (!email) return;
+
+    var originalLabel = button ? button.innerHTML : "";
+    var originalTitle = button ? button.getAttribute("title") : "";
+    var iconOnlyButton = Boolean(button && button.classList.contains("icon-only"));
+    if (button) {
+      button.disabled = true;
+      if (iconOnlyButton) {
+        button.innerHTML = '<i class="bi bi-arrow-repeat"></i>';
+        button.setAttribute("title", "Generating report...");
+        button.setAttribute("aria-label", "Generating report...");
+      } else {
+        button.innerHTML = '<i class="bi bi-arrow-repeat"></i> Generating...';
+      }
+    }
+
+    fetchJson("/reports/generate/" + encodeURIComponent(email), { credentials: "same-origin" })
+      .then(function (payload) {
+        if (!payload || !payload.success) {
+          throw new Error((payload && payload.error) || "Report generation failed");
+        }
+        applyReportReadyState(card, payload);
+        if (typeof showToast === "function") {
+          showToast("Report generated successfully", "success");
+        }
       })
-      .catch(() => {
-        searchResultsList.innerHTML =
-          '<div class="text-center py-3 text-danger"><i class="fas fa-exclamation-circle me-1"></i>Search failed</div>';
-        return [];
+      .catch(function (error) {
+        if (typeof showToast === "function") {
+          showToast(error.message || "Failed to generate report", "danger");
+        }
+        if (button) {
+          button.disabled = false;
+          button.innerHTML = originalLabel;
+          if (iconOnlyButton) {
+            if (originalTitle) {
+              button.setAttribute("title", originalTitle);
+              button.setAttribute("aria-label", originalTitle);
+            } else {
+              button.removeAttribute("title");
+              button.removeAttribute("aria-label");
+            }
+          }
+        }
       });
   }
 
-  function renderReportActions(email, containerId, payload) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    const safeEmail = escapeHtml(email);
-    if (payload && payload.success) {
-      const viewUrl = payload.view_url || "#";
-      const downloadUrl = payload.download_url || "#";
-      container.innerHTML =
-        '<a href="' + viewUrl + '" target="_blank" class="icon-btn btn-view" title="View"><i class="fas fa-eye"></i></a>' +
-        '<a href="' + downloadUrl + '" class="icon-btn btn-dl" title="Download"><i class="fas fa-download"></i></a>' +
-        '<button class="icon-btn btn-regen js-generate-report" data-email="' + safeEmail + '" data-container="' + containerId + '" title="Regenerate"><i class="fas fa-redo"></i></button>' +
-        '<button class="icon-btn btn-gallery js-open-proctoring" data-email="' + safeEmail + '" title="View Proctoring Screenshots"><i class="fas fa-images"></i></button>';
+  function syncDateFilterVisibility() {
+    if (!periodSelect || !dateInput) return;
+    var isCustomDate = periodSelect.value === "date";
+    dateInput.classList.toggle("is-hidden", !isCustomDate);
+    if (!isCustomDate) {
+      dateInput.value = "";
+    }
+  }
+
+  function submitFilters(resetOffset) {
+    if (!filterForm) return;
+    if (pageInput) {
+      pageInput.value = "1";
+    }
+    if (offsetInput && resetOffset !== false) {
+      offsetInput.value = "0";
+    }
+    filterForm.submit();
+  }
+
+  var HOVER_DELAY_MS = 40;
+  var LIST_EXIT_DELAY_MS = 180;
+  var activeCard = null;
+  var lockedCard = null;
+  var enterTimer = null;
+  var leaveTimer = null;
+  var cardSwitchToken = 0;
+
+  function applyOverlaySpacing(card) {
+    if (!card) return;
+    var panel = card.querySelector(".candidate-expanded-grid");
+    var panelHeight = panel ? Math.ceil(panel.getBoundingClientRect().height) : 0;
+    var spacing = Math.max(220, panelHeight + 16);
+    card.style.setProperty("--overlay-space", spacing + "px");
+    card.classList.add("with-space");
+  }
+
+  function clearOverlaySpacing(card) {
+    if (!card) return;
+    card.classList.remove("with-space");
+    card.style.removeProperty("--overlay-space");
+  }
+
+  function setActiveCard(card) {
+    if (activeCard === card) {
+      if (activeCard) {
+        applyOverlaySpacing(activeCard);
+      }
       return;
     }
-    const errorText = escapeHtml((payload && payload.error) ? payload.error : "Failed");
-    container.innerHTML =
-      '<span class="text-danger" style="font-size:0.75rem;"><i class="fas fa-exclamation-circle"></i> ' + errorText + "</span>" +
-      ' <button class="icon-btn btn-regen js-generate-report" data-email="' + safeEmail + '" data-container="' + containerId + '"><i class="fas fa-redo"></i></button>' +
-      ' <button class="icon-btn btn-gallery js-open-proctoring" data-email="' + safeEmail + '" title="View Proctoring Screenshots"><i class="fas fa-images"></i></button>';
+
+    var oldCard = activeCard;
+    activeCard = card || null;
+
+    // Always reserve space on the next active card first so layout never shrinks first.
+    if (activeCard) {
+      applyOverlaySpacing(activeCard);
+      activeCard.classList.add("is-active");
+    }
+
+    if (!oldCard) return;
+    var token = ++cardSwitchToken;
+    var releaseOldCard = function () {
+      if (token !== cardSwitchToken) return;
+      if (oldCard === activeCard) return;
+      clearOverlaySpacing(oldCard);
+      oldCard.classList.remove("is-active");
+    };
+
+    if (typeof window.requestAnimationFrame === "function") {
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(releaseOldCard);
+      });
+      return;
+    }
+
+    window.setTimeout(releaseOldCard, 40);
   }
 
-  function generateReport(email, containerId) {
-    if (!email || !containerId) return;
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    container.innerHTML = '<span class="icon-btn btn-loading"><i class="fas fa-spinner fa-spin"></i></span>';
-    fetchJson("/reports/generate/" + encodeURIComponent(email))
-      .then((data) => renderReportActions(email, containerId, data))
-      .catch((err) => renderReportActions(email, containerId, { success: false, error: err.message || "Error" }));
-  }
+  function initCardExpansion() {
+    var cards = Array.prototype.slice.call(document.querySelectorAll("[data-candidate-card]"));
+    if (!cards.length) return;
+    var reportsList = document.querySelector(".reports-list");
 
-  function openProctoringGallery(email) {
-    if (!email) return;
-    if (proctoringModal) {
-      proctoringModal.classList.add("active");
-      proctoringModal.setAttribute("aria-hidden", "false");
-    }
-    if (proctoringModalTitle) {
-      proctoringModalTitle.textContent = "Proctoring Screenshots - " + email;
-    }
-    if (proctoringGalleryMeta) {
-      proctoringGalleryMeta.textContent = "Loading screenshots...";
-    }
-    if (proctoringGallery) {
-      proctoringGallery.innerHTML = "";
-    }
-    proctoringShots = [];
-    proctoringShotIndex = -1;
+    cards.forEach(function (card) {
+      card.classList.remove("is-active");
+      clearOverlaySpacing(card);
+    });
+    setActiveCard(null);
 
-    fetchJson("/reports/proctoring/screenshots?email=" + encodeURIComponent(email))
-      .then((data) => {
-        const items = (data && data.screenshots) ? data.screenshots : [];
-        if (!items.length) {
-          if (proctoringGalleryMeta) proctoringGalleryMeta.textContent = "No proctoring screenshots found.";
+    if (reportsList) {
+      reportsList.addEventListener("mouseenter", function () {
+        window.clearTimeout(leaveTimer);
+      });
+
+      reportsList.addEventListener("mouseleave", function () {
+        if (lockedCard) {
           return;
         }
-        proctoringShots = items.map((item, idx) => Object.assign({ __index: idx }, item));
-        proctoringShotIndex = -1;
-        if (proctoringGalleryMeta) {
-          proctoringGalleryMeta.textContent = items.length + " screenshot(s) captured";
+        window.clearTimeout(enterTimer);
+        window.clearTimeout(leaveTimer);
+        leaveTimer = window.setTimeout(function () {
+          if (lockedCard) {
+            return;
+          }
+          setActiveCard(null);
+        }, LIST_EXIT_DELAY_MS);
+      });
+    }
+
+    function isOverRowActions(card, event) {
+      if (!card || !event) return false;
+      var hitNode = event.target;
+      if ((!hitNode || hitNode === card) && typeof document.elementFromPoint === "function") {
+        hitNode = document.elementFromPoint(event.clientX, event.clientY);
+      }
+      return Boolean(hitNode && hitNode.closest && hitNode.closest(".row-actions"));
+    }
+
+    cards.forEach(function (card) {
+      card.addEventListener("mouseenter", function (event) {
+        if (lockedCard && lockedCard !== card) {
+          return;
         }
-        let html = "";
-        proctoringShots.forEach((item) => {
-          const meta = [];
-          if (item.round_label) meta.push(escapeHtml(item.round_label));
-          if (item.source) meta.push(escapeHtml(String(item.source).toUpperCase()));
-          if (item.captured_at) meta.push(escapeHtml(formatGalleryTimestamp(item.captured_at)));
-          html += '<div class="proctoring-shot">';
-          html += '<img src="/reports/proctoring/screenshot/' + item.id + '" loading="lazy" alt="Proctoring screenshot" data-proctoring-index="' + item.__index + '">';
-          html += '<div class="proctoring-shot-meta">' + meta.join(" | ") + "</div>";
-          html += "</div>";
+        if (isOverRowActions(card, event)) {
+          window.clearTimeout(enterTimer);
+          return;
+        }
+        window.clearTimeout(leaveTimer);
+        window.clearTimeout(enterTimer);
+        enterTimer = window.setTimeout(function () {
+          setActiveCard(card);
+        }, HOVER_DELAY_MS);
+      });
+
+      card.addEventListener("mouseleave", function () {
+        window.clearTimeout(enterTimer);
+        if (lockedCard) {
+          return;
+        }
+        if (!reportsList) {
+          window.clearTimeout(leaveTimer);
+          leaveTimer = window.setTimeout(function () {
+            if (lockedCard) {
+              return;
+            }
+            if (activeCard === card) {
+              setActiveCard(null);
+            }
+          }, HOVER_DELAY_MS);
+        }
+      });
+
+      card.addEventListener("focusin", function () {
+        if (lockedCard && lockedCard !== card) {
+          return;
+        }
+        window.clearTimeout(leaveTimer);
+        window.clearTimeout(enterTimer);
+        setActiveCard(card);
+      });
+
+      card.addEventListener("focusout", function (event) {
+        var next = event.relatedTarget;
+        if (next && card.contains(next)) {
+          return;
+        }
+        if (lockedCard) {
+          return;
+        }
+        if (activeCard === card) {
+          setActiveCard(null);
+        }
+      });
+
+      card.addEventListener("click", function (event) {
+        if (event.target.closest(".row-actions, a, button, input, select, textarea, label")) {
+          return;
+        }
+        window.clearTimeout(leaveTimer);
+        window.clearTimeout(enterTimer);
+
+        // Click toggles lock on this card.
+        if (lockedCard === card) {
+          lockedCard = null;
+          setActiveCard(null);
+          return;
+        }
+        lockedCard = card;
+        setActiveCard(card);
+      });
+
+      var rowActions = card.querySelector(".row-actions");
+      if (rowActions) {
+        rowActions.addEventListener("mouseenter", function () {
+          window.clearTimeout(enterTimer);
         });
-        if (proctoringGallery) {
-          proctoringGallery.innerHTML = html;
+      }
+    });
+  }
+
+  function formatExactTimestamp(isoValue) {
+    if (!isoValue) {
+      return {
+        local: "Capture time unavailable",
+        utc: "",
+      };
+    }
+
+    var date = new Date(isoValue);
+    if (Number.isNaN(date.getTime())) {
+      return {
+        local: String(isoValue),
+        utc: "",
+      };
+    }
+
+    var local = date.toLocaleString(undefined, {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+      timeZoneName: "short",
+    });
+
+    var utc = date.toISOString().replace("T", " ").replace("Z", " UTC");
+    return { local: local, utc: utc };
+  }
+
+  function renderGallery(capturedScreenshots) {
+    if (!galleryGrid) return;
+    galleryGrid.innerHTML = "";
+
+    if (!capturedScreenshots.length) {
+      var emptyNode = document.createElement("div");
+      emptyNode.className = "reports-gallery-empty";
+      emptyNode.textContent = "No screenshots captured for this candidate yet.";
+      galleryGrid.appendChild(emptyNode);
+      return;
+    }
+
+    var fragment = document.createDocumentFragment();
+    capturedScreenshots.forEach(function (shot) {
+      var article = document.createElement("article");
+      article.className = "reports-shot";
+
+      var link = document.createElement("a");
+      link.className = "reports-shot-link";
+      link.href = "/reports/proctoring/screenshot/" + encodeURIComponent(String(shot.id || ""));
+      link.target = "_blank";
+      link.rel = "noopener";
+
+      var img = document.createElement("img");
+      img.loading = "lazy";
+      img.src = link.href;
+      img.alt = "Screenshot " + String(shot.id || "");
+      link.appendChild(img);
+
+      var body = document.createElement("div");
+      body.className = "reports-shot-body";
+
+      var ts = formatExactTimestamp(shot.captured_at);
+      var timeLocal = document.createElement("div");
+      timeLocal.className = "reports-shot-time";
+      timeLocal.textContent = ts.local;
+      body.appendChild(timeLocal);
+
+      if (ts.utc) {
+        var timeUtc = document.createElement("div");
+        timeUtc.className = "reports-shot-time-utc";
+        timeUtc.textContent = ts.utc;
+        body.appendChild(timeUtc);
+      }
+
+      var meta = document.createElement("div");
+      meta.className = "reports-shot-meta";
+      var roundLabel = shot.round_label || shot.round_key || "Round";
+      var eventType = shot.event_type || "capture";
+      var source = shot.source || "system";
+      meta.textContent = roundLabel + " | " + eventType + " | " + source;
+      body.appendChild(meta);
+
+      article.appendChild(link);
+      article.appendChild(body);
+      fragment.appendChild(article);
+    });
+
+    galleryGrid.appendChild(fragment);
+  }
+
+  function openGallery(email, candidateName) {
+    if (!galleryModal || !galleryMeta || !galleryGrid || !galleryTitle || !email) {
+      return;
+    }
+
+    activeGalleryEmail = String(email);
+    galleryTitle.textContent = "Proctoring Screenshots - " + (candidateName || email);
+    galleryMeta.textContent = "Loading screenshots...";
+    galleryGrid.innerHTML = '<div class="reports-gallery-empty">Loading screenshots...</div>';
+    galleryModal.classList.add("active");
+    galleryModal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+
+    fetchJson("/reports/proctoring/screenshots?email=" + encodeURIComponent(email) + "&limit=300", {
+      credentials: "same-origin",
+    })
+      .then(function (payload) {
+        if (activeGalleryEmail !== String(email)) {
+          return;
         }
+        var screenshots = Array.isArray(payload && payload.screenshots) ? payload.screenshots : [];
+        galleryMeta.textContent = screenshots.length + " screenshot(s) found";
+        renderGallery(screenshots);
       })
-      .catch(() => {
-        if (proctoringGalleryMeta) {
-          proctoringGalleryMeta.textContent = "Failed to load screenshots. Please try again.";
+      .catch(function (error) {
+        galleryMeta.textContent = "Unable to load screenshots";
+        galleryGrid.innerHTML = '<div class="reports-gallery-empty">Failed to load screenshots.</div>';
+        if (typeof showToast === "function") {
+          showToast(error.message || "Failed to load screenshots", "danger");
         }
       });
   }
 
-  function renderProctoringViewer() {
-    if (proctoringShotIndex < 0 || proctoringShotIndex >= proctoringShots.length) return;
-    const shot = proctoringShots[proctoringShotIndex];
-    if (proctoringViewerImage) {
-      proctoringViewerImage.src = "/reports/proctoring/screenshot/" + shot.id;
-    }
-    if (proctoringViewerMeta) {
-      const parts = [];
-      if (shot.round_label) parts.push(shot.round_label);
-      if (shot.source) parts.push(String(shot.source).toUpperCase());
-      if (shot.captured_at) parts.push(formatGalleryTimestamp(shot.captured_at));
-      parts.push((proctoringShotIndex + 1) + " / " + proctoringShots.length);
-      proctoringViewerMeta.textContent = parts.join(" | ");
-    }
-    if (proctoringPrevBtn) proctoringPrevBtn.disabled = proctoringShotIndex === 0;
-    if (proctoringNextBtn) proctoringNextBtn.disabled = proctoringShotIndex === (proctoringShots.length - 1);
+  function closeGallery() {
+    if (!galleryModal) return;
+    activeGalleryEmail = "";
+    galleryModal.classList.remove("active");
+    galleryModal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
   }
 
-  function openProctoringViewerByIndex(index) {
-    if (!Array.isArray(proctoringShots) || proctoringShots.length === 0) return;
-    const idx = Number(index);
-    if (Number.isNaN(idx) || idx < 0 || idx >= proctoringShots.length) return;
-    proctoringShotIndex = idx;
-    renderProctoringViewer();
-    if (proctoringViewer) {
-      proctoringViewer.classList.add("active");
-      proctoringViewer.setAttribute("aria-hidden", "false");
-    }
-  }
-
-  function stepProctoringViewer(delta) {
-    if (!proctoringShots.length) return;
-    const next = proctoringShotIndex + delta;
-    if (next < 0 || next >= proctoringShots.length) return;
-    proctoringShotIndex = next;
-    renderProctoringViewer();
-  }
-
-  function closeProctoringViewer() {
-    if (!proctoringViewer) return;
-    proctoringViewer.classList.remove("active");
-    proctoringViewer.setAttribute("aria-hidden", "true");
-  }
-
-  function closeProctoringGallery() {
-    if (!proctoringModal) return;
-    proctoringModal.classList.remove("active");
-    proctoringModal.setAttribute("aria-hidden", "true");
-  }
-
-  const searchBtn = document.getElementById("searchBtn");
-  if (searchBtn && searchInput) {
-    searchBtn.addEventListener("click", function () { searchCandidates(undefined, true); });
-    searchInput.addEventListener("keyup", function (e) {
-      if (e.key === "Enter") searchCandidates(undefined, true);
+  function initializeReportActionState() {
+    var cards = Array.prototype.slice.call(document.querySelectorAll("[data-candidate-card]"));
+    cards.forEach(function (card) {
+      var hasReport = String(card.getAttribute("data-has-report") || "0") === "1";
+      var links = buildReportLinks({}, card.getAttribute("data-report-filename") || "");
+      renderRowActions(card, hasReport, links);
+      renderActionHub(card, hasReport, links);
     });
-    searchInput.addEventListener("input", function () {
-      const q = searchInput.value.trim();
-      window.clearTimeout(searchTimer);
-      if (q.length < 1) {
-        if (searchResults) searchResults.classList.remove("active");
-        if (searchResultsList) searchResultsList.innerHTML = "";
+  }
+
+  if (roleSelect && filterForm) {
+    roleSelect.addEventListener("change", function () {
+      submitFilters(true);
+    });
+  }
+
+  if (periodSelect && filterForm) {
+    syncDateFilterVisibility();
+    periodSelect.addEventListener("change", function () {
+      syncDateFilterVisibility();
+      if (periodSelect.value === "date") {
+        if (!dateInput) return;
+        if (typeof dateInput.showPicker === "function") {
+          dateInput.showPicker();
+        } else {
+          dateInput.focus();
+          dateInput.click();
+        }
+        if (dateInput.value) {
+          submitFilters(true);
+        }
         return;
       }
-      searchTimer = window.setTimeout(function () {
-        searchCandidates(q, false);
-      }, 220);
+      submitFilters(true);
     });
-    searchInput.addEventListener("change", function () {
-      const q = searchInput.value.trim();
-      if (q.length >= 1) {
-        searchCandidates(q, false);
+  }
+
+  if (dateInput && filterForm) {
+    dateInput.addEventListener("change", function () {
+      if (periodSelect && periodSelect.value !== "date") {
+        return;
+      }
+      submitFilters(true);
+    });
+  }
+
+  if (searchInput && filterForm) {
+    searchInput.addEventListener("input", function () {
+      window.clearTimeout(searchTimer);
+      searchTimer = window.setTimeout(function () {
+        submitFilters(true);
+      }, 360);
+    });
+
+    searchInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        window.clearTimeout(searchTimer);
+        submitFilters(true);
       }
     });
   }
 
-  const clearBtn = document.getElementById("clearSearchBtn");
-  if (clearBtn) {
-    clearBtn.addEventListener("click", function () {
-      if (searchInput) searchInput.value = "";
-      if (searchResults) searchResults.classList.remove("active");
-      if (searchResultsList) searchResultsList.innerHTML = "";
+  if (perPageSelect && perPageInput && filterForm) {
+    perPageSelect.addEventListener("change", function () {
+      perPageInput.value = perPageSelect.value;
+      submitFilters(false);
     });
   }
 
   document.addEventListener("click", function (event) {
-    const generateBtn = event.target.closest(".js-generate-report");
+    var generateBtn = event.target.closest(".js-generate-report");
     if (generateBtn) {
       event.preventDefault();
-      generateReport(generateBtn.dataset.email, generateBtn.dataset.container);
+      var ownerCard = generateBtn.closest("[data-candidate-card]");
+      generateReport(generateBtn.getAttribute("data-email"), generateBtn, ownerCard);
       return;
     }
 
-    const openBtn = event.target.closest(".js-open-proctoring");
-    if (openBtn) {
+    var galleryBtn = event.target.closest(".js-open-gallery");
+    if (galleryBtn) {
       event.preventDefault();
-      openProctoringGallery(openBtn.dataset.email);
+      openGallery(
+        galleryBtn.getAttribute("data-email"),
+        galleryBtn.getAttribute("data-name")
+      );
       return;
     }
 
-    const closeGalleryBtn = event.target.closest(".js-close-gallery");
-    if (closeGalleryBtn) {
+    if (event.target.closest(".js-close-gallery")) {
       event.preventDefault();
-      closeProctoringGallery();
-      return;
-    }
-
-    const closeViewerBtn = event.target.closest(".js-close-viewer");
-    if (closeViewerBtn) {
-      event.preventDefault();
-      closeProctoringViewer();
-      return;
-    }
-
-    const stepBtn = event.target.closest(".js-step-viewer");
-    if (stepBtn) {
-      event.preventDefault();
-      const delta = Number(stepBtn.dataset.step || 0);
-      if (delta) stepProctoringViewer(delta);
-      return;
-    }
-
-    const shotImg = event.target.closest("[data-proctoring-index]");
-    if (shotImg) {
-      event.preventDefault();
-      openProctoringViewerByIndex(shotImg.dataset.proctoringIndex);
+      closeGallery();
     }
   });
 
-  if (proctoringModal) {
-    proctoringModal.addEventListener("click", function (e) {
-      if (e.target === proctoringModal) {
-        closeProctoringGallery();
+  if (galleryModal) {
+    galleryModal.addEventListener("click", function (event) {
+      if (event.target === galleryModal) {
+        closeGallery();
       }
     });
   }
 
-  if (proctoringViewer) {
-    proctoringViewer.addEventListener("click", function (e) {
-      if (e.target === proctoringViewer) {
-        closeProctoringViewer();
-      }
-    });
-  }
-
-  document.addEventListener("keydown", function (e) {
-    if (proctoringViewer && proctoringViewer.classList.contains("active")) {
-      if (e.key === "ArrowRight") stepProctoringViewer(1);
-      if (e.key === "ArrowLeft") stepProctoringViewer(-1);
-      if (e.key === "Escape") {
-        closeProctoringViewer();
-        return;
-      }
-    }
-    if (proctoringModal && proctoringModal.classList.contains("active") && e.key === "Escape") {
-      closeProctoringGallery();
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      closeGallery();
     }
   });
 
-  window.AziroReports = {
-    generateReport: generateReport,
-    openProctoringGallery: openProctoringGallery,
-  };
+  initializeReportActionState();
+  initCardExpansion();
 })();

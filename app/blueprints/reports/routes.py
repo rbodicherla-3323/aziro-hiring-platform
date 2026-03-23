@@ -1,9 +1,10 @@
 # filepath: d:\Projects\aziro-hiring-platform\app\blueprints\reports\routes.py
 """
-Reports page — recent session candidates + historical report search.
+Reports page - recent session candidates + historical report search.
 """
 from datetime import datetime, timezone, timedelta
 from io import BytesIO
+from math import ceil
 from flask import Blueprint, render_template, request, session, jsonify, send_file, abort, current_app
 
 from app.utils.auth_decorator import login_required
@@ -19,6 +20,7 @@ from app.services.plagiarism_service import (
 from app.services.pdf_service import generate_candidate_pdf, REPORTS_DIR
 
 reports_bp = Blueprint("reports", __name__)
+_VALID_PERIOD_FILTERS = {"today", "24h", "7d", "28d", "date"}
 
 
 def _get_db_service():
@@ -37,16 +39,88 @@ def _get_pdf_service():
         return None, None
 
 
+def _resolve_date_range(filter_type: str, specific_date: str = "", offset: int = 0):
+    now = datetime.now(timezone.utc)
+    offset = int(offset or 0)
+    if offset > 0:
+        offset = 0
+
+    if filter_type == "today":
+        start = now.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=offset)
+        return start, start + timedelta(days=1)
+    if filter_type == "24h":
+        end = now + timedelta(hours=24 * offset)
+        return end - timedelta(hours=24), end
+    if filter_type == "7d":
+        end = now + timedelta(days=7 * offset)
+        return end - timedelta(days=7), end
+    if filter_type == "28d":
+        end = now + timedelta(days=28 * offset)
+        return end - timedelta(days=28), end
+    if filter_type == "date" and specific_date:
+        try:
+            d = datetime.strptime(specific_date, "%Y-%m-%d")
+        except ValueError:
+            return None, None
+        start = d.replace(tzinfo=timezone.utc) + timedelta(days=offset)
+        return start, start + timedelta(days=1)
+    return None, None
+
+
+def _period_label(filter_type: str, specific_date: str = "") -> str:
+    if filter_type == "24h":
+        return "Last 24 Hours"
+    if filter_type == "7d":
+        return "Last 7 Days"
+    if filter_type == "28d":
+        return "Last 28 Days"
+    if filter_type == "date" and specific_date:
+        return specific_date
+    return "Today"
+
+
 @reports_bp.route("/reports")
 @login_required
 def reports():
     user = session.get("user", {})
     user_email = user.get("email", "dev@aziro.com")
     q = request.args.get("q", "").strip()
+    role_filter = request.args.get("role", "").strip()
+    search_global_mode = bool(q)
+    date_filter = str(request.args.get("filter", "today") or "today").strip().lower()
+    specific_date = str(request.args.get("date", "") or "").strip()
+    try:
+        date_offset = int(request.args.get("offset", "0"))
+    except (TypeError, ValueError):
+        date_offset = 0
+    if date_offset > 0:
+        date_offset = 0
+    if specific_date:
+        date_filter = "date"
+    if date_filter not in _VALID_PERIOD_FILTERS:
+        date_filter = "today"
+    if date_filter != "date":
+        specific_date = ""
+    range_start, range_end = _resolve_date_range(date_filter, specific_date, date_offset)
+    if not range_start or not range_end:
+        date_filter = "today"
+        specific_date = ""
+        date_offset = 0
+        range_start, range_end = _resolve_date_range("today")
+    period_label = _period_label(date_filter, specific_date)
+    try:
+        page = max(1, int(request.args.get("page", "1")))
+    except (TypeError, ValueError):
+        page = 1
+    try:
+        per_page = int(request.args.get("per_page", "8"))
+    except (TypeError, ValueError):
+        per_page = 8
+    if per_page not in (5, 8, 10, 20, 50):
+        per_page = 8
 
-    # Recent session candidates for this user (retention window)
-    since = datetime.now(timezone.utc) - timedelta(days=SESSION_RETENTION_DAYS)
-    user_tests = get_tests_for_user_in_range(user_email, since)
+    # HR-scoped generated tests for selected period.
+    user_tests = get_tests_for_user_in_range(user_email, range_start)
 
     def _parse_created_at(value):
         if isinstance(value, datetime):
@@ -66,6 +140,14 @@ def reports():
         dt = _parse_created_at(item.get("created_at", ""))
         return dt or datetime.min.replace(tzinfo=timezone.utc)
 
+    user_tests = [
+        t
+        for t in user_tests
+        if (dt := _parse_created_at(t.get("created_at", ""))) is not None
+        and dt >= range_start
+        and dt < range_end
+    ]
+
     user_tests_sorted = sorted(user_tests, key=_created_sort_key, reverse=True)
     tests_by_email = {}
     for t in user_tests_sorted:
@@ -76,14 +158,25 @@ def reports():
             tests_by_email[email_key] = t
     user_emails = set(tests_by_email.keys())
 
-    # Get evaluation data for recent session candidates
+    # Get evaluation data
     all_candidates = EvaluationAggregator.get_candidates()
-    session_candidates = []
+    all_candidates_by_email = {}
     for c in all_candidates:
         email_key = str(c.get("email", "")).strip().lower()
-        if email_key in user_emails:
+        if not email_key or email_key in all_candidates_by_email:
+            continue
+        if email_key in tests_by_email and not c.get("created_at"):
             c["created_at"] = tests_by_email[email_key].get("created_at", "")
-            session_candidates.append(c)
+        all_candidates_by_email[email_key] = c
+
+    session_candidates = []
+    for email_key in user_emails:
+        candidate = all_candidates_by_email.get(email_key)
+        if not candidate:
+            continue
+        if email_key in tests_by_email:
+            candidate["created_at"] = tests_by_email[email_key].get("created_at", "")
+        session_candidates.append(candidate)
 
     # Also add test entries that don't yet have evaluation data
     evaluated_emails = {str(c.get("email", "")).strip().lower() for c in session_candidates}
@@ -108,8 +201,55 @@ def reports():
             },
         })
         evaluated_emails.add(email_key)
+        all_candidates_by_email[email_key] = session_candidates[-1]
+
+    # When searching, include org-wide DB candidate matches too (even if they are
+    # outside this HR's generated list) so search can access full database scope.
+    if search_global_mode:
+        db_role_filter = role_filter if role_filter.lower() not in {"all", "all roles"} else ""
+        try:
+            db_matches = db_service.search_candidates(q, db_role_filter)
+        except Exception as exc:
+            current_app.logger.exception("DB candidate search failed: %s", exc)
+            db_matches = []
+
+        for row in db_matches:
+            email_key = str(row.get("email", "")).strip().lower()
+            if not email_key:
+                continue
+            existing = all_candidates_by_email.get(email_key)
+            if existing is not None:
+                if not existing.get("role"):
+                    existing["role"] = str(row.get("role", "")).strip()
+                if not existing.get("name"):
+                    existing["name"] = str(row.get("name", "")).strip() or email_key
+                if not existing.get("created_at"):
+                    existing["created_at"] = str(row.get("created_at", "")).strip()
+                continue
+
+            all_candidates_by_email[email_key] = {
+                "name": str(row.get("name", "")).strip() or email_key,
+                "email": email_key,
+                "role": str(row.get("role", "")).strip(),
+                "role_key": "",
+                "batch_id": "",
+                "created_at": str(row.get("created_at", "")).strip(),
+                "rounds": {},
+                "summary": {
+                    "total_rounds": 0,
+                    "attempted_rounds": 0,
+                    "passed_rounds": 0,
+                    "failed_rounds": 0,
+                    "overall_percentage": 0,
+                    "overall_verdict": "Pending",
+                },
+            }
 
     session_candidates.sort(key=_created_sort_key, reverse=True)
+    all_candidates_pool = list(all_candidates_by_email.values())
+    all_candidates_pool.sort(key=_created_sort_key, reverse=True)
+    base_candidates = list(all_candidates_pool) if search_global_mode else list(session_candidates)
+    base_total_candidates = len(base_candidates)
 
     def _attach_report_info(candidate):
         email_key = str(candidate.get("email", "")).strip().lower()
@@ -127,38 +267,78 @@ def reports():
         candidate["report_filename"] = info.get("filename") if info else ""
         candidate["report_id"] = info.get("id") if info else None
 
-    for cand in session_candidates:
-        _attach_report_info(cand)
+    role_options = sorted(
+        {
+            str(c.get("role", "")).strip()
+            for c in base_candidates
+            if str(c.get("role", "")).strip()
+        },
+        key=lambda value: value.lower(),
+    )
+    session_total_candidates = len(session_candidates)
 
-    # Apply search filter if q= is present
+    filtered_candidates = list(base_candidates)
+    if role_filter and role_filter.lower() not in {"all", "all roles"}:
+        rf = role_filter.lower()
+        filtered_candidates = [
+            c for c in filtered_candidates
+            if str(c.get("role", "")).strip().lower() == rf
+        ]
     if q:
         q_lower = q.lower()
-        session_candidates = [
-            c for c in session_candidates
+        filtered_candidates = [
+            c for c in filtered_candidates
             if q_lower in c.get("name", "").lower()
             or q_lower in c.get("email", "").lower()
             or q_lower in c.get("role", "").lower()
         ]
 
+    filtered_total_candidates = len(filtered_candidates)
+    total_pages = max(1, ceil(filtered_total_candidates / per_page)) if filtered_total_candidates else 1
+    page = min(page, total_pages)
+    start_idx = (page - 1) * per_page
+    end_idx = start_idx + per_page
+    paged_candidates = filtered_candidates[start_idx:end_idx]
+    showing_from = start_idx + 1 if filtered_total_candidates else 0
+    showing_to = start_idx + len(paged_candidates)
+    for candidate in paged_candidates:
+        _attach_report_info(candidate)
+
     try:
-        summaries_by_email = build_proctoring_summary_by_email({c.get("email", "") for c in session_candidates})
+        summaries_by_email = build_proctoring_summary_by_email({c.get("email", "") for c in paged_candidates})
     except Exception as exc:
         current_app.logger.exception("Failed to build proctoring summaries: %s", exc)
         summaries_by_email = {}
     try:
-        plagiarism_by_email = build_plagiarism_summary_by_candidates(session_candidates)
+        plagiarism_by_email = build_plagiarism_summary_by_candidates(paged_candidates)
     except Exception as exc:
         current_app.logger.exception("Failed to build plagiarism summaries: %s", exc)
         plagiarism_by_email = {}
-    for candidate in session_candidates:
+    for candidate in paged_candidates:
         email_key = str(candidate.get("email", "")).strip().lower()
         candidate["proctoring_summary"] = summaries_by_email.get(email_key, blank_proctoring_summary())
         candidate["plagiarism_summary"] = plagiarism_by_email.get(email_key, blank_plagiarism_summary())
 
     return render_template(
         "reports.html",
-        session_candidates=session_candidates,
+        session_candidates=paged_candidates,
         recent_days=SESSION_RETENTION_DAYS,
+        session_total_candidates=session_total_candidates,
+        base_total_candidates=base_total_candidates,
+        search_global_mode=search_global_mode,
+        filtered_total_candidates=filtered_total_candidates,
+        role_options=role_options,
+        selected_role=role_filter or "All Roles",
+        search_query=q,
+        page=page,
+        per_page=per_page,
+        total_pages=total_pages,
+        showing_from=showing_from,
+        showing_to=showing_to,
+        date_filter=date_filter,
+        specific_date=specific_date,
+        date_offset=date_offset,
+        period_label=period_label,
     )
 
 
@@ -271,38 +451,42 @@ def search_reports():
 @login_required
 def generate_report(email):
     """Generate a PDF report for a candidate and return JSON with action URLs."""
+    email_key = str(email or "").strip().lower()
+    if not email_key:
+        return jsonify({"success": False, "error": "Candidate email is required"}), 400
+
     # First try from evaluation aggregator (in-memory data)
     all_candidates = EvaluationAggregator.get_candidates()
     candidate_data = None
     for c in all_candidates:
-        if c["email"] == email:
+        if str(c.get("email", "")).strip().lower() == email_key:
             candidate_data = c
             break
 
     # Fallback to DB
     if not candidate_data:
-        candidate_data = db_service.get_candidate_report_data(email)
+        candidate_data = db_service.get_candidate_report_data(email_key)
 
     if not candidate_data:
-        return jsonify({"success": False, "error": f"No data found for candidate: {email}"}), 404
+        return jsonify({"success": False, "error": f"No data found for candidate: {email_key}"}), 404
 
-    proctoring_by_email = build_proctoring_summary_by_email({email})
-    candidate_data["proctoring_summary"] = proctoring_by_email.get(email.strip().lower(), blank_proctoring_summary())
+    proctoring_by_email = build_proctoring_summary_by_email({email_key})
+    candidate_data["proctoring_summary"] = proctoring_by_email.get(email_key, blank_proctoring_summary())
     plagiarism_by_email = build_plagiarism_summary_by_candidates([candidate_data])
-    candidate_data["plagiarism_summary"] = plagiarism_by_email.get(email.strip().lower(), blank_plagiarism_summary())
+    candidate_data["plagiarism_summary"] = plagiarism_by_email.get(email_key, blank_plagiarism_summary())
 
     # Attach AI summaries for PDF rendering.
     try:
-        candidate_data["ai_overall_summary"] = EvaluationService.generate_candidate_overall_summary(email)
+        candidate_data["ai_overall_summary"] = EvaluationService.generate_candidate_overall_summary(email_key)
     except Exception:
         candidate_data["ai_overall_summary"] = None
 
     try:
-        candidate_data["ai_coding_summary"] = EvaluationService.generate_candidate_coding_round_summary(email)
+        candidate_data["ai_coding_summary"] = EvaluationService.generate_candidate_coding_round_summary(email_key)
     except Exception:
         candidate_data["ai_coding_summary"] = None
     try:
-        candidate_data["coding_round_data"] = EvaluationService.get_candidate_coding_round_data(email)
+        candidate_data["coding_round_data"] = EvaluationService.get_candidate_coding_round_data(email_key)
     except Exception:
         candidate_data["coding_round_data"] = None
 
@@ -322,7 +506,7 @@ def generate_report(email):
             if ts and getattr(ts, "id", None):
                 db_service.save_report(ts.id, filename, user.get("email", ""))
             else:
-                db_service.save_report(email, filename, user.get("email", ""))
+                db_service.save_report(email_key, filename, user.get("email", ""))
         except Exception:
             pass
 
@@ -500,5 +684,6 @@ def generate_report_by_session():
         return jsonify({"status": "ok", "filename": pdf_filename})
     except Exception as e:
         return jsonify({"status": "error", "error": str(e)}), 500
+
 
 

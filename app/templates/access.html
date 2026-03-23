@@ -7,25 +7,83 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  .sidebar,
+  .az-topbar,
   .access-replica {
-    --am-blue: #1f61de;
-    --am-blue-deep: #184fb8;
-    --am-orange: #ff7b1a;
-    --am-orange-deep: #f26400;
     font-family: "Poppins", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
-    background:
-      radial-gradient(780px 270px at -8% -10%, rgba(31, 97, 222, 0.18) 0%, rgba(31, 97, 222, 0) 70%),
-      radial-gradient(560px 240px at 100% -4%, rgba(255, 123, 26, 0.14) 0%, rgba(255, 123, 26, 0) 72%),
-      linear-gradient(180deg, #f8f9ff 0%, #f1f4fc 100%);
-    border: 1px solid #dde5f7;
-    border-radius: 20px;
-    padding: 18px 0 14px;
-    color: #152a59;
-    font-size: 14px;
   }
 
   .breadcrumb {
     display: none;
+  }
+
+  .content-area > footer {
+    display: none;
+  }
+
+  .access-replica {
+    --am-border: #dfe6f7;
+    --am-title: #1f3366;
+    --am-text: #4f5f83;
+    --am-muted: #7a839d;
+    --am-blue: #2d63da;
+    --am-blue-deep: #244db7;
+    --am-orange: #ff7a1a;
+    --am-orange-deep: #f26400;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--am-border);
+    border-radius: 20px;
+    padding: 22px 0 14px;
+    color: #1f315c;
+    font-size: var(--az-fs-body);
+    background:
+      radial-gradient(760px 280px at -6% -10%, rgba(45, 99, 218, 0.19) 0%, rgba(45, 99, 218, 0) 69%),
+      radial-gradient(520px 220px at 92% 0%, rgba(255, 122, 26, 0.16) 0%, rgba(255, 122, 26, 0) 71%),
+      linear-gradient(180deg, #fafbff 0%, #f4f3fc 62%, #efedf9 100%);
+    letter-spacing: 0;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+  }
+
+  .access-replica * {
+    font-style: normal;
+  }
+
+  .access-replica::before {
+    content: "";
+    position: absolute;
+    top: 156px;
+    right: -20px;
+    width: 560px;
+    height: 170px;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 8% 70%, rgba(229, 237, 255, 0.82) 0, rgba(229, 237, 255, 0.82) 24%, transparent 26%),
+      radial-gradient(ellipse at 24% 72%, rgba(223, 232, 253, 0.84) 0, rgba(223, 232, 253, 0.84) 24%, transparent 26%),
+      radial-gradient(ellipse at 40% 70%, rgba(220, 230, 251, 0.82) 0, rgba(220, 230, 251, 0.82) 24%, transparent 26%),
+      radial-gradient(ellipse at 56% 72%, rgba(214, 224, 248, 0.78) 0, rgba(214, 224, 248, 0.78) 24%, transparent 26%),
+      radial-gradient(ellipse at 72% 70%, rgba(210, 221, 247, 0.76) 0, rgba(210, 221, 247, 0.76) 24%, transparent 26%),
+      radial-gradient(ellipse at 88% 70%, rgba(207, 218, 244, 0.7) 0, rgba(207, 218, 244, 0.7) 24%, transparent 26%);
+    opacity: 0.9;
+    z-index: 0;
+  }
+
+  .access-replica::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 180px;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(240, 239, 251, 0) 0%, rgba(225, 231, 248, 0.58) 100%);
+    z-index: 0;
+  }
+
+  .access-replica > * {
+    position: relative;
+    z-index: 1;
   }
 
   .am-inner {
@@ -38,15 +96,15 @@
   .am-breadcrumb {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 13px;
+    gap: 8px;
+    margin: 0 8px 10px;
+    color: #496293;
+    font-size: var(--az-fs-meta);
     font-weight: 500;
-    color: #223b73;
-    margin: 2px 8px 8px;
   }
 
   .am-breadcrumb .current {
-    color: #29334b;
+    color: #2f3b56;
     font-weight: 500;
   }
 
@@ -54,200 +112,224 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 4px 8px 10px;
+    margin: 4px 8px 8px;
   }
 
   .am-title-row i {
-    color: #1f61de;
-    font-size: 24px;
+    color: var(--am-blue);
+    font-size: 21px;
   }
 
   .am-title-row h1 {
     margin: 0;
-    font-size: 34px;
-    line-height: 1.08;
-    font-weight: 700;
-    color: #152a59;
-    letter-spacing: -0.02em;
+    color: var(--am-title);
+    font-size: var(--az-fs-page-title);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
   }
 
   .am-subtitle {
-    margin: 0 8px 18px;
-    font-size: 14px;
-    color: #3f4f74;
+    margin: 0 8px 16px;
+    color: var(--am-text);
+    font-size: var(--az-fs-page-subtitle);
     font-weight: 500;
     line-height: 1.45;
   }
 
   .am-subtitle strong {
-    color: #14295a;
+    color: #243964;
     font-weight: 700;
   }
 
   .am-surface {
-    background: #ffffff;
-    border: 1px solid #dfe6f7;
-    border-radius: 20px;
+    border: 1px solid var(--am-border);
+    border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 12px 26px rgba(28, 43, 86, 0.08);
+    background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+    box-shadow: 0 12px 30px rgba(41, 63, 120, 0.1);
   }
 
   .am-topbar {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: space-between;
-    gap: 18px;
-    padding: 16px 22px;
+    gap: 12px;
+    padding: 12px 14px;
     border-bottom: 1px solid #dfe7f8;
-    background:
-      linear-gradient(90deg, rgba(31, 97, 222, 0.06) 0%, rgba(31, 97, 222, 0) 40%),
-      linear-gradient(270deg, rgba(255, 123, 26, 0.08) 0%, rgba(255, 123, 26, 0) 45%),
-      linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+    background: linear-gradient(140deg, #ffffff 0%, #f1f7ff 88%);
   }
 
   .am-stats {
-    display: flex;
-    align-items: stretch;
-    gap: 0;
-    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
     flex: 1;
+    min-width: 0;
   }
 
   .am-stat {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 8px 16px 8px 10px;
-    min-height: 84px;
-    flex: 1 1 0;
-    border-right: 1px solid #e7ebf6;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    gap: 10px;
+    min-height: 74px;
+    padding: 10px 12px;
+    border: 1px solid #e5e8f3;
+    border-radius: 12px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
   }
 
-  .am-stat:last-child {
-    border-right: none;
+  .am-stat:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(40, 66, 124, 0.14);
+  }
+
+  .am-stat-total {
+    background: linear-gradient(135deg, #ffffff 0%, #edf5ff 100%);
+  }
+
+  .am-stat-approved {
+    background: linear-gradient(135deg, #ffffff 0%, #eef5ff 100%);
+  }
+
+  .am-stat-pending {
+    background: linear-gradient(135deg, #ffffff 0%, #fff3e8 100%);
+  }
+
+  .am-stat-revoked {
+    background: linear-gradient(135deg, #ffffff 0%, #fff2f2 100%);
   }
 
   .am-stat-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
     flex-shrink: 0;
+    color: #ffffff;
+    font-size: 0.8rem;
+    box-shadow: 0 8px 14px rgba(38, 64, 130, 0.16);
+  }
+
+  .am-stat-total .am-stat-icon,
+  .am-stat-approved .am-stat-icon {
+    background: linear-gradient(135deg, #3b87f0 0%, #2b5fd3 100%);
+  }
+
+  .am-stat-pending .am-stat-icon {
+    background: linear-gradient(135deg, #ff9a3a 0%, #f26b0f 100%);
+  }
+
+  .am-stat-revoked .am-stat-icon {
+    background: linear-gradient(135deg, #ff7a7a 0%, #df3f47 100%);
   }
 
   .am-stat-label {
-    color: #5e6c8f;
-    font-size: 13px;
-    line-height: 1.1;
-    margin-bottom: 6px;
-    font-weight: 500;
+    margin-bottom: 5px;
+    color: #2f3f66;
+    font-size: var(--az-fs-meta);
+    font-weight: 600;
+    line-height: 1.15;
   }
 
   .am-stat-value {
-    color: #1a2e5f;
-    font-size: 30px;
+    color: #202b47;
+    font-size: 1.5rem;
+    font-weight: 600;
     line-height: 1;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-
-  .am-stat-total .am-stat-icon {
-    background: #e8f0ff;
-    color: var(--am-blue);
-  }
-
-  .am-stat-approved .am-stat-icon {
-    background: #e8f0ff;
-    color: var(--am-blue);
   }
 
   .am-stat-approved .am-stat-value {
     color: var(--am-blue);
   }
 
-  .am-stat-pending .am-stat-icon {
-    background: #fff0d8;
-    color: var(--am-orange-deep);
-  }
-
   .am-stat-pending .am-stat-value {
     color: var(--am-orange-deep);
   }
 
-  .am-stat-revoked .am-stat-icon {
-    background: #ffe6e5;
-    color: #f04141;
-  }
-
   .am-stat-revoked .am-stat-value {
-    color: #dc2d2d;
+    color: #dd2f2f;
   }
 
   .am-top-actions {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
     flex-shrink: 0;
-    margin-left: auto;
   }
 
   .am-btn {
-    border: 1px solid #d8e1f4;
-    background: #ffffff;
-    color: #1a2f5d;
-    border-radius: 10px;
-    height: 44px;
-    padding: 0 16px;
+    height: 36px;
+    border-radius: 11px;
+    border: 1px solid #d1dcf5;
+    background: #f8fbff;
+    color: #355083;
+    font-size: var(--az-fs-btn);
+    font-weight: 600;
+    line-height: 1;
+    padding: 0 13px;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    font-weight: 600;
+    gap: 7px;
     text-decoration: none;
     cursor: pointer;
-    line-height: 1;
+    transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
   }
 
   .am-btn i {
-    font-size: 16px;
+    font-size: 0.8rem;
   }
 
   .am-btn:hover {
-    background: #f5f8ff;
-    color: #1a2f5d;
+    background: #eaf2ff;
+    border-color: #aac1ee;
+    color: #2f4d85;
   }
 
   .am-btn-primary {
-    border-color: var(--am-blue);
+    border-color: transparent;
     background: linear-gradient(135deg, var(--am-blue) 0%, var(--am-blue-deep) 100%);
     color: #ffffff;
-    box-shadow: 0 10px 18px rgba(27, 88, 209, 0.28);
+    box-shadow: 0 9px 18px rgba(40, 93, 207, 0.24);
   }
 
   .am-btn-primary:hover {
-    background: linear-gradient(135deg, #2e70e8 0%, var(--am-blue) 100%);
+    background: linear-gradient(135deg, #3d79e8 0%, #2a57c6 100%);
     color: #ffffff;
+    border-color: transparent;
+  }
+
+  .am-btn-accent {
+    border-color: transparent;
+    background: linear-gradient(135deg, var(--am-orange) 0%, var(--am-orange-deep) 100%);
+    color: #ffffff;
+    box-shadow: 0 9px 18px rgba(242, 100, 0, 0.24);
+  }
+
+  .am-btn-accent:hover {
+    background: linear-gradient(135deg, #ff9634 0%, #de5a00 100%);
+    color: #ffffff;
+    border-color: transparent;
   }
 
   .am-btn-icon {
-    width: 44px;
-    min-width: 44px;
+    width: 36px;
+    min-width: 36px;
     justify-content: center;
     padding: 0;
   }
 
   .am-invite-panel {
     display: none;
-    padding: 12px 18px;
+    padding: 12px 14px;
     border-top: 1px solid #e4eaf8;
     border-bottom: 1px solid #e4eaf8;
     background:
-      linear-gradient(90deg, rgba(31, 97, 222, 0.06) 0%, rgba(31, 97, 222, 0) 45%),
-      #f7fbff;
+      linear-gradient(90deg, rgba(45, 99, 218, 0.08) 0%, rgba(45, 99, 218, 0) 48%),
+      linear-gradient(180deg, #fbfdff 0%, #f3f8ff 100%);
   }
 
   .am-invite-panel.show {
@@ -263,46 +345,48 @@
 
   .am-invite-input {
     width: min(440px, 100%);
-    height: 44px;
+    height: 36px;
     border: 1px solid #d7e1f5;
-    border-radius: 10px;
-    padding: 0 14px;
-    font-size: 13px;
+    border-radius: 11px;
+    padding: 0 12px;
+    font-size: var(--az-fs-body);
+    font-weight: 500;
     color: #2a3c66;
     outline: none;
+    background: #ffffff;
   }
 
   .am-invite-input:focus {
     border-color: var(--am-blue);
-    box-shadow: 0 0 0 3px rgba(31, 97, 222, 0.14);
+    box-shadow: 0 0 0 3px rgba(45, 99, 218, 0.14);
   }
 
   .am-bulk-bar {
-    padding: 14px 22px;
-    background:
-      linear-gradient(90deg, rgba(31, 97, 222, 0.07) 0%, rgba(31, 97, 222, 0) 45%),
-      linear-gradient(180deg, #fafdff 0%, #f7faff 100%);
-    border-bottom: 1px solid #e0e7f8;
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto auto;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
+    padding: 12px 14px;
+    border-bottom: 1px solid #e0e7f8;
+    background:
+      linear-gradient(90deg, rgba(45, 99, 218, 0.08) 0%, rgba(45, 99, 218, 0) 45%),
+      linear-gradient(180deg, #fafdff 0%, #f7faff 100%);
   }
 
   .am-selection {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    color: #1a2f5d;
-    font-size: 14px;
+    color: #1f315c;
+    font-size: var(--az-fs-body);
     font-weight: 600;
   }
 
   .am-checkbox {
-    width: 24px;
-    height: 24px;
-    border: 2px solid #afbddc;
-    border-radius: 7px;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid #afbddc;
+    border-radius: 6px;
     appearance: none;
     -webkit-appearance: none;
     background: #fff;
@@ -321,7 +405,7 @@
   .am-checkbox:checked::after {
     content: "\2713";
     color: #fff;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
     line-height: 1;
   }
@@ -329,30 +413,41 @@
   .am-bulk-actions {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
   }
 
   .am-btn-outline-blue {
-    color: var(--am-blue);
-    border-color: #c8d9fb;
-    background: #f4f9ff;
+    color: #234ea8;
+    border-color: #bfd2fb;
+    background: #eef4ff;
   }
 
   .am-btn-outline-red {
-    color: #e33939;
-    border-color: #f2caca;
-    background: #fff8f8;
+    color: #da2f2f;
+    border-color: #f1cccc;
+    background: #fff6f6;
   }
 
   .am-btn-outline-blue:hover {
-    background: #eaf3ff;
-    color: var(--am-blue);
+    background: #e3edff;
+    color: #234ea8;
   }
 
   .am-btn-outline-red:hover {
-    background: #fff1f1;
-    color: #e33939;
+    background: #fff0f0;
+    color: #da2f2f;
+  }
+
+  .am-btn-outline-orange {
+    color: #d06413;
+    border-color: #ffd0a3;
+    background: #fff1e2;
+  }
+
+  .am-btn-outline-orange:hover {
+    background: #ffe7cf;
+    color: #c65b0d;
   }
 
   .am-table-wrap {
@@ -361,46 +456,50 @@
 
   .am-table {
     width: 100%;
+    min-width: 980px;
     border-collapse: collapse;
-    min-width: 1100px;
     table-layout: auto;
   }
 
   .am-table thead th {
-    background:
-      linear-gradient(90deg, rgba(31, 97, 222, 0.06) 0%, rgba(31, 97, 222, 0) 48%),
-      linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
-    color: #1c2f5f;
-    font-size: 13px;
-    font-weight: 700;
+    padding: 12px 14px;
     text-align: left;
-    padding: 14px 16px;
-    border-bottom: 1px solid #e1e8f8;
     white-space: nowrap;
+    color: #213764;
+    font-size: var(--az-fs-label);
+    font-weight: 700;
+    border-bottom: 1px solid #e1e8f8;
+    background:
+      linear-gradient(90deg, rgba(45, 99, 218, 0.07) 0%, rgba(45, 99, 218, 0) 48%),
+      linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
   }
 
   .am-table tbody td {
-    padding: 14px 16px;
-    font-size: 13px;
-    font-weight: 500;
+    padding: 10px 14px;
     color: #203360;
-    border-bottom: 1px solid #edf0f8;
-    vertical-align: middle;
+    font-size: var(--az-fs-body);
+    font-weight: 500;
     white-space: nowrap;
+    vertical-align: middle;
+    border-bottom: 1px solid #edf0f8;
   }
 
   .am-table th.am-check-col,
   .am-table td.am-check-col {
-    width: 54px;
+    width: 48px;
     text-align: center;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .am-data-row:hover {
+    background: rgba(236, 243, 255, 0.82);
   }
 
   .am-data-row.is-selected {
     background:
-      linear-gradient(90deg, rgba(31, 97, 222, 0.08) 0%, rgba(31, 97, 222, 0) 60%),
-      #f7faff;
+      linear-gradient(90deg, rgba(45, 99, 218, 0.09) 0%, rgba(45, 99, 218, 0) 65%),
+      #f4f8ff;
   }
 
   .am-data-row.status-locked {
@@ -410,87 +509,106 @@
   .am-status-pill {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    min-height: 40px;
-    padding: 0 16px;
+    gap: 6px;
+    min-height: 30px;
+    padding: 0 11px;
     border-radius: 999px;
-    font-size: 13px;
-    font-weight: 600;
     border: 1px solid transparent;
+    font-size: var(--az-fs-meta);
+    font-weight: 600;
     line-height: 1;
   }
 
   .am-status-pill i {
-    font-size: 15px;
+    font-size: 0.78rem;
   }
 
   .am-status-approved {
-    color: var(--am-blue);
-    background: #e9f1ff;
+    color: #2354b8;
+    background: linear-gradient(135deg, #eef4ff 0%, #dde9ff 100%);
+    border-color: #ccdcff;
   }
 
   .am-status-pending {
-    color: var(--am-orange-deep);
-    background: #fff0de;
+    color: #d06413;
+    background: linear-gradient(135deg, #fff3e5 0%, #ffe8d2 100%);
+    border-color: #ffd9b7;
   }
 
   .am-status-revoked {
-    color: #ea3636;
-    background: #ffe8e8;
+    color: #d53535;
+    background: linear-gradient(135deg, #fff0f0 0%, #ffdfe0 100%);
+    border-color: #ffcacc;
   }
 
   .am-status-locked {
-    color: #223a6f;
-    background: #e4e9f7;
+    color: #2d4678;
+    background: linear-gradient(135deg, #ecf1ff 0%, #dee7fb 100%);
+    border-color: #cddbf9;
   }
 
   .am-row-actions {
     display: inline-flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 10px;
+    gap: 8px;
     min-width: 0;
   }
 
   .am-action-btn {
-    min-width: 46px;
-    height: 40px;
+    min-width: 36px;
+    height: 34px;
     border-radius: 10px;
-    border: 1px solid #d8e1f2;
-    background: #fbfdff;
-    color: #1c2f5f;
+    border: 1px solid #d1dcf5;
+    background: #f8fbff;
+    color: #355083;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
+    padding: 0 10px;
     text-decoration: none;
-    padding: 0 11px;
-    font-size: 13px;
+    font-size: var(--az-fs-btn);
     font-weight: 600;
-    gap: 8px;
+    line-height: 1;
+    transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease;
   }
 
   .am-action-btn i {
-    font-size: 16px;
+    font-size: 0.8rem;
     line-height: 1;
   }
 
   .am-action-btn:hover {
-    background: #f4f8ff;
-    color: #1c2f5f;
+    background: #eaf2ff;
+    border-color: #aac1ee;
+    color: #2f4d85;
   }
 
   .am-action-btn.approve {
-    color: var(--am-blue);
-    border-color: #c7d8fb;
-    background: #f3f8ff;
+    color: #234ea8;
+    border-color: #bfd2fb;
+    background: #eef4ff;
   }
 
   .am-action-btn.reject,
   .am-action-btn.revoke,
   .am-action-btn.delete {
-    color: #e33939;
-    border-color: #f0c9c9;
-    background: #fff7f7;
+    color: #da2f2f;
+    border-color: #f1cccc;
+    background: #fff6f6;
+  }
+
+  .am-action-btn.warm {
+    color: #d06413;
+    border-color: #ffd0a3;
+    background: #fff1e2;
+  }
+
+  .am-action-btn.warm:hover {
+    background: #ffe7cf;
+    border-color: #ffc48c;
+    color: #c65b0d;
   }
 
   .am-more {
@@ -513,7 +631,7 @@
     min-width: 170px;
     border: 1px solid #dfe6f6;
     border-radius: 10px;
-    background: #fff;
+    background: #ffffff;
     box-shadow: 0 12px 24px rgba(30, 44, 86, 0.14);
     padding: 8px;
     z-index: 20;
@@ -521,14 +639,14 @@
 
   .am-menu-btn {
     width: 100%;
-    height: 36px;
+    height: 34px;
     border: none;
     border-radius: 8px;
-    background: #fff;
+    background: #ffffff;
     color: #1f315d;
     text-align: left;
     padding: 0 10px;
-    font-size: 13px;
+    font-size: var(--az-fs-body);
     font-weight: 500;
     display: flex;
     align-items: center;
@@ -543,20 +661,29 @@
     color: #dd2f2f;
   }
 
+  .am-menu-btn.warn {
+    color: #c65b0d;
+  }
+
+  .am-menu-btn.warn:hover {
+    background: #fff2e4;
+  }
+
   .am-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 14px;
-    padding: 14px 22px;
+    padding: 12px 14px;
+    border-top: 1px solid #e1e8f8;
     background:
-      linear-gradient(90deg, rgba(31, 97, 222, 0.05) 0%, rgba(31, 97, 222, 0) 46%),
-      #fff;
+      linear-gradient(90deg, rgba(45, 99, 218, 0.07) 0%, rgba(45, 99, 218, 0) 46%),
+      linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
   }
 
   .am-foot-text {
-    font-size: 13px;
     color: #3a4b71;
+    font-size: var(--az-fs-body);
     font-weight: 500;
   }
 
@@ -569,26 +696,26 @@
   }
 
   .am-per-page {
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid #d1dcf5;
+    border-radius: 11px;
+    background: #f8fbff;
+    color: #355083;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    border: 1px solid #d8e1f4;
-    border-radius: 11px;
-    height: 44px;
-    padding: 0 14px;
-    color: #2a3f6b;
-    font-size: 13px;
+    gap: 8px;
+    font-size: var(--az-fs-body);
     font-weight: 500;
-    background: #fff;
   }
 
   .am-per-page select {
     border: none;
     outline: none;
     background: transparent;
-    font-size: 13px;
+    color: #243a6c;
+    font-size: var(--az-fs-label);
     font-weight: 700;
-    color: #12295d;
   }
 
   .am-page-nav {
@@ -598,44 +725,48 @@
   }
 
   .am-page-btn {
-    width: 42px;
-    height: 42px;
+    width: 36px;
+    height: 36px;
     border-radius: 10px;
-    border: 1px solid #d8e1f4;
+    border: 1px solid #d1dcf5;
+    background: #f8fbff;
+    color: #355083;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #1b2f5f;
-    background: #fff;
     text-decoration: none;
-    font-size: 14px;
+    font-size: var(--az-fs-label);
     font-weight: 600;
+    transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
   }
 
   .am-page-btn:hover {
-    background: #f3f7ff;
-    color: #1b2f5f;
+    background: #eaf2ff;
+    border-color: #aac1ee;
+    color: #2f4d85;
   }
 
   .am-page-btn.active {
-    border-color: var(--am-blue);
-    background: var(--am-blue);
-    color: #fff;
+    border-color: transparent;
+    background: linear-gradient(135deg, var(--am-blue) 0%, var(--am-blue-deep) 100%);
+    color: #ffffff;
+    box-shadow: 0 9px 18px rgba(40, 93, 207, 0.24);
   }
 
   .am-empty {
     padding: 32px 16px;
     text-align: center;
     color: #6a7696;
-    font-size: 13px;
+    font-size: var(--az-fs-body);
   }
 
   @media (max-width: 1200px) {
     .am-title-row h1 {
-      font-size: 28px;
+      font-size: 1.8rem;
     }
-    .am-stat-value {
-      font-size: 24px;
+
+    .am-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
@@ -643,33 +774,39 @@
     .access-replica {
       padding: 12px 0 10px;
     }
+
     .am-topbar {
       flex-direction: column;
       align-items: stretch;
-      gap: 12px;
     }
-    .am-stats {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 6px;
-    }
-    .am-stat {
-      border-right: none;
-      border: 1px solid #edf1fa;
-      border-radius: 10px;
-    }
+
     .am-bulk-bar {
       grid-template-columns: 1fr;
       align-items: flex-start;
-      padding: 12px 14px;
     }
+
     .am-footer {
       flex-direction: column;
       align-items: flex-start;
     }
+
     .am-pager {
       width: 100%;
       justify-content: space-between;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .am-inner {
+      padding: 0 10px;
+    }
+
+    .am-stats {
+      grid-template-columns: 1fr;
+    }
+
+    .am-row-actions {
+      gap: 6px;
     }
   }
 </style>
@@ -680,9 +817,9 @@
   <div class="am-inner">
     <div class="am-breadcrumb">
       <i class="bi bi-house"></i>
-      <span>Create Test</span>
+      <span>Dashboard</span>
       <i class="bi bi-chevron-right"></i>
-      <span class="current">Generate Candidate Test</span>
+      <span class="current">Access Management</span>
     </div>
 
     <div class="am-title-row">
@@ -725,7 +862,11 @@
         </div>
 
         <div class="am-top-actions">
-          <button type="button" class="am-btn am-btn-primary" id="amInviteToggle">
+          <a href="{{ url_for('access.access_management_export') }}" class="am-btn am-btn-primary">
+            <i class="bi bi-download"></i>
+            Export CSV
+          </a>
+          <button type="button" class="am-btn am-btn-accent" id="amInviteToggle">
             <i class="bi bi-plus-lg"></i>
             Invite User
           </button>
@@ -753,7 +894,7 @@
         <div class="am-bulk-actions">
           <button type="button" class="am-btn am-btn-outline-blue am-bulk-action" data-action="approve"><i class="bi bi-check-lg"></i>Approve</button>
           <button type="button" class="am-btn am-btn-outline-red am-bulk-action" data-action="reject"><i class="bi bi-trash3"></i>Reject</button>
-          <button type="button" class="am-btn am-btn-outline-red am-bulk-action" data-action="revoke"><i class="bi bi-bag-x"></i>Revoke</button>
+          <button type="button" class="am-btn am-btn-outline-orange am-bulk-action" data-action="revoke"><i class="bi bi-bag-x"></i>Revoke</button>
           <button type="button" class="am-btn am-btn-outline-red am-bulk-action" data-action="delete"><i class="bi bi-trash"></i>Delete</button>
         </div>
         <button type="button" class="am-btn" id="amCancelBulk">Cancel</button>
@@ -808,13 +949,13 @@
                       <button type="submit" class="am-action-btn reject"><i class="bi bi-x-lg"></i>{% if a.status_key == 'locked' %}Reject{% endif %}</button>
                     </form>
                   {% elif a.status_key == 'revoked' %}
-                    <button type="button" class="am-action-btn" title="View"><i class="bi bi-eye"></i></button>
+                    <a class="am-action-btn" href="{{ url_for('access.access_management_view', email=a.email) }}" title="View"><i class="bi bi-eye"></i></a>
                     <form method="post" action="{{ url_for('access.access_management_approve') }}">
                       <input type="hidden" name="email" value="{{ a.email }}">
-                      <button type="submit" class="am-action-btn" title="Restore"><i class="bi bi-arrow-clockwise"></i></button>
+                      <button type="submit" class="am-action-btn warm" title="Restore"><i class="bi bi-arrow-clockwise"></i></button>
                     </form>
                   {% else %}
-                    <button type="button" class="am-action-btn" title="View"><i class="bi bi-eye"></i></button>
+                    <a class="am-action-btn" href="{{ url_for('access.access_management_view', email=a.email) }}" title="View"><i class="bi bi-eye"></i></a>
                     <a class="am-action-btn" href="mailto:{{ a.email }}" title="Email"><i class="bi bi-envelope"></i></a>
                   {% endif %}
 
@@ -831,7 +972,7 @@
                       </form>
                       <form method="post" action="{{ url_for('access.access_management_revoke') }}">
                         <input type="hidden" name="email" value="{{ a.email }}">
-                        <button type="submit" class="am-menu-btn"><i class="bi bi-bag-x"></i>Revoke</button>
+                        <button type="submit" class="am-menu-btn warn"><i class="bi bi-bag-x"></i>Revoke</button>
                       </form>
                       <form method="post" action="{{ url_for('access.access_management_delete') }}">
                         <input type="hidden" name="email" value="{{ a.email }}">
@@ -888,8 +1029,15 @@
 {% endblock %}
 
 {% block page_instructions %}
-<p class="mb-2">Use this page to approve, reject, revoke, and remove access requests.</p>
-<p class="mb-0 text-muted small">You can select multiple users and run bulk actions from the top action bar.</p>
+<p class="mb-2">Use Access Management with this sequence:</p>
+<ol class="mb-0 ps-3">
+  <li><strong>Review summary cards:</strong> Check totals for pending, approved, revoked, and rejected users.</li>
+  <li><strong>Filter and search:</strong> Narrow users by status/role and search by name or email.</li>
+  <li><strong>Inspect request rows:</strong> Verify role, request time, approver, and current state before changing access.</li>
+  <li><strong>Run single-user actions:</strong> Use Approve, Reject, Revoke, or Delete on the specific user row.</li>
+  <li><strong>Run bulk actions safely:</strong> Select multiple users, confirm selected count, then apply one bulk action.</li>
+  <li><strong>Invite new users:</strong> Open the invite panel, submit details, then verify they appear in the table.</li>
+</ol>
 {% endblock %}
 
 {% block scripts %}

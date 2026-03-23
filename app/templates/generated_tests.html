@@ -15,30 +15,6 @@
         letter-spacing: 0;
     }
 
-    .az-topbar {
-        position: relative;
-        overflow: hidden;
-        background: linear-gradient(180deg, #f9f9ff 0%, #f4f4fd 100%);
-    }
-    .az-topbar::after {
-        content: "";
-        position: absolute;
-        right: -14px;
-        top: -6px;
-        width: 290px;
-        height: 78px;
-        pointer-events: none;
-        background:
-            radial-gradient(ellipse at 18% 68%, rgba(230, 238, 255, 0.92) 0, rgba(230, 238, 255, 0.92) 26%, transparent 28%),
-            radial-gradient(ellipse at 46% 68%, rgba(223, 233, 255, 0.88) 0, rgba(223, 233, 255, 0.88) 26%, transparent 28%),
-            radial-gradient(ellipse at 74% 68%, rgba(218, 228, 252, 0.85) 0, rgba(218, 228, 252, 0.85) 26%, transparent 28%);
-        opacity: 0.7;
-    }
-    .az-topbar > * {
-        position: relative;
-        z-index: 1;
-    }
-
     .breadcrumb {
         display: none;
     }
@@ -50,24 +26,36 @@
         --gt-text-muted: #737b91;
         position: relative;
         overflow: hidden;
-        padding: 6px 0 14px;
-        border-radius: 12px;
-        background: linear-gradient(180deg, #f9f9ff 0%, #f4f3fc 62%, #efedf9 100%);
+        border: 1px solid #dfe6f7;
+        border-radius: 20px;
+        padding: 14px 18px 14px;
+        background:
+            radial-gradient(760px 280px at -6% -10%, rgba(45, 99, 218, 0.19) 0%, rgba(45, 99, 218, 0) 69%),
+            radial-gradient(520px 220px at 92% 0%, rgba(255, 122, 26, 0.16) 0%, rgba(255, 122, 26, 0) 71%),
+            linear-gradient(180deg, #fafbff 0%, #f4f3fc 62%, #efedf9 100%);
+        font-weight: 500;
+        font-style: normal;
+        letter-spacing: 0;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: geometricPrecision;
     }
     .generated-tests-page::before {
         content: "";
         position: absolute;
-        top: 52px;
-        right: -36px;
-        width: 420px;
-        height: 174px;
+        top: 154px;
+        right: -20px;
+        width: 560px;
+        height: 170px;
         pointer-events: none;
         background:
-            radial-gradient(ellipse at 16% 60%, rgba(226, 236, 255, 0.77) 0, rgba(226, 236, 255, 0.77) 28%, transparent 30%),
-            radial-gradient(ellipse at 39% 58%, rgba(222, 232, 255, 0.81) 0, rgba(222, 232, 255, 0.81) 28%, transparent 30%),
-            radial-gradient(ellipse at 61% 60%, rgba(218, 228, 252, 0.79) 0, rgba(218, 228, 252, 0.79) 28%, transparent 30%),
-            radial-gradient(ellipse at 83% 60%, rgba(214, 225, 251, 0.77) 0, rgba(214, 225, 251, 0.77) 28%, transparent 30%);
-        opacity: 0.79;
+            radial-gradient(ellipse at 8% 70%, rgba(229, 237, 255, 0.82) 0, rgba(229, 237, 255, 0.82) 24%, transparent 26%),
+            radial-gradient(ellipse at 24% 72%, rgba(223, 232, 253, 0.84) 0, rgba(223, 232, 253, 0.84) 24%, transparent 26%),
+            radial-gradient(ellipse at 40% 70%, rgba(220, 230, 251, 0.82) 0, rgba(220, 230, 251, 0.82) 24%, transparent 26%),
+            radial-gradient(ellipse at 56% 72%, rgba(214, 224, 248, 0.78) 0, rgba(214, 224, 248, 0.78) 24%, transparent 26%),
+            radial-gradient(ellipse at 72% 70%, rgba(210, 221, 247, 0.76) 0, rgba(210, 221, 247, 0.76) 24%, transparent 26%),
+            radial-gradient(ellipse at 88% 70%, rgba(207, 218, 244, 0.7) 0, rgba(207, 218, 244, 0.7) 24%, transparent 26%);
+        opacity: 0.92;
+        z-index: 0;
     }
     .generated-tests-page::after {
         content: "";
@@ -75,13 +63,28 @@
         left: 0;
         right: 0;
         bottom: 0;
-        height: 130px;
+        height: 180px;
         pointer-events: none;
-        background: linear-gradient(180deg, rgba(240, 239, 251, 0) 0%, rgba(227, 224, 246, 0.54) 100%);
+        background: linear-gradient(180deg, rgba(240, 239, 251, 0) 0%, rgba(225, 231, 248, 0.58) 100%);
+        z-index: 0;
     }
     .generated-tests-page > * {
         position: relative;
         z-index: 1;
+    }
+
+    .gt-breadcrumb {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: #8a92a6;
+        font-size: var(--az-fs-label);
+        margin-bottom: 8px;
+    }
+
+    .gt-breadcrumb .active {
+        color: #4c5c86;
+        font-weight: 600;
     }
 
     .gt-header {
@@ -95,13 +98,13 @@
         margin: 0;
         color: var(--gt-text-main);
         font-weight: 600;
-        font-size: 2.05rem;
+        font-size: var(--az-fs-page-title);
         line-height: 1.1;
     }
     .gt-subtitle {
         margin: 6px 0 0;
         color: var(--gt-text-muted);
-        font-size: 0.94rem;
+        font-size: var(--az-fs-page-subtitle);
         font-weight: 500;
     }
     .btn-gt-create {
@@ -109,7 +112,7 @@
         background: linear-gradient(135deg, #ff9a2e 0%, #f97316 100%);
         color: #ffffff;
         border-radius: 8px;
-        font-size: 0.8rem;
+        font-size: var(--az-fs-label);
         font-weight: 600;
         padding: 7px 14px;
         box-shadow: 0 8px 18px rgba(249, 115, 22, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.22);
@@ -322,13 +325,13 @@
         cursor: pointer;
     }
     .test-chip-link:hover {
-        filter: brightness(0.97);
+        filter: brightness(1.05);
         text-decoration: none;
     }
-    .chip-0 { color: #1f5f96; background: #d6e9ff; border-color: #bed7f5; }
-    .chip-1 { color: #2d6f4d; background: #dff0e5; border-color: #c8dfd1; }
-    .chip-2 { color: #484f8e; background: #e2e2fa; border-color: #cfd1f3; }
-    .chip-3 { color: #7a4f29; background: #f2e2d2; border-color: #e4ceb6; }
+    .chip-0 { color: #2a5fa8; background: #9bc0f4; border-color: #87b3ee; }
+    .chip-1 { color: #2a694a; background: #abe0c5; border-color: #98d6b6; }
+    .chip-2 { color: #525cab; background: #bec4f2; border-color: #aeb6eb; }
+    .chip-3 { color: #916033; background: #f3cfaf; border-color: #eac093; }
 
     .candidate-actions {
         display: inline-flex;
@@ -414,8 +417,27 @@
 </style>
 {% endblock %}
 
+{% block page_instructions %}
+<p class="mb-2">Use Generated Tests in this order:</p>
+<ol class="mb-0 ps-3">
+    <li><strong>Find candidates:</strong> Use search and filters (role, status, date) to narrow the list.</li>
+    <li><strong>Select rows:</strong> Tick individual candidates or use <strong>Select Candidates</strong> for bulk operations.</li>
+    <li><strong>Share test links:</strong> Use <strong>Send Email</strong> (bulk or row-level Resend) to notify candidates.</li>
+    <li><strong>Copy/open links:</strong> Use row actions to copy link table or open the candidate test URL directly.</li>
+    <li><strong>Clean stale entries:</strong> Delete invalid/obsolete rows after confirmation.</li>
+    <li><strong>Continue workflow:</strong> Track attempts in Evaluation and finalize outcomes in Reports.</li>
+</ol>
+{% endblock %}
+
 {% block content %}
 <div class="generated-tests-page">
+    <div class="gt-breadcrumb">
+        <i class="bi bi-house"></i>
+        <span>&#8250;</span>
+        <span>Dashboard</span>
+        <span>&#8250;</span>
+        <span class="active">Generated Tests</span>
+    </div>
     <div class="gt-header">
         <div>
             <h4 class="gt-title">Generated Tests</h4>
