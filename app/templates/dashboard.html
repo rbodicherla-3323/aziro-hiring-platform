@@ -972,6 +972,7 @@
                         <ul class="dropdown-menu dropdown-menu-end dash-overview-menu">
                             <li><a href="{{ url_for('dashboard.dashboard', filter='today') }}" class="dropdown-item {% if date_filter == 'today' %}active{% endif %}">Today</a></li>
                             <li><a href="{{ url_for('dashboard.dashboard', filter='24h') }}" class="dropdown-item {% if date_filter == '24h' %}active{% endif %}">Last 24 Hours</a></li>
+                            <li><a href="{{ url_for('dashboard.dashboard', filter='2d') }}" class="dropdown-item {% if date_filter == '2d' %}active{% endif %}">Last 2 Days</a></li>
                             <li><a href="{{ url_for('dashboard.dashboard', filter='7d') }}" class="dropdown-item {% if date_filter == '7d' %}active{% endif %}">Last 7 Days</a></li>
                             <li><a href="{{ url_for('dashboard.dashboard', filter='28d') }}" class="dropdown-item {% if date_filter == '28d' %}active{% endif %}">Last 28 Days</a></li>
                             <li><hr class="dropdown-divider"></li>
@@ -1066,7 +1067,7 @@
                     <i class="fas fa-piggy-bank me-1"></i> Cost Savings
                 </div>
                 <p class="savings-tagline">
-                    Every interview on Aziro replaces a paid first-round screening cost.
+                    Every interview on Aziro replaces a paid third-party screening tool.
                 </p>
             </div>
 
@@ -1116,6 +1117,7 @@
                 <div class="dash-filter-cluster">
                     <a href="{{ url_for('dashboard.dashboard', filter='today') }}" class="dash-filter-pill {% if date_filter == 'today' %}active{% endif %}">Today</a>
                     <a href="{{ url_for('dashboard.dashboard', filter='24h') }}" class="dash-filter-pill {% if date_filter == '24h' %}active{% endif %}">Last 24 Hours</a>
+                    <a href="{{ url_for('dashboard.dashboard', filter='2d') }}" class="dash-filter-pill {% if date_filter == '2d' %}active{% endif %}">Last 2 Days</a>
                     <a href="{{ url_for('dashboard.dashboard', filter='7d') }}" class="dash-filter-pill {% if date_filter == '7d' %}active{% endif %}">Last 7 Days</a>
                     <a href="{{ url_for('dashboard.dashboard', filter='28d') }}" class="dash-filter-pill {% if date_filter == '28d' %}active{% endif %}">Last 28 Days</a>
                     <form class="dash-custom-date" method="get" action="{{ url_for('dashboard.dashboard') }}">
