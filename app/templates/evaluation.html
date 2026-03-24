@@ -14,28 +14,12 @@
     --ev-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
     --ev-bg: #f5f7fa;
 }
-.evaluation-page { padding: 8px 0 24px; background: var(--ev-bg); min-height: 100vh; }
+.evaluation-page { padding: 8px 0 24px; background: var(--ev-bg); min-height: 100vh; font-family: "Poppins", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif; }
 .eval-breadcrumb { font-size: 0.78rem; color: var(--ev-muted); margin-bottom: 4px; }
 .eval-breadcrumb a { color: var(--ev-brand); text-decoration: none; font-weight: 500; }
 .eval-breadcrumb a:hover { text-decoration: underline; }
 .eval-title-bar { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px; flex-wrap: wrap; gap: 10px; }
 .eval-title-h4 { font-size: 1.45rem; font-weight: 700; color: var(--ev-ink); margin: 0; letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px; line-height: 1.3; }
-.help-btn-wrap { display: inline-block; position: relative; vertical-align: middle; }
-.help-btn { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: #cbd5e1; color: #334155; border-radius: 50%; font-size: 0.72rem; font-weight: 700; cursor: pointer; border: none; font-family: sans-serif; line-height: 1; padding: 0; margin: 0; flex-shrink: 0; transition: background 0.2s, color 0.2s; }
-.help-btn:hover { background: var(--ev-brand); color: #fff; }
-.help-tooltip-box { display: none; position: absolute; right: 0; top: 30px; background: #1e293b; color: #e2e8f0; border-radius: 10px; padding: 14px 18px; width: 290px; font-size: 0.78rem; font-weight: 400; box-shadow: 0 8px 24px rgba(0,0,0,0.2); z-index: 9999; line-height: 1.5; white-space: normal; }
-.help-btn-wrap:hover .help-tooltip-box { display: block; }
-.help-tooltip-box-title { font-weight: 700; font-size: 0.8rem; color: #fff; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-.help-tooltip-box ol { margin: 0; padding-left: 16px; }
-.help-tooltip-box ol li { margin-bottom: 5px; color: #cbd5e1; }
-.help-tooltip-box ol li:last-child { margin-bottom: 0; }
-.eval-top-tools { display: flex; align-items: center; gap: 10px; margin-left: 6px; }
-.eval-top-search { position: relative; width: 320px; margin-left: 0; }
-.eval-top-search input { width: 100%; padding: 8px 16px 8px 34px; border: 1px solid var(--ev-border); border-radius: 999px; font-size: 0.82rem; background: #fff; color: var(--ev-ink); outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
-.eval-top-search input:focus { border-color: var(--ev-az-blue); box-shadow: 0 0 0 3px rgba(32,80,160,0.12); }
-.eval-top-search .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 0.8rem; pointer-events: none; }
-.eval-top-search input::placeholder { color: #94a3b8; }
-.eval-top-help .help-tooltip-box { right: 0; left: auto; top: 30px; }
 .threshold-legend { background: #fff; border: 1px solid var(--ev-border); border-radius: 10px; padding: 12px 20px; margin-bottom: 20px; display: flex; align-items: center; flex-wrap: wrap; gap: 14px; box-shadow: var(--ev-shadow); }
 .threshold-item { display: inline-flex; align-items: center; gap: 6px; font-size: 0.79rem; color: var(--ev-muted); }
 .threshold-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
@@ -98,41 +82,7 @@
 .btn-evaluate:hover { background: #1b458c; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(32,80,160,0.3); color: #fff; }
 .btn-evaluate:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-@media (max-width: 992px) {
-    .eval-top-tools { margin-left: 10px; }
-    .eval-top-search { width: 240px; }
-}
-
-@media (max-width: 768px) {
-    .eval-top-tools { display: none; }
-}
 </style>
-{% endblock %}
-
-{% block navbar_left_extra %}
-<div class="eval-top-tools">
-    <div class="eval-top-search">
-        <i class="bi bi-search search-icon"></i>
-        <input type="text" id="candidateSearch" placeholder="Search by name, email or role..." oninput="filterCards()">
-    </div>
-</div>
-{% endblock %}
-
-{% block navbar_right_extra %}
-<span class="help-btn-wrap eval-top-help">
-    <button class="help-btn">?</button>
-    <div class="help-tooltip-box">
-        <div class="help-tooltip-box-title">How to Evaluate a Candidate</div>
-        <ol>
-            <li>Click <strong>"Select Candidates"</strong> dropdown</li>
-            <li>Check one or more candidates from the list</li>
-            <li>Click <strong>"Evaluate Selected"</strong> button</li>
-            <li>View each candidate's round scores, proctoring summary and code similarity</li>
-            <li>Green <strong>PASS</strong> means they met the pass threshold</li>
-            <li>A candidate is <strong>Selected</strong> only if they pass all rounds</li>
-        </ol>
-    </div>
-</span>
 {% endblock %}
 
 {% block content %}
@@ -419,7 +369,8 @@ if (selectAll) {
 
 // Search
 function filterCards() {
-    var query = document.getElementById('candidateSearch').value.toLowerCase().trim();
+    var searchInput = document.getElementById('globalSearchInput');
+    var query = searchInput ? searchInput.value.toLowerCase().trim() : '';
     var cards = document.querySelectorAll('.candidate-result-card');
     var noResults = document.getElementById('noSearchResults');
     var visibleCount = 0;
@@ -435,5 +386,43 @@ function filterCards() {
         noResults.style.display = visibleCount === 0 && query !== '' ? 'block' : 'none';
     }
 }
+
+var topSearchInput = document.getElementById('globalSearchInput');
+if (topSearchInput) {
+    topSearchInput.placeholder = 'Search by name, email or role...';
+    topSearchInput.addEventListener('input', filterCards);
+}
+
+// Right topbar "?" should show evaluation steps on hover.
+window.addEventListener('load', function () {
+    var topbarHelpBtn = document.getElementById('topbarHelpBtn');
+    if (!topbarHelpBtn || !window.bootstrap || !window.bootstrap.Tooltip) return;
+
+    topbarHelpBtn.removeAttribute('data-bs-toggle');
+    topbarHelpBtn.removeAttribute('data-bs-target');
+    topbarHelpBtn.setAttribute('data-bs-html', 'true');
+    topbarHelpBtn.setAttribute('title', '');
+    topbarHelpBtn.setAttribute(
+        'data-bs-title',
+        '<div style="text-align:left;max-width:320px;">' +
+            '<div style="font-weight:700;margin-bottom:6px;">How to Evaluate a Candidate</div>' +
+            '<ol style="padding-left:16px;margin:0;">' +
+                '<li>Click "Select Candidates" dropdown</li>' +
+                '<li>Check one or more candidates from the list</li>' +
+                '<li>Click "Evaluate Selected" button</li>' +
+                '<li>View round scores, proctoring summary and code similarity</li>' +
+                '<li>Green PASS means threshold met</li>' +
+                '<li>Selected only if all rounds are passed</li>' +
+            '</ol>' +
+        '</div>'
+    );
+
+    new bootstrap.Tooltip(topbarHelpBtn, {
+        trigger: 'hover focus',
+        placement: 'bottom',
+        container: 'body',
+        sanitize: false
+    });
+});
 </script>
 {% endblock %}
