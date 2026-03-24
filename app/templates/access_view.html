@@ -1,0 +1,358 @@
+{% extends "base.html" %}
+{% block title %}Access Details{% endblock %}
+{% block breadcrumb %}Access Details{% endblock %}
+
+{% block head %}
+<style>
+  .sidebar,
+  .az-topbar,
+  .access-detail {
+    font-family: "Poppins", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-style: normal;
+    letter-spacing: 0;
+  }
+
+  .breadcrumb {
+    display: none;
+  }
+
+  .content-area > footer {
+    display: none;
+  }
+
+  .access-detail {
+    position: relative;
+    overflow: hidden;
+    max-width: 1320px;
+    margin: 0 auto;
+    border: 1px solid #dfe6f7;
+    border-radius: 20px;
+    padding: 20px 18px 18px;
+    background:
+      radial-gradient(760px 280px at -6% -10%, rgba(45, 99, 218, 0.19) 0%, rgba(45, 99, 218, 0) 69%),
+      radial-gradient(520px 220px at 92% 0%, rgba(255, 122, 26, 0.16) 0%, rgba(255, 122, 26, 0) 71%),
+      linear-gradient(180deg, #fafbff 0%, #f4f3fc 62%, #efedf9 100%);
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+  }
+
+  .access-detail::before {
+    content: "";
+    position: absolute;
+    top: 154px;
+    right: -20px;
+    width: 560px;
+    height: 170px;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 8% 70%, rgba(229, 237, 255, 0.82) 0, rgba(229, 237, 255, 0.82) 24%, transparent 26%),
+      radial-gradient(ellipse at 24% 72%, rgba(223, 232, 253, 0.84) 0, rgba(223, 232, 253, 0.84) 24%, transparent 26%),
+      radial-gradient(ellipse at 40% 70%, rgba(220, 230, 251, 0.82) 0, rgba(220, 230, 251, 0.82) 24%, transparent 26%),
+      radial-gradient(ellipse at 56% 72%, rgba(214, 224, 248, 0.78) 0, rgba(214, 224, 248, 0.78) 24%, transparent 26%),
+      radial-gradient(ellipse at 72% 70%, rgba(210, 221, 247, 0.76) 0, rgba(210, 221, 247, 0.76) 24%, transparent 26%),
+      radial-gradient(ellipse at 88% 70%, rgba(207, 218, 244, 0.7) 0, rgba(207, 218, 244, 0.7) 24%, transparent 26%);
+    opacity: 0.92;
+    z-index: 0;
+  }
+
+  .access-detail::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 180px;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(240, 239, 251, 0) 0%, rgba(225, 231, 248, 0.58) 100%);
+    z-index: 0;
+  }
+
+  .access-detail > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .access-detail-breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #8a92a6;
+    font-size: var(--az-fs-label);
+    margin: 0 0 10px;
+  }
+
+  .access-detail-breadcrumb .active {
+    color: #4c5c86;
+    font-weight: 600;
+  }
+
+  .access-detail-card {
+    border: 1px solid #dfe6f7;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 12px 28px rgba(41, 63, 120, 0.1);
+    overflow: hidden;
+  }
+
+  .access-detail-head {
+    padding: 14px 16px;
+    border-bottom: 1px solid #e1e8f8;
+    background: linear-gradient(140deg, #ffffff 0%, #f1f7ff 88%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .access-detail-title {
+    margin: 0;
+    color: #1f3366;
+    font-size: var(--az-fs-page-title);
+    font-weight: 600;
+  }
+
+  .access-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 30px;
+    padding: 0 11px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-size: var(--az-fs-meta);
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .access-status-pill.approved {
+    color: #2354b8;
+    background: linear-gradient(135deg, #eef4ff 0%, #dde9ff 100%);
+    border-color: #ccdcff;
+  }
+
+  .access-status-pill.pending {
+    color: #d06413;
+    background: linear-gradient(135deg, #fff3e5 0%, #ffe8d2 100%);
+    border-color: #ffd9b7;
+  }
+
+  .access-status-pill.revoked {
+    color: #d53535;
+    background: linear-gradient(135deg, #fff0f0 0%, #ffdfe0 100%);
+    border-color: #ffcacc;
+  }
+
+  .access-status-pill.locked {
+    color: #2d4678;
+    background: linear-gradient(135deg, #ecf1ff 0%, #dee7fb 100%);
+    border-color: #cddbf9;
+  }
+
+  .access-detail-body {
+    padding: 16px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .access-detail-item {
+    border: 1px solid #e7edf9;
+    border-radius: 10px;
+    padding: 10px 12px;
+    background: #fbfdff;
+  }
+
+  .access-detail-label {
+    margin: 0 0 4px;
+    color: #6b7898;
+    font-size: var(--az-fs-meta);
+    font-weight: 500;
+  }
+
+  .access-detail-value {
+    margin: 0;
+    color: #243964;
+    font-size: var(--az-fs-body);
+    font-weight: 600;
+    word-break: break-word;
+  }
+
+  .access-detail-actions {
+    padding: 14px 16px 16px;
+    border-top: 1px solid #e1e8f8;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .access-btn {
+    height: 36px;
+    border-radius: 11px;
+    border: 1px solid #d1dcf5;
+    background: #f8fbff;
+    color: #355083;
+    font-size: var(--az-fs-btn);
+    font-weight: 600;
+    line-height: 1;
+    padding: 0 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .access-btn:hover {
+    background: #eaf2ff;
+    border-color: #aac1ee;
+    color: #2f4d85;
+  }
+
+  .access-btn.primary {
+    border-color: transparent;
+    background: linear-gradient(135deg, #2d63da 0%, #244db7 100%);
+    color: #ffffff;
+  }
+
+  .access-btn.primary:hover {
+    background: linear-gradient(135deg, #3d79e8 0%, #2a57c6 100%);
+    color: #ffffff;
+  }
+
+  .access-btn.danger {
+    color: #da2f2f;
+    border-color: #f1cccc;
+    background: #fff6f6;
+  }
+
+  .access-btn.warm {
+    color: #d06413;
+    border-color: #ffd0a3;
+    background: #fff1e2;
+  }
+
+  .access-btn.warm:hover {
+    background: #ffe7cf;
+    border-color: #ffc48c;
+    color: #c65b0d;
+  }
+
+  @media (max-width: 768px) {
+    .access-detail-body {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="access-detail">
+  <div class="access-detail-breadcrumb">
+    <i class="bi bi-house"></i>
+    <span>&#8250;</span>
+    <span>Access Management</span>
+    <span>&#8250;</span>
+    <span class="active">Access Details</span>
+  </div>
+  <div class="access-detail-card">
+    <header class="access-detail-head">
+      <h1 class="access-detail-title">Access Details</h1>
+      <span class="access-status-pill {{ detail.status_key }}">
+        {% if detail.status_key == 'approved' %}
+          <i class="bi bi-check-circle-fill"></i>
+        {% elif detail.status_key == 'pending' %}
+          <i class="bi bi-hourglass-split"></i>
+        {% elif detail.status_key == 'revoked' %}
+          <i class="bi bi-slash-circle"></i>
+        {% else %}
+          <i class="bi bi-lock"></i>
+        {% endif %}
+        {{ detail.status_label }}
+      </span>
+    </header>
+
+    <div class="access-detail-body">
+      <article class="access-detail-item">
+        <p class="access-detail-label">Email</p>
+        <p class="access-detail-value">{{ detail.email }}</p>
+      </article>
+      <article class="access-detail-item">
+        <p class="access-detail-label">Current Status</p>
+        <p class="access-detail-value">{{ detail.status_label }}</p>
+      </article>
+      <article class="access-detail-item">
+        <p class="access-detail-label">Requested On</p>
+        <p class="access-detail-value">{{ detail.requested_on }}</p>
+      </article>
+      <article class="access-detail-item">
+        <p class="access-detail-label">Approved By</p>
+        <p class="access-detail-value">{{ detail.approved_by }}</p>
+      </article>
+      <article class="access-detail-item">
+        <p class="access-detail-label">Approved At</p>
+        <p class="access-detail-value">{{ detail.approved_at }}</p>
+      </article>
+      <article class="access-detail-item">
+        <p class="access-detail-label">Access Admin</p>
+        <p class="access-detail-value">{{ access_admin_email }}</p>
+      </article>
+    </div>
+
+    <div class="access-detail-actions">
+      <a class="access-btn" href="{{ url_for('access.access_management_page') }}">
+        <i class="bi bi-arrow-left"></i>
+        Back
+      </a>
+
+      <a class="access-btn" href="mailto:{{ detail.email }}">
+        <i class="bi bi-envelope"></i>
+        Email
+      </a>
+
+      <form method="post" action="{{ url_for('access.access_management_approve') }}">
+        <input type="hidden" name="email" value="{{ detail.email }}">
+        <button type="submit" class="access-btn primary">
+          <i class="bi bi-check-lg"></i>
+          Approve
+        </button>
+      </form>
+
+      <form method="post" action="{{ url_for('access.access_management_reject') }}">
+        <input type="hidden" name="email" value="{{ detail.email }}">
+        <button type="submit" class="access-btn danger">
+          <i class="bi bi-x-lg"></i>
+          Reject
+        </button>
+      </form>
+
+      <form method="post" action="{{ url_for('access.access_management_revoke') }}">
+        <input type="hidden" name="email" value="{{ detail.email }}">
+        <button type="submit" class="access-btn warm">
+          <i class="bi bi-bag-x"></i>
+          Revoke
+        </button>
+      </form>
+
+      <form method="post" action="{{ url_for('access.access_management_delete') }}">
+        <input type="hidden" name="email" value="{{ detail.email }}">
+        <button type="submit" class="access-btn danger">
+          <i class="bi bi-trash"></i>
+          Delete
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block page_instructions %}
+<p class="mb-2">Use this detail page step by step:</p>
+<ol class="mb-0 ps-3">
+    <li><strong>Confirm identity:</strong> Validate the user name, email, role, and current access status.</li>
+    <li><strong>Review audit context:</strong> Check request/approval metadata before making any change.</li>
+    <li><strong>Pick exactly one action:</strong> Approve, Reject, Revoke, or Delete based on policy.</li>
+    <li><strong>Notify if needed:</strong> Use the Email action for communication after status change.</li>
+    <li><strong>Return to list:</strong> Go back to Access Management to continue with remaining requests.</li>
+</ol>
+{% endblock %}

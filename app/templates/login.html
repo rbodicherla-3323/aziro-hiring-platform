@@ -3,82 +3,667 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aziro Hiring Management</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=optional" rel="stylesheet">
+  <title>Aziro Hiring Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=optional" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <style>
+    :root {
+      --ink-900: #1f2f58;
+      --ink-700: #45537a;
+      --ink-500: #6f7a97;
+      --line: #d8dced;
+      --field-bg: #f7f8fc;
+      --orange-1: #ff8b1f;
+      --orange-2: #ff6a00;
+      --content-top-gap: clamp(28px, 4.8vh, 58px);
+      --content-bottom-gap: clamp(4px, 0.8vh, 10px);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
     body {
-      font-family: "Inter", "Segoe UI", system-ui, sans-serif;
-      background: #f8fafc; margin: 0;
-      display: flex; justify-content: center; align-items: center; height: 100vh;
-      -webkit-font-smoothing: antialiased;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
     }
-    .login-container {
-      background: #fff; padding: 40px; border-radius: 10px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
-      width: 360px; text-align: center; border: 1px solid #e2e8f0;
+
+    body {
+      overflow: auto;
+      padding: 0;
+      position: relative;
+      isolation: isolate;
+      font-family: "Poppins", "Segoe UI", system-ui, sans-serif;
+      color: var(--ink-900);
+      background:
+        radial-gradient(60% 30% at 14% 90%, rgba(219, 227, 248, 0.84) 0%, transparent 72%),
+        radial-gradient(48% 24% at 33% 92%, rgba(224, 231, 249, 0.76) 0%, transparent 73%),
+        radial-gradient(58% 27% at 66% 92%, rgba(220, 228, 248, 0.68) 0%, transparent 74%),
+        radial-gradient(44% 21% at 87% 91%, rgba(223, 230, 248, 0.56) 0%, transparent 76%),
+        radial-gradient(circle at 11% 77%, rgba(255, 255, 255, 0.34) 0 8px, transparent 9px),
+        radial-gradient(circle at 25% 81%, rgba(255, 255, 255, 0.28) 0 9px, transparent 10px),
+        radial-gradient(circle at 42% 78%, rgba(255, 255, 255, 0.24) 0 8px, transparent 9px),
+        radial-gradient(circle at 58% 83%, rgba(255, 255, 255, 0.2) 0 9px, transparent 10px),
+        radial-gradient(circle at 74% 79%, rgba(255, 255, 255, 0.18) 0 8px, transparent 9px),
+        radial-gradient(circle at 90% 83%, rgba(255, 255, 255, 0.16) 0 8px, transparent 9px),
+        radial-gradient(1000px 420px at 28% 4%, rgba(250, 238, 226, 0.72), transparent 64%),
+        linear-gradient(180deg, #f8f9fd 0%, #f3f4fa 100%);
     }
-    .logo { margin-bottom: 20px; }
-    .logo img { width: 120px; border-radius: 6px; }
-    h2 { margin-bottom: 20px; font-weight: 600; font-size: 1.25rem; color: #0f172a; }
-    .form-group { margin-bottom: 15px; text-align: left; }
-    label { display: block; margin-bottom: 5px; font-size: 0.82rem; font-weight: 500; color: #334155; }
-    input[type="email"], input[type="password"] {
-      width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px;
-      font-size: 0.875rem; font-family: inherit; color: #1e293b; box-sizing: border-box;
-      transition: border-color 0.15s ease;
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: min(calc(100vw - clamp(30px, 3.2vw, 66px)), 1400px);
+      height: min(100vh, 980px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(500px, 760px) clamp(390px, 31.5vw, 530px);
+      gap: clamp(16px, 1.6vw, 28px);
+      align-items: center;
+      justify-content: center;
+      padding: clamp(16px, 1.7vh, 24px) 0;
     }
-    input[type="email"]:focus, input[type="password"]:focus {
-      outline: none; border-color: #0f766e; box-shadow: 0 0 0 3px rgba(15,118,110,0.1);
+
+    .bg-dots {
+      position: absolute;
+      top: clamp(18px, 2vw, 28px);
+      right: clamp(16px, 1.8vw, 28px);
+      width: clamp(38px, 4vw, 58px);
+      height: clamp(38px, 4vw, 58px);
+      background-image: radial-gradient(rgba(173, 182, 208, 0.76) 1.2px, transparent 1.2px);
+      background-size: 10px 10px;
+      opacity: 0.42;
+      pointer-events: none;
     }
+
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-top: var(--content-top-gap);
+      padding-left: clamp(6px, 0.8vw, 10px);
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(27px, 2.4vw, 38px);
+      line-height: 1.12;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #243668;
+    }
+
+    .title-accent {
+      color: #e9781c;
+      margin-left: 8px;
+    }
+
+    .subtitle {
+      margin: clamp(12px, 1.4vh, 18px) 0 0;
+      color: #3f4d73;
+      font-size: clamp(15px, 1.35vw, 21px);
+      line-height: 1.4;
+      font-weight: 500;
+      max-width: 90%;
+    }
+
+    .feature-list {
+      margin: clamp(20px, 2.8vh, 32px) 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      row-gap: clamp(10px, 1.5vh, 16px);
+      max-width: 88%;
+    }
+
+    .feature-item {
+      display: grid;
+      grid-template-columns: clamp(42px, 3vw, 52px) 1fr;
+      align-items: center;
+      column-gap: clamp(10px, 0.78vw, 13px);
+      color: #304069;
+      font-size: clamp(17px, 1.52vw, 24px);
+      line-height: 1.22;
+      font-weight: 500;
+      letter-spacing: -0.005em;
+    }
+
+    .feature-icon {
+      width: clamp(30px, 2.1vw, 40px);
+      height: clamp(30px, 2.1vw, 40px);
+      border-radius: 10px;
+      border: 1px solid rgba(243, 145, 72, 0.26);
+      background: #fff8f1;
+      color: #f08a2a;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(14px, 0.92vw, 18px);
+      box-shadow: 0 4px 10px rgba(245, 149, 72, 0.13);
+    }
+
+    .illustration-wrap {
+      margin-top: auto;
+      margin-bottom: var(--content-bottom-gap);
+      width: min(92%, 790px);
+      min-height: 30%;
+      background: transparent;
+      border-radius: 0;
+      overflow: visible;
+    }
+
+    .illustration-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .panel-wrap {
+      position: relative;
+      width: clamp(390px, 31.5vw, 530px);
+      height: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: stretch;
+      padding-top: var(--content-top-gap);
+      padding-bottom: var(--content-bottom-gap);
+      padding-inline: 0;
+    }
+
+    .panel-wrap::before {
+      content: "";
+      position: absolute;
+      top: clamp(-22px, -1.8vh, -8px);
+      left: 10%;
+      right: -12%;
+      height: clamp(80px, 10.4vh, 124px);
+      border-radius: 56px;
+      background:
+        radial-gradient(64% 86% at 18% 100%, rgba(219, 227, 247, 0.76), transparent 72%),
+        radial-gradient(72% 86% at 61% 108%, rgba(220, 228, 248, 0.62), transparent 76%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .auth-card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      border-radius: 22px;
+      border: 1px solid #e6e9f4;
+      background: #ffffff;
+      box-shadow: 0 16px 36px rgba(62, 79, 124, 0.13);
+      padding: clamp(22px, 2.2vh, 30px) clamp(20px, 1.6vw, 28px) clamp(16px, 1.8vh, 24px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand {
+      display: flex;
+      justify-content: center;
+      margin-bottom: clamp(10px, 1.2vh, 16px);
+    }
+
+    .brand img {
+      width: clamp(96px, 8.2vw, 138px);
+      height: auto;
+      display: block;
+    }
+
+    .auth-title {
+      margin: 0;
+      text-align: center;
+      color: #1f2f58;
+      font-size: clamp(22px, 1.85vw, 30px);
+      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .auth-subtitle {
+      margin: clamp(4px, 0.6vh, 8px) 0 clamp(14px, 1.5vh, 20px);
+      text-align: center;
+      color: #6d7897;
+      font-size: clamp(12px, 0.88vw, 15px);
+      line-height: 1.35;
+      font-weight: 500;
+    }
+
+    .alerts {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .alert {
+      border-radius: 9px;
+      border: 1px solid rgba(177, 36, 54, 0.26);
+      background: rgba(255, 238, 241, 0.86);
+      color: #8a2030;
+      font-size: clamp(12px, 0.88vw, 14px);
+      line-height: 1.25;
+      padding: 8px 10px;
+    }
+
+    .field {
+      margin-bottom: clamp(10px, 1vh, 14px);
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 6px;
+      color: #37486f;
+      font-size: clamp(11px, 0.78vw, 13px);
+      line-height: 1.2;
+      font-weight: 500;
+    }
+
+    .field-box {
+      position: relative;
+    }
+
+    .field-box .icon {
+      position: absolute;
+      left: clamp(12px, 0.95vw, 15px);
+      top: 50%;
+      transform: translateY(-50%);
+      color: #78839f;
+      font-size: clamp(16px, 1.04vw, 18px);
+      pointer-events: none;
+    }
+
+    .field-box .toggle {
+      position: absolute;
+      right: clamp(10px, 0.9vw, 14px);
+      top: 50%;
+      transform: translateY(-50%);
+      border: 0;
+      background: transparent;
+      color: #78839f;
+      cursor: pointer;
+      font-size: clamp(16px, 1.04vw, 18px);
+      width: 26px;
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .input {
+      width: 100%;
+      height: clamp(38px, 3.8vh, 46px);
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--field-bg);
+      color: #55617d;
+      font-family: inherit;
+      font-size: clamp(13px, 0.92vw, 15px);
+      font-weight: 500;
+      line-height: 1;
+      padding: 0 clamp(32px, 2.1vw, 44px);
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    .input::placeholder {
+      color: #848fa8;
+      font-weight: 500;
+    }
+
+    .input:focus {
+      border-color: #b8c6e6;
+      box-shadow: 0 0 0 3px rgba(74, 115, 191, 0.15);
+      background: #ffffff;
+    }
+
+    .meta-row {
+      margin-top: clamp(1px, 0.2vh, 3px);
+      margin-bottom: clamp(12px, 1.4vh, 16px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .remember {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #4e5f83;
+      font-size: clamp(12px, 0.82vw, 14px);
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .remember input {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      accent-color: #4a7be0;
+      cursor: pointer;
+    }
+
+    .forgot {
+      color: #2f56ad;
+      text-decoration: none;
+      font-size: clamp(12px, 0.82vw, 14px);
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .forgot:hover {
+      text-decoration: underline;
+    }
+
     .btn {
-      width: 100%; padding: 11px; border: none; border-radius: 8px; color: #fff;
-      font-size: 0.875rem; font-weight: 500; font-family: inherit; cursor: pointer;
-      transition: background 0.15s ease, transform 0.1s ease;
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      height: clamp(40px, 4vh, 48px);
+      font-family: inherit;
+      font-size: clamp(14px, 0.95vw, 16px);
+      font-weight: 600;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
     }
-    .btn:hover { transform: translateY(-1px); }
-    .btn:active { transform: translateY(0); }
-    .btn-primary-login { background: #0f766e; }
-    .btn-primary-login:hover { background: #0d6963; }
-    .btn-microsoft { background: #1e293b; }
-    .btn-microsoft:hover { background: #334155; }
+
+    .btn-primary {
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--orange-1) 0%, var(--orange-2) 100%);
+      box-shadow: 0 10px 18px rgba(250, 115, 19, 0.25);
+      position: relative;
+    }
+
+    .btn-primary::after {
+      content: "\2192";
+      position: absolute;
+      right: clamp(14px, 1vw, 18px);
+      font-size: clamp(16px, 1vw, 18px);
+      line-height: 1;
+      opacity: 0.95;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+      box-shadow: 0 14px 22px rgba(250, 115, 19, 0.29);
+    }
+
     .divider {
-      margin: 20px 0; font-size: 0.78rem; color: #94a3b8;
-      display: flex; align-items: center; gap: 12px;
+      margin: clamp(12px, 1.4vh, 16px) 0 clamp(10px, 1vh, 12px);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #6a7694;
+      font-size: clamp(12px, 0.78vw, 13px);
+      font-weight: 500;
+      line-height: 1;
     }
-    .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: #e2e8f0; }
-    .links { margin-top: 16px; font-size: 0.78rem; color: #94a3b8; }
-    .error {
-      background: #fef2f2; color: #991b1b; border: 1px solid #fecaca;
-      border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 0.82rem; text-align: left;
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #d4daea;
+    }
+
+    .btn-ms {
+      height: clamp(40px, 3.8vh, 46px);
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: #fafbfe;
+      color: #334566;
+      font-size: clamp(13px, 0.9vw, 15px);
+      font-weight: 500;
+      box-shadow: none;
+      gap: 10px;
+    }
+
+    .btn-ms:hover {
+      background: #f3f6fc;
+      border-color: #c7d1e9;
+    }
+
+    .ms-icon {
+      width: clamp(14px, 1vw, 18px);
+      height: clamp(14px, 1vw, 18px);
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 2px;
+    }
+
+    .ms-icon span:nth-child(1) { background: #f35325; }
+    .ms-icon span:nth-child(2) { background: #81bc06; }
+    .ms-icon span:nth-child(3) { background: #05a6f0; }
+    .ms-icon span:nth-child(4) { background: #ffba08; }
+
+    .secure-note {
+      margin-top: auto;
+      padding-top: clamp(10px, 1.1vh, 14px);
+      text-align: center;
+      color: #7a859f;
+      font-size: clamp(11px, 0.72vw, 12px);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      line-height: 1.2;
+    }
+
+    @media (max-width: 1160px) {
+      body {
+        overflow: auto;
+        padding: 0;
+      }
+
+      .page {
+        min-height: 100vh;
+        height: auto;
+        display: block;
+        padding: 18px 14px 20px;
+      }
+
+      .hero {
+        height: auto;
+        padding-top: 10px;
+      }
+
+      .title {
+        font-size: clamp(28px, 8.2vw, 36px);
+      }
+
+      .subtitle {
+        font-size: clamp(16px, 4.8vw, 22px);
+      }
+
+      .feature-item {
+        font-size: clamp(16px, 4.2vw, 21px);
+      }
+
+      .illustration-wrap {
+        width: 100%;
+        margin-top: 18px;
+      }
+
+      .panel-wrap {
+        width: 100%;
+        height: auto;
+        flex: none;
+        padding-top: 0;
+        padding-bottom: 0;
+        padding-inline: 0;
+      }
+
+      .panel-wrap::before {
+        display: none;
+      }
+
+      .auth-card {
+        width: 100%;
+        height: auto;
+        max-width: 540px;
+        margin-inline: auto;
+      }
+
+      .auth-title {
+        font-size: clamp(24px, 7vw, 32px);
+      }
     }
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <div class="logo">
-      <img src="{{ url_for('static', filename='images/azirotech_logo.jpg') }}" alt="Aziro Tech Logo">
-    </div>
-    <h2>Sign in to your account</h2>
-    {% if error %}<div class="error">{{ error }}</div>{% endif %}
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}{% for category, message in messages %}<div class="error">{{ message }}</div>{% endfor %}{% endif %}
-    {% endwith %}
-    <form action="{{ url_for('auth.login') }}" method="POST">
-      <div class="form-group">
-        <label for="username">Work Email</label>
-        <input type="email" id="username" name="username" placeholder="you@aziro.com" required>
+  <main class="page">
+    <div class="bg-dots" aria-hidden="true"></div>
+
+    <section class="hero" aria-hidden="true">
+      <h1 class="title">
+        <span>Aziro</span><span class="title-accent">Hiring Platform</span>
+      </h1>
+      <p class="subtitle">AI-Powered Candidate Evaluation<br>&amp; Hiring Automation</p>
+
+      <ul class="feature-list">
+        <li class="feature-item">
+          <span class="feature-icon"><i class="bi bi-file-earmark-ruled"></i></span>
+          <span>Automated Technical Tests</span>
+        </li>
+        <li class="feature-item">
+          <span class="feature-icon"><i class="bi bi-cpu"></i></span>
+          <span>AI Candidate Evaluation</span>
+        </li>
+        <li class="feature-item">
+          <span class="feature-icon"><i class="bi bi-bar-chart-line"></i></span>
+          <span>Smart Hiring Insights</span>
+        </li>
+      </ul>
+
+      <div class="illustration-wrap">
+        <img src="{{ url_for('static', filename='images/login_illustration_exact.png') }}" alt="Hiring dashboard illustration">
       </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Enter password" required>
+    </section>
+
+    <section class="panel-wrap">
+      <div class="auth-card">
+        <div class="brand">
+          <img src="{{ url_for('static', filename='images/azirotech_logo.jpg') }}" alt="Aziro logo">
+        </div>
+
+        <h2 class="auth-title">Sign in to your account</h2>
+        <p class="auth-subtitle">Access your hiring dashboard</p>
+
+        {% set flashes = get_flashed_messages(with_categories=true) %}
+        {% if error or flashes %}
+          <div class="alerts">
+            {% if error %}
+              <div class="alert">{{ error }}</div>
+            {% endif %}
+            {% for category, message in flashes %}
+              <div class="alert">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <form action="{{ url_for('auth.login') }}" method="POST" autocomplete="on">
+          <div class="field">
+            <label for="username" class="field-label">Work Email</label>
+            <div class="field-box">
+              <i class="bi bi-envelope icon"></i>
+              <input
+                type="email"
+                id="username"
+                name="username"
+                class="input"
+                placeholder="you@aziro.com"
+                value="{{ request.form.get('username', '') }}"
+                autocomplete="email"
+                required
+              >
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="password" class="field-label">Password</label>
+            <div class="field-box">
+              <i class="bi bi-lock icon"></i>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="input"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+              >
+              <button type="button" id="togglePassword" class="toggle" aria-label="Show password">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <label class="remember" for="remember">
+              <input type="checkbox" id="remember" name="remember">
+              <span>Remember me</span>
+            </label>
+            <a href="#" class="forgot">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+
+        <div class="divider">OR</div>
+
+        <form action="{{ url_for('auth.microsoft_login') }}" method="GET">
+          <button type="submit" class="btn btn-ms">
+            <span class="ms-icon" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+            </span>
+            <span>Continue with Microsoft</span>
+          </button>
+        </form>
+
+        <div class="secure-note">
+          <i class="bi bi-lock"></i>
+          <span>Secure login powered by Microsoft</span>
+        </div>
       </div>
-      <button type="submit" class="btn btn-primary-login">Sign In</button>
-    </form>
-    <div class="divider">OR</div>
-    <form action="{{ url_for('auth.microsoft_login') }}" method="GET">
-      <button type="submit" class="btn btn-microsoft">Continue with Microsoft</button>
-    </form>
-    <div class="links"><small>Only @aziro.com accounts are allowed</small></div>  </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var passwordInput = document.getElementById("password");
+      var toggleBtn = document.getElementById("togglePassword");
+      if (!passwordInput || !toggleBtn) return;
+      var icon = toggleBtn.querySelector("i");
+
+      toggleBtn.addEventListener("click", function () {
+        var isHidden = passwordInput.type === "password";
+        passwordInput.type = isHidden ? "text" : "password";
+        toggleBtn.setAttribute("aria-label", isHidden ? "Hide password" : "Show password");
+        if (icon) {
+          icon.className = isHidden ? "bi bi-eye-slash" : "bi bi-eye";
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
