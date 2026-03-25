@@ -70,27 +70,54 @@ def _build_test_url(endpoint, **values):
     return f"{scheme}://{host}{path}"
 
 
-def _resolve_date_range(filter_type: str, specific_date: str = ""):
+def _resolve_date_range(filter_type: str, specific_date: str = "", offset: int = 0):
     now = datetime.now(timezone.utc)
+    offset = int(offset or 0)
+    # Future windows are not allowed for dashboard stats navigation.
+    if offset > 0:
+        offset = 0
     if filter_type == "today":
-        start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        start = now.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=offset)
         end = start + timedelta(days=1)
         return start, end
     if filter_type == "24h":
-        return now - timedelta(hours=24), now
+        end = now + timedelta(hours=24 * offset)
+        return end - timedelta(hours=24), end
+    if filter_type == "28d":
+        end = now + timedelta(days=28 * offset)
+        return end - timedelta(days=28), end
     if filter_type == "2d":
-        return now - timedelta(days=2), now
+        end = now + timedelta(days=2 * offset)
+        return end - timedelta(days=2), end
     if filter_type == "7d":
-        return now - timedelta(days=7), now
+        end = now + timedelta(days=7 * offset)
+        return end - timedelta(days=7), end
     if filter_type == "date" and specific_date:
         try:
             d = datetime.strptime(specific_date, "%Y-%m-%d")
-            start = d.replace(tzinfo=timezone.utc)
+            start = d.replace(tzinfo=timezone.utc) + timedelta(days=offset)
             end = start + timedelta(days=1)
             return start, end
         except ValueError:
             return None, None
     return None, None
+
+
+def _percentage_delta(current: int | float, previous: int | float) -> float:
+    current = float(current or 0)
+    previous = float(previous or 0)
+    if previous <= 0:
+        return 100.0 if current > 0 else 0.0
+    return ((current - previous) / previous) * 100.0
+
+
+def _trend_payload(current: int | float, previous: int | float) -> dict:
+    raw = _percentage_delta(current, previous)
+    return {
+        "raw": round(raw, 1),
+        "pct": round(abs(raw), 1),
+        "is_up": raw >= 0,
+    }
 
 
 # --------------------------------------------
@@ -106,30 +133,115 @@ def dashboard():
     # Date filter
     date_filter = request.args.get("filter", "today")
     specific_date = request.args.get("date", "")
+    try:
+        date_offset = int(request.args.get("offset", "0"))
+    except (TypeError, ValueError):
+        date_offset = 0
+    if date_offset > 0:
+        date_offset = 0
     if specific_date:
         date_filter = "date"
 
-    # Today's stats (all users)
+    # Today's stats scoped to current user.
     today_start, today_end = _resolve_date_range("today")
     today_stats = db_service.get_test_link_stats(
-        since=today_start,
-        until=today_end,
-    )
-
-    # My today stats
-    my_today_stats = db_service.get_test_link_stats(
         since=today_start,
         until=today_end,
         created_by=user_email,
     )
 
+    # Kept for template compatibility.
+    my_today_stats = today_stats
+    active_sessions = db_service.get_active_test_session_count(
+        created_by=user_email,
+        since=today_start,
+        until=today_end,
+    )
+
     # My stats with date filter
-    range_start, range_end = _resolve_date_range(date_filter, specific_date)
+    range_start, range_end = _resolve_date_range(date_filter, specific_date, date_offset)
+    overall_stats = db_service.get_test_link_stats(
+        since=range_start,
+        until=range_end,
+    )
     my_stats = db_service.get_test_link_stats(
         since=range_start,
         until=range_end,
         created_by=user_email,
     )
+
+    # Previous-period stats (same duration) for real trend percentages.
+    prev_stats = {"total_candidates": 0, "total_tests": 0, "completed": 0, "pending": 0}
+    if range_start and range_end and range_end > range_start:
+        window = range_end - range_start
+        prev_stats = db_service.get_test_link_stats(
+            since=range_start - window,
+            until=range_start,
+            created_by=user_email,
+        )
+
+    tests_trend = _trend_payload(my_stats.get("total_tests", 0), prev_stats.get("total_tests", 0))
+    pending_trend = _trend_payload(my_stats.get("pending", 0), prev_stats.get("pending", 0))
+    completed_trend = _trend_payload(my_stats.get("completed", 0), prev_stats.get("completed", 0))
+
+    # Real monthly chart series for this user.
+    performance_series = db_service.get_test_link_monthly_series(
+        points=6,
+        created_by=user_email,
+    )
+    series_count = len(performance_series)
+    chart_top = 32.0
+    chart_bottom = 184.0
+    chart_left = 40.0
+    chart_right = 338.0
+    chart_height = chart_bottom - chart_top
+    chart_width = chart_right - chart_left
+    chart_max = max(
+        1,
+        max((pt.get("tests", 0) for pt in performance_series), default=0),
+        max((pt.get("completed", 0) for pt in performance_series), default=0),
+    )
+
+    chart_points = []
+    for idx, point in enumerate(performance_series):
+        x = chart_left
+        if series_count > 1:
+            x = chart_left + (chart_width * idx / (series_count - 1))
+        tests_value = int(point.get("tests", 0) or 0)
+        completed_value = int(point.get("completed", 0) or 0)
+        y_tests = chart_bottom - (tests_value / chart_max) * chart_height
+        y_completed = chart_bottom - (completed_value / chart_max) * chart_height
+        chart_points.append(
+            {
+                "label": point.get("label", ""),
+                "x": round(x, 1),
+                "tests": tests_value,
+                "completed": completed_value,
+                "y_tests": round(y_tests, 1),
+                "y_completed": round(y_completed, 1),
+            }
+        )
+
+    chart_tests_polyline = " ".join(f"{p['x']},{p['y_tests']}" for p in chart_points)
+    chart_completed_polyline = " ".join(f"{p['x']},{p['y_completed']}" for p in chart_points)
+
+    y_tick_values = [chart_max, chart_max * 0.75, chart_max * 0.5, chart_max * 0.25, 0]
+    chart_y_ticks = []
+    for tick_value in y_tick_values:
+        y_pos = chart_bottom
+        if chart_max > 0:
+            y_pos = chart_bottom - (tick_value / chart_max) * chart_height
+        chart_y_ticks.append(
+            {
+                "value": int(round(tick_value)),
+                "y": round(y_pos, 1),
+            }
+        )
+
+    latest_point = chart_points[-1] if chart_points else {"tests": 0, "completed": 0}
+    previous_point = chart_points[-2] if len(chart_points) > 1 else {"tests": 0, "completed": 0}
+    chart_tests_trend = _trend_payload(latest_point.get("tests", 0), previous_point.get("tests", 0))
+    chart_completed_trend = _trend_payload(latest_point.get("completed", 0), previous_point.get("completed", 0))
 
     return render_template(
         "dashboard.html",
@@ -137,9 +249,24 @@ def dashboard():
         user_email=user_email,
         today_stats=today_stats,
         my_today_stats=my_today_stats,
+        overall_stats=overall_stats,
         my_stats=my_stats,
+        prev_stats=prev_stats,
+        tests_trend=tests_trend,
+        pending_trend=pending_trend,
+        completed_trend=completed_trend,
         date_filter=date_filter,
         specific_date=specific_date,
+        date_offset=date_offset,
+        performance_series=performance_series,
+        chart_points=chart_points,
+        chart_y_ticks=chart_y_ticks,
+        chart_tests_polyline=chart_tests_polyline,
+        chart_completed_polyline=chart_completed_polyline,
+        chart_latest=latest_point,
+        chart_tests_trend=chart_tests_trend,
+        chart_completed_trend=chart_completed_trend,
+        active_sessions=active_sessions,
     )
 
 
@@ -465,3 +592,15 @@ def create_test():
         if auto_failures:
             flash(f"{len(auto_failures)} email(s) failed to send. Check Generated Tests for retry.", "warning")
     return redirect(url_for("tests.generated_tests"))
+
+
+@dashboard_bp.route("/api/dashboard-lifetime")
+@login_required
+def dashboard_lifetime():
+    from app.models import Candidate
+    from flask import jsonify
+    try:
+        total = Candidate.query.count()
+    except Exception:
+        total = 0
+    return jsonify({"total_interviews": total})

@@ -12,7 +12,10 @@ from datetime import datetime
 from . import tests_bp
 from app.utils.auth_decorator import login_required
 from app.utils.role_normalizer import ROLE_NAME_TO_KEY
-from app.services.generated_tests_store import get_tests_for_user_today
+from app.services.generated_tests_store import (
+    get_tests_for_user_today,
+    delete_generated_tests_for_user,
+)
 from app.services.email_service import send_candidate_test_links_email
 from app.services.user_token_store import (
     get_valid_graph_delegated_token,
@@ -306,5 +309,48 @@ def send_generated_tests_emails():
         "sent_count": sent_count,
         "failed_count": len(failures),
         "failures": failures,
+    })
+
+
+@tests_bp.route("/generated-tests/delete", methods=["POST"])
+@login_required
+def delete_generated_tests():
+    """Delete selected generated test rows for the current logged-in user."""
+    payload = request.get_json(silent=True) or {}
+    raw_items = payload.get("items", [])
+
+    if not isinstance(raw_items, list):
+        return jsonify({"success": False, "error": "Invalid delete payload."}), 400
+
+    items = []
+    for raw in raw_items:
+        if isinstance(raw, dict):
+            email = str(raw.get("email", "")).strip().lower()
+            role = str(raw.get("role", "")).strip()
+            created_at = str(raw.get("created_at", "")).strip()
+            if not email:
+                continue
+            items.append({
+                "email": email,
+                "role": role,
+                "created_at": created_at,
+            })
+        else:
+            email = str(raw or "").strip().lower()
+            if not email:
+                continue
+            items.append({"email": email, "role": "", "created_at": ""})
+
+    if not items:
+        return jsonify({"success": False, "error": "No candidates selected."}), 400
+
+    user = session.get("user", {})
+    user_email = user.get("email", "dev@aziro.com")
+    removed_count = delete_generated_tests_for_user(user_email, items)
+
+    return jsonify({
+        "success": True,
+        "requested_count": len(items),
+        "removed_count": removed_count,
     })
 
