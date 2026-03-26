@@ -272,7 +272,7 @@
         border-radius: 10px;
         padding: 14px 14px 12px;
         background: #fdfdff;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
     }
     .upload-section-title {
         margin: 0 0 6px;
@@ -367,18 +367,63 @@
         font-size: 0.78rem;
     }
     .candidate-details-section {
-        padding-top: 2px;
+        border: 1px solid #d9e4fb;
+        border-radius: 10px;
+        background: linear-gradient(180deg, #f8fbff 0%, #ffffff 42%);
+        padding: 12px 14px 14px;
+        position: relative;
+    }
+    .candidate-details-section::before {
+        content: "Extracted Details";
+        position: absolute;
+        top: -10px;
+        left: 12px;
+        font-size: 0.73rem;
+        letter-spacing: 0.28px;
+        text-transform: uppercase;
+        color: #3565b9;
+        font-weight: 700;
+        background: #ffffff;
+        padding: 0 6px;
     }
     .candidate-details-subtitle {
-        margin: 0 0 13px;
+        margin: 0 0 10px;
         color: #6f7792;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
     }
     .candidate-details-title {
-        margin: 0 0 10px;
+        margin: 0 0 7px;
         color: #2f4678;
         font-size: 1.02rem;
         font-weight: 600;
+    }
+    .autofill-status {
+        margin: 0 0 10px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        padding: 6px 10px;
+        font-size: 0.81rem;
+        font-weight: 600;
+        line-height: 1.35;
+        display: none;
+    }
+    .autofill-status.visible {
+        display: block;
+        animation: status-pop 220ms ease-out;
+    }
+    .autofill-status.is-success {
+        color: #0f6a49;
+        background: #e8f8f1;
+        border-color: #bbe9d5;
+    }
+    .autofill-status.is-info {
+        color: #1f4c99;
+        background: #edf4ff;
+        border-color: #c8ddff;
+    }
+    @keyframes status-pop {
+        from { opacity: 0; transform: translateY(-2px); }
+        to { opacity: 1; transform: translateY(0); }
     }
     .ghost-label {
         opacity: 0;
@@ -436,13 +481,11 @@
         font-size: 0.97rem;
         font-weight: 500;
     }
-    .candidate-row[data-current-step="1"] .upload-section {
+    .candidate-row[data-current-step="1"] .upload-section,
+    .candidate-row[data-current-step="1"] .candidate-details-section {
         display: block;
     }
-    .candidate-row[data-current-step="2"] .candidate-details-section {
-        display: block;
-    }
-    .candidate-row[data-current-step="3"] .review-section {
+    .candidate-row[data-current-step="2"] .review-section {
         display: block;
     }
     .candidate-row .upload-section,
@@ -583,8 +626,7 @@
         border-color: #89aee8;
         box-shadow: 0 0 0 3px rgba(95, 140, 222, 0.24);
     }
-    .create-test-page[data-step="2"] .mode-grid,
-    .create-test-page[data-step="3"] .mode-grid {
+    .create-test-page[data-step="2"] .mode-grid {
         display: none;
     }
     @media (max-width: 992px) {
@@ -647,9 +689,8 @@
 
         <div class="details-panel">
             <div class="workflow-steps">
-                <div class="workflow-step" data-step="1"><span class="dot" data-step-num="1">1</span>Upload Documents</div>
-                <div class="workflow-step" data-step="2"><span class="dot" data-step-num="2">2</span>Candidate Details</div>
-                <div class="workflow-step" data-step="3"><span class="dot" data-step-num="3">3</span>Review &amp; Generate</div>
+                <div class="workflow-step" data-step="1"><span class="dot" data-step-num="1">1</span>Upload &amp; Candidate Details</div>
+                <div class="workflow-step" data-step="2"><span class="dot" data-step-num="2">2</span>Review &amp; Generate</div>
             </div>
             <div id="candidateContainer">
                 <div class="candidate-card candidate-row">
@@ -687,8 +728,9 @@
                         </div>
                     </div>
                     <div class="candidate-details-section">
-                        <h6 class="candidate-details-title">Step 2: Candidate Details</h6>
+                        <h6 class="candidate-details-title">Candidate Details</h6>
                         <p class="candidate-details-subtitle">Enter the candidate's information to generate test link specific to their role.</p>
+                        <div class="autofill-status" aria-live="polite"></div>
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label"><i class="fas fa-user me-1"></i>Full Name <span class="auto-fill-badge">Auto-filled</span></label>
@@ -742,7 +784,7 @@
                         </div>
                     </div>
                     <div class="review-section">
-                        <h6 class="review-title">Step 3: Review &amp; Generate</h6>
+                        <h6 class="review-title">Step 2: Review &amp; Generate</h6>
                         <p class="review-subtitle">Verify the candidate information and generate the test link.</p>
                         <div class="review-card">
                             <h6 class="review-card-title">Candidate Details</h6>
@@ -810,6 +852,7 @@ const prevStepBtn = document.getElementById("prevStepBtn");
 const backToDashboardBtn = document.getElementById("backToDashboardBtn");
 const viewGeneratedTestsBtn = document.getElementById("viewGeneratedTestsBtn");
 const createTestPage = document.querySelector(".create-test-page");
+const TOTAL_STEPS = 2;
 let currentStep = 1;
 let isSubmitting = false;
 
@@ -904,14 +947,11 @@ function syncWorkflow(step) {
     workflowSteps.forEach((item) => {
         const stepNo = Number(item.getAttribute("data-step"));
         item.classList.remove("is-active", "is-done");
-        if (stepNo === 1) {
+        if (stepNo < step) {
             item.classList.add("is-done");
         }
-        if (stepNo === step && stepNo > 1) {
+        if (stepNo === step) {
             item.classList.add("is-active");
-        }
-        if (step === 1 && stepNo === 1) {
-            item.classList.add("is-done");
         }
     });
 }
@@ -933,7 +973,7 @@ function syncActionBar(step) {
         ? '<i class="fas fa-angle-left me-1"></i>Previous'
         : '<i class="fas fa-angle-left me-1"></i>Back';
 
-    if (step === 3) {
+    if (step === TOTAL_STEPS) {
         nextStepBtn.classList.add("d-none");
         generateBtn.classList.remove("d-none");
     } else {
@@ -943,11 +983,11 @@ function syncActionBar(step) {
 }
 
 function setStep(step) {
-    currentStep = Math.max(1, Math.min(3, Number(step) || 1));
+    currentStep = Math.max(1, Math.min(TOTAL_STEPS, Number(step) || 1));
     if (createTestPage) {
         createTestPage.setAttribute("data-step", String(currentStep));
     }
-    if (currentStep === 3) {
+    if (currentStep === TOTAL_STEPS) {
         populateReviewPanel();
     }
     syncStepPanels(currentStep);
@@ -981,6 +1021,20 @@ function clearFieldErrors(row) {
     clearFieldError(row, ".name-error");
     clearFieldError(row, ".email-error");
     clearFieldError(row, ".role-error");
+}
+
+function setAutofillStatus(row, message, level) {
+    const node = row.querySelector(".autofill-status");
+    if (!node) return;
+    const text = String(message || "").trim();
+    if (!text) {
+        node.textContent = "";
+        node.classList.remove("visible", "is-success", "is-info");
+        return;
+    }
+    node.textContent = text;
+    node.classList.remove("is-success", "is-info");
+    node.classList.add("visible", level === "success" ? "is-success" : "is-info");
 }
 
 function resetUploadZone(zone) {
@@ -1070,6 +1124,7 @@ function resetCandidateRow(row) {
     row.querySelectorAll(".field-error").forEach((node) => {
         node.textContent = "";
     });
+    setAutofillStatus(row, "", "");
     const reviewName = row.querySelector(".review-name-value");
     const reviewEmail = row.querySelector(".review-email-value");
     const reviewRole = row.querySelector(".review-role-value");
@@ -1132,6 +1187,7 @@ function applyResumeResponse(row, payload) {
     } else {
         clearFieldError(row, ".email-error");
     }
+
 }
 
 function applyJdResponse(row, payload) {
@@ -1144,6 +1200,7 @@ function applyJdResponse(row, payload) {
             roleField.value = matched.value;
             showBadge(badges[1], true);
             clearFieldError(row, ".role-error");
+            setAutofillStatus(row, "JD parsed. Role was auto-matched.", "success");
             return;
         }
     }
@@ -1151,6 +1208,9 @@ function applyJdResponse(row, payload) {
     const fallbackMessage = payload.message || "No role fits perfectly among available roles.";
     if (!roleField || !roleField.value) {
         setFieldError(row, ".role-error", fallbackMessage);
+    }
+    if (payload.role_found) {
+        setAutofillStatus(row, "JD parsed. Review the suggested role.", "info");
     }
 }
 
@@ -1184,6 +1244,7 @@ function setupFileInputListeners(row) {
                 zone.classList.add("has-file");
                 zone.querySelector(".file-name").textContent = file.name;
                 zone.querySelector(".upload-icon").innerHTML = '<i class="fas fa-check-circle"></i>';
+                setAutofillStatus(row, "", "");
             } else {
                 resetUploadZone(zone);
             }
@@ -1239,6 +1300,7 @@ function setupFileInputListeners(row) {
                     });
             } else {
                 resetUploadZone(zone);
+                setAutofillStatus(row, "", "");
             }
         });
     }
@@ -1253,6 +1315,7 @@ function setupFileInputListeners(row) {
                 zone.classList.add("has-file");
                 zone.querySelector(".file-name").textContent = file.name;
                 zone.querySelector(".upload-icon").innerHTML = '<i class="fas fa-check-circle"></i>';
+                setAutofillStatus(row, "", "");
                 clearFieldError(row, ".role-error");
 
                 if (spinner) spinner.classList.add("active");
@@ -1282,6 +1345,7 @@ function setupFileInputListeners(row) {
                     });
             } else {
                 resetUploadZone(zone);
+                setAutofillStatus(row, "", "");
             }
         });
     }
@@ -1295,10 +1359,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 nextStepBtn.addEventListener("click", () => {
-    if (currentStep === 2 && !validateRequiredFields()) {
+    if (currentStep === 1 && !validateRequiredFields()) {
         return;
     }
-    if (currentStep === 2) {
+    if (currentStep === 1) {
         populateReviewPanel();
     }
     setStep(currentStep + 1);
@@ -1315,8 +1379,8 @@ form.addEventListener("submit", (event) => {
         return;
     }
 
-    if (currentStep !== 3) {
-        setStep(3);
+    if (currentStep !== TOTAL_STEPS) {
+        setStep(TOTAL_STEPS);
         return;
     }
     if (!validateRequiredFields()) {
