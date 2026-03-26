@@ -618,6 +618,70 @@ def get_latest_report_for_email(email: str) -> dict | None:
     }
 
 
+def get_latest_test_session_id_for_candidate(
+    email: str,
+    *,
+    created_by: str | None = None,
+    since: datetime | None = None,
+    until: datetime | None = None,
+    role_key: str = "",
+    batch_id: str = "",
+) -> int | None:
+    """Return latest test_session_id for a candidate with optional scope filters."""
+    email_key = str(email or "").strip().lower()
+    if not email_key:
+        return None
+
+    query = (
+        db.session.query(TestSession.id)
+        .join(Candidate, TestSession.candidate_id == Candidate.id)
+        .filter(db.func.lower(Candidate.email) == email_key)
+    )
+    if created_by:
+        query = query.filter(db.func.lower(TestSession.created_by) == str(created_by).strip().lower())
+    if since:
+        query = query.filter(TestSession.created_at >= since)
+    if until:
+        query = query.filter(TestSession.created_at < until)
+    if role_key:
+        query = query.filter(db.func.lower(TestSession.role_key) == str(role_key).strip().lower())
+    if batch_id:
+        query = query.filter(db.func.lower(TestSession.batch_id) == str(batch_id).strip().lower())
+
+    row = query.order_by(TestSession.created_at.desc(), TestSession.id.desc()).first()
+    if not row or not row[0]:
+        return None
+    return int(row[0])
+
+
+def get_latest_test_session_id_for_email(email: str) -> int | None:
+    """Backward-compatible alias for latest session lookup by email only."""
+    return get_latest_test_session_id_for_candidate(email)
+
+
+def get_round_session_uuids_for_test_session(test_session_id: int, attempted_only: bool = True) -> list[str]:
+    """Return unique round session_uuid values for a test_session_id."""
+    if not test_session_id:
+        return []
+
+    query = RoundResult.query.filter_by(test_session_id=int(test_session_id))
+    if attempted_only:
+        query = query.filter(
+            db.func.lower(RoundResult.status).notin_(("pending", "not attempted", ""))
+        )
+
+    rows = query.with_entities(RoundResult.session_uuid).all()
+    seen = set()
+    ordered = []
+    for row in rows:
+        session_uuid = str(row[0] if row else "").strip().lower()
+        if not session_uuid or session_uuid in seen:
+            continue
+        seen.add(session_uuid)
+        ordered.append(session_uuid)
+    return ordered
+
+
 def get_candidate_report_data(email: str) -> dict:
     """Get full candidate data for report generation."""
     candidate = Candidate.query.filter_by(email=email).first()
