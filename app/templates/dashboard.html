@@ -126,6 +126,1047 @@
         color: var(--dash-text);
     }
 
+    .dash-carousel-panel {
+        margin-bottom: 14px;
+        overflow: hidden;
+        border-color: #d6deef;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fafe 100%);
+    }
+
+    .dash-carousel {
+        border-radius: 14px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .dash-carousel .carousel-inner {
+        border-radius: 14px;
+        min-height: 370px;
+    }
+
+    .dash-carousel-slide {
+        --slide-accent: #9cc4ff;
+        --slide-card-bg: rgba(255, 255, 255, 0.1);
+        --slide-card-border: rgba(255, 255, 255, 0.2);
+        --slide-title: #f7fbff;
+        --slide-copy: #e4eefc;
+        --slide-kicker: #c7ddff;
+        --slide-label: #c6d8f2;
+        --slide-note: #d4e2f7;
+        --slide-tag-text: #f4f9ff;
+        --slide-tag-bg: rgba(255, 255, 255, 0.11);
+        --slide-tag-border: rgba(255, 255, 255, 0.25);
+        --slide-value: #ffffff;
+        height: 370px;
+        padding: 20px 22px;
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 14px;
+        align-items: stretch;
+        color: #eff4ff;
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+    }
+
+    .dash-carousel-slide.image-right {
+        grid-template-columns: minmax(0, 1fr) 220px;
+    }
+
+    .dash-carousel-slide.layout-overall {
+        grid-template-columns: 286px minmax(0, 1fr);
+    }
+
+    .dash-carousel-slide.layout-personal {
+        grid-template-columns: minmax(0, 1fr) 286px;
+    }
+
+    .dash-carousel-content {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: 10px;
+        height: 100%;
+        min-width: 0;
+        min-height: 0;
+        overflow: visible;
+    }
+
+    .dash-carousel-slide.image-right .dash-carousel-figure {
+        order: 2;
+    }
+
+    .dash-carousel-slide.image-right .dash-carousel-content {
+        order: 1;
+    }
+
+    .dash-carousel-figure {
+        position: relative;
+        align-self: stretch;
+        height: 100%;
+        min-height: 0;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 12px 24px rgba(10, 21, 35, 0.32);
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dash-carousel-figure.figure-media-only {
+        border: none;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .dash-carousel-figure.figure-media-only::after {
+        display: none;
+    }
+
+    .dash-carousel-figure.figure-media-only .dash-carousel-media {
+        border-radius: 14px;
+        transform: none;
+        filter: saturate(1.06) contrast(1.04);
+    }
+
+    .dash-carousel-figure.figure-graph {
+        display: block;
+        padding: 12px;
+    }
+
+    .dash-side-live {
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+        gap: 8px;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+    }
+
+    .dash-carousel-figure.figure-graph .dash-live-legend {
+        font-size: 0.66rem;
+        gap: 10px;
+    }
+
+    .dash-carousel-figure.figure-graph .dash-live-pill {
+        font-size: 0.63rem;
+        padding: 4px 9px;
+    }
+
+    .dash-carousel-figure.figure-graph .dash-overall-live-chart,
+    .dash-carousel-figure.figure-graph .dash-personal-live-chart {
+        height: 100%;
+    }
+
+    .dash-carousel-figure::after {
+        content: "";
+        position: absolute;
+        inset: auto -40% -62% -40%;
+        height: 90%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0) 68%);
+        pointer-events: none;
+    }
+
+    .dash-carousel-figure .dash-carousel-media {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        filter: saturate(1.03) contrast(1.03);
+        transform: scale(1.02);
+    }
+
+    .dash-carousel-figure .dash-carousel-piggy-media {
+        animation: dashPiggyFloat 3.8s ease-in-out infinite;
+        transform-origin: center;
+        object-fit: contain;
+        object-position: center;
+        transform: none;
+    }
+
+    .dash-carousel-figure video.dash-carousel-media {
+        animation: dashVideoDrift 18s ease-in-out infinite alternate;
+    }
+
+    .dash-carousel-figure .dash-carousel-fallback {
+        display: none;
+    }
+
+    .dash-carousel-figure.video-failed .dash-carousel-video {
+        display: none;
+    }
+
+    .dash-carousel-figure.video-failed .dash-carousel-fallback {
+        display: block;
+    }
+
+    .carousel-item .dash-carousel-slide {
+        opacity: 0.84;
+        transform: scale(1.02) translateY(4px);
+        filter: saturate(0.9);
+    }
+
+    .carousel-item.active .dash-carousel-slide {
+        animation: dashSlideSettle 0.62s cubic-bezier(0.2, 0.7, 0.15, 1) forwards;
+    }
+
+    .dash-carousel-slide::before {
+        content: "";
+        position: absolute;
+        inset: -40% auto auto -18%;
+        width: 52%;
+        height: 168%;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 70%);
+        pointer-events: none;
+        animation: dashCarouselHalo 10s ease-in-out infinite;
+        z-index: -1;
+        opacity: 0.42;
+    }
+
+    .dash-carousel-slide::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(circle at 84% 18%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 42%),
+            linear-gradient(100deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.16) 46%, rgba(255, 255, 255, 0.03) 100%);
+        mix-blend-mode: screen;
+        transform: translateX(-44%);
+        animation: dashCarouselSweep 9.5s linear infinite;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0.3;
+    }
+
+    .dash-carousel-slide.tone-overall {
+        --slide-accent: #8ec3ff;
+        --slide-title: #f5f9ff;
+        --slide-copy: #d9e8ff;
+        --slide-kicker: #9ec8ff;
+        --slide-label: #c7dcfb;
+        --slide-note: #d9e7fd;
+        --slide-tag-text: #ecf5ff;
+        --slide-tag-bg: rgba(164, 205, 255, 0.2);
+        --slide-tag-border: rgba(173, 213, 255, 0.45);
+        --slide-card-bg: linear-gradient(150deg, rgba(176, 209, 255, 0.24) 0%, rgba(117, 170, 245, 0.14) 100%);
+        --slide-card-border: rgba(164, 205, 255, 0.5);
+        --slide-value: #f7fbff;
+        background: linear-gradient(136deg, #11408b 0%, #1e5db8 46%, #3090d5 100%);
+    }
+
+    .dash-carousel-slide.tone-personal {
+        --slide-accent: #76e8c0;
+        --slide-title: #ecfff7;
+        --slide-copy: #d4f5e8;
+        --slide-kicker: #95f0d1;
+        --slide-label: #c2ebdc;
+        --slide-note: #d7f0e6;
+        --slide-tag-text: #ecfff8;
+        --slide-tag-bg: rgba(151, 241, 208, 0.18);
+        --slide-tag-border: rgba(151, 241, 208, 0.42);
+        --slide-card-bg: linear-gradient(150deg, rgba(149, 241, 208, 0.24) 0%, rgba(92, 198, 169, 0.15) 100%);
+        --slide-card-border: rgba(151, 241, 208, 0.44);
+        --slide-value: #f2fffb;
+        background: linear-gradient(136deg, #0e5f4b 0%, #13886b 48%, #21b18b 100%);
+    }
+
+    .dash-carousel-slide.tone-saving {
+        --slide-accent: #ffcc9a;
+        --slide-title: #fff6ef;
+        --slide-copy: #ffe3d4;
+        --slide-kicker: #ffcfaa;
+        --slide-label: #f8d7c2;
+        --slide-note: #fde5d7;
+        --slide-tag-text: #fff4ed;
+        --slide-tag-bg: rgba(255, 199, 153, 0.18);
+        --slide-tag-border: rgba(255, 200, 159, 0.42);
+        --slide-card-bg: linear-gradient(150deg, rgba(255, 204, 160, 0.24) 0%, rgba(255, 140, 107, 0.15) 100%);
+        --slide-card-border: rgba(255, 190, 145, 0.46);
+        --slide-value: #fff9f4;
+        background: linear-gradient(136deg, #8b2f35 0%, #b04d3b 42%, #de7a3a 100%);
+    }
+
+    .dash-carousel-slide.tone-performance {
+        --slide-accent: #c0a0ff;
+        --slide-title: #f6f2ff;
+        --slide-copy: #e3d9ff;
+        --slide-kicker: #cbb5ff;
+        --slide-label: #d9c9ff;
+        --slide-note: #e3d8ff;
+        --slide-tag-text: #f5efff;
+        --slide-tag-bg: rgba(201, 176, 255, 0.2);
+        --slide-tag-border: rgba(203, 182, 255, 0.46);
+        --slide-card-bg: linear-gradient(150deg, rgba(197, 170, 255, 0.24) 0%, rgba(151, 114, 239, 0.14) 100%);
+        --slide-card-border: rgba(196, 169, 255, 0.46);
+        --slide-value: #fbf8ff;
+        background: linear-gradient(136deg, #3d2d7f 0%, #6240ab 44%, #8f56cc 100%);
+    }
+
+    .dash-carousel-slide.tone-actions {
+        --slide-accent: #f6c37a;
+        --slide-title: #fff9ef;
+        --slide-copy: #f8e8ce;
+        --slide-kicker: #f6cb90;
+        --slide-label: #f3ddb8;
+        --slide-note: #f2e0c1;
+        --slide-tag-text: #fff9ef;
+        --slide-tag-bg: rgba(246, 195, 122, 0.2);
+        --slide-tag-border: rgba(246, 195, 122, 0.44);
+        --slide-card-bg: linear-gradient(150deg, rgba(246, 195, 122, 0.24) 0%, rgba(216, 153, 73, 0.16) 100%);
+        --slide-card-border: rgba(246, 196, 124, 0.46);
+        --slide-value: #fffaf2;
+        background: linear-gradient(136deg, #1e2336 0%, #2f354a 46%, #4b3c30 100%);
+    }
+
+    /* Slide-specific layouts so each card is structurally unique */
+    .dash-carousel-slide.layout-overall .dash-overall-live {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        gap: 8px;
+        height: 100%;
+        min-height: 0;
+    }
+
+    .dash-carousel-slide.layout-personal .dash-personal-stack {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+        gap: 10px;
+        min-height: 0;
+        height: 100%;
+    }
+
+    .dash-carousel-slide.layout-personal .dash-carousel-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .dash-carousel-slide.layout-personal .dash-carousel-metric:nth-child(1) {
+        grid-row: auto;
+        justify-content: flex-start;
+        border-radius: 12px;
+        background: var(--slide-card-bg);
+    }
+
+    .dash-carousel-slide.layout-personal .dash-carousel-metric:nth-child(1) .value {
+        font-size: clamp(0.98rem, 1.05vw, 1.14rem);
+    }
+
+    .dash-carousel-slide.layout-saving .dash-carousel-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-areas:
+            "hero hero"
+            "a b"
+            "c c";
+        grid-auto-rows: minmax(0, 1fr);
+        gap: 8px;
+    }
+
+    .dash-carousel-slide.layout-saving .dash-carousel-metric:nth-child(1) {
+        grid-area: hero;
+        border-radius: 14px;
+        padding: 10px 12px;
+        background: linear-gradient(135deg, rgba(255, 214, 186, 0.34) 0%, rgba(255, 166, 123, 0.22) 100%);
+    }
+
+    .dash-carousel-slide.layout-saving .dash-carousel-metric:nth-child(2) { grid-area: a; }
+    .dash-carousel-slide.layout-saving .dash-carousel-metric:nth-child(3) { grid-area: b; }
+    .dash-carousel-slide.layout-saving .dash-carousel-metric:nth-child(4) { grid-area: c; }
+
+    .dash-carousel-slide.layout-saving .dash-carousel-metric:nth-child(1) .value {
+        font-size: 1.34rem;
+    }
+
+    .dash-carousel-slide.layout-performance .dash-carousel-performance {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .dash-carousel-slide.layout-performance .dash-perf-card {
+        border-radius: 14px;
+        padding: 9px 11px;
+        background: linear-gradient(145deg, rgba(197, 170, 255, 0.3) 0%, rgba(151, 114, 239, 0.17) 100%);
+    }
+
+    .dash-carousel-slide.layout-actions .dash-carousel-action-hub {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        height: 100%;
+    }
+
+    .dash-carousel-slide.layout-actions .dash-carousel-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-auto-rows: minmax(68px, 1fr);
+        gap: 8px;
+        align-content: stretch;
+        height: 100%;
+        flex: 1 1 auto;
+    }
+
+    .dash-carousel-slide.layout-actions .dash-carousel-action {
+        height: 100%;
+        min-height: 68px;
+        padding: 10px 10px;
+    }
+
+    .dash-overall-live-head,
+    .dash-personal-live-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .dash-live-legend {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: #e7f0ff;
+        font-size: 0.66rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .dash-live-legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        white-space: nowrap;
+    }
+
+    .dash-live-legend .tests i { color: #ffb06e; }
+    .dash-live-legend .completed i { color: #86c5ff; }
+
+    .dash-live-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 3px 9px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        background: rgba(255, 255, 255, 0.12);
+        color: #f4f8ff;
+        font-size: 0.63rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+    }
+
+    .dash-overall-live-chart,
+    .dash-personal-live-chart {
+        width: 100%;
+        height: 164px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.26);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.05) 100%);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+    }
+
+    .dash-overall-live-chart .grid,
+    .dash-personal-live-chart .grid {
+        stroke: rgba(255, 255, 255, 0.2);
+        stroke-width: 1;
+    }
+
+    .dash-overall-live-chart .v-grid,
+    .dash-personal-live-chart .v-grid {
+        stroke: rgba(255, 255, 255, 0.08);
+        stroke-width: 1;
+    }
+
+    .dash-overall-live-chart .line.tests,
+    .dash-personal-live-chart .line.tests {
+        fill: none;
+        stroke: #ffb06e;
+        stroke-width: 3.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .dash-overall-live-chart .line.completed,
+    .dash-personal-live-chart .line.completed {
+        fill: none;
+        stroke: #86c5ff;
+        stroke-width: 3.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .dash-overall-live-chart .dot.tests,
+    .dash-personal-live-chart .dot.tests {
+        fill: #ffc188;
+        stroke: #9e5620;
+        stroke-width: 1;
+    }
+
+    .dash-overall-live-chart .dot.completed,
+    .dash-personal-live-chart .dot.completed {
+        fill: #9fd4ff;
+        stroke: #1f4f8f;
+        stroke-width: 1;
+    }
+
+    .dash-overall-live-chart text,
+    .dash-personal-live-chart text {
+        fill: rgba(246, 251, 255, 0.9);
+        font-size: 11px;
+        font-weight: 500;
+    }
+
+    .dash-overall-ribbon {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        grid-auto-rows: minmax(88px, 1fr);
+        align-content: stretch;
+        min-height: 0;
+    }
+
+    .dash-overall-kpi {
+        border: 1px solid var(--slide-card-border);
+        border-radius: 12px;
+        background: var(--slide-card-bg);
+        padding: 10px 12px 10px;
+        min-height: 88px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+
+    .dash-overall-kpi .k-label {
+        font-size: 0.68rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--slide-label);
+        line-height: 1.2;
+    }
+
+    .dash-overall-kpi .k-value {
+        font-size: clamp(1.0rem, 1.08vw, 1.18rem);
+        line-height: 1.16;
+        font-weight: 600;
+        color: var(--slide-value);
+    }
+
+    .dash-personal-live {
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+        gap: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 12px;
+        background: linear-gradient(150deg, rgba(158, 247, 213, 0.18) 0%, rgba(99, 214, 180, 0.1) 100%);
+        padding: 8px;
+        min-height: 0;
+    }
+
+    .dash-savings-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-areas:
+            "hero hero"
+            "a b"
+            "c c";
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        min-height: 0;
+        align-content: stretch;
+    }
+
+    .dash-savings-hero,
+    .dash-savings-mini {
+        border: 1px solid var(--slide-card-border);
+        border-radius: 12px;
+        background: var(--slide-card-bg);
+        padding: 10px 12px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.64);
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+        min-width: 0;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .dash-savings-hero {
+        grid-area: hero;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 238, 216, 0.82) 100%);
+    }
+
+    .dash-savings-hero .s-hero-label {
+        font-size: 0.67rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--slide-label);
+    }
+
+    .dash-savings-hero .s-hero-value {
+        margin-top: 3px;
+        font-size: clamp(1.14rem, 1.2vw, 1.34rem);
+        line-height: 1.16;
+        font-weight: 600;
+        color: var(--slide-value);
+    }
+
+    /* Ensure hero text in Cost Savings stays readable on the light hero gradient */
+    .dash-carousel-slide.tone-saving .dash-savings-hero .s-hero-label {
+        color: #8b3b2a;
+    }
+
+    .dash-carousel-slide.tone-saving .dash-savings-hero .s-hero-value,
+    .dash-carousel-slide.tone-saving .dash-savings-hero .s-hero-value span {
+        color: #5d1f24;
+    }
+
+    .dash-savings-mini:nth-child(2) { grid-area: a; }
+    .dash-savings-mini:nth-child(3) { grid-area: b; }
+    .dash-savings-mini:nth-child(4) { grid-area: c; }
+
+    .dash-savings-mini .s-mini-label {
+        font-size: 0.66rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--slide-label);
+        line-height: 1.28;
+    }
+
+    .dash-savings-mini .s-mini-value {
+        margin-top: 5px;
+        display: block;
+        font-size: clamp(0.96rem, 1.02vw, 1.12rem);
+        line-height: 1.26;
+        font-weight: 600;
+        color: var(--slide-value);
+        overflow-wrap: anywhere;
+    }
+
+    .dash-carousel-copy {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        height: 100%;
+        opacity: 0;
+        transform: translateY(14px);
+        position: relative;
+        min-height: 0;
+    }
+
+    .dash-carousel-copy p {
+        margin: 6px 0 0;
+        font-size: 0.76rem;
+        line-height: 1.38;
+        color: var(--slide-copy);
+        max-width: 520px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .dash-carousel-copy p:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .dash-carousel-copy .dash-carousel-kicker {
+        margin: 0 0 6px;
+        font-size: 1.56rem;
+        font-weight: 600;
+        line-height: 1.14;
+        letter-spacing: 0;
+        text-transform: none;
+        color: var(--slide-title);
+        display: block;
+        -webkit-line-clamp: unset;
+        -webkit-box-orient: initial;
+        overflow: visible;
+        max-width: none;
+    }
+
+    .dash-carousel-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 8px;
+    }
+
+    .dash-carousel-tag {
+        padding: 4px 9px;
+        border-radius: 999px;
+        border: 1px solid var(--slide-tag-border);
+        background: var(--slide-tag-bg);
+        color: var(--slide-tag-text);
+        font-size: 0.63rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        line-height: 1;
+    }
+
+    .dash-carousel-metrics,
+    .dash-carousel-performance,
+    .dash-carousel-actions,
+    .dash-carousel-action-hub,
+    .dash-overall-ribbon,
+    .dash-savings-grid {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    .carousel-item.active .dash-carousel-copy {
+        animation: dashCarouselLift 0.52s ease forwards;
+        animation-delay: 0.08s;
+    }
+
+    .carousel-item.active .dash-carousel-metrics,
+    .carousel-item.active .dash-carousel-performance,
+    .carousel-item.active .dash-carousel-actions,
+    .carousel-item.active .dash-carousel-action-hub,
+    .carousel-item.active .dash-overall-ribbon,
+    .carousel-item.active .dash-savings-grid {
+        animation: dashCarouselLift 0.52s ease forwards;
+        animation-delay: 0.14s;
+    }
+
+    .dash-carousel-metrics {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-auto-rows: 1fr;
+        gap: 10px;
+        height: 100%;
+        align-content: stretch;
+        min-height: 0;
+    }
+
+    .dash-carousel-metrics.compact .dash-carousel-metric {
+        padding: 9px 10px 8px;
+    }
+
+    .dash-carousel-metric {
+        border: 1px solid var(--slide-card-border);
+        border-radius: 12px;
+        padding: 10px 12px 10px;
+        background: var(--slide-card-bg);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        overflow: hidden;
+        min-width: 0;
+    }
+
+    .carousel-item.active .dash-carousel-metric {
+        animation: dashCarouselMetric 0.42s ease forwards;
+    }
+
+    .carousel-item.active .dash-carousel-metric:nth-child(1) { animation-delay: 0.2s; }
+    .carousel-item.active .dash-carousel-metric:nth-child(2) { animation-delay: 0.26s; }
+    .carousel-item.active .dash-carousel-metric:nth-child(3) { animation-delay: 0.32s; }
+    .carousel-item.active .dash-carousel-metric:nth-child(4) { animation-delay: 0.38s; }
+    .carousel-item.active .dash-overall-kpi:nth-child(1),
+    .carousel-item.active .dash-savings-hero { animation: dashCarouselMetric 0.42s ease forwards; animation-delay: 0.2s; }
+    .carousel-item.active .dash-overall-kpi:nth-child(2),
+    .carousel-item.active .dash-savings-mini:nth-child(2) { animation: dashCarouselMetric 0.42s ease forwards; animation-delay: 0.26s; }
+    .carousel-item.active .dash-overall-kpi:nth-child(3),
+    .carousel-item.active .dash-savings-mini:nth-child(3) { animation: dashCarouselMetric 0.42s ease forwards; animation-delay: 0.32s; }
+    .carousel-item.active .dash-overall-kpi:nth-child(4),
+    .carousel-item.active .dash-savings-mini:nth-child(4) { animation: dashCarouselMetric 0.42s ease forwards; animation-delay: 0.38s; }
+
+    .dash-carousel-metric .icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 7px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 5px;
+        background: rgba(255, 255, 255, 0.2);
+        color: #f4f7ff;
+        font-size: 0.75rem;
+        box-shadow: 0 6px 14px rgba(13, 24, 41, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .carousel-item.active .dash-carousel-metric .icon {
+        animation: dashIconPulse 2.8s ease-in-out infinite;
+    }
+
+    .dash-carousel-metric .label {
+        display: block;
+        font-size: 0.66rem;
+        font-weight: 500;
+        color: var(--slide-label);
+        margin-bottom: 2px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .dash-carousel-metric .value {
+        display: block;
+        font-size: clamp(0.98rem, 1.05vw, 1.14rem);
+        line-height: 1.16;
+        font-weight: 600;
+        color: var(--slide-value);
+        letter-spacing: -0.01em;
+        overflow-wrap: anywhere;
+    }
+
+    .dash-carousel-metric .note {
+        display: none;
+        margin-top: 3px;
+        font-size: 0.63rem;
+        line-height: 1.3;
+        color: var(--slide-note);
+    }
+
+    .dash-carousel-performance {
+        display: grid;
+        gap: 10px;
+        height: 100%;
+        align-content: stretch;
+        min-height: 0;
+    }
+
+    .dash-perf-card {
+        border: 1px solid var(--slide-card-border);
+        border-radius: 12px;
+        background: var(--slide-card-bg);
+        padding: 10px 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .dash-perf-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--slide-title);
+        margin-bottom: 7px;
+        gap: 8px;
+    }
+
+    .dash-carousel-slide.layout-performance .dash-perf-head span:last-child {
+        font-size: 0.92rem;
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    .dash-perf-track {
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.2);
+        overflow: hidden;
+    }
+
+    .dash-perf-fill {
+        height: 100%;
+        border-radius: 999px;
+        transition: width 0.5s ease;
+    }
+
+    .dash-perf-fill.warm {
+        background: linear-gradient(90deg, #ffd27a 0%, #ff9d4d 100%);
+    }
+
+    .dash-perf-fill.cool {
+        background: linear-gradient(90deg, #9bc8ff 0%, #69a1ff 100%);
+    }
+
+    .dash-perf-meta {
+        margin-top: 6px;
+        font-size: 0.73rem;
+        color: var(--slide-note);
+        white-space: normal;
+        line-height: 1.35;
+    }
+
+    .dash-carousel-action-hub {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        height: 100%;
+        min-height: 0;
+    }
+
+    .dash-carousel-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-auto-rows: minmax(68px, 1fr);
+        gap: 10px;
+        flex: 1 1 auto;
+        align-content: stretch;
+    }
+
+    .dash-carousel-action {
+        min-width: 0;
+        height: 100%;
+        min-height: 68px;
+        border-radius: 11px;
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        background: rgba(255, 255, 255, 0.1);
+        color: #f6f9ff;
+        font-size: 0.82rem;
+        font-weight: 600;
+        line-height: 1.2;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-align: center;
+        transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .dash-carousel-action i {
+        font-size: 0.9rem;
+    }
+
+    .dash-carousel-action:hover {
+        background: rgba(255, 255, 255, 0.18);
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.42);
+        transform: translateY(-1px);
+    }
+
+    .dash-carousel-action.primary {
+        background: rgba(255, 255, 255, 0.22);
+        color: #ffffff;
+    }
+
+    .dash-carousel-indicators {
+        margin-bottom: 8px;
+        gap: 6px;
+    }
+
+    .dash-carousel-indicators [data-bs-target] {
+        width: 28px;
+        height: 4px;
+        border: none;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.3);
+        opacity: 1;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .dash-carousel-indicators [data-bs-target]::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: #ffffff;
+        transform: scaleX(0);
+        transform-origin: left center;
+    }
+
+    .dash-carousel-indicators .active::after {
+        animation: dashIndicatorProgress 4.6s linear forwards;
+    }
+
+    .dash-carousel .carousel-control-prev,
+    .dash-carousel .carousel-control-next {
+        width: 44px;
+        opacity: 1;
+    }
+
+    .dash-carousel .carousel-control-prev-icon,
+    .dash-carousel .carousel-control-next-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background-color: rgba(18, 28, 51, 0.34);
+        border: 1px solid rgba(255, 255, 255, 0.26);
+        background-size: 54% 54%;
+    }
+
+    @keyframes dashSlideSettle {
+        0% { opacity: 0.82; transform: scale(1.02) translateY(4px); filter: saturate(0.9); }
+        100% { opacity: 1; transform: scale(1) translateY(0); filter: saturate(1); }
+    }
+
+    @keyframes dashCarouselHalo {
+        0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.72; }
+        50% { transform: translate3d(20px, -7px, 0) scale(1.08); opacity: 0.95; }
+    }
+
+    @keyframes dashCarouselSweep {
+        0% { transform: translateX(-48%); }
+        100% { transform: translateX(48%); }
+    }
+
+    @keyframes dashCarouselLift {
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes dashCarouselMetric {
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes dashIconPulse {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-1px) scale(1.04); }
+    }
+
+    @keyframes dashIndicatorProgress {
+        from { transform: scaleX(0); }
+        to { transform: scaleX(1); }
+    }
+
+    @keyframes dashVideoDrift {
+        0% { transform: scale(1.02) translateX(0); }
+        100% { transform: scale(1.06) translateX(-2%); }
+    }
+
+    @keyframes dashPiggyFloat {
+        0%, 100% { transform: scale(1.02) translateY(0); }
+        50% { transform: scale(1.06) translateY(-6px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .dash-carousel-slide::before,
+        .dash-carousel-slide::after,
+        .carousel-item.active .dash-carousel-slide,
+        .carousel-item.active .dash-carousel-copy,
+        .carousel-item.active .dash-carousel-metrics,
+        .carousel-item.active .dash-carousel-performance,
+        .carousel-item.active .dash-carousel-actions,
+        .carousel-item.active .dash-carousel-action-hub,
+        .carousel-item.active .dash-carousel-metric,
+        .carousel-item.active .dash-carousel-metric .icon,
+        .carousel-item.active .dash-overall-kpi,
+        .carousel-item.active .dash-savings-hero,
+        .carousel-item.active .dash-savings-mini,
+        .dash-carousel-indicators .active::after,
+        .dash-carousel-figure .dash-carousel-piggy-media {
+            animation: none !important;
+            opacity: 1;
+            transform: none;
+            filter: none;
+        }
+    }
+
     .dash-overview-grid {
         display: grid;
         grid-template-columns: minmax(0, 2.12fr) minmax(0, 1.08fr);
@@ -146,6 +1187,103 @@
         box-shadow: 0 14px 34px rgba(38, 61, 120, 0.14);
     }
 
+    .dash-detail-nav-wrap {
+        margin-top: 12px;
+        padding: 12px 6px;
+        border-radius: 14px;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    }
+
+    .dash-detail-nav {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        align-items: stretch;
+    }
+
+    .dash-detail-tab {
+        appearance: none;
+        border: none;
+        border-right: 1px solid #d9e3f4;
+        background: transparent;
+        padding: 10px 14px 12px;
+        color: #67738f;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+        text-align: center;
+        transition: background 0.16s ease, color 0.16s ease;
+    }
+
+    .dash-detail-tab:last-child {
+        border-right: none;
+    }
+
+    .dash-detail-tab .detail-icon {
+        width: 62px;
+        height: 62px;
+        border-radius: 12px;
+        border: 1px solid #d8deea;
+        background: linear-gradient(180deg, #f0f2f8 0%, #e5e9f1 100%);
+        color: #a2abbb;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.68rem;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
+    }
+
+    .dash-detail-tab .detail-title {
+        min-height: 50px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #5f6d89;
+        font-size: 0.82rem;
+        line-height: 1.3;
+        font-weight: 600;
+    }
+
+    .dash-detail-tab .detail-link {
+        color: #2d95d9;
+        font-size: 0.79rem;
+        font-weight: 600;
+        line-height: 1;
+    }
+
+    .dash-detail-tab:hover {
+        background: #f3f8ff;
+    }
+
+    .dash-detail-tab.is-active {
+        background: linear-gradient(180deg, #f4f8ff 0%, #edf4ff 100%);
+        color: #1f3f72;
+    }
+
+    .dash-detail-tab.is-active .detail-icon {
+        border-color: rgba(45, 99, 218, 0.36);
+        background: linear-gradient(135deg, #3f90ff 0%, #285bcb 100%);
+        color: #ffffff;
+        box-shadow: 0 10px 18px rgba(40, 93, 207, 0.24);
+    }
+
+    .dash-detail-tab.is-active .detail-title {
+        color: #1f3f72;
+    }
+
+    .dash-detail-tab.is-active .detail-link {
+        color: #f17309;
+    }
+
+    .dash-detail-panel {
+        margin-top: 12px;
+    }
+
+    .dash-detail-panel.is-hidden {
+        display: none;
+    }
+
     .dash-today-panel {
         padding: 14px 16px 16px;
         border-top: 2px solid rgba(45, 99, 218, 0.44);
@@ -163,7 +1301,8 @@
     .dash-section-title {
         margin: 0;
         color: #1f315c;
-        font-size: var(--az-fs-heading);
+        font-size: 1.48rem;
+        line-height: 1.16;
         font-weight: 600;
     }
 
@@ -251,10 +1390,11 @@
     .dash-mini-card {
         border: 1px solid #e5e8f3;
         border-radius: 14px;
-        padding: 14px 16px 12px;
+        padding: 14px 18px 14px;
         min-height: 106px;
         position: relative;
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+        overflow: hidden;
     }
 
     .dash-mini-card .mini-label {
@@ -266,9 +1406,12 @@
 
     .dash-mini-card .mini-value {
         color: #202b47;
-        font-size: 1.98rem;
+        font-size: clamp(1.5rem, 2vw, 1.88rem);
         font-weight: 600;
-        line-height: 1;
+        line-height: 1.12;
+        letter-spacing: -0.012em;
+        padding-right: 42px;
+        overflow-wrap: anywhere;
     }
 
     .dash-mini-icon {
@@ -287,29 +1430,33 @@
     }
 
     .mini-tone-blue {
-        background: #eaf2ff;
+        background: linear-gradient(145deg, #edf4ff 0%, #dceaff 100%);
+        border-color: #c8dcff;
     }
     .mini-tone-green {
-        background: #eef8ff;
+        background: linear-gradient(145deg, #e9fbf5 0%, #d1f2e8 100%);
+        border-color: #bde7d8;
     }
     .mini-tone-purple {
-        background: #fff3e8;
+        background: linear-gradient(145deg, #fff2e8 0%, #ffe2cf 100%);
+        border-color: #ffd0ae;
     }
     .mini-tone-sky {
-        background: #edf3ff;
+        background: linear-gradient(145deg, #f1ecff 0%, #e1d6ff 100%);
+        border-color: #cdc0f5;
     }
 
     .mini-tone-blue .dash-mini-icon {
-        background: linear-gradient(135deg, #3b87f0 0%, #2b5fd3 100%);
+        background: linear-gradient(135deg, #3f90ff 0%, #285bcb 100%);
     }
     .mini-tone-green .dash-mini-icon {
-        background: linear-gradient(135deg, #4e96f4 0%, #2d63da 100%);
+        background: linear-gradient(135deg, #3bc8a2 0%, #1f987a 100%);
     }
     .mini-tone-purple .dash-mini-icon {
-        background: linear-gradient(135deg, #ff9a3a 0%, #f26b0f 100%);
+        background: linear-gradient(135deg, #ffad53 0%, #ef6b19 100%);
     }
     .mini-tone-sky .dash-mini-icon {
-        background: linear-gradient(135deg, #3f76e3 0%, #244db7 100%);
+        background: linear-gradient(135deg, #8a6cf0 0%, #5e42c8 100%);
     }
 
     .dash-performance-panel {
@@ -326,7 +1473,8 @@
 
     .dash-performance-head h4 {
         margin: 0;
-        font-size: 1.5rem;
+        font-size: 1.48rem;
+        line-height: 1.16;
         font-weight: 600;
         color: #1f2d4b;
     }
@@ -423,7 +1571,8 @@
         align-items: center;
         gap: 10px;
         color: #1f3366;
-        font-size: 1.12rem;
+        font-size: 1.48rem;
+        line-height: 1.16;
         font-weight: 600;
     }
 
@@ -523,7 +1672,9 @@
     .dash-stat-grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 10px;
+        grid-auto-rows: 1fr;
+        gap: 12px;
+        align-items: stretch;
     }
 
     .dash-stat-card {
@@ -531,27 +1682,34 @@
         border-radius: 13px;
         background: linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
         padding: 14px 14px;
-        min-height: 96px;
-        display: flex;
+        min-height: 118px;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr);
         align-items: center;
         gap: 12px;
         box-shadow: 0 6px 14px rgba(44, 61, 107, 0.05);
+        overflow: hidden;
     }
 
     .dash-stat-card:nth-child(1) {
-        background: linear-gradient(135deg, #ffffff 0%, #edf5ff 100%);
+        background: linear-gradient(140deg, #ffffff 0%, #e4f0ff 100%);
+        border-color: #cbdcff;
     }
 
     .dash-stat-card:nth-child(2) {
-        background: linear-gradient(135deg, #ffffff 0%, #fff3e8 100%);
+        background: linear-gradient(140deg, #ffffff 0%, #ffe9d8 100%);
+        border-color: #ffd2b2;
     }
 
     .dash-stat-card:nth-child(3) {
-        background: linear-gradient(135deg, #ffffff 0%, #fff6ec 100%);
+        background: linear-gradient(140deg, #ffffff 0%, #e7f8f2 100%);
+        border-color: #c7eadf;
     }
 
     .dash-stat-card:nth-child(4) {
-        background: linear-gradient(135deg, #ffffff 0%, #eef5ff 100%);
+        background: linear-gradient(140deg, #ffffff 0%, #ede7ff 100%);
+        border-color: #d3c7f5;
     }
 
     .dash-stat-icon {
@@ -576,38 +1734,53 @@
     }
 
     .dash-stat-icon.pending {
-        background: #fff3e5;
-        color: #f17309;
+        background: #e8f7f1;
+        color: #1f987a;
     }
 
     .dash-stat-icon.completed {
-        background: #e8f1ff;
-        color: #2d63da;
+        background: #efe8ff;
+        color: #6b4fd2;
     }
 
     .dash-stat-info {
         min-width: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 2px;
+        height: 100%;
     }
 
     .dash-stat-value {
         margin: 0;
         color: #1f3366;
-        font-size: 1.78rem;
-        line-height: 1;
+        font-size: clamp(1.24rem, 1.45vw, 1.46rem);
+        line-height: 1.16;
         font-weight: 600;
+        letter-spacing: -0.01em;
+        display: block;
+        overflow-wrap: anywhere;
+        min-height: 0;
     }
 
     .dash-stat-label {
-        margin: 5px 0 0;
+        margin: 2px 0 0;
         color: #41557e;
-        font-size: 0.9rem;
+        font-size: 0.84rem;
         font-weight: 500;
+        line-height: 1.28;
     }
 
     .dash-stat-trend {
-        font-size: 0.74rem;
+        display: inline-flex;
+        align-items: center;
+        margin: 2px 0 0;
+        font-size: 0.71rem;
         font-weight: 600;
-        margin-left: 8px;
+        flex-shrink: 0;
+        white-space: nowrap;
+        line-height: 1.2;
     }
 
     .dash-stat-trend.up {
@@ -616,127 +1789,6 @@
 
     .dash-stat-trend.down {
         color: #de4f4f;
-    }
-
-    .dash-bottom-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1.75fr) minmax(0, 1.1fr);
-        gap: 12px;
-    }
-
-    .dash-actions-panel,
-    .dash-session-panel {
-        padding: 14px 16px 16px;
-    }
-
-    .dash-actions-panel {
-        border-top: 2px solid rgba(45, 99, 218, 0.38);
-        background: linear-gradient(150deg, #ffffff 0%, #f2f8ff 100%);
-    }
-
-    .dash-session-panel {
-        border-top: 2px solid rgba(255, 122, 26, 0.38);
-        background: linear-gradient(150deg, #ffffff 0%, #fff3e8 100%);
-    }
-
-    .dash-actions-row {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 10px;
-        margin-top: 10px;
-    }
-
-    .dash-action-btn {
-        height: 44px;
-        border: 1px solid transparent;
-        border-radius: 8px;
-        background: linear-gradient(135deg, #3a78e8 0%, #2a57c6 100%);
-        color: #ffffff;
-        font-size: 0.74rem;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        text-decoration: none;
-        box-shadow: 0 10px 18px rgba(42, 87, 192, 0.24);
-    }
-
-    .dash-actions-row .dash-action-btn:first-child {
-        background: linear-gradient(135deg, #ff982f 0%, #f26400 100%);
-        box-shadow: 0 10px 18px rgba(242, 100, 0, 0.29);
-    }
-
-    .dash-action-btn:hover {
-        filter: brightness(1.04);
-        color: #ffffff;
-        transform: translateY(-1px);
-    }
-
-    .dash-session-title {
-        margin: 0;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        color: #1f3366;
-        font-size: 1.06rem;
-        font-weight: 600;
-    }
-
-    .dash-session-title i {
-        color: var(--dash-blue);
-    }
-
-    .dash-session-list {
-        margin-top: 10px;
-        border-top: 1px solid #eceffa;
-        padding-top: 10px;
-    }
-
-    .dash-session-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: #2d4370;
-        font-size: 0.84rem;
-        font-weight: 500;
-        margin-bottom: 8px;
-    }
-
-    .dash-session-item i {
-        color: #f1a231;
-        width: 14px;
-        text-align: center;
-    }
-
-    .dash-session-item.server i {
-        color: #2d63da;
-    }
-
-    .dash-active-session {
-        margin-top: 10px;
-        padding-top: 10px;
-        border-top: 1px solid #eceffa;
-        color: #1f3366;
-    }
-
-    .dash-active-session .count {
-        font-size: 1.9rem;
-        font-weight: 600;
-        line-height: 1;
-        margin-right: 7px;
-    }
-
-    .dash-active-session .label {
-        font-size: 0.88rem;
-        font-weight: 500;
-    }
-
-    .dash-session-note {
-        margin: 10px 0 0;
-        color: #66718d;
-        font-size: 0.78rem;
-        line-height: 1.45;
     }
 
     .dash-page-footer {
@@ -754,17 +1806,83 @@
     }
 
     @media (max-width: 1200px) {
-        .dash-overview-grid,
-        .dash-bottom-grid {
+        .dash-detail-nav {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .dash-detail-tab {
+            border-right: 1px solid #d9e3f4;
+            border-bottom: 1px solid #d9e3f4;
+        }
+
+        .dash-detail-tab:nth-child(2n) {
+            border-right: none;
+        }
+
+        .dash-detail-tab:nth-last-child(-n+2) {
+            border-bottom: none;
+        }
+
+        .dash-carousel .carousel-inner {
+            min-height: 480px;
+        }
+
+        .dash-carousel-slide {
             grid-template-columns: 1fr;
+            height: 480px;
+            grid-template-rows: 152px 1fr;
+        }
+
+        .dash-carousel-slide.layout-overall,
+        .dash-carousel-slide.layout-personal {
+            height: 548px;
+            grid-template-rows: 228px 1fr;
+        }
+
+        .dash-carousel-slide .dash-carousel-figure,
+        .dash-carousel-slide.image-right .dash-carousel-figure,
+        .dash-carousel-slide.image-right .dash-carousel-content {
+            order: initial;
+        }
+
+        .dash-carousel-performance {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .dash-carousel-slide.layout-overall .dash-overall-ribbon,
+        .dash-carousel-slide.layout-personal .dash-carousel-metrics,
+        .dash-carousel-slide.layout-saving .dash-savings-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-areas: none;
+            grid-auto-rows: minmax(0, 1fr);
+        }
+
+        .dash-carousel-slide.layout-personal .dash-personal-stack {
+            grid-template-columns: 1fr;
+        }
+
+        .dash-carousel-slide.layout-personal .dash-carousel-metric:nth-child(1),
+        .dash-carousel-slide.layout-saving .dash-savings-hero,
+        .dash-carousel-slide.layout-saving .dash-savings-mini:nth-child(2),
+        .dash-carousel-slide.layout-saving .dash-savings-mini:nth-child(3),
+        .dash-carousel-slide.layout-saving .dash-savings-mini:nth-child(4) {
+            grid-row: auto;
+            grid-column: auto;
+            grid-area: auto;
+        }
+
+        .dash-carousel-slide.layout-actions .dash-carousel-action-hub {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto;
+        }
+
+        .dash-carousel-slide.layout-actions .dash-carousel-actions {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
         .dash-overview-cards,
         .dash-stat-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        .dash-actions-row {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
     }
@@ -772,6 +1890,77 @@
     @media (max-width: 768px) {
         .dashboard-replica {
             padding: 18px 14px 14px;
+        }
+
+        .dash-detail-nav {
+            grid-template-columns: 1fr;
+        }
+
+        .dash-detail-tab,
+        .dash-detail-tab:nth-child(2n) {
+            border-right: none;
+            border-bottom: 1px solid #d9e3f4;
+        }
+
+        .dash-detail-tab:last-child {
+            border-bottom: none;
+        }
+
+        .dash-carousel .carousel-inner {
+            min-height: 620px;
+        }
+
+        .dash-carousel-slide {
+            padding: 16px 14px 30px;
+            height: 620px;
+            grid-template-rows: 144px 1fr;
+        }
+
+        .dash-carousel-slide.layout-overall,
+        .dash-carousel-slide.layout-personal {
+            height: 700px;
+            grid-template-rows: 230px 1fr;
+        }
+
+        .dash-carousel-copy p {
+            font-size: 0.78rem;
+        }
+
+        .dash-carousel-copy .dash-carousel-kicker {
+            font-size: 1.34rem;
+            line-height: 1.14;
+        }
+
+        .dash-overall-live-chart,
+        .dash-personal-live-chart {
+            height: 166px;
+        }
+
+        .dash-carousel-metrics {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .dash-carousel-slide.layout-overall .dash-overall-ribbon,
+        .dash-carousel-slide.layout-personal .dash-carousel-metrics,
+        .dash-carousel-slide.layout-saving .dash-savings-grid,
+        .dash-carousel-slide.layout-actions .dash-carousel-actions {
+            grid-template-columns: 1fr;
+            grid-template-areas: none;
+        }
+
+        .dash-carousel-slide.layout-personal .dash-personal-stack {
+            grid-template-columns: 1fr;
+        }
+
+        .dash-carousel-performance,
+        .dash-carousel-actions {
+            grid-template-columns: 1fr;
+        }
+
+        .dash-carousel-action-hub { grid-template-rows: auto; }
+
+        .dash-carousel-action {
+            min-width: 0;
         }
 
         .dash-greeting {
@@ -783,8 +1972,7 @@
         }
 
         .dash-overview-cards,
-        .dash-stat-grid,
-        .dash-actions-row {
+        .dash-stat-grid {
             grid-template-columns: 1fr;
         }
 
@@ -792,17 +1980,18 @@
             flex-direction: column;
             align-items: flex-start;
         }
+
     }
 
     /* Cost savings banner */
     .savings-banner {
         background: linear-gradient(135deg, var(--az-slate-800) 0%, var(--az-slate-900) 100%);
         border-radius: 12px;
-        padding: 20px 28px;
-        display: flex;
-        align-items: center;
-        gap: 28px;
-        flex-wrap: wrap;
+        padding: 22px 24px;
+        display: grid;
+        grid-template-columns: minmax(210px, 1.2fr) repeat(3, minmax(0, 1fr));
+        align-items: stretch;
+        gap: 12px;
         box-shadow: var(--az-shadow-md);
         position: relative;
         overflow: hidden;
@@ -818,7 +2007,13 @@
         background: rgba(255,255,255,0.03);
         pointer-events: none;
     }
-    .savings-left { flex: 1; min-width: 160px; }
+    .savings-left {
+        min-width: 0;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 12px;
+        background: rgba(255,255,255,0.05);
+        padding: 12px 14px;
+    }
     .savings-pill {
         display: inline-flex;
         align-items: center;
@@ -835,21 +2030,24 @@
         color: var(--az-slate-400);
         font-size: 0.78rem;
         margin: 0;
-        line-height: 1.45;
-        max-width: 200px;
+        line-height: 1.42;
+        max-width: none;
     }
     .savings-divider {
-        width: 1px;
-        align-self: stretch;
-        background: rgba(255,255,255,0.1);
-        flex-shrink: 0;
+        display: none;
     }
     .savings-stat {
         display: flex;
-        align-items: center;
-        gap: 14px;
-        flex: 1;
-        min-width: 140px;
+        align-items: flex-start;
+        gap: 12px;
+        min-width: 0;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 12px;
+        background: rgba(255,255,255,0.05);
+        padding: 12px 14px;
+    }
+    .savings-stat > div:last-child {
+        min-width: 0;
     }
     .savings-icon {
         width: 42px;
@@ -867,27 +2065,48 @@
         color: #fbbf24 !important;
     }
     .savings-value {
-        font-size: 1.55rem;
+        font-size: clamp(1.04rem, 1.36vw, 1.26rem);
         font-weight: 700;
         color: #fff;
-        line-height: 1;
+        line-height: 1.24;
         letter-spacing: -0.5px;
+        padding-bottom: 2px;
+        overflow-wrap: anywhere;
     }
     .savings-value-gold { color: #fbbf24; }
     .savings-label {
         font-size: 0.73rem;
         color: rgba(255,255,255,0.75);
         font-weight: 500;
-        margin-top: 3px;
+        margin-top: 2px;
+        line-height: 1.32;
     }
     .savings-sublabel {
         font-size: 0.65rem;
         color: var(--az-slate-500);
-        margin-top: 1px;
+        margin-top: 2px;
+        line-height: 1.3;
+    }
+    .savings-stat.savings-total {
+        border-color: rgba(251, 191, 36, 0.35);
+        background: linear-gradient(145deg, rgba(251,191,36,0.1) 0%, rgba(255,255,255,0.04) 100%);
+    }
+    @media (max-width: 1280px) {
+        .savings-banner {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .savings-left {
+            grid-column: 1 / -1;
+        }
     }
     @media (max-width: 640px) {
-        .savings-banner { flex-direction: column; gap: 16px; }
-        .savings-divider { width: 100%; height: 1px; align-self: auto; }
+        .savings-banner {
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        .savings-left {
+            grid-column: auto;
+        }
     }
 </style>
 {% endblock %}
@@ -929,6 +2148,40 @@
 {% else %}
     {% set overview_label = 'Today' %}
 {% endif %}
+{% set perf_max = (chart_y_ticks[0].value if chart_y_ticks else 1) | int %}
+{% if perf_max <= 0 %}
+    {% set perf_max = 1 %}
+{% endif %}
+{% set tests_width = ((chart_latest.tests | float) * 100.0 / perf_max) %}
+{% if tests_width > 100 %}
+    {% set tests_width = 100 %}
+{% endif %}
+{% set completed_width = ((chart_latest.completed | float) * 100.0 / perf_max) %}
+{% if completed_width > 100 %}
+    {% set completed_width = 100 %}
+{% endif %}
+{% set latest_tests = chart_latest.tests | int %}
+{% set latest_completed = chart_latest.completed | int %}
+{% if latest_tests > 0 %}
+    {% set latest_completion_ratio = (latest_completed * 100.0) / latest_tests %}
+{% else %}
+    {% set latest_completion_ratio = 0 %}
+{% endif %}
+{% set overall_latest_tests = overall_chart_latest.tests | int %}
+{% set overall_latest_completed = overall_chart_latest.completed | int %}
+{% if overall_latest_tests > 0 %}
+    {% set overall_latest_completion_ratio = (overall_latest_completed * 100.0) / overall_latest_tests %}
+{% else %}
+    {% set overall_latest_completion_ratio = 0 %}
+{% endif %}
+{% if my_total > 0 %}
+    {% set pending_pressure_width = ((my_stats.pending | float) * 100.0 / my_total) %}
+{% else %}
+    {% set pending_pressure_width = 0 %}
+{% endif %}
+{% if pending_pressure_width > 100 %}
+    {% set pending_pressure_width = 100 %}
+{% endif %}
 {% set prev_offset = (date_offset | int) - 1 %}
 {% set next_offset = (date_offset | int) + 1 %}
 {% set next_disabled = (date_offset | int) >= 0 %}
@@ -951,116 +2204,410 @@
         <p class="dash-subtitle">Manage your hiring process efficiently with easy-to-use tools.</p>
     </section>
 
-    <section class="dash-overview-grid">
-        <article class="dash-panel dash-today-panel">
-            <div class="dash-today-head">
-                <div>
-                    <h2 class="dash-section-title">{{ overview_label }} Overview</h2>
-                    <p class="dash-section-subtitle">Summary metrics for the selected dashboard period</p>
+    <section class="dash-panel dash-carousel-panel">
+        <div id="dashHeroCarousel" class="carousel slide dash-carousel" data-bs-ride="carousel" data-bs-interval="4600" data-bs-pause="hover">
+            <div class="carousel-indicators dash-carousel-indicators">
+                <button type="button" data-bs-target="#dashHeroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#dashHeroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#dashHeroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#dashHeroCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#dashHeroCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="dash-carousel-slide tone-overall layout-overall">
+                        <div class="dash-carousel-figure figure-graph">
+                            <div class="dash-side-live">
+                                <div class="dash-overall-live-head">
+                                    <div class="dash-live-legend">
+                                        <span class="tests"><i class="bi bi-circle-fill"></i>Tests</span>
+                                        <span class="completed"><i class="bi bi-circle-fill"></i>Completed</span>
+                                    </div>
+                                    <span class="dash-live-pill"><i class="bi bi-broadcast-pin"></i>Live Org Trend</span>
+                                </div>
+                                <svg class="dash-overall-live-chart" viewBox="0 0 360 225" role="img" aria-label="Organization monthly trend for tests and completions">
+                                    {% for tick in overall_chart_y_ticks %}
+                                    <line class="grid" x1="40" y1="{{ tick.y }}" x2="338" y2="{{ tick.y }}"/>
+                                    <text x="34" y="{{ tick.y + 3 }}" text-anchor="end">{{ tick.value }}</text>
+                                    {% endfor %}
+                                    {% for point in overall_chart_points %}
+                                    <line class="v-grid" x1="{{ point.x }}" y1="184" x2="{{ point.x }}" y2="30"/>
+                                    {% endfor %}
+                                    <polyline class="line tests" points="{{ overall_chart_tests_polyline }}"/>
+                                    <polyline class="line completed" points="{{ overall_chart_completed_polyline }}"/>
+                                    {% for point in overall_chart_points %}
+                                    <circle class="dot tests" cx="{{ point.x }}" cy="{{ point.y_tests }}" r="3.6"/>
+                                    <circle class="dot completed" cx="{{ point.x }}" cy="{{ point.y_completed }}" r="3.6"/>
+                                    <text x="{{ point.x }}" y="205" text-anchor="middle">{{ point.label }}</text>
+                                    {% endfor %}
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="dash-carousel-content">
+                            <div class="dash-carousel-copy">
+                                <p class="dash-carousel-kicker">Overall Statistics</p>
+                                <p>Detailed live organization trend across test creation, completion velocity, and delivery health.</p>
+                                <div class="dash-carousel-tags">
+                                    <span class="dash-carousel-tag">Executive View</span>
+                                </div>
+                            </div>
+                            <div class="dash-overall-live">
+                                <div class="dash-overall-ribbon">
+                                    <div class="dash-overall-kpi">
+                                        <span class="k-label">Candidates</span>
+                                        <span class="k-value">{{ overall_stats.total_candidates | int }}</span>
+                                    </div>
+                                    <div class="dash-overall-kpi">
+                                        <span class="k-label">Latest Month</span>
+                                        <span class="k-value">{{ overall_latest_tests }}</span>
+                                    </div>
+                                    <div class="dash-overall-kpi">
+                                        <span class="k-label">Completion</span>
+                                        <span class="k-value">{{ "%.1f"|format(overall_latest_completion_ratio) }}%</span>
+                                    </div>
+                                    <div class="dash-overall-kpi">
+                                        <span class="k-label">Pending</span>
+                                        <span class="k-value">{{ overview_pending }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="dash-today-controls">
-                    <div class="dropdown dash-overview-filter">
-                        <button
-                            type="button"
-                            class="dash-week-btn"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            {{ overview_label }}
-                            <i class="bi bi-chevron-down"></i>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end dash-overview-menu">
-                            <li><a href="{{ url_for('dashboard.dashboard', filter='today') }}" class="dropdown-item {% if date_filter == 'today' %}active{% endif %}">Today</a></li>
-                            <li><a href="{{ url_for('dashboard.dashboard', filter='24h') }}" class="dropdown-item {% if date_filter == '24h' %}active{% endif %}">Last 24 Hours</a></li>
-                            <li><a href="{{ url_for('dashboard.dashboard', filter='2d') }}" class="dropdown-item {% if date_filter == '2d' %}active{% endif %}">Last 2 Days</a></li>
-                            <li><a href="{{ url_for('dashboard.dashboard', filter='7d') }}" class="dropdown-item {% if date_filter == '7d' %}active{% endif %}">Last 7 Days</a></li>
-                            <li><a href="{{ url_for('dashboard.dashboard', filter='28d') }}" class="dropdown-item {% if date_filter == '28d' %}active{% endif %}">Last 28 Days</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><button type="button" id="dashOverviewCustomDateBtn" class="dropdown-item {% if date_filter == 'date' %}active{% endif %}">{% if specific_date %}{{ specific_date }}{% else %}Custom Date{% endif %}</button></li>
-                        </ul>
-                        <form class="d-none" method="get" action="{{ url_for('dashboard.dashboard') }}">
-                            <input type="hidden" name="filter" value="date">
-                            <input id="dashOverviewCustomDateInput" class="dash-hidden-date" type="date" name="date" value="{{ specific_date }}">
-                        </form>
+                <div class="carousel-item">
+                    <div class="dash-carousel-slide tone-personal image-right layout-personal">
+                        <div class="dash-carousel-figure figure-graph">
+                            <div class="dash-side-live">
+                                <div class="dash-personal-live-head">
+                                    <div class="dash-live-legend">
+                                        <span class="tests"><i class="bi bi-circle-fill"></i>Tests</span>
+                                        <span class="completed"><i class="bi bi-circle-fill"></i>Completed</span>
+                                    </div>
+                                    <span class="dash-live-pill"><i class="bi bi-person-badge"></i>My Trend</span>
+                                </div>
+                                <svg class="dash-personal-live-chart" viewBox="0 0 360 225" role="img" aria-label="Personal monthly trend for tests and completions">
+                                    {% for tick in chart_y_ticks %}
+                                    <line class="grid" x1="40" y1="{{ tick.y }}" x2="338" y2="{{ tick.y }}"/>
+                                    {% endfor %}
+                                    {% for point in chart_points %}
+                                    <line class="v-grid" x1="{{ point.x }}" y1="184" x2="{{ point.x }}" y2="30"/>
+                                    {% endfor %}
+                                    <polyline class="line tests" points="{{ chart_tests_polyline }}"/>
+                                    <polyline class="line completed" points="{{ chart_completed_polyline }}"/>
+                                    {% for point in chart_points %}
+                                    <circle class="dot tests" cx="{{ point.x }}" cy="{{ point.y_tests }}" r="3.6"/>
+                                    <circle class="dot completed" cx="{{ point.x }}" cy="{{ point.y_completed }}" r="3.6"/>
+                                    <text x="{{ point.x }}" y="205" text-anchor="middle">{{ point.label }}</text>
+                                    {% endfor %}
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="dash-carousel-content">
+                            <div class="dash-carousel-copy">
+                                <p class="dash-carousel-kicker">My Statistics</p>
+                                <p>Your monthly trend graph and recruiter productivity metrics for the selected window.</p>
+                                <div class="dash-carousel-tags">
+                                    <span class="dash-carousel-tag">Personal KPIs</span>
+                                </div>
+                            </div>
+                            <div class="dash-carousel-metrics">
+                                <div class="dash-carousel-metric">
+                                    <span class="icon"><i class="bi bi-stack"></i></span>
+                                    <span class="label">Candidates</span>
+                                    <span class="value">{{ my_stats.total_candidates | int }}</span>
+                                </div>
+                                <div class="dash-carousel-metric">
+                                    <span class="icon"><i class="bi bi-arrow-left-right"></i></span>
+                                    <span class="label">Tests Created</span>
+                                    <span class="value">{{ my_total }}</span>
+                                </div>
+                                <div class="dash-carousel-metric">
+                                    <span class="icon"><i class="bi bi-check2"></i></span>
+                                    <span class="label">Completed</span>
+                                    <span class="value">{{ my_completed }}</span>
+                                </div>
+                                <div class="dash-carousel-metric">
+                                    <span class="icon"><i class="bi bi-graph-up-arrow"></i></span>
+                                    <span class="label">Productivity</span>
+                                    <span class="value">{{ "%.1f"|format(my_productivity) }}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="dash-carousel-slide tone-saving layout-saving">
+                        <div class="dash-carousel-figure figure-media-only">
+                            <img
+                                class="dash-carousel-media dash-carousel-piggy-media"
+                                src="{{ url_for('static', filename='images/dashboard_carousel_savings.svg', v=ASSET_VERSION) }}"
+                                alt="Piggy bank savings visual for cost optimization"
+                                loading="lazy"
+                                onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/dashboard_carousel_savings.svg') }}';"
+                            >
+                        </div>
+                        <div class="dash-carousel-content">
+                            <div class="dash-carousel-copy">
+                                <p class="dash-carousel-kicker">Cost Savings</p>
+                                <p>Automation savings against baseline screening cost, updated from real completed interviews.</p>
+                                <div class="dash-carousel-tags">
+                                    <span class="dash-carousel-tag">ROI Tracking</span>
+                                </div>
+                            </div>
+                            <div class="dash-savings-grid">
+                                <div class="dash-savings-hero">
+                                    <span class="s-hero-label">Estimated Total Saved</span>
+                                    <span class="s-hero-value">Rs. <span id="carousel-stat-total-saved">--</span></span>
+                                </div>
+                                <div class="dash-savings-mini">
+                                    <span class="s-mini-label">Interviews</span>
+                                    <span class="s-mini-value" id="carousel-stat-total-interviews">--</span>
+                                </div>
+                                <div class="dash-savings-mini">
+                                    <span class="s-mini-label">Per Interview</span>
+                                    <span class="s-mini-value">Rs. <span id="carousel-stat-cost-per">400</span></span>
+                                </div>
+                                <div class="dash-savings-mini">
+                                    <span class="s-mini-label">Active Sessions</span>
+                                    <span class="s-mini-value">{{ active_sessions }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="dash-carousel-slide tone-performance image-right layout-performance">
+                        <div class="dash-carousel-figure figure-media-only">
+                            <img
+                                class="dash-carousel-media"
+                                src="{{ url_for('static', filename='images/dashboard_carousel_performance.svg', v=ASSET_VERSION) }}"
+                                alt="Performance trend visual with growth analytics"
+                                loading="lazy"
+                                onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/dashboard_carousel_performance.svg') }}';"
+                            >
+                        </div>
+                        <div class="dash-carousel-content">
+                            <div class="dash-carousel-copy">
+                                <p class="dash-carousel-kicker">Performance Trends</p>
+                                <p>Execution-relevant signals for throughput, completion reliability, and pending-pressure risk.</p>
+                                <div class="dash-carousel-tags">
+                                    <span class="dash-carousel-tag">Trend Intelligence</span>
+                                </div>
+                            </div>
+                            <div class="dash-carousel-performance">
+                                <div class="dash-perf-card">
+                                    <div class="dash-perf-head">
+                                        <span>Throughput Momentum</span>
+                                        <span>{{ chart_latest.tests | int }}</span>
+                                    </div>
+                                    <div class="dash-perf-track">
+                                        <div class="dash-perf-fill warm" style="width: {{ '%.1f'|format(tests_width) }}%;"></div>
+                                    </div>
+                                    <div class="dash-perf-meta">{% if chart_tests_trend.is_up %}+{% else %}-{% endif %}{{ "%.1f"|format(chart_tests_trend.pct | float) }}% vs previous month</div>
+                                </div>
+                                <div class="dash-perf-card">
+                                    <div class="dash-perf-head">
+                                        <span>Completion Reliability</span>
+                                        <span>{{ "%.1f"|format(latest_completion_ratio) }}%</span>
+                                    </div>
+                                    <div class="dash-perf-track">
+                                        <div class="dash-perf-fill cool" style="width: {{ '%.1f'|format(completed_width) }}%;"></div>
+                                    </div>
+                                    <div class="dash-perf-meta">{{ chart_latest.completed | int }} completed out of {{ chart_latest.tests | int }} created</div>
+                                </div>
+                                <div class="dash-perf-card">
+                                    <div class="dash-perf-head">
+                                        <span>Backlog Pressure</span>
+                                        <span>{{ my_stats.pending | int }}</span>
+                                    </div>
+                                    <div class="dash-perf-track">
+                                        <div class="dash-perf-fill warm" style="width: {{ '%.1f'|format(pending_pressure_width) }}%;"></div>
+                                    </div>
+                                    <div class="dash-perf-meta">{% if pending_trend.is_up %}+{% else %}-{% endif %}{{ "%.1f"|format(pending_trend.pct | float) }}% pending trend</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="dash-carousel-slide tone-actions layout-actions">
+                        <div class="dash-carousel-figure figure-media-only">
+                            <img
+                                class="dash-carousel-media"
+                                src="{{ url_for('static', filename='images/dashboard_carousel_navigation_v2.svg', v=ASSET_VERSION) }}"
+                                alt="Quick navigation workflow map"
+                                loading="lazy"
+                                onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/dashboard_carousel_navigation_v2.svg') }}';"
+                            >
+                        </div>
+                        <div class="dash-carousel-content">
+                            <div class="dash-carousel-copy">
+                                <p class="dash-carousel-kicker">Quick Navigation</p>
+                                <p>Jump to core workflows with live session visibility and pending follow-up awareness.</p>
+                                <div class="dash-carousel-tags">
+                                    <span class="dash-carousel-tag">Workflow Fastlane</span>
+                                </div>
+                            </div>
+                            <div class="dash-carousel-action-hub">
+                                <div class="dash-carousel-actions">
+                                    <a href="{{ url_for('dashboard.create_test') }}" class="dash-carousel-action primary"><i class="bi bi-plus-lg"></i>Create Test</a>
+                                    <a href="{{ url_for('tests.generated_tests') }}" class="dash-carousel-action"><i class="bi bi-card-list"></i>Generated Tests</a>
+                                    <a href="{{ url_for('evaluation.evaluation') }}" class="dash-carousel-action"><i class="bi bi-clipboard-data"></i>Evaluation</a>
+                                    <a href="{{ url_for('reports.reports') }}" class="dash-carousel-action"><i class="bi bi-journal-text"></i>Reports</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="dash-overview-cards">
-                <div class="dash-mini-card mini-tone-blue">
-                    <div class="mini-label">Total Tests</div>
-                    <div class="mini-value">{{ overview_total }}</div>
-                    <span class="dash-mini-icon"><i class="bi bi-briefcase"></i></span>
-                </div>
-                <div class="dash-mini-card mini-tone-green">
-                    <div class="mini-label">Completed</div>
-                    <div class="mini-value">{{ overview_completed }}</div>
-                    <span class="dash-mini-icon"><i class="bi bi-check2"></i></span>
-                </div>
-                <div class="dash-mini-card mini-tone-purple">
-                    <div class="mini-label">Pending</div>
-                    <div class="mini-value">{{ overview_pending }}</div>
-                    <span class="dash-mini-icon"><i class="bi bi-hourglass-split"></i></span>
-                </div>
-                <div class="dash-mini-card mini-tone-sky">
-                    <div class="mini-label">Productivity</div>
-                    <div class="mini-value">{{ "%.1f"|format(overview_productivity) }}%</div>
-                    <span class="dash-mini-icon"><i class="bi bi-graph-up-arrow"></i></span>
-                </div>
-            </div>
-        </article>
-
-        <aside class="dash-panel dash-performance-panel">
-            <div class="dash-performance-head">
-                <h4>Performance</h4>
-            </div>
-            <div class="dash-chart-wrap">
-                <div class="dash-chart-meta">
-                    <div class="dash-chart-kpi">
-                        <span><span class="dot dot-orange"></span>{{ chart_latest.tests | int }}</span>
-                        <span class="trend {% if chart_tests_trend.is_up %}up{% else %}down{% endif %}">
-                            {% if chart_tests_trend.is_up %}+{% else %}-{% endif %}{{ "%.1f"|format(chart_tests_trend.pct | float) }}%
-                        </span>
-                    </div>
-                    <div class="dash-chart-kpi">
-                        <span><span class="dot dot-blue"></span>{{ chart_latest.completed | int }}</span>
-                        <span class="trend {% if chart_completed_trend.is_up %}up{% else %}down{% endif %}">
-                            {% if chart_completed_trend.is_up %}+{% else %}-{% endif %}{{ "%.1f"|format(chart_completed_trend.pct | float) }}%
-                        </span>
-                    </div>
-                </div>
-                <svg class="dash-chart-svg" viewBox="0 0 360 225" role="img" aria-label="Performance chart">
-                    {% for tick in chart_y_ticks %}
-                    <line x1="40" y1="{{ tick.y }}" x2="338" y2="{{ tick.y }}" stroke="#e8ecf7" stroke-width="1"/>
-                    {% endfor %}
-                    {% for point in chart_points %}
-                    <line x1="{{ point.x }}" y1="184" x2="{{ point.x }}" y2="26" stroke="{% if loop.first %}#dce2f1{% else %}#edf1fb{% endif %}" stroke-width="1"/>
-                    {% endfor %}
-
-                    {% if chart_tests_polyline %}
-                    <polyline points="{{ chart_tests_polyline }}" fill="none" stroke="#f29b43" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                    {% endif %}
-                    {% if chart_completed_polyline %}
-                    <polyline points="{{ chart_completed_polyline }}" fill="none" stroke="#5767f0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                    {% endif %}
-
-                    {% for point in chart_points %}
-                    <circle cx="{{ point.x }}" cy="{{ point.y_tests }}" r="3.6" fill="#f29b43"/>
-                    <circle cx="{{ point.x }}" cy="{{ point.y_completed }}" r="3.6" fill="#5767f0"/>
-                    {% endfor %}
-
-                    {% for tick in chart_y_ticks %}
-                    <text x="14" y="{{ tick.y + 4 }}">{{ tick.value }}</text>
-                    {% endfor %}
-
-                    {% for point in chart_points %}
-                    <text x="{{ point.x }}" y="208" text-anchor="middle">{{ point.label }}</text>
-                    {% endfor %}
-                </svg>
-            </div>
-        </aside>
+            <button class="carousel-control-prev" type="button" data-bs-target="#dashHeroCarousel" data-bs-slide="prev" aria-label="Previous slide">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#dashHeroCarousel" data-bs-slide="next" aria-label="Next slide">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+        </div>
     </section>
 
-    <section class="dash-panel" style="margin-top:16px;">
+    <section class="dash-panel dash-detail-nav-wrap" aria-label="Dashboard detail views">
+        <div class="dash-detail-nav" role="tablist">
+            <button type="button" class="dash-detail-tab is-active" data-detail-toggle="overview" aria-selected="true" aria-controls="dash-detail-overview">
+                <span class="detail-icon"><i class="bi bi-calendar2-week"></i></span>
+                <span class="detail-title">Period Overview</span>
+                <span class="detail-link">View details</span>
+            </button>
+            <button type="button" class="dash-detail-tab" data-detail-toggle="performance" aria-selected="false" aria-controls="dash-detail-performance">
+                <span class="detail-icon"><i class="bi bi-bar-chart-line"></i></span>
+                <span class="detail-title">Performance</span>
+                <span class="detail-link">View details</span>
+            </button>
+            <button type="button" class="dash-detail-tab" data-detail-toggle="savings" aria-selected="false" aria-controls="dash-detail-savings">
+                <span class="detail-icon"><i class="bi bi-piggy-bank"></i></span>
+                <span class="detail-title">Cost Savings</span>
+                <span class="detail-link">View details</span>
+            </button>
+            <button type="button" class="dash-detail-tab" data-detail-toggle="my-stats" aria-selected="false" aria-controls="dash-detail-my-stats">
+                <span class="detail-icon"><i class="bi bi-person-badge"></i></span>
+                <span class="detail-title">My Statistics</span>
+                <span class="detail-link">View details</span>
+            </button>
+        </div>
+    </section>
+
+    <section id="dash-detail-overview" class="dash-panel dash-today-panel dash-detail-panel" data-detail-panel="overview">
+        <div class="dash-today-head">
+            <div>
+                <h2 class="dash-section-title">Period Overview</h2>
+                <p class="dash-section-subtitle">Summary metrics for {{ overview_label }}</p>
+            </div>
+            <div class="dash-today-controls">
+                <div class="dropdown dash-overview-filter">
+                    <button
+                        type="button"
+                        class="dash-week-btn"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        {{ overview_label }}
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dash-overview-menu">
+                        <li><a href="{{ url_for('dashboard.dashboard', filter='today') }}" class="dropdown-item {% if date_filter == 'today' %}active{% endif %}">Today</a></li>
+                        <li><a href="{{ url_for('dashboard.dashboard', filter='24h') }}" class="dropdown-item {% if date_filter == '24h' %}active{% endif %}">Last 24 Hours</a></li>
+                        <li><a href="{{ url_for('dashboard.dashboard', filter='2d') }}" class="dropdown-item {% if date_filter == '2d' %}active{% endif %}">Last 2 Days</a></li>
+                        <li><a href="{{ url_for('dashboard.dashboard', filter='7d') }}" class="dropdown-item {% if date_filter == '7d' %}active{% endif %}">Last 7 Days</a></li>
+                        <li><a href="{{ url_for('dashboard.dashboard', filter='28d') }}" class="dropdown-item {% if date_filter == '28d' %}active{% endif %}">Last 28 Days</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button type="button" id="dashOverviewCustomDateBtn" class="dropdown-item {% if date_filter == 'date' %}active{% endif %}">{% if specific_date %}{{ specific_date }}{% else %}Custom Date{% endif %}</button></li>
+                    </ul>
+                    <form class="d-none" method="get" action="{{ url_for('dashboard.dashboard') }}">
+                        <input type="hidden" name="filter" value="date">
+                        <input id="dashOverviewCustomDateInput" class="dash-hidden-date" type="date" name="date" value="{{ specific_date }}">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="dash-overview-cards">
+            <div class="dash-mini-card mini-tone-blue">
+                <div class="mini-label">Total Tests</div>
+                <div class="mini-value">{{ overview_total }}</div>
+                <span class="dash-mini-icon"><i class="bi bi-briefcase"></i></span>
+            </div>
+            <div class="dash-mini-card mini-tone-green">
+                <div class="mini-label">Completed</div>
+                <div class="mini-value">{{ overview_completed }}</div>
+                <span class="dash-mini-icon"><i class="bi bi-check2"></i></span>
+            </div>
+            <div class="dash-mini-card mini-tone-purple">
+                <div class="mini-label">Pending</div>
+                <div class="mini-value">{{ overview_pending }}</div>
+                <span class="dash-mini-icon"><i class="bi bi-hourglass-split"></i></span>
+            </div>
+            <div class="dash-mini-card mini-tone-sky">
+                <div class="mini-label">Productivity</div>
+                <div class="mini-value">{{ "%.1f"|format(overview_productivity) }}%</div>
+                <span class="dash-mini-icon"><i class="bi bi-graph-up-arrow"></i></span>
+            </div>
+        </div>
+    </section>
+
+    <section id="dash-detail-performance" class="dash-panel dash-performance-panel dash-detail-panel is-hidden" data-detail-panel="performance">
+        <div class="dash-performance-head">
+            <h4>Performance</h4>
+        </div>
+        <div class="dash-chart-wrap">
+            <div class="dash-chart-meta">
+                <div class="dash-chart-kpi">
+                    <span><span class="dot dot-orange"></span>{{ chart_latest.tests | int }}</span>
+                    <span class="trend {% if chart_tests_trend.is_up %}up{% else %}down{% endif %}">
+                        {% if chart_tests_trend.is_up %}+{% else %}-{% endif %}{{ "%.1f"|format(chart_tests_trend.pct | float) }}%
+                    </span>
+                </div>
+                <div class="dash-chart-kpi">
+                    <span><span class="dot dot-blue"></span>{{ chart_latest.completed | int }}</span>
+                    <span class="trend {% if chart_completed_trend.is_up %}up{% else %}down{% endif %}">
+                        {% if chart_completed_trend.is_up %}+{% else %}-{% endif %}{{ "%.1f"|format(chart_completed_trend.pct | float) }}%
+                    </span>
+                </div>
+            </div>
+            <svg class="dash-chart-svg" viewBox="0 0 360 225" role="img" aria-label="Execution trends chart">
+                {% for tick in chart_y_ticks %}
+                <line x1="40" y1="{{ tick.y }}" x2="338" y2="{{ tick.y }}" stroke="#e8ecf7" stroke-width="1"/>
+                {% endfor %}
+                {% for point in chart_points %}
+                <line x1="{{ point.x }}" y1="184" x2="{{ point.x }}" y2="26" stroke="{% if loop.first %}#dce2f1{% else %}#edf1fb{% endif %}" stroke-width="1"/>
+                {% endfor %}
+
+                {% if chart_tests_polyline %}
+                <polyline points="{{ chart_tests_polyline }}" fill="none" stroke="#f29b43" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                {% endif %}
+                {% if chart_completed_polyline %}
+                <polyline points="{{ chart_completed_polyline }}" fill="none" stroke="#5767f0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                {% endif %}
+
+                {% for point in chart_points %}
+                <circle cx="{{ point.x }}" cy="{{ point.y_tests }}" r="3.6" fill="#f29b43"/>
+                <circle cx="{{ point.x }}" cy="{{ point.y_completed }}" r="3.6" fill="#5767f0"/>
+                {% endfor %}
+
+                {% for tick in chart_y_ticks %}
+                <text x="14" y="{{ tick.y + 4 }}">{{ tick.value }}</text>
+                {% endfor %}
+
+                {% for point in chart_points %}
+                <text x="{{ point.x }}" y="208" text-anchor="middle">{{ point.label }}</text>
+                {% endfor %}
+            </svg>
+        </div>
+    </section>
+
+    <section id="dash-detail-savings" class="dash-panel dash-detail-panel is-hidden" data-detail-panel="savings">
+        <div class="dash-today-head" style="padding: 14px 16px 0;">
+            <div>
+                <h2 class="dash-section-title">Cost Savings</h2>
+                <p class="dash-section-subtitle">Live savings and ROI impact</p>
+            </div>
+        </div>
         <div class="savings-banner">
             <div class="savings-left">
                 <div class="savings-pill">
@@ -1070,8 +2617,6 @@
                     Every interview on Aziro replaces a paid third-party screening tool.
                 </p>
             </div>
-
-            <div class="savings-divider"></div>
 
             <div class="savings-stat">
                 <div class="savings-icon" style="background: rgba(255,255,255,0.12);">
@@ -1095,8 +2640,6 @@
                 </div>
             </div>
 
-            <div class="savings-divider"></div>
-
             <div class="savings-stat savings-total">
                 <div class="savings-icon savings-icon-gold">
                     <i class="fas fa-indian-rupee-sign"></i>
@@ -1110,7 +2653,7 @@
         </div>
     </section>
 
-    <section class="dash-panel dash-stats-panel">
+    <section id="dash-detail-my-stats" class="dash-panel dash-stats-panel dash-detail-panel is-hidden" data-detail-panel="my-stats">
         <header class="dash-stats-head">
             <h3 class="dash-block-title">My Statistics</h3>
             <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
@@ -1146,49 +2689,28 @@
             <article class="dash-stat-card">
                 <span class="dash-stat-icon tests"><i class="bi bi-arrow-left-right"></i></span>
                 <div class="dash-stat-info">
-                    <p class="dash-stat-value">{{ my_total }} <span class="dash-stat-trend {% if tests_trend.is_up %}up{% else %}down{% endif %}">{% if tests_trend.is_up %}+{% else %}-{% endif %}{{ "%.1f"|format(tests_trend.pct | float) }}%</span></p>
+                    <p class="dash-stat-value">{{ my_total }}</p>
+                    <span class="dash-stat-trend {% if tests_trend.is_up %}up{% else %}down{% endif %}">{% if tests_trend.is_up %}+{% else %}-{% endif %}{{ "%.1f"|format(tests_trend.pct | float) }}%</span>
                     <p class="dash-stat-label">Tests Created</p>
                 </div>
             </article>
             <article class="dash-stat-card">
                 <span class="dash-stat-icon pending"><i class="bi bi-file-earmark-text"></i></span>
                 <div class="dash-stat-info">
-                    <p class="dash-stat-value">{{ my_stats.pending | int }} <span class="dash-stat-trend {% if pending_trend.is_up %}up{% else %}down{% endif %}">{% if pending_trend.is_up %}+{% else %}-{% endif %}{{ "%.1f"|format(pending_trend.pct | float) }}%</span></p>
+                    <p class="dash-stat-value">{{ my_stats.pending | int }}</p>
+                    <span class="dash-stat-trend {% if pending_trend.is_up %}up{% else %}down{% endif %}">{% if pending_trend.is_up %}+{% else %}-{% endif %}{{ "%.1f"|format(pending_trend.pct | float) }}%</span>
                     <p class="dash-stat-label">Pending</p>
                 </div>
             </article>
             <article class="dash-stat-card">
                 <span class="dash-stat-icon completed"><i class="bi bi-person-fill"></i></span>
                 <div class="dash-stat-info">
-                    <p class="dash-stat-value">{{ my_completed }} <span class="dash-stat-trend {% if completed_trend.is_up %}up{% else %}down{% endif %}">{% if completed_trend.is_up %}+{% else %}-{% endif %}{{ "%.1f"|format(completed_trend.pct | float) }}%</span></p>
+                    <p class="dash-stat-value">{{ my_completed }}</p>
+                    <span class="dash-stat-trend {% if completed_trend.is_up %}up{% else %}down{% endif %}">{% if completed_trend.is_up %}+{% else %}-{% endif %}{{ "%.1f"|format(completed_trend.pct | float) }}%</span>
                     <p class="dash-stat-label">Completed</p>
                 </div>
             </article>
         </div>
-    </section>
-
-    <section class="dash-bottom-grid">
-        <article class="dash-panel dash-actions-panel">
-            <h3 class="dash-block-title">Quick Actions</h3>
-            <div class="dash-actions-row">
-                <a href="{{ url_for('dashboard.create_test') }}" class="dash-action-btn"><i class="bi bi-plus-lg"></i>Create Test</a>
-                <a href="{{ url_for('tests.generated_tests') }}" class="dash-action-btn"><i class="bi bi-card-list"></i>View Tests</a>
-                <a href="{{ url_for('evaluation.evaluation') }}" class="dash-action-btn"><i class="bi bi-clipboard-data"></i>Evaluate</a>
-                <a href="{{ url_for('reports.reports') }}" class="dash-action-btn"><i class="bi bi-journal-text"></i>Reports</a>
-            </div>
-        </article>
-        <aside class="dash-panel dash-session-panel">
-            <h3 class="dash-session-title"><i class="bi bi-plus-square-fill"></i>Session Info</h3>
-            <div class="dash-session-list">
-                <div class="dash-session-item"><i class="bi bi-envelope"></i>{{ user_email }}</div>
-                <div class="dash-session-item server"><i class="bi bi-list-task"></i>Server: {{ request.host }}</div>
-            </div>
-            <div class="dash-active-session">
-                <span class="count">{{ active_sessions }}</span>
-                <span class="label">Active Sessions</span>
-            </div>
-            <p class="dash-session-note">Session scoped to today. For previous data, check Reports or search.</p>
-        </aside>
     </section>
 
     <div class="dash-page-footer">&#169; 2024 AI-Based Interview Automation System</div>
@@ -1199,10 +2721,11 @@
 <p class="mb-2">Follow these steps to use the Dashboard efficiently:</p>
 <ol class="mb-0 ps-3">
     <li><strong>Set timeframe:</strong> Use date pills (or custom date) to load metrics for the period you want.</li>
-    <li><strong>Read KPI cards:</strong> Review totals for tests created, completed attempts, pending attempts, and active sessions.</li>
-    <li><strong>Check candidate activity:</strong> Inspect the session table for each candidate's status and recent progression.</li>
-    <li><strong>Take action quickly:</strong> Use Quick Actions to jump to Create Test, Generated Tests, Evaluation, or Reports.</li>
-    <li><strong>Validate session scope:</strong> Confirm account/server details in Session Info before sharing operational updates.</li>
+    <li><strong>Choose section:</strong> Use the four detail buttons (Period Overview, Performance, Cost Savings, My Statistics).</li>
+    <li><strong>Open detail view:</strong> Click a button to load that section's full detailed panel below.</li>
+    <li><strong>Track trends:</strong> In Performance, review latest tests/completions and trend percentages.</li>
+    <li><strong>Check savings:</strong> In Cost Savings, monitor interview count, per-interview savings, and total savings.</li>
+    <li><strong>Review personal metrics:</strong> In My Statistics, use period filters and navigation arrows for your own results.</li>
 </ol>
 {% endblock %}
 
@@ -1237,6 +2760,106 @@
 </script>
 <script>
 (function () {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll(".dash-detail-tab[data-detail-toggle]"));
+    var panels = Array.prototype.slice.call(document.querySelectorAll(".dash-detail-panel[data-detail-panel]"));
+    if (!tabs.length || !panels.length) {
+        return;
+    }
+
+    function setActiveSection(key) {
+        tabs.forEach(function (tab) {
+            var active = tab.getAttribute("data-detail-toggle") === key;
+            tab.classList.toggle("is-active", active);
+            tab.setAttribute("aria-selected", active ? "true" : "false");
+        });
+
+        panels.forEach(function (panel) {
+            var active = panel.getAttribute("data-detail-panel") === key;
+            panel.classList.toggle("is-hidden", !active);
+        });
+    }
+
+    tabs.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+            setActiveSection(tab.getAttribute("data-detail-toggle"));
+        });
+    });
+
+    setActiveSection("overview");
+})();
+</script>
+<script>
+(function () {
+    var carousel = document.getElementById("dashHeroCarousel");
+    if (!carousel) {
+        return;
+    }
+
+    var videos = Array.prototype.slice.call(
+        carousel.querySelectorAll(".dash-carousel-video")
+    );
+    if (!videos.length) {
+        return;
+    }
+
+    function markVideoFailed(video) {
+        var figure = video.closest(".dash-carousel-figure");
+        if (figure) {
+            figure.classList.add("video-failed");
+        }
+    }
+
+    function clearVideoFailed(video) {
+        var figure = video.closest(".dash-carousel-figure");
+        if (figure) {
+            figure.classList.remove("video-failed");
+        }
+    }
+
+    function syncSlideVideos() {
+        videos.forEach(function (video) {
+            var item = video.closest(".carousel-item");
+            var isActive = !!(item && item.classList.contains("active"));
+            if (isActive) {
+                clearVideoFailed(video);
+                video.muted = true;
+                video.defaultMuted = true;
+                var playPromise = video.play();
+                if (playPromise && typeof playPromise.catch === "function") {
+                    playPromise.catch(function () {});
+                }
+            } else {
+                video.pause();
+            }
+        });
+    }
+
+    videos.forEach(function (video) {
+        video.addEventListener("error", function () {
+            markVideoFailed(video);
+        });
+        video.addEventListener("loadeddata", function () {
+            clearVideoFailed(video);
+        });
+        video.addEventListener("canplay", function () {
+            clearVideoFailed(video);
+        });
+        video.addEventListener("playing", function () {
+            clearVideoFailed(video);
+        });
+    });
+
+    carousel.addEventListener("slide.bs.carousel", function () {
+        videos.forEach(function (video) {
+            video.pause();
+        });
+    });
+    carousel.addEventListener("slid.bs.carousel", syncSlideVideos);
+    syncSlideVideos();
+})();
+</script>
+<script>
+(function () {
   const COST_PER_INTERVIEW = 400;
   const FALLBACK_COUNT = 0;
 
@@ -1256,12 +2879,18 @@
 
   function render(totalInterviews) {
     const totalSaved = totalInterviews * COST_PER_INTERVIEW;
-    const costPerEl = document.getElementById('stat-cost-per');
-    if (costPerEl) {
-      costPerEl.textContent = COST_PER_INTERVIEW.toLocaleString();
-    }
-    animateCount(document.getElementById('stat-total-interviews'), totalInterviews, 1200);
-    animateCount(document.getElementById('stat-total-saved'), totalSaved, 1400);
+    ['stat-cost-per', 'carousel-stat-cost-per'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.textContent = COST_PER_INTERVIEW.toLocaleString();
+      }
+    });
+    ['stat-total-interviews', 'carousel-stat-total-interviews'].forEach((id) => {
+      animateCount(document.getElementById(id), totalInterviews, 1200);
+    });
+    ['stat-total-saved', 'carousel-stat-total-saved'].forEach((id) => {
+      animateCount(document.getElementById(id), totalSaved, 1400);
+    });
   }
 
   fetch('/api/dashboard-lifetime')

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="400" viewBox="0 0 260 400" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="20" y1="18" x2="240" y2="386" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2C4E59"/>
+      <stop offset="1" stop-color="#55847D"/>
+    </linearGradient>
+    <radialGradient id="mint" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(196 74) rotate(39) scale(110)">
+      <stop stop-color="#A8EFD9" stop-opacity="0.44"/>
+      <stop offset="1" stop-color="#A8EFD9" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="nodeA" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#93C1FF"/>
+      <stop offset="1" stop-color="#6F95FF"/>
+    </linearGradient>
+    <linearGradient id="nodeB" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFD38F"/>
+      <stop offset="1" stop-color="#FF9B72"/>
+    </linearGradient>
+    <linearGradient id="nodeC" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#9CECD3"/>
+      <stop offset="1" stop-color="#62C7A9"/>
+    </linearGradient>
+    <filter id="nodeShadow" x="8" y="126" width="244" height="180" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#173738" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+
+  <rect width="260" height="400" rx="24" fill="url(#bg)"/>
+  <rect width="260" height="400" rx="24" fill="url(#mint)"/>
+
+  <text x="130" y="82" text-anchor="middle" fill="#ECF7F3" font-size="24" font-family="Poppins, Arial, sans-serif" font-weight="700">Action Hub</text>
+  <text x="130" y="100" text-anchor="middle" fill="#CFE7E0" font-size="10" font-family="Poppins, Arial, sans-serif" font-weight="500">Navigation Workflow</text>
+
+  <g>
+    <circle cx="130" cy="126" r="13" fill="#D7F5EC" fill-opacity="0.22"/>
+    <path d="M124 126H136M130 120V132" stroke="#E7F9F3" stroke-width="2.6" stroke-linecap="round"/>
+  </g>
+
+  <g stroke="#D7EEE7" stroke-opacity="0.72" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M130 138L50 162"/>
+    <path d="M130 138L130 162"/>
+    <path d="M130 138L210 162"/>
+    <path d="M130 138L50 232"/>
+    <path d="M130 138L130 232"/>
+    <path d="M130 138L210 232"/>
+  </g>
+
+  <g filter="url(#nodeShadow)">
+    <rect x="14" y="162" width="72" height="40" rx="11" fill="url(#nodeA)"/>
+    <rect x="94" y="162" width="72" height="40" rx="11" fill="url(#nodeB)"/>
+    <rect x="174" y="162" width="72" height="40" rx="11" fill="url(#nodeC)"/>
+    <rect x="14" y="232" width="72" height="40" rx="11" fill="url(#nodeC)"/>
+    <rect x="94" y="232" width="72" height="40" rx="11" fill="url(#nodeA)"/>
+    <rect x="174" y="232" width="72" height="40" rx="11" fill="url(#nodeB)"/>
+  </g>
+
+  <g fill="#133248" font-size="8" font-family="Poppins, Arial, sans-serif" font-weight="700" text-anchor="middle">
+    <text x="50" y="183">Dashboard</text>
+    <text x="130" y="183">Create Test</text>
+    <text x="210" y="178">
+      <tspan x="210" dy="0">Generated</tspan>
+      <tspan x="210" dy="10">Tests</tspan>
+    </text>
+    <text x="50" y="253">Evaluation</text>
+    <text x="130" y="253">Reports</text>
+    <text x="210" y="248">
+      <tspan x="210" dy="0">Access</tspan>
+      <tspan x="210" dy="10">Mgmt</tspan>
+    </text>
+  </g>
+
+  <circle cx="56" cy="52" r="14" fill="#FFFFFF" fill-opacity="0.2"/>
+  <circle cx="208" cy="346" r="20" fill="#FFFFFF" fill-opacity="0.15"/>
+</svg>
