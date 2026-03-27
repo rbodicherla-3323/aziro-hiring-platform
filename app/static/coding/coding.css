@@ -65,7 +65,7 @@ body.proctoring-warning {
     --code-text-dim:       #4a5b78;
 
     /* Font stacks */
-    --code-ui-font:        "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --code-ui-font:        "Poppins", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
     --code-mono:           "Cascadia Code", "Fira Code", "JetBrains Mono", "Consolas", monospace;
 
     /* Brand accents (matching MCQ premium) */
@@ -396,7 +396,7 @@ body::before {
 body.coding-start-page {
     background: var(--aziro-bg) !important;
     color: var(--aziro-text) !important;
-    font-family: "Segoe UI", Arial, sans-serif !important;
+    font-family: var(--code-ui-font) !important;
 }
 
 body.coding-start-page::before {

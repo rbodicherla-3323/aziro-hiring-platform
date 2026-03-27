@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="400" viewBox="0 0 260 400" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="22" y1="18" x2="240" y2="386" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1D4EA6"/>
+      <stop offset="1" stop-color="#3D89C6"/>
+    </linearGradient>
+    <radialGradient id="auraA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(62 72) rotate(39) scale(108)">
+      <stop stop-color="#A7CCFF" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#A7CCFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="auraB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(208 334) rotate(41) scale(132)">
+      <stop stop-color="#FFE5C1" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#FFE5C1" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="glass" x1="38" y1="56" x2="224" y2="344" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.36"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="52" y1="86" x2="210" y2="322" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FCFF" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#E5F0FF" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="74" y1="144" x2="186" y2="244" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#72A8FF"/>
+      <stop offset="1" stop-color="#5AD2FF"/>
+    </linearGradient>
+    <linearGradient id="barWarm" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFC57A"/>
+      <stop offset="1" stop-color="#FF8A63"/>
+    </linearGradient>
+    <linearGradient id="barCool" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#7690FF"/>
+      <stop offset="1" stop-color="#95E0FF"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="260" height="400" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#092248" flood-opacity="0.36"/>
+    </filter>
+    <filter id="soft" x="60" y="136" width="140" height="132" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#1B3C7A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <rect width="260" height="400" rx="24" fill="url(#bg)"/>
+  <rect width="260" height="400" rx="24" fill="url(#auraA)"/>
+  <rect width="260" height="400" rx="24" fill="url(#auraB)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="34" y="56" width="192" height="288" rx="20" fill="url(#glass)" stroke="#FFFFFF" stroke-opacity="0.42"/>
+  </g>
+
+  <rect x="48" y="78" width="164" height="250" rx="16" fill="url(#panel)" stroke="#FFFFFF" stroke-opacity="0.62"/>
+  <rect x="64" y="94" width="84" height="11" rx="5.5" fill="#315EA8" fill-opacity="0.42"/>
+  <rect x="64" y="112" width="56" height="8" rx="4" fill="#315EA8" fill-opacity="0.24"/>
+
+  <g filter="url(#soft)">
+    <rect x="70" y="140" width="120" height="112" rx="18" fill="url(#screen)"/>
+    <rect x="80" y="154" width="56" height="8" rx="4" fill="#EAF4FF" fill-opacity="0.82"/>
+    <rect x="80" y="168" width="42" height="6" rx="3" fill="#EAF4FF" fill-opacity="0.52"/>
+    <path d="M82 232L102 210L118 218L136 186L154 198L176 166" stroke="url(#barWarm)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M82 238L104 232L120 202L136 212L156 190L176 198" stroke="url(#barCool)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <g>
+    <circle cx="82" cy="286" r="12" fill="#EDF5FF" stroke="#BFD7FF"/>
+    <circle cx="112" cy="286" r="12" fill="#EDF5FF" stroke="#BFD7FF"/>
+    <circle cx="142" cy="286" r="12" fill="#EDF5FF" stroke="#BFD7FF"/>
+    <rect x="160" y="274" width="36" height="24" rx="8" fill="#EAF3FF" stroke="#BED5FD"/>
+  </g>
+
+  <g opacity="0.9">
+    <circle cx="56" cy="52" r="14" fill="#FFFFFF" fill-opacity="0.24"/>
+    <circle cx="208" cy="346" r="20" fill="#FFFFFF" fill-opacity="0.18"/>
+  </g>
+</svg>

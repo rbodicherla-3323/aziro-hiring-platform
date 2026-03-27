@@ -23,6 +23,7 @@ def blank_proctoring_summary():
         "suspicion_score": 0,
         "suspicion_threshold_exceeded": False,
         "suspicion_threshold_event_count": 0,
+        "total_count": 0,
     }
 
 
@@ -40,7 +41,30 @@ def _to_int(value, default=0):
         return default
 
 
-def build_proctoring_summary_by_email(emails, events_file=PROCTORING_EVENTS_JSONL):
+def _normalize_session_scope(session_ids_by_email):
+    scope = {}
+    if not isinstance(session_ids_by_email, dict):
+        return scope
+
+    for raw_email, raw_sessions in session_ids_by_email.items():
+        email_key = str(raw_email or "").strip().lower()
+        if not email_key:
+            continue
+        values = set()
+        if isinstance(raw_sessions, (set, list, tuple)):
+            for sid in raw_sessions:
+                sid_key = str(sid or "").strip().lower()
+                if sid_key:
+                    values.add(sid_key)
+        scope[email_key] = values
+    return scope
+
+
+def build_proctoring_summary_by_email(
+    emails,
+    events_file=PROCTORING_EVENTS_JSONL,
+    session_ids_by_email=None,
+):
     normalized = {
         str(email or "").strip().lower()
         for email in emails
@@ -52,6 +76,8 @@ def build_proctoring_summary_by_email(emails, events_file=PROCTORING_EVENTS_JSON
     summaries = {email: blank_proctoring_summary() for email in normalized}
     if not events_file.exists():
         return summaries
+
+    scoped_sessions = _normalize_session_scope(session_ids_by_email)
 
     try:
         with events_file.open("r", encoding="utf-8") as handle:
@@ -69,11 +95,18 @@ def build_proctoring_summary_by_email(emails, events_file=PROCTORING_EVENTS_JSON
                 if not email or email not in summaries:
                     continue
 
+                if email in scoped_sessions:
+                    session_id = str(event.get("session_id") or "").strip().lower()
+                    if not session_id or session_id not in scoped_sessions[email]:
+                        continue
+
                 summary = summaries[email]
                 event_type = str(event.get("event_type") or "").strip().lower()
                 details = event.get("details")
                 if not isinstance(details, dict):
                     details = {}
+
+                summary["total_count"] += 1
 
                 if event_type == "tab switching detected":
                     summary["tab_switches"] += 1

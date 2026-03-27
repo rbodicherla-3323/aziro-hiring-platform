@@ -184,64 +184,87 @@ def dashboard():
     pending_trend = _trend_payload(my_stats.get("pending", 0), prev_stats.get("pending", 0))
     completed_trend = _trend_payload(my_stats.get("completed", 0), prev_stats.get("completed", 0))
 
-    # Real monthly chart series for this user.
+    def _build_chart_payload(series: list[dict]) -> dict:
+        series_count = len(series)
+        chart_top = 32.0
+        chart_bottom = 184.0
+        chart_left = 40.0
+        chart_right = 338.0
+        chart_height = chart_bottom - chart_top
+        chart_width = chart_right - chart_left
+        chart_max = max(
+            1,
+            max((pt.get("tests", 0) for pt in series), default=0),
+            max((pt.get("completed", 0) for pt in series), default=0),
+        )
+
+        points = []
+        for idx, point in enumerate(series):
+            x = chart_left
+            if series_count > 1:
+                x = chart_left + (chart_width * idx / (series_count - 1))
+            tests_value = int(point.get("tests", 0) or 0)
+            completed_value = int(point.get("completed", 0) or 0)
+            y_tests = chart_bottom - (tests_value / chart_max) * chart_height
+            y_completed = chart_bottom - (completed_value / chart_max) * chart_height
+            points.append(
+                {
+                    "label": point.get("label", ""),
+                    "x": round(x, 1),
+                    "tests": tests_value,
+                    "completed": completed_value,
+                    "y_tests": round(y_tests, 1),
+                    "y_completed": round(y_completed, 1),
+                }
+            )
+
+        tests_polyline = " ".join(f"{p['x']},{p['y_tests']}" for p in points)
+        completed_polyline = " ".join(f"{p['x']},{p['y_completed']}" for p in points)
+
+        y_tick_values = [chart_max, chart_max * 0.75, chart_max * 0.5, chart_max * 0.25, 0]
+        y_ticks = []
+        for tick_value in y_tick_values:
+            y_pos = chart_bottom
+            if chart_max > 0:
+                y_pos = chart_bottom - (tick_value / chart_max) * chart_height
+            y_ticks.append(
+                {
+                    "value": int(round(tick_value)),
+                    "y": round(y_pos, 1),
+                }
+            )
+
+        latest = points[-1] if points else {"tests": 0, "completed": 0}
+        previous = points[-2] if len(points) > 1 else {"tests": 0, "completed": 0}
+
+        return {
+            "points": points,
+            "y_ticks": y_ticks,
+            "tests_polyline": tests_polyline,
+            "completed_polyline": completed_polyline,
+            "latest": latest,
+            "tests_trend": _trend_payload(latest.get("tests", 0), previous.get("tests", 0)),
+            "completed_trend": _trend_payload(latest.get("completed", 0), previous.get("completed", 0)),
+        }
+
+    # Member (current HR) monthly chart.
     performance_series = db_service.get_test_link_monthly_series(
         points=6,
         created_by=user_email,
     )
-    series_count = len(performance_series)
-    chart_top = 32.0
-    chart_bottom = 184.0
-    chart_left = 40.0
-    chart_right = 338.0
-    chart_height = chart_bottom - chart_top
-    chart_width = chart_right - chart_left
-    chart_max = max(
-        1,
-        max((pt.get("tests", 0) for pt in performance_series), default=0),
-        max((pt.get("completed", 0) for pt in performance_series), default=0),
-    )
+    my_chart = _build_chart_payload(performance_series)
 
-    chart_points = []
-    for idx, point in enumerate(performance_series):
-        x = chart_left
-        if series_count > 1:
-            x = chart_left + (chart_width * idx / (series_count - 1))
-        tests_value = int(point.get("tests", 0) or 0)
-        completed_value = int(point.get("completed", 0) or 0)
-        y_tests = chart_bottom - (tests_value / chart_max) * chart_height
-        y_completed = chart_bottom - (completed_value / chart_max) * chart_height
-        chart_points.append(
-            {
-                "label": point.get("label", ""),
-                "x": round(x, 1),
-                "tests": tests_value,
-                "completed": completed_value,
-                "y_tests": round(y_tests, 1),
-                "y_completed": round(y_completed, 1),
-            }
-        )
+    # Organization-wide monthly chart.
+    overall_performance_series = db_service.get_test_link_monthly_series(points=8)
+    overall_chart = _build_chart_payload(overall_performance_series)
 
-    chart_tests_polyline = " ".join(f"{p['x']},{p['y_tests']}" for p in chart_points)
-    chart_completed_polyline = " ".join(f"{p['x']},{p['y_completed']}" for p in chart_points)
-
-    y_tick_values = [chart_max, chart_max * 0.75, chart_max * 0.5, chart_max * 0.25, 0]
-    chart_y_ticks = []
-    for tick_value in y_tick_values:
-        y_pos = chart_bottom
-        if chart_max > 0:
-            y_pos = chart_bottom - (tick_value / chart_max) * chart_height
-        chart_y_ticks.append(
-            {
-                "value": int(round(tick_value)),
-                "y": round(y_pos, 1),
-            }
-        )
-
-    latest_point = chart_points[-1] if chart_points else {"tests": 0, "completed": 0}
-    previous_point = chart_points[-2] if len(chart_points) > 1 else {"tests": 0, "completed": 0}
-    chart_tests_trend = _trend_payload(latest_point.get("tests", 0), previous_point.get("tests", 0))
-    chart_completed_trend = _trend_payload(latest_point.get("completed", 0), previous_point.get("completed", 0))
+    chart_points = my_chart["points"]
+    chart_y_ticks = my_chart["y_ticks"]
+    chart_tests_polyline = my_chart["tests_polyline"]
+    chart_completed_polyline = my_chart["completed_polyline"]
+    latest_point = my_chart["latest"]
+    chart_tests_trend = my_chart["tests_trend"]
+    chart_completed_trend = my_chart["completed_trend"]
 
     return render_template(
         "dashboard.html",
@@ -266,6 +289,14 @@ def dashboard():
         chart_latest=latest_point,
         chart_tests_trend=chart_tests_trend,
         chart_completed_trend=chart_completed_trend,
+        overall_chart_series=overall_performance_series,
+        overall_chart_points=overall_chart["points"],
+        overall_chart_y_ticks=overall_chart["y_ticks"],
+        overall_chart_tests_polyline=overall_chart["tests_polyline"],
+        overall_chart_completed_polyline=overall_chart["completed_polyline"],
+        overall_chart_latest=overall_chart["latest"],
+        overall_chart_tests_trend=overall_chart["tests_trend"],
+        overall_chart_completed_trend=overall_chart["completed_trend"],
         active_sessions=active_sessions,
     )
 
