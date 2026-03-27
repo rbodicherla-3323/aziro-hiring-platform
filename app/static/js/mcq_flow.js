@@ -35,7 +35,10 @@ window.__MCQ_AJAX_FLOW = false;
     }
 
     function ajaxHeaders(extra) {
-        const base = { "X-Requested-With": "XMLHttpRequest" };
+        const base = {
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "application/json"
+        };
         return Object.assign(base, extra || {});
     }
 
@@ -92,6 +95,24 @@ window.__MCQ_AJAX_FLOW = false;
     function buildQuestionUrl(index) {
         const safeIndex = Math.max(0, Number(index) || 0);
         return `/mcq/question/${encodeURIComponent(sessionId)}?q=${safeIndex}`;
+    }
+
+    function submitQuestionFormFallback(form, nav) {
+        if (!form) return;
+
+        const existingNav = form.querySelector('input[data-fallback-nav="1"]');
+        if (existingNav) {
+            existingNav.remove();
+        }
+
+        const navInput = document.createElement("input");
+        navInput.type = "hidden";
+        navInput.name = "nav";
+        navInput.value = nav || "next";
+        navInput.setAttribute("data-fallback-nav", "1");
+        form.appendChild(navInput);
+        setNavInProgressFlag(true);
+        HTMLFormElement.prototype.submit.call(form);
     }
 
     function setNavInProgressFlag(value) {
@@ -219,6 +240,41 @@ window.__MCQ_AJAX_FLOW = false;
         backBtn.disabled = expired;
         backBtn.classList.toggle("is-disabled", expired);
         backBtn.title = expired ? "Timer completed. Going back is disabled." : "";
+    }
+
+    function bindSubmitConfirmation() {
+        const submitForm = document.getElementById("mcqSubmitForm");
+        const submitBtn = document.getElementById("mcqConfirmSubmitBtn");
+        const backBtn = document.getElementById("mcqBackToTestBtn");
+        if (!submitForm || !submitBtn) return;
+
+        submitForm.action = state.submitUrl;
+        if (submitForm.dataset.bound === "1") {
+            return;
+        }
+        submitForm.dataset.bound = "1";
+
+        submitForm.addEventListener("submit", (e) => {
+            if (submitForm.dataset.submitting === "1") {
+                e.preventDefault();
+                return;
+            }
+
+            const confirmed = window.confirm(
+                "Are you sure you want to submit the test? You will not be able to change your answers after submission."
+            );
+            if (!confirmed) {
+                e.preventDefault();
+                return;
+            }
+
+            submitForm.dataset.submitting = "1";
+            submitBtn.disabled = true;
+            if (backBtn) {
+                backBtn.disabled = true;
+            }
+            setNavInProgressFlag(true);
+        });
     }
 
     function setBodyView(view) {
@@ -433,7 +489,7 @@ window.__MCQ_AJAX_FLOW = false;
                     name="nav"
                     value="next"
                     class="btn btn-primary px-4">
-                ${isLast ? "Submit" : "Next"}
+                ${isLast ? "Review & Submit" : "Next"}
             </button>
         </div>`;
     }
@@ -2037,7 +2093,9 @@ window.__MCQ_AJAX_FLOW = false;
 
         <div class="actions mcq-submit-actions">
             <button id="mcqBackToTestBtn" type="button" class="btn btn-secondary">Back to Test</button>
-            <button id="mcqConfirmSubmitBtn" class="btn btn-danger">Confirm & Submit</button>
+            <form id="mcqSubmitForm" method="POST" action="${escapeHtml(state.submitUrl)}">
+                <button id="mcqConfirmSubmitBtn" type="submit" class="btn btn-danger">Confirm & Submit</button>
+            </form>
         </div>
     </div>
 </div>`;
@@ -2046,7 +2104,6 @@ window.__MCQ_AJAX_FLOW = false;
         resetViewportToTop();
 
         const backBtn = document.getElementById("mcqBackToTestBtn");
-        const submitBtn = document.getElementById("mcqConfirmSubmitBtn");
         applySubmitBackButtonState();
         if (backBtn) {
             backBtn.addEventListener("click", async () => {
@@ -2073,22 +2130,7 @@ window.__MCQ_AJAX_FLOW = false;
                 }
             });
         }
-
-        if (!submitBtn) return;
-
-        submitBtn.addEventListener("click", async () => {
-            submitBtn.disabled = true;
-            try {
-                const data = await fetchJson(state.submitUrl, {
-                    method: "POST",
-                    headers: ajaxHeaders(),
-                    credentials: "same-origin"
-                });
-                window.location.href = data.redirect_url || `/mcq/completed/${sessionId}`;
-            } catch (_) {
-                window.location.href = state.submitUrl;
-            }
-        });
+        bindSubmitConfirmation();
 
         if (proctoringEnabled && typeof window.setupExamProctoring === "function") {
             window.setupExamProctoring();
@@ -2226,7 +2268,8 @@ window.__MCQ_AJAX_FLOW = false;
             try {
                 await navigateQuestion(nav, selected ? selected.value : "");
             } catch (_) {
-                window.location.href = form.action;
+                submitQuestionFormFallback(form, nav);
+                return;
             } finally {
                 if (submitter) {
                     submitter.disabled = false;
@@ -2382,6 +2425,7 @@ window.__MCQ_AJAX_FLOW = false;
             });
         }
 
+        bindSubmitConfirmation();
         return true;
     }
 

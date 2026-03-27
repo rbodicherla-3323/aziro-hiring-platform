@@ -1,8 +1,13 @@
 from app.services.evaluation_store import EVALUATION_STORE
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
+from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 from app.services.coding_submission_store import get_latest_coding_submission
 from app.services.generated_tests_store import GENERATED_TESTS
-from app.services.ai_generator import generate_evaluation_summary, generate_coding_round_summary
+from app.services.ai_generator import (
+    generate_evaluation_summary,
+    generate_coding_round_summary,
+    generate_consolidated_evaluation_summary,
+)
 from app.services.mcq_runtime_store import get_mcq_session_data, mcq_session_key
 from app.utils.role_round_mapping import ROLE_ROUND_MAPPING
 from app.utils.round_display_mapping import ROUND_DISPLAY_MAPPING
@@ -14,6 +19,7 @@ from app.utils.round_order import (
 )
 from flask import session
 import logging
+import re
 import time
 from datetime import datetime
 
@@ -64,6 +70,8 @@ class EvaluationService:
             details.append({
                 "question_no": idx + 1,
                 "question": q.get("question", ""),
+                "topic": q.get("topic", ""),
+                "tags": list(q.get("tags", [])) if isinstance(q.get("tags"), list) else [],
                 "selected_answer": selected_value,
                 "correct_answer": correct_value,
                 "is_correct": selected_value == correct_value,
@@ -85,6 +93,152 @@ class EvaluationService:
             except Exception:
                 return 0.0
         return 0.0
+
+    @staticmethod
+    def _normalize_email(value: str) -> str:
+        return str(value or "").strip().lower()
+
+    @staticmethod
+    def _normalize_text(value: str) -> str:
+        text = str(value or "").replace("\r\n", "\n").replace("\r", "\n")
+        return re.sub(r"\s+", " ", text).strip()
+
+    @staticmethod
+    def _truncate_text(value: str, limit: int = 120) -> str:
+        text = EvaluationService._normalize_text(value)
+        if len(text) <= limit:
+            return text
+        trimmed = text[: max(0, limit - 3)].rstrip()
+        if " " in trimmed:
+            trimmed = trimmed.rsplit(" ", 1)[0]
+        return f"{trimmed}..."
+
+    @staticmethod
+    def _merge_submission_details(primary, fallback) -> dict:
+        merged = dict(primary) if isinstance(primary, dict) else {}
+        fallback = fallback if isinstance(fallback, dict) else {}
+        for key, value in fallback.items():
+            if key == "responses":
+                if isinstance(value, list) and not merged.get("responses"):
+                    merged["responses"] = value
+                continue
+
+            existing = merged.get(key)
+            if isinstance(value, dict):
+                if value and not isinstance(existing, dict):
+                    merged[key] = dict(value)
+                elif value and isinstance(existing, dict) and not existing:
+                    merged[key] = dict(value)
+                continue
+
+            if isinstance(value, list):
+                if value and not existing:
+                    merged[key] = list(value)
+                continue
+
+            if value not in (None, "") and not str(existing or "").strip():
+                merged[key] = value
+        return merged
+
+    @staticmethod
+    def _get_test_link_meta(session_id: str) -> dict:
+        session_id = str(session_id or "").strip()
+        if not session_id:
+            return {}
+
+        registry_meta = MCQ_SESSION_REGISTRY.get(session_id) or CODING_SESSION_REGISTRY.get(session_id)
+        if isinstance(registry_meta, dict):
+            return registry_meta
+
+        try:
+            from app.services import db_service
+            meta = db_service.get_test_link_meta(session_id)
+            return meta if isinstance(meta, dict) else {}
+        except Exception:
+            return {}
+
+    @staticmethod
+    def _get_latest_live_round_result(candidate_data: dict, round_key: str) -> dict | None:
+        email_key = EvaluationService._normalize_email((candidate_data or {}).get("email", ""))
+        if not email_key or not round_key:
+            return None
+
+        target_batch = str((candidate_data or {}).get("batch_id", "") or "").strip()
+        target_role_key = str((candidate_data or {}).get("role_key", "") or "").strip()
+        target_role = EvaluationService._normalize_text((candidate_data or {}).get("role", "") or "")
+
+        fallback_match = None
+        for session_id, result in reversed(list(EVALUATION_STORE.items())):
+            if EvaluationService._normalize_email(result.get("email", "")) != email_key:
+                continue
+            if str(result.get("round_key", "") or "").strip() != round_key:
+                continue
+
+            if fallback_match is None:
+                fallback_match = result
+
+            meta = EvaluationService._get_test_link_meta(session_id)
+            meta_batch = str(meta.get("batch_id", "") or "").strip()
+            meta_role_key = str(meta.get("role_key", "") or "").strip()
+            meta_role = EvaluationService._normalize_text(meta.get("role_label", "") or meta.get("role", "") or "")
+
+            if target_batch and meta_batch and target_batch != meta_batch:
+                continue
+            if target_role_key and meta_role_key and target_role_key != meta_role_key:
+                continue
+            if target_role and meta_role and target_role != meta_role:
+                continue
+            return result
+
+        return fallback_match
+
+    @staticmethod
+    def _resolve_round_submission_details(candidate_data: dict, round_key: str, round_data: dict) -> dict:
+        base_details = {}
+        if isinstance(round_data, dict):
+            raw_details = round_data.get("submission_details")
+            if isinstance(raw_details, dict):
+                base_details = dict(raw_details)
+
+        live_result = EvaluationService._get_latest_live_round_result(candidate_data, round_key)
+        if isinstance(live_result, dict):
+            base_details = EvaluationService._merge_submission_details(
+                base_details,
+                live_result.get("submission_details") or {},
+            )
+
+        if round_key == "L4":
+            latest_submission = get_latest_coding_submission(candidate_data.get("email", ""), round_key) or {}
+            latest_summary = {
+                "question_title": latest_submission.get("question_title", ""),
+                "question_text": latest_submission.get("question_text", ""),
+                "language": latest_submission.get("language", ""),
+            }
+            base_details = EvaluationService._merge_submission_details(base_details, latest_summary)
+
+        return base_details
+
+    @staticmethod
+    def _gap_signal_label(response: dict) -> tuple[str, str, list[str]]:
+        topic = EvaluationService._truncate_text(response.get("topic", ""), 80)
+        tags = response.get("tags", [])
+        if not isinstance(tags, list):
+            tags = []
+        clean_tags = [
+            EvaluationService._truncate_text(tag, 40)
+            for tag in tags
+            if EvaluationService._normalize_text(tag)
+        ][:3]
+        question_text = EvaluationService._truncate_text(
+            response.get("question") or response.get("question_text") or "",
+            120,
+        )
+
+        if topic:
+            return topic, "topic", clean_tags
+        if clean_tags:
+            return clean_tags[0], "tag", clean_tags
+        return question_text, "question", clean_tags
 
     @staticmethod
     def _resolve_generated_test_entry(candidate_data: dict) -> dict | None:
@@ -226,6 +380,411 @@ class EvaluationService:
         }
 
     @staticmethod
+    def _prepare_consolidated_summary_payload(candidates_data: list[dict], scope: dict | None = None) -> dict | None:
+        """Build a compact multi-candidate payload for consolidated AI reporting."""
+        if not isinstance(candidates_data, list):
+            return None
+
+        normalized_candidates = []
+        round_stats_map = {}
+        gap_signals_map = {}
+        coding_signals_map = {}
+        verdict_counts = {
+            "Selected": 0,
+            "Rejected": 0,
+            "In Progress": 0,
+            "Pending": 0,
+        }
+        score_total = 0.0
+        score_count = 0
+        attempted_candidate_count = 0
+        batch_ids = set()
+        role_labels = set()
+        not_started_candidate_count = 0
+        partially_completed_candidate_count = 0
+        fully_completed_candidate_count = 0
+        multiple_failed_round_candidates = 0
+        total_round_slots = 0
+
+        for candidate_data in candidates_data:
+            prepared = EvaluationService._prepare_l1_l4_summary_payload(candidate_data)
+            if not prepared:
+                continue
+
+            summary = prepared.get("summary", {}) or {}
+            verdict = str(summary.get("overall_verdict", "Pending") or "Pending")
+            verdict_counts.setdefault(verdict, 0)
+            verdict_counts[verdict] += 1
+
+            overall_percentage = float(summary.get("overall_percentage", 0) or 0)
+            attempted_rounds = int(summary.get("attempted_rounds", 0) or 0)
+            total_rounds = int(summary.get("total_rounds", 0) or len(prepared.get("rounds") or {}))
+            failed_rounds = int(summary.get("failed_rounds", 0) or 0)
+            email_key = EvaluationService._normalize_email(prepared.get("email", ""))
+
+            if attempted_rounds > 0:
+                attempted_candidate_count += 1
+                score_total += overall_percentage
+                score_count += 1
+            if attempted_rounds == 0:
+                not_started_candidate_count += 1
+            elif attempted_rounds < total_rounds:
+                partially_completed_candidate_count += 1
+            else:
+                fully_completed_candidate_count += 1
+            if failed_rounds >= 2:
+                multiple_failed_round_candidates += 1
+            total_round_slots += total_rounds
+
+            batch_id = str(prepared.get("batch_id", "") or "").strip()
+            if batch_id:
+                batch_ids.add(batch_id)
+
+            role_label = str(prepared.get("role", "") or "").strip()
+            if role_label:
+                role_labels.add(role_label)
+
+            rounds_payload = []
+            for round_key, round_data in (prepared.get("rounds") or {}).items():
+                round_label = str(round_data.get("round_label", "") or round_key).strip() or round_key
+                round_number = int(round_data.get("round_number", 0) or 0)
+                status = str(round_data.get("status", "Pending") or "Pending")
+                percentage = float(round_data.get("percentage", 0) or 0)
+                threshold = float(round_data.get("pass_threshold", 0) or 0)
+                attempted = EvaluationService._is_attempted_status(status)
+
+                stat = round_stats_map.setdefault(
+                    round_label,
+                    {
+                        "round_key": round_key,
+                        "round_label": round_label,
+                        "round_number": round_number,
+                        "candidate_count": 0,
+                        "attempted_candidates": 0,
+                        "passed_candidates": 0,
+                        "failed_candidates": 0,
+                        "pending_candidates": 0,
+                        "below_threshold_candidates": 0,
+                        "percentage_total": 0.0,
+                        "detail_candidates": 0,
+                        "incorrect_response_count": 0,
+                        "unanswered_question_count": 0,
+                        "coding_detail_candidates": 0,
+                    },
+                )
+                stat["candidate_count"] += 1
+                if attempted:
+                    stat["attempted_candidates"] += 1
+                    stat["percentage_total"] += percentage
+                    if status.upper() == "PASS":
+                        stat["passed_candidates"] += 1
+                    elif status.upper() == "FAIL":
+                        stat["failed_candidates"] += 1
+                    if threshold and percentage < threshold:
+                        stat["below_threshold_candidates"] += 1
+                else:
+                    stat["pending_candidates"] += 1
+
+                submission_details = EvaluationService._resolve_round_submission_details(prepared, round_key, round_data)
+                responses = submission_details.get("responses", []) if isinstance(submission_details, dict) else []
+                incorrect_response_count = 0
+                unanswered_question_count = 0
+
+                if isinstance(responses, list) and responses:
+                    stat["detail_candidates"] += 1
+                    for response in responses:
+                        if not isinstance(response, dict) or bool(response.get("is_correct")):
+                            continue
+
+                        incorrect_response_count += 1
+                        signal_label, evidence_type, clean_tags = EvaluationService._gap_signal_label(response)
+                        if not signal_label:
+                            continue
+
+                        signal_key = (
+                            round_label.lower(),
+                            evidence_type,
+                            signal_label.lower(),
+                        )
+                        signal_entry = gap_signals_map.setdefault(
+                            signal_key,
+                            {
+                                "round_key": round_key,
+                                "round_label": round_label,
+                                "signal_label": signal_label,
+                                "evidence_type": evidence_type,
+                                "occurrences": 0,
+                                "candidate_emails": set(),
+                                "evidence_examples": [],
+                                "related_tags": {},
+                            },
+                        )
+                        signal_entry["occurrences"] += 1
+                        if email_key:
+                            signal_entry["candidate_emails"].add(email_key)
+
+                        question_excerpt = EvaluationService._truncate_text(
+                            response.get("question") or response.get("question_text") or signal_label,
+                            120,
+                        )
+                        if question_excerpt and question_excerpt not in signal_entry["evidence_examples"]:
+                            if len(signal_entry["evidence_examples"]) < 2:
+                                signal_entry["evidence_examples"].append(question_excerpt)
+
+                        for tag in clean_tags:
+                            tag_key = tag.lower()
+                            signal_entry["related_tags"][tag_key] = signal_entry["related_tags"].get(tag_key, 0) + 1
+
+                    total_questions = int(round_data.get("total", 0) or 0)
+                    unanswered_question_count = max(0, total_questions - len(responses)) if total_questions else 0
+                    stat["incorrect_response_count"] += incorrect_response_count
+                    stat["unanswered_question_count"] += unanswered_question_count
+
+                    if unanswered_question_count > 0:
+                        completion_key = (round_label.lower(), "completion", "question completion / unanswered items")
+                        completion_signal = gap_signals_map.setdefault(
+                            completion_key,
+                            {
+                                "round_key": round_key,
+                                "round_label": round_label,
+                                "signal_label": "Question completion / unanswered items",
+                                "evidence_type": "completion",
+                                "occurrences": 0,
+                                "candidate_emails": set(),
+                                "evidence_examples": ["Some questions were left unanswered in this round."],
+                                "related_tags": {},
+                            },
+                        )
+                        completion_signal["occurrences"] += unanswered_question_count
+                        if email_key:
+                            completion_signal["candidate_emails"].add(email_key)
+
+                question_title = EvaluationService._truncate_text(
+                    submission_details.get("question_title", "") if isinstance(submission_details, dict) else "",
+                    96,
+                )
+                question_text = EvaluationService._truncate_text(
+                    submission_details.get("question_text", "") if isinstance(submission_details, dict) else "",
+                    140,
+                )
+                language = EvaluationService._normalize_text(
+                    submission_details.get("language", "") if isinstance(submission_details, dict) else ""
+                ).lower()
+
+                if round_key == "L4" and (question_title or question_text or language):
+                    stat["coding_detail_candidates"] += 1
+                    signal_title = question_title or question_text or round_label
+                    coding_key = (round_label.lower(), signal_title.lower())
+                    coding_signal = coding_signals_map.setdefault(
+                        coding_key,
+                        {
+                            "round_key": round_key,
+                            "round_label": round_label,
+                            "question_title": signal_title,
+                            "prompt_excerpt": question_text,
+                            "candidate_emails": set(),
+                            "attempted_candidates": set(),
+                            "failed_candidates": set(),
+                            "passed_candidates": set(),
+                            "languages": {},
+                            "percentage_total": 0.0,
+                            "percentage_count": 0,
+                        },
+                    )
+                    if email_key:
+                        coding_signal["candidate_emails"].add(email_key)
+                    if attempted:
+                        if email_key:
+                            coding_signal["attempted_candidates"].add(email_key)
+                        coding_signal["percentage_total"] += percentage
+                        coding_signal["percentage_count"] += 1
+                    if status.upper() == "FAIL" and email_key:
+                        coding_signal["failed_candidates"].add(email_key)
+                    elif status.upper() == "PASS" and email_key:
+                        coding_signal["passed_candidates"].add(email_key)
+                    if language:
+                        coding_signal["languages"][language] = coding_signal["languages"].get(language, 0) + 1
+
+                rounds_payload.append({
+                    "round_key": round_key,
+                    "round_label": round_label,
+                    "round_number": round_number,
+                    "status": status,
+                    "percentage": percentage,
+                    "pass_threshold": threshold,
+                    "correct": int(round_data.get("correct", 0) or 0),
+                    "total": int(round_data.get("total", 0) or 0),
+                    "question_detail_count": len(responses) if isinstance(responses, list) else 0,
+                    "incorrect_response_count": incorrect_response_count,
+                    "unanswered_question_count": unanswered_question_count,
+                    "coding_question_title": question_title,
+                    "coding_language": language,
+                })
+
+            normalized_candidates.append({
+                "role": role_label,
+                "batch_id": batch_id,
+                "overall_verdict": verdict,
+                "overall_percentage": overall_percentage,
+                "attempted_rounds": attempted_rounds,
+                "passed_rounds": int(summary.get("passed_rounds", 0) or 0),
+                "failed_rounds": failed_rounds,
+                "total_rounds": total_rounds,
+                "rounds": rounds_payload,
+            })
+
+        if not normalized_candidates:
+            return None
+
+        round_stats = []
+        for stat in round_stats_map.values():
+            attempted_candidates = int(stat.get("attempted_candidates", 0) or 0)
+            average_percentage = (
+                round(float(stat.get("percentage_total", 0) or 0) / attempted_candidates, 2)
+                if attempted_candidates > 0
+                else 0.0
+            )
+            round_stats.append({
+                "round_key": stat["round_key"],
+                "round_label": stat["round_label"],
+                "round_number": stat["round_number"],
+                "candidate_count": stat["candidate_count"],
+                "attempted_candidates": attempted_candidates,
+                "passed_candidates": stat["passed_candidates"],
+                "failed_candidates": stat["failed_candidates"],
+                "pending_candidates": stat["pending_candidates"],
+                "below_threshold_candidates": stat["below_threshold_candidates"],
+                "average_percentage": average_percentage,
+                "detail_candidates": stat["detail_candidates"],
+                "incorrect_response_count": stat["incorrect_response_count"],
+                "unanswered_question_count": stat["unanswered_question_count"],
+                "coding_detail_candidates": stat["coding_detail_candidates"],
+            })
+
+        round_stats.sort(key=lambda item: (int(item.get("round_number", 0) or 0), item.get("round_label", "").lower()))
+
+        raw_gap_signals = []
+        for signal in gap_signals_map.values():
+            related_tags = sorted(
+                signal.get("related_tags", {}).items(),
+                key=lambda item: (-int(item[1] or 0), item[0]),
+            )
+            raw_gap_signals.append({
+                "round_key": signal.get("round_key", ""),
+                "round_label": signal.get("round_label", ""),
+                "signal_label": signal.get("signal_label", ""),
+                "evidence_type": signal.get("evidence_type", "question"),
+                "candidate_occurrences": len(signal.get("candidate_emails", set())),
+                "occurrences": int(signal.get("occurrences", 0) or 0),
+                "evidence_examples": list(signal.get("evidence_examples", []) or []),
+                "related_tags": [item[0] for item in related_tags[:3]],
+            })
+
+        signal_priority = {
+            "topic": 0,
+            "tag": 1,
+            "question": 2,
+            "completion": 3,
+        }
+        raw_gap_signals.sort(
+            key=lambda item: (
+                int(signal_priority.get(item.get("evidence_type", "question"), 9)),
+                -int(item.get("candidate_occurrences", 0) or 0),
+                -int(item.get("occurrences", 0) or 0),
+                str(item.get("round_label", "")).lower(),
+                str(item.get("signal_label", "")).lower(),
+            )
+        )
+
+        min_signal_candidate_occurrences = 2 if len(normalized_candidates) >= 3 else 1
+        recurring_gap_signals = [
+            item for item in raw_gap_signals
+            if int(item.get("candidate_occurrences", 0) or 0) >= min_signal_candidate_occurrences
+        ]
+        if not recurring_gap_signals:
+            recurring_gap_signals = raw_gap_signals[:]
+        recurring_gap_signals = recurring_gap_signals[:6]
+
+        coding_signals = []
+        for signal in coding_signals_map.values():
+            languages = sorted(
+                signal.get("languages", {}).items(),
+                key=lambda item: (-int(item[1] or 0), item[0]),
+            )
+            percentage_count = int(signal.get("percentage_count", 0) or 0)
+            coding_signals.append({
+                "round_key": signal.get("round_key", ""),
+                "round_label": signal.get("round_label", ""),
+                "question_title": signal.get("question_title", ""),
+                "prompt_excerpt": signal.get("prompt_excerpt", ""),
+                "candidate_occurrences": len(signal.get("candidate_emails", set())),
+                "attempted_candidates": len(signal.get("attempted_candidates", set())),
+                "failed_candidates": len(signal.get("failed_candidates", set())),
+                "passed_candidates": len(signal.get("passed_candidates", set())),
+                "average_percentage": round(
+                    float(signal.get("percentage_total", 0) or 0) / percentage_count,
+                    2,
+                ) if percentage_count > 0 else 0.0,
+                "languages": [item[0] for item in languages[:3]],
+            })
+
+        coding_signals.sort(
+            key=lambda item: (
+                -int(item.get("failed_candidates", 0) or 0),
+                -int(item.get("candidate_occurrences", 0) or 0),
+                float(item.get("average_percentage", 0) or 0),
+                str(item.get("question_title", "")).lower(),
+            )
+        )
+        coding_signals = coding_signals[:4]
+
+        scope = scope or {}
+        scope_role = str(scope.get("role", "") or "").strip()
+        if not scope_role or scope_role.lower() == "all roles":
+            scope_role = next(iter(role_labels), "Selected Candidates") if len(role_labels) == 1 else "Selected Candidates"
+        total_attempted_rounds = sum(
+            int(candidate.get("attempted_rounds", 0) or 0)
+            for candidate in normalized_candidates
+        )
+
+        return {
+            "scope": {
+                "role": scope_role,
+                "period_label": str(scope.get("period_label", "") or "").strip() or "Current Scope",
+                "candidate_count": len(normalized_candidates),
+                "attempted_candidate_count": attempted_candidate_count,
+                "average_overall_percentage": round(score_total / score_count, 2) if score_count else 0.0,
+                "batch_ids": sorted(batch_ids, key=lambda value: value.lower()),
+                "search_global_mode": bool(scope.get("search_global_mode")),
+                "search_query": str(scope.get("search_query", "") or "").strip(),
+            },
+            "aggregate": {
+                "verdict_counts": verdict_counts,
+                "round_stats": round_stats,
+                "completion_stats": {
+                    "fully_completed_candidates": fully_completed_candidate_count,
+                    "partially_completed_candidates": partially_completed_candidate_count,
+                    "not_started_candidates": not_started_candidate_count,
+                    "multiple_failed_round_candidates": multiple_failed_round_candidates,
+                    "average_rounds_attempted": round(
+                        total_attempted_rounds / len(normalized_candidates),
+                        2,
+                    ) if normalized_candidates else 0.0,
+                    "average_completion_ratio": round(
+                        (
+                            total_attempted_rounds
+                            / total_round_slots
+                        ) * 100,
+                        2,
+                    ) if total_round_slots > 0 else 0.0,
+                },
+                "recurring_gap_signals": recurring_gap_signals,
+                "coding_signals": coding_signals,
+            },
+            "candidates": normalized_candidates,
+        }
+
+    @staticmethod
     def _enrich_l4_with_coding_submission(candidate_data: dict) -> dict:
         """Attach persisted L4 coding question/code details if available."""
         if not candidate_data:
@@ -339,6 +898,14 @@ class EvaluationService:
         if not summary_payload:
             return None
         return generate_evaluation_summary(summary_payload)
+
+    @staticmethod
+    def generate_consolidated_summary(candidates_data: list[dict], scope: dict | None = None):
+        """Generate one AI summary across multiple selected candidates."""
+        summary_payload = EvaluationService._prepare_consolidated_summary_payload(candidates_data, scope)
+        if not summary_payload:
+            return None
+        return generate_consolidated_evaluation_summary(summary_payload)
 
     @staticmethod
     def generate_candidate_coding_round_summary(candidate_email):

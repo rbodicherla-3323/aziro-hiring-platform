@@ -28,8 +28,8 @@
 
         <div class="actions mcq-submit-actions">
             <button id="mcqBackToTestBtn" type="button" class="btn btn-secondary">Back to Test</button>
-            <form id="mcqSubmitForm" method="POST">
-                <button id="mcqConfirmSubmitBtn" class="btn btn-danger">Confirm & Submit</button>
+            <form id="mcqSubmitForm" method="POST" action="{{ url_for('mcq.submit', session_id=session_id) }}">
+                <button id="mcqConfirmSubmitBtn" type="submit" class="btn btn-danger">Confirm & Submit</button>
             </form>
         </div>
     </div>
@@ -38,5 +38,5 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{{ url_for('static', filename='js/mcq_flow.js', v='20260312-code-structure-v9') }}"></script>
+<script src="{{ url_for('static', filename='js/mcq_flow.js', v='20260327-mcq-submit-nav-v10') }}"></script>
 {% endblock %}

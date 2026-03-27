@@ -177,7 +177,9 @@ def _record_proctoring_event(session_id, event_type, details=None, ts=None, scre
 
 
 def _is_ajax_request():
-    return request.headers.get("X-Requested-With") == "XMLHttpRequest"
+    requested_with = str(request.headers.get("X-Requested-With", "") or "").strip().lower()
+    accept = str(request.headers.get("Accept", "") or "").strip().lower()
+    return requested_with == "xmlhttprequest" or "application/json" in accept
 
 
 def _proctoring_enabled():
@@ -623,6 +625,7 @@ def submit(session_id):
 
     return render_template(
         "mcq/submit.html",
+        session_id=session_id,
         proctoring_enabled=_proctoring_enabled(),
     )
 

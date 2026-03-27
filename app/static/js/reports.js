@@ -13,9 +13,51 @@
   var galleryTitle = document.getElementById("reportsGalleryTitle");
   var galleryMeta = document.getElementById("reportsGalleryMeta");
   var galleryGrid = document.getElementById("reportsGalleryGrid");
+  var consolidatedTrigger = document.getElementById("reportsConsolidatedTrigger");
+  var consolidatedModal = document.getElementById("reportsConsolidatedModal");
+  var consolidatedScope = document.getElementById("reportsConsolidatedScope");
+  var consolidatedRoleValue = document.getElementById("consolidatedRoleValue");
+  var consolidatedPeriodValue = document.getElementById("consolidatedPeriodValue");
+  var consolidatedBatchValue = document.getElementById("consolidatedBatchValue");
+  var consolidatedRoleSelect = document.getElementById("consolidatedRoleSelect");
+  var consolidatedPeriodSelect = document.getElementById("consolidatedPeriodSelect");
+  var consolidatedDateInput = document.getElementById("consolidatedDateInput");
+  var consolidatedPreviewBtn = document.getElementById("reportsConsolidatedPreview");
+  var consolidatedResultsMeta = document.getElementById("reportsConsolidatedResultsMeta");
+  var consolidatedLoadedPreview = document.getElementById("reportsConsolidatedLoadedPreview");
+  var consolidatedBatchSelect = document.getElementById("consolidatedBatchSelect");
+  var consolidatedVerdictFilter = document.getElementById("consolidatedVerdictFilter");
+  var consolidatedCandidateSearch = document.getElementById("consolidatedCandidateSearch");
+  var consolidatedCandidateList = document.getElementById("reportsConsolidatedCandidateList");
+  var consolidatedPlaceholder = document.getElementById("reportsConsolidatedPlaceholder");
+  var consolidatedLoading = document.getElementById("reportsConsolidatedLoading");
+  var consolidatedContent = document.getElementById("reportsConsolidatedContent");
+  var consolidatedSelectionMeta = document.getElementById("reportsConsolidatedSelectionMeta");
+  var consolidatedDownloadBtn = document.getElementById("reportsConsolidatedDownload");
+  var consolidatedGenerateBtn = document.getElementById("reportsConsolidatedGenerate");
+  var consolidatedCopyBtn = document.getElementById("reportsConsolidatedCopy");
 
   var searchTimer = null;
   var activeGalleryEmail = "";
+  var consolidatedState = {
+    candidates: [],
+    selectedEmails: {},
+    visibleCandidates: [],
+    rawSummary: "",
+    summaryMeta: null,
+    scope: null,
+    isLoadingCandidates: false,
+    isGenerating: false,
+    isDownloading: false,
+  };
+
+  function syncBodyModalState() {
+    var hasActiveModal = Boolean(
+      (galleryModal && galleryModal.classList.contains("active")) ||
+      (consolidatedModal && consolidatedModal.classList.contains("active"))
+    );
+    document.body.style.overflow = hasActiveModal ? "hidden" : "";
+  }
 
   function fetchJson(url, options) {
     return fetch(url, options || { credentials: "same-origin" }).then(async function (response) {
@@ -595,7 +637,7 @@
     galleryGrid.innerHTML = '<div class="reports-gallery-empty">Loading screenshots...</div>';
     galleryModal.classList.add("active");
     galleryModal.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
+    syncBodyModalState();
 
     fetchJson("/reports/proctoring/screenshots?email=" + encodeURIComponent(email) + "&limit=300", {
       credentials: "same-origin",
@@ -622,7 +664,632 @@
     activeGalleryEmail = "";
     galleryModal.classList.remove("active");
     galleryModal.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
+    syncBodyModalState();
+  }
+
+  function buildConsolidatedScopeParams() {
+    var params = new URLSearchParams();
+    if (consolidatedRoleSelect && consolidatedRoleSelect.value) {
+      params.set("role", consolidatedRoleSelect.value);
+    }
+    if (consolidatedPeriodSelect && consolidatedPeriodSelect.value) {
+      params.set("filter", consolidatedPeriodSelect.value);
+    }
+    if (consolidatedDateInput && consolidatedDateInput.value) {
+      params.set("date", consolidatedDateInput.value);
+    }
+    params.set("offset", "0");
+    return params;
+  }
+
+  function buildConsolidatedRequestPayload() {
+    return {
+      role: consolidatedRoleSelect ? consolidatedRoleSelect.value : "",
+      filter: consolidatedPeriodSelect ? consolidatedPeriodSelect.value : "today",
+      date: consolidatedDateInput ? consolidatedDateInput.value : "",
+      offset: "0",
+      q: "",
+      candidate_emails: getSelectedConsolidatedEmails(),
+    };
+  }
+
+  function syncConsolidatedDateFilterVisibility() {
+    if (!consolidatedPeriodSelect || !consolidatedDateInput) return;
+    var isSpecificDate = consolidatedPeriodSelect.value === "date";
+    consolidatedDateInput.classList.toggle("is-hidden", !isSpecificDate);
+    if (!isSpecificDate) {
+      consolidatedDateInput.value = "";
+    }
+  }
+
+  function syncConsolidatedFiltersFromPage() {
+    if (consolidatedRoleSelect && roleSelect) {
+      consolidatedRoleSelect.value = roleSelect.value || "All Roles";
+    }
+    if (consolidatedPeriodSelect && periodSelect) {
+      consolidatedPeriodSelect.value = periodSelect.value || "today";
+    }
+    if (consolidatedDateInput && dateInput) {
+      consolidatedDateInput.value = dateInput.value || "";
+    }
+    syncConsolidatedDateFilterVisibility();
+  }
+
+  function getSelectedConsolidatedEmails() {
+    var selected = [];
+    consolidatedState.candidates.forEach(function (candidate) {
+      var email = String(candidate.email || "");
+      if (email && consolidatedState.selectedEmails[email]) {
+        selected.push(email);
+      }
+    });
+    return selected;
+  }
+
+  function resetConsolidatedOutput(message) {
+    consolidatedState.rawSummary = "";
+    consolidatedState.summaryMeta = null;
+    if (consolidatedContent) {
+      consolidatedContent.classList.remove("is-visible");
+      consolidatedContent.innerHTML = "";
+    }
+    if (consolidatedLoading) {
+      consolidatedLoading.style.display = "none";
+    }
+    if (consolidatedPlaceholder) {
+      consolidatedPlaceholder.textContent = message || "Select candidates and click Generate Summary.";
+      consolidatedPlaceholder.style.display = "flex";
+    }
+    updateConsolidatedFooterState();
+  }
+
+  function setConsolidatedLoadingState(isLoading, message) {
+    consolidatedState.isGenerating = Boolean(isLoading);
+    if (consolidatedLoading) {
+      consolidatedLoading.textContent = message || "Building a consolidated summary...";
+      consolidatedLoading.style.display = isLoading ? "flex" : "none";
+    }
+    if (consolidatedPlaceholder) {
+      consolidatedPlaceholder.style.display = isLoading ? "none" : consolidatedPlaceholder.style.display;
+    }
+    if (consolidatedContent && isLoading) {
+      consolidatedContent.classList.remove("is-visible");
+      consolidatedContent.innerHTML = "";
+    }
+    updateConsolidatedFooterState();
+  }
+
+  function getVerdictBadgeClass(verdict) {
+    var normalized = String(verdict || "").toLowerCase();
+    if (normalized === "rejected") return "verdict-rejected";
+    if (normalized === "selected") return "verdict-selected";
+    if (normalized === "in progress") return "verdict-progress";
+    return "verdict-pending";
+  }
+
+  function stripSummaryFormatting(value) {
+    return String(value || "")
+      .replace(/^#{1,6}\s*/, "")
+      .replace(/\*\*/g, "")
+      .trim();
+  }
+
+  function ensureSummaryList(container, ordered) {
+    var last = container.lastElementChild;
+    if (last && last.tagName === (ordered ? "OL" : "UL")) {
+      return last;
+    }
+    var list = document.createElement(ordered ? "ol" : "ul");
+    list.className = "consolidated-summary-list";
+    container.appendChild(list);
+    return list;
+  }
+
+  function renderConsolidatedSummary(summaryText) {
+    if (!consolidatedContent || !consolidatedPlaceholder) return;
+
+    consolidatedState.rawSummary = String(summaryText || "").trim();
+    consolidatedContent.innerHTML = "";
+    consolidatedContent.classList.add("is-visible");
+    consolidatedPlaceholder.style.display = "none";
+    if (consolidatedLoading) {
+      consolidatedLoading.style.display = "none";
+    }
+
+    var wrapper = document.createElement("div");
+    wrapper.className = "consolidated-summary-block";
+    var lines = consolidatedState.rawSummary.split(/\r?\n/);
+
+    lines.forEach(function (rawLine) {
+      var trimmed = String(rawLine || "").trim();
+      if (!trimmed) {
+        return;
+      }
+
+      var plain = stripSummaryFormatting(trimmed);
+      var lowered = plain.toLowerCase();
+
+      if (lowered === "consolidated interview feedback") {
+        var title = document.createElement("h3");
+        title.className = "consolidated-summary-title";
+        title.textContent = plain;
+        wrapper.appendChild(title);
+        return;
+      }
+
+      if (
+        lowered === "overall outcome" ||
+        lowered === "key observations" ||
+        lowered === "overall assessment & recommendations" ||
+        lowered === "overall assessment and recommendations"
+      ) {
+        var heading = document.createElement("h4");
+        heading.className = "consolidated-summary-section";
+        heading.textContent = plain;
+        wrapper.appendChild(heading);
+        return;
+      }
+
+      if (/^\d+\.\s+/.test(trimmed)) {
+        var orderedList = ensureSummaryList(wrapper, true);
+        var orderedItem = document.createElement("li");
+        orderedItem.textContent = stripSummaryFormatting(trimmed.replace(/^\d+\.\s+/, ""));
+        orderedList.appendChild(orderedItem);
+        return;
+      }
+
+      if (/^[-*\u2022]\s+/.test(trimmed)) {
+        var bulletList = ensureSummaryList(wrapper, false);
+        var bulletItem = document.createElement("li");
+        bulletItem.textContent = stripSummaryFormatting(trimmed.replace(/^[-*\u2022]\s+/, ""));
+        bulletList.appendChild(bulletItem);
+        return;
+      }
+
+      var paragraph = document.createElement("p");
+      paragraph.className = "consolidated-summary-paragraph";
+      paragraph.textContent = plain;
+      wrapper.appendChild(paragraph);
+    });
+
+    consolidatedContent.appendChild(wrapper);
+    updateConsolidatedFooterState();
+  }
+
+  function populateConsolidatedBatchOptions(batchOptions) {
+    if (!consolidatedBatchSelect) return;
+    consolidatedBatchSelect.innerHTML = "";
+
+    var defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "All Batches";
+    consolidatedBatchSelect.appendChild(defaultOption);
+
+    (batchOptions || []).forEach(function (item) {
+      var option = document.createElement("option");
+      option.value = String(item && item.value ? item.value : "");
+      var count = Number(item && item.count ? item.count : 0);
+      option.textContent = String(item && item.label ? item.label : "No Batch") + (count ? " (" + count + ")" : "");
+      consolidatedBatchSelect.appendChild(option);
+    });
+
+    if (batchOptions && batchOptions.length === 1) {
+      consolidatedBatchSelect.value = String(batchOptions[0].value || "");
+    } else {
+      consolidatedBatchSelect.value = "";
+    }
+  }
+
+  function getVisibleConsolidatedCandidates() {
+    var batchValue = consolidatedBatchSelect ? String(consolidatedBatchSelect.value || "") : "";
+    var verdictValue = consolidatedVerdictFilter ? String(consolidatedVerdictFilter.value || "").toLowerCase() : "";
+    var query = consolidatedCandidateSearch ? consolidatedCandidateSearch.value.trim().toLowerCase() : "";
+
+    return consolidatedState.candidates.filter(function (candidate) {
+      var batchId = String(candidate.batch_id || "");
+      var verdict = String(candidate.overall_verdict || "").toLowerCase();
+      var haystack = [
+        String(candidate.name || ""),
+        String(candidate.email || ""),
+        String(candidate.role || ""),
+        batchId,
+      ].join(" ").toLowerCase();
+
+      if (batchValue !== "" && batchId !== batchValue) {
+        return false;
+      }
+      if (verdictValue && verdict !== verdictValue) {
+        return false;
+      }
+      if (query && haystack.indexOf(query) === -1) {
+        return false;
+      }
+      return true;
+    });
+  }
+
+  function updateConsolidatedScopeCard() {
+    var scope = consolidatedState.scope || {};
+    var roleLabel = scope.role || (consolidatedRoleSelect ? consolidatedRoleSelect.value : "All Roles") || "All Roles";
+    var periodLabel = scope.period_label || "Current Scope";
+
+    if (consolidatedRoleValue) {
+      consolidatedRoleValue.textContent = roleLabel;
+    }
+    if (consolidatedPeriodValue) {
+      consolidatedPeriodValue.textContent = periodLabel;
+    }
+    if (consolidatedBatchValue) {
+      var batchOption = consolidatedBatchSelect && consolidatedBatchSelect.selectedOptions && consolidatedBatchSelect.selectedOptions[0];
+      consolidatedBatchValue.textContent = batchOption ? batchOption.textContent : "All Batches";
+    }
+    if (consolidatedScope) {
+      var candidateCount = Number(scope.filtered_total_candidates || consolidatedState.candidates.length || 0);
+      var scopeBits = [roleLabel, periodLabel, candidateCount + " candidate(s)"];
+      consolidatedScope.textContent = scopeBits.join(" | ");
+    }
+    if (consolidatedResultsMeta) {
+      var selectedInfo = "Load candidates to preview the filtered result list.";
+      if (consolidatedState.scope && consolidatedState.candidates.length) {
+        selectedInfo = consolidatedState.candidates.length + " candidate(s) loaded for verification. Names are listed below.";
+      } else if (consolidatedState.scope && !consolidatedState.isLoadingCandidates) {
+        selectedInfo = "No candidates matched the selected role/date filters.";
+      }
+      consolidatedResultsMeta.textContent = selectedInfo;
+    }
+  }
+
+  function updateConsolidatedFooterState() {
+    var selectedCount = getSelectedConsolidatedEmails().length;
+    var visibleCount = consolidatedState.visibleCandidates.length;
+
+    if (consolidatedSelectionMeta) {
+      consolidatedSelectionMeta.textContent = selectedCount + " selected of " + visibleCount + " visible";
+    }
+    if (consolidatedGenerateBtn) {
+      consolidatedGenerateBtn.disabled = consolidatedState.isLoadingCandidates || consolidatedState.isGenerating || selectedCount < 1;
+    }
+    if (consolidatedCopyBtn) {
+      consolidatedCopyBtn.disabled = !consolidatedState.rawSummary || consolidatedState.isGenerating;
+    }
+    if (consolidatedDownloadBtn) {
+      consolidatedDownloadBtn.disabled = !consolidatedState.rawSummary || consolidatedState.isGenerating || consolidatedState.isDownloading;
+    }
+  }
+
+  function renderConsolidatedLoadedPreview(candidates) {
+    if (!consolidatedLoadedPreview) return;
+    consolidatedLoadedPreview.innerHTML = "";
+
+    var items = Array.isArray(candidates) ? candidates : [];
+    if (!items.length) {
+      consolidatedLoadedPreview.innerHTML = '<div class="consolidated-loaded-empty">No candidate names to preview for the current filters.</div>';
+      return;
+    }
+
+    var fragment = document.createDocumentFragment();
+    items.forEach(function (candidate) {
+      var pill = document.createElement("span");
+      pill.className = "consolidated-loaded-pill";
+      pill.textContent = candidate.name || candidate.email || "Candidate";
+      fragment.appendChild(pill);
+    });
+    consolidatedLoadedPreview.appendChild(fragment);
+  }
+
+  function renderConsolidatedCandidateList() {
+    if (!consolidatedCandidateList) return;
+
+    var visibleCandidates = getVisibleConsolidatedCandidates();
+    consolidatedState.visibleCandidates = visibleCandidates;
+    updateConsolidatedScopeCard();
+    renderConsolidatedLoadedPreview(visibleCandidates);
+    consolidatedCandidateList.innerHTML = "";
+
+    if (consolidatedState.isLoadingCandidates) {
+      consolidatedCandidateList.innerHTML = '<div class="consolidated-empty-state">Loading candidates...</div>';
+      updateConsolidatedFooterState();
+      return;
+    }
+
+    if (!visibleCandidates.length) {
+      consolidatedCandidateList.innerHTML = '<div class="consolidated-empty-state">No candidates match the current batch, verdict, or search filter.</div>';
+      updateConsolidatedFooterState();
+      return;
+    }
+
+    var fragment = document.createDocumentFragment();
+    visibleCandidates.forEach(function (candidate) {
+      var email = String(candidate.email || "");
+      var row = document.createElement("label");
+      row.className = "consolidated-candidate-row";
+      row.setAttribute("data-email", email);
+
+      var checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = Boolean(consolidatedState.selectedEmails[email]);
+      checkbox.setAttribute("data-consolidated-email", email);
+
+      var main = document.createElement("div");
+      main.className = "consolidated-candidate-main";
+
+      var name = document.createElement("div");
+      name.className = "consolidated-candidate-name";
+      name.textContent = candidate.name || email || "Candidate";
+      main.appendChild(name);
+
+      var emailText = document.createElement("div");
+      emailText.className = "consolidated-candidate-email";
+      var emailLine = candidate.email || "";
+      if (candidate.batch_id) {
+        emailLine += " | " + candidate.batch_id;
+      }
+      emailText.textContent = emailLine || "Email unavailable";
+      main.appendChild(emailText);
+
+      var meta = document.createElement("div");
+      meta.className = "consolidated-candidate-meta";
+
+      var score = document.createElement("span");
+      score.className = "consolidated-badge score";
+      score.textContent = Math.round(Number(candidate.overall_score || 0)) + "%";
+      meta.appendChild(score);
+
+      var verdict = document.createElement("span");
+      verdict.className = "consolidated-badge " + getVerdictBadgeClass(candidate.overall_verdict);
+      verdict.textContent = candidate.overall_verdict || "Pending";
+      meta.appendChild(verdict);
+
+      row.appendChild(checkbox);
+      row.appendChild(main);
+      row.appendChild(meta);
+      fragment.appendChild(row);
+    });
+
+    consolidatedCandidateList.appendChild(fragment);
+    updateConsolidatedFooterState();
+  }
+
+  function loadConsolidatedCandidates() {
+    if (
+      consolidatedPeriodSelect &&
+      consolidatedPeriodSelect.value === "date" &&
+      consolidatedDateInput &&
+      !consolidatedDateInput.value
+    ) {
+      if (typeof showToast === "function") {
+        showToast("Choose a specific date to load candidates", "warning");
+      }
+      if (typeof consolidatedDateInput.showPicker === "function") {
+        consolidatedDateInput.showPicker();
+      } else {
+        consolidatedDateInput.focus();
+      }
+      return;
+    }
+
+    consolidatedState.isLoadingCandidates = true;
+    consolidatedState.candidates = [];
+    consolidatedState.selectedEmails = {};
+    consolidatedState.visibleCandidates = [];
+    consolidatedState.scope = null;
+    resetConsolidatedOutput("Select candidates and click Generate Summary.");
+    renderConsolidatedCandidateList();
+
+    fetchJson("/reports/consolidated/candidates?" + buildConsolidatedScopeParams().toString(), {
+      credentials: "same-origin",
+    })
+      .then(function (payload) {
+        consolidatedState.scope = payload && payload.scope ? payload.scope : {};
+        consolidatedState.candidates = Array.isArray(payload && payload.candidates) ? payload.candidates : [];
+        consolidatedState.selectedEmails = {};
+        consolidatedState.candidates.forEach(function (candidate) {
+          var email = String(candidate.email || "");
+          if (email) {
+            consolidatedState.selectedEmails[email] = true;
+          }
+        });
+        populateConsolidatedBatchOptions(Array.isArray(payload && payload.batch_options) ? payload.batch_options : []);
+        resetConsolidatedOutput("Select candidates and click Generate Summary.");
+      })
+      .catch(function (error) {
+        consolidatedState.scope = null;
+        consolidatedState.candidates = [];
+        consolidatedState.selectedEmails = {};
+        if (typeof showToast === "function") {
+          showToast(error.message || "Failed to load candidates", "danger");
+        }
+      })
+      .finally(function () {
+        consolidatedState.isLoadingCandidates = false;
+        renderConsolidatedCandidateList();
+      });
+  }
+
+  function openConsolidatedModal() {
+    if (!consolidatedModal) return;
+
+    closeGallery();
+    syncConsolidatedFiltersFromPage();
+    if (consolidatedVerdictFilter) {
+      consolidatedVerdictFilter.value = "";
+    }
+    if (consolidatedCandidateSearch) {
+      consolidatedCandidateSearch.value = "";
+    }
+    consolidatedModal.classList.add("active");
+    consolidatedModal.setAttribute("aria-hidden", "false");
+    syncBodyModalState();
+    loadConsolidatedCandidates();
+  }
+
+  function closeConsolidatedModal() {
+    if (!consolidatedModal) return;
+    consolidatedModal.classList.remove("active");
+    consolidatedModal.setAttribute("aria-hidden", "true");
+    syncBodyModalState();
+  }
+
+  function applyConsolidatedBulkSelection(mode) {
+    var visibleCandidates = getVisibleConsolidatedCandidates();
+    if (mode === "none") {
+      consolidatedState.selectedEmails = {};
+      renderConsolidatedCandidateList();
+      return;
+    }
+
+    if (mode === "all") {
+      visibleCandidates.forEach(function (candidate) {
+        var email = String(candidate.email || "");
+        if (email) {
+          consolidatedState.selectedEmails[email] = true;
+        }
+      });
+      renderConsolidatedCandidateList();
+      return;
+    }
+
+    consolidatedState.selectedEmails = {};
+    visibleCandidates.forEach(function (candidate) {
+      var email = String(candidate.email || "");
+      if (!email) return;
+      if (mode === "rejected" && String(candidate.overall_verdict || "") === "Rejected") {
+        consolidatedState.selectedEmails[email] = true;
+      }
+      if (mode === "attempted" && Number(candidate.attempted_rounds || 0) > 0) {
+        consolidatedState.selectedEmails[email] = true;
+      }
+    });
+    renderConsolidatedCandidateList();
+  }
+
+  function generateConsolidatedSummary() {
+    var selectedEmails = getSelectedConsolidatedEmails();
+    if (!selectedEmails.length) {
+      if (typeof showToast === "function") {
+        showToast("Select at least one candidate", "warning");
+      }
+      return;
+    }
+
+    setConsolidatedLoadingState(true, "Building a consolidated summary...");
+    fetchJson("/reports/consolidated-summary", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(buildConsolidatedRequestPayload()),
+    })
+      .then(function (payload) {
+        if (!payload || !payload.success) {
+          throw new Error((payload && payload.error) || "Failed to generate consolidated summary");
+        }
+        consolidatedState.summaryMeta = payload && payload.meta ? payload.meta : null;
+        renderConsolidatedSummary(payload.summary || "");
+        if (typeof showToast === "function") {
+          showToast("Consolidated summary generated", "success");
+        }
+      })
+      .catch(function (error) {
+        resetConsolidatedOutput("Select candidates and click Generate Summary.");
+        if (typeof showToast === "function") {
+          showToast(error.message || "Failed to generate consolidated summary", "danger");
+        }
+      })
+      .finally(function () {
+        consolidatedState.isGenerating = false;
+        if (consolidatedLoading) {
+          consolidatedLoading.style.display = "none";
+        }
+        updateConsolidatedFooterState();
+      });
+  }
+
+  function downloadConsolidatedSummaryPdf() {
+    var text = String(consolidatedState.rawSummary || "").trim();
+    if (!text) {
+      return;
+    }
+
+    consolidatedState.isDownloading = true;
+    updateConsolidatedFooterState();
+
+    fetchJson("/reports/consolidated-summary/pdf", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        summary: text,
+        meta: consolidatedState.summaryMeta || {},
+      }),
+    })
+      .then(function (payload) {
+        if (!payload || !payload.success || !payload.download_url) {
+          throw new Error((payload && payload.error) || "Failed to generate summary PDF");
+        }
+        window.open(payload.download_url, "_blank");
+        if (typeof showToast === "function") {
+          showToast("Summary PDF is ready", "success");
+        }
+      })
+      .catch(function (error) {
+        if (typeof showToast === "function") {
+          showToast(error.message || "Failed to generate summary PDF", "danger");
+        }
+      })
+      .finally(function () {
+        consolidatedState.isDownloading = false;
+        updateConsolidatedFooterState();
+      });
+  }
+
+  function copyConsolidatedSummary() {
+    var text = String(consolidatedState.rawSummary || "").trim();
+    if (!text) return;
+
+    function onCopied() {
+      if (typeof showToast === "function") {
+        showToast("Consolidated summary copied", "success");
+      }
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(onCopied).catch(function () {
+        var textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.setAttribute("readonly", "readonly");
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        try {
+          document.execCommand("copy");
+          onCopied();
+        } finally {
+          document.body.removeChild(textarea);
+        }
+      });
+      return;
+    }
+
+    var fallbackTextarea = document.createElement("textarea");
+    fallbackTextarea.value = text;
+    fallbackTextarea.setAttribute("readonly", "readonly");
+    fallbackTextarea.style.position = "fixed";
+    fallbackTextarea.style.opacity = "0";
+    document.body.appendChild(fallbackTextarea);
+    fallbackTextarea.focus();
+    fallbackTextarea.select();
+    try {
+      document.execCommand("copy");
+      onCopied();
+    } finally {
+      document.body.removeChild(fallbackTextarea);
+    }
   }
 
   function initializeReportActionState() {
@@ -695,6 +1362,81 @@
     });
   }
 
+  if (consolidatedTrigger) {
+    consolidatedTrigger.addEventListener("click", function () {
+      openConsolidatedModal();
+    });
+  }
+
+  if (consolidatedPreviewBtn) {
+    consolidatedPreviewBtn.addEventListener("click", function () {
+      loadConsolidatedCandidates();
+    });
+  }
+
+  if (consolidatedPeriodSelect) {
+    syncConsolidatedDateFilterVisibility();
+    consolidatedPeriodSelect.addEventListener("change", function () {
+      syncConsolidatedDateFilterVisibility();
+    });
+  }
+
+  if (consolidatedDateInput) {
+    consolidatedDateInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        loadConsolidatedCandidates();
+      }
+    });
+  }
+
+  if (consolidatedBatchSelect) {
+    consolidatedBatchSelect.addEventListener("change", function () {
+      renderConsolidatedCandidateList();
+    });
+  }
+
+  if (consolidatedVerdictFilter) {
+    consolidatedVerdictFilter.addEventListener("change", function () {
+      renderConsolidatedCandidateList();
+    });
+  }
+
+  if (consolidatedCandidateSearch) {
+    consolidatedCandidateSearch.addEventListener("input", function () {
+      renderConsolidatedCandidateList();
+    });
+  }
+
+  if (consolidatedCandidateList) {
+    consolidatedCandidateList.addEventListener("change", function (event) {
+      var checkbox = event.target.closest("[data-consolidated-email]");
+      if (!checkbox) return;
+      var email = String(checkbox.getAttribute("data-consolidated-email") || "");
+      if (!email) return;
+      consolidatedState.selectedEmails[email] = Boolean(checkbox.checked);
+      updateConsolidatedFooterState();
+    });
+  }
+
+  if (consolidatedGenerateBtn) {
+    consolidatedGenerateBtn.addEventListener("click", function () {
+      generateConsolidatedSummary();
+    });
+  }
+
+  if (consolidatedDownloadBtn) {
+    consolidatedDownloadBtn.addEventListener("click", function () {
+      downloadConsolidatedSummaryPdf();
+    });
+  }
+
+  if (consolidatedCopyBtn) {
+    consolidatedCopyBtn.addEventListener("click", function () {
+      copyConsolidatedSummary();
+    });
+  }
+
   document.addEventListener("click", function (event) {
     var generateBtn = event.target.closest(".js-generate-report");
     if (generateBtn) {
@@ -717,6 +1459,19 @@
     if (event.target.closest(".js-close-gallery")) {
       event.preventDefault();
       closeGallery();
+      return;
+    }
+
+    if (event.target.closest(".js-close-consolidated")) {
+      event.preventDefault();
+      closeConsolidatedModal();
+      return;
+    }
+
+    var selectModeButton = event.target.closest("[data-select-mode]");
+    if (selectModeButton) {
+      event.preventDefault();
+      applyConsolidatedBulkSelection(selectModeButton.getAttribute("data-select-mode"));
     }
   });
 
@@ -728,9 +1483,18 @@
     });
   }
 
+  if (consolidatedModal) {
+    consolidatedModal.addEventListener("click", function (event) {
+      if (event.target === consolidatedModal) {
+        closeConsolidatedModal();
+      }
+    });
+  }
+
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
       closeGallery();
+      closeConsolidatedModal();
     }
   });
 

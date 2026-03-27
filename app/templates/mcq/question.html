@@ -97,7 +97,7 @@
                             value="next"
                             class="btn btn-primary px-4">
                         {% if q_index + 1 == total_questions %}
-                            Submit
+                            Review & Submit
                         {% else %}
                             Next
                         {% endif %}
@@ -110,6 +110,6 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{{ url_for('static', filename='js/mcq_flow.js', v='20260312-code-structure-v9') }}"></script>
+<script src="{{ url_for('static', filename='js/mcq_flow.js', v='20260327-mcq-submit-nav-v10') }}"></script>
 {% endblock %}
 
