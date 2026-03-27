@@ -210,6 +210,8 @@ def start_test(session_id):
     session_meta = MCQ_SESSION_REGISTRY.get(session_id)
     if not session_meta:
         return "Invalid or expired test link", 404
+    if session_meta.get("started"):
+        return "This test has already been started. Restart is not allowed.", 403
 
     # ✅ Clear ALL old test session data to keep cookie small
     #    (Flask's cookie-based session has a ~4 KB browser limit;
@@ -237,6 +239,8 @@ def start_test(session_id):
             "time_minutes": 20
         },
         candidate_name=session_meta["candidate_name"],
+        candidate_email=session_meta.get("email", ""),
+        role_label=session_meta.get("role_label", session_meta.get("role_key", "")),
         proctoring_enabled=_proctoring_enabled(),
     )
 
@@ -246,6 +250,16 @@ def start_test(session_id):
 # -------------------------------------------------
 @mcq_bp.route("/begin/<session_id>", methods=["POST"])
 def begin_test(session_id):
+    session_meta = MCQ_SESSION_REGISTRY.get(session_id)
+    if not session_meta:
+        return "Invalid or expired test link", 404
+    if session_meta.get("started"):
+        return "This test has already been started. Restart is not allowed.", 403
+
+    session_meta["started"] = True
+    session_meta["started_at"] = _utc_now_iso()
+    MCQ_SESSION_REGISTRY[session_id] = session_meta
+
     return redirect(
         url_for("mcq.question", session_id=session_id, q=0)
     )
@@ -260,6 +274,10 @@ def question(session_id):
     session_meta = MCQ_SESSION_REGISTRY.get(session_id)
     if not session_meta:
         return "Invalid or expired test link", 404
+    if not session_meta.get("started"):
+        session_meta["started"] = True
+        session_meta["started_at"] = _utc_now_iso()
+        MCQ_SESSION_REGISTRY[session_id] = session_meta
 
     try:
         q_index = max(0, int(request.args.get("q", 0)))

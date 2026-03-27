@@ -1460,3 +1460,129 @@ body::before {
         justify-content: center;
     }
 }
+
+/* Start page v2 strict overview alignment (used by both MCQ and Coding start) */
+.test-start-v2 .overview-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 108px !important;
+    border: 1px solid #e5e8f2 !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+}
+
+.test-start-v2 .overview-item {
+    min-height: 78px !important;
+    padding: 8px 14px 4px !important;
+    border-right: 1px solid #e5e8f2 !important;
+    border-bottom: none !important;
+    background: #fbfcff !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+}
+
+.test-start-v2 .overview-item:last-child {
+    border-right: none !important;
+}
+
+.test-start-v2 .overview-state {
+    min-height: 78px !important;
+    padding: 8px 8px 4px !important;
+    background: #fbfcff !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    text-align: center !important;
+}
+
+.test-start-v2 .overview-state-text {
+    color: #727d95 !important;
+    font-size: 12px !important;
+    white-space: nowrap !important;
+}
+
+.test-start-v2 .overview-state-dot {
+    color: #95a2bd !important;
+    font-size: 12px !important;
+    line-height: 1 !important;
+    margin-top: 4px !important;
+}
+
+.test-start-v2 .overview-head {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 10px !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    color: #5f6c8a !important;
+    font-weight: 700 !important;
+}
+
+.test-start-v2 .overview-head .overview-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 20px !important;
+    height: 20px !important;
+    color: #f97316 !important;
+}
+
+.test-start-v2 .overview-head .overview-icon svg {
+    width: 20px !important;
+    height: 20px !important;
+    display: block !important;
+}
+
+.test-start-v2 .overview-body {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    gap: 6px !important;
+    white-space: nowrap !important;
+    margin-top: 3px !important;
+}
+
+.test-start-v2 .overview-number {
+    font-size: 30px !important;
+    font-weight: 700 !important;
+    color: #1f2f58 !important;
+    line-height: 0.98 !important;
+}
+
+.test-start-v2 .overview-unit {
+    font-size: 14px !important;
+    color: #596887 !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+}
+
+.test-start-v2 .overview-mode-value {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: #1f2f58 !important;
+    line-height: 1.15 !important;
+}
+
+@media (max-width: 767px) {
+    .test-start-v2 .overview-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .test-start-v2 .overview-item {
+        border-right: none !important;
+        border-bottom: 1px solid #e5e8f2 !important;
+    }
+    .test-start-v2 .overview-state {
+        border-bottom: none !important;
+    }
+    .test-start-v2 .overview-number {
+        font-size: 26px !important;
+    }
+    .test-start-v2 .overview-unit {
+        font-size: 13px !important;
+    }
+    .test-start-v2 .overview-mode-value {
+        font-size: 18px !important;
+    }
+}
+

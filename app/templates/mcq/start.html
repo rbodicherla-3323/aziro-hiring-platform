@@ -1,65 +1,297 @@
 {% extends "mcq/base_mcq.html" %}
+{% block extra_css %}
+<style>
+.test-start-v2 {
+    max-width: 900px;
+    margin: 22px auto 0;
+}
+.test-start-v2 .start-card {
+    border: 1px solid #e5e8f2;
+    border-radius: 12px;
+    background: #ffffff;
+    padding: 16px;
+    box-shadow: 0 14px 28px rgba(16, 30, 68, 0.07);
+}
+.test-start-v2 .status-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+.test-start-v2 .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid #e3e7f1;
+    background: #f7f8fc;
+    color: #4f5a73;
+}
+.test-start-v2 .status-pill.proctor {
+    border-color: #ffd8c2;
+    background: #fff4ee;
+    color: #d76a32;
+}
+.test-start-v2 .candidate-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eceff5;
+    margin-bottom: 12px;
+}
+.test-start-v2 .candidate-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f5f7fd 0%, #e8edf9 100%);
+    border: 1px solid #d9e1f2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #4d5f85;
+    font-weight: 700;
+}
+.test-start-v2 .candidate-name {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.2;
+    color: #1f2f58;
+    font-weight: 700;
+}
+.test-start-v2 .candidate-meta {
+    margin-top: 2px;
+    font-size: 13px;
+    color: #7a859f;
+}
+.test-start-v2 .round-title {
+    margin: 0 0 10px;
+    font-size: 31px;
+    line-height: 1.18;
+    font-weight: 700;
+    color: #1d2e5c;
+}
+.test-start-v2 .overview-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 108px;
+    border: 1px solid #e5e8f2;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+.test-start-v2 .overview-item {
+    background: #fbfcff;
+    padding: 10px 14px 9px;
+    border-right: 1px solid #e5e8f2;
+    min-height: 82px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.test-start-v2 .overview-head {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #5f6c8a;
+    font-weight: 700;
+}
+.test-start-v2 .overview-body {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    white-space: nowrap;
+}
+.test-start-v2 .overview-number {
+    font-size: 33px;
+    font-weight: 700;
+    color: #1f2f58;
+    line-height: 1;
+}
+.test-start-v2 .overview-unit {
+    font-size: 13px;
+    color: #596887;
+    font-weight: 500;
+}
+.test-start-v2 .overview-mode-value {
+    font-size: 33px;
+    font-weight: 700;
+    color: #1f2f58;
+    line-height: 1;
+}
+.test-start-v2 .overview-state {
+    min-height: 82px;
+    padding: 10px 8px 9px;
+    background: #fbfcff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+.test-start-v2 .overview-state-text {
+    color: #727d95;
+    font-size: 13px;
+    white-space: nowrap;
+}
+.test-start-v2 .overview-state-dot {
+    color: #95a2bd;
+    font-size: 12px;
+    line-height: 1;
+}
+.test-start-v2 .instruction-wrap {
+    border: 1px solid #e5e8f2;
+    border-radius: 10px;
+    padding: 12px 13px 10px;
+    margin-bottom: 10px;
+    background: #fcfdff;
+}
+.test-start-v2 .instruction-title {
+    margin: 0 0 8px;
+    font-size: 15px;
+    color: #2a3a66;
+    font-weight: 600;
+}
+.test-start-v2 .instruction-list {
+    margin: 0;
+    padding-left: 18px;
+    color: #616d88;
+    font-size: 14px;
+    line-height: 1.56;
+}
+.test-start-v2 .instruction-list li + li {
+    margin-top: 3px;
+}
+.test-start-v2 .timer-warning {
+    border: 1px solid #ffe2d3;
+    border-radius: 8px;
+    background: #fff4ef;
+    color: #bd5d2e;
+    font-size: 13px;
+    padding: 6px 10px;
+    margin-bottom: 10px;
+}
+.test-start-v2 .actions {
+    display: flex;
+    justify-content: flex-end;
+}
+.test-start-v2 .start-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #ff9a3a 0%, #f97316 100%);
+    box-shadow: 0 10px 18px rgba(249, 115, 22, 0.24);
+}
+@media (max-width: 767px) {
+    .test-start-v2 .overview-grid {
+        grid-template-columns: 1fr;
+    }
+    .test-start-v2 .overview-item {
+        border-right: none;
+        border-bottom: 1px solid #e5e8f2;
+    }
+    .test-start-v2 .overview-item:last-child {
+        border-bottom: none;
+    }
+    .test-start-v2 .round-title {
+        font-size: 25px;
+    }
+    .test-start-v2 .candidate-name {
+        font-size: 16px;
+    }
+    .test-start-v2 .instruction-title {
+        font-size: 15px;
+    }
+}
+</style>
+{% endblock %}
 {% block content %}
 
-<div class="mcq-start-shell">
-    <div class="card mcq-start-card">
-        <div class="mcq-status-row">
-            <span class="mcq-status-pill">
+<div class="test-start-v2">
+    <div class="start-card">
+        <div class="status-row">
+            <span class="status-pill proctor">
+                <i class="bi bi-shield-check"></i>
                 {% if proctoring_enabled %}Secure Proctoring Active{% else %}Standard Assessment Mode{% endif %}
             </span>
-            <span class="mcq-status-pill">Timed Assessment</span>
+            <span class="status-pill">
+                <i class="bi bi-clock-history"></i>
+                Timed Assessment
+            </span>
         </div>
 
-        <div class="mcq-brand-row">
-            <img class="mcq-inline-logo"
-                 src="{{ url_for('static', filename='images/azirotech_logo.jpg') }}"
-                 alt="Aziro logo">
+        <div class="candidate-row">
+            <div class="candidate-avatar">{{ (candidate_name or "C")[:1]|upper }}</div>
             <div>
-                <div class="mcq-brand-copy">Aziro Enterprise Hiring Platform</div>
-                <h2 class="mcq-round-title">{{ test.round_name }}</h2>
+                <h2 class="candidate-name">{{ candidate_name }}</h2>
+                <div class="candidate-meta">{{ candidate_email }} {% if role_label %}&middot; {{ role_label }}{% endif %}</div>
             </div>
         </div>
 
-        <div class="mcq-overview-grid">
-            <div class="mcq-overview-item">
-                <span class="mcq-overview-label">Questions</span>
-                <span class="mcq-overview-value">{{ test.total_questions }}</span>
+        <h1 class="round-title">{{ test.round_name }}</h1>
+
+        <div class="overview-grid">
+            <div class="overview-item">
+                <span class="overview-head"><span class="overview-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"></path><rect x="5" y="4" width="14" height="17" rx="2"></rect><path d="M9 12h6"></path><path d="M9 16h4"></path></svg></span>Questions</span>
+                <div class="overview-body">
+                    <span class="overview-number">{{ test.total_questions }}</span>
+                    <span class="overview-unit">Questions</span>
+                </div>
             </div>
-            <div class="mcq-overview-item">
-                <span class="mcq-overview-label">Duration</span>
-                <span class="mcq-overview-value">{{ test.time_minutes }}m</span>
+            <div class="overview-item">
+                <span class="overview-head"><span class="overview-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span>{{ test.time_minutes }} Minutes</span>
+                <div class="overview-body">
+                    <span class="overview-number">{{ test.time_minutes }}</span>
+                    <span class="overview-unit">Minutes</span>
+                </div>
             </div>
-            <div class="mcq-overview-item">
-                <span class="mcq-overview-label">Mode</span>
-                <span class="mcq-overview-value">{% if proctoring_enabled %}Proctored{% else %}Standard{% endif %}</span>
+            <div class="overview-item">
+                <span class="overview-head"><span class="overview-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z"></path><path d="M9 12l2 2 4-4"></path></svg></span>Mode</span>
+                <div class="overview-body">
+                    <span class="overview-mode-value">{% if proctoring_enabled %}Proctored{% else %}Standard{% endif %}</span>
+                </div>
+            </div>
+            <div class="overview-state">
+                <span class="overview-state-text"><i class="bi bi-circle"></i> Not Started</span>
+                <span class="overview-state-dot"><i class="bi bi-circle"></i></span>
             </div>
         </div>
 
-        <div class="mcq-instruction-wrap">
-            <h4 class="mcq-instruction-title">Instructions</h4>
-            <ul class="mcq-instruction-list">
+        <div class="instruction-wrap">
+            <h4 class="instruction-title">Instructions</h4>
+            <ul class="instruction-list">
                 <li>Each question has only one correct answer.</li>
-                <li>Question palette is available to jump between questions.</li>
-                <li>You can move next even without selecting an answer.</li>
-                <li>Do not refresh or close the browser while taking the test.</li>
+                <li>Navigation palette is available to jump between questions.</li>
+                <li>Test timer begins immediately upon starting.</li>
+                <li>Once the test is started, it cannot be restarted using the same test link.</li>
+                <li>Keep your internet connection stable until the test is completed.</li>
+                <li>Do not refresh or close the browser.</li>
                 {% if proctoring_enabled %}
                 <li>Switching tabs and leaving fullscreen are monitored.</li>
                 {% endif %}
             </ul>
         </div>
 
+        <div class="timer-warning">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            Timer begins immediately. {% if proctoring_enabled %}Full-screen mode will stay enforced.{% endif %}
+        </div>
+
         <div class="actions">
             <form id="mcqStartForm"
                   method="POST"
                   action="{{ url_for('mcq.begin_test', session_id=test.session_id) }}">
-                <button class="btn btn-primary">Start Test</button>
+                <button class="start-btn">Start {{ test.round_name }} Test <i class="bi bi-arrow-right"></i></button>
             </form>
         </div>
-
-        <p class="mcq-start-footer">
-            Once started, your timer begins immediately.
-            {% if proctoring_enabled %}Full-screen mode will stay enforced.{% endif %}
-        </p>
     </div>
 </div>
 
@@ -68,3 +300,4 @@
 {% block extra_js %}
 <script src="{{ url_for('static', filename='js/mcq_flow.js', v='20260312-code-structure-v9') }}"></script>
 {% endblock %}
+
