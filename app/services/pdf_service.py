@@ -449,3 +449,90 @@ def generate_candidate_pdf(candidate_data: dict) -> str:
 
     doc.build(elements)
     return filename
+
+
+def generate_consolidated_summary_pdf(summary_text: str, meta: dict | None = None) -> str:
+    """
+    Generate a PDF for a consolidated candidate summary.
+
+    Parameters
+    ----------
+    summary_text : str
+        Consolidated summary content to render.
+    meta : dict | None
+        Optional metadata such as role, period label, candidate count, and batch ids.
+
+    Returns
+    -------
+    str
+        Filename relative to REPORTS_DIR.
+    """
+    meta = meta or {}
+    role = str(meta.get("role", "") or "Selected Candidates").strip()
+    period_label = str(meta.get("period_label", "") or "Current Scope").strip()
+    candidate_count = int(meta.get("candidate_count", 0) or 0)
+    batch_ids = [str(value).strip() for value in (meta.get("batch_ids", []) or []) if str(value).strip()]
+
+    safe_role = "".join(ch if ch.isalnum() or ch in " _-" else "_" for ch in role).strip() or "consolidated_summary"
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    filename = f"{safe_role}_consolidated_{timestamp}.pdf"
+    filepath = REPORTS_DIR / filename
+
+    doc = SimpleDocTemplate(
+        str(filepath),
+        pagesize=A4,
+        leftMargin=18 * mm,
+        rightMargin=18 * mm,
+        topMargin=18 * mm,
+        bottomMargin=18 * mm,
+    )
+
+    styles = _build_styles()
+    elements = []
+
+    elements.append(Paragraph("Consolidated Candidate Summary", styles["ReportTitle"]))
+    elements.append(Paragraph(
+        f"Generated on {datetime.now(timezone.utc).strftime('%d %b %Y, %H:%M UTC')}",
+        styles["SubTitle"],
+    ))
+    elements.append(HRFlowable(width="100%", thickness=1, color=AZIRO_BLUE))
+    elements.append(Spacer(1, 4 * mm))
+
+    elements.append(Paragraph("Summary Scope", styles["SectionHead"]))
+    info_data = [
+        ["Role", role],
+        ["Period", period_label],
+        ["Candidates", str(candidate_count)],
+        ["Batch", ", ".join(batch_ids) if batch_ids else "All Batches"],
+    ]
+    info_table = Table(info_data, colWidths=[40 * mm, 120 * mm])
+    info_table.setStyle(TableStyle([
+        ("FONTNAME", (0, 0), (0, -1), "Helvetica-Bold"),
+        ("FONTSIZE", (0, 0), (-1, -1), 10),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+        ("TOPPADDING", (0, 0), (-1, -1), 4),
+        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+    ]))
+    elements.append(info_table)
+    elements.append(Spacer(1, 6 * mm))
+
+    elements.append(Paragraph("Consolidated Interview Feedback", styles["SectionHead"]))
+    elements.append(
+        _build_summary_card(
+            "Consolidated Summary",
+            str(summary_text or "").strip() or "Summary content is unavailable.",
+            styles,
+            doc.width,
+        )
+    )
+
+    elements.append(Spacer(1, 10 * mm))
+    elements.append(HRFlowable(width="100%", thickness=0.5, color=colors.grey))
+    elements.append(Spacer(1, 2 * mm))
+    elements.append(Paragraph(
+        "This PDF was generated from the consolidated summary workflow in the Aziro AI Hiring Platform.",
+        ParagraphStyle("Footer", fontSize=8, textColor=colors.grey),
+    ))
+
+    doc.build(elements)
+    return filename

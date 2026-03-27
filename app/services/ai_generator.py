@@ -374,6 +374,147 @@ def _build_fallback_coding_summary(coding_data):
     )
 
 
+def _build_fallback_consolidated_summary(consolidated_payload):
+    """Return deterministic multi-candidate summary text when AI is unavailable."""
+    if not isinstance(consolidated_payload, dict):
+        return "Consolidated evaluation data is unavailable."
+
+    scope = consolidated_payload.get("scope", {}) or {}
+    aggregate = consolidated_payload.get("aggregate", {}) or {}
+    verdict_counts = aggregate.get("verdict_counts", {}) or {}
+    round_stats = aggregate.get("round_stats", []) or []
+    completion_stats = aggregate.get("completion_stats", {}) or {}
+    recurring_gap_signals = aggregate.get("recurring_gap_signals", []) or []
+    coding_signals = aggregate.get("coding_signals", []) or []
+
+    role = scope.get("role", "Selected Candidates")
+    period_label = scope.get("period_label", "Current Scope")
+    candidate_count = int(scope.get("candidate_count", 0) or 0)
+    attempted_candidate_count = int(scope.get("attempted_candidate_count", 0) or 0)
+    average_overall_percentage = float(scope.get("average_overall_percentage", 0) or 0)
+    selected_count = int(verdict_counts.get("Selected", 0) or 0)
+    rejected_count = int(verdict_counts.get("Rejected", 0) or 0)
+    in_progress_count = int(verdict_counts.get("In Progress", 0) or 0)
+    pending_count = int(verdict_counts.get("Pending", 0) or 0)
+    batch_ids = [value for value in (scope.get("batch_ids", []) or []) if str(value or "").strip()]
+    completion_ratio = float(completion_stats.get("average_completion_ratio", 0) or 0)
+    partially_completed = int(completion_stats.get("partially_completed_candidates", 0) or 0)
+    not_started = int(completion_stats.get("not_started_candidates", 0) or 0)
+    multiple_failed = int(completion_stats.get("multiple_failed_round_candidates", 0) or 0)
+
+    lines = [
+        "Consolidated Interview Feedback",
+        "",
+        "Overall Outcome",
+        (
+            f"This summary covers {candidate_count} candidate(s) for the {role} role "
+            f"in the {period_label} scope."
+        ),
+        (
+            f"{attempted_candidate_count} candidate(s) attempted at least one round. "
+            f"The overall average score across attempted candidates was {average_overall_percentage:.2f}%."
+        ),
+        (
+            f"Verdict distribution: Selected = {selected_count}, Rejected = {rejected_count}, "
+            f"In Progress = {in_progress_count}, Pending = {pending_count}."
+        ),
+        (
+            f"Average round completion across the selected set was {completion_ratio:.2f}%."
+        ),
+    ]
+    if batch_ids:
+        lines.append(f"Batch coverage: {', '.join(batch_ids)}.")
+
+    lines.extend(["", "Key Observations"])
+    ranked_rounds = sorted(
+        round_stats,
+        key=lambda row: (
+            -int(row.get("failed_candidates", 0) or 0),
+            float(row.get("average_percentage", 0) or 0),
+            row.get("round_label", ""),
+        ),
+    )
+
+    observation_index = 1
+    if ranked_rounds:
+        for stat in ranked_rounds[:3]:
+            lines.append(
+                (
+                    f"{observation_index}. {stat.get('round_label', 'Round')}: "
+                    f"{int(stat.get('attempted_candidates', 0) or 0)} attempted, "
+                    f"{int(stat.get('failed_candidates', 0) or 0)} failed, "
+                    f"{int(stat.get('passed_candidates', 0) or 0)} passed, "
+                    f"average score {float(stat.get('average_percentage', 0) or 0):.2f}%, "
+                    f"with {int(stat.get('below_threshold_candidates', 0) or 0)} below threshold."
+                )
+            )
+            observation_index += 1
+    else:
+        lines.append("1. Round-level trend data was not available for this candidate set.")
+        observation_index = 2
+
+    if partially_completed or not_started:
+        lines.append(
+            (
+                f"{observation_index}. Interview readiness/completion: "
+                f"{partially_completed} candidate(s) were still in progress and "
+                f"{not_started} had not started any round in this scope."
+            )
+        )
+        observation_index += 1
+
+    if multiple_failed:
+        lines.append(
+            (
+                f"{observation_index}. {multiple_failed} candidate(s) failed multiple rounds, "
+                "which suggests the batch quality gap was not limited to a single stage."
+            )
+        )
+        observation_index += 1
+
+    for signal in recurring_gap_signals[:2]:
+        label = str(signal.get("signal_label", "") or "").strip()
+        if not label:
+            continue
+        examples = [value for value in (signal.get("evidence_examples", []) or []) if str(value or "").strip()]
+        example_text = str(examples[0]).rstrip(". ") if examples else ""
+        evidence = f" Example: {example_text}." if example_text else ""
+        lines.append(
+            (
+                f"{observation_index}. Repeated gap in {signal.get('round_label', 'the batch')}: "
+                f"\"{label}\" appeared across {int(signal.get('candidate_occurrences', 0) or 0)} candidate(s)."
+                f"{evidence}"
+            )
+        )
+        observation_index += 1
+
+    for signal in coding_signals[:1]:
+        title = str(signal.get("question_title", "") or "").strip() or "the coding challenge"
+        languages = ", ".join(signal.get("languages", []) or [])
+        language_clause = f" Common languages: {languages}." if languages else ""
+        lines.append(
+            (
+                f"{observation_index}. Hands-on coding signal: \"{title}\" was attempted by "
+                f"{int(signal.get('attempted_candidates', 0) or 0)} candidate(s), with "
+                f"{int(signal.get('failed_candidates', 0) or 0)} failing and an average score of "
+                f"{float(signal.get('average_percentage', 0) or 0):.2f}%."
+                f"{language_clause}"
+            )
+        )
+        observation_index += 1
+
+    lines.extend([
+        "",
+        "Overall Assessment & Recommendations",
+        "- Use the weakest rounds and repeated gap signals in this summary as the primary prescreening checkpoints for the next drive.",
+        "- Focus candidate preparation on the repeated concept and coding patterns called out above rather than only on overall scores.",
+        "- Recheck interview readiness before scheduling when completion is low or many candidates remain in progress.",
+        "- Treat repeated multi-round failures as a sign to tighten shortlisting criteria for this role before the next batch is shared.",
+    ])
+
+    return "\n".join(lines)
+
+
 def _strip_coding_overview_lines(text: str) -> str:
     """Remove high-level candidate/application overview lines from coding summary."""
     if not text:
@@ -481,3 +622,52 @@ def generate_coding_round_summary(coding_data):
     except Exception as e:
         print(f"Error generating coding summary: {e}. Using fallback coding summary.")
         return _strip_coding_overview_lines(_build_fallback_coding_summary(coding_data))
+
+
+def generate_consolidated_evaluation_summary(consolidated_payload):
+    """
+    Generate an AI-based consolidated summary across multiple selected candidates.
+    """
+    ai_client = _get_ai_client()
+    if not ai_client:
+        print("Gemini AI client not initialized. Using fallback consolidated summary.")
+        return _build_fallback_consolidated_summary(consolidated_payload)
+
+    prompt = f"""
+    Create a professional consolidated interview-performance summary from the structured data below.
+
+    Required structure:
+    1) Title line: "Consolidated Interview Feedback"
+    2) Section heading: "Overall Outcome"
+       - One concise paragraph that summarizes candidate volume, verdict mix, completion status, and the overall signal.
+    3) Section heading: "Key Observations"
+       - 5 to 7 numbered observations covering recurring patterns across the batch.
+       - Prioritize repeated weak rounds, low average-score rounds, completion/readiness issues, recurring knowledge gaps from repeated question evidence, and coding/performance trends when present.
+    4) Section heading: "Overall Assessment & Recommendations"
+       - 4 to 6 bullet points with practical next-step recommendations.
+
+    Constraints:
+    - Do not mention AI.
+    - Do not mention candidate names or emails.
+    - Use only the provided structured data.
+    - If recurring_gap_signals include repeated question evidence, infer the underlying concept gap from that evidence instead of repeating raw question text verbatim.
+    - Use recurring_gap_signals only when the evidence clearly supports the conclusion; otherwise stay generic and data-driven.
+    - Use coding_signals to comment on hands-on implementation strength or weakness when present.
+    - If round labels are generic and detailed evidence is weak, keep observations generic and data-driven.
+    - Do not mention submitted code.
+    - Do not output a table.
+    - Keep the summary detailed but readable for HR/hiring review.
+
+    Consolidated data:
+    {consolidated_payload}
+    """
+
+    try:
+        response = ai_client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=prompt
+        )
+        return response.text.strip()
+    except Exception as e:
+        print(f"Error generating consolidated summary: {e}. Using fallback consolidated summary.")
+        return _build_fallback_consolidated_summary(consolidated_payload)
