@@ -121,6 +121,34 @@ def _attach_report_info(candidate: dict):
     candidate["report_id"] = info.get("id") if info else None
 
 
+def _extract_test_session_ids(test_entry: dict) -> set[str]:
+    session_ids = set()
+    tests_map = (test_entry or {}).get("tests", {}) or {}
+    if not isinstance(tests_map, dict):
+        return session_ids
+
+    for test_meta in tests_map.values():
+        session_id = str((test_meta or {}).get("session_id", "")).strip().lower()
+        if session_id:
+            session_ids.add(session_id)
+
+    return session_ids
+
+
+def _session_scope_by_email(test_entries) -> dict[str, set[str]]:
+    scope = {}
+    for entry in test_entries or []:
+        email_key = _normalize_email((entry or {}).get("email", ""))
+        if not email_key or email_key in scope:
+            continue
+        scope[email_key] = set(_extract_test_session_ids(entry))
+    return scope
+
+
+def _attempted_rounds(candidate: dict) -> int:
+    return int(((candidate or {}).get("summary") or {}).get("attempted_rounds") or 0)
+
+
 def _collect_reports_scope(
     *,
     user_email: str,
@@ -303,6 +331,9 @@ def _collect_reports_scope(
         "specific_date": specific_date,
         "date_offset": date_offset,
         "period_label": period_label,
+        "range_start": range_start,
+        "range_end": range_end,
+        "proctoring_scope": proctoring_scope,
     }
 
 
@@ -377,6 +408,9 @@ def reports():
     )
     filtered_candidates = scope["filtered_candidates"]
     filtered_total_candidates = scope["filtered_total_candidates"]
+    range_start = scope["range_start"]
+    range_end = scope["range_end"]
+    proctoring_scope = scope["proctoring_scope"]
     total_pages = max(1, ceil(filtered_total_candidates / per_page)) if filtered_total_candidates else 1
     page = min(page, total_pages)
     start_idx = (page - 1) * per_page
