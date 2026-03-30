@@ -112,6 +112,11 @@ def test_mcq_submit_post_accepts_json_accept_header_and_returns_redirect(monkeyp
         payload = response.get_json()
         assert payload["redirect_url"].endswith(f"/mcq/completed/{session_id}")
         assert session_id in EVALUATION_STORE
+
+        # Link must be invalid once candidate submits.
+        retry_response = client.get(f"/mcq/start/{session_id}")
+        assert retry_response.status_code == 404
     finally:
         _cleanup_session(session_id)
         EVALUATION_STORE.clear()
+

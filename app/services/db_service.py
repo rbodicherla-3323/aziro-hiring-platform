@@ -238,6 +238,30 @@ def get_test_link_meta(session_id: str) -> dict | None:
         "expires_at": _dt_to_iso(record.expires_at),
     }
 
+def expire_test_link_now(session_id: str, when: datetime | None = None) -> bool:
+    """
+    Expire a test link immediately.
+
+    Returns True when a link record was found and updated; False otherwise.
+    This helper is intentionally fail-safe so candidate submit flows are never blocked.
+    """
+    sid = str(session_id or "").strip()
+    if not sid:
+        return False
+
+    when = when or _now_utc()
+
+    try:
+        record = TestLink.query.get(sid)
+        if not record:
+            return False
+        record.expires_at = when
+        db.session.add(record)
+        db.session.commit()
+        return True
+    except Exception:
+        db.session.rollback()
+        return False
 
 def get_test_link_stats(
     since: datetime | None = None,
