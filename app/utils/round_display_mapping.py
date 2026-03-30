@@ -33,6 +33,7 @@ ROUND_DISPLAY_MAPPING = {
         "L3A": "Python API Automation",
         "L4": "Coding Challenge (Python)",
         "L5": "Soft Skills",
+        "L6": "Domain",
     },
 
     # ---------------- Python QA + Linux ----------------
