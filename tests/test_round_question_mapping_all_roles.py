@@ -73,6 +73,7 @@ def test_all_in_scope_role_round_banks_match_enterprise_mapping():
 def test_python_qa_no_longer_includes_aptitude_l1():
     assert ROUND_QUESTION_MAPPING["python_qa"] == {
         "L2": ["python/python_senior_theory_debug.json"],
-        "L3": ["qa/python_qa_enterprise_shared.json"],
+        "L3": ["qa/python_qa_enterprise_ui.json"],
+        "L3A": ["qa/python_qa_enterprise_api.json"],
         "L5": ["soft_skills.json"],
     }

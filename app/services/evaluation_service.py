@@ -33,6 +33,7 @@ ROUND_PASS_PERCENTAGE = {
     "L1": 60,   # Aptitude - logical/quantitative reasoning
     "L2": 70,   # Technical Theory
     "L3": 70,   # Technical Fundamentals / Practical
+    "L3A": 70,  # Technical Fundamentals / Practical
     "L5": 50,   # Soft Skills - subjective, keep lenient
     "L6": 65,   # Domain-specific knowledge
 }

@@ -19,10 +19,10 @@ ROLE_ROUND_MAPPING = {
         "allow_domain": False
     },
     "python_qa": {
-        "rounds": ["L2", "L3", "L5"],
+        "rounds": ["L2", "L3", "L3A", "L5"],
         "coding_rounds": ["L4"],
         "coding_language": "python",
-        "allow_domain": True
+        "allow_domain": False
     },
     "python_qa_linux": {
         "rounds": ["L1", "L2", "L3", "L5"],

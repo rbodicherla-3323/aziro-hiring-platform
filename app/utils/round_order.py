@@ -1,4 +1,4 @@
-INTERNAL_ROUND_ORDER = ("L1", "L2", "L3", "L4", "L5", "L6")
+INTERNAL_ROUND_ORDER = ("L1", "L2", "L3", "L3A", "L4", "L5", "L6")
 
 
 def round_sort_key(round_key: str):

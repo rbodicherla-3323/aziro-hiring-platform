@@ -29,7 +29,8 @@ ROUND_DISPLAY_MAPPING = {
     "python_qa": {
         "L1": "Aptitude",
         "L2": "Python Theory + Debugging",
-        "L3": "QA & Testing",
+        "L3": "Python UI Automation",
+        "L3A": "Python API Automation",
         "L4": "Coding Challenge (Python)",
         "L5": "Soft Skills",
     },
