@@ -1,2080 +1,892 @@
 [
-  {
-    "id": "python-python-senior-theory-debug-001",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = [1, 2, 3]\nx.append([4, 5])\nprint(len(x))?",
-    "options": [
-      "4",
-      "Error",
-      "5",
-      "3"
-    ],
-    "correct_answer": "4",
-    "topic": "Data Structures and Performance",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "data-structures-and-performance",
-      "debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-002",
-    "question": "A snippet runs with the following behavior. Which output is correct?\na = [1, 2, 3]\nb = a\nb.append(4)\nprint(a)?",
-    "options": [
-      "[1, 2, 3, 4]",
-      "Error under stated conditions",
-      "[4]",
-      "None"
-    ],
-    "correct_answer": "[1, 2, 3, 4]",
-    "topic": "Practical Debugging",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "practical-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-003",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint({1, 2, 3} & {2, 3, 4})?",
-    "options": [
-      "{2, 3}",
-      "Error",
-      "{1,2,3,4}",
-      "{1, 4}"
-    ],
-    "correct_answer": "{2, 3}",
-    "topic": "Data Structures and Performance",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "data-structures-and-performance",
-      "debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-004",
-    "question": "What does *args allow in a function definition?",
-    "options": [
-      "Variable positional args",
-      "Keyword arguments",
-      "Default parameters under production constraints",
-      "Type annotations"
-    ],
-    "correct_answer": "Variable positional args",
-    "topic": "Functions and Call Semantics",
-    "difficulty": "easy",
-    "style": "operations",
-    "tags": [
-      "functions-and-call-semantics",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-005",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint([x**2 for x in range(4)])?",
-    "options": [
-      "[0, 1, 4, 9]",
-      "[1, 2, 3, 4]",
-      "[1, 4, 9, 16]",
-      "[0, 2, 4, 6]"
-    ],
-    "correct_answer": "[0, 1, 4, 9]",
-    "topic": "Iterators and Comprehensions",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "iterators-and-comprehensions",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-006",
-    "question": "A snippet runs with the following behavior. Which output is correct?\ndef f(a, b=[]): b.append(a) return b\nprint(f(1)); print(f(2))?",
-    "options": [
-      "[1] then [1, 2]",
-      "[1] then [2]",
-      "[1, 2] then [1, 2]",
-      "Error both times"
-    ],
-    "correct_answer": "[1] then [1, 2]",
-    "topic": "Practical Debugging",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "practical-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-007",
-    "question": "Which method returns a shallow copy of a list?",
-    "options": [
-      ".copy() under stated conditions",
-      ".clone()",
-      ".duplicate() based on available context",
-      ".replica()"
-    ],
-    "correct_answer": ".copy() under stated conditions",
-    "topic": "Data Structures and Performance",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "data-structures-and-performance",
-      "list",
-      "python",
-      "scenario"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-008",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint('abcdef'[1:4])?",
-    "options": [
-      "bcd",
-      "bcde",
-      "abcd",
-      "abc"
-    ],
-    "correct_answer": "bcd",
-    "topic": "Python Language and Runtime",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-009",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = {'a': 1, 'b': 2}\nprint(x.get('c', 0))?",
-    "options": [
-      "0 under stated conditions",
-      "Error based on available context",
-      "''",
-      "None"
-    ],
-    "correct_answer": "0 under stated conditions",
-    "topic": "Data Structures and Performance",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "data-structures-and-performance",
-      "debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-010",
-    "question": "A snippet runs with the following behavior. Which output is correct?\ntry: print(1/0)\nexcept ZeroDivisionError: print('caught')\nfinally: print('done')?",
-    "options": [
-      "caught then done",
-      "caught under stated conditions",
-      "done",
-      "None"
-    ],
-    "correct_answer": "caught then done",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "exceptions-and-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-011",
-    "question": "What is a lambda function?",
-    "options": [
-      "An anonymous function",
-      "A class method only under production constraints",
-      "A built-in module",
-      "A named function"
-    ],
-    "correct_answer": "An anonymous function",
-    "topic": "Functions and Call Semantics",
-    "difficulty": "medium",
-    "style": "operations",
-    "tags": [
-      "functions-and-call-semantics",
-      "lambda",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-012",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(sorted([3,1,2], reverse=True))?",
-    "options": [
-      "[3, 2, 1]",
-      "Error",
-      "[3, 1, 2]",
-      "[1, 2, 3]"
-    ],
-    "correct_answer": "[3, 2, 1]",
-    "topic": "Python Language and Runtime",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-013",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = (1,)\nprint(type(x).__name__)?",
-    "options": [
-      "tuple",
-      "set",
-      "int",
-      "None under stated conditions"
-    ],
-    "correct_answer": "tuple",
-    "topic": "Python Language and Runtime",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-014",
-    "question": "What does __init__ method do in a class?",
-    "options": [
-      "Initializes object",
-      "Deletes object",
-      "Compares objects under production constraints",
-      "Copies object"
-    ],
-    "correct_answer": "Initializes object",
-    "topic": "OOP and Design",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "class",
-      "oop-and-design",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-015",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint({}.fromkeys(['a','b'], 0))?",
-    "options": [
-      "{'a': 0, 'b': 0}",
-      "Error",
-      "[0, 0] under stated conditions",
-      "None"
-    ],
-    "correct_answer": "{'a': 0, 'b': 0}",
-    "topic": "Data Structures and Performance",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "data-structures-and-performance",
-      "debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-016",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint('release candidate'.title())?",
-    "options": [
-      "Release Candidate",
-      "None under stated conditions",
-      "0",
-      "1"
-    ],
-    "correct_answer": "Release Candidate",
-    "topic": "Python Language and Runtime",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-017",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = [1, 2, 3]\nprint(x[::-1])?",
-    "options": [
-      "[3, 2, 1]",
-      "[3]",
-      "[1, 2, 3]",
-      "Error"
-    ],
-    "correct_answer": "[3, 2, 1]",
-    "topic": "Data Structures and Performance",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "data-structures-and-performance",
-      "debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-018",
-    "question": "What does the 'with' statement ensure?",
-    "options": [
-      "Resource cleanup",
-      "Error logging",
-      "Type checking",
-      "Loop iteration under production constraints"
-    ],
-    "correct_answer": "Resource cleanup",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "exceptions-and-debugging",
-      "python",
-      "scenario"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-019",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(list(map(str, [1,2,3])))?",
-    "options": [
-      "['1','2','3']",
-      "[1, 2, 3]",
-      "Error",
-      "['str','str']"
-    ],
-    "correct_answer": "['1','2','3']",
-    "topic": "Functions and Call Semantics",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "functions-and-call-semantics",
-      "list",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-020",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(isinstance(True, int))?",
-    "options": [
-      "True",
-      "False",
-      "Error",
-      "None"
-    ],
-    "correct_answer": "True",
-    "topic": "Practical Debugging",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "practical-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-021",
-    "question": "What does @staticmethod decorator indicate?",
-    "options": [
-      "No implicit param under stated conditions",
-      "Requires self param based on available context",
-      "Private method only",
-      "Requires cls param"
-    ],
-    "correct_answer": "No implicit param under stated conditions",
-    "topic": "OOP and Design",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "decorator",
-      "oop-and-design",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-022",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint('abc'.replace('b', 'x'))?",
-    "options": [
-      "axc",
-      "xbc",
-      "abc",
-      "abx"
-    ],
-    "correct_answer": "axc",
-    "topic": "Python Language and Runtime",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-023",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(list(filter(lambda x: x>2, [1,2,3,4])))?",
-    "options": [
-      "[3, 4]",
-      "[2, 3, 4]",
-      "[1, 2, 3]",
-      "[1, 2]"
-    ],
-    "correct_answer": "[3, 4]",
-    "topic": "Functions and Call Semantics",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "functions-and-call-semantics",
-      "lambda",
-      "list",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-024",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(dict(zip(['a','b'], [1,2])))?",
-    "options": [
-      "{'a':1,'b':2}",
-      "{1:'a',2:'b'}",
-      "[('a',1),('b',2)]",
-      "Error"
-    ],
-    "correct_answer": "{'a':1,'b':2}",
-    "topic": "Data Structures and Performance",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "data-structures-and-performance",
-      "debugging",
-      "dict",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-025",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = 'hello'\nprint(x[::2])?",
-    "options": [
-      "hlo",
-      "hl",
-      "hel",
-      "elo"
-    ],
-    "correct_answer": "hlo",
-    "topic": "Python Language and Runtime",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-026",
-    "question": "Which of the following raises TypeError?",
-    "options": [
-      "'3' + 4",
-      "0 + 4",
-      "3 + 4",
-      "'3' + '4'"
-    ],
-    "correct_answer": "'3' + 4",
-    "topic": "Practical Debugging",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "practical-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-027",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(all([True, True, False]))?",
-    "options": [
-      "False",
-      "Error",
-      "None",
-      "True"
-    ],
-    "correct_answer": "False",
-    "topic": "Python Language and Runtime",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-028",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(any([False, 0, '', 1]))?",
-    "options": [
-      "True",
-      "False",
-      "1",
-      "None"
-    ],
-    "correct_answer": "True",
-    "topic": "Python Language and Runtime",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-029",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nclass A: x = 5\na = A()\na.x = 10\nprint(A.x)?",
-    "options": [
-      "5 under stated conditions",
-      "Error based on available context",
-      "10",
-      "None"
-    ],
-    "correct_answer": "5 under stated conditions",
-    "topic": "OOP and Design",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "class",
-      "debugging",
-      "oop-and-design",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-030",
-    "question": "What does **kwargs allow in a function?",
-    "options": [
-      "Keyword arguments",
-      "Default values only",
-      "Positional arguments",
-      "Return types"
-    ],
-    "correct_answer": "Keyword arguments",
-    "topic": "Functions and Call Semantics",
-    "difficulty": "medium",
-    "style": "operations",
-    "tags": [
-      "functions-and-call-semantics",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-031",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint({1:1, 1.0:2})?",
-    "options": [
-      "{1: 2}",
-      "{1.0: 1}",
-      "{1: 1, 1.0: 2}",
-      "Error"
-    ],
-    "correct_answer": "{1: 2}",
-    "topic": "Practical Debugging",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "practical-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-032",
-    "question": "A snippet runs with the following behavior. Which output is correct?\ndef func(x=[]): x.append(1) return len(x)\nprint(func(), func())?",
-    "options": [
-      "1 2",
-      "1 1",
-      "2 2",
-      "Error"
-    ],
-    "correct_answer": "1 2",
-    "topic": "Practical Debugging",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "practical-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-033",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(type(lambda: None).__name__)?",
-    "options": [
-      "function",
-      "lambda",
-      "NoneType",
-      "method"
-    ],
-    "correct_answer": "function",
-    "topic": "Functions and Call Semantics",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "functions-and-call-semantics",
-      "lambda",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-034",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint('A' > 'a')?",
-    "options": [
-      "False",
-      "Error",
-      "None",
-      "True"
-    ],
-    "correct_answer": "False",
-    "topic": "Practical Debugging",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "practical-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-035",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = [1, [2, 3]]\ny = x.copy()\ny[1].append(4)\nprint(x)?",
-    "options": [
-      "[1, [2, 3, 4]]",
-      "Error",
-      "[1, [2, 3], 4]",
-      "[1, [2, 3]]"
-    ],
-    "correct_answer": "[1, [2, 3, 4]]",
-    "topic": "Practical Debugging",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "practical-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-036",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint('hello'.find('xyz'))?",
-    "options": [
-      "-1",
-      "Error",
-      "0",
-      "None"
-    ],
-    "correct_answer": "-1",
-    "topic": "Python Language and Runtime",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-037",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(sum([1,2,3], 10))?",
-    "options": [
-      "16",
-      "6",
-      "10",
-      "Error"
-    ],
-    "correct_answer": "16",
-    "topic": "Python Language and Runtime",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-038",
-    "question": "A snippet runs with the following behavior. Which output is correct?\ntry: x = int('abc')\nexcept: x = -1\nprint(x)?",
-    "options": [
-      "-1",
-      "0",
-      "Error",
-      "abc"
-    ],
-    "correct_answer": "-1",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "exceptions-and-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-039",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint([i for i in range(10) if i%3==0])?",
-    "options": [
-      "[0, 3, 6, 9]",
-      "[0, 3, 6] under stated conditions",
-      "[3, 6, 9]",
-      "None"
-    ],
-    "correct_answer": "[0, 3, 6, 9]",
-    "topic": "Iterators and Comprehensions",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "iterators-and-comprehensions",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-040",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nd = {'a':1}\nd.setdefault('b', 2)\nprint(d)?",
-    "options": [
-      "{'a':1,'b':2}",
-      "Error",
-      "{'b': 2} under stated conditions",
-      "None"
-    ],
-    "correct_answer": "{'a':1,'b':2}",
-    "topic": "Data Structures and Performance",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "data-structures-and-performance",
-      "debugging",
-      "python",
-      "set"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-041",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(divmod(17, 5))?",
-    "options": [
-      "(3, 2)",
-      "Error",
-      "4",
-      "(2, 3)"
-    ],
-    "correct_answer": "(3, 2)",
-    "topic": "Python Language and Runtime",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-042",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nfor i in range(3): pass\nprint(i)?",
-    "options": [
-      "2",
-      "Error",
-      "3",
-      "0"
-    ],
-    "correct_answer": "2",
-    "topic": "Practical Debugging",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "practical-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-043",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(' '.join(['a','b','c']))?",
-    "options": [
-      "a b c",
-      "'a' 'b' 'c'",
-      "abc",
-      "a,b,c"
-    ],
-    "correct_answer": "a b c",
-    "topic": "Python Language and Runtime",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-044",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = [1, 2, 3]\nx[1:2] = [4, 5]\nprint(x)?",
-    "options": [
-      "[1, 4, 5, 3]",
-      "[4, 5, 3]",
-      "Error",
-      "[1, [4,5], 3]"
-    ],
-    "correct_answer": "[1, 4, 5, 3]",
-    "topic": "Data Structures and Performance",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "data-structures-and-performance",
-      "debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-045",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(bin(10))?",
-    "options": [
-      "0b1010",
-      "10",
-      "0x10 under stated conditions",
-      "None"
-    ],
-    "correct_answer": "0b1010",
-    "topic": "Python Language and Runtime",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-046",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(bool([]))?",
-    "options": [
-      "False",
-      "True under stated conditions",
-      "[]",
-      "None"
-    ],
-    "correct_answer": "False",
-    "topic": "Practical Debugging",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "practical-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-047",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint('abcabc'.count('ab'))?",
-    "options": [
-      "2",
-      "3",
-      "0",
-      "1"
-    ],
-    "correct_answer": "2",
-    "topic": "Python Language and Runtime",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-048",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(type(1+2j).__name__)?",
-    "options": [
-      "complex",
-      "float under stated conditions",
-      "int",
-      "None"
-    ],
-    "correct_answer": "complex",
-    "topic": "Python Language and Runtime",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-049",
-    "question": "A snippet runs with the following behavior. Which output is correct?\ndef outer(): x = 10 def inner(): return x return inner\nprint(outer()())?",
-    "options": [
-      "10 under stated conditions",
-      "inner based on available context",
-      "None",
-      "Error"
-    ],
-    "correct_answer": "10 under stated conditions",
-    "topic": "Functions and Call Semantics",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "functions-and-call-semantics",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-050",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nclass A: def __repr__(self): return 'A()'\na = A()\nprint([a])?",
-    "options": [
-      "[A()]",
-      "A()",
-      "[<A object>]",
-      "Error"
-    ],
-    "correct_answer": "[A()]",
-    "topic": "OOP and Design",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "class",
-      "debugging",
-      "oop-and-design",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-051",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint([x*y for x in [1,2] for y in [3,4]])?",
-    "options": [
-      "[3,4,6,8]",
-      "[4,6]",
-      "[3,8]",
-      "[[3,4],[6,8]]"
-    ],
-    "correct_answer": "[3,4,6,8]",
-    "topic": "Iterators and Comprehensions",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "iterators-and-comprehensions",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-052",
-    "question": "A snippet runs with the following behavior. Which output is correct?\ndef gen(): yield 1 yield 2\ng = gen()\nprint(next(g), next(g))?",
-    "options": [
-      "1 2",
-      "1 1",
-      "Error",
-      "2 1"
-    ],
-    "correct_answer": "1 2",
-    "topic": "Iterators and Comprehensions",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "iterators-and-comprehensions",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-053",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint((lambda x, y: x+y)(3, 4))?",
-    "options": [
-      "7 under stated conditions",
-      "34",
-      "None",
-      "Error based on available context"
-    ],
-    "correct_answer": "7 under stated conditions",
-    "topic": "Functions and Call Semantics",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "functions-and-call-semantics",
-      "lambda",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-054",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nfrom collections import Counter\nprint(Counter('aabbbcc').most_common(1))?",
-    "options": [
-      "[('b', 3)]",
-      "{'b': 3}",
-      "Error",
-      "[('a', 2)]"
-    ],
-    "correct_answer": "[('b', 3)]",
-    "topic": "Data Structures and Performance",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "data-structures-and-performance",
-      "debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-055",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint({k:v for k,v in zip('abc',[1,2,3])})?",
-    "options": [
-      "{'a':1,'b':2,'c':3}",
-      "Error",
-      "{1:'a'} under stated conditions",
-      "None"
-    ],
-    "correct_answer": "{'a':1,'b':2,'c':3}",
-    "topic": "Iterators and Comprehensions",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "iterators-and-comprehensions",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-056",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nclass B(Exception): pass\ntry: raise B('oops')\nexcept Exception as e: print(type(e).__name__)?",
-    "options": [
-      "B under stated conditions",
-      "oops",
-      "Exception based on available context",
-      "Error"
-    ],
-    "correct_answer": "B under stated conditions",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "class",
-      "debugging",
-      "exception",
-      "exceptions-and-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-057",
-    "question": "A snippet runs with the following behavior. Which output is correct?\ndef deco(f): def wrap(): return f() + 1 return wrap\n@deco\ndef five(): return 5\nprint(five())?",
-    "options": [
-      "6",
-      "None",
-      "5",
-      "Error"
-    ],
-    "correct_answer": "6",
-    "topic": "OOP and Design",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "oop-and-design",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-058",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(list(zip([1,2,3],[4,5])))?",
-    "options": [
-      "[(1,4),(2,5)]",
-      "Error",
-      "[(1,4),(2,5),(3,None)]",
-      "[(1,2),(3,4)]"
-    ],
-    "correct_answer": "[(1,4),(2,5)]",
-    "topic": "Python Language and Runtime",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "list",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-059",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = [1, 2, 3]\ny = x\nx = x + [4]\nprint(y)?",
-    "options": [
-      "[1, 2, 3]",
-      "Error",
-      "[1, 2, 3, 4]",
-      "[4]"
-    ],
-    "correct_answer": "[1, 2, 3]",
-    "topic": "Practical Debugging",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "practical-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-060",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(0.1 + 0.2 == 0.3)?",
-    "options": [
-      "False",
-      "Error",
-      "True",
-      "3"
-    ],
-    "correct_answer": "False",
-    "topic": "Practical Debugging",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "practical-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-061",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nclass M(type): pass\nclass A(metaclass=M): pass\nprint(type(A).__name__)?",
-    "options": [
-      "M",
-      "object",
-      "type",
-      "A"
-    ],
-    "correct_answer": "M",
-    "topic": "OOP and Design",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "class",
-      "debugging",
-      "oop-and-design",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-062",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nfrom functools import reduce\nprint(reduce(lambda a,b: a*b, [1,2,3,4]))?",
-    "options": [
-      "24",
-      "10",
-      "Error",
-      "4"
-    ],
-    "correct_answer": "24",
-    "topic": "Functions and Call Semantics",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "functions-and-call-semantics",
-      "lambda",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-063",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nimport copy\na = [[1,2],[3,4]]\nb = copy.deepcopy(a)\nb[0].append(5)\nprint(a)?",
-    "options": [
-      "[[1,2],[3,4]]",
-      "[[1,2,5],[3,4]]",
-      "[[1,2],[3,4,5]]",
-      "Error"
-    ],
-    "correct_answer": "[[1,2],[3,4]]",
-    "topic": "Data Structures and Performance",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "data-structures-and-performance",
-      "debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-064",
-    "question": "A snippet runs with the following behavior. Which output is correct?\ndef f(): try: return 1 finally: return 2\nprint(f())?",
-    "options": [
-      "2",
-      "Error",
-      "None",
-      "1"
-    ],
-    "correct_answer": "2",
-    "topic": "Practical Debugging",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "practical-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-065",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = {i: i**2 for i in range(3)}\nprint(x)?",
-    "options": [
-      "{0:0,1:1,2:4}",
-      "[0, 1, 4] under stated conditions",
-      "Error",
-      "None"
-    ],
-    "correct_answer": "{0:0,1:1,2:4}",
-    "topic": "Iterators and Comprehensions",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "iterators-and-comprehensions",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-066",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(sorted('dcba'))?",
-    "options": [
-      "['a','b','c','d']",
-      "abcd",
-      "dcba",
-      "['d','c','b','a']"
-    ],
-    "correct_answer": "['a','b','c','d']",
-    "topic": "Python Language and Runtime",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-067",
-    "question": "A snippet runs with the following behavior. Which output is correct?\ndef gen(): return (x**2 for x in range(3))\nprint(list(gen()))?",
-    "options": [
-      "[0, 1, 4]",
-      "Error",
-      "[1, 4, 9]",
-      "(0, 1, 4)"
-    ],
-    "correct_answer": "[0, 1, 4]",
-    "topic": "Iterators and Comprehensions",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "iterators-and-comprehensions",
-      "list",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-068",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nclass A: def __len__(self): return 5\nprint(len(A()))?",
-    "options": [
-      "5",
-      "None",
-      "0",
-      "Error"
-    ],
-    "correct_answer": "5",
-    "topic": "OOP and Design",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "class",
-      "debugging",
-      "oop-and-design",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-069",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(hasattr([], '__iter__'))?",
-    "options": [
-      "True",
-      "None",
-      "Error",
-      "False"
-    ],
-    "correct_answer": "True",
-    "topic": "Python Language and Runtime",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-070",
-    "question": "A snippet runs with the following behavior. Which output is correct?\ntry: raise ValueError('test')\nexcept ValueError as e: print(str(e))?",
-    "options": [
-      "test",
-      "None",
-      "Error",
-      "ValueError"
-    ],
-    "correct_answer": "test",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "exceptions-and-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-071",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(frozenset([1,2,3]) == {1,2,3})?",
-    "options": [
-      "True",
-      "Error",
-      "None",
-      "False"
-    ],
-    "correct_answer": "True",
-    "topic": "Python Language and Runtime",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-and-runtime",
-      "set"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-072",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nclass A: pass\nclass B(A): pass\nprint(issubclass(B, A))?",
-    "options": [
-      "True",
-      "None",
-      "Error",
-      "False"
-    ],
-    "correct_answer": "True",
-    "topic": "OOP and Design",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "class",
-      "debugging",
-      "oop-and-design",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-073",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint({True: 'a', 1: 'b', 1.0: 'c'})?",
-    "options": [
-      "{True: 'c'}",
-      "{True:'a',1:'b',1.0:'c'}",
-      "{1: 'b'}",
-      "Error"
-    ],
-    "correct_answer": "{True: 'c'}",
-    "topic": "Practical Debugging",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "practical-debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-074",
-    "question": "A snippet runs with the following behavior. Which output is correct?\ndef f(*a, **k): print(len(a), len(k))\nf(1,2,x=3,y=4)?",
-    "options": [
-      "2 2",
-      "4 0",
-      "Error",
-      "0 4"
-    ],
-    "correct_answer": "2 2",
-    "topic": "Functions and Call Semantics",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "functions-and-call-semantics",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-075",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(list(range(10, 0, -3)))?",
-    "options": [
-      "[10, 7, 4, 1]",
-      "[7, 4, 1]",
-      "[10, 7, 4]",
-      "[10, 8, 5, 2]"
-    ],
-    "correct_answer": "[10, 7, 4, 1]",
-    "topic": "Python Language and Runtime",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "list",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-076",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = [1, 2, 3]\nx *= 2\nprint(x)?",
-    "options": [
-      "[1,2,3,1,2,3]",
-      "Error",
-      "[[1,2,3],[1,2,3]]",
-      "[2, 4, 6]"
-    ],
-    "correct_answer": "[1,2,3,1,2,3]",
-    "topic": "Data Structures and Performance",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "data-structures-and-performance",
-      "debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-077",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nclass A: def __add__(self, o): return 42\nprint(A() + A())?",
-    "options": [
-      "42 under stated conditions",
-      "None",
-      "Error based on available context",
-      "A()"
-    ],
-    "correct_answer": "42 under stated conditions",
-    "topic": "OOP and Design",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "class",
-      "debugging",
-      "oop-and-design",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-078",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(type(iter([])).__name__)?",
-    "options": [
-      "list_iterator",
-      "list",
-      "iterator under stated conditions",
-      "None"
-    ],
-    "correct_answer": "list_iterator",
-    "topic": "Iterators and Comprehensions",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "iterators-and-comprehensions",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-079",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint('abc'.__class__.__name__)?",
-    "options": [
-      "str under stated conditions",
-      "text",
-      "String based on available context",
-      "None"
-    ],
-    "correct_answer": "str under stated conditions",
-    "topic": "OOP and Design",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "class",
-      "debugging",
-      "oop-and-design",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-080",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nfrom collections import defaultdict\nd = defaultdict(list)\nd['x'].append(1)\nprint(dict(d))?",
-    "options": [
-      "{'x': [1]}",
-      "{'x': 1}",
-      "Error",
-      "defaultdict(1)"
-    ],
-    "correct_answer": "{'x': [1]}",
-    "topic": "Data Structures and Performance",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "data-structures-and-performance",
-      "debugging",
-      "dict",
-      "list",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-081",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint([None] * 3)?",
-    "options": [
-      "[None, None, None]",
-      "None under stated conditions",
-      "[3]",
-      "0"
-    ],
-    "correct_answer": "[None, None, None]",
-    "topic": "Data Structures and Performance",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "data-structures-and-performance",
-      "debugging",
-      "python"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-senior-theory-debug-082",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(globals().__class__.__name__)?",
-    "options": [
-      "dict under stated conditions",
-      "frame",
-      "globals based on available context",
-      "module"
-    ],
-    "correct_answer": "dict under stated conditions",
-    "topic": "Python Language and Runtime",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "class",
-      "debugging",
-      "python",
-      "python-language-and-runtime"
-    ],
-    "role_target": "python_shared_senior",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  }
+    {
+        "id":  "python-python-senior-theory-debug-001",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\ndef outer(): x = 10 def inner(): return x return inner\nprint(outer()())?",
+        "options":  [
+                        "10 under stated conditions",
+                        "inner based on available context",
+                        "None",
+                        "Error"
+                    ],
+        "correct_answer":  "10 under stated conditions",
+        "topic":  "Functions and Call Semantics",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "functions-and-call-semantics",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-002",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nclass A: def __repr__(self): return \u0027A()\u0027\na = A()\nprint([a])?",
+        "options":  [
+                        "[A()]",
+                        "A()",
+                        "[\u003cA object\u003e]",
+                        "Error"
+                    ],
+        "correct_answer":  "[A()]",
+        "topic":  "OOP and Design",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "class",
+                     "debugging",
+                     "oop-and-design",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-003",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint([x*y for x in [1,2] for y in [3,4]])?",
+        "options":  [
+                        "[3,4,6,8]",
+                        "[4,6]",
+                        "[3,8]",
+                        "[[3,4],[6,8]]"
+                    ],
+        "correct_answer":  "[3,4,6,8]",
+        "topic":  "Iterators and Comprehensions",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "iterators-and-comprehensions",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-004",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\ndef gen(): yield 1 yield 2\ng = gen()\nprint(next(g), next(g))?",
+        "options":  [
+                        "1 2",
+                        "1 1",
+                        "Error",
+                        "2 1"
+                    ],
+        "correct_answer":  "1 2",
+        "topic":  "Iterators and Comprehensions",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "iterators-and-comprehensions",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-005",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint((lambda x, y: x+y)(3, 4))?",
+        "options":  [
+                        "7 under stated conditions",
+                        "34",
+                        "None",
+                        "Error based on available context"
+                    ],
+        "correct_answer":  "7 under stated conditions",
+        "topic":  "Functions and Call Semantics",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "functions-and-call-semantics",
+                     "lambda",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-006",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nfrom collections import Counter\nprint(Counter(\u0027aabbbcc\u0027).most_common(1))?",
+        "options":  [
+                        "[(\u0027b\u0027, 3)]",
+                        "{\u0027b\u0027: 3}",
+                        "Error",
+                        "[(\u0027a\u0027, 2)]"
+                    ],
+        "correct_answer":  "[(\u0027b\u0027, 3)]",
+        "topic":  "Data Structures and Performance",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "data-structures-and-performance",
+                     "debugging",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-007",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint({k:v for k,v in zip(\u0027abc\u0027,[1,2,3])})?",
+        "options":  [
+                        "{\u0027a\u0027:1,\u0027b\u0027:2,\u0027c\u0027:3}",
+                        "Error",
+                        "{1:\u0027a\u0027} under stated conditions",
+                        "None"
+                    ],
+        "correct_answer":  "{\u0027a\u0027:1,\u0027b\u0027:2,\u0027c\u0027:3}",
+        "topic":  "Iterators and Comprehensions",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "iterators-and-comprehensions",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-008",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nclass B(Exception): pass\ntry: raise B(\u0027oops\u0027)\nexcept Exception as e: print(type(e).__name__)?",
+        "options":  [
+                        "B under stated conditions",
+                        "oops",
+                        "Exception based on available context",
+                        "Error"
+                    ],
+        "correct_answer":  "B under stated conditions",
+        "topic":  "Exceptions and Debugging",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "class",
+                     "debugging",
+                     "exception",
+                     "exceptions-and-debugging",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-009",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\ndef deco(f): def wrap(): return f() + 1 return wrap\n@deco\ndef five(): return 5\nprint(five())?",
+        "options":  [
+                        "6",
+                        "None",
+                        "5",
+                        "Error"
+                    ],
+        "correct_answer":  "6",
+        "topic":  "OOP and Design",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "oop-and-design",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-010",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(list(zip([1,2,3],[4,5])))?",
+        "options":  [
+                        "[(1,4),(2,5)]",
+                        "Error",
+                        "[(1,4),(2,5),(3,None)]",
+                        "[(1,2),(3,4)]"
+                    ],
+        "correct_answer":  "[(1,4),(2,5)]",
+        "topic":  "Python Language and Runtime",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "list",
+                     "python",
+                     "python-language-and-runtime"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-011",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nx = [1, 2, 3]\ny = x\nx = x + [4]\nprint(y)?",
+        "options":  [
+                        "[1, 2, 3]",
+                        "Error",
+                        "[1, 2, 3, 4]",
+                        "[4]"
+                    ],
+        "correct_answer":  "[1, 2, 3]",
+        "topic":  "Practical Debugging",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "practical-debugging",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-012",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(0.1 + 0.2 == 0.3)?",
+        "options":  [
+                        "False",
+                        "Error",
+                        "True",
+                        "3"
+                    ],
+        "correct_answer":  "False",
+        "topic":  "Practical Debugging",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "practical-debugging",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-013",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nclass M(type): pass\nclass A(metaclass=M): pass\nprint(type(A).__name__)?",
+        "options":  [
+                        "M",
+                        "object",
+                        "type",
+                        "A"
+                    ],
+        "correct_answer":  "M",
+        "topic":  "OOP and Design",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "class",
+                     "debugging",
+                     "oop-and-design",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-014",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nfrom functools import reduce\nprint(reduce(lambda a,b: a*b, [1,2,3,4]))?",
+        "options":  [
+                        "24",
+                        "10",
+                        "Error",
+                        "4"
+                    ],
+        "correct_answer":  "24",
+        "topic":  "Functions and Call Semantics",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "functions-and-call-semantics",
+                     "lambda",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-015",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nimport copy\na = [[1,2],[3,4]]\nb = copy.deepcopy(a)\nb[0].append(5)\nprint(a)?",
+        "options":  [
+                        "[[1,2],[3,4]]",
+                        "[[1,2,5],[3,4]]",
+                        "[[1,2],[3,4,5]]",
+                        "Error"
+                    ],
+        "correct_answer":  "[[1,2],[3,4]]",
+        "topic":  "Data Structures and Performance",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "data-structures-and-performance",
+                     "debugging",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-016",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\ndef f(): try: return 1 finally: return 2\nprint(f())?",
+        "options":  [
+                        "2",
+                        "Error",
+                        "None",
+                        "1"
+                    ],
+        "correct_answer":  "2",
+        "topic":  "Practical Debugging",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "practical-debugging",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-017",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nx = {i: i**2 for i in range(3)}\nprint(x)?",
+        "options":  [
+                        "{0:0,1:1,2:4}",
+                        "[0, 1, 4] under stated conditions",
+                        "Error",
+                        "None"
+                    ],
+        "correct_answer":  "{0:0,1:1,2:4}",
+        "topic":  "Iterators and Comprehensions",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "iterators-and-comprehensions",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-018",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(sorted(\u0027dcba\u0027))?",
+        "options":  [
+                        "[\u0027a\u0027,\u0027b\u0027,\u0027c\u0027,\u0027d\u0027]",
+                        "abcd",
+                        "dcba",
+                        "[\u0027d\u0027,\u0027c\u0027,\u0027b\u0027,\u0027a\u0027]"
+                    ],
+        "correct_answer":  "[\u0027a\u0027,\u0027b\u0027,\u0027c\u0027,\u0027d\u0027]",
+        "topic":  "Python Language and Runtime",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "python",
+                     "python-language-and-runtime"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-019",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\ndef gen(): return (x**2 for x in range(3))\nprint(list(gen()))?",
+        "options":  [
+                        "[0, 1, 4]",
+                        "Error",
+                        "[1, 4, 9]",
+                        "(0, 1, 4)"
+                    ],
+        "correct_answer":  "[0, 1, 4]",
+        "topic":  "Iterators and Comprehensions",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "iterators-and-comprehensions",
+                     "list",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-020",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nclass A: def __len__(self): return 5\nprint(len(A()))?",
+        "options":  [
+                        "5",
+                        "None",
+                        "0",
+                        "Error"
+                    ],
+        "correct_answer":  "5",
+        "topic":  "OOP and Design",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "class",
+                     "debugging",
+                     "oop-and-design",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-021",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(hasattr([], \u0027__iter__\u0027))?",
+        "options":  [
+                        "True",
+                        "None",
+                        "Error",
+                        "False"
+                    ],
+        "correct_answer":  "True",
+        "topic":  "Python Language and Runtime",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "python",
+                     "python-language-and-runtime"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-022",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\ntry: raise ValueError(\u0027test\u0027)\nexcept ValueError as e: print(str(e))?",
+        "options":  [
+                        "test",
+                        "None",
+                        "Error",
+                        "ValueError"
+                    ],
+        "correct_answer":  "test",
+        "topic":  "Exceptions and Debugging",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "exceptions-and-debugging",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-023",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(frozenset([1,2,3]) == {1,2,3})?",
+        "options":  [
+                        "True",
+                        "Error",
+                        "None",
+                        "False"
+                    ],
+        "correct_answer":  "True",
+        "topic":  "Python Language and Runtime",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "python",
+                     "python-language-and-runtime",
+                     "set"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-024",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nclass A: pass\nclass B(A): pass\nprint(issubclass(B, A))?",
+        "options":  [
+                        "True",
+                        "None",
+                        "Error",
+                        "False"
+                    ],
+        "correct_answer":  "True",
+        "topic":  "OOP and Design",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "class",
+                     "debugging",
+                     "oop-and-design",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-025",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint({True: \u0027a\u0027, 1: \u0027b\u0027, 1.0: \u0027c\u0027})?",
+        "options":  [
+                        "{True: \u0027c\u0027}",
+                        "{True:\u0027a\u0027,1:\u0027b\u0027,1.0:\u0027c\u0027}",
+                        "{1: \u0027b\u0027}",
+                        "Error"
+                    ],
+        "correct_answer":  "{True: \u0027c\u0027}",
+        "topic":  "Practical Debugging",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "practical-debugging",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-026",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\ndef f(*a, **k): print(len(a), len(k))\nf(1,2,x=3,y=4)?",
+        "options":  [
+                        "2 2",
+                        "4 0",
+                        "Error",
+                        "0 4"
+                    ],
+        "correct_answer":  "2 2",
+        "topic":  "Functions and Call Semantics",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "functions-and-call-semantics",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-027",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(list(range(10, 0, -3)))?",
+        "options":  [
+                        "[10, 7, 4, 1]",
+                        "[7, 4, 1]",
+                        "[10, 7, 4]",
+                        "[10, 8, 5, 2]"
+                    ],
+        "correct_answer":  "[10, 7, 4, 1]",
+        "topic":  "Python Language and Runtime",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "list",
+                     "python",
+                     "python-language-and-runtime"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-028",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nx = [1, 2, 3]\nx *= 2\nprint(x)?",
+        "options":  [
+                        "[1,2,3,1,2,3]",
+                        "Error",
+                        "[[1,2,3],[1,2,3]]",
+                        "[2, 4, 6]"
+                    ],
+        "correct_answer":  "[1,2,3,1,2,3]",
+        "topic":  "Data Structures and Performance",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "data-structures-and-performance",
+                     "debugging",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-029",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nclass A: def __add__(self, o): return 42\nprint(A() + A())?",
+        "options":  [
+                        "42 under stated conditions",
+                        "None",
+                        "Error based on available context",
+                        "A()"
+                    ],
+        "correct_answer":  "42 under stated conditions",
+        "topic":  "OOP and Design",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "class",
+                     "debugging",
+                     "oop-and-design",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-030",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(type(iter([])).__name__)?",
+        "options":  [
+                        "list_iterator",
+                        "list",
+                        "iterator under stated conditions",
+                        "None"
+                    ],
+        "correct_answer":  "list_iterator",
+        "topic":  "Iterators and Comprehensions",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "iterators-and-comprehensions",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-031",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(\u0027abc\u0027.__class__.__name__)?",
+        "options":  [
+                        "str under stated conditions",
+                        "text",
+                        "String based on available context",
+                        "None"
+                    ],
+        "correct_answer":  "str under stated conditions",
+        "topic":  "OOP and Design",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "class",
+                     "debugging",
+                     "oop-and-design",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-032",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nfrom collections import defaultdict\nd = defaultdict(list)\nd[\u0027x\u0027].append(1)\nprint(dict(d))?",
+        "options":  [
+                        "{\u0027x\u0027: [1]}",
+                        "{\u0027x\u0027: 1}",
+                        "Error",
+                        "defaultdict(1)"
+                    ],
+        "correct_answer":  "{\u0027x\u0027: [1]}",
+        "topic":  "Data Structures and Performance",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "data-structures-and-performance",
+                     "debugging",
+                     "dict",
+                     "list",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-033",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint([None] * 3)?",
+        "options":  [
+                        "[None, None, None]",
+                        "None under stated conditions",
+                        "[3]",
+                        "0"
+                    ],
+        "correct_answer":  "[None, None, None]",
+        "topic":  "Data Structures and Performance",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "data-structures-and-performance",
+                     "debugging",
+                     "python"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-034",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(globals().__class__.__name__)?",
+        "options":  [
+                        "dict under stated conditions",
+                        "frame",
+                        "globals based on available context",
+                        "module"
+                    ],
+        "correct_answer":  "dict under stated conditions",
+        "topic":  "Python Language and Runtime",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "class",
+                     "debugging",
+                     "python",
+                     "python-language-and-runtime"
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-senior-theory-debug-035",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\na = [1, 2, 3]\nb = a[:]\nb.append(4)\nprint(a)?",
+        "options":  [
+                        "[1, 2, 3]",
+                        "[4]",
+                        "Error",
+                        "[1, 2, 3, 4]"
+                    ],
+        "correct_answer":  "[1, 2, 3]",
+        "topic":  "Data Structures and Performance",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+
+                 ],
+        "role_target":  "python_shared_senior",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    }
 ]

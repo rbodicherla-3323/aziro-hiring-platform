@@ -1,2550 +1,1260 @@
 [
-  {
-    "id": "python-python-entry-theory-debug-001",
-    "question": "Which keyword is used to define a function in Python?",
-    "options": [
-      "def under stated conditions",
-      "function based on available context",
-      "func",
-      "define"
-    ],
-    "correct_answer": "def under stated conditions",
-    "topic": "Functions and OOP",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "functions-and-oop",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-002",
-    "question": "Which keyword is used to handle exceptions?",
-    "options": [
-      "except",
-      "catch",
-      "handle",
-      "error"
-    ],
-    "correct_answer": "except",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "exception",
-      "exceptions-and-debugging",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-003",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(type(3.14).__name__)?",
-    "options": [
-      "float",
-      "double",
-      "number",
-      "int"
-    ],
-    "correct_answer": "float",
-    "topic": "Testing Basics",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "testing-basics"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-004",
-    "question": "A production defect investigation needs clarity on len([1, 2, 3]) return?",
-    "options": [
-      "3",
-      "1",
-      "4",
-      "2"
-    ],
-    "correct_answer": "3",
-    "topic": "Testing Basics",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "testing-basics"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-005",
-    "question": "Which data type is mutable in Python?",
-    "options": [
-      "list",
-      "str",
-      "tuple",
-      "int"
-    ],
-    "correct_answer": "list",
-    "topic": "Standard Library Usage",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "standard-library-usage"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-006",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(10 % 3)?",
-    "options": [
-      "1",
-      "0",
-      "10",
-      "3"
-    ],
-    "correct_answer": "1",
-    "topic": "Standard Library Usage",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "standard-library-usage"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-007",
-    "question": "In a production scenario, which option best describes range(5) generate?",
-    "options": [
-      "0 to 4",
-      "1 to 4",
-      "0 to 5",
-      "1 to 5"
-    ],
-    "correct_answer": "0 to 4",
-    "topic": "Functions and OOP",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "functions-and-oop",
-      "python",
-      "scenario"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-008",
-    "question": "Which method adds an element to the end of a list?",
-    "options": [
-      "append()",
-      "add()",
-      "extend()",
-      "insert()"
-    ],
-    "correct_answer": "append()",
-    "topic": "Testing Basics",
-    "difficulty": "easy",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "list",
-      "python",
-      "testing-basics"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-009",
-    "question": "During live operations, which option best describes a function return if there is no return statement?",
-    "options": [
-      "None",
-      "False",
-      "empty string",
-      "0"
-    ],
-    "correct_answer": "None",
-    "topic": "Functions and OOP",
-    "difficulty": "easy",
-    "style": "operations",
-    "tags": [
-      "functions-and-oop",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-010",
-    "question": "How do you start a comment in Python?",
-    "options": [
-      "# under stated conditions",
-      "// based on available context",
-      "--",
-      "/*"
-    ],
-    "correct_answer": "# under stated conditions",
-    "topic": "Python Language Fundamentals",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "python",
-      "python-language-fundamentals"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-011",
-    "question": "In a production scenario, which option best describes the 'pass' statement do?",
-    "options": [
-      "Does nothing",
-      "Skips iteration",
-      "Exits the loop",
-      "Returns None"
-    ],
-    "correct_answer": "Does nothing",
-    "topic": "Testing Basics",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "python",
-      "scenario",
-      "testing-basics"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-012",
-    "question": "Which keyword creates a class in Python?",
-    "options": [
-      "class under stated conditions",
-      "object based on available context",
-      "define",
-      "struct"
-    ],
-    "correct_answer": "class under stated conditions",
-    "topic": "Python Language Fundamentals",
-    "difficulty": "easy",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "class",
-      "python",
-      "python-language-fundamentals"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-013",
-    "question": "Which built-in function returns the largest item?",
-    "options": [
-      "max()",
-      "len()",
-      "min()",
-      "sum()"
-    ],
-    "correct_answer": "max()",
-    "topic": "Functions and OOP",
-    "difficulty": "easy",
-    "style": "operations",
-    "tags": [
-      "functions-and-oop",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-014",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(bool(0))?",
-    "options": [
-      "False",
-      "True under stated conditions",
-      "0",
-      "None"
-    ],
-    "correct_answer": "False",
-    "topic": "Python Language Fundamentals",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "python",
-      "python-language-fundamentals"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-015",
-    "question": "Which of these creates a dictionary?",
-    "options": [
-      "{'a': 1} under stated conditions",
-      "{1, 2, 3} based on available context",
-      "(1, 2, 3)",
-      "[1, 2, 3]"
-    ],
-    "correct_answer": "{'a': 1} under stated conditions",
-    "topic": "Standard Library Usage",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "dict",
-      "python",
-      "scenario",
-      "standard-library-usage"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-016",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint('hello'[1])?",
-    "options": [
-      "e",
-      "l",
-      "o",
-      "h"
-    ],
-    "correct_answer": "e",
-    "topic": "Python Language Fundamentals",
-    "difficulty": "easy",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "python",
-      "python-language-fundamentals"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-017",
-    "question": "Which loop is used for iterating over a sequence?",
-    "options": [
-      "for under stated conditions",
-      "while",
-      "foreach",
-      "Cannot be inferred from the given information"
-    ],
-    "correct_answer": "for under stated conditions",
-    "topic": "Modules and Tooling",
-    "difficulty": "easy",
-    "style": "operations",
-    "tags": [
-      "modules-and-tooling",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-018",
-    "question": "Which operator is used for exponentiation?",
-    "options": [
-      "**",
-      "%%",
-      "^",
-      "//"
-    ],
-    "correct_answer": "**",
-    "topic": "Data Structures and Collections",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "data-structures-and-collections",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-019",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(type([])).__name__?",
-    "options": [
-      "list",
-      "set",
-      "dict",
-      "tuple"
-    ],
-    "correct_answer": "list",
-    "topic": "Python Language Fundamentals",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "python",
-      "python-language-fundamentals",
-      "scenario"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-020",
-    "question": "During architecture review, which option best describes str(123) return?",
-    "options": [
-      "'123'",
-      "error",
-      "123",
-      "int"
-    ],
-    "correct_answer": "'123'",
-    "topic": "Python Language Fundamentals",
-    "difficulty": "easy",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "python",
-      "python-language-fundamentals"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-021",
-    "question": "Which method removes the last element from a list?",
-    "options": [
-      "pop() under stated conditions",
-      "discard() based on available context",
-      "remove()",
-      "delete()"
-    ],
-    "correct_answer": "pop() under stated conditions",
-    "topic": "Modules and Tooling",
-    "difficulty": "easy",
-    "style": "operations",
-    "tags": [
-      "list",
-      "modules-and-tooling",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-022",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(2 ** 3)?",
-    "options": [
-      "8",
-      "9",
-      "5",
-      "6"
-    ],
-    "correct_answer": "8",
-    "topic": "Data Structures and Collections",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "data-structures-and-collections",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-023",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint('py' * 3)?",
-    "options": [
-      "pypypy",
-      "py3",
-      "py py py",
-      "error"
-    ],
-    "correct_answer": "pypypy",
-    "topic": "Standard Library Usage",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "python",
-      "scenario",
-      "standard-library-usage"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-024",
-    "question": "During architecture review, which option best describes the 'in' keyword check?",
-    "options": [
-      "membership",
-      "data type under production constraints",
-      "equality",
-      "identity"
-    ],
-    "correct_answer": "membership",
-    "topic": "Standard Library Usage",
-    "difficulty": "easy",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "python",
-      "standard-library-usage"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-025",
-    "question": "Which function converts a string to an integer?",
-    "options": [
-      "int()",
-      "chr()",
-      "float()",
-      "str()"
-    ],
-    "correct_answer": "int()",
-    "topic": "Testing Basics",
-    "difficulty": "easy",
-    "style": "operations",
-    "tags": [
-      "operations",
-      "python",
-      "testing-basics"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-026",
-    "question": "What does input() return by default?",
-    "options": [
-      "str",
-      "float",
-      "bool",
-      "int"
-    ],
-    "correct_answer": "str",
-    "topic": "Functions and OOP",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "functions-and-oop",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-027",
-    "question": "Which of the following is an immutable type?",
-    "options": [
-      "tuple",
-      "set",
-      "list under production constraints",
-      "dict"
-    ],
-    "correct_answer": "tuple",
-    "topic": "Modules and Tooling",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "modules-and-tooling",
-      "python",
-      "scenario"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-028",
-    "question": "What does.strip() do to a string?",
-    "options": [
-      "Removes whitespace",
-      "Reverses it",
-      "Lowercases it under production constraints",
-      "Splits it"
-    ],
-    "correct_answer": "Removes whitespace",
-    "topic": "Data Structures and Collections",
-    "difficulty": "easy",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "data-structures-and-collections",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-029",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(not True)?",
-    "options": [
-      "False",
-      "Error",
-      "None",
-      "True"
-    ],
-    "correct_answer": "False",
-    "topic": "Python Language Fundamentals",
-    "difficulty": "easy",
-    "style": "operations",
-    "tags": [
-      "operations",
-      "python",
-      "python-language-fundamentals"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-030",
-    "question": "What does break do inside a loop?",
-    "options": [
-      "Exits the loop",
-      "Does nothing",
-      "Skips one cycle",
-      "Restarts loop"
-    ],
-    "correct_answer": "Exits the loop",
-    "topic": "Testing Basics",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "python",
-      "testing-basics"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-031",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint([1,2,3][-1])?",
-    "options": [
-      "3",
-      "1",
-      "2",
-      "Error"
-    ],
-    "correct_answer": "3",
-    "topic": "Data Structures and Collections",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "data-structures-and-collections",
-      "python",
-      "scenario"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-032",
-    "question": "Which module provides mathematical functions?",
-    "options": [
-      "math",
-      "random",
-      "os",
-      "sys"
-    ],
-    "correct_answer": "math",
-    "topic": "Functions and OOP",
-    "difficulty": "easy",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "functions-and-oop",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-033",
-    "question": "How do you create an empty set in Python?",
-    "options": [
-      "set()",
-      "[] under production constraints",
-      "{}",
-      "()"
-    ],
-    "correct_answer": "set()",
-    "topic": "Data Structures and Collections",
-    "difficulty": "easy",
-    "style": "operations",
-    "tags": [
-      "data-structures-and-collections",
-      "operations",
-      "python",
-      "set"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-034",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(abs(-7))?",
-    "options": [
-      "7",
-      "Error",
-      "0",
-      "-7"
-    ],
-    "correct_answer": "7",
-    "topic": "Functions and OOP",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "functions-and-oop",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-035",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint('Hello'.lower())?",
-    "options": [
-      "Hello",
-      "None under stated conditions",
-      "0",
-      "1"
-    ],
-    "correct_answer": "Hello",
-    "topic": "Data Structures and Collections",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "data-structures-and-collections",
-      "python",
-      "scenario"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-036",
-    "question": "Which statement is used to skip the current iteration?",
-    "options": [
-      "continue",
-      "break",
-      "pass",
-      "return under production constraints"
-    ],
-    "correct_answer": "continue",
-    "topic": "Modules and Tooling",
-    "difficulty": "easy",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "modules-and-tooling",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-037",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(5 == 5.0)?",
-    "options": [
-      "True",
-      "False",
-      "Error",
-      "None"
-    ],
-    "correct_answer": "True",
-    "topic": "Data Structures and Collections",
-    "difficulty": "easy",
-    "style": "operations",
-    "tags": [
-      "data-structures-and-collections",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-038",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(round(3.7))?",
-    "options": [
-      "4",
-      "7",
-      "Error",
-      "3"
-    ],
-    "correct_answer": "4",
-    "topic": "Functions and OOP",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "functions-and-oop",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-039",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(list('abc'))?",
-    "options": [
-      "['a','b','c']",
-      "['abc']",
-      "abc",
-      "('a','b','c')"
-    ],
-    "correct_answer": "['a','b','c']",
-    "topic": "Testing Basics",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "list",
-      "python",
-      "scenario",
-      "testing-basics"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-040",
-    "question": "A snippet runs with the following behavior. Which output is correct?\na = [1, 2, 3]\nb = a\nb.append(4)\nprint(a)?",
-    "options": [
-      "[1, 2, 3, 4]",
-      "Error under stated conditions",
-      "[4]",
-      "None"
-    ],
-    "correct_answer": "[1, 2, 3, 4]",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "easy",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "exceptions-and-debugging",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-041",
-    "question": "Which method returns all dictionary keys?",
-    "options": [
-      ".keys()",
-      ".values()",
-      ".items()",
-      ".get()"
-    ],
-    "correct_answer": ".keys()",
-    "topic": "Testing Basics",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "dict",
-      "python",
-      "testing-basics"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-042",
-    "question": "A snippet runs with the following behavior. Which output is correct?\ndef f(a, b=[]): b.append(a) return b\nprint(f(1)); print(f(2))?",
-    "options": [
-      "[1] then [1, 2]",
-      "[1] then [2]",
-      "[1, 2] then [1, 2]",
-      "Error both times"
-    ],
-    "correct_answer": "[1] then [1, 2]",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "exceptions-and-debugging",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-043",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(isinstance(True, int))?",
-    "options": [
-      "True",
-      "False",
-      "Error",
-      "None"
-    ],
-    "correct_answer": "True",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "exceptions-and-debugging",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-044",
-    "question": "A production defect investigation needs clarity on the index of the first element in a list?",
-    "options": [
-      "0",
-      "1",
-      "None",
-      "-1"
-    ],
-    "correct_answer": "0",
-    "topic": "Modules and Tooling",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "list",
-      "modules-and-tooling",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-045",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(bool(''))?",
-    "options": [
-      "False",
-      "Error",
-      "None",
-      "True"
-    ],
-    "correct_answer": "False",
-    "topic": "Python Language Fundamentals",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "python-language-fundamentals"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-046",
-    "question": "What does.split() do with no arguments?",
-    "options": [
-      "Splits on spaces",
-      "Returns original",
-      "Splits on commas",
-      "Raises error"
-    ],
-    "correct_answer": "Splits on spaces",
-    "topic": "Modules and Tooling",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "modules-and-tooling",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-047",
-    "question": "Which of these is a valid variable name?",
-    "options": [
-      "_count",
-      "class under stated conditions",
-      "2name",
-      "var"
-    ],
-    "correct_answer": "_count",
-    "topic": "Standard Library Usage",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "python",
-      "standard-library-usage"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-048",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(type(None).__name__)?",
-    "options": [
-      "NoneType",
-      "void under stated conditions",
-      "null",
-      "None"
-    ],
-    "correct_answer": "NoneType",
-    "topic": "Data Structures and Collections",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "data-structures-and-collections",
-      "debugging",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-049",
-    "question": "In a production scenario, which option best describes *args allow in a function definition?",
-    "options": [
-      "Variable positional args",
-      "Keyword arguments",
-      "Default parameters under production constraints",
-      "Type annotations"
-    ],
-    "correct_answer": "Variable positional args",
-    "topic": "Functions and OOP",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "functions-and-oop",
-      "python",
-      "scenario"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-050",
-    "question": "Which method joins list elements into a string?",
-    "options": [
-      ".join() under stated conditions",
-      ".merge()",
-      ".combine() based on available context",
-      ".concat()"
-    ],
-    "correct_answer": ".join() under stated conditions",
-    "topic": "Testing Basics",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "list",
-      "python",
-      "testing-basics"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-051",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(3 in [1, 2, 3])?",
-    "options": [
-      "True",
-      "Error",
-      "False",
-      "3"
-    ],
-    "correct_answer": "True",
-    "topic": "Standard Library Usage",
-    "difficulty": "medium",
-    "style": "operations",
-    "tags": [
-      "operations",
-      "python",
-      "standard-library-usage"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-052",
-    "question": "What does the elif keyword mean?",
-    "options": [
-      "else if",
-      "end if",
-      "else loop",
-      "element if"
-    ],
-    "correct_answer": "else if",
-    "topic": "Python Language Fundamentals",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "python",
-      "python-language-fundamentals"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-053",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint([1,2] + [3,4])?",
-    "options": [
-      "[1,2,3,4]",
-      "[[1,2],[3,4]]",
-      "[4, 6]",
-      "Error"
-    ],
-    "correct_answer": "[1,2,3,4]",
-    "topic": "Modules and Tooling",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "modules-and-tooling",
-      "python",
-      "scenario"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-054",
-    "question": "Which of the following raises TypeError?",
-    "options": [
-      "'3' + 4",
-      "0 + 4",
-      "3 + 4",
-      "'3' + '4'"
-    ],
-    "correct_answer": "'3' + 4",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "exceptions-and-debugging",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-055",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint({1:1, 1.0:2})?",
-    "options": [
-      "{1: 2}",
-      "{1.0: 1}",
-      "{1: 1, 1.0: 2}",
-      "Error"
-    ],
-    "correct_answer": "{1: 2}",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "medium",
-    "style": "operations",
-    "tags": [
-      "exceptions-and-debugging",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-056",
-    "question": "What is a lambda function?",
-    "options": [
-      "An anonymous function",
-      "A class method only under production constraints",
-      "A built-in module",
-      "A named function"
-    ],
-    "correct_answer": "An anonymous function",
-    "topic": "Functions and OOP",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "functions-and-oop",
-      "lambda",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-057",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = [1, 2, 3]\nx.append([4, 5])\nprint(len(x))?",
-    "options": [
-      "4",
-      "Error",
-      "5",
-      "3"
-    ],
-    "correct_answer": "4",
-    "topic": "Standard Library Usage",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "python",
-      "scenario",
-      "standard-library-usage"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-058",
-    "question": "A snippet runs with the following behavior. Which output is correct?\ndef func(x=[]): x.append(1) return len(x)\nprint(func(), func())?",
-    "options": [
-      "1 2",
-      "1 1",
-      "2 2",
-      "Error"
-    ],
-    "correct_answer": "1 2",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "exceptions-and-debugging",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-059",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint({1, 2, 3} & {2, 3, 4})?",
-    "options": [
-      "{2, 3}",
-      "Error",
-      "{1,2,3,4}",
-      "{1, 4}"
-    ],
-    "correct_answer": "{2, 3}",
-    "topic": "Data Structures and Collections",
-    "difficulty": "medium",
-    "style": "operations",
-    "tags": [
-      "data-structures-and-collections",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-060",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint('A' > 'a')?",
-    "options": [
-      "False",
-      "Error",
-      "None",
-      "True"
-    ],
-    "correct_answer": "False",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "exceptions-and-debugging",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-061",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(sorted([3,1,2], reverse=True))?",
-    "options": [
-      "[3, 2, 1]",
-      "Error",
-      "[3, 1, 2]",
-      "[1, 2, 3]"
-    ],
-    "correct_answer": "[3, 2, 1]",
-    "topic": "Functions and OOP",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "functions-and-oop",
-      "python",
-      "scenario"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-062",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint([x**2 for x in range(4)])?",
-    "options": [
-      "[0, 1, 4, 9]",
-      "[1, 2, 3, 4]",
-      "[1, 4, 9, 16]",
-      "[0, 2, 4, 6]"
-    ],
-    "correct_answer": "[0, 1, 4, 9]",
-    "topic": "Python Language Fundamentals",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "python",
-      "python-language-fundamentals"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-063",
-    "question": "Which method returns a shallow copy of a list?",
-    "options": [
-      ".copy() under stated conditions",
-      ".clone()",
-      ".duplicate() based on available context",
-      ".replica()"
-    ],
-    "correct_answer": ".copy() under stated conditions",
-    "topic": "Data Structures and Collections",
-    "difficulty": "medium",
-    "style": "operations",
-    "tags": [
-      "data-structures-and-collections",
-      "list",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-064",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(all([True, True, False]))?",
-    "options": [
-      "False",
-      "Error",
-      "None",
-      "True"
-    ],
-    "correct_answer": "False",
-    "topic": "Functions and OOP",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "functions-and-oop",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-065",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint('abcdef'[1:4])?",
-    "options": [
-      "bcd",
-      "bcde",
-      "abcd",
-      "abc"
-    ],
-    "correct_answer": "bcd",
-    "topic": "Testing Basics",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "python",
-      "scenario",
-      "testing-basics"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-066",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = {'a': 1, 'b': 2}\nprint(x.get('c', 0))?",
-    "options": [
-      "0 under stated conditions",
-      "Error based on available context",
-      "''",
-      "None"
-    ],
-    "correct_answer": "0 under stated conditions",
-    "topic": "Modules and Tooling",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "modules-and-tooling",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-067",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = [1, [2, 3]]\ny = x.copy()\ny[1].append(4)\nprint(x)?",
-    "options": [
-      "[1, [2, 3, 4]]",
-      "Error",
-      "[1, [2, 3], 4]",
-      "[1, [2, 3]]"
-    ],
-    "correct_answer": "[1, [2, 3, 4]]",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "medium",
-    "style": "operations",
-    "tags": [
-      "exceptions-and-debugging",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-068",
-    "question": "A snippet runs with the following behavior. Which output is correct?\ntry: print(1/0)\nexcept ZeroDivisionError: print('caught')\nfinally: print('done')?",
-    "options": [
-      "caught then done",
-      "caught under stated conditions",
-      "done",
-      "None"
-    ],
-    "correct_answer": "caught then done",
-    "topic": "Modules and Tooling",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "modules-and-tooling",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-069",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = (1,)\nprint(type(x).__name__)?",
-    "options": [
-      "tuple",
-      "set",
-      "int",
-      "None under stated conditions"
-    ],
-    "correct_answer": "tuple",
-    "topic": "Standard Library Usage",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "python",
-      "scenario",
-      "standard-library-usage"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-070",
-    "question": "During architecture review, which option best describes __init__ method do in a class?",
-    "options": [
-      "Initializes object",
-      "Deletes object",
-      "Compares objects under production constraints",
-      "Copies object"
-    ],
-    "correct_answer": "Initializes object",
-    "topic": "Testing Basics",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "class",
-      "python",
-      "testing-basics"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-071",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint({}.fromkeys(['a','b'], 0))?",
-    "options": [
-      "{'a': 0, 'b': 0}",
-      "Error",
-      "[0, 0] under stated conditions",
-      "None"
-    ],
-    "correct_answer": "{'a': 0, 'b': 0}",
-    "topic": "Modules and Tooling",
-    "difficulty": "medium",
-    "style": "operations",
-    "tags": [
-      "modules-and-tooling",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-072",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = [1, 2, 3]\nprint(x[::-1])?",
-    "options": [
-      "[3, 2, 1]",
-      "[3]",
-      "[1, 2, 3]",
-      "Error"
-    ],
-    "correct_answer": "[3, 2, 1]",
-    "topic": "Python Language Fundamentals",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "python",
-      "python-language-fundamentals"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-073",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nfor i in range(3): pass\nprint(i)?",
-    "options": [
-      "2",
-      "Error",
-      "3",
-      "0"
-    ],
-    "correct_answer": "2",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "exceptions-and-debugging",
-      "python",
-      "scenario"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-074",
-    "question": "During architecture review, which option best describes the 'with' statement ensure?",
-    "options": [
-      "Resource cleanup",
-      "Error logging",
-      "Type checking",
-      "Loop iteration under production constraints"
-    ],
-    "correct_answer": "Resource cleanup",
-    "topic": "Testing Basics",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "python",
-      "testing-basics"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-075",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(list(map(str, [1,2,3])))?",
-    "options": [
-      "['1','2','3']",
-      "[1, 2, 3]",
-      "Error",
-      "['str','str']"
-    ],
-    "correct_answer": "['1','2','3']",
-    "topic": "Standard Library Usage",
-    "difficulty": "medium",
-    "style": "operations",
-    "tags": [
-      "list",
-      "operations",
-      "python",
-      "standard-library-usage"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-076",
-    "question": "A production defect investigation needs clarity on @staticmethod decorator indicate?",
-    "options": [
-      "No implicit param under stated conditions",
-      "Requires self param based on available context",
-      "Private method only",
-      "Requires cls param"
-    ],
-    "correct_answer": "No implicit param under stated conditions",
-    "topic": "Standard Library Usage",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "decorator",
-      "python",
-      "standard-library-usage"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-077",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint('abc'.replace('b', 'x'))?",
-    "options": [
-      "axc",
-      "xbc",
-      "abc",
-      "abx"
-    ],
-    "correct_answer": "axc",
-    "topic": "Data Structures and Collections",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "data-structures-and-collections",
-      "debugging",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-078",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(list(filter(lambda x: x>2, [1,2,3,4])))?",
-    "options": [
-      "[3, 4]",
-      "[2, 3, 4]",
-      "[1, 2, 3]",
-      "[1, 2]"
-    ],
-    "correct_answer": "[3, 4]",
-    "topic": "Python Language Fundamentals",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "lambda",
-      "list",
-      "python",
-      "python-language-fundamentals"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-079",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(dict(zip(['a','b'], [1,2])))?",
-    "options": [
-      "{'a':1,'b':2}",
-      "{1:'a',2:'b'}",
-      "[('a',1),('b',2)]",
-      "Error"
-    ],
-    "correct_answer": "{'a':1,'b':2}",
-    "topic": "Standard Library Usage",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "dict",
-      "python",
-      "standard-library-usage"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-080",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = [1, 2, 3]\ny = x\nx = x + [4]\nprint(y)?",
-    "options": [
-      "[1, 2, 3]",
-      "Error",
-      "[1, 2, 3, 4]",
-      "[4]"
-    ],
-    "correct_answer": "[1, 2, 3]",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "debugging",
-      "exceptions-and-debugging",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-081",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = 'hello'\nprint(x[::2])?",
-    "options": [
-      "hlo",
-      "hl",
-      "hel",
-      "elo"
-    ],
-    "correct_answer": "hlo",
-    "topic": "Data Structures and Collections",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "data-structures-and-collections",
-      "debugging",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-082",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(any([False, 0, '', 1]))?",
-    "options": [
-      "True",
-      "False",
-      "1",
-      "None"
-    ],
-    "correct_answer": "True",
-    "topic": "Testing Basics",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "python",
-      "scenario",
-      "testing-basics"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-083",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nclass A: x = 5\na = A()\na.x = 10\nprint(A.x)?",
-    "options": [
-      "5 under stated conditions",
-      "Error based on available context",
-      "10",
-      "None"
-    ],
-    "correct_answer": "5 under stated conditions",
-    "topic": "Data Structures and Collections",
-    "difficulty": "hard",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "class",
-      "data-structures-and-collections",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-084",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(0.1 + 0.2 == 0.3)?",
-    "options": [
-      "False",
-      "Error",
-      "True",
-      "3"
-    ],
-    "correct_answer": "False",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "hard",
-    "style": "operations",
-    "tags": [
-      "exceptions-and-debugging",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-085",
-    "question": "What does **kwargs allow in a function?",
-    "options": [
-      "Keyword arguments",
-      "Default values only",
-      "Positional arguments",
-      "Return types"
-    ],
-    "correct_answer": "Keyword arguments",
-    "topic": "Standard Library Usage",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "python",
-      "standard-library-usage"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-086",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(type(lambda: None).__name__)?",
-    "options": [
-      "function",
-      "lambda",
-      "NoneType",
-      "method"
-    ],
-    "correct_answer": "function",
-    "topic": "Modules and Tooling",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "lambda",
-      "modules-and-tooling",
-      "python",
-      "scenario"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-087",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint('hello'.find('xyz'))?",
-    "options": [
-      "-1",
-      "Error",
-      "0",
-      "None"
-    ],
-    "correct_answer": "-1",
-    "topic": "Testing Basics",
-    "difficulty": "hard",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "python",
-      "testing-basics"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-088",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(sum([1,2,3], 10))?",
-    "options": [
-      "16",
-      "6",
-      "10",
-      "Error"
-    ],
-    "correct_answer": "16",
-    "topic": "Modules and Tooling",
-    "difficulty": "hard",
-    "style": "operations",
-    "tags": [
-      "modules-and-tooling",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-089",
-    "question": "A snippet runs with the following behavior. Which output is correct?\ntry: x = int('abc')\nexcept: x = -1\nprint(x)?",
-    "options": [
-      "-1",
-      "0",
-      "Error",
-      "abc"
-    ],
-    "correct_answer": "-1",
-    "topic": "Data Structures and Collections",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "data-structures-and-collections",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-090",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint([i for i in range(10) if i%3==0])?",
-    "options": [
-      "[0, 3, 6, 9]",
-      "[0, 3, 6] under stated conditions",
-      "[3, 6, 9]",
-      "None"
-    ],
-    "correct_answer": "[0, 3, 6, 9]",
-    "topic": "Modules and Tooling",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "modules-and-tooling",
-      "python",
-      "scenario"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-091",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nd = {'a':1}\nd.setdefault('b', 2)\nprint(d)?",
-    "options": [
-      "{'a':1,'b':2}",
-      "Error",
-      "{'b': 2} under stated conditions",
-      "None"
-    ],
-    "correct_answer": "{'a':1,'b':2}",
-    "topic": "Modules and Tooling",
-    "difficulty": "hard",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "modules-and-tooling",
-      "python",
-      "set"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-092",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(divmod(17, 5))?",
-    "options": [
-      "(3, 2)",
-      "Error",
-      "4",
-      "(2, 3)"
-    ],
-    "correct_answer": "(3, 2)",
-    "topic": "Python Language Fundamentals",
-    "difficulty": "hard",
-    "style": "operations",
-    "tags": [
-      "operations",
-      "python",
-      "python-language-fundamentals"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-093",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(bin(10))?",
-    "options": [
-      "0b1010",
-      "10",
-      "0x10 under stated conditions",
-      "None"
-    ],
-    "correct_answer": "0b1010",
-    "topic": "Functions and OOP",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "functions-and-oop",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-094",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint((lambda x, y: x+y)(3, 4))?",
-    "options": [
-      "7 under stated conditions",
-      "34",
-      "None",
-      "Error based on available context"
-    ],
-    "correct_answer": "7 under stated conditions",
-    "topic": "Functions and OOP",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "functions-and-oop",
-      "lambda",
-      "python",
-      "scenario"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-095",
-    "question": "A snippet runs with the following behavior. Which output is correct?\ndef f(): try: return 1 finally: return 2\nprint(f())?",
-    "options": [
-      "2",
-      "Error",
-      "None",
-      "1"
-    ],
-    "correct_answer": "2",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "hard",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "exceptions-and-debugging",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-096",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint({True: 'a', 1: 'b', 1.0: 'c'})?",
-    "options": [
-      "{True: 'c'}",
-      "{True:'a',1:'b',1.0:'c'}",
-      "{1: 'b'}",
-      "Error"
-    ],
-    "correct_answer": "{True: 'c'}",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "hard",
-    "style": "operations",
-    "tags": [
-      "exceptions-and-debugging",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-097",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(' '.join(['a','b','c']))?",
-    "options": [
-      "a b c",
-      "'a' 'b' 'c'",
-      "abc",
-      "a,b,c"
-    ],
-    "correct_answer": "a b c",
-    "topic": "Standard Library Usage",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "concept",
-      "python",
-      "standard-library-usage"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-098",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nx = [1, 2, 3]\nx[1:2] = [4, 5]\nprint(x)?",
-    "options": [
-      "[1, 4, 5, 3]",
-      "[4, 5, 3]",
-      "Error",
-      "[1, [4,5], 3]"
-    ],
-    "correct_answer": "[1, 4, 5, 3]",
-    "topic": "Python Language Fundamentals",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "python",
-      "python-language-fundamentals",
-      "scenario"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-099",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint('abcabc'.count('ab'))?",
-    "options": [
-      "2",
-      "3",
-      "0",
-      "1"
-    ],
-    "correct_answer": "2",
-    "topic": "Exceptions and Debugging",
-    "difficulty": "hard",
-    "style": "architecture",
-    "tags": [
-      "architecture",
-      "exceptions-and-debugging",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-100",
-    "question": "A snippet runs with the following behavior. Which output is correct?\nprint(type(1+2j).__name__)?",
-    "options": [
-      "complex",
-      "float under stated conditions",
-      "int",
-      "None"
-    ],
-    "correct_answer": "complex",
-    "topic": "Data Structures and Collections",
-    "difficulty": "hard",
-    "style": "operations",
-    "tags": [
-      "data-structures-and-collections",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  },
-  {
-    "id": "python-python-entry-theory-debug-101",
-    "question": "What is the index of the first element in a list?",
-    "options": [
-      "0",
-      "1",
-      "None",
-      "-1"
-    ],
-    "correct_answer": "0",
-    "topic": "Data Structures and Collections",
-    "difficulty": "easy",
-    "style": "operations",
-    "tags": [
-      "data-structures-and-collections",
-      "list",
-      "operations",
-      "python"
-    ],
-    "role_target": "python_entry",
-    "round_target": "L2",
-    "version_scope": [
-      "python311",
-      "pytest"
-    ]
-  }
+    {
+        "id":  "python-python-entry-theory-debug-001",
+        "question":  "Which keyword is used to define a function in Python?",
+        "options":  [
+                        "def under stated conditions",
+                        "function based on available context",
+                        "func",
+                        "define"
+                    ],
+        "correct_answer":  "def under stated conditions",
+        "topic":  "Functions and OOP",
+        "difficulty":  "easy",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "functions-and-oop",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-002",
+        "question":  "Which keyword is used to handle exceptions?",
+        "options":  [
+                        "except",
+                        "catch",
+                        "handle",
+                        "error"
+                    ],
+        "correct_answer":  "except",
+        "topic":  "Exceptions and Debugging",
+        "difficulty":  "easy",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "exception",
+                     "exceptions-and-debugging",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-003",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(type(3.14).__name__)?",
+        "options":  [
+                        "float",
+                        "double",
+                        "number",
+                        "int"
+                    ],
+        "correct_answer":  "float",
+        "topic":  "Testing Basics",
+        "difficulty":  "easy",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "python",
+                     "testing-basics"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-004",
+        "question":  "A production defect investigation needs clarity on len([1, 2, 3]) return?",
+        "options":  [
+                        "3",
+                        "1",
+                        "4",
+                        "2"
+                    ],
+        "correct_answer":  "3",
+        "topic":  "Testing Basics",
+        "difficulty":  "easy",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "python",
+                     "testing-basics"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-005",
+        "question":  "Which data type is mutable in Python?",
+        "options":  [
+                        "list",
+                        "str",
+                        "tuple",
+                        "int"
+                    ],
+        "correct_answer":  "list",
+        "topic":  "Standard Library Usage",
+        "difficulty":  "easy",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "python",
+                     "standard-library-usage"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-006",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(10 % 3)?",
+        "options":  [
+                        "1",
+                        "0",
+                        "10",
+                        "3"
+                    ],
+        "correct_answer":  "1",
+        "topic":  "Standard Library Usage",
+        "difficulty":  "easy",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "python",
+                     "standard-library-usage"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-007",
+        "question":  "In a production scenario, which option best describes range(5) generate?",
+        "options":  [
+                        "0 to 4",
+                        "1 to 4",
+                        "0 to 5",
+                        "1 to 5"
+                    ],
+        "correct_answer":  "0 to 4",
+        "topic":  "Functions and OOP",
+        "difficulty":  "easy",
+        "style":  "scenario",
+        "tags":  [
+                     "functions-and-oop",
+                     "python",
+                     "scenario"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-008",
+        "question":  "Which method adds an element to the end of a list?",
+        "options":  [
+                        "append()",
+                        "add()",
+                        "extend()",
+                        "insert()"
+                    ],
+        "correct_answer":  "append()",
+        "topic":  "Testing Basics",
+        "difficulty":  "easy",
+        "style":  "architecture",
+        "tags":  [
+                     "architecture",
+                     "list",
+                     "python",
+                     "testing-basics"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-009",
+        "question":  "During live operations, which option best describes a function return if there is no return statement?",
+        "options":  [
+                        "None",
+                        "False",
+                        "empty string",
+                        "0"
+                    ],
+        "correct_answer":  "None",
+        "topic":  "Functions and OOP",
+        "difficulty":  "easy",
+        "style":  "operations",
+        "tags":  [
+                     "functions-and-oop",
+                     "operations",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-010",
+        "question":  "How do you start a comment in Python?",
+        "options":  [
+                        "# under stated conditions",
+                        "// based on available context",
+                        "--",
+                        "/*"
+                    ],
+        "correct_answer":  "# under stated conditions",
+        "topic":  "Python Language Fundamentals",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "concept",
+                     "python",
+                     "python-language-fundamentals"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-011",
+        "question":  "In a production scenario, which option best describes the \u0027pass\u0027 statement do?",
+        "options":  [
+                        "Does nothing",
+                        "Skips iteration",
+                        "Exits the loop",
+                        "Returns None"
+                    ],
+        "correct_answer":  "Does nothing",
+        "topic":  "Testing Basics",
+        "difficulty":  "easy",
+        "style":  "scenario",
+        "tags":  [
+                     "python",
+                     "scenario",
+                     "testing-basics"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-012",
+        "question":  "Which keyword creates a class in Python?",
+        "options":  [
+                        "class under stated conditions",
+                        "object based on available context",
+                        "define",
+                        "struct"
+                    ],
+        "correct_answer":  "class under stated conditions",
+        "topic":  "Python Language Fundamentals",
+        "difficulty":  "easy",
+        "style":  "architecture",
+        "tags":  [
+                     "architecture",
+                     "class",
+                     "python",
+                     "python-language-fundamentals"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-013",
+        "question":  "Which built-in function returns the largest item?",
+        "options":  [
+                        "max()",
+                        "len()",
+                        "min()",
+                        "sum()"
+                    ],
+        "correct_answer":  "max()",
+        "topic":  "Functions and OOP",
+        "difficulty":  "easy",
+        "style":  "operations",
+        "tags":  [
+                     "functions-and-oop",
+                     "operations",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-014",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(bool(0))?",
+        "options":  [
+                        "False",
+                        "True under stated conditions",
+                        "0",
+                        "None"
+                    ],
+        "correct_answer":  "False",
+        "topic":  "Python Language Fundamentals",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "concept",
+                     "python",
+                     "python-language-fundamentals"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-015",
+        "question":  "Which of these creates a dictionary?",
+        "options":  [
+                        "{\u0027a\u0027: 1} under stated conditions",
+                        "{1, 2, 3} based on available context",
+                        "(1, 2, 3)",
+                        "[1, 2, 3]"
+                    ],
+        "correct_answer":  "{\u0027a\u0027: 1} under stated conditions",
+        "topic":  "Standard Library Usage",
+        "difficulty":  "easy",
+        "style":  "scenario",
+        "tags":  [
+                     "dict",
+                     "python",
+                     "scenario",
+                     "standard-library-usage"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-016",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(\u0027hello\u0027[1])?",
+        "options":  [
+                        "e",
+                        "l",
+                        "o",
+                        "h"
+                    ],
+        "correct_answer":  "e",
+        "topic":  "Python Language Fundamentals",
+        "difficulty":  "easy",
+        "style":  "architecture",
+        "tags":  [
+                     "architecture",
+                     "python",
+                     "python-language-fundamentals"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-017",
+        "question":  "Which loop is used for iterating over a sequence?",
+        "options":  [
+                        "for under stated conditions",
+                        "while",
+                        "foreach",
+                        "Cannot be inferred from the given information"
+                    ],
+        "correct_answer":  "for under stated conditions",
+        "topic":  "Modules and Tooling",
+        "difficulty":  "easy",
+        "style":  "operations",
+        "tags":  [
+                     "modules-and-tooling",
+                     "operations",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-018",
+        "question":  "Which operator is used for exponentiation?",
+        "options":  [
+                        "**",
+                        "%%",
+                        "^",
+                        "//"
+                    ],
+        "correct_answer":  "**",
+        "topic":  "Data Structures and Collections",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "concept",
+                     "data-structures-and-collections",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-019",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(type([])).__name__?",
+        "options":  [
+                        "list",
+                        "set",
+                        "dict",
+                        "tuple"
+                    ],
+        "correct_answer":  "list",
+        "topic":  "Python Language Fundamentals",
+        "difficulty":  "easy",
+        "style":  "scenario",
+        "tags":  [
+                     "python",
+                     "python-language-fundamentals",
+                     "scenario"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-020",
+        "question":  "During architecture review, which option best describes str(123) return?",
+        "options":  [
+                        "\u0027123\u0027",
+                        "error",
+                        "123",
+                        "int"
+                    ],
+        "correct_answer":  "\u0027123\u0027",
+        "topic":  "Python Language Fundamentals",
+        "difficulty":  "easy",
+        "style":  "architecture",
+        "tags":  [
+                     "architecture",
+                     "python",
+                     "python-language-fundamentals"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-021",
+        "question":  "Which method removes the last element from a list?",
+        "options":  [
+                        "pop() under stated conditions",
+                        "discard() based on available context",
+                        "remove()",
+                        "delete()"
+                    ],
+        "correct_answer":  "pop() under stated conditions",
+        "topic":  "Modules and Tooling",
+        "difficulty":  "easy",
+        "style":  "operations",
+        "tags":  [
+                     "list",
+                     "modules-and-tooling",
+                     "operations",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-022",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(2 ** 3)?",
+        "options":  [
+                        "8",
+                        "9",
+                        "5",
+                        "6"
+                    ],
+        "correct_answer":  "8",
+        "topic":  "Data Structures and Collections",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "concept",
+                     "data-structures-and-collections",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-023",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(\u0027py\u0027 * 3)?",
+        "options":  [
+                        "pypypy",
+                        "py3",
+                        "py py py",
+                        "error"
+                    ],
+        "correct_answer":  "pypypy",
+        "topic":  "Standard Library Usage",
+        "difficulty":  "easy",
+        "style":  "scenario",
+        "tags":  [
+                     "python",
+                     "scenario",
+                     "standard-library-usage"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-024",
+        "question":  "During architecture review, which option best describes the \u0027in\u0027 keyword check?",
+        "options":  [
+                        "membership",
+                        "data type under production constraints",
+                        "equality",
+                        "identity"
+                    ],
+        "correct_answer":  "membership",
+        "topic":  "Standard Library Usage",
+        "difficulty":  "easy",
+        "style":  "architecture",
+        "tags":  [
+                     "architecture",
+                     "python",
+                     "standard-library-usage"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-025",
+        "question":  "Which function converts a string to an integer?",
+        "options":  [
+                        "int()",
+                        "chr()",
+                        "float()",
+                        "str()"
+                    ],
+        "correct_answer":  "int()",
+        "topic":  "Testing Basics",
+        "difficulty":  "easy",
+        "style":  "operations",
+        "tags":  [
+                     "operations",
+                     "python",
+                     "testing-basics"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-026",
+        "question":  "What does input() return by default?",
+        "options":  [
+                        "str",
+                        "float",
+                        "bool",
+                        "int"
+                    ],
+        "correct_answer":  "str",
+        "topic":  "Functions and OOP",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "concept",
+                     "functions-and-oop",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-027",
+        "question":  "Which of the following is an immutable type?",
+        "options":  [
+                        "tuple",
+                        "set",
+                        "list under production constraints",
+                        "dict"
+                    ],
+        "correct_answer":  "tuple",
+        "topic":  "Modules and Tooling",
+        "difficulty":  "easy",
+        "style":  "scenario",
+        "tags":  [
+                     "modules-and-tooling",
+                     "python",
+                     "scenario"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-028",
+        "question":  "What does.strip() do to a string?",
+        "options":  [
+                        "Removes whitespace",
+                        "Reverses it",
+                        "Lowercases it under production constraints",
+                        "Splits it"
+                    ],
+        "correct_answer":  "Removes whitespace",
+        "topic":  "Data Structures and Collections",
+        "difficulty":  "easy",
+        "style":  "architecture",
+        "tags":  [
+                     "architecture",
+                     "data-structures-and-collections",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-029",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(not True)?",
+        "options":  [
+                        "False",
+                        "Error",
+                        "None",
+                        "True"
+                    ],
+        "correct_answer":  "False",
+        "topic":  "Python Language Fundamentals",
+        "difficulty":  "easy",
+        "style":  "operations",
+        "tags":  [
+                     "operations",
+                     "python",
+                     "python-language-fundamentals"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-030",
+        "question":  "What does break do inside a loop?",
+        "options":  [
+                        "Exits the loop",
+                        "Does nothing",
+                        "Skips one cycle",
+                        "Restarts loop"
+                    ],
+        "correct_answer":  "Exits the loop",
+        "topic":  "Testing Basics",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "concept",
+                     "python",
+                     "testing-basics"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-031",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint([1,2,3][-1])?",
+        "options":  [
+                        "3",
+                        "1",
+                        "2",
+                        "Error"
+                    ],
+        "correct_answer":  "3",
+        "topic":  "Data Structures and Collections",
+        "difficulty":  "easy",
+        "style":  "scenario",
+        "tags":  [
+                     "data-structures-and-collections",
+                     "python",
+                     "scenario"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-032",
+        "question":  "Which module provides mathematical functions?",
+        "options":  [
+                        "math",
+                        "random",
+                        "os",
+                        "sys"
+                    ],
+        "correct_answer":  "math",
+        "topic":  "Functions and OOP",
+        "difficulty":  "easy",
+        "style":  "architecture",
+        "tags":  [
+                     "architecture",
+                     "functions-and-oop",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-033",
+        "question":  "How do you create an empty set in Python?",
+        "options":  [
+                        "set()",
+                        "[] under production constraints",
+                        "{}",
+                        "()"
+                    ],
+        "correct_answer":  "set()",
+        "topic":  "Data Structures and Collections",
+        "difficulty":  "easy",
+        "style":  "operations",
+        "tags":  [
+                     "data-structures-and-collections",
+                     "operations",
+                     "python",
+                     "set"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-034",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(abs(-7))?",
+        "options":  [
+                        "7",
+                        "Error",
+                        "0",
+                        "-7"
+                    ],
+        "correct_answer":  "7",
+        "topic":  "Functions and OOP",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "concept",
+                     "functions-and-oop",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-035",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(\u0027Hello\u0027.lower())?",
+        "options":  [
+                        "Hello",
+                        "None under stated conditions",
+                        "0",
+                        "1"
+                    ],
+        "correct_answer":  "Hello",
+        "topic":  "Data Structures and Collections",
+        "difficulty":  "easy",
+        "style":  "scenario",
+        "tags":  [
+                     "data-structures-and-collections",
+                     "python",
+                     "scenario"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-036",
+        "question":  "Which statement is used to skip the current iteration?",
+        "options":  [
+                        "continue",
+                        "break",
+                        "pass",
+                        "return under production constraints"
+                    ],
+        "correct_answer":  "continue",
+        "topic":  "Modules and Tooling",
+        "difficulty":  "easy",
+        "style":  "architecture",
+        "tags":  [
+                     "architecture",
+                     "modules-and-tooling",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-037",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(5 == 5.0)?",
+        "options":  [
+                        "True",
+                        "False",
+                        "Error",
+                        "None"
+                    ],
+        "correct_answer":  "True",
+        "topic":  "Data Structures and Collections",
+        "difficulty":  "easy",
+        "style":  "operations",
+        "tags":  [
+                     "data-structures-and-collections",
+                     "operations",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-038",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(round(3.7))?",
+        "options":  [
+                        "4",
+                        "7",
+                        "Error",
+                        "3"
+                    ],
+        "correct_answer":  "4",
+        "topic":  "Functions and OOP",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "concept",
+                     "functions-and-oop",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-039",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(list(\u0027abc\u0027))?",
+        "options":  [
+                        "[\u0027a\u0027,\u0027b\u0027,\u0027c\u0027]",
+                        "[\u0027abc\u0027]",
+                        "abc",
+                        "(\u0027a\u0027,\u0027b\u0027,\u0027c\u0027)"
+                    ],
+        "correct_answer":  "[\u0027a\u0027,\u0027b\u0027,\u0027c\u0027]",
+        "topic":  "Testing Basics",
+        "difficulty":  "easy",
+        "style":  "scenario",
+        "tags":  [
+                     "list",
+                     "python",
+                     "scenario",
+                     "testing-basics"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-040",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\na = [1, 2, 3]\nb = a\nb.append(4)\nprint(a)?",
+        "options":  [
+                        "[1, 2, 3, 4]",
+                        "Error under stated conditions",
+                        "[4]",
+                        "None"
+                    ],
+        "correct_answer":  "[1, 2, 3, 4]",
+        "topic":  "Exceptions and Debugging",
+        "difficulty":  "easy",
+        "style":  "architecture",
+        "tags":  [
+                     "architecture",
+                     "exceptions-and-debugging",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-041",
+        "question":  "Which method returns all dictionary keys?",
+        "options":  [
+                        ".keys()",
+                        ".values()",
+                        ".items()",
+                        ".get()"
+                    ],
+        "correct_answer":  ".keys()",
+        "topic":  "Testing Basics",
+        "difficulty":  "easy",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "dict",
+                     "python",
+                     "testing-basics"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-045",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(bool(\u0027\u0027))?",
+        "options":  [
+                        "False",
+                        "Error",
+                        "None",
+                        "True"
+                    ],
+        "correct_answer":  "False",
+        "topic":  "Python Language Fundamentals",
+        "difficulty":  "easy",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "python",
+                     "python-language-fundamentals"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-046",
+        "question":  "What does.split() do with no arguments?",
+        "options":  [
+                        "Splits on spaces",
+                        "Returns original",
+                        "Splits on commas",
+                        "Raises error"
+                    ],
+        "correct_answer":  "Splits on spaces",
+        "topic":  "Modules and Tooling",
+        "difficulty":  "easy",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "modules-and-tooling",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-047",
+        "question":  "Which of these is a valid variable name?",
+        "options":  [
+                        "_count",
+                        "class under stated conditions",
+                        "2name",
+                        "var"
+                    ],
+        "correct_answer":  "_count",
+        "topic":  "Standard Library Usage",
+        "difficulty":  "easy",
+        "style":  "debugging",
+        "tags":  [
+                     "debugging",
+                     "python",
+                     "standard-library-usage"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-048",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(type(None).__name__)?",
+        "options":  [
+                        "NoneType",
+                        "void under stated conditions",
+                        "null",
+                        "None"
+                    ],
+        "correct_answer":  "NoneType",
+        "topic":  "Data Structures and Collections",
+        "difficulty":  "easy",
+        "style":  "debugging",
+        "tags":  [
+                     "data-structures-and-collections",
+                     "debugging",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-050",
+        "question":  "Which method joins list elements into a string?",
+        "options":  [
+                        ".join() under stated conditions",
+                        ".merge()",
+                        ".combine() based on available context",
+                        ".concat()"
+                    ],
+        "correct_answer":  ".join() under stated conditions",
+        "topic":  "Testing Basics",
+        "difficulty":  "easy",
+        "style":  "architecture",
+        "tags":  [
+                     "architecture",
+                     "list",
+                     "python",
+                     "testing-basics"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-051",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(3 in [1, 2, 3])?",
+        "options":  [
+                        "True",
+                        "Error",
+                        "False",
+                        "3"
+                    ],
+        "correct_answer":  "True",
+        "topic":  "Standard Library Usage",
+        "difficulty":  "easy",
+        "style":  "operations",
+        "tags":  [
+                     "operations",
+                     "python",
+                     "standard-library-usage"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-052",
+        "question":  "What does the elif keyword mean?",
+        "options":  [
+                        "else if",
+                        "end if",
+                        "else loop",
+                        "element if"
+                    ],
+        "correct_answer":  "else if",
+        "topic":  "Python Language Fundamentals",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "concept",
+                     "python",
+                     "python-language-fundamentals"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-101",
+        "question":  "What is the index of the first element in a list?",
+        "options":  [
+                        "0",
+                        "1",
+                        "None",
+                        "-1"
+                    ],
+        "correct_answer":  "0",
+        "topic":  "Data Structures and Collections",
+        "difficulty":  "easy",
+        "style":  "operations",
+        "tags":  [
+                     "data-structures-and-collections",
+                     "list",
+                     "operations",
+                     "python"
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    },
+    {
+        "id":  "python-python-entry-theory-debug-102",
+        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(10 // 3)?",
+        "options":  [
+                        "3",
+                        "4",
+                        "1",
+                        "33"
+                    ],
+        "correct_answer":  "3",
+        "topic":  "Python Language Fundamentals",
+        "difficulty":  "easy",
+        "style":  "operations",
+        "tags":  [
+
+                 ],
+        "role_target":  "python_entry",
+        "round_target":  "L2",
+        "version_scope":  [
+                              "python311",
+                              "pytest"
+                          ]
+    }
 ]
