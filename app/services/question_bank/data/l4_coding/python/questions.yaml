@@ -3053,3 +3053,2639 @@
     - - 1010
     expected:
       10: 10
+- id: 48
+  title: Longest Substring Without Repeating Characters
+  difficulty: HARD
+  description: Given a string s, return the length of the longest substring without
+    repeating characters.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(s):'
+  public_tests:
+  - input:
+    - abcabcbb
+    expected: 3
+  - input:
+    - bbbbb
+    expected: 1
+  - input:
+    - pwwkew
+    expected: 3
+  hidden_tests:
+  - input:
+    - ''
+    expected: 0
+  - input:
+    - dvdf
+    expected: 3
+  - input:
+    - abba
+    expected: 2
+  - input:
+    - anviaj
+    expected: 5
+  - input:
+    - tmmzuxt
+    expected: 5
+- id: 49
+  title: Minimum Window Substring
+  difficulty: HARD
+  description: Given strings s and t, return the minimum window in s that contains
+    all characters of t. Return empty string if impossible.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(s, t):'
+  public_tests:
+  - input:
+    - ADOBECODEBANC
+    - ABC
+    expected: BANC
+  - input:
+    - a
+    - a
+    expected: a
+  - input:
+    - a
+    - aa
+    expected: ''
+  hidden_tests:
+  - input:
+    - aa
+    - aa
+    expected: aa
+  - input:
+    - ab
+    - b
+    expected: b
+  - input:
+    - bdab
+    - ab
+    expected: ab
+  - input:
+    - cabefgecdaecf
+    - cae
+    expected: aec
+  - input:
+    - bba
+    - ab
+    expected: ba
+- id: 50
+  title: Merge Overlapping Intervals
+  difficulty: HARD
+  description: Given a list of intervals [start, end], merge all overlapping intervals
+    and return the merged result sorted by start.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(intervals):'
+  public_tests:
+  - input:
+    - - - 1
+        - 3
+      - - 2
+        - 6
+      - - 8
+        - 10
+      - - 15
+        - 18
+    expected:
+    - - 1
+      - 6
+    - - 8
+      - 10
+    - - 15
+      - 18
+  - input:
+    - - - 1
+        - 4
+      - - 4
+        - 5
+    expected:
+    - - 1
+      - 5
+  - input:
+    - - - 1
+        - 4
+      - - 0
+        - 4
+    expected:
+    - - 0
+      - 4
+  hidden_tests:
+  - input:
+    - - - 1
+        - 4
+      - - 2
+        - 3
+    expected:
+    - - 1
+      - 4
+  - input:
+    - - - 1
+        - 2
+      - - 3
+        - 4
+      - - 5
+        - 6
+    expected:
+    - - 1
+      - 2
+    - - 3
+      - 4
+    - - 5
+      - 6
+  - input:
+    - - - 1
+        - 10
+      - - 2
+        - 5
+      - - 6
+        - 9
+    expected:
+    - - 1
+      - 10
+  - input:
+    - - - 5
+        - 7
+      - - 1
+        - 2
+      - - 2
+        - 4
+    expected:
+    - - 1
+      - 4
+    - - 5
+      - 7
+  - input:
+    - []
+    expected: []
+- id: 51
+  title: Kth Largest Element
+  difficulty: HARD
+  description: Return the kth largest element in an unsorted array.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(nums, k):'
+  public_tests:
+  - input:
+    - - 3
+      - 2
+      - 1
+      - 5
+      - 6
+      - 4
+    - 2
+    expected: 5
+  - input:
+    - - 3
+      - 2
+      - 3
+      - 1
+      - 2
+      - 4
+      - 5
+      - 5
+      - 6
+    - 4
+    expected: 4
+  - input:
+    - - 1
+    - 1
+    expected: 1
+  hidden_tests:
+  - input:
+    - - -1
+      - -2
+      - -3
+      - -4
+    - 2
+    expected: -2
+  - input:
+    - - 7
+      - 7
+      - 7
+      - 7
+    - 3
+    expected: 7
+  - input:
+    - - 9
+      - 8
+      - 7
+      - 6
+      - 5
+    - 5
+    expected: 5
+  - input:
+    - - 2
+      - 1
+    - 1
+    expected: 2
+  - input:
+    - - 100
+      - 99
+      - 100
+      - 98
+    - 2
+    expected: 100
+- id: 52
+  title: Top K Frequent Elements
+  difficulty: HARD
+  description: Return the top k frequent elements. If frequencies tie, return smaller
+    value first.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(nums, k):'
+  public_tests:
+  - input:
+    - - 1
+      - 1
+      - 1
+      - 2
+      - 2
+      - 3
+    - 2
+    expected:
+    - 1
+    - 2
+  - input:
+    - - 4
+      - 4
+      - 4
+      - 6
+      - 6
+      - 7
+      - 7
+      - 7
+    - 2
+    expected:
+    - 4
+    - 7
+  - input:
+    - - 1
+    - 1
+    expected:
+    - 1
+  hidden_tests:
+  - input:
+    - - 5
+      - 5
+      - 4
+      - 4
+      - 3
+      - 3
+    - 2
+    expected:
+    - 4
+    - 5
+  - input:
+    - - 9
+      - 9
+      - 8
+      - 8
+      - 8
+      - 7
+    - 1
+    expected:
+    - 8
+  - input:
+    - - 2
+      - 2
+      - 2
+      - 1
+      - 1
+      - 3
+    - 3
+    expected:
+    - 2
+    - 1
+    - 3
+  - input:
+    - - 10
+      - 9
+      - 8
+      - 7
+    - 2
+    expected:
+    - 7
+    - 8
+  - input:
+    - - 0
+      - 0
+      - 0
+      - 0
+    - 1
+    expected:
+    - 0
+- id: 53
+  title: Word Ladder Length
+  difficulty: HARD
+  description: Given beginWord, endWord, and a word list, return the length of the
+    shortest transformation sequence, or 0 if impossible.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(begin_word, end_word, word_list):'
+  public_tests:
+  - input:
+    - hit
+    - cog
+    - - hot
+      - dot
+      - dog
+      - lot
+      - log
+      - cog
+    expected: 5
+  - input:
+    - hit
+    - cog
+    - - hot
+      - dot
+      - dog
+      - lot
+      - log
+    expected: 0
+  - input:
+    - a
+    - c
+    - - a
+      - b
+      - c
+    expected: 2
+  hidden_tests:
+  - input:
+    - red
+    - tax
+    - - ted
+      - tex
+      - red
+      - tax
+      - tad
+      - den
+      - rex
+      - pee
+    expected: 4
+  - input:
+    - lost
+    - cost
+    - - most
+      - fist
+      - lost
+      - cost
+      - fost
+      - fish
+    expected: 2
+  - input:
+    - same
+    - same
+    - - same
+    expected: 1
+  - input:
+    - ab
+    - cd
+    - - ab
+      - cb
+      - cd
+    expected: 3
+  - input:
+    - aaa
+    - bbb
+    - - aab
+      - abb
+      - bbb
+    expected: 4
+- id: 54
+  title: Course Schedule Feasibility
+  difficulty: HARD
+  description: Given number of courses and prerequisite pairs [a, b] (take b before
+    a), return true if all courses can be finished.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(num_courses, prerequisites):'
+  public_tests:
+  - input:
+    - 2
+    - - - 1
+        - 0
+    expected: true
+  - input:
+    - 2
+    - - - 1
+        - 0
+      - - 0
+        - 1
+    expected: false
+  - input:
+    - 4
+    - - - 1
+        - 0
+      - - 2
+        - 1
+      - - 3
+        - 2
+    expected: true
+  hidden_tests:
+  - input:
+    - 3
+    - - - 1
+        - 0
+      - - 1
+        - 2
+      - - 0
+        - 1
+    expected: false
+  - input:
+    - 5
+    - []
+    expected: true
+  - input:
+    - 3
+    - - - 0
+        - 1
+      - - 0
+        - 2
+      - - 1
+        - 2
+    expected: true
+  - input:
+    - 3
+    - - - 0
+        - 1
+      - - 1
+        - 2
+      - - 2
+        - 0
+    expected: false
+  - input:
+    - 1
+    - []
+    expected: true
+- id: 55
+  title: Number of Islands
+  difficulty: HARD
+  description: Given a grid of '1' and '0' rows (as strings), return the number of
+    islands.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(grid):'
+  public_tests:
+  - input:
+    - - '11110'
+      - '11010'
+      - '11000'
+      - '00000'
+    expected: 1
+  - input:
+    - - '11000'
+      - '11000'
+      - '00100'
+      - '00011'
+    expected: 3
+  - input:
+    - []
+    expected: 0
+  hidden_tests:
+  - input:
+    - - '1'
+    expected: 1
+  - input:
+    - - '0'
+    expected: 0
+  - input:
+    - - '10101'
+    expected: 3
+  - input:
+    - - '111'
+      - '010'
+      - '111'
+    expected: 1
+  - input:
+    - - '100'
+      - '001'
+      - '010'
+    expected: 3
+- id: 56
+  title: Shortest Path in Binary Matrix
+  difficulty: HARD
+  description: Given an n x n binary matrix, return shortest clear path length from
+    top-left to bottom-right using 8 directions. Return -1 if impossible.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(grid):'
+  public_tests:
+  - input:
+    - - - 0
+        - 1
+      - - 1
+        - 0
+    expected: 2
+  - input:
+    - - - 0
+        - 0
+        - 0
+      - - 1
+        - 1
+        - 0
+      - - 1
+        - 1
+        - 0
+    expected: 4
+  - input:
+    - - - 1
+        - 0
+      - - 1
+        - 0
+    expected: -1
+  hidden_tests:
+  - input:
+    - - - 0
+    expected: 1
+  - input:
+    - - - 0
+        - 0
+      - - 0
+        - 0
+    expected: 2
+  - input:
+    - - - 0
+        - 1
+        - 1
+      - - 1
+        - 1
+        - 0
+      - - 1
+        - 1
+        - 0
+    expected: -1
+  - input:
+    - - - 0
+        - 0
+        - 1
+      - - 1
+        - 0
+        - 1
+      - - 1
+        - 0
+        - 0
+    expected: 4
+  - input:
+    - - - 0
+        - 1
+      - - 0
+        - 0
+    expected: 2
+- id: 57
+  title: Decode Encoded String
+  difficulty: HARD
+  description: Decode strings encoded as k[encoded_string], where k is a positive
+    integer. Nested patterns are allowed.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(s):'
+  public_tests:
+  - input:
+    - 3[a]2[bc]
+    expected: aaabcbc
+  - input:
+    - 3[a2[c]]
+    expected: accaccacc
+  - input:
+    - 2[abc]3[cd]ef
+    expected: abcabccdcdcdef
+  hidden_tests:
+  - input:
+    - 10[a]
+    expected: aaaaaaaaaa
+  - input:
+    - 2[ab3[c]]
+    expected: abcccabccc
+  - input:
+    - 1[z]
+    expected: z
+  - input:
+    - 3[a]2[b4[F]c]
+    expected: aaabFFFFcbFFFFc
+  - input:
+    - 0[a]
+    expected: ''
+- id: 58
+  title: Daily Temperatures Wait Days
+  difficulty: HARD
+  description: Given daily temperatures, return an array where answer[i] is number
+    of days until a warmer temperature. If none, 0.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(temps):'
+  public_tests:
+  - input:
+    - - 73
+      - 74
+      - 75
+      - 71
+      - 69
+      - 72
+      - 76
+      - 73
+    expected:
+    - 1
+    - 1
+    - 4
+    - 2
+    - 1
+    - 1
+    - 0
+    - 0
+  - input:
+    - - 30
+      - 40
+      - 50
+      - 60
+    expected:
+    - 1
+    - 1
+    - 1
+    - 0
+  - input:
+    - - 30
+      - 60
+      - 90
+    expected:
+    - 1
+    - 1
+    - 0
+  hidden_tests:
+  - input:
+    - - 90
+      - 80
+      - 70
+    expected:
+    - 0
+    - 0
+    - 0
+  - input:
+    - - 70
+      - 70
+      - 70
+    expected:
+    - 0
+    - 0
+    - 0
+  - input:
+    - - 65
+      - 66
+      - 65
+      - 67
+    expected:
+    - 1
+    - 2
+    - 1
+    - 0
+  - input:
+    - - 50
+    expected:
+    - 0
+  - input:
+    - - 60
+      - 50
+      - 55
+      - 53
+      - 58
+    expected:
+    - 0
+    - 1
+    - 2
+    - 1
+    - 0
+- id: 59
+  title: Next Greater Element in Circular Array
+  difficulty: HARD
+  description: For each element, find next greater element traversing circularly.
+    If not found, return -1 for that index.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(nums):'
+  public_tests:
+  - input:
+    - - 1
+      - 2
+      - 1
+    expected:
+    - 2
+    - -1
+    - 2
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 3
+    expected:
+    - 2
+    - 3
+    - 4
+    - -1
+    - 4
+  - input:
+    - - 5
+      - 4
+      - 3
+      - 2
+      - 1
+    expected:
+    - -1
+    - 5
+    - 5
+    - 5
+    - 5
+  hidden_tests:
+  - input:
+    - - 2
+      - 2
+      - 2
+    expected:
+    - -1
+    - -1
+    - -1
+  - input:
+    - - 1
+    expected:
+    - -1
+  - input:
+    - - 3
+      - 1
+      - 2
+    expected:
+    - -1
+    - 2
+    - 3
+  - input:
+    - - 2
+      - 1
+      - 2
+      - 4
+      - 3
+    expected:
+    - 4
+    - 2
+    - 4
+    - -1
+    - 4
+  - input:
+    - - 9
+      - 8
+      - 7
+      - 3
+      - 2
+    expected:
+    - -1
+    - 9
+    - 9
+    - 9
+    - 9
+- id: 60
+  title: Largest Rectangle in Histogram
+  difficulty: HARD
+  description: Given bar heights of a histogram, return area of the largest rectangle.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(heights):'
+  public_tests:
+  - input:
+    - - 2
+      - 1
+      - 5
+      - 6
+      - 2
+      - 3
+    expected: 10
+  - input:
+    - - 2
+      - 4
+    expected: 4
+  - input:
+    - - 2
+      - 1
+      - 2
+    expected: 3
+  hidden_tests:
+  - input:
+    - - 1
+      - 1
+      - 1
+      - 1
+    expected: 4
+  - input:
+    - - 6
+      - 2
+      - 5
+      - 4
+      - 5
+      - 1
+      - 6
+    expected: 12
+  - input:
+    - - 1
+    expected: 1
+  - input:
+    - - 4
+      - 3
+      - 2
+      - 1
+    expected: 6
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    expected: 9
+- id: 61
+  title: Trapping Rain Water
+  difficulty: HARD
+  description: Given elevation map heights, return total amount of trapped rain water.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(height):'
+  public_tests:
+  - input:
+    - - 0
+      - 1
+      - 0
+      - 2
+      - 1
+      - 0
+      - 1
+      - 3
+      - 2
+      - 1
+      - 2
+      - 1
+    expected: 6
+  - input:
+    - - 4
+      - 2
+      - 0
+      - 3
+      - 2
+      - 5
+    expected: 9
+  - input:
+    - - 1
+      - 2
+      - 3
+      - 4
+    expected: 0
+  hidden_tests:
+  - input:
+    - - 5
+      - 4
+      - 1
+      - 2
+    expected: 1
+  - input:
+    - - 2
+      - 0
+      - 2
+    expected: 2
+  - input:
+    - - 3
+      - 0
+      - 1
+      - 3
+      - 0
+      - 5
+    expected: 8
+  - input:
+    - - 0
+    expected: 0
+  - input:
+    - - 2
+      - 1
+      - 0
+      - 1
+      - 3
+    expected: 4
+- id: 62
+  title: Median of Two Sorted Arrays
+  difficulty: HARD
+  description: Given two sorted arrays, return their median as a float.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(a, b):'
+  public_tests:
+  - input:
+    - - 1
+      - 3
+    - - 2
+    expected: 2.0
+  - input:
+    - - 1
+      - 2
+    - - 3
+      - 4
+    expected: 2.5
+  - input:
+    - - 0
+      - 0
+    - - 0
+      - 0
+    expected: 0.0
+  hidden_tests:
+  - input:
+    - []
+    - - 1
+    expected: 1.0
+  - input:
+    - - 2
+    - []
+    expected: 2.0
+  - input:
+    - - 100000
+    - - 100001
+    expected: 100000.5
+  - input:
+    - - 1
+      - 1
+    - - 1
+      - 2
+    expected: 1.0
+  - input:
+    - - 3
+    - - 1
+      - 2
+      - 4
+      - 5
+      - 6
+    expected: 3.5
+- id: 63
+  title: Longest Increasing Path in Matrix
+  difficulty: HARD
+  description: Given a matrix of integers, return length of the longest strictly increasing
+    path moving up/down/left/right.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(matrix):'
+  public_tests:
+  - input:
+    - - - 9
+        - 9
+        - 4
+      - - 6
+        - 6
+        - 8
+      - - 2
+        - 1
+        - 1
+    expected: 4
+  - input:
+    - - - 3
+        - 4
+        - 5
+      - - 3
+        - 2
+        - 6
+      - - 2
+        - 2
+        - 1
+    expected: 4
+  - input:
+    - - - 1
+    expected: 1
+  hidden_tests:
+  - input:
+    - - - 1
+        - 2
+      - - 3
+        - 4
+    expected: 3
+  - input:
+    - - - 7
+        - 7
+        - 7
+      - - 7
+        - 7
+        - 7
+    expected: 1
+  - input:
+    - - - 1
+        - 2
+        - 3
+      - - 6
+        - 5
+        - 4
+    expected: 6
+  - input:
+    - - - 5
+    expected: 1
+  - input:
+    - - - 1
+        - 2
+        - 1
+      - - 2
+        - 3
+        - 2
+      - - 1
+        - 2
+        - 1
+    expected: 3
+- id: 64
+  title: Coin Change Minimum Coins
+  difficulty: HARD
+  description: Given coin denominations and amount, return minimum number of coins
+    needed. Return -1 if impossible.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(coins, amount):'
+  public_tests:
+  - input:
+    - - 1
+      - 2
+      - 5
+    - 11
+    expected: 3
+  - input:
+    - - 2
+    - 3
+    expected: -1
+  - input:
+    - - 1
+    - 0
+    expected: 0
+  hidden_tests:
+  - input:
+    - - 1
+    - 2
+    expected: 2
+  - input:
+    - - 2
+      - 5
+      - 10
+      - 1
+    - 27
+    expected: 4
+  - input:
+    - - 186
+      - 419
+      - 83
+      - 408
+    - 6249
+    expected: 20
+  - input:
+    - - 3
+      - 7
+    - 1
+    expected: -1
+  - input:
+    - - 2
+      - 4
+    - 8
+    expected: 2
+- id: 65
+  title: Edit Distance
+  difficulty: HARD
+  description: Return the minimum number of operations (insert, delete, replace) to
+    convert word1 into word2.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(word1, word2):'
+  public_tests:
+  - input:
+    - horse
+    - ros
+    expected: 3
+  - input:
+    - intention
+    - execution
+    expected: 5
+  - input:
+    - ''
+    - abc
+    expected: 3
+  hidden_tests:
+  - input:
+    - abc
+    - abc
+    expected: 0
+  - input:
+    - kitten
+    - sitting
+    expected: 3
+  - input:
+    - a
+    - b
+    expected: 1
+  - input:
+    - abcdef
+    - azced
+    expected: 3
+  - input:
+    - ''
+    - ''
+    expected: 0
+- id: 66
+  title: N-Queens Count
+  difficulty: HARD
+  description: Given n, return the number of distinct solutions to the n-queens puzzle.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(n):'
+  public_tests:
+  - input:
+    - 1
+    expected: 1
+  - input:
+    - 4
+    expected: 2
+  - input:
+    - 5
+    expected: 10
+  hidden_tests:
+  - input:
+    - 6
+    expected: 4
+  - input:
+    - 7
+    expected: 40
+  - input:
+    - 8
+    expected: 92
+  - input:
+    - 2
+    expected: 0
+  - input:
+    - 3
+    expected: 0
+- id: 67
+  title: Regular Expression Matching
+  difficulty: HARD
+  description: Implement regex matching with support for '.' and '*'. Return true
+    if pattern fully matches the string.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(s, p):'
+  public_tests:
+  - input:
+    - aa
+    - a
+    expected: false
+  - input:
+    - aa
+    - a*
+    expected: true
+  - input:
+    - ab
+    - .*
+    expected: true
+  hidden_tests:
+  - input:
+    - aab
+    - c*a*b
+    expected: true
+  - input:
+    - mississippi
+    - mis*is*p*.
+    expected: false
+  - input:
+    - ''
+    - c*
+    expected: true
+  - input:
+    - ''
+    - ''
+    expected: true
+  - input:
+    - abcd
+    - d*
+    expected: false
+- id: 68
+  title: LRU Cache Simulator
+  difficulty: HARD
+  description: Simulate an LRU cache. Operations are put/get. Return outputs only
+    for get operations.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(capacity, operations):'
+  public_tests:
+  - input:
+    - 2
+    - - - put
+        - 1
+        - 1
+      - - put
+        - 2
+        - 2
+      - - get
+        - 1
+      - - put
+        - 3
+        - 3
+      - - get
+        - 2
+      - - put
+        - 4
+        - 4
+      - - get
+        - 1
+      - - get
+        - 3
+      - - get
+        - 4
+    expected:
+    - 1
+    - -1
+    - -1
+    - 3
+    - 4
+  - input:
+    - 1
+    - - - put
+        - 2
+        - 1
+      - - get
+        - 2
+      - - put
+        - 3
+        - 2
+      - - get
+        - 2
+      - - get
+        - 3
+    expected:
+    - 1
+    - -1
+    - 2
+  - input:
+    - 2
+    - - - get
+        - 9
+      - - put
+        - 9
+        - 9
+      - - get
+        - 9
+    expected:
+    - -1
+    - 9
+  hidden_tests:
+  - input:
+    - 2
+    - - - put
+        - 1
+        - 10
+      - - put
+        - 2
+        - 20
+      - - put
+        - 1
+        - 15
+      - - get
+        - 1
+      - - put
+        - 3
+        - 30
+      - - get
+        - 2
+    expected:
+    - 15
+    - -1
+  - input:
+    - 3
+    - - - put
+        - 1
+        - 1
+      - - put
+        - 2
+        - 2
+      - - put
+        - 3
+        - 3
+      - - get
+        - 2
+      - - put
+        - 4
+        - 4
+      - - get
+        - 1
+      - - get
+        - 3
+      - - get
+        - 4
+    expected:
+    - 2
+    - -1
+    - 3
+    - 4
+  - input:
+    - 1
+    - - - get
+        - 1
+      - - put
+        - 1
+        - 100
+      - - get
+        - 1
+      - - put
+        - 2
+        - 200
+      - - get
+        - 1
+      - - get
+        - 2
+    expected:
+    - -1
+    - 100
+    - -1
+    - 200
+  - input:
+    - 2
+    - - - put
+        - 5
+        - 5
+      - - put
+        - 6
+        - 6
+      - - get
+        - 5
+      - - get
+        - 6
+    expected:
+    - 5
+    - 6
+  - input:
+    - 2
+    - - - put
+        - 1
+        - 1
+      - - put
+        - 2
+        - 2
+      - - put
+        - 3
+        - 3
+      - - get
+        - 1
+      - - get
+        - 2
+      - - get
+        - 3
+    expected:
+    - -1
+    - 2
+    - 3
+- id: 69
+  title: LFU Cache Simulator
+  difficulty: HARD
+  description: Simulate an LFU cache with LRU tie-breaker for same frequency. Return
+    outputs only for get operations.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(capacity, operations):'
+  public_tests:
+  - input:
+    - 2
+    - - - put
+        - 1
+        - 1
+      - - put
+        - 2
+        - 2
+      - - get
+        - 1
+      - - put
+        - 3
+        - 3
+      - - get
+        - 2
+      - - get
+        - 3
+    expected:
+    - 1
+    - -1
+    - 3
+  - input:
+    - 2
+    - - - put
+        - 2
+        - 2
+      - - put
+        - 1
+        - 1
+      - - get
+        - 2
+      - - get
+        - 1
+      - - get
+        - 2
+      - - put
+        - 3
+        - 3
+      - - get
+        - 1
+      - - get
+        - 2
+      - - get
+        - 3
+    expected:
+    - 2
+    - 1
+    - 2
+    - -1
+    - 2
+    - 3
+  - input:
+    - 0
+    - - - put
+        - 1
+        - 1
+      - - get
+        - 1
+    expected:
+    - -1
+  hidden_tests:
+  - input:
+    - 1
+    - - - put
+        - 1
+        - 1
+      - - get
+        - 1
+      - - put
+        - 2
+        - 2
+      - - get
+        - 1
+      - - get
+        - 2
+    expected:
+    - 1
+    - -1
+    - 2
+  - input:
+    - 2
+    - - - put
+        - 1
+        - 10
+      - - put
+        - 2
+        - 20
+      - - put
+        - 3
+        - 30
+      - - get
+        - 1
+      - - get
+        - 2
+      - - get
+        - 3
+    expected:
+    - -1
+    - 20
+    - 30
+  - input:
+    - 2
+    - - - put
+        - 1
+        - 1
+      - - put
+        - 2
+        - 2
+      - - get
+        - 1
+      - - put
+        - 2
+        - 22
+      - - put
+        - 3
+        - 3
+      - - get
+        - 1
+      - - get
+        - 2
+      - - get
+        - 3
+    expected:
+    - 1
+    - 1
+    - -1
+    - 3
+  - input:
+    - 2
+    - - - put
+        - 1
+        - 1
+      - - put
+        - 2
+        - 2
+      - - get
+        - 2
+      - - put
+        - 3
+        - 3
+      - - get
+        - 1
+      - - get
+        - 2
+      - - get
+        - 3
+    expected:
+    - -1
+    - 2
+    - 3
+  - input:
+    - 3
+    - - - put
+        - 1
+        - 1
+      - - put
+        - 2
+        - 2
+      - - put
+        - 3
+        - 3
+      - - get
+        - 1
+      - - get
+        - 1
+      - - get
+        - 2
+      - - put
+        - 4
+        - 4
+      - - get
+        - 3
+      - - get
+        - 4
+    expected:
+    - 1
+    - 1
+    - 2
+    - -1
+    - 4
+- id: 70
+  title: Time-Based Key Value Store
+  difficulty: HARD
+  description: Support set(key, value, timestamp) and get(key, timestamp) returning
+    the latest value with timestamp <= query timestamp.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(operations):'
+  public_tests:
+  - input:
+    - - - set
+        - foo
+        - bar
+        - 1
+      - - get
+        - foo
+        - 1
+      - - get
+        - foo
+        - 3
+      - - set
+        - foo
+        - bar2
+        - 4
+      - - get
+        - foo
+        - 4
+      - - get
+        - foo
+        - 5
+    expected:
+    - bar
+    - bar
+    - bar2
+    - bar2
+  - input:
+    - - - set
+        - a
+        - x
+        - 10
+      - - get
+        - a
+        - 9
+      - - get
+        - a
+        - 10
+      - - get
+        - a
+        - 11
+    expected:
+    - ''
+    - x
+    - x
+  - input:
+    - - - get
+        - none
+        - 100
+      - - set
+        - k
+        - v
+        - 2
+      - - get
+        - k
+        - 1
+      - - get
+        - k
+        - 2
+    expected:
+    - ''
+    - ''
+    - v
+  hidden_tests:
+  - input:
+    - - - set
+        - k
+        - v1
+        - 1
+      - - set
+        - k
+        - v2
+        - 2
+      - - set
+        - k
+        - v3
+        - 3
+      - - get
+        - k
+        - 2
+    expected:
+    - v2
+  - input:
+    - - - set
+        - x
+        - a
+        - 5
+      - - get
+        - x
+        - 4
+      - - get
+        - x
+        - 5
+      - - get
+        - x
+        - 100
+    expected:
+    - ''
+    - a
+    - a
+  - input:
+    - - - set
+        - u
+        - '1'
+        - 1
+      - - set
+        - v
+        - '2'
+        - 1
+      - - get
+        - u
+        - 1
+      - - get
+        - v
+        - 1
+    expected:
+    - '1'
+    - '2'
+  - input:
+    - - - set
+        - x
+        - first
+        - 2
+      - - set
+        - x
+        - second
+        - 2
+      - - get
+        - x
+        - 2
+    expected:
+    - second
+  - input:
+    - - - set
+        - a
+        - z
+        - 7
+      - - get
+        - a
+        - 6
+      - - get
+        - a
+        - 7
+      - - get
+        - a
+        - 8
+    expected:
+    - ''
+    - z
+    - z
+- id: 71
+  title: Trie Query Simulator
+  difficulty: HARD
+  description: Implement Trie operations insert, search, startsWith. Return outputs
+    only for search and startsWith operations.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(operations):'
+  public_tests:
+  - input:
+    - - - insert
+        - apple
+      - - search
+        - apple
+      - - search
+        - app
+      - - startsWith
+        - app
+      - - insert
+        - app
+      - - search
+        - app
+    expected:
+    - true
+    - false
+    - true
+    - true
+  - input:
+    - - - search
+        - a
+      - - insert
+        - a
+      - - search
+        - a
+      - - startsWith
+        - a
+      - - startsWith
+        - b
+    expected:
+    - false
+    - true
+    - true
+    - false
+  - input:
+    - - - insert
+        - cat
+      - - insert
+        - car
+      - - search
+        - car
+      - - startsWith
+        - ca
+    expected:
+    - true
+    - true
+  hidden_tests:
+  - input:
+    - - - insert
+        - abc
+      - - insert
+        - abcd
+      - - search
+        - abc
+      - - search
+        - ab
+      - - startsWith
+        - abcd
+    expected:
+    - true
+    - false
+    - true
+  - input:
+    - - - insert
+        - x
+      - - insert
+        - xy
+      - - insert
+        - xyz
+      - - search
+        - xyz
+      - - startsWith
+        - xy
+    expected:
+    - true
+    - true
+  - input:
+    - - - startsWith
+        - 'no'
+      - - insert
+        - note
+      - - startsWith
+        - 'no'
+      - - search
+        - not
+    expected:
+    - false
+    - true
+    - false
+  - input:
+    - - - insert
+        - same
+      - - insert
+        - same
+      - - search
+        - same
+      - - startsWith
+        - sam
+    expected:
+    - true
+    - true
+  - input:
+    - - - search
+        - ''
+      - - startsWith
+        - ''
+    expected:
+    - false
+    - true
+- id: 72
+  title: In-Memory File System Simulator
+  difficulty: HARD
+  description: Support mkdir, add (append content to file), read, and ls. Return outputs
+    only for ls and read operations.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(operations):'
+  public_tests:
+  - input:
+    - - - mkdir
+        - /a/b
+      - - add
+        - /a/b/file.txt
+        - hello
+      - - add
+        - /a/b/file.txt
+        - ' world'
+      - - read
+        - /a/b/file.txt
+      - - ls
+        - /a/b
+    expected:
+    - hello world
+    - - file.txt
+  - input:
+    - - - mkdir
+        - /z
+      - - ls
+        - /
+      - - add
+        - /z/t.txt
+        - x
+      - - ls
+        - /z
+      - - read
+        - /z/t.txt
+    expected:
+    - - z
+    - - t.txt
+    - x
+  - input:
+    - - - add
+        - /m/n.txt
+        - a
+      - - ls
+        - /m
+      - - read
+        - /m/n.txt
+    expected:
+    - - n.txt
+    - a
+  hidden_tests:
+  - input:
+    - - - mkdir
+        - /a
+      - - mkdir
+        - /a/c
+      - - mkdir
+        - /a/b
+      - - ls
+        - /a
+    expected:
+    - - b
+      - c
+  - input:
+    - - - add
+        - /x.txt
+        - p
+      - - ls
+        - /
+      - - read
+        - /x.txt
+    expected:
+    - - x.txt
+    - p
+  - input:
+    - - - mkdir
+        - /d/e/f
+      - - ls
+        - /d/e
+      - - add
+        - /d/e/f/k
+        - '1'
+      - - read
+        - /d/e/f/k
+    expected:
+    - - f
+    - '1'
+  - input:
+    - - - add
+        - /r.txt
+        - ab
+      - - add
+        - /r.txt
+        - cd
+      - - read
+        - /r.txt
+    expected:
+    - abcd
+  - input:
+    - - - mkdir
+        - /a
+      - - add
+        - /a/f
+        - z
+      - - ls
+        - /a/f
+    expected:
+    - - f
+- id: 73
+  title: Median Finder Stream Simulator
+  difficulty: HARD
+  description: Support addNum and findMedian on a data stream. Return outputs only
+    for findMedian operations.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(operations):'
+  public_tests:
+  - input:
+    - - - add
+        - 1
+      - - add
+        - 2
+      - - find
+      - - add
+        - 3
+      - - find
+    expected:
+    - 1.5
+    - 2.0
+  - input:
+    - - - add
+        - 5
+      - - find
+      - - add
+        - 10
+      - - find
+      - - add
+        - 100
+      - - find
+    expected:
+    - 5.0
+    - 7.5
+    - 10.0
+  - input:
+    - - - add
+        - -1
+      - - add
+        - -2
+      - - find
+    expected:
+    - -1.5
+  hidden_tests:
+  - input:
+    - - - add
+        - 2
+      - - add
+        - 2
+      - - find
+    expected:
+    - 2.0
+  - input:
+    - - - add
+        - 1
+      - - add
+        - 4
+      - - add
+        - 2
+      - - add
+        - 3
+      - - find
+    expected:
+    - 2.5
+  - input:
+    - - - add
+        - 1000
+      - - find
+    expected:
+    - 1000.0
+  - input:
+    - - - add
+        - 7
+      - - add
+        - 8
+      - - add
+        - 9
+      - - find
+      - - add
+        - 10
+      - - find
+    expected:
+    - 8.0
+    - 8.5
+  - input:
+    - - - add
+        - 0
+      - - add
+        - 0
+      - - add
+        - 0
+      - - find
+    expected:
+    - 0.0
+- id: 74
+  title: Calendar Booking Simulator
+  difficulty: HARD
+  description: Simulate booking intervals [start, end). Return true if booking succeeds
+    (no overlap), else false.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(operations):'
+  public_tests:
+  - input:
+    - - - book
+        - 10
+        - 20
+      - - book
+        - 15
+        - 25
+      - - book
+        - 20
+        - 30
+    expected:
+    - true
+    - false
+    - true
+  - input:
+    - - - book
+        - 1
+        - 5
+      - - book
+        - 5
+        - 10
+      - - book
+        - 2
+        - 3
+    expected:
+    - true
+    - true
+    - false
+  - input:
+    - - - book
+        - 5
+        - 10
+      - - book
+        - 10
+        - 15
+      - - book
+        - 15
+        - 20
+    expected:
+    - true
+    - true
+    - true
+  hidden_tests:
+  - input:
+    - - - book
+        - 0
+        - 1
+      - - book
+        - 1
+        - 2
+      - - book
+        - 0
+        - 2
+    expected:
+    - true
+    - true
+    - false
+  - input:
+    - - - book
+        - 3
+        - 7
+      - - book
+        - 7
+        - 8
+      - - book
+        - 2
+        - 3
+    expected:
+    - true
+    - true
+    - true
+  - input:
+    - - - book
+        - 4
+        - 9
+      - - book
+        - 6
+        - 7
+      - - book
+        - 9
+        - 10
+    expected:
+    - true
+    - false
+    - true
+  - input:
+    - - - book
+        - 1
+        - 100
+      - - book
+        - 50
+        - 60
+      - - book
+        - 100
+        - 101
+    expected:
+    - true
+    - false
+    - true
+  - input:
+    - - - book
+        - 8
+        - 12
+      - - book
+        - 12
+        - 16
+      - - book
+        - 7
+        - 8
+    expected:
+    - true
+    - true
+    - true
+- id: 75
+  title: Disjoint Set Connectivity Simulator
+  difficulty: HARD
+  description: Support union and connected operations for nodes 0..n-1. Return outputs
+    only for connected operations.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(n, operations):'
+  public_tests:
+  - input:
+    - 5
+    - - - union
+        - 0
+        - 1
+      - - union
+        - 1
+        - 2
+      - - connected
+        - 0
+        - 2
+      - - connected
+        - 3
+        - 4
+    expected:
+    - true
+    - false
+  - input:
+    - 4
+    - - - connected
+        - 0
+        - 1
+      - - union
+        - 2
+        - 3
+      - - connected
+        - 2
+        - 3
+    expected:
+    - false
+    - true
+  - input:
+    - 3
+    - - - union
+        - 0
+        - 1
+      - - union
+        - 1
+        - 2
+      - - connected
+        - 0
+        - 2
+    expected:
+    - true
+  hidden_tests:
+  - input:
+    - 6
+    - - - union
+        - 0
+        - 1
+      - - union
+        - 2
+        - 3
+      - - union
+        - 1
+        - 2
+      - - connected
+        - 0
+        - 3
+      - - connected
+        - 4
+        - 5
+    expected:
+    - true
+    - false
+  - input:
+    - 2
+    - - - connected
+        - 0
+        - 0
+      - - connected
+        - 0
+        - 1
+    expected:
+    - true
+    - false
+  - input:
+    - 7
+    - - - union
+        - 5
+        - 6
+      - - connected
+        - 5
+        - 6
+      - - union
+        - 0
+        - 6
+      - - connected
+        - 0
+        - 5
+    expected:
+    - true
+    - true
+  - input:
+    - 5
+    - - - union
+        - 1
+        - 1
+      - - connected
+        - 1
+        - 1
+      - - connected
+        - 1
+        - 2
+    expected:
+    - true
+    - false
+  - input:
+    - 3
+    - - - union
+        - 0
+        - 2
+      - - connected
+        - 2
+        - 0
+      - - connected
+        - 1
+        - 2
+    expected:
+    - true
+    - false
+- id: 76
+  title: Dynamic Shortest Path Query Simulator
+  difficulty: HARD
+  description: Given n nodes (0-indexed), support addEdge(u,v,w) and shortest(src,dst)
+    on directed weighted graph. Return outputs only for shortest queries (-1 if unreachable).
+  function:
+    python:
+      name: solve
+      signature: 'def solve(n, operations):'
+  public_tests:
+  - input:
+    - 4
+    - - - add
+        - 0
+        - 1
+        - 5
+      - - add
+        - 1
+        - 2
+        - 3
+      - - shortest
+        - 0
+        - 2
+      - - shortest
+        - 2
+        - 0
+    expected:
+    - 8
+    - -1
+  - input:
+    - 3
+    - - - add
+        - 0
+        - 1
+        - 2
+      - - add
+        - 0
+        - 2
+        - 10
+      - - add
+        - 1
+        - 2
+        - 1
+      - - shortest
+        - 0
+        - 2
+    expected:
+    - 3
+  - input:
+    - 2
+    - - - shortest
+        - 0
+        - 1
+      - - add
+        - 0
+        - 1
+        - 7
+      - - shortest
+        - 0
+        - 1
+    expected:
+    - -1
+    - 7
+  hidden_tests:
+  - input:
+    - 5
+    - - - add
+        - 0
+        - 1
+        - 2
+      - - add
+        - 1
+        - 2
+        - 2
+      - - add
+        - 0
+        - 2
+        - 10
+      - - shortest
+        - 0
+        - 2
+      - - add
+        - 2
+        - 3
+        - 1
+      - - shortest
+        - 0
+        - 3
+    expected:
+    - 4
+    - 5
+  - input:
+    - 3
+    - - - add
+        - 0
+        - 1
+        - 1
+      - - add
+        - 1
+        - 0
+        - 1
+      - - shortest
+        - 0
+        - 2
+    expected:
+    - -1
+  - input:
+    - 4
+    - - - add
+        - 0
+        - 1
+        - 4
+      - - add
+        - 1
+        - 2
+        - 4
+      - - add
+        - 0
+        - 2
+        - 9
+      - - shortest
+        - 0
+        - 2
+      - - add
+        - 2
+        - 3
+        - 1
+      - - shortest
+        - 0
+        - 3
+    expected:
+    - 8
+    - 9
+  - input:
+    - 3
+    - - - add
+        - 0
+        - 1
+        - 5
+      - - add
+        - 0
+        - 1
+        - 2
+      - - shortest
+        - 0
+        - 1
+    expected:
+    - 2
+  - input:
+    - 3
+    - - - add
+        - 0
+        - 2
+        - 6
+      - - add
+        - 0
+        - 1
+        - 2
+      - - add
+        - 1
+        - 2
+        - 2
+      - - shortest
+        - 0
+        - 2
+    expected:
+    - 4
+- id: 77
+  title: Snapshot Array Simulator
+  difficulty: HARD
+  description: Support set(index,val), snap(), and get(index,snap_id). Return outputs
+    for snap and get operations.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(length, operations):'
+  public_tests:
+  - input:
+    - 3
+    - - - set
+        - 0
+        - 5
+      - - snap
+      - - set
+        - 0
+        - 6
+      - - get
+        - 0
+        - 0
+    expected:
+    - 0
+    - 5
+  - input:
+    - 1
+    - - - snap
+      - - get
+        - 0
+        - 0
+      - - set
+        - 0
+        - 9
+      - - snap
+      - - get
+        - 0
+        - 1
+    expected:
+    - 0
+    - 0
+    - 1
+    - 9
+  - input:
+    - 2
+    - - - set
+        - 1
+        - 7
+      - - snap
+      - - get
+        - 1
+        - 0
+      - - get
+        - 0
+        - 0
+    expected:
+    - 0
+    - 7
+    - 0
+  hidden_tests:
+  - input:
+    - 2
+    - - - set
+        - 0
+        - 1
+      - - set
+        - 0
+        - 2
+      - - snap
+      - - get
+        - 0
+        - 0
+    expected:
+    - 0
+    - 2
+  - input:
+    - 2
+    - - - snap
+      - - snap
+      - - get
+        - 1
+        - 0
+      - - get
+        - 1
+        - 1
+    expected:
+    - 0
+    - 1
+    - 0
+    - 0
+  - input:
+    - 3
+    - - - set
+        - 2
+        - 4
+      - - snap
+      - - set
+        - 2
+        - 8
+      - - snap
+      - - get
+        - 2
+        - 0
+      - - get
+        - 2
+        - 1
+    expected:
+    - 0
+    - 1
+    - 4
+    - 8
+  - input:
+    - 1
+    - - - set
+        - 0
+        - 3
+      - - set
+        - 0
+        - 5
+      - - snap
+      - - get
+        - 0
+        - 0
+    expected:
+    - 0
+    - 5
+  - input:
+    - 4
+    - - - get
+        - 3
+        - 0
+      - - snap
+      - - get
+        - 3
+        - 0
+      - - get
+        - 3
+        - 1
+    expected:
+    - 0
+    - 0
+    - 0
+    - 0
