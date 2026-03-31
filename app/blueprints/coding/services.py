@@ -15,7 +15,7 @@ from app.services.coding_runtime_store import (
 
 
 QUESTION_COUNT = 1
-DEFAULT_DURATION_MINUTES = 20
+DEFAULT_DURATION_MINUTES = 30
 
 
 _JAVA_MODIFIERS = {

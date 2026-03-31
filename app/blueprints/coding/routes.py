@@ -227,6 +227,8 @@ def start_test(session_id):
     session_meta = CODING_SESSION_REGISTRY.get(session_id)
     if not session_meta:
         return "Invalid or expired coding test link", 404
+    if session_meta.get("started"):
+        return "This test has already been started. Restart is not allowed.", 403
 
     # Clear ALL old test session data to keep cookie small
     stale_keys = [k for k in list(session.keys())
@@ -266,11 +268,13 @@ def start_test(session_id):
             "session_id": session_id,
             "round_name": session_meta["round_label"],
             "language": language_display,
-            "time_minutes": 20,
+            "time_minutes": 30,
             "question_title": question["title"] if question else "Coding Challenge",
             "difficulty": question.get("difficulty", "MEDIUM") if question else "MEDIUM",
         },
         candidate_name=session_meta["candidate_name"],
+        candidate_email=session_meta.get("email", ""),
+        role_label=session_meta.get("role_label", session_meta.get("role_key", "")),
         proctoring_enabled=_proctoring_enabled(),
         body_class="mcq-start-page",
     )
@@ -281,6 +285,20 @@ def start_test(session_id):
 # -------------------------------------------------
 @coding_bp.route("/begin/<session_id>", methods=["POST"])
 def begin_test(session_id):
+    session_meta = CODING_SESSION_REGISTRY.get(session_id)
+    if not session_meta:
+        if _is_ajax_request():
+            return jsonify({"status": "error", "reason": "invalid_session"}), 404
+        return "Invalid or expired coding test link", 404
+    if session_meta.get("started"):
+        if _is_ajax_request():
+            return jsonify({"status": "locked", "reason": "already_started"}), 403
+        return "This test has already been started. Restart is not allowed.", 403
+
+    session_meta["started"] = True
+    session_meta["started_at"] = _utc_now_iso()
+    CODING_SESSION_REGISTRY[session_id] = session_meta
+
     if _is_ajax_request():
         return jsonify({"status": "ok", "editor_url": url_for("coding.editor", session_id=session_id)})
     return redirect(url_for("coding.editor", session_id=session_id))
@@ -294,6 +312,10 @@ def editor(session_id):
     session_meta = CODING_SESSION_REGISTRY.get(session_id)
     if not session_meta:
         return "Invalid or expired coding test link", 404
+    if not session_meta.get("started"):
+        session_meta["started"] = True
+        session_meta["started_at"] = _utc_now_iso()
+        CODING_SESSION_REGISTRY[session_id] = session_meta
 
     if CodingSessionService.is_submitted(session_id):
         return redirect(url_for("coding.completed", session_id=session_id))
