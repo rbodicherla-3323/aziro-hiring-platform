@@ -112,6 +112,16 @@
     return [email, batchId, roleKey].join("||");
   }
 
+  function normalizeScopeValue(value) {
+    var text = String(value || "").trim();
+    if (!text) return "";
+    var lowered = text.toLowerCase();
+    if (lowered === "none" || lowered === "null" || lowered === "undefined") {
+      return "";
+    }
+    return text;
+  }
+
   function getCardCandidateContext(card, actionNode) {
     var context = {
       email: "",
@@ -123,32 +133,32 @@
     };
 
     if (card) {
-      context.email = String(card.getAttribute("data-candidate-email") || "").trim();
-      context.name = String(card.getAttribute("data-candidate-name") || "").trim();
-      context.candidateKey = String(card.getAttribute("data-candidate-key") || "").trim();
-      context.roleKey = String(card.getAttribute("data-candidate-role-key") || "").trim();
-      context.batchId = String(card.getAttribute("data-candidate-batch-id") || "").trim();
-      context.testSessionId = String(card.getAttribute("data-candidate-test-session-id") || "").trim();
+      context.email = normalizeScopeValue(card.getAttribute("data-candidate-email"));
+      context.name = normalizeScopeValue(card.getAttribute("data-candidate-name"));
+      context.candidateKey = normalizeScopeValue(card.getAttribute("data-candidate-key"));
+      context.roleKey = normalizeScopeValue(card.getAttribute("data-candidate-role-key"));
+      context.batchId = normalizeScopeValue(card.getAttribute("data-candidate-batch-id"));
+      context.testSessionId = normalizeScopeValue(card.getAttribute("data-candidate-test-session-id"));
     }
 
     if (actionNode) {
       if (!context.email) {
-        context.email = String(actionNode.getAttribute("data-email") || "").trim();
+        context.email = normalizeScopeValue(actionNode.getAttribute("data-email"));
       }
       if (!context.name) {
-        context.name = String(actionNode.getAttribute("data-name") || "").trim();
+        context.name = normalizeScopeValue(actionNode.getAttribute("data-name"));
       }
       if (!context.candidateKey) {
-        context.candidateKey = String(actionNode.getAttribute("data-candidate-key") || "").trim();
+        context.candidateKey = normalizeScopeValue(actionNode.getAttribute("data-candidate-key"));
       }
       if (!context.roleKey) {
-        context.roleKey = String(actionNode.getAttribute("data-role-key") || "").trim();
+        context.roleKey = normalizeScopeValue(actionNode.getAttribute("data-role-key"));
       }
       if (!context.batchId) {
-        context.batchId = String(actionNode.getAttribute("data-batch-id") || "").trim();
+        context.batchId = normalizeScopeValue(actionNode.getAttribute("data-batch-id"));
       }
       if (!context.testSessionId) {
-        context.testSessionId = String(actionNode.getAttribute("data-test-session-id") || "").trim();
+        context.testSessionId = normalizeScopeValue(actionNode.getAttribute("data-test-session-id"));
       }
     }
 

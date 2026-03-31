@@ -91,6 +91,8 @@ def test_reports_page_renders_for_attempted_candidate_scope(monkeypatch):
     body = response.get_data(as_text=True)
     assert "Alice Example" in body
     assert "C++ Developer" in body
+    assert 'data-email="alice@example.com"' in body
+    assert 'data-test-session-id="None"' not in body
 
 
 def test_reports_page_search_includes_report_backed_candidates(monkeypatch):
