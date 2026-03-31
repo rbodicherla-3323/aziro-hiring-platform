@@ -880,7 +880,9 @@
         "difficulty":  "hard",
         "style":  "debugging",
         "tags":  [
-
+                     "data-structures-and-performance",
+                     "debugging",
+                     "python"
                  ],
         "role_target":  "python_shared_senior",
         "round_target":  "L2",

@@ -55,12 +55,12 @@
     "id": "cpp-cpp-dev-l2-404",
     "question": "Insert keys in strictly increasing order into a naive BST. Search becomes?",
     "options": [
-      "O(n) worst-case.",
+      "O(n) worst-case. under stated conditions",
       "O(1) average-case.",
       "O(log n) worst-case.",
-      "O(n log n) worst-case."
+      "O(n log n) worst-case. based on available context"
     ],
-    "correct_answer": "O(n) worst-case.",
+    "correct_answer": "O(n) worst-case. under stated conditions",
     "topic": "Algorithms",
     "difficulty": "hard",
     "style": "concept",
@@ -81,12 +81,12 @@
     "id": "cpp-cpp-dev-l2-405",
     "question": "To support k-th smallest queries in O(log n) on a dynamic BST, you typically?",
     "options": [
-      "Store subtree sizes.",
+      "Store subtree sizes. under stated conditions",
       "Run full inorder each query.",
-      "Re-sort keys after each insert.",
+      "Re-sort keys after each insert. based on available context",
       "Use BFS and stop at depth k."
     ],
-    "correct_answer": "Store subtree sizes.",
+    "correct_answer": "Store subtree sizes. under stated conditions",
     "topic": "Data Structures",
     "difficulty": "hard",
     "style": "concept",
@@ -159,12 +159,12 @@
     "id": "cpp-cpp-dev-l2-408",
     "question": "Iterative inorder traversal using a stack needs extra memory of?",
     "options": [
-      "O(h) extra.",
+      "O(h) extra. under stated conditions",
       "O(n) always.",
-      "O(log n) always.",
+      "O(log n) always. based on available context",
       "O(1) always."
     ],
-    "correct_answer": "O(h) extra.",
+    "correct_answer": "O(h) extra. under stated conditions",
     "topic": "Algorithms",
     "difficulty": "moderate",
     "style": "concept",
@@ -185,12 +185,12 @@
     "id": "cpp-cpp-dev-l2-409",
     "question": "Lowest common ancestor (LCA) in a BST can be found by?",
     "options": [
-      "Stop at split point.",
-      "Binary lifting on depths.",
+      "Stop at split point. under stated conditions",
+      "Binary lifting on depths. based on available context",
       "Full inorder then scan.",
       "Run Dijkstra from root."
     ],
-    "correct_answer": "Stop at split point.",
+    "correct_answer": "Stop at split point. under stated conditions",
     "topic": "Algorithms",
     "difficulty": "hard",
     "style": "concept",
@@ -395,12 +395,12 @@
     "id": "cpp-cpp-dev-l2-417",
     "question": "To compute floor(x) in a BST (largest key <= x), you?",
     "options": [
-      "Track last <= x.",
+      "Track last <= x. under stated conditions",
       "Always go left on < x.",
-      "Full inorder then search.",
+      "Full inorder then search. based on available context",
       "BFS and keep max."
     ],
-    "correct_answer": "Track last <= x.",
+    "correct_answer": "Track last <= x. under stated conditions",
     "topic": "Algorithms",
     "difficulty": "hard",
     "style": "concept",
@@ -421,12 +421,12 @@
     "id": "cpp-cpp-dev-l2-418",
     "question": "For heavy insert/search workloads with worst-case guarantees, you choose?",
     "options": [
-      "Balanced BST (AVL/RB).",
+      "Balanced BST (AVL/RB). under stated conditions",
       "Naive BST always log n.",
-      "Heap for ordered traversal.",
+      "Heap for ordered traversal. based on available context",
       "unordered_map for ranges."
     ],
-    "correct_answer": "Balanced BST (AVL/RB).",
+    "correct_answer": "Balanced BST (AVL/RB). under stated conditions",
     "topic": "System Design",
     "difficulty": "hard",
     "style": "concept",

@@ -1,4 +1,5 @@
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 from flask import Flask
@@ -29,13 +30,14 @@ def _create_test_app(monkeypatch):
 
 def test_reports_page_renders_for_attempted_candidate_scope(monkeypatch):
     candidate_email = "alice@example.com"
+    created_at = datetime.now(timezone.utc).isoformat()
     candidate = {
         "name": "Alice Example",
         "email": candidate_email,
         "role": "C++ Developer",
         "role_key": "cpp",
         "batch_id": "batch_cpp_1",
-        "created_at": "2026-03-27T05:00:00+00:00",
+        "created_at": created_at,
         "rounds": {},
         "summary": {
             "total_rounds": 1,
@@ -52,7 +54,7 @@ def test_reports_page_renders_for_attempted_candidate_scope(monkeypatch):
         "role": "C++ Developer",
         "role_key": "cpp",
         "batch_id": "batch_cpp_1",
-        "created_at": "2026-03-27T05:00:00+00:00",
+        "created_at": created_at,
         "tests": {
             "L2": {"session_id": "test-session-1"},
         },

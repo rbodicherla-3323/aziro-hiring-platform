@@ -400,12 +400,12 @@
     "id": "cpp-cpp-dev-l2-437",
     "question": "Marking a method `= 0` makes it?",
     "options": [
-      "Pure virtual.",
-      "Deleted function.",
+      "Pure virtual. under stated conditions",
+      "Deleted function. based on available context",
       "Inline function.",
       "Static function."
     ],
-    "correct_answer": "Pure virtual.",
+    "correct_answer": "Pure virtual. under stated conditions",
     "topic": "OOP Basics",
     "difficulty": "moderate",
     "style": "concept",

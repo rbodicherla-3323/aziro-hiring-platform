@@ -56,12 +56,12 @@
     "id": "cpp-cpp-dev-l2-350",
     "question": "You need to add optional cross-cutting features to backups (encryption, compression, throttling, metrics) without changing core backup algorithms or hypervisor backends. Which pattern is the best fit?",
     "options": [
-      "Decorator (wrap transfer stream).",
+      "Decorator (wrap transfer stream). under stated conditions",
       "Singleton (global wrapper instance).",
-      "Visitor (walk components to add features).",
+      "Visitor (walk components to add features). based on available context",
       "Factory Method (create an encrypted job)."
     ],
-    "correct_answer": "Decorator (wrap transfer stream).",
+    "correct_answer": "Decorator (wrap transfer stream). under stated conditions",
     "topic": "Design Patterns",
     "difficulty": "hard",
     "style": "concept",
@@ -187,12 +187,12 @@
     "id": "cpp-cpp-dev-l2-355",
     "question": "In a C++ header that must be usable from both C and C++, what is the typical correct pattern to give C linkage when compiled as C++?",
     "options": [
-      "#ifdef __cplusplus extern \"C\" { }",
+      "#ifdef __cplusplus extern \"C\" { } under stated conditions",
       "extern \"C++\" around the C API (wrong).",
-      "Use extern on each function (not linkage).",
+      "Use extern on each function (not linkage). based on available context",
       "Linker auto-fixes mangled symbols (no)."
     ],
-    "correct_answer": "#ifdef __cplusplus extern \"C\" { }",
+    "correct_answer": "#ifdef __cplusplus extern \"C\" { } under stated conditions",
     "topic": "Modern C++",
     "difficulty": "hard",
     "style": "concept",
@@ -213,12 +213,12 @@
     "id": "cpp-cpp-dev-l2-356",
     "question": "Which statement about extern \"C\" is correct?",
     "options": [
-      "C linkage forbids overload sets.",
+      "C linkage forbids overload sets. under stated conditions",
       "It changes runtime semantics to C rules.",
       "It guarantees same ABI on every platform.",
-      "It makes functions thread-safe by default."
+      "It makes functions thread-safe by default. based on available context"
     ],
-    "correct_answer": "C linkage forbids overload sets.",
+    "correct_answer": "C linkage forbids overload sets. under stated conditions",
     "topic": "Modern C++",
     "difficulty": "hard",
     "style": "concept",
@@ -346,12 +346,12 @@
     "id": "cpp-cpp-dev-l2-361",
     "question": "Which statement best distinguishes 'extern' (storage/class specifier) from extern \"C\"/extern \"C++\" (language linkage)?",
     "options": [
-      "extern declares; extern \"C\" picks linkage.",
-      "extern means dynamic; extern \"C\" means static.",
+      "extern declares; extern \"C\" picks linkage. under stated conditions",
+      "extern means dynamic; extern \"C\" means static. based on available context",
       "extern \"C\" changes storage duration to static.",
       "extern and extern \"C\" are identical keywords."
     ],
-    "correct_answer": "extern declares; extern \"C\" picks linkage.",
+    "correct_answer": "extern declares; extern \"C\" picks linkage. under stated conditions",
     "topic": "Modern C++",
     "difficulty": "hard",
     "style": "concept",

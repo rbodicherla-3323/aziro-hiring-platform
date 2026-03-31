@@ -181,7 +181,7 @@ def build_frozen_mcq_round_payload(role_key, round_key, question_files, question
         strategy='balanced_difficulty_v2',
         rng=rng or random.Random(),
         constraints={
-            'difficulty_mix': ENTERPRISE_BALANCED_DIFFICULTY_MIX,
+            'difficulty_mix': dict(policy.get('selection_difficulty_mix') or ENTERPRISE_BALANCED_DIFFICULTY_MIX),
             'min_debugging_total': policy.get('min_selected_debugging', 0),
             'selected_debugging_by_difficulty': policy.get('selected_debugging_by_difficulty', {}),
         },
@@ -191,7 +191,7 @@ def build_frozen_mcq_round_payload(role_key, round_key, question_files, question
         'selected_questions': selected,
         'selected_question_ids': [question.get('id') for question in selected],
         'selection_strategy': 'balanced_difficulty_v2',
-        'difficulty_mix': dict(ENTERPRISE_BALANCED_DIFFICULTY_MIX),
+        'difficulty_mix': dict(policy.get('selection_difficulty_mix') or ENTERPRISE_BALANCED_DIFFICULTY_MIX),
         'debugging_mix': _debugging_mix(selected),
         'question_bank_files': list(question_files),
         'selection_locked_at': datetime.now(timezone.utc).isoformat(),

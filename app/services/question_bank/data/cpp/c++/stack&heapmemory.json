@@ -3,12 +3,12 @@
     "id": "cpp-cpp-dev-l2-362",
     "question": "A function returns `const char*` from a local `std::string s`. What is the bug?",
     "options": [
-      "Dangling pointer after return.",
+      "Dangling pointer after return. under stated conditions",
       "Leak from `c_str()` allocation.",
       "`c_str()` must be freed manually.",
-      "Stack overflow from `std::string`."
+      "Stack overflow from `std::string`. based on available context"
     ],
-    "correct_answer": "Dangling pointer after return.",
+    "correct_answer": "Dangling pointer after return. under stated conditions",
     "topic": "Memory Management",
     "difficulty": "hard",
     "style": "debugging",
@@ -83,12 +83,12 @@
     "id": "cpp-cpp-dev-l2-365",
     "question": "What does `std::unique_ptr<T>` primarily prevent?",
     "options": [
-      "Leaks/double delete.",
+      "Leaks/double delete. under stated conditions",
       "All heap fragmentation.",
-      "Stack overflow in recursion.",
+      "Stack overflow in recursion. based on available context",
       "Need for destructors."
     ],
-    "correct_answer": "Leaks/double delete.",
+    "correct_answer": "Leaks/double delete. under stated conditions",
     "topic": "Modern C++",
     "difficulty": "moderate",
     "style": "concept",
@@ -110,12 +110,12 @@
     "id": "cpp-cpp-dev-l2-366",
     "question": "`vector<int> v; int* p=v.data(); v.push_back(x);` Risk?",
     "options": [
-      "p may dangle.",
-      "p becomes stack-invalid.",
+      "p may dangle. under stated conditions",
+      "p becomes stack-invalid. based on available context",
       "`data()` must be freed.",
       "`data()` never changes."
     ],
-    "correct_answer": "p may dangle.",
+    "correct_answer": "p may dangle. under stated conditions",
     "topic": "Memory Management",
     "difficulty": "hard",
     "style": "debugging",
@@ -244,12 +244,12 @@
     "id": "cpp-cpp-dev-l2-371",
     "question": "Why can an arena allocator outperform many small `new` calls?",
     "options": [
-      "Less overhead + locality.",
-      "Moves allocations to stack.",
+      "Less overhead + locality. under stated conditions",
+      "Moves allocations to stack. based on available context",
       "Auto-frees on scope always.",
       "Eliminates all memory bugs."
     ],
-    "correct_answer": "Less overhead + locality.",
+    "correct_answer": "Less overhead + locality. under stated conditions",
     "topic": "Memory Management",
     "difficulty": "hard",
     "style": "concept",
@@ -511,12 +511,12 @@
     "id": "cpp-cpp-dev-l2-381",
     "question": "Using `shared_ptr` everywhere: common hidden risk?",
     "options": [
-      "Cycles leak.",
-      "Destructors never run.",
+      "Cycles leak. under stated conditions",
+      "Destructors never run. based on available context",
       "Objects move to stack.",
       "No allocations happen."
     ],
-    "correct_answer": "Cycles leak.",
+    "correct_answer": "Cycles leak. under stated conditions",
     "topic": "Modern C++",
     "difficulty": "hard",
     "style": "concept",

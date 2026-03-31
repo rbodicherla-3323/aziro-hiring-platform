@@ -79,7 +79,6 @@ def _period_label(filter_type: str, specific_date: str = "") -> str:
         return specific_date
     return "Today"
 
-
 def _parse_created_at(value):
     if isinstance(value, datetime):
         dt = value
@@ -194,6 +193,7 @@ def _collect_reports_scope(
     ]
 
     user_tests_sorted = sorted(user_tests, key=_created_sort_key, reverse=True)
+    proctoring_scope = _session_scope_by_email(user_tests_sorted)
     tests_by_email = {}
     for t in user_tests_sorted:
         email_key = _normalize_email(t.get("email", ""))
@@ -421,8 +421,77 @@ def reports():
     for candidate in paged_candidates:
         _attach_report_info(candidate)
 
+    paged_email_keys = {
+        str((c or {}).get("email", "")).strip().lower()
+        for c in paged_candidates
+        if str((c or {}).get("email", "")).strip()
+    }
+    scoped_session_ids = {}
+    for candidate in paged_candidates:
+        email_key = str((candidate or {}).get("email", "")).strip().lower()
+        if not email_key:
+            continue
+        session_ids = set()
+        attempted_rounds = _attempted_rounds(candidate)
+        if attempted_rounds > 0:
+            role_key = str((candidate or {}).get("role_key", "")).strip()
+            batch_id = str((candidate or {}).get("batch_id", "")).strip()
+            latest_session_id = None
+            try:
+                latest_session_id = db_service.get_latest_test_session_id_for_candidate(
+                    email_key,
+                    created_by=user_email,
+                    since=range_start,
+                    until=range_end,
+                    role_key=role_key,
+                    batch_id=batch_id,
+                )
+            except Exception as exc:
+                current_app.logger.exception(
+                    "Failed to resolve scoped test session for %s: %s",
+                    email_key,
+                    exc,
+                )
+
+            if not latest_session_id:
+                try:
+                    latest_session_id = db_service.get_latest_test_session_id_for_candidate(
+                        email_key,
+                        role_key=role_key,
+                        batch_id=batch_id,
+                    )
+                except Exception as exc:
+                    current_app.logger.exception(
+                        "Fallback latest session lookup failed for %s: %s",
+                        email_key,
+                        exc,
+                    )
+
+            if latest_session_id:
+                try:
+                    session_ids.update(
+                        db_service.get_round_session_uuids_for_test_session(
+                            latest_session_id,
+                            attempted_only=True,
+                        )
+                    )
+                except Exception as exc:
+                    current_app.logger.exception(
+                        "Failed to resolve round session UUIDs for %s (test_session_id=%s): %s",
+                        email_key,
+                        latest_session_id,
+                        exc,
+                    )
+
+            if not session_ids:
+                session_ids.update(proctoring_scope.get(email_key, set()))
+
+        scoped_session_ids[email_key] = session_ids
     try:
-        summaries_by_email = build_proctoring_summary_by_email({c.get("email", "") for c in paged_candidates})
+        summaries_by_email = build_proctoring_summary_by_email(
+            paged_email_keys,
+            session_ids_by_email=scoped_session_ids,
+        )
     except Exception as exc:
         current_app.logger.exception("Failed to build proctoring summaries: %s", exc)
         summaries_by_email = {}
@@ -433,7 +502,10 @@ def reports():
         plagiarism_by_email = {}
     for candidate in paged_candidates:
         email_key = str(candidate.get("email", "")).strip().lower()
-        candidate["proctoring_summary"] = summaries_by_email.get(email_key, blank_proctoring_summary())
+        if _attempted_rounds(candidate) <= 0:
+            candidate["proctoring_summary"] = blank_proctoring_summary()
+        else:
+            candidate["proctoring_summary"] = summaries_by_email.get(email_key, blank_proctoring_summary())
         candidate["plagiarism_summary"] = plagiarism_by_email.get(email_key, blank_plagiarism_summary())
 
     return render_template(
@@ -727,8 +799,59 @@ def generate_report(email):
     if not candidate_data:
         return jsonify({"success": False, "error": f"No data found for candidate: {email_key}"}), 404
 
-    proctoring_by_email = build_proctoring_summary_by_email({email_key})
-    candidate_data["proctoring_summary"] = proctoring_by_email.get(email_key, blank_proctoring_summary())
+    attempted_rounds = _attempted_rounds(candidate_data)
+    session_scope = set()
+    test_session_id = candidate_data.get("test_session_id")
+    user = session.get("user", {})
+    creator_email = str((user or {}).get("email", "")).strip().lower()
+    if not test_session_id:
+        role_key = str((candidate_data or {}).get("role_key", "")).strip()
+        batch_id = str((candidate_data or {}).get("batch_id", "")).strip()
+        try:
+            test_session_id = db_service.get_latest_test_session_id_for_candidate(
+                email_key,
+                created_by=creator_email,
+                role_key=role_key,
+                batch_id=batch_id,
+            )
+        except Exception as exc:
+            current_app.logger.exception("Failed to resolve latest test session for %s: %s", email_key, exc)
+            test_session_id = None
+        if not test_session_id:
+            try:
+                test_session_id = db_service.get_latest_test_session_id_for_email(email_key)
+            except Exception as exc:
+                current_app.logger.exception(
+                    "Fallback latest session lookup by email failed for %s: %s",
+                    email_key,
+                    exc,
+                )
+                test_session_id = None
+
+    if test_session_id:
+        try:
+            session_scope.update(
+                db_service.get_round_session_uuids_for_test_session(
+                    int(test_session_id),
+                    attempted_only=True,
+                )
+            )
+        except Exception as exc:
+            current_app.logger.exception(
+                "Failed to resolve round session UUIDs for %s (test_session_id=%s): %s",
+                email_key,
+                test_session_id,
+                exc,
+            )
+
+    if attempted_rounds <= 0:
+        candidate_data["proctoring_summary"] = blank_proctoring_summary()
+    else:
+        proctoring_by_email = build_proctoring_summary_by_email(
+            {email_key},
+            session_ids_by_email={email_key: session_scope},
+        )
+        candidate_data["proctoring_summary"] = proctoring_by_email.get(email_key, blank_proctoring_summary())
     plagiarism_by_email = build_plagiarism_summary_by_candidates([candidate_data])
     candidate_data["plagiarism_summary"] = plagiarism_by_email.get(email_key, blank_plagiarism_summary())
 
@@ -749,7 +872,6 @@ def generate_report(email):
 
     # Generate PDF
     try:
-        user = session.get("user", {})
         ts = None
         try:
             ts = db_service.ensure_candidate_session_for_report(candidate_data, user.get("email", ""))
@@ -933,6 +1055,33 @@ def generate_report_by_session():
     candidate_data = db_service.get_candidate_report_data(cand.email)
     if not candidate_data:
         return jsonify({"status": "error", "error": "No data for candidate"}), 404
+
+    email_key = str(cand.email or "").strip().lower()
+    attempted_rounds = _attempted_rounds(candidate_data)
+    if attempted_rounds <= 0:
+        candidate_data["proctoring_summary"] = blank_proctoring_summary()
+    else:
+        try:
+            scoped_session_ids = set(
+                db_service.get_round_session_uuids_for_test_session(
+                    test_session_id,
+                    attempted_only=True,
+                )
+            )
+        except Exception as exc:
+            current_app.logger.exception(
+                "Failed to fetch session scope for report generation test_session_id=%s: %s",
+                test_session_id,
+                exc,
+            )
+            scoped_session_ids = set()
+        proctoring_by_email = build_proctoring_summary_by_email(
+            {email_key},
+            session_ids_by_email={email_key: scoped_session_ids},
+        )
+        candidate_data["proctoring_summary"] = proctoring_by_email.get(email_key, blank_proctoring_summary())
+    plagiarism_by_email = build_plagiarism_summary_by_candidates([candidate_data])
+    candidate_data["plagiarism_summary"] = plagiarism_by_email.get(email_key, blank_plagiarism_summary())
 
     try:
         pdf_filename = generate_candidate_pdf(candidate_data)

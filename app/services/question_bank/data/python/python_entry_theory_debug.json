@@ -1236,7 +1236,7 @@
     },
     {
         "id":  "python-python-entry-theory-debug-102",
-        "question":  "A snippet runs with the following behavior. Which output is correct?\nprint(10 // 3)?",
+        "question":  "In Python, what does floor division return for this expression?\nprint(10 // 3)?",
         "options":  [
                         "3",
                         "4",
@@ -1248,7 +1248,9 @@
         "difficulty":  "easy",
         "style":  "operations",
         "tags":  [
-
+                     "operations",
+                     "python",
+                     "python-language-fundamentals"
                  ],
         "role_target":  "python_entry",
         "round_target":  "L2",

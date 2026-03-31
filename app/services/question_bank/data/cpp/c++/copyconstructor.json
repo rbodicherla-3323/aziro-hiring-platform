@@ -109,12 +109,12 @@
     "id": "cpp-cpp-dev-l2-340",
     "question": "Assume C++17 or later. Given:\\nstruct A {\r\n    A();\r\n    A(const A&);\r\n};\r\nA make() { return A{}; }\r\nA x = make();\\nHow many times is A(const A&) called?",
     "options": [
-      "0 (C++17 guaranteed elision).",
+      "0 (C++17 guaranteed elision). under stated conditions",
       "1 (copy from return temporary).",
-      "2 (copy return, then copy into x).",
+      "2 (copy return, then copy into x). based on available context",
       "Depends on optimization flags."
     ],
-    "correct_answer": "0 (C++17 guaranteed elision).",
+    "correct_answer": "0 (C++17 guaranteed elision). under stated conditions",
     "topic": "Copy and Move Semantics",
     "difficulty": "hard",
     "style": "concept",

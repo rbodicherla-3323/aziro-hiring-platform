@@ -29,6 +29,8 @@ def test_python_entry_bank_validates_and_freezes():
 
     assert len(payload["selected_questions"]) == 15
     assert payload["question_bank_files"] == [source_name]
+    assert payload["difficulty_mix"] == {"easy": 15}
+    assert {question["difficulty"] for question in payload["selected_questions"]} == {"easy"}
 
 
 def test_non_entry_python_roles_share_updated_l2_bank():
@@ -51,3 +53,5 @@ def test_non_entry_python_roles_share_updated_l2_bank():
 
         assert len(payload["selected_questions"]) == 15
         assert payload["question_bank_files"] == source_files
+        assert payload["difficulty_mix"] == {"hard": 15}
+        assert {question["difficulty"] for question in payload["selected_questions"]} == {"hard"}

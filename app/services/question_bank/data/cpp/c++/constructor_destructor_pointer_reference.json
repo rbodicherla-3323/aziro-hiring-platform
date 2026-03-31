@@ -3,12 +3,12 @@
     "id": "cpp-cpp-dev-l2-382",
     "question": "Delete Derived via `Base*` but Base has no virtual destructor. Outcome?",
     "options": [
-      "UB: Derived dtor may not run.",
+      "UB: Derived dtor may not run. under stated conditions",
       "Defined: both dtors always run.",
       "Only a leak; behavior is defined.",
-      "Compile error: delete needs virtual dtor."
+      "Compile error: delete needs virtual dtor. based on available context"
     ],
-    "correct_answer": "UB: Derived dtor may not run.",
+    "correct_answer": "UB: Derived dtor may not run. under stated conditions",
     "topic": "OOP Internals",
     "difficulty": "hard",
     "style": "debugging",
@@ -30,12 +30,12 @@
     "id": "cpp-cpp-dev-l2-383",
     "question": "A class has a reference data member. What must constructors do?",
     "options": [
-      "Init it in init-list.",
+      "Init it in init-list. under stated conditions",
       "Assign it in the ctor body.",
-      "Leave it default-initialized.",
+      "Leave it default-initialized. based on available context",
       "Make the reference `mutable`."
     ],
-    "correct_answer": "Init it in init-list.",
+    "correct_answer": "Init it in init-list. under stated conditions",
     "topic": "Modern C++",
     "difficulty": "hard",
     "style": "concept",
@@ -350,12 +350,12 @@
     "id": "cpp-cpp-dev-l2-395",
     "question": "Why prefer `make_unique<T>(...)` over `unique_ptr<T>(new T(...))`?",
     "options": [
-      "Stronger exception safety.",
-      "Avoids heap allocation entirely.",
+      "Stronger exception safety. under stated conditions",
+      "Avoids heap allocation entirely. based on available context",
       "Disables destructors for speed.",
       "Makes T trivially destructible."
     ],
-    "correct_answer": "Stronger exception safety.",
+    "correct_answer": "Stronger exception safety. under stated conditions",
     "topic": "Modern C++",
     "difficulty": "hard",
     "style": "concept",
@@ -510,12 +510,12 @@
     "id": "cpp-cpp-dev-l2-401",
     "question": "Safe rule for RAII destructors?",
     "options": [
-      "Don't throw (noexcept).",
+      "Don't throw (noexcept). under stated conditions",
       "Throw on failure to signal.",
       "Allocate memory in destructor.",
-      "Call virtual functions in dtor."
+      "Call virtual functions in dtor. based on available context"
     ],
-    "correct_answer": "Don't throw (noexcept).",
+    "correct_answer": "Don't throw (noexcept). under stated conditions",
     "topic": "Modern C++",
     "difficulty": "hard",
     "style": "concept",
