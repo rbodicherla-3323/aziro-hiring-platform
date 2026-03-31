@@ -236,11 +236,18 @@ class CodingSessionService:
         if normalized_language in ("c#", "cs"):
             normalized_language = "csharp"
 
-        if get_coding_session_data(session_id):
+        existing = get_coding_session_data(session_id)
+        if existing:
+            # Reset timer so it starts fresh each time the candidate opens the test,
+            # but preserve questions/code/answers.
+            if not existing.get("submitted"):
+                existing["start_time"] = int(time.time())
+                set_coding_session_data(session_id, existing)
             return
 
         legacy = session.get(session_key)
         if isinstance(legacy, dict) and "question" in legacy and "language" in legacy:
+            legacy["start_time"] = int(time.time())
             set_coding_session_data(session_id, legacy)
             session[session_key] = {"runtime_store": True}
             session.modified = True

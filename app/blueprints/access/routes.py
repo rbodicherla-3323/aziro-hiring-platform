@@ -1,8 +1,18 @@
-from flask import flash, redirect, render_template, request, session, url_for
+import csv
+import io
+import math
+from datetime import datetime, timezone
+
+from flask import flash, make_response, redirect, render_template, request, session, url_for
 
 from . import access_bp
 from app.access_config import get_access_admin_emails
-from app.services.access_approvals_service import delete_approval, get_approval, list_approvals, set_access_active
+from app.services.access_approvals_service import (
+    delete_approval,
+    get_approval,
+    list_approvals,
+    set_access_active,
+)
 from app.services.email_service import send_plain_email
 from app.utils.auth_decorator import login_required
 
@@ -39,6 +49,59 @@ def _extract_email_from_form() -> str:
     return _normalize_email(request.form.get("email", ""))
 
 
+def _parse_int(value, default: int, minimum: int = 1, maximum: int = 200) -> int:
+    try:
+        parsed = int(value)
+    except (TypeError, ValueError):
+        return default
+    return max(minimum, min(maximum, parsed))
+
+
+def _format_dt(dt) -> str:
+    if not dt:
+        return ""
+    if isinstance(dt, datetime):
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt.astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+    return str(dt)
+
+
+def _status_payload(approval) -> tuple[str, str]:
+    if approval.is_active:
+        return "approved", "Approved"
+    if approval.approved_by and approval.approved_at:
+        return "revoked", "Revoked"
+    if approval.requested_at:
+        return "pending", "Pending"
+    return "locked", "Locked"
+
+
+def _approval_rows(approvals: list) -> list[dict]:
+    rows = []
+    for approval in approvals:
+        status_key, status_label = _status_payload(approval)
+        rows.append(
+            {
+                "email": approval.email,
+                "status_key": status_key,
+                "status_label": status_label,
+                "requested_on": _format_dt(approval.requested_at),
+                "approved_by": approval.approved_by or "-",
+                "approved_at": _format_dt(approval.approved_at),
+            }
+        )
+    return rows
+
+
+def _pagination_bounds(total: int, page: int, per_page: int) -> tuple[int, int]:
+    if total <= 0:
+        return 0, 0
+    start = (page - 1) * per_page + 1
+    end = min(total, page * per_page)
+    return start, end
+
+
 
 def _send_access_revoked_admin_email(revoked_email: str, existed: bool) -> tuple[bool, str]:
     revoked_email = _normalize_email(revoked_email)
@@ -47,7 +110,7 @@ def _send_access_revoked_admin_email(revoked_email: str, existed: bool) -> tuple
         return False, "Missing admin email."
 
     subject = f"Access Revoked: {revoked_email or 'unknown'}"
-    status_line = "Entry deleted from approvals table." if existed else "No approval entry existed in DB."
+    status_line = "Access status set to revoked (inactive)." if existed else "No approval entry existed in DB."
     body = "\n".join(
         [
             "Access was revoked in Access Management.",
@@ -64,9 +127,13 @@ def _send_access_revoked_admin_email(revoked_email: str, existed: bool) -> tuple
     delegated_token = str(oauth.get("graph_access_token", "") or "")
     delegated_sender = _current_user_email()
 
+    # Skip the revoker — they get a dedicated confirmation email separately.
+    revoker_email = _current_user_email()
     sent_any = False
     errors = []
     for admin_email in admin_emails:
+        if admin_email == revoker_email:
+            continue
         ok, err = send_plain_email(
             to_email=admin_email,
             subject=subject,
@@ -79,9 +146,45 @@ def _send_access_revoked_admin_email(revoked_email: str, existed: bool) -> tuple
         else:
             errors.append(f"{admin_email}: {err}")
 
+    if not admin_emails or all(e == revoker_email for e in admin_emails):
+        # All admins are the revoker — nothing extra to send; not a failure.
+        return True, ""
     if not sent_any:
         return False, "; ".join(errors) if errors else "Failed to notify admin."
     return True, ""
+
+
+def _send_access_revoked_revoker_email(revoked_email: str) -> tuple[bool, str]:
+    revoked_email = _normalize_email(revoked_email)
+    revoker_email = _current_user_email()
+    if not revoker_email:
+        return False, "Missing revoker email."
+
+    subject = "Access Revoked (Confirmation)"
+    body = "\n".join(
+        [
+            "You revoked access in Access Management.",
+            "",
+            f"User: {revoked_email or 'N/A'}",
+            f"Revoked by: {revoker_email}",
+            "",
+            f"Manage here: {url_for('access.access_management_page', _external=True)}",
+        ]
+    )
+
+    oauth = session.get("oauth", {}) if isinstance(session.get("oauth"), dict) else {}
+    delegated_token = str(oauth.get("graph_access_token", "") or "")
+    delegated_sender = revoker_email
+
+    return send_plain_email(
+        to_email=revoker_email,
+        subject=subject,
+        body=body,
+        delegated_access_token=delegated_token,
+        delegated_sender_email=delegated_sender,
+    )
+
+
 def _send_access_approved_user_email(approved_email: str) -> tuple[bool, str]:
     approved_email = _normalize_email(approved_email)
     if not approved_email:
@@ -154,11 +257,78 @@ def access_management_page():
     if denied:
         return denied
 
-    approvals = list_approvals()
+    page = _parse_int(request.args.get("page"), default=1, minimum=1, maximum=10000)
+    per_page = _parse_int(request.args.get("per_page"), default=6, minimum=1, maximum=100)
+
+    rows_all = _approval_rows(list_approvals())
+    total_requests = len(rows_all)
+    approved_count = sum(1 for r in rows_all if r["status_key"] == "approved")
+    pending_count = sum(1 for r in rows_all if r["status_key"] == "pending")
+    revoked_count = sum(1 for r in rows_all if r["status_key"] == "revoked")
+
+    total_pages = max(1, math.ceil(total_requests / per_page)) if total_requests else 1
+    page = min(page, total_pages)
+
+    slice_start = (page - 1) * per_page
+    slice_end = slice_start + per_page
+    rows_page = rows_all[slice_start:slice_end]
+    range_start, range_end = _pagination_bounds(total_requests, page, per_page)
+
+    page_numbers = list(range(max(1, page - 1), min(total_pages, page + 1) + 1))
+    if 1 not in page_numbers and total_pages > 0:
+        page_numbers.insert(0, 1)
+    if total_pages not in page_numbers and total_pages > 1:
+        page_numbers.append(total_pages)
+
     return render_template(
         "access.html",
-        approvals=approvals,
+        approvals=rows_page,
         access_admin_email=_access_admin_display(),
+        total_requests=total_requests,
+        approved_count=approved_count,
+        pending_count=pending_count,
+        revoked_count=revoked_count,
+        page=page,
+        per_page=per_page,
+        total_pages=total_pages,
+        page_numbers=page_numbers,
+        range_start=range_start,
+        range_end=range_end,
+    )
+
+
+@access_bp.route("/access-management/view")
+@login_required
+def access_management_view():
+    denied = _require_access_admin_page()
+    if denied:
+        return denied
+
+    email = _normalize_email(request.args.get("email", ""))
+    if not email or not email.endswith("@aziro.com"):
+        flash("Only @aziro.com emails are allowed.", "danger")
+        return redirect(url_for("access.access_management_page"))
+
+    approval = get_approval(email)
+    if not approval:
+        flash(f"No approval entry found for {email}.", "warning")
+        return redirect(url_for("access.access_management_page"))
+
+    status_key, status_label = _status_payload(approval)
+    detail = {
+        "email": approval.email,
+        "status_key": status_key,
+        "status_label": status_label,
+        "requested_on": _format_dt(approval.requested_at) or "-",
+        "approved_by": approval.approved_by or "-",
+        "approved_at": _format_dt(approval.approved_at) or "-",
+        "is_active": bool(approval.is_active),
+    }
+
+    return render_template(
+        "access_view.html",
+        access_admin_email=_access_admin_display(),
+        detail=detail,
     )
 
 
@@ -236,6 +406,27 @@ def access_management_approve():
     return redirect(url_for("access.access_management_page"))
 
 
+@access_bp.route("/access-management/reject", methods=["POST"])
+@login_required
+def access_management_reject():
+    denied = _require_access_admin_page()
+    if denied:
+        return denied
+
+    email = _extract_email_from_form()
+    if not email.endswith("@aziro.com"):
+        flash("Only @aziro.com emails are allowed.", "danger")
+        return redirect(url_for("access.access_management_page"))
+
+    if not get_approval(email):
+        flash(f"No approval entry found for {email}.", "warning")
+        return redirect(url_for("access.access_management_page"))
+
+    set_access_active(email=email, is_active=False, approved_by=_current_user_email())
+    flash(f"Rejected access for {email}.", "warning")
+    return redirect(url_for("access.access_management_page"))
+
+
 @access_bp.route("/access-management/revoke", methods=["POST"])
 @login_required
 def access_management_revoke():
@@ -249,23 +440,124 @@ def access_management_revoke():
         return redirect(url_for("access.access_management_page"))
 
     existed = bool(get_approval(email))
-    deleted = delete_approval(email)
+    if existed:
+        set_access_active(email=email, is_active=False, approved_by=_current_user_email())
 
-    # Notify admin (even if it was already missing).
-    notify_ok, notify_err = _send_access_revoked_admin_email(email, existed=existed)
+    # Notify revoker (confirmation) and other admins.
+    revoker_ok, revoker_err = _send_access_revoked_revoker_email(email)
+    admin_ok, admin_err = _send_access_revoked_admin_email(email, existed=existed)
 
-    if deleted:
-        if notify_ok:
-            flash(f"Revoked access for {email}. Entry deleted. Admin notified.", "warning")
+    all_ok = revoker_ok and admin_ok
+    if existed:
+        if all_ok:
+            flash(f"Revoked access for {email}. Notifications sent.", "warning")
         else:
-            flash(f"Revoked access for {email}. Entry deleted, but notification failed: {notify_err}", "warning")
+            parts = []
+            if not revoker_ok:
+                parts.append(f"revoker email failed: {revoker_err}")
+            if not admin_ok:
+                parts.append(f"admin email failed: {admin_err}")
+            detail = "; ".join(p for p in parts if p)
+            flash(f"Revoked access for {email}, but notifications had issues: {detail}", "warning")
     else:
-        if notify_ok:
-            flash(f"No approval entry found for {email}. Admin notified.", "warning")
+        if all_ok:
+            flash(f"No approval entry found for {email}. Notifications sent.", "warning")
         else:
-            flash(f"No approval entry found for {email}. Notification failed: {notify_err}", "warning")
+            parts = []
+            if not revoker_ok:
+                parts.append(f"revoker email failed: {revoker_err}")
+            if not admin_ok:
+                parts.append(f"admin email failed: {admin_err}")
+            detail = "; ".join(p for p in parts if p)
+            flash(f"No approval entry found for {email}. Notifications had issues: {detail}", "warning")
 
 
 
     return redirect(url_for("access.access_management_page"))
+
+
+@access_bp.route("/access-management/delete", methods=["POST"])
+@login_required
+def access_management_delete():
+    denied = _require_access_admin_page()
+    if denied:
+        return denied
+
+    email = _extract_email_from_form()
+    if not email.endswith("@aziro.com"):
+        flash("Only @aziro.com emails are allowed.", "danger")
+        return redirect(url_for("access.access_management_page"))
+
+    if delete_approval(email):
+        flash(f"Deleted access record for {email}.", "warning")
+    else:
+        flash(f"No approval entry found for {email}.", "warning")
+    return redirect(url_for("access.access_management_page"))
+
+
+@access_bp.route("/access-management/bulk", methods=["POST"])
+@login_required
+def access_management_bulk():
+    denied = _require_access_admin_page()
+    if denied:
+        return denied
+
+    bulk_action = str(request.form.get("bulk_action", "")).strip().lower()
+    emails = [_normalize_email(e) for e in request.form.getlist("emails") if _normalize_email(e)]
+
+    if bulk_action not in {"approve", "reject", "revoke", "delete"}:
+        flash("Invalid bulk action.", "danger")
+        return redirect(url_for("access.access_management_page"))
+    if not emails:
+        flash("Select at least one user.", "warning")
+        return redirect(url_for("access.access_management_page"))
+
+    updated = 0
+    for email in emails:
+        if not email.endswith("@aziro.com"):
+            continue
+        if bulk_action == "approve":
+            set_access_active(email=email, is_active=True, approved_by=_current_user_email())
+            updated += 1
+        elif bulk_action in {"reject", "revoke"}:
+            if get_approval(email):
+                set_access_active(email=email, is_active=False, approved_by=_current_user_email())
+                updated += 1
+        elif bulk_action == "delete":
+            if delete_approval(email):
+                updated += 1
+
+    if updated:
+        flash(f"Bulk action '{bulk_action}' applied to {updated} user(s).", "success")
+    else:
+        flash("No records were updated.", "warning")
+    return redirect(url_for("access.access_management_page"))
+
+
+@access_bp.route("/access-management/export")
+@login_required
+def access_management_export():
+    denied = _require_access_admin_page()
+    if denied:
+        return denied
+
+    rows = _approval_rows(list_approvals())
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["email", "status", "requested_on", "approved_by", "approved_at"])
+    for row in rows:
+        writer.writerow(
+            [
+                row["email"],
+                row["status_label"],
+                row["requested_on"],
+                row["approved_by"],
+                row["approved_at"],
+            ]
+        )
+
+    response = make_response(output.getvalue())
+    response.headers["Content-Type"] = "text/csv; charset=utf-8"
+    response.headers["Content-Disposition"] = "attachment; filename=access_management.csv"
+    return response
 

@@ -2297,6 +2297,10 @@ def submit(session_id):
         # Free runtime/cookie space immediately after submission
         CodingSessionService.clear_session(session_id)
 
+        # Invalidate link immediately after successful submission.
+        db_service.expire_test_link_now(session_id)
+        CODING_SESSION_REGISTRY.pop(session_id, None)
+
         completed_url = url_for("coding.completed", session_id=session_id)
         if _is_ajax_request():
             return jsonify({"redirect_url": completed_url})
@@ -2317,13 +2321,17 @@ def submit(session_id):
 # -------------------------------------------------
 @coding_bp.route("/completed/<session_id>")
 def completed(session_id):
+    candidate_name = CODING_SESSION_REGISTRY.get(session_id, {}).get("candidate_name", "")
+    if not candidate_name:
+        persisted_meta = db_service.get_test_link_meta(session_id) or {}
+        candidate_name = persisted_meta.get("candidate_name", "")
+
     return render_template(
         "coding/completed.html",
-        candidate_name=CODING_SESSION_REGISTRY.get(session_id, {}).get("candidate_name", "Candidate"),
+        candidate_name=candidate_name or "Candidate",
         proctoring_enabled=_proctoring_enabled(),
         body_class="coding-start-page",
     )
-
 
 # -------------------------------------------------
 # PROCTORING ENDPOINTS (mirrors MCQ proctoring)

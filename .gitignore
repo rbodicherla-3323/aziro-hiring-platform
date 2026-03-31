@@ -25,6 +25,8 @@ app/runtime/
 .pip_tmp/
 .pip_cache/
 sqlite_probe.db
+tests/_tmp_reports/
+tests/_tmp_app_instances/
 
 # Utility scripts (not part of the app)
 _apply_ui.py

@@ -1,368 +1,1503 @@
 (function () {
-  const searchInput = document.getElementById("searchInput");
-  const searchResults = document.getElementById("searchResults");
-  const searchResultsList = document.getElementById("searchResultsList");
-  const proctoringModal = document.getElementById("proctoringModal");
-  const proctoringGallery = document.getElementById("proctoringGallery");
-  const proctoringGalleryMeta = document.getElementById("proctoringGalleryMeta");
-  const proctoringModalTitle = document.getElementById("proctoringModalTitle");
-  const proctoringViewer = document.getElementById("proctoringViewer");
-  const proctoringViewerImage = document.getElementById("proctoringViewerImage");
-  const proctoringViewerMeta = document.getElementById("proctoringViewerMeta");
-  const proctoringPrevBtn = document.getElementById("proctoringPrevBtn");
-  const proctoringNextBtn = document.getElementById("proctoringNextBtn");
+  var filterForm = document.getElementById("reportsFilterForm");
+  var roleSelect = document.getElementById("reportsRoleSelect");
+  var periodSelect = document.getElementById("reportsPeriodSelect");
+  var dateInput = document.getElementById("reportsDateInput");
+  var searchInput = document.getElementById("reportsSearchInput");
+  var pageInput = document.getElementById("reportsPageInput");
+  var perPageInput = document.getElementById("reportsPerPageInput");
+  var perPageSelect = document.getElementById("reportsPerPageSelect");
+  var offsetInput = document.getElementById("reportsOffsetInput");
 
-  let proctoringShots = [];
-  let proctoringShotIndex = -1;
-  let searchTimer = null;
+  var galleryModal = document.getElementById("reportsGalleryModal");
+  var galleryTitle = document.getElementById("reportsGalleryTitle");
+  var galleryMeta = document.getElementById("reportsGalleryMeta");
+  var galleryGrid = document.getElementById("reportsGalleryGrid");
+  var consolidatedTrigger = document.getElementById("reportsConsolidatedTrigger");
+  var consolidatedModal = document.getElementById("reportsConsolidatedModal");
+  var consolidatedScope = document.getElementById("reportsConsolidatedScope");
+  var consolidatedRoleValue = document.getElementById("consolidatedRoleValue");
+  var consolidatedPeriodValue = document.getElementById("consolidatedPeriodValue");
+  var consolidatedBatchValue = document.getElementById("consolidatedBatchValue");
+  var consolidatedRoleSelect = document.getElementById("consolidatedRoleSelect");
+  var consolidatedPeriodSelect = document.getElementById("consolidatedPeriodSelect");
+  var consolidatedDateInput = document.getElementById("consolidatedDateInput");
+  var consolidatedPreviewBtn = document.getElementById("reportsConsolidatedPreview");
+  var consolidatedResultsMeta = document.getElementById("reportsConsolidatedResultsMeta");
+  var consolidatedLoadedPreview = document.getElementById("reportsConsolidatedLoadedPreview");
+  var consolidatedBatchSelect = document.getElementById("consolidatedBatchSelect");
+  var consolidatedVerdictFilter = document.getElementById("consolidatedVerdictFilter");
+  var consolidatedCandidateSearch = document.getElementById("consolidatedCandidateSearch");
+  var consolidatedCandidateList = document.getElementById("reportsConsolidatedCandidateList");
+  var consolidatedPlaceholder = document.getElementById("reportsConsolidatedPlaceholder");
+  var consolidatedLoading = document.getElementById("reportsConsolidatedLoading");
+  var consolidatedContent = document.getElementById("reportsConsolidatedContent");
+  var consolidatedSelectionMeta = document.getElementById("reportsConsolidatedSelectionMeta");
+  var consolidatedDownloadBtn = document.getElementById("reportsConsolidatedDownload");
+  var consolidatedGenerateBtn = document.getElementById("reportsConsolidatedGenerate");
+  var consolidatedCopyBtn = document.getElementById("reportsConsolidatedCopy");
 
-  function escapeHtml(value) {
-    return String(value || "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#39;");
-  }
+  var searchTimer = null;
+  var activeGalleryEmail = "";
+  var consolidatedState = {
+    candidates: [],
+    selectedEmails: {},
+    visibleCandidates: [],
+    rawSummary: "",
+    summaryMeta: null,
+    scope: null,
+    isLoadingCandidates: false,
+    isGenerating: false,
+    isDownloading: false,
+  };
 
-  function formatGalleryTimestamp(ts) {
-    if (!ts) return "";
-    try {
-      const date = new Date(ts);
-      if (Number.isNaN(date.getTime())) return ts;
-      return date.toLocaleString();
-    } catch (_) {
-      return ts;
-    }
+  function syncBodyModalState() {
+    var hasActiveModal = Boolean(
+      (galleryModal && galleryModal.classList.contains("active")) ||
+      (consolidatedModal && consolidatedModal.classList.contains("active"))
+    );
+    document.body.style.overflow = hasActiveModal ? "hidden" : "";
   }
 
   function fetchJson(url, options) {
-    const opts = Object.assign({ credentials: "same-origin" }, options || {});
-    return fetch(url, opts).then(async (response) => {
-      const contentType = (response.headers.get("content-type") || "").toLowerCase();
-      const isJson = contentType.includes("application/json");
+    return fetch(url, options || { credentials: "same-origin" }).then(async function (response) {
+      var contentType = (response.headers.get("content-type") || "").toLowerCase();
+      var isJson = contentType.indexOf("application/json") >= 0;
       if (!response.ok) {
-        let message = `Request failed (${response.status})`;
+        var message = "Request failed (" + response.status + ")";
         try {
           if (isJson) {
-            const data = await response.json();
+            var data = await response.json();
             message = data.error || data.message || message;
           } else {
-            const text = await response.text();
+            var text = await response.text();
             if (text) message = text;
           }
         } catch (_) {
-          // ignore parse errors
+          // no-op
         }
         throw new Error(message);
       }
-      if (isJson) {
-        return response.json();
-      }
-      const text = await response.text();
-      if (!text) return {};
-      try {
-        return JSON.parse(text);
-      } catch (_) {
-        throw new Error("Unexpected response.");
-      }
+      if (isJson) return response.json();
+      return {};
     });
   }
 
-  function searchCandidates(forcedQuery, showWarning) {
-    if (!searchInput || !searchResults || !searchResultsList) return;
-    const q = (forcedQuery !== undefined ? forcedQuery : searchInput.value).trim();
-    if (q.length < 2) {
-      if (showWarning && typeof showToast === "function") {
-        showToast("Enter at least 2 characters", "warning");
+  function buildReportLinks(payload, fallbackFilename) {
+    var filename = "";
+    if (payload && payload.filename) {
+      filename = String(payload.filename);
+    } else if (fallbackFilename) {
+      filename = String(fallbackFilename);
+    }
+
+    var viewUrl = (payload && payload.view_url) || (filename ? ("/reports/view/" + encodeURIComponent(filename)) : "#");
+    var downloadUrl = (payload && payload.download_url) || (filename ? ("/reports/download-file/" + encodeURIComponent(filename)) : "#");
+    return {
+      filename: filename,
+      viewUrl: viewUrl,
+      downloadUrl: downloadUrl,
+    };
+  }
+
+  function makeActionElement(config) {
+    var node = config.href ? document.createElement("a") : document.createElement("button");
+    var label = String(config.label || "");
+    var iconOnly = Boolean(config.iconOnly);
+    if (!config.href) {
+      node.type = "button";
+    }
+    node.className = config.className || "";
+    if (iconOnly) {
+      node.classList.add("icon-only");
+    }
+    if (config.action) {
+      node.setAttribute("data-action", config.action);
+    }
+    if (config.email) {
+      node.setAttribute("data-email", config.email);
+    }
+    if (config.name) {
+      node.setAttribute("data-name", config.name);
+    }
+    if (config.href) {
+      node.href = config.href;
+      if (config.target) {
+        node.target = config.target;
       }
-      searchResults.classList.remove("active");
-      searchResultsList.innerHTML = "";
+      if (config.rel) {
+        node.rel = config.rel;
+      }
+    }
+    if (config.disabled) {
+      if (node.tagName === "BUTTON") {
+        node.disabled = true;
+      }
+      node.classList.add("disabled");
+      node.setAttribute("aria-disabled", "true");
+    }
+
+    if (iconOnly) {
+      if (label) {
+        node.title = label;
+        node.setAttribute("aria-label", label);
+      }
+      node.innerHTML = config.icon || "";
+      return node;
+    }
+
+    if (label) {
+      node.setAttribute("aria-label", label);
+    }
+    node.innerHTML = (config.icon || "") + (label ? " " + label : "");
+    return node;
+  }
+
+  function renderRowActions(card, hasReport, links) {
+    var rowActions = card ? card.querySelector(".row-actions") : null;
+    if (!rowActions) return;
+
+    var email = String(card.getAttribute("data-candidate-email") || "");
+    var name = String(card.getAttribute("data-candidate-name") || "");
+
+    rowActions.innerHTML = "";
+
+    rowActions.appendChild(makeActionElement({
+      className: "row-action-btn gallery js-open-gallery",
+      action: "view-screenshots",
+      email: email,
+      name: name,
+      icon: '<i class="bi bi-images"></i>',
+      label: "View Screenshots",
+      iconOnly: true,
+    }));
+
+    if (hasReport) {
+      rowActions.appendChild(makeActionElement({
+        className: "row-action-btn view",
+        href: links.viewUrl,
+        target: "_blank",
+        rel: "noopener",
+        icon: '<i class="bi bi-eye-fill"></i>',
+        label: "View Report",
+        iconOnly: true,
+      }));
+      rowActions.appendChild(makeActionElement({
+        className: "row-action-btn",
+        href: links.downloadUrl,
+        icon: '<i class="bi bi-download"></i>',
+        label: "Download PDF",
+        iconOnly: true,
+      }));
+      rowActions.appendChild(makeActionElement({
+        className: "row-action-btn generate js-generate-report",
+        action: "regenerate-report",
+        email: email,
+        icon: '<i class="bi bi-arrow-repeat"></i>',
+        label: "Regenerate Report",
+        iconOnly: true,
+      }));
       return;
     }
-    searchResultsList.innerHTML =
-      '<div class="text-center py-3"><div class="spinner-border spinner-border-sm" style="color:var(--az-primary);"></div><span class="ms-2 text-muted">Searching...</span></div>';
-    searchResults.classList.add("active");
-    fetchJson("/reports/search?q=" + encodeURIComponent(q))
-      .then((data) => {
-        const items = (data && data.candidates) ? data.candidates : [];
-        if (!items.length) {
-          searchResultsList.innerHTML =
-            '<div class="text-center py-3 text-muted"><i class="fas fa-search me-1"></i>No candidates found</div>';
-          return;
-        }
-        let html = "";
-        items.forEach((c, i) => {
-          const aid = "sr-" + i;
-          const safeName = escapeHtml(c.name || "");
-          const safeEmail = escapeHtml(c.email || "");
-          const safeRole = escapeHtml(c.role || "N/A");
-          const hasReport = !!(c.has_report && c.report_filename);
-          let actions = "";
-          if (hasReport) {
-            const viewUrl = "/reports/view/" + encodeURIComponent(c.report_filename);
-            const downloadUrl = "/reports/download-file/" + encodeURIComponent(c.report_filename);
-            actions += '<a href="' + viewUrl + '" target="_blank" class="icon-btn btn-view" title="View"><i class="fas fa-eye"></i></a>';
-            actions += '<a href="' + downloadUrl + '" class="icon-btn btn-dl" title="Download"><i class="fas fa-download"></i></a>';
-            actions += '<button class="icon-btn btn-regen js-generate-report" data-email="' + safeEmail + '" data-container="' + aid + '" title="Regenerate"><i class="fas fa-redo"></i></button>';
-          } else {
-            actions += '<button class="icon-btn btn-gen js-generate-report" data-email="' + safeEmail + '" data-container="' + aid + '" title="Generate Report"><i class="fas fa-file-pdf"></i></button>';
-          }
-          actions += '<button class="icon-btn btn-gallery js-open-proctoring" data-email="' + safeEmail + '" title="View Proctoring Screenshots"><i class="fas fa-images"></i></button>';
-          html += '<div class="d-flex align-items-center justify-content-between p-2 border-bottom">';
-          html += '<div><span style="font-weight:500; color:var(--az-slate-900);">' + safeName + '</span>';
-          html += ' <span class="badge-role ms-1">' + safeRole + "</span>";
-          html += '<div style="font-size:0.78rem;color:var(--az-slate-500);">' + safeEmail + "</div></div>";
-          html += '<div class="report-actions" id="' + aid + '" data-email="' + safeEmail + '">';
-          html += actions;
-          html += "</div></div>";
-        });
-        searchResultsList.innerHTML = html;
-      })
-      .catch(() => {
-        searchResultsList.innerHTML =
-          '<div class="text-center py-3 text-danger"><i class="fas fa-exclamation-circle me-1"></i>Search failed</div>';
-      });
+
+    rowActions.appendChild(makeActionElement({
+      className: "row-action-btn generate js-generate-report",
+      action: "generate-report",
+      email: email,
+      icon: '<i class="bi bi-file-earmark-pdf-fill"></i>',
+      label: "Generate Report",
+      iconOnly: true,
+    }));
   }
 
-  function renderReportActions(email, containerId, payload) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    const safeEmail = escapeHtml(email);
-    if (payload && payload.success) {
-      const viewUrl = payload.view_url || "#";
-      const downloadUrl = payload.download_url || "#";
-      container.innerHTML =
-        '<a href="' + viewUrl + '" target="_blank" class="icon-btn btn-view" title="View"><i class="fas fa-eye"></i></a>' +
-        '<a href="' + downloadUrl + '" class="icon-btn btn-dl" title="Download"><i class="fas fa-download"></i></a>' +
-        '<button class="icon-btn btn-regen js-generate-report" data-email="' + safeEmail + '" data-container="' + containerId + '" title="Regenerate"><i class="fas fa-redo"></i></button>' +
-        '<button class="icon-btn btn-gallery js-open-proctoring" data-email="' + safeEmail + '" title="View Proctoring Screenshots"><i class="fas fa-images"></i></button>';
-      return;
+  function renderActionHub(card, hasReport, links) {
+    var actionGrid = card ? card.querySelector(".insight-actions") : null;
+    if (!actionGrid) return;
+
+    var email = String(card.getAttribute("data-candidate-email") || "");
+    var name = String(card.getAttribute("data-candidate-name") || "");
+
+    actionGrid.innerHTML = "";
+
+    if (hasReport) {
+      actionGrid.appendChild(makeActionElement({
+        className: "insight-action primary js-view-report",
+        action: "view-report",
+        href: links.viewUrl,
+        target: "_blank",
+        rel: "noopener",
+        icon: '<i class="bi bi-eye-fill"></i>',
+        label: "View Report",
+      }));
+      actionGrid.appendChild(makeActionElement({
+        className: "insight-action report-download js-download-report",
+        action: "download-report",
+        href: links.downloadUrl,
+        icon: '<i class="bi bi-download"></i>',
+        label: "Download PDF",
+      }));
+    } else {
+      actionGrid.appendChild(makeActionElement({
+        className: "insight-action report-generate js-generate-report",
+        action: "generate-report",
+        email: email,
+        icon: '<i class="bi bi-file-earmark-pdf-fill"></i>',
+        label: "Generate Report",
+      }));
+      actionGrid.appendChild(makeActionElement({
+        className: "insight-action report-download js-download-report disabled",
+        action: "download-report",
+        icon: '<i class="bi bi-download"></i>',
+        label: "Download PDF",
+        disabled: true,
+      }));
     }
-    const errorText = escapeHtml((payload && payload.error) ? payload.error : "Failed");
-    container.innerHTML =
-      '<span class="text-danger" style="font-size:0.75rem;"><i class="fas fa-exclamation-circle"></i> ' + errorText + "</span>" +
-      ' <button class="icon-btn btn-regen js-generate-report" data-email="' + safeEmail + '" data-container="' + containerId + '"><i class="fas fa-redo"></i></button>' +
-      ' <button class="icon-btn btn-gallery js-open-proctoring" data-email="' + safeEmail + '" title="View Proctoring Screenshots"><i class="fas fa-images"></i></button>';
+
+    actionGrid.appendChild(makeActionElement({
+      className: "insight-action js-open-gallery",
+      action: "view-screenshots",
+      email: email,
+      name: name,
+      icon: '<i class="bi bi-images"></i>',
+      label: "View Screenshots",
+    }));
+
+    actionGrid.appendChild(makeActionElement({
+      className: "insight-action report-regenerate js-generate-report" + (hasReport ? "" : " disabled"),
+      action: "regenerate-report",
+      email: email,
+      icon: '<i class="bi bi-arrow-repeat"></i>',
+      label: "Regenerate Report",
+      disabled: !hasReport,
+    }));
   }
 
-  function generateReport(email, containerId) {
-    if (!email || !containerId) return;
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    container.innerHTML = '<span class="icon-btn btn-loading"><i class="fas fa-spinner fa-spin"></i></span>';
-    fetchJson("/reports/generate/" + encodeURIComponent(email))
-      .then((data) => renderReportActions(email, containerId, data))
-      .catch((err) => renderReportActions(email, containerId, { success: false, error: err.message || "Error" }));
+  function applyReportReadyState(card, payload) {
+    if (!card) return;
+    var fallbackFilename = card.getAttribute("data-report-filename") || "";
+    var links = buildReportLinks(payload || {}, fallbackFilename);
+
+    card.setAttribute("data-has-report", "1");
+    if (links.filename) {
+      card.setAttribute("data-report-filename", links.filename);
+    }
+
+    renderRowActions(card, true, links);
+    renderActionHub(card, true, links);
   }
 
-  function openProctoringGallery(email) {
+  function generateReport(email, button, card) {
     if (!email) return;
-    if (proctoringModal) {
-      proctoringModal.classList.add("active");
-      proctoringModal.setAttribute("aria-hidden", "false");
-    }
-    if (proctoringModalTitle) {
-      proctoringModalTitle.textContent = "Proctoring Screenshots - " + email;
-    }
-    if (proctoringGalleryMeta) {
-      proctoringGalleryMeta.textContent = "Loading screenshots...";
-    }
-    if (proctoringGallery) {
-      proctoringGallery.innerHTML = "";
-    }
-    proctoringShots = [];
-    proctoringShotIndex = -1;
 
-    fetchJson("/reports/proctoring/screenshots?email=" + encodeURIComponent(email))
-      .then((data) => {
-        const items = (data && data.screenshots) ? data.screenshots : [];
-        if (!items.length) {
-          if (proctoringGalleryMeta) proctoringGalleryMeta.textContent = "No proctoring screenshots found.";
-          return;
+    var originalLabel = button ? button.innerHTML : "";
+    var originalTitle = button ? button.getAttribute("title") : "";
+    var iconOnlyButton = Boolean(button && button.classList.contains("icon-only"));
+    if (button) {
+      button.disabled = true;
+      if (iconOnlyButton) {
+        button.innerHTML = '<i class="bi bi-arrow-repeat"></i>';
+        button.setAttribute("title", "Generating report...");
+        button.setAttribute("aria-label", "Generating report...");
+      } else {
+        button.innerHTML = '<i class="bi bi-arrow-repeat"></i> Generating...';
+      }
+    }
+
+    fetchJson("/reports/generate/" + encodeURIComponent(email), { credentials: "same-origin" })
+      .then(function (payload) {
+        if (!payload || !payload.success) {
+          throw new Error((payload && payload.error) || "Report generation failed");
         }
-        proctoringShots = items.map((item, idx) => Object.assign({ __index: idx }, item));
-        proctoringShotIndex = -1;
-        if (proctoringGalleryMeta) {
-          proctoringGalleryMeta.textContent = items.length + " screenshot(s) captured";
-        }
-        let html = "";
-        proctoringShots.forEach((item) => {
-          const meta = [];
-          if (item.round_label) meta.push(escapeHtml(item.round_label));
-          if (item.source) meta.push(escapeHtml(String(item.source).toUpperCase()));
-          if (item.captured_at) meta.push(escapeHtml(formatGalleryTimestamp(item.captured_at)));
-          html += '<div class="proctoring-shot">';
-          html += '<img src="/reports/proctoring/screenshot/' + item.id + '" loading="lazy" alt="Proctoring screenshot" data-proctoring-index="' + item.__index + '">';
-          html += '<div class="proctoring-shot-meta">' + meta.join(" | ") + "</div>";
-          html += "</div>";
-        });
-        if (proctoringGallery) {
-          proctoringGallery.innerHTML = html;
+        applyReportReadyState(card, payload);
+        if (typeof showToast === "function") {
+          showToast("Report generated successfully", "success");
         }
       })
-      .catch(() => {
-        if (proctoringGalleryMeta) {
-          proctoringGalleryMeta.textContent = "Failed to load screenshots. Please try again.";
+      .catch(function (error) {
+        if (typeof showToast === "function") {
+          showToast(error.message || "Failed to generate report", "danger");
+        }
+        if (button) {
+          button.disabled = false;
+          button.innerHTML = originalLabel;
+          if (iconOnlyButton) {
+            if (originalTitle) {
+              button.setAttribute("title", originalTitle);
+              button.setAttribute("aria-label", originalTitle);
+            } else {
+              button.removeAttribute("title");
+              button.removeAttribute("aria-label");
+            }
+          }
         }
       });
   }
 
-  function renderProctoringViewer() {
-    if (proctoringShotIndex < 0 || proctoringShotIndex >= proctoringShots.length) return;
-    const shot = proctoringShots[proctoringShotIndex];
-    if (proctoringViewerImage) {
-      proctoringViewerImage.src = "/reports/proctoring/screenshot/" + shot.id;
-    }
-    if (proctoringViewerMeta) {
-      const parts = [];
-      if (shot.round_label) parts.push(shot.round_label);
-      if (shot.source) parts.push(String(shot.source).toUpperCase());
-      if (shot.captured_at) parts.push(formatGalleryTimestamp(shot.captured_at));
-      parts.push((proctoringShotIndex + 1) + " / " + proctoringShots.length);
-      proctoringViewerMeta.textContent = parts.join(" | ");
-    }
-    if (proctoringPrevBtn) proctoringPrevBtn.disabled = proctoringShotIndex === 0;
-    if (proctoringNextBtn) proctoringNextBtn.disabled = proctoringShotIndex === (proctoringShots.length - 1);
-  }
-
-  function openProctoringViewerByIndex(index) {
-    if (!Array.isArray(proctoringShots) || proctoringShots.length === 0) return;
-    const idx = Number(index);
-    if (Number.isNaN(idx) || idx < 0 || idx >= proctoringShots.length) return;
-    proctoringShotIndex = idx;
-    renderProctoringViewer();
-    if (proctoringViewer) {
-      proctoringViewer.classList.add("active");
-      proctoringViewer.setAttribute("aria-hidden", "false");
+  function syncDateFilterVisibility() {
+    if (!periodSelect || !dateInput) return;
+    var isCustomDate = periodSelect.value === "date";
+    dateInput.classList.toggle("is-hidden", !isCustomDate);
+    if (!isCustomDate) {
+      dateInput.value = "";
     }
   }
 
-  function stepProctoringViewer(delta) {
-    if (!proctoringShots.length) return;
-    const next = proctoringShotIndex + delta;
-    if (next < 0 || next >= proctoringShots.length) return;
-    proctoringShotIndex = next;
-    renderProctoringViewer();
+  function submitFilters(resetOffset) {
+    if (!filterForm) return;
+    if (pageInput) {
+      pageInput.value = "1";
+    }
+    if (offsetInput && resetOffset !== false) {
+      offsetInput.value = "0";
+    }
+    filterForm.submit();
   }
 
-  function closeProctoringViewer() {
-    if (!proctoringViewer) return;
-    proctoringViewer.classList.remove("active");
-    proctoringViewer.setAttribute("aria-hidden", "true");
+  var HOVER_DELAY_MS = 40;
+  var LIST_EXIT_DELAY_MS = 180;
+  var activeCard = null;
+  var lockedCard = null;
+  var enterTimer = null;
+  var leaveTimer = null;
+  var cardSwitchToken = 0;
+
+  function applyOverlaySpacing(card) {
+    if (!card) return;
+    var panel = card.querySelector(".candidate-expanded-grid");
+    var panelHeight = panel ? Math.ceil(panel.getBoundingClientRect().height) : 0;
+    var spacing = Math.max(220, panelHeight + 16);
+    card.style.setProperty("--overlay-space", spacing + "px");
+    card.classList.add("with-space");
   }
 
-  function closeProctoringGallery() {
-    if (!proctoringModal) return;
-    proctoringModal.classList.remove("active");
-    proctoringModal.setAttribute("aria-hidden", "true");
+  function clearOverlaySpacing(card) {
+    if (!card) return;
+    card.classList.remove("with-space");
+    card.style.removeProperty("--overlay-space");
   }
 
-  const searchBtn = document.getElementById("searchBtn");
-  if (searchBtn && searchInput) {
-    searchBtn.addEventListener("click", function () { searchCandidates(undefined, true); });
-    searchInput.addEventListener("keyup", function (e) {
-      if (e.key === "Enter") searchCandidates(undefined, true);
+  function setActiveCard(card) {
+    if (activeCard === card) {
+      if (activeCard) {
+        applyOverlaySpacing(activeCard);
+      }
+      return;
+    }
+
+    var oldCard = activeCard;
+    activeCard = card || null;
+
+    // Always reserve space on the next active card first so layout never shrinks first.
+    if (activeCard) {
+      applyOverlaySpacing(activeCard);
+      activeCard.classList.add("is-active");
+    }
+
+    if (!oldCard) return;
+    var token = ++cardSwitchToken;
+    var releaseOldCard = function () {
+      if (token !== cardSwitchToken) return;
+      if (oldCard === activeCard) return;
+      clearOverlaySpacing(oldCard);
+      oldCard.classList.remove("is-active");
+    };
+
+    if (typeof window.requestAnimationFrame === "function") {
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(releaseOldCard);
+      });
+      return;
+    }
+
+    window.setTimeout(releaseOldCard, 40);
+  }
+
+  function initCardExpansion() {
+    var cards = Array.prototype.slice.call(document.querySelectorAll("[data-candidate-card]"));
+    if (!cards.length) return;
+    var reportsList = document.querySelector(".reports-list");
+
+    cards.forEach(function (card) {
+      card.classList.remove("is-active");
+      clearOverlaySpacing(card);
     });
-    searchInput.addEventListener("input", function () {
-      const q = searchInput.value.trim();
-      window.clearTimeout(searchTimer);
-      if (q.length < 2) {
-        if (searchResults) searchResults.classList.remove("active");
-        if (searchResultsList) searchResultsList.innerHTML = "";
+    setActiveCard(null);
+
+    if (reportsList) {
+      reportsList.addEventListener("mouseenter", function () {
+        window.clearTimeout(leaveTimer);
+      });
+
+      reportsList.addEventListener("mouseleave", function () {
+        if (lockedCard) {
+          return;
+        }
+        window.clearTimeout(enterTimer);
+        window.clearTimeout(leaveTimer);
+        leaveTimer = window.setTimeout(function () {
+          if (lockedCard) {
+            return;
+          }
+          setActiveCard(null);
+        }, LIST_EXIT_DELAY_MS);
+      });
+    }
+
+    function isOverRowActions(card, event) {
+      if (!card || !event) return false;
+      var hitNode = event.target;
+      if ((!hitNode || hitNode === card) && typeof document.elementFromPoint === "function") {
+        hitNode = document.elementFromPoint(event.clientX, event.clientY);
+      }
+      return Boolean(hitNode && hitNode.closest && hitNode.closest(".row-actions"));
+    }
+
+    cards.forEach(function (card) {
+      card.addEventListener("mouseenter", function (event) {
+        if (lockedCard && lockedCard !== card) {
+          return;
+        }
+        if (isOverRowActions(card, event)) {
+          window.clearTimeout(enterTimer);
+          return;
+        }
+        window.clearTimeout(leaveTimer);
+        window.clearTimeout(enterTimer);
+        enterTimer = window.setTimeout(function () {
+          setActiveCard(card);
+        }, HOVER_DELAY_MS);
+      });
+
+      card.addEventListener("mouseleave", function () {
+        window.clearTimeout(enterTimer);
+        if (lockedCard) {
+          return;
+        }
+        if (!reportsList) {
+          window.clearTimeout(leaveTimer);
+          leaveTimer = window.setTimeout(function () {
+            if (lockedCard) {
+              return;
+            }
+            if (activeCard === card) {
+              setActiveCard(null);
+            }
+          }, HOVER_DELAY_MS);
+        }
+      });
+
+      card.addEventListener("focusin", function () {
+        if (lockedCard && lockedCard !== card) {
+          return;
+        }
+        window.clearTimeout(leaveTimer);
+        window.clearTimeout(enterTimer);
+        setActiveCard(card);
+      });
+
+      card.addEventListener("focusout", function (event) {
+        var next = event.relatedTarget;
+        if (next && card.contains(next)) {
+          return;
+        }
+        if (lockedCard) {
+          return;
+        }
+        if (activeCard === card) {
+          setActiveCard(null);
+        }
+      });
+
+      card.addEventListener("click", function (event) {
+        if (event.target.closest(".row-actions, a, button, input, select, textarea, label")) {
+          return;
+        }
+        window.clearTimeout(leaveTimer);
+        window.clearTimeout(enterTimer);
+
+        // Click toggles lock on this card.
+        if (lockedCard === card) {
+          lockedCard = null;
+          setActiveCard(null);
+          return;
+        }
+        lockedCard = card;
+        setActiveCard(card);
+      });
+
+      var rowActions = card.querySelector(".row-actions");
+      if (rowActions) {
+        rowActions.addEventListener("mouseenter", function () {
+          window.clearTimeout(enterTimer);
+        });
+      }
+    });
+  }
+
+  function formatExactTimestamp(isoValue) {
+    if (!isoValue) {
+      return {
+        local: "Capture time unavailable",
+        utc: "",
+      };
+    }
+
+    var date = new Date(isoValue);
+    if (Number.isNaN(date.getTime())) {
+      return {
+        local: String(isoValue),
+        utc: "",
+      };
+    }
+
+    var local = date.toLocaleString(undefined, {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+      timeZoneName: "short",
+    });
+
+    var utc = date.toISOString().replace("T", " ").replace("Z", " UTC");
+    return { local: local, utc: utc };
+  }
+
+  function renderGallery(capturedScreenshots) {
+    if (!galleryGrid) return;
+    galleryGrid.innerHTML = "";
+
+    if (!capturedScreenshots.length) {
+      var emptyNode = document.createElement("div");
+      emptyNode.className = "reports-gallery-empty";
+      emptyNode.textContent = "No screenshots captured for this candidate yet.";
+      galleryGrid.appendChild(emptyNode);
+      return;
+    }
+
+    var fragment = document.createDocumentFragment();
+    capturedScreenshots.forEach(function (shot) {
+      var article = document.createElement("article");
+      article.className = "reports-shot";
+
+      var link = document.createElement("a");
+      link.className = "reports-shot-link";
+      link.href = "/reports/proctoring/screenshot/" + encodeURIComponent(String(shot.id || ""));
+      link.target = "_blank";
+      link.rel = "noopener";
+
+      var img = document.createElement("img");
+      img.loading = "lazy";
+      img.src = link.href;
+      img.alt = "Screenshot " + String(shot.id || "");
+      link.appendChild(img);
+
+      var body = document.createElement("div");
+      body.className = "reports-shot-body";
+
+      var ts = formatExactTimestamp(shot.captured_at);
+      var timeLocal = document.createElement("div");
+      timeLocal.className = "reports-shot-time";
+      timeLocal.textContent = ts.local;
+      body.appendChild(timeLocal);
+
+      if (ts.utc) {
+        var timeUtc = document.createElement("div");
+        timeUtc.className = "reports-shot-time-utc";
+        timeUtc.textContent = ts.utc;
+        body.appendChild(timeUtc);
+      }
+
+      var meta = document.createElement("div");
+      meta.className = "reports-shot-meta";
+      var roundLabel = shot.round_label || shot.round_key || "Round";
+      var eventType = shot.event_type || "capture";
+      var source = shot.source || "system";
+      meta.textContent = roundLabel + " | " + eventType + " | " + source;
+      body.appendChild(meta);
+
+      article.appendChild(link);
+      article.appendChild(body);
+      fragment.appendChild(article);
+    });
+
+    galleryGrid.appendChild(fragment);
+  }
+
+  function openGallery(email, candidateName) {
+    if (!galleryModal || !galleryMeta || !galleryGrid || !galleryTitle || !email) {
+      return;
+    }
+
+    activeGalleryEmail = String(email);
+    galleryTitle.textContent = "Proctoring Screenshots - " + (candidateName || email);
+    galleryMeta.textContent = "Loading screenshots...";
+    galleryGrid.innerHTML = '<div class="reports-gallery-empty">Loading screenshots...</div>';
+    galleryModal.classList.add("active");
+    galleryModal.setAttribute("aria-hidden", "false");
+    syncBodyModalState();
+
+    fetchJson("/reports/proctoring/screenshots?email=" + encodeURIComponent(email) + "&limit=300", {
+      credentials: "same-origin",
+    })
+      .then(function (payload) {
+        if (activeGalleryEmail !== String(email)) {
+          return;
+        }
+        var screenshots = Array.isArray(payload && payload.screenshots) ? payload.screenshots : [];
+        galleryMeta.textContent = screenshots.length + " screenshot(s) found";
+        renderGallery(screenshots);
+      })
+      .catch(function (error) {
+        galleryMeta.textContent = "Unable to load screenshots";
+        galleryGrid.innerHTML = '<div class="reports-gallery-empty">Failed to load screenshots.</div>';
+        if (typeof showToast === "function") {
+          showToast(error.message || "Failed to load screenshots", "danger");
+        }
+      });
+  }
+
+  function closeGallery() {
+    if (!galleryModal) return;
+    activeGalleryEmail = "";
+    galleryModal.classList.remove("active");
+    galleryModal.setAttribute("aria-hidden", "true");
+    syncBodyModalState();
+  }
+
+  function buildConsolidatedScopeParams() {
+    var params = new URLSearchParams();
+    if (consolidatedRoleSelect && consolidatedRoleSelect.value) {
+      params.set("role", consolidatedRoleSelect.value);
+    }
+    if (consolidatedPeriodSelect && consolidatedPeriodSelect.value) {
+      params.set("filter", consolidatedPeriodSelect.value);
+    }
+    if (consolidatedDateInput && consolidatedDateInput.value) {
+      params.set("date", consolidatedDateInput.value);
+    }
+    params.set("offset", "0");
+    return params;
+  }
+
+  function buildConsolidatedRequestPayload() {
+    return {
+      role: consolidatedRoleSelect ? consolidatedRoleSelect.value : "",
+      filter: consolidatedPeriodSelect ? consolidatedPeriodSelect.value : "today",
+      date: consolidatedDateInput ? consolidatedDateInput.value : "",
+      offset: "0",
+      q: "",
+      candidate_emails: getSelectedConsolidatedEmails(),
+    };
+  }
+
+  function syncConsolidatedDateFilterVisibility() {
+    if (!consolidatedPeriodSelect || !consolidatedDateInput) return;
+    var isSpecificDate = consolidatedPeriodSelect.value === "date";
+    consolidatedDateInput.classList.toggle("is-hidden", !isSpecificDate);
+    if (!isSpecificDate) {
+      consolidatedDateInput.value = "";
+    }
+  }
+
+  function syncConsolidatedFiltersFromPage() {
+    if (consolidatedRoleSelect && roleSelect) {
+      consolidatedRoleSelect.value = roleSelect.value || "All Roles";
+    }
+    if (consolidatedPeriodSelect && periodSelect) {
+      consolidatedPeriodSelect.value = periodSelect.value || "today";
+    }
+    if (consolidatedDateInput && dateInput) {
+      consolidatedDateInput.value = dateInput.value || "";
+    }
+    syncConsolidatedDateFilterVisibility();
+  }
+
+  function getSelectedConsolidatedEmails() {
+    var selected = [];
+    consolidatedState.candidates.forEach(function (candidate) {
+      var email = String(candidate.email || "");
+      if (email && consolidatedState.selectedEmails[email]) {
+        selected.push(email);
+      }
+    });
+    return selected;
+  }
+
+  function resetConsolidatedOutput(message) {
+    consolidatedState.rawSummary = "";
+    consolidatedState.summaryMeta = null;
+    if (consolidatedContent) {
+      consolidatedContent.classList.remove("is-visible");
+      consolidatedContent.innerHTML = "";
+    }
+    if (consolidatedLoading) {
+      consolidatedLoading.style.display = "none";
+    }
+    if (consolidatedPlaceholder) {
+      consolidatedPlaceholder.textContent = message || "Select candidates and click Generate Summary.";
+      consolidatedPlaceholder.style.display = "flex";
+    }
+    updateConsolidatedFooterState();
+  }
+
+  function setConsolidatedLoadingState(isLoading, message) {
+    consolidatedState.isGenerating = Boolean(isLoading);
+    if (consolidatedLoading) {
+      consolidatedLoading.textContent = message || "Building a consolidated summary...";
+      consolidatedLoading.style.display = isLoading ? "flex" : "none";
+    }
+    if (consolidatedPlaceholder) {
+      consolidatedPlaceholder.style.display = isLoading ? "none" : consolidatedPlaceholder.style.display;
+    }
+    if (consolidatedContent && isLoading) {
+      consolidatedContent.classList.remove("is-visible");
+      consolidatedContent.innerHTML = "";
+    }
+    updateConsolidatedFooterState();
+  }
+
+  function getVerdictBadgeClass(verdict) {
+    var normalized = String(verdict || "").toLowerCase();
+    if (normalized === "rejected") return "verdict-rejected";
+    if (normalized === "selected") return "verdict-selected";
+    if (normalized === "in progress") return "verdict-progress";
+    return "verdict-pending";
+  }
+
+  function stripSummaryFormatting(value) {
+    return String(value || "")
+      .replace(/^#{1,6}\s*/, "")
+      .replace(/\*\*/g, "")
+      .trim();
+  }
+
+  function ensureSummaryList(container, ordered) {
+    var last = container.lastElementChild;
+    if (last && last.tagName === (ordered ? "OL" : "UL")) {
+      return last;
+    }
+    var list = document.createElement(ordered ? "ol" : "ul");
+    list.className = "consolidated-summary-list";
+    container.appendChild(list);
+    return list;
+  }
+
+  function renderConsolidatedSummary(summaryText) {
+    if (!consolidatedContent || !consolidatedPlaceholder) return;
+
+    consolidatedState.rawSummary = String(summaryText || "").trim();
+    consolidatedContent.innerHTML = "";
+    consolidatedContent.classList.add("is-visible");
+    consolidatedPlaceholder.style.display = "none";
+    if (consolidatedLoading) {
+      consolidatedLoading.style.display = "none";
+    }
+
+    var wrapper = document.createElement("div");
+    wrapper.className = "consolidated-summary-block";
+    var lines = consolidatedState.rawSummary.split(/\r?\n/);
+
+    lines.forEach(function (rawLine) {
+      var trimmed = String(rawLine || "").trim();
+      if (!trimmed) {
         return;
       }
-      searchTimer = window.setTimeout(function () {
-        searchCandidates(q, false);
-      }, 250);
+
+      var plain = stripSummaryFormatting(trimmed);
+      var lowered = plain.toLowerCase();
+
+      if (lowered === "consolidated interview feedback") {
+        var title = document.createElement("h3");
+        title.className = "consolidated-summary-title";
+        title.textContent = plain;
+        wrapper.appendChild(title);
+        return;
+      }
+
+      if (
+        lowered === "overall outcome" ||
+        lowered === "key observations" ||
+        lowered === "overall assessment & recommendations" ||
+        lowered === "overall assessment and recommendations"
+      ) {
+        var heading = document.createElement("h4");
+        heading.className = "consolidated-summary-section";
+        heading.textContent = plain;
+        wrapper.appendChild(heading);
+        return;
+      }
+
+      if (/^\d+\.\s+/.test(trimmed)) {
+        var orderedList = ensureSummaryList(wrapper, true);
+        var orderedItem = document.createElement("li");
+        orderedItem.textContent = stripSummaryFormatting(trimmed.replace(/^\d+\.\s+/, ""));
+        orderedList.appendChild(orderedItem);
+        return;
+      }
+
+      if (/^[-*\u2022]\s+/.test(trimmed)) {
+        var bulletList = ensureSummaryList(wrapper, false);
+        var bulletItem = document.createElement("li");
+        bulletItem.textContent = stripSummaryFormatting(trimmed.replace(/^[-*\u2022]\s+/, ""));
+        bulletList.appendChild(bulletItem);
+        return;
+      }
+
+      var paragraph = document.createElement("p");
+      paragraph.className = "consolidated-summary-paragraph";
+      paragraph.textContent = plain;
+      wrapper.appendChild(paragraph);
+    });
+
+    consolidatedContent.appendChild(wrapper);
+    updateConsolidatedFooterState();
+  }
+
+  function populateConsolidatedBatchOptions(batchOptions) {
+    if (!consolidatedBatchSelect) return;
+    consolidatedBatchSelect.innerHTML = "";
+
+    var defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "All Batches";
+    consolidatedBatchSelect.appendChild(defaultOption);
+
+    (batchOptions || []).forEach(function (item) {
+      var option = document.createElement("option");
+      option.value = String(item && item.value ? item.value : "");
+      var count = Number(item && item.count ? item.count : 0);
+      option.textContent = String(item && item.label ? item.label : "No Batch") + (count ? " (" + count + ")" : "");
+      consolidatedBatchSelect.appendChild(option);
+    });
+
+    if (batchOptions && batchOptions.length === 1) {
+      consolidatedBatchSelect.value = String(batchOptions[0].value || "");
+    } else {
+      consolidatedBatchSelect.value = "";
+    }
+  }
+
+  function getVisibleConsolidatedCandidates() {
+    var batchValue = consolidatedBatchSelect ? String(consolidatedBatchSelect.value || "") : "";
+    var verdictValue = consolidatedVerdictFilter ? String(consolidatedVerdictFilter.value || "").toLowerCase() : "";
+    var query = consolidatedCandidateSearch ? consolidatedCandidateSearch.value.trim().toLowerCase() : "";
+
+    return consolidatedState.candidates.filter(function (candidate) {
+      var batchId = String(candidate.batch_id || "");
+      var verdict = String(candidate.overall_verdict || "").toLowerCase();
+      var haystack = [
+        String(candidate.name || ""),
+        String(candidate.email || ""),
+        String(candidate.role || ""),
+        batchId,
+      ].join(" ").toLowerCase();
+
+      if (batchValue !== "" && batchId !== batchValue) {
+        return false;
+      }
+      if (verdictValue && verdict !== verdictValue) {
+        return false;
+      }
+      if (query && haystack.indexOf(query) === -1) {
+        return false;
+      }
+      return true;
     });
   }
 
-  const clearBtn = document.getElementById("clearSearchBtn");
-  if (clearBtn) {
-    clearBtn.addEventListener("click", function () {
-      if (searchInput) searchInput.value = "";
-      if (searchResults) searchResults.classList.remove("active");
-      if (searchResultsList) searchResultsList.innerHTML = "";
+  function updateConsolidatedScopeCard() {
+    var scope = consolidatedState.scope || {};
+    var roleLabel = scope.role || (consolidatedRoleSelect ? consolidatedRoleSelect.value : "All Roles") || "All Roles";
+    var periodLabel = scope.period_label || "Current Scope";
+
+    if (consolidatedRoleValue) {
+      consolidatedRoleValue.textContent = roleLabel;
+    }
+    if (consolidatedPeriodValue) {
+      consolidatedPeriodValue.textContent = periodLabel;
+    }
+    if (consolidatedBatchValue) {
+      var batchOption = consolidatedBatchSelect && consolidatedBatchSelect.selectedOptions && consolidatedBatchSelect.selectedOptions[0];
+      consolidatedBatchValue.textContent = batchOption ? batchOption.textContent : "All Batches";
+    }
+    if (consolidatedScope) {
+      var candidateCount = Number(scope.filtered_total_candidates || consolidatedState.candidates.length || 0);
+      var scopeBits = [roleLabel, periodLabel, candidateCount + " candidate(s)"];
+      consolidatedScope.textContent = scopeBits.join(" | ");
+    }
+    if (consolidatedResultsMeta) {
+      var selectedInfo = "Load candidates to preview the filtered result list.";
+      if (consolidatedState.scope && consolidatedState.candidates.length) {
+        selectedInfo = consolidatedState.candidates.length + " candidate(s) loaded for verification. Names are listed below.";
+      } else if (consolidatedState.scope && !consolidatedState.isLoadingCandidates) {
+        selectedInfo = "No candidates matched the selected role/date filters.";
+      }
+      consolidatedResultsMeta.textContent = selectedInfo;
+    }
+  }
+
+  function updateConsolidatedFooterState() {
+    var selectedCount = getSelectedConsolidatedEmails().length;
+    var visibleCount = consolidatedState.visibleCandidates.length;
+
+    if (consolidatedSelectionMeta) {
+      consolidatedSelectionMeta.textContent = selectedCount + " selected of " + visibleCount + " visible";
+    }
+    if (consolidatedGenerateBtn) {
+      consolidatedGenerateBtn.disabled = consolidatedState.isLoadingCandidates || consolidatedState.isGenerating || selectedCount < 1;
+    }
+    if (consolidatedCopyBtn) {
+      consolidatedCopyBtn.disabled = !consolidatedState.rawSummary || consolidatedState.isGenerating;
+    }
+    if (consolidatedDownloadBtn) {
+      consolidatedDownloadBtn.disabled = !consolidatedState.rawSummary || consolidatedState.isGenerating || consolidatedState.isDownloading;
+    }
+  }
+
+  function renderConsolidatedLoadedPreview(candidates) {
+    if (!consolidatedLoadedPreview) return;
+    consolidatedLoadedPreview.innerHTML = "";
+
+    var items = Array.isArray(candidates) ? candidates : [];
+    if (!items.length) {
+      consolidatedLoadedPreview.innerHTML = '<div class="consolidated-loaded-empty">No candidate names to preview for the current filters.</div>';
+      return;
+    }
+
+    var fragment = document.createDocumentFragment();
+    items.forEach(function (candidate) {
+      var pill = document.createElement("span");
+      pill.className = "consolidated-loaded-pill";
+      pill.textContent = candidate.name || candidate.email || "Candidate";
+      fragment.appendChild(pill);
+    });
+    consolidatedLoadedPreview.appendChild(fragment);
+  }
+
+  function renderConsolidatedCandidateList() {
+    if (!consolidatedCandidateList) return;
+
+    var visibleCandidates = getVisibleConsolidatedCandidates();
+    consolidatedState.visibleCandidates = visibleCandidates;
+    updateConsolidatedScopeCard();
+    renderConsolidatedLoadedPreview(visibleCandidates);
+    consolidatedCandidateList.innerHTML = "";
+
+    if (consolidatedState.isLoadingCandidates) {
+      consolidatedCandidateList.innerHTML = '<div class="consolidated-empty-state">Loading candidates...</div>';
+      updateConsolidatedFooterState();
+      return;
+    }
+
+    if (!visibleCandidates.length) {
+      consolidatedCandidateList.innerHTML = '<div class="consolidated-empty-state">No candidates match the current batch, verdict, or search filter.</div>';
+      updateConsolidatedFooterState();
+      return;
+    }
+
+    var fragment = document.createDocumentFragment();
+    visibleCandidates.forEach(function (candidate) {
+      var email = String(candidate.email || "");
+      var row = document.createElement("label");
+      row.className = "consolidated-candidate-row";
+      row.setAttribute("data-email", email);
+
+      var checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = Boolean(consolidatedState.selectedEmails[email]);
+      checkbox.setAttribute("data-consolidated-email", email);
+
+      var main = document.createElement("div");
+      main.className = "consolidated-candidate-main";
+
+      var name = document.createElement("div");
+      name.className = "consolidated-candidate-name";
+      name.textContent = candidate.name || email || "Candidate";
+      main.appendChild(name);
+
+      var emailText = document.createElement("div");
+      emailText.className = "consolidated-candidate-email";
+      var emailLine = candidate.email || "";
+      if (candidate.batch_id) {
+        emailLine += " | " + candidate.batch_id;
+      }
+      emailText.textContent = emailLine || "Email unavailable";
+      main.appendChild(emailText);
+
+      var meta = document.createElement("div");
+      meta.className = "consolidated-candidate-meta";
+
+      var score = document.createElement("span");
+      score.className = "consolidated-badge score";
+      score.textContent = Math.round(Number(candidate.overall_score || 0)) + "%";
+      meta.appendChild(score);
+
+      var verdict = document.createElement("span");
+      verdict.className = "consolidated-badge " + getVerdictBadgeClass(candidate.overall_verdict);
+      verdict.textContent = candidate.overall_verdict || "Pending";
+      meta.appendChild(verdict);
+
+      row.appendChild(checkbox);
+      row.appendChild(main);
+      row.appendChild(meta);
+      fragment.appendChild(row);
+    });
+
+    consolidatedCandidateList.appendChild(fragment);
+    updateConsolidatedFooterState();
+  }
+
+  function loadConsolidatedCandidates() {
+    if (
+      consolidatedPeriodSelect &&
+      consolidatedPeriodSelect.value === "date" &&
+      consolidatedDateInput &&
+      !consolidatedDateInput.value
+    ) {
+      if (typeof showToast === "function") {
+        showToast("Choose a specific date to load candidates", "warning");
+      }
+      if (typeof consolidatedDateInput.showPicker === "function") {
+        consolidatedDateInput.showPicker();
+      } else {
+        consolidatedDateInput.focus();
+      }
+      return;
+    }
+
+    consolidatedState.isLoadingCandidates = true;
+    consolidatedState.candidates = [];
+    consolidatedState.selectedEmails = {};
+    consolidatedState.visibleCandidates = [];
+    consolidatedState.scope = null;
+    resetConsolidatedOutput("Select candidates and click Generate Summary.");
+    renderConsolidatedCandidateList();
+
+    fetchJson("/reports/consolidated/candidates?" + buildConsolidatedScopeParams().toString(), {
+      credentials: "same-origin",
+    })
+      .then(function (payload) {
+        consolidatedState.scope = payload && payload.scope ? payload.scope : {};
+        consolidatedState.candidates = Array.isArray(payload && payload.candidates) ? payload.candidates : [];
+        consolidatedState.selectedEmails = {};
+        consolidatedState.candidates.forEach(function (candidate) {
+          var email = String(candidate.email || "");
+          if (email) {
+            consolidatedState.selectedEmails[email] = true;
+          }
+        });
+        populateConsolidatedBatchOptions(Array.isArray(payload && payload.batch_options) ? payload.batch_options : []);
+        resetConsolidatedOutput("Select candidates and click Generate Summary.");
+      })
+      .catch(function (error) {
+        consolidatedState.scope = null;
+        consolidatedState.candidates = [];
+        consolidatedState.selectedEmails = {};
+        if (typeof showToast === "function") {
+          showToast(error.message || "Failed to load candidates", "danger");
+        }
+      })
+      .finally(function () {
+        consolidatedState.isLoadingCandidates = false;
+        renderConsolidatedCandidateList();
+      });
+  }
+
+  function openConsolidatedModal() {
+    if (!consolidatedModal) return;
+
+    closeGallery();
+    syncConsolidatedFiltersFromPage();
+    if (consolidatedVerdictFilter) {
+      consolidatedVerdictFilter.value = "";
+    }
+    if (consolidatedCandidateSearch) {
+      consolidatedCandidateSearch.value = "";
+    }
+    consolidatedModal.classList.add("active");
+    consolidatedModal.setAttribute("aria-hidden", "false");
+    syncBodyModalState();
+    loadConsolidatedCandidates();
+  }
+
+  function closeConsolidatedModal() {
+    if (!consolidatedModal) return;
+    consolidatedModal.classList.remove("active");
+    consolidatedModal.setAttribute("aria-hidden", "true");
+    syncBodyModalState();
+  }
+
+  function applyConsolidatedBulkSelection(mode) {
+    var visibleCandidates = getVisibleConsolidatedCandidates();
+    if (mode === "none") {
+      consolidatedState.selectedEmails = {};
+      renderConsolidatedCandidateList();
+      return;
+    }
+
+    if (mode === "all") {
+      visibleCandidates.forEach(function (candidate) {
+        var email = String(candidate.email || "");
+        if (email) {
+          consolidatedState.selectedEmails[email] = true;
+        }
+      });
+      renderConsolidatedCandidateList();
+      return;
+    }
+
+    consolidatedState.selectedEmails = {};
+    visibleCandidates.forEach(function (candidate) {
+      var email = String(candidate.email || "");
+      if (!email) return;
+      if (mode === "rejected" && String(candidate.overall_verdict || "") === "Rejected") {
+        consolidatedState.selectedEmails[email] = true;
+      }
+      if (mode === "attempted" && Number(candidate.attempted_rounds || 0) > 0) {
+        consolidatedState.selectedEmails[email] = true;
+      }
+    });
+    renderConsolidatedCandidateList();
+  }
+
+  function generateConsolidatedSummary() {
+    var selectedEmails = getSelectedConsolidatedEmails();
+    if (!selectedEmails.length) {
+      if (typeof showToast === "function") {
+        showToast("Select at least one candidate", "warning");
+      }
+      return;
+    }
+
+    setConsolidatedLoadingState(true, "Building a consolidated summary...");
+    fetchJson("/reports/consolidated-summary", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(buildConsolidatedRequestPayload()),
+    })
+      .then(function (payload) {
+        if (!payload || !payload.success) {
+          throw new Error((payload && payload.error) || "Failed to generate consolidated summary");
+        }
+        consolidatedState.summaryMeta = payload && payload.meta ? payload.meta : null;
+        renderConsolidatedSummary(payload.summary || "");
+        if (typeof showToast === "function") {
+          showToast("Consolidated summary generated", "success");
+        }
+      })
+      .catch(function (error) {
+        resetConsolidatedOutput("Select candidates and click Generate Summary.");
+        if (typeof showToast === "function") {
+          showToast(error.message || "Failed to generate consolidated summary", "danger");
+        }
+      })
+      .finally(function () {
+        consolidatedState.isGenerating = false;
+        if (consolidatedLoading) {
+          consolidatedLoading.style.display = "none";
+        }
+        updateConsolidatedFooterState();
+      });
+  }
+
+  function downloadConsolidatedSummaryPdf() {
+    var text = String(consolidatedState.rawSummary || "").trim();
+    if (!text) {
+      return;
+    }
+
+    consolidatedState.isDownloading = true;
+    updateConsolidatedFooterState();
+
+    fetchJson("/reports/consolidated-summary/pdf", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        summary: text,
+        meta: consolidatedState.summaryMeta || {},
+      }),
+    })
+      .then(function (payload) {
+        if (!payload || !payload.success || !payload.download_url) {
+          throw new Error((payload && payload.error) || "Failed to generate summary PDF");
+        }
+        window.open(payload.download_url, "_blank");
+        if (typeof showToast === "function") {
+          showToast("Summary PDF is ready", "success");
+        }
+      })
+      .catch(function (error) {
+        if (typeof showToast === "function") {
+          showToast(error.message || "Failed to generate summary PDF", "danger");
+        }
+      })
+      .finally(function () {
+        consolidatedState.isDownloading = false;
+        updateConsolidatedFooterState();
+      });
+  }
+
+  function copyConsolidatedSummary() {
+    var text = String(consolidatedState.rawSummary || "").trim();
+    if (!text) return;
+
+    function onCopied() {
+      if (typeof showToast === "function") {
+        showToast("Consolidated summary copied", "success");
+      }
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(onCopied).catch(function () {
+        var textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.setAttribute("readonly", "readonly");
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        try {
+          document.execCommand("copy");
+          onCopied();
+        } finally {
+          document.body.removeChild(textarea);
+        }
+      });
+      return;
+    }
+
+    var fallbackTextarea = document.createElement("textarea");
+    fallbackTextarea.value = text;
+    fallbackTextarea.setAttribute("readonly", "readonly");
+    fallbackTextarea.style.position = "fixed";
+    fallbackTextarea.style.opacity = "0";
+    document.body.appendChild(fallbackTextarea);
+    fallbackTextarea.focus();
+    fallbackTextarea.select();
+    try {
+      document.execCommand("copy");
+      onCopied();
+    } finally {
+      document.body.removeChild(fallbackTextarea);
+    }
+  }
+
+  function initializeReportActionState() {
+    var cards = Array.prototype.slice.call(document.querySelectorAll("[data-candidate-card]"));
+    cards.forEach(function (card) {
+      var hasReport = String(card.getAttribute("data-has-report") || "0") === "1";
+      var links = buildReportLinks({}, card.getAttribute("data-report-filename") || "");
+      renderRowActions(card, hasReport, links);
+      renderActionHub(card, hasReport, links);
+    });
+  }
+
+  if (roleSelect && filterForm) {
+    roleSelect.addEventListener("change", function () {
+      submitFilters(true);
+    });
+  }
+
+  if (periodSelect && filterForm) {
+    syncDateFilterVisibility();
+    periodSelect.addEventListener("change", function () {
+      syncDateFilterVisibility();
+      if (periodSelect.value === "date") {
+        if (!dateInput) return;
+        if (typeof dateInput.showPicker === "function") {
+          dateInput.showPicker();
+        } else {
+          dateInput.focus();
+          dateInput.click();
+        }
+        if (dateInput.value) {
+          submitFilters(true);
+        }
+        return;
+      }
+      submitFilters(true);
+    });
+  }
+
+  if (dateInput && filterForm) {
+    dateInput.addEventListener("change", function () {
+      if (periodSelect && periodSelect.value !== "date") {
+        return;
+      }
+      submitFilters(true);
+    });
+  }
+
+  if (searchInput && filterForm) {
+    searchInput.addEventListener("input", function () {
+      window.clearTimeout(searchTimer);
+      searchTimer = window.setTimeout(function () {
+        submitFilters(true);
+      }, 360);
+    });
+
+    searchInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        window.clearTimeout(searchTimer);
+        submitFilters(true);
+      }
+    });
+  }
+
+  if (perPageSelect && perPageInput && filterForm) {
+    perPageSelect.addEventListener("change", function () {
+      perPageInput.value = perPageSelect.value;
+      submitFilters(false);
+    });
+  }
+
+  if (consolidatedTrigger) {
+    consolidatedTrigger.addEventListener("click", function () {
+      openConsolidatedModal();
+    });
+  }
+
+  if (consolidatedPreviewBtn) {
+    consolidatedPreviewBtn.addEventListener("click", function () {
+      loadConsolidatedCandidates();
+    });
+  }
+
+  if (consolidatedPeriodSelect) {
+    syncConsolidatedDateFilterVisibility();
+    consolidatedPeriodSelect.addEventListener("change", function () {
+      syncConsolidatedDateFilterVisibility();
+    });
+  }
+
+  if (consolidatedDateInput) {
+    consolidatedDateInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        loadConsolidatedCandidates();
+      }
+    });
+  }
+
+  if (consolidatedBatchSelect) {
+    consolidatedBatchSelect.addEventListener("change", function () {
+      renderConsolidatedCandidateList();
+    });
+  }
+
+  if (consolidatedVerdictFilter) {
+    consolidatedVerdictFilter.addEventListener("change", function () {
+      renderConsolidatedCandidateList();
+    });
+  }
+
+  if (consolidatedCandidateSearch) {
+    consolidatedCandidateSearch.addEventListener("input", function () {
+      renderConsolidatedCandidateList();
+    });
+  }
+
+  if (consolidatedCandidateList) {
+    consolidatedCandidateList.addEventListener("change", function (event) {
+      var checkbox = event.target.closest("[data-consolidated-email]");
+      if (!checkbox) return;
+      var email = String(checkbox.getAttribute("data-consolidated-email") || "");
+      if (!email) return;
+      consolidatedState.selectedEmails[email] = Boolean(checkbox.checked);
+      updateConsolidatedFooterState();
+    });
+  }
+
+  if (consolidatedGenerateBtn) {
+    consolidatedGenerateBtn.addEventListener("click", function () {
+      generateConsolidatedSummary();
+    });
+  }
+
+  if (consolidatedDownloadBtn) {
+    consolidatedDownloadBtn.addEventListener("click", function () {
+      downloadConsolidatedSummaryPdf();
+    });
+  }
+
+  if (consolidatedCopyBtn) {
+    consolidatedCopyBtn.addEventListener("click", function () {
+      copyConsolidatedSummary();
     });
   }
 
   document.addEventListener("click", function (event) {
-    const generateBtn = event.target.closest(".js-generate-report");
+    var generateBtn = event.target.closest(".js-generate-report");
     if (generateBtn) {
       event.preventDefault();
-      generateReport(generateBtn.dataset.email, generateBtn.dataset.container);
+      var ownerCard = generateBtn.closest("[data-candidate-card]");
+      generateReport(generateBtn.getAttribute("data-email"), generateBtn, ownerCard);
       return;
     }
 
-    const openBtn = event.target.closest(".js-open-proctoring");
-    if (openBtn) {
+    var galleryBtn = event.target.closest(".js-open-gallery");
+    if (galleryBtn) {
       event.preventDefault();
-      openProctoringGallery(openBtn.dataset.email);
+      openGallery(
+        galleryBtn.getAttribute("data-email"),
+        galleryBtn.getAttribute("data-name")
+      );
       return;
     }
 
-    const closeGalleryBtn = event.target.closest(".js-close-gallery");
-    if (closeGalleryBtn) {
+    if (event.target.closest(".js-close-gallery")) {
       event.preventDefault();
-      closeProctoringGallery();
+      closeGallery();
       return;
     }
 
-    const closeViewerBtn = event.target.closest(".js-close-viewer");
-    if (closeViewerBtn) {
+    if (event.target.closest(".js-close-consolidated")) {
       event.preventDefault();
-      closeProctoringViewer();
+      closeConsolidatedModal();
       return;
     }
 
-    const stepBtn = event.target.closest(".js-step-viewer");
-    if (stepBtn) {
+    var selectModeButton = event.target.closest("[data-select-mode]");
+    if (selectModeButton) {
       event.preventDefault();
-      const delta = Number(stepBtn.dataset.step || 0);
-      if (delta) stepProctoringViewer(delta);
-      return;
-    }
-
-    const shotImg = event.target.closest("[data-proctoring-index]");
-    if (shotImg) {
-      event.preventDefault();
-      openProctoringViewerByIndex(shotImg.dataset.proctoringIndex);
+      applyConsolidatedBulkSelection(selectModeButton.getAttribute("data-select-mode"));
     }
   });
 
-  if (proctoringModal) {
-    proctoringModal.addEventListener("click", function (e) {
-      if (e.target === proctoringModal) {
-        closeProctoringGallery();
+  if (galleryModal) {
+    galleryModal.addEventListener("click", function (event) {
+      if (event.target === galleryModal) {
+        closeGallery();
       }
     });
   }
 
-  if (proctoringViewer) {
-    proctoringViewer.addEventListener("click", function (e) {
-      if (e.target === proctoringViewer) {
-        closeProctoringViewer();
+  if (consolidatedModal) {
+    consolidatedModal.addEventListener("click", function (event) {
+      if (event.target === consolidatedModal) {
+        closeConsolidatedModal();
       }
     });
   }
 
-  document.addEventListener("keydown", function (e) {
-    if (proctoringViewer && proctoringViewer.classList.contains("active")) {
-      if (e.key === "ArrowRight") stepProctoringViewer(1);
-      if (e.key === "ArrowLeft") stepProctoringViewer(-1);
-      if (e.key === "Escape") {
-        closeProctoringViewer();
-        return;
-      }
-    }
-    if (proctoringModal && proctoringModal.classList.contains("active") && e.key === "Escape") {
-      closeProctoringGallery();
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      closeGallery();
+      closeConsolidatedModal();
     }
   });
 
-  window.AziroReports = {
-    generateReport: generateReport,
-    openProctoringGallery: openProctoringGallery,
-  };
+  initializeReportActionState();
+  initCardExpansion();
 })();

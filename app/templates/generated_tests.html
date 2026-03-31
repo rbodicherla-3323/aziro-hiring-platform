@@ -3,554 +3,903 @@
 {% block breadcrumb %}Generated Tests{% endblock %}
 
 {% block head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+    .sidebar,
+    .az-topbar,
     .generated-tests-page {
-        --gt-brand: #0f766e;
-        --gt-brand-2: #14b8a6;
-        --gt-ink: #0f172a;
-        --gt-muted: #64748b;
-        --gt-border: #e2e8f0;
-        --gt-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
-                border-radius: 10px;
-        padding-top: 6px;
-        padding-bottom: 14px;
+        font-family: "Poppins", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+        font-style: normal;
+        letter-spacing: 0;
     }
 
-    .generated-tests-page .page-title {
+    .breadcrumb {
+        display: none;
+    }
+
+    .generated-tests-page {
+        --gt-border: #e5e8f4;
+        --gt-card-bg: #ffffff;
+        --gt-text-main: #263a67;
+        --gt-text-muted: #737b91;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #dfe6f7;
+        border-radius: 20px;
+        padding: 14px 18px 14px;
+        background:
+            radial-gradient(760px 280px at -6% -10%, rgba(45, 99, 218, 0.19) 0%, rgba(45, 99, 218, 0) 69%),
+            radial-gradient(520px 220px at 92% 0%, rgba(255, 122, 26, 0.16) 0%, rgba(255, 122, 26, 0) 71%),
+            linear-gradient(180deg, #fafbff 0%, #f4f3fc 62%, #efedf9 100%);
+        font-weight: 500;
+        font-style: normal;
+        letter-spacing: 0;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: geometricPrecision;
+    }
+    .generated-tests-page::before {
+        content: "";
+        position: absolute;
+        top: 154px;
+        right: -20px;
+        width: 560px;
+        height: 170px;
+        pointer-events: none;
+        background:
+            radial-gradient(ellipse at 8% 70%, rgba(229, 237, 255, 0.82) 0, rgba(229, 237, 255, 0.82) 24%, transparent 26%),
+            radial-gradient(ellipse at 24% 72%, rgba(223, 232, 253, 0.84) 0, rgba(223, 232, 253, 0.84) 24%, transparent 26%),
+            radial-gradient(ellipse at 40% 70%, rgba(220, 230, 251, 0.82) 0, rgba(220, 230, 251, 0.82) 24%, transparent 26%),
+            radial-gradient(ellipse at 56% 72%, rgba(214, 224, 248, 0.78) 0, rgba(214, 224, 248, 0.78) 24%, transparent 26%),
+            radial-gradient(ellipse at 72% 70%, rgba(210, 221, 247, 0.76) 0, rgba(210, 221, 247, 0.76) 24%, transparent 26%),
+            radial-gradient(ellipse at 88% 70%, rgba(207, 218, 244, 0.7) 0, rgba(207, 218, 244, 0.7) 24%, transparent 26%);
+        opacity: 0.92;
+        z-index: 0;
+    }
+    .generated-tests-page::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 180px;
+        pointer-events: none;
+        background: linear-gradient(180deg, rgba(240, 239, 251, 0) 0%, rgba(225, 231, 248, 0.58) 100%);
+        z-index: 0;
+    }
+    .generated-tests-page > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .gt-breadcrumb {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: #8a92a6;
+        font-size: var(--az-fs-label);
+        margin-bottom: 8px;
+    }
+
+    .gt-breadcrumb .active {
+        color: #4c5c86;
         font-weight: 600;
-        letter-spacing: -0.01em;
-        color: #0f172a;
-        margin-bottom: 4px;
     }
 
-    .generated-tests-page .page-subtitle {
-        color: var(--gt-muted);
-        font-size: 0.95rem;
+    .gt-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+    .gt-title {
+        margin: 0;
+        color: var(--gt-text-main);
+        font-weight: 600;
+        font-size: var(--az-fs-page-title);
+        line-height: 1.1;
+    }
+    .gt-subtitle {
+        margin: 6px 0 0;
+        color: var(--gt-text-muted);
+        font-size: var(--az-fs-page-subtitle);
+        font-weight: 500;
+    }
+    .btn-gt-create {
+        border: 1px solid #ef8f2f;
+        background: linear-gradient(135deg, #ff9a2e 0%, #f97316 100%);
+        color: #ffffff;
+        border-radius: 8px;
+        font-size: var(--az-fs-label);
+        font-weight: 600;
+        padding: 7px 14px;
+        box-shadow: 0 8px 18px rgba(249, 115, 22, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    }
+    .btn-gt-create:hover,
+    .btn-gt-create:focus {
+        border-color: #e67f20;
+        background: linear-gradient(135deg, #ffa63f 0%, #fb7f27 100%);
+        color: #ffffff;
+        box-shadow: 0 10px 22px rgba(249, 115, 22, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+    }
+    .btn-gt-create:active {
+        background: linear-gradient(135deg, #f8942c 0%, #ef7218 100%);
     }
 
-    .generated-tests-page .toolbar-card,
-    .generated-tests-page .list-card {
+    .gt-card {
         border: 1px solid var(--gt-border);
         border-radius: 10px;
-        background: #ffffff;
-        box-shadow: var(--gt-shadow);
+        background: var(--gt-card-bg);
+        box-shadow: 0 6px 22px rgba(41, 60, 114, 0.07);
     }
-
-    .generated-tests-page .btn-brand {
-        border-radius: 8px;
-        font-weight: 500;
-        border: 0;
-        background: var(--gt-brand);
-        box-shadow: 0 1px 3px rgba(15,118,110,0.15);
+    .gt-toolbar {
+        margin-bottom: 10px;
+        overflow: hidden;
     }
-
-    .generated-tests-page .btn-brand:hover {
-        background: #0d6963;
-        transform: translateY(-1px);
-        box-shadow: 0 2px 6px rgba(15,118,110,0.20);
+    .gt-toolbar-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 14px;
+        border-bottom: 1px solid #edf0f8;
     }
-
-    /* Scoped refinement: compact, readable generated-links section only */
-    .candidate-card {
-        padding: 0.9rem 1rem !important;
-        margin-bottom: 0.7rem !important;
-        color: #0f172a;
-        font-size: calc(0.875rem + 1px);
-        border: 1px solid #e2e8f0 !important;
-        border-radius: 10px !important;
-        background: #ffffff !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-        transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
-    }
-
-    .candidate-card:hover {
-        transform: translateY(-2px);
-        border-color: #cbd5e1 !important;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-    }
-
-    .candidate-card .candidate-heading {
+    .gt-select-label {
         display: inline-flex;
         align-items: center;
-        gap: 0.4rem;
-        line-height: 1;
-    }
-
-    .candidate-card .candidate-name {
-        color: #0f172a;
-        font-size: 1.05rem;
-        font-weight: 600;
-        line-height: 1;
-    }
-
-    .candidate-card .candidate-meta {
-        color: #64748b;
+        gap: 8px;
+        color: #2f3e64;
         font-size: 0.84rem;
+        font-weight: 600;
+    }
+    .gt-selected-count {
+        color: #8d94a7;
+        font-size: 0.77rem;
+        font-weight: 500;
+    }
+    .gt-toolbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 14px;
+    }
+    .btn-gt {
+        border-radius: 7px;
+        font-size: 0.79rem;
+        font-weight: 600;
+        padding: 6px 12px;
+        line-height: 1.2;
+        border: 1px solid transparent;
+    }
+    .btn-gt-email {
+        color: #fff;
+        background: linear-gradient(135deg, #2f87ac 0%, #2f63b9 100%);
+        box-shadow: 0 8px 16px rgba(47, 99, 185, 0.21);
+    }
+    .btn-gt-delete {
+        color: #b14545;
+        border-color: #efd1d6;
+        background: #fff2f4;
     }
 
-    .candidate-card .test-links-grid {
+    .gt-filter {
+        margin-bottom: 10px;
+        padding: 8px 10px;
+        background: #f9f9fe;
+    }
+    .gt-filter-grid {
         display: grid;
-        gap: 0.22rem;
-        margin-top: 0.38rem !important;
-        margin-left: 1.35rem;
-        padding-left: 0.45rem;
-        border-left: 2px solid #e2e8f0;
+        grid-template-columns: minmax(0, 2fr) repeat(3, minmax(126px, 0.56fr));
+        gap: 8px;
+    }
+    .gt-search-wrap {
+        position: relative;
+    }
+    .gt-search-wrap i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9aa5be;
+        font-size: 0.8rem;
+    }
+    .gt-search-input,
+    .gt-filter-select {
+        width: 100%;
+        height: 33px;
+        border: 1px solid #dfe4f2;
+        border-radius: 8px;
+        background: #f5f7fe;
+        color: #4b5a7f;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+    .gt-search-input::placeholder {
+        color: #98a2ba;
+    }
+    .gt-search-input {
+        padding: 0 12px 0 34px;
+    }
+    .gt-filter-select {
+        padding: 0 30px 0 10px;
+    }
+    .gt-search-input:focus,
+    .gt-filter-select:focus {
+        outline: none;
+        border-color: #cbd4ea;
+        box-shadow: 0 0 0 2px rgba(142, 164, 212, 0.16);
     }
 
-    .candidate-card .test-link-item {
+    .gt-list {
+        padding: 10px;
+    }
+    .candidate-row-card {
+        border: 1px solid #e6e9f3;
+        border-radius: 9px;
+        background: #fff;
+        padding: 12px;
+        margin-bottom: 9px;
+        box-shadow: 0 3px 9px rgba(35, 53, 102, 0.035);
+    }
+    .candidate-row-card:last-child {
+        margin-bottom: 0;
+    }
+    .candidate-main {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
-        gap: 0.35rem;
-        border: 0;
-        border-radius: 0;
-        background: transparent;
-        padding: 0.05rem 0;
+        gap: 14px;
     }
-
-    .candidate-card .test-link-meta {
+    .candidate-left {
+        display: flex;
+        align-items: flex-start;
         min-width: 0;
+        flex: 1 1 auto;
+    }
+    .candidate-check {
+        margin-top: 3px;
+        margin-right: 10px;
+    }
+    .candidate-name-row {
         display: flex;
         align-items: center;
-        gap: 0.4rem;
-        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 3px;
     }
-
-    .candidate-card .test-level-pill {
+    .candidate-name {
+        color: #2a365a;
+        font-size: 1.01rem;
+        font-weight: 700;
+        line-height: 1.15;
+        text-transform: uppercase;
+    }
+    .status-pill {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-width: 46px;
-        padding: 0.08rem 0.35rem;
         border-radius: 999px;
-        background: #f0fdfa;
-        color: #0f766e;
-        font-weight: 600;
+        padding: 2px 9px;
         font-size: 0.67rem;
+        font-weight: 600;
+        text-transform: capitalize;
     }
-
-    .candidate-card .test-link-label {
-        color: #0f172a;
-        font-size: 0.79rem;
-        font-weight: 500;
-        max-width: 260px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    .status-pill.sent {
+        color: #4f6f66;
+        background: #e7f1ed;
+        border: 1px solid #d6e6df;
     }
-
-    .candidate-card .test-link-actions {
+    .status-pill.pending {
+        color: #b36d2d;
+        background: #fff1df;
+        border: 1px solid #f2dcc1;
+    }
+    .candidate-email {
+        color: #566587;
+        font-size: 0.81rem;
+        margin-bottom: 1px;
+    }
+    .candidate-role {
+        color: #5f6f92;
+        font-size: 0.83rem;
+        margin-bottom: 7px;
+    }
+    .test-chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .test-chip {
         display: inline-flex;
         align-items: center;
-        gap: 0.3rem;
-        white-space: nowrap;
+        border-radius: 6px;
+        padding: 2px 8px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        line-height: 1.2;
+        border: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+    .test-chip-link {
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .test-chip-link:hover {
+        filter: brightness(1.05);
+        text-decoration: none;
+    }
+    .chip-0 { color: #2a5fa8; background: #9bc0f4; border-color: #87b3ee; }
+    .chip-1 { color: #2a694a; background: #abe0c5; border-color: #98d6b6; }
+    .chip-2 { color: #525cab; background: #bec4f2; border-color: #aeb6eb; }
+    .chip-3 { color: #916033; background: #f3cfaf; border-color: #eac093; }
+
+    .candidate-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
         flex-shrink: 0;
     }
-
-    .candidate-card .test-link-actions .btn-link {
-        text-decoration: none;
-        font-weight: 500;
-        color: #0f172a;
-        padding: 0 !important;
-        font-size: 0.75rem;
+    .candidate-actions::after {
+        content: "\22ef";
+        color: #8893ad;
+        font-size: 1rem;
         line-height: 1;
+        margin-left: 2px;
     }
-
-    .candidate-card .copyBtn {
-        min-width: 18px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+    .btn-copy-link,
+    .btn-row-actions {
+        border-radius: 7px;
+        border: 1px solid #d5dcef;
+        background: #f6f8fe;
+        color: #3e4e74;
+        font-size: 0.77rem;
+        font-weight: 600;
+        padding: 5px 10px;
+        line-height: 1.2;
     }
-
-    .candidate-card .copy-all-btn {
+    .btn-copy-link:disabled {
+        opacity: 0.58;
+    }
+    .actions-menu .dropdown-menu {
+        border: 1px solid #dde3f2;
         border-radius: 8px;
-        font-size: 0.75rem;
+        box-shadow: 0 12px 24px rgba(35, 52, 102, 0.12);
+        min-width: 170px;
+    }
+    .actions-menu .dropdown-item {
+        font-size: 0.8rem;
+        color: #415178;
         font-weight: 500;
     }
-
-    .generated-tests-page .empty-state-card {
-        border: 1px dashed #cbd5e1;
-        border-radius: 10px;
-        background: #ffffff;
-        padding: 2.5rem 1.25rem;
+    .actions-menu .dropdown-item.text-danger {
+        color: #b14545 !important;
     }
 
-    @media (max-width: 768px) {
-        .candidate-card .test-links-grid {
-            margin-left: 0;
-            padding-left: 0;
-            border-left: 0;
-        }
+    .gt-empty-inline {
+        border: 1px dashed #d6deef;
+        border-radius: 8px;
+        padding: 16px;
+        text-align: center;
+        color: #7c859d;
+        font-size: 0.82rem;
+        background: #fbfcff;
+    }
+    .gt-list-footer {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid #eceff7;
+        color: #7f879d;
+        font-size: 0.76rem;
+    }
 
-        .candidate-card .test-link-item {
+    @media (max-width: 1200px) {
+        .gt-filter-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+    @media (max-width: 992px) {
+        .gt-header {
             flex-direction: column;
-            align-items: flex-start;
+            align-items: stretch;
         }
-
-        .candidate-card .test-link-actions {
+        .gt-filter-grid {
+            grid-template-columns: 1fr;
+        }
+        .candidate-main {
+            flex-direction: column;
+            gap: 10px;
+        }
+        .candidate-actions {
             width: 100%;
-            justify-content: flex-start;        }
+            justify-content: flex-start;
+        }
     }
 </style>
 {% endblock %}
 
+{% block page_instructions %}
+<p class="mb-2">Use Generated Tests in this order:</p>
+<ol class="mb-0 ps-3">
+    <li><strong>Find candidates:</strong> Use search and filters (role, status, date) to narrow the list.</li>
+    <li><strong>Select rows:</strong> Tick individual candidates or use <strong>Select Candidates</strong> for bulk operations.</li>
+    <li><strong>Share test links:</strong> Use <strong>Send Email</strong> (bulk or row-level Resend) to notify candidates.</li>
+    <li><strong>Copy/open links:</strong> Use row actions to copy link table or open the candidate test URL directly.</li>
+    <li><strong>Clean stale entries:</strong> Delete invalid/obsolete rows after confirmation.</li>
+    <li><strong>Continue workflow:</strong> Track attempts in Evaluation and finalize outcomes in Reports.</li>
+</ol>
+{% endblock %}
+
 {% block content %}
 <div class="generated-tests-page">
-
-<!-- NEW BACK BUTTON (TOP) -->
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <div>
-        <h4 class="mb-1 page-title">Generated Tests</h4>
-        <p class="mb-0 page-subtitle">
-            View and share test links generated in this session.
-        </p>
+    <div class="gt-breadcrumb">
+        <i class="bi bi-house"></i>
+        <span>&#8250;</span>
+        <span>Dashboard</span>
+        <span>&#8250;</span>
+        <span class="active">Generated Tests</span>
     </div>
-    <a href="/create-test" class="btn btn-outline-primary btn-sm">
-        <i class="bi bi-plus-circle me-1"></i>Create New Test
-    </a>
-</div>
+    <div class="gt-header">
+        <div>
+            <h4 class="gt-title">Generated Tests</h4>
+            <p class="gt-subtitle">View and manage candidate test links created in this session.</p>
+        </div>
+        <a href="/create-test" class="btn btn-gt-create"><i class="bi bi-plus-lg me-1"></i>Create New Test</a>
+    </div>
 
-<!-- ================= BULK ACTIONS ================= -->
-<div class="card shadow-sm mb-4 toolbar-card">
-    <div class="card-body d-flex align-items-center justify-content-between">
-        <div class="d-flex align-items-center gap-3">
-            <div>
-                <input class="form-check-input me-2" type="checkbox" id="selectAll">
-                <label class="form-check-label fw-semibold">
-                    Select all candidates
-                </label>
+    <div class="gt-card gt-toolbar">
+        <div class="gt-toolbar-top">
+            <label class="gt-select-label">
+                <input class="form-check-input" type="checkbox" id="selectAll">
+                <span>Select Candidates</span>
+                <span class="gt-selected-count" id="selectedCount">(0 Selected)</span>
+            </label>
+            <span class="text-muted small">&#8230;</span>
+        </div>
+        <div class="gt-toolbar-actions">
+            <button class="btn btn-gt btn-gt-email" id="bulkEmailBtn"><i class="bi bi-envelope me-1"></i>Send Email</button>
+            <button class="btn btn-gt btn-gt-delete" id="bulkDeleteBtn"><i class="bi bi-trash me-1"></i>Delete</button>
+        </div>
+    </div>
+
+    <div class="gt-card gt-filter">
+        <div class="gt-filter-grid">
+            <div class="gt-search-wrap">
+                <i class="bi bi-search"></i>
+                <input id="candidateSearch" type="search" class="gt-search-input" placeholder="Search candidates..." autocomplete="off">
             </div>
-            <span class="text-muted small" id="selectedCount">(0 selected)</span>
-        </div>
-
-        <div class="d-flex gap-2">
-            <button class="btn btn-primary btn-sm btn-brand" id="bulkEmailBtn">
-                <i class="bi bi-envelope me-1"></i>Send Emails to Selected
-            </button>
+            <select id="roleFilter" class="gt-filter-select">
+                <option value="all">All Roles</option>
+            </select>
+            <select id="statusFilter" class="gt-filter-select">
+                <option value="all">All Status</option>
+                <option value="sent">Sent</option>
+                <option value="pending">Pending</option>
+            </select>
+            <select id="dateFilter" class="gt-filter-select">
+                <option value="all">All Dates</option>
+                <option value="today">Today</option>
+                <option value="last7">Last 7 Days</option>
+            </select>
         </div>
     </div>
-</div>
 
-<!-- ================= CANDIDATE TEST LIST ================= -->
-<div class="card shadow-sm mb-4 list-card">
-    <div class="card-body">
-
-        {% if candidates %}
-            {% for cand in candidates %}
-            <div class="border rounded p-3 mb-3 candidate-card test-card-row" data-status="sent">
-
-                <div class="d-flex justify-content-between align-items-start">
-                    <div class="d-flex align-items-start">
-                        <input type="checkbox"
-                               class="candidateCheck me-3 mt-1"
-                               id="generated_candidate_{{ loop.index }}"
-                               name="generated_candidate_select"
-                               value="{{ cand.email }}">
-                        <div>
-                            <div class="candidate-heading">
-                                <div class="candidate-name">{{ cand.name }}</div>
-                                <span class="badge bg-success-subtle text-success">Sent</span>
-                            </div>
-                            <div class="candidate-meta">
-                                {{ cand.email }} &middot; {{ cand.role }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-outline-primary btn-sm copyAllBtn copy-all-btn" title="Copy all test links">
-                            <i class="bi bi-clipboard2 me-1"></i>Copy Links
-                        </button>
-                        <button class="btn btn-outline-warning btn-sm resendBtn" title="Resend Email">
-                            <i class="bi bi-arrow-clockwise"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="test-links-grid mt-3">
-                    {% set test_seq = namespace(value=0) %}
-                    {% for level in round_order if level in cand.tests %}
-                    {% set test = cand.tests[level] %}
-                    {% set test_seq.value = test_seq.value + 1 %}
-                    <div class="test-link-item" data-test-label="{{ test.label }}" data-test-url="{{ test.url }}">
-                        <div class="test-link-meta">
-                            <span class="test-level-pill">{{ test_seq.value }}</span>
-                            <span class="test-link-label" title="{{ test.label }}">{{ test.label }}</span>
-                        </div>
-                        <div class="test-link-actions">
-                            <a href="{{ test.url }}"
-                               target="_blank"
-                               class="btn btn-link btn-sm p-0">
-                                <i class="bi bi-box-arrow-up-right me-1"></i>Open
-                            </a>
-
-                            <button class="btn btn-link btn-sm p-0 copyBtn"
-                                    data-link="{{ test.url }}"
-                                    title="Copy link"
-                                    aria-label="Copy link">
-                                <i class="bi bi-clipboard"></i>
-                            </button>
-                        </div>
-                    </div>
+    <div class="gt-card gt-list">
+        <div id="candidateList">
+            {% if candidates %}
+                {% for cand in candidates %}
+                    {% set tests_map = cand.get('tests', {}) %}
+                    {% set first_test = namespace(url='') %}
+                    {% set test_labels = namespace(value='') %}
+                    {% set cand_status = (cand.get('status') or 'sent')|lower %}
+                    {% for level in round_order if level in tests_map %}
+                        {% set test = tests_map[level] %}
+                        {% if not first_test.url and test.get('url') %}{% set first_test.url = test.get('url') %}{% endif %}
+                        {% if test.get('label') %}{% set test_labels.value = test_labels.value ~ (' | ' if test_labels.value else '') ~ test.get('label') %}{% endif %}
                     {% endfor %}
-                </div>
-
-            </div>
-            {% endfor %}
-        {% else %}
-            <!-- Empty State -->
-            <div class="text-center py-5 empty-state-card">
-                <div class="empty-state-icon mb-3">
-                    <i class="bi bi-file-earmark-x fs-1 text-muted"></i>
-                </div>
-                <h6 class="text-muted">No tests generated yet</h6>
-                <p class="text-muted small mb-3">Create your first test to get started</p>
-                <a href="/create-test" class="btn btn-primary btn-sm btn-brand">
-                    <i class="bi bi-plus-circle me-1"></i>Create Test
-                </a>
-            </div>
-        {% endif %}
-
+                    <div class="candidate-row-card"
+                         data-email="{{ cand.get('email', '') }}"
+                         data-role="{{ (cand.get('role', '')|lower) }}"
+                         data-role-display="{{ cand.get('role', '') }}"
+                         data-status="{{ cand_status }}"
+                         data-created-at="{{ cand.get('created_at', '') }}"
+                         data-open-url="{{ first_test.url }}"
+                         data-search="{{ ((cand.get('name', '') ~ ' ' ~ cand.get('email', '') ~ ' ' ~ cand.get('role', '') ~ ' ' ~ test_labels.value)|lower) }}">
+                        <div class="candidate-main">
+                            <div class="candidate-left">
+                                <input type="checkbox" class="form-check-input candidate-check" value="{{ cand.get('email', '') }}" data-role="{{ cand.get('role', '') }}" data-created-at="{{ cand.get('created_at', '') }}">
+                                <div class="candidate-info">
+                                    <div class="candidate-name-row">
+                                        <div class="candidate-name">{{ cand.get('name', '') }}</div>
+                                        <span class="status-pill {{ 'pending' if cand_status == 'pending' else 'sent' }}">{{ 'Pending' if cand_status == 'pending' else 'Sent' }}</span>
+                                    </div>
+                                    <div class="candidate-email">{{ cand.get('email', '') }}</div>
+                                    <div class="candidate-role">{{ cand.get('role', '') }}</div>
+                                    <div class="test-chip-row">
+                                        {% for level in round_order if level in tests_map %}
+                                            {% set test = tests_map[level] %}
+                                            {% if test.get('label') %}
+                                                {% if test.get('url') %}
+                                                    <a class="test-chip chip-{{ loop.index0 % 4 }} test-chip-link" href="{{ test.get('url') }}" target="_blank" rel="noopener noreferrer">{{ test.get('label') }}</a>
+                                                {% else %}
+                                                    <span class="test-chip chip-{{ loop.index0 % 4 }}">{{ test.get('label') }}</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="candidate-actions">
+                                <button type="button" class="btn btn-copy-link copy-link-btn" {% if not first_test.url %}disabled{% endif %}><i class="bi bi-clipboard me-1"></i>Copy Link</button>
+                                <div class="dropdown actions-menu">
+                                    <button class="btn btn-row-actions dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-eye me-1"></i>Actions</button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><button type="button" class="dropdown-item candidate-action" data-action="open"><i class="bi bi-box-arrow-up-right me-2"></i>Open Test</button></li>
+                                        <li><button type="button" class="dropdown-item candidate-action" data-action="resend"><i class="bi bi-arrow-clockwise me-2"></i>Resend Emails</button></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><button type="button" class="dropdown-item text-danger candidate-action" data-action="delete"><i class="bi bi-trash me-2"></i>Delete</button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div id="noResultsState" class="gt-empty-inline{% if candidates %} d-none{% endif %}">No generated tests found for the selected filters.</div>
+        <div class="gt-list-footer"><span id="visibleCountLabel">Showing 0 of 0 candidates</span></div>
     </div>
 </div>
 
-<!-- ================= JS ================= -->
 <script>
-    const selectAll = document.getElementById("selectAll");
-    const candidateChecks = document.querySelectorAll(".candidateCheck");
-    const selectedCountEl = document.getElementById("selectedCount");
+    (function () {
+        const selectAll = document.getElementById("selectAll");
+        const selectedCountEl = document.getElementById("selectedCount");
+        const bulkEmailBtn = document.getElementById("bulkEmailBtn");
+        const bulkDeleteBtn = document.getElementById("bulkDeleteBtn");
+        const candidateList = document.getElementById("candidateList");
+        const noResultsState = document.getElementById("noResultsState");
+        const visibleCountLabel = document.getElementById("visibleCountLabel");
+        const searchInput = document.getElementById("candidateSearch");
+        const roleFilter = document.getElementById("roleFilter");
+        const statusFilter = document.getElementById("statusFilter");
+        const dateFilter = document.getElementById("dateFilter");
 
-    function copyTextToClipboard(text) {
-        const value = String(text || "");
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            return navigator.clipboard.writeText(value);
-        }
-        return new Promise((resolve, reject) => {
-            try {
-                const ta = document.createElement("textarea");
-                ta.value = value;
-                ta.setAttribute("readonly", "");
-                ta.style.position = "fixed";
-                ta.style.opacity = "0";
-                document.body.appendChild(ta);
-                ta.focus();
-                ta.select();
-                const ok = document.execCommand("copy");
-                document.body.removeChild(ta);
-                if (ok) resolve();
-                else reject(new Error("Copy command failed"));
-            } catch (err) {
-                reject(err);
-            }
-        });
-    }
+        const rows = () => Array.from(candidateList.querySelectorAll(".candidate-row-card"));
+        const checks = () => Array.from(candidateList.querySelectorAll(".candidate-check"));
+        const selectedChecks = () => checks().filter((cb) => cb.checked);
+        const visibleRows = () => rows().filter((r) => !r.classList.contains("d-none"));
 
-    function escapeHtml(value) {
-        return String(value || "")
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#39;");
-    }
-
-    function buildCandidateLinksTable(card) {
-        const rows = Array.from(card.querySelectorAll(".test-link-item"))
-            .map((node, idx) => {
-                const label = (node.getAttribute("data-test-label") || "").trim();
-                const url = (node.getAttribute("data-test-url") || "").trim();
-                if (!label || !url) return null;
-                return {
-                    index: String(idx + 1),
-                    label,
-                    url,
-                };
-            })
-            .filter(Boolean);
-
-        const noHeader = "No";
-        const nameHeader = "Test Name";
-        const urlHeader = "Test Link";
-
-        const noWidth = Math.max(noHeader.length, ...rows.map(r => r.index.length));
-        const nameWidth = Math.max(nameHeader.length, ...rows.map(r => r.label.length));
-        const lineHeader = `${noHeader.padEnd(noWidth)} | ${nameHeader.padEnd(nameWidth)} | ${urlHeader}`;
-        const lineSep = `${"-".repeat(noWidth)}-+-${"-".repeat(nameWidth)}-+-${"-".repeat(urlHeader.length)}`;
-
-        const textLines = [];
-        textLines.push(lineHeader);
-        textLines.push(lineSep);
-        rows.forEach(row => {
-            textLines.push(`${row.index.padEnd(noWidth)} | ${row.label.padEnd(nameWidth)} | ${row.url}`);
-        });
-
-        const htmlRows = rows.map(row => (
-            `<tr>` +
-            `<td style="border:1px solid #d8e5f0;padding:7px 10px;text-align:center;background:#ffffff;">${escapeHtml(row.index)}</td>` +
-            `<td style="border:1px solid #d8e5f0;padding:7px 10px;background:#ffffff;">${escapeHtml(row.label)}</td>` +
-            `<td style="border:1px solid #d8e5f0;padding:7px 10px;background:#ffffff;">` +
-            `<a href="${escapeHtml(row.url)}" style="color:#0f766e;text-decoration:none;">${escapeHtml(row.url)}</a>` +
-            `</td>` +
-            `</tr>`
-        )).join("");
-
-        const html = (
-            `<div style="font-family:Inter,Arial,sans-serif;font-size:13px;color:#0f172a;">` +
-            `<table style="border-collapse:separate;border-spacing:0 6px;width:100%;font-size:13px;">` +
-            `<thead>` +
-            `<tr style="background:#f0fdfa;">` +
-            `<th style="border:1px solid #d8e5f0;padding:6px 8px;text-align:center;">No</th>` +
-            `<th style="border:1px solid #d8e5f0;padding:6px 8px;text-align:left;">Test Name</th>` +
-            `<th style="border:1px solid #d8e5f0;padding:6px 8px;text-align:left;">Test Link</th>` +
-            `</tr>` +
-            `</thead>` +
-            `<tbody>${htmlRows}</tbody>` +
-            `</table>` +
-            `</div>`
-        );
-
-        return {
-            rows,
-            text: textLines.join("\n"),
-            html,
-        };
-    }
-
-    async function copyTableToClipboard(text, html) {
-        if (
-            navigator.clipboard &&
-            navigator.clipboard.write &&
-            typeof ClipboardItem !== "undefined"
-        ) {
-            const item = new ClipboardItem({
-                "text/plain": new Blob([String(text || "")], { type: "text/plain" }),
-                "text/html": new Blob([String(html || "")], { type: "text/html" }),
+        function copyText(text) {
+            const value = String(text || "");
+            if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(value);
+            return new Promise((resolve, reject) => {
+                try {
+                    const ta = document.createElement("textarea");
+                    ta.value = value;
+                    ta.setAttribute("readonly", "");
+                    ta.style.position = "fixed";
+                    ta.style.opacity = "0";
+                    document.body.appendChild(ta);
+                    ta.focus();
+                    ta.select();
+                    const ok = document.execCommand("copy");
+                    document.body.removeChild(ta);
+                    if (ok) resolve();
+                    else reject(new Error("Copy command failed"));
+                } catch (err) {
+                    reject(err);
+                }
             });
-            await navigator.clipboard.write([item]);
-            return;
         }
-        await copyTextToClipboard(text);
-    }
 
-    function updateSelectedCount() {
-        const count = document.querySelectorAll(".candidateCheck:checked").length;
-        selectedCountEl.textContent = `(${count} selected)`;
-    }
+        function escapeHtml(value) {
+            return String(value || "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
 
-    selectAll.addEventListener("change", () => {
-        candidateChecks.forEach(cb => cb.checked = selectAll.checked);
-        updateSelectedCount();
-    });
-
-    candidateChecks.forEach(cb => {
-        cb.addEventListener("change", () => {
-            updateSelectedCount();
-            selectAll.checked = document.querySelectorAll(".candidateCheck:checked").length === candidateChecks.length;
-        });
-    });
-
-    document.querySelectorAll(".copyBtn").forEach(btn => {
-        btn.addEventListener("click", async () => {
-            try {
-                await copyTextToClipboard(btn.dataset.link);
-            } catch (error) {
-                if (typeof showToast === 'function') showToast('Failed to copy link', 'danger');
-                return;
-            }
-            btn.innerHTML = '<i class="bi bi-check"></i>';
-            if (typeof showToast === 'function') showToast('Link copied to clipboard!', 'success');
-            setTimeout(() => btn.innerHTML = '<i class="bi bi-clipboard"></i>', 1500);
-        });
-    });
-
-    document.querySelectorAll(".copyAllBtn").forEach(btn => {
-        btn.addEventListener("click", async () => {
-            const card = btn.closest(".candidate-card");
-            if (!card) return;
-            const payload = buildCandidateLinksTable(card);
-
-            if (!payload.rows.length) {
-                if (typeof showToast === 'function') showToast('No test links to copy.', 'warning');
-                return;
-            }
-
-            const originalHtml = btn.innerHTML;
-            try {
-                await copyTableToClipboard(payload.text, payload.html);
-                btn.innerHTML = '<i class="bi bi-check2 me-1"></i>Copied';
-                if (typeof showToast === 'function') showToast('Test links copied in table format!', 'success');
-            } catch (error) {
-                if (typeof showToast === 'function') showToast('Failed to copy test links.', 'danger');
-            } finally {
-                setTimeout(() => {
-                    btn.innerHTML = originalHtml;
-                }, 1600);
-            }
-        });
-    });
-
-    // Resend button
-    document.querySelectorAll(".resendBtn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            if (typeof showToast === 'function') showToast('Email resent successfully!', 'success');
-        });
-    });
-
-    // Bulk Email Button
-    const bulkEmailBtn = document.getElementById('bulkEmailBtn');
-    if (bulkEmailBtn) {
-        bulkEmailBtn.addEventListener('click', async () => {
-            const selected = Array.from(document.querySelectorAll('.candidateCheck:checked'))
-                .map(cb => cb.value)
+        function buildCandidateLinksTable(row) {
+            if (!row) return { rows: [], text: "", html: "" };
+            const rowsData = Array.from(row.querySelectorAll(".test-chip-link"))
+                .map((node, idx) => {
+                    const label = String((node.textContent || "").trim());
+                    const url = String(node.getAttribute("href") || "").trim();
+                    if (!label || !url) return null;
+                    return { index: String(idx + 1), label, url };
+                })
                 .filter(Boolean);
 
-            if (!selected.length) {
-                if (typeof showToast === 'function') showToast('Please select candidates first', 'warning');
+            const noHeader = "No";
+            const nameHeader = "Test Name";
+            const urlHeader = "Test Link";
+            const noWidth = Math.max(noHeader.length, ...rowsData.map((r) => r.index.length), 1);
+            const nameWidth = Math.max(nameHeader.length, ...rowsData.map((r) => r.label.length), 1);
+            const lineHeader = `${noHeader.padEnd(noWidth)} | ${nameHeader.padEnd(nameWidth)} | ${urlHeader}`;
+            const lineSep = `${"-".repeat(noWidth)}-+-${"-".repeat(nameWidth)}-+-${"-".repeat(urlHeader.length)}`;
+            const textLines = [lineHeader, lineSep];
+            rowsData.forEach((item) => {
+                textLines.push(`${item.index.padEnd(noWidth)} | ${item.label.padEnd(nameWidth)} | ${item.url}`);
+            });
+
+            const htmlRows = rowsData.map((item) => (
+                `<tr>` +
+                `<td style="border:1px solid #d8e5f0;padding:7px 10px;text-align:center;background:#ffffff;">${escapeHtml(item.index)}</td>` +
+                `<td style="border:1px solid #d8e5f0;padding:7px 10px;background:#ffffff;">${escapeHtml(item.label)}</td>` +
+                `<td style="border:1px solid #d8e5f0;padding:7px 10px;background:#ffffff;"><a href="${escapeHtml(item.url)}" style="color:#2f63b9;text-decoration:none;">${escapeHtml(item.url)}</a></td>` +
+                `</tr>`
+            )).join("");
+
+            const html = (
+                `<div style="font-family:Poppins,Inter,'Segoe UI',system-ui,-apple-system,sans-serif;font-size:13px;color:#263a67;">` +
+                `<table style="border-collapse:separate;border-spacing:0 6px;width:100%;font-size:13px;">` +
+                `<thead><tr style="background:#f5f8ff;">` +
+                `<th style="border:1px solid #d8e5f0;padding:6px 8px;text-align:center;">No</th>` +
+                `<th style="border:1px solid #d8e5f0;padding:6px 8px;text-align:left;">Test Name</th>` +
+                `<th style="border:1px solid #d8e5f0;padding:6px 8px;text-align:left;">Test Link</th>` +
+                `</tr></thead>` +
+                `<tbody>${htmlRows}</tbody>` +
+                `</table>` +
+                `</div>`
+            );
+
+            return {
+                rows: rowsData,
+                text: textLines.join("\n"),
+                html,
+            };
+        }
+
+        async function copyTableToClipboard(text, html) {
+            if (navigator.clipboard && navigator.clipboard.write && typeof ClipboardItem !== "undefined") {
+                const item = new ClipboardItem({
+                    "text/plain": new Blob([String(text || "")], { type: "text/plain" }),
+                    "text/html": new Blob([String(html || "")], { type: "text/html" }),
+                });
+                await navigator.clipboard.write([item]);
+                return;
+            }
+            await copyText(text);
+        }
+
+        function normalizeForSearch(value) {
+            return String(value || "")
+                .toLowerCase()
+                .replace(/[^a-z0-9+.#@_-]+/g, " ")
+                .replace(/\s+/g, " ")
+                .trim();
+        }
+
+        function tokenizeQuery(value) {
+            return normalizeForSearch(value).split(" ").filter(Boolean);
+        }
+
+        function parseDate(value) {
+            const dt = new Date(String(value || ""));
+            return Number.isNaN(dt.getTime()) ? null : dt;
+        }
+
+        function isDateMatch(createdAt, filterValue) {
+            if (filterValue === "all") return true;
+            const dt = parseDate(createdAt);
+            if (!dt) return false;
+            const now = new Date();
+            if (filterValue === "today") return dt.toDateString() === now.toDateString();
+            if (filterValue === "last7") return (now.getTime() - dt.getTime()) <= 7 * 24 * 60 * 60 * 1000;
+            return true;
+        }
+
+        function updateSelectedCount() {
+            selectedCountEl.textContent = `(${selectedChecks().length} Selected)`;
+        }
+
+        function updateSelectAllState() {
+            const visibleChecks = visibleRows().map((r) => r.querySelector(".candidate-check")).filter(Boolean);
+            const checkedCount = visibleChecks.filter((cb) => cb.checked).length;
+            selectAll.checked = visibleChecks.length > 0 && checkedCount === visibleChecks.length;
+            selectAll.indeterminate = checkedCount > 0 && checkedCount < visibleChecks.length;
+        }
+
+        function updateVisibleCount() {
+            const total = rows().length;
+            const visible = visibleRows().length;
+            visibleCountLabel.textContent = visible ? `Showing 1-${visible} of ${total} candidates` : `Showing 0 of ${total} candidates`;
+        }
+
+        function populateRoleFilter() {
+            const previous = roleFilter.value || "all";
+            const roleMap = new Map();
+            rows().forEach((row) => {
+                const value = String(row.dataset.role || "").trim();
+                const label = String(row.dataset.roleDisplay || "").trim();
+                if (value && label) roleMap.set(value, label);
+            });
+            roleFilter.innerHTML = '<option value="all">All Roles</option>';
+            Array.from(roleMap.entries()).sort((a, b) => a[1].localeCompare(b[1])).forEach(([value, label]) => {
+                const opt = document.createElement("option");
+                opt.value = value;
+                opt.textContent = label;
+                roleFilter.appendChild(opt);
+            });
+            roleFilter.value = Array.from(roleFilter.options).some((o) => o.value === previous) ? previous : "all";
+        }
+
+        function applyFilters() {
+            const qTokens = tokenizeQuery(searchInput.value || "");
+            const role = String(roleFilter.value || "all").toLowerCase();
+            const status = String(statusFilter.value || "all").toLowerCase();
+            const date = String(dateFilter.value || "all").toLowerCase();
+
+            rows().forEach((row) => {
+                const hay = normalizeForSearch(row.dataset.search || "");
+                const matchSearch = !qTokens.length || qTokens.every((token) => hay.includes(token));
+                const matchRole = role === "all" || String(row.dataset.role || "") === role;
+                const matchStatus = status === "all" || String(row.dataset.status || "") === status;
+                const matchDate = isDateMatch(row.dataset.createdAt || "", date);
+                row.classList.toggle("d-none", !(matchSearch && matchRole && matchStatus && matchDate));
+            });
+
+            noResultsState.classList.toggle("d-none", visibleRows().length > 0);
+            updateSelectAllState();
+            updateVisibleCount();
+        }
+
+        async function sendEmails(emailList, trigger) {
+            const emails = Array.from(new Set((emailList || []).map((e) => String(e || "").trim().toLowerCase()).filter(Boolean)));
+            if (!emails.length) {
+                if (typeof showToast === "function") showToast("Please select candidates first", "warning");
+                return false;
+            }
+            const original = trigger ? trigger.innerHTML : "";
+            if (trigger) {
+                trigger.disabled = true;
+                trigger.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Sending...';
+            }
+            try {
+                const resp = await fetch("/generated-tests/send-emails", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ emails: emails }),
+                });
+                const result = await resp.json();
+                if (!resp.ok || !result.success) {
+                    if (typeof showToast === "function") showToast((result && result.error) || "Failed to send emails.", "danger");
+                    return false;
+                }
+                if (typeof showToast === "function") showToast(result.failed_count > 0 ? "Some emails failed." : "Emails sent successfully", result.failed_count > 0 ? "warning" : "success");
+                return true;
+            } catch (_) {
+                if (typeof showToast === "function") showToast("Failed to send emails.", "danger");
+                return false;
+            } finally {
+                if (trigger) {
+                    trigger.disabled = false;
+                    trigger.innerHTML = original;
+                }
+            }
+        }
+
+        async function deleteRows(targetRows, trigger) {
+            const items = (targetRows || []).map((row) => ({
+                email: String(row.dataset.email || "").trim().toLowerCase(),
+                role: String(row.dataset.roleDisplay || "").trim(),
+                created_at: String(row.dataset.createdAt || "").trim(),
+            })).filter((x) => x.email);
+
+            if (!items.length) {
+                if (typeof showToast === "function") showToast("Please select candidates first", "warning");
                 return;
             }
 
-            const originalHtml = bulkEmailBtn.innerHTML;
-            bulkEmailBtn.disabled = true;
-            bulkEmailBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Sending...';
-
+            const original = trigger ? trigger.innerHTML : "";
+            if (trigger) {
+                trigger.disabled = true;
+                trigger.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Deleting...';
+            }
             try {
-                const response = await fetch('/generated-tests/send-emails', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ emails: selected })
+                const resp = await fetch("/generated-tests/delete", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ items: items }),
                 });
-
-                const result = await response.json();
-                if (!response.ok || !result.success) {
-                    const message = (result && result.error) ? result.error : 'Failed to send selected emails.';
-                    console.error('Failed to send test links:', message, result);
-                    if (typeof showToast === 'function') showToast('Failed: Failed to send test links', 'danger');
+                const result = await resp.json();
+                if (!resp.ok || !result.success) {
+                    if (typeof showToast === "function") showToast((result && result.error) || "Failed to delete candidates.", "danger");
                     return;
                 }
-
-                if (result.failed_count > 0) {
-                    const failureReasons = (result.failures || [])
-                        .map(item => `${item.email || 'unknown'}: ${item.reason || 'unknown error'}`)
-                        .join(' | ');
-                    console.error('Failed to send test links:', failureReasons, result.failures);
-                    if (typeof showToast === 'function') showToast('Failed: Failed to send test links', 'danger');
-                } else {
-                    if (typeof showToast === 'function') {
-                        showToast('Success: Test links sent successfully', 'success');
-                    }
-                }
-            } catch (error) {
-                console.error('Failed to send test links:', error);
-                if (typeof showToast === 'function') showToast('Failed: Failed to send test links', 'danger');
+                targetRows.forEach((row) => row.remove());
+                populateRoleFilter();
+                applyFilters();
+                updateSelectedCount();
+                if (typeof showToast === "function") showToast("Candidate(s) deleted", "success");
+            } catch (_) {
+                if (typeof showToast === "function") showToast("Failed to delete candidates.", "danger");
             } finally {
-                bulkEmailBtn.disabled = false;
-                bulkEmailBtn.innerHTML = originalHtml;
+                if (trigger) {
+                    trigger.disabled = false;
+                    trigger.innerHTML = original;
+                }
+            }
+        }
+
+        selectAll.addEventListener("change", () => {
+            visibleRows().forEach((row) => {
+                const cb = row.querySelector(".candidate-check");
+                if (cb) cb.checked = selectAll.checked;
+            });
+            updateSelectedCount();
+            updateSelectAllState();
+        });
+
+        candidateList.addEventListener("change", (e) => {
+            if (!e.target.classList.contains("candidate-check")) return;
+            updateSelectedCount();
+            updateSelectAllState();
+        });
+
+        bulkEmailBtn.addEventListener("click", async () => {
+            await sendEmails(selectedChecks().map((cb) => cb.value), bulkEmailBtn);
+        });
+
+        bulkDeleteBtn.addEventListener("click", async () => {
+            await deleteRows(selectedChecks().map((cb) => cb.closest(".candidate-row-card")).filter(Boolean), bulkDeleteBtn);
+        });
+
+        candidateList.addEventListener("click", async (e) => {
+            const copyBtn = e.target.closest(".copy-link-btn");
+            if (copyBtn) {
+                const row = copyBtn.closest(".candidate-row-card");
+                const payload = buildCandidateLinksTable(row);
+                const fallback = row ? String(row.dataset.openUrl || "").trim() : "";
+                if (!payload.rows.length && !fallback) {
+                    if (typeof showToast === "function") showToast("No test link available.", "warning");
+                    return;
+                }
+                try {
+                    if (payload.rows.length) {
+                        await copyTableToClipboard(payload.text, payload.html);
+                        if (typeof showToast === "function") showToast("Test links copied in table format!", "success");
+                    } else {
+                        await copyText(fallback);
+                        if (typeof showToast === "function") showToast("Link copied to clipboard", "success");
+                    }
+                } catch (_) {
+                    if (typeof showToast === "function") showToast("Failed to copy link.", "danger");
+                }
+                return;
+            }
+
+            const actionBtn = e.target.closest(".candidate-action");
+            if (!actionBtn) return;
+            const row = actionBtn.closest(".candidate-row-card");
+            if (!row) return;
+            const action = String(actionBtn.dataset.action || "").toLowerCase();
+            const email = String(row.dataset.email || "").trim();
+            const openUrl = String(row.dataset.openUrl || "").trim();
+
+            if (action === "open") {
+                if (!openUrl) {
+                    if (typeof showToast === "function") showToast("No test link available.", "warning");
+                    return;
+                }
+                window.open(openUrl, "_blank", "noopener,noreferrer");
+            } else if (action === "resend") {
+                await sendEmails([email], actionBtn);
+            } else if (action === "delete") {
+                await deleteRows([row], actionBtn);
             }
         });
-    }
-</script>
-</div>
 
+        [searchInput, roleFilter, statusFilter, dateFilter].forEach((el) => {
+            el.addEventListener("input", applyFilters);
+            el.addEventListener("change", applyFilters);
+        });
+
+        populateRoleFilter();
+        updateSelectedCount();
+        applyFilters();
+    })();
+</script>
 {% endblock %}

@@ -131,7 +131,7 @@ def save_round_result(test_session_id: int, round_key: str, round_label: str,
     existing = RoundResult.query.filter_by(
         test_session_id=test_session_id,
         round_key=round_key,
-    ).first()
+    ).order_by(RoundResult.created_at.desc()).first()
 
     if existing:
         existing.round_label = round_label
@@ -238,6 +238,30 @@ def get_test_link_meta(session_id: str) -> dict | None:
         "expires_at": _dt_to_iso(record.expires_at),
     }
 
+def expire_test_link_now(session_id: str, when: datetime | None = None) -> bool:
+    """
+    Expire a test link immediately.
+
+    Returns True when a link record was found and updated; False otherwise.
+    This helper is intentionally fail-safe so candidate submit flows are never blocked.
+    """
+    sid = str(session_id or "").strip()
+    if not sid:
+        return False
+
+    when = when or _now_utc()
+
+    try:
+        record = TestLink.query.get(sid)
+        if not record:
+            return False
+        record.expires_at = when
+        db.session.add(record)
+        db.session.commit()
+        return True
+    except Exception:
+        db.session.rollback()
+        return False
 
 def get_test_link_stats(
     since: datetime | None = None,
@@ -278,6 +302,168 @@ def get_test_link_stats(
         "completed": int(completed),
         "pending": int(pending),
     }
+
+
+def get_active_test_session_count(
+    *,
+    created_by: str | None = None,
+    since: datetime | None = None,
+    until: datetime | None = None,
+    as_of: datetime | None = None,
+) -> int:
+    """
+    Count active test sessions from real DB state.
+    A session is considered active when:
+    - its test link is not expired, and
+    - it does not yet have a PASS/FAIL round result.
+    """
+    as_of = as_of or _now_utc()
+
+    query = TestLink.query
+    if created_by:
+        query = query.filter(db.func.lower(TestLink.created_by) == created_by.strip().lower())
+    if since:
+        query = query.filter(TestLink.created_at >= since)
+    if until:
+        query = query.filter(TestLink.created_at < until)
+
+    query = query.filter(
+        db.or_(TestLink.expires_at.is_(None), TestLink.expires_at > as_of)
+    )
+
+    session_rows = query.with_entities(TestLink.session_id).all()
+    session_ids = {
+        str(row[0]).strip().lower()
+        for row in session_rows
+        if row and row[0]
+    }
+    if not session_ids:
+        return 0
+
+    completed_rows = (
+        db.session.query(db.func.lower(RoundResult.session_uuid))
+        .filter(db.func.lower(RoundResult.session_uuid).in_(session_ids))
+        .filter(RoundResult.status.in_(("PASS", "FAIL")))
+        .distinct()
+        .all()
+    )
+    completed_ids = {
+        str(row[0]).strip().lower()
+        for row in completed_rows
+        if row and row[0]
+    }
+
+    return max(0, len(session_ids - completed_ids))
+
+
+def _month_start_utc(value: datetime) -> datetime:
+    return datetime(value.year, value.month, 1, tzinfo=timezone.utc)
+
+
+def _add_months_utc(value: datetime, delta_months: int) -> datetime:
+    total = value.year * 12 + (value.month - 1) + delta_months
+    year = total // 12
+    month = total % 12 + 1
+    return datetime(year, month, 1, tzinfo=timezone.utc)
+
+
+def get_test_link_monthly_series(
+    *,
+    points: int = 6,
+    created_by: str | None = None,
+) -> list[dict]:
+    """
+    Return monthly test activity series.
+    Each item: {"key": "YYYY-MM", "label": "Mon", "tests": int, "completed": int}
+    """
+    points = max(2, int(points or 6))
+    now = _now_utc()
+    current_month = _month_start_utc(now)
+
+    buckets = []
+    index_by_key = {}
+    for idx in range(points):
+        start = _add_months_utc(current_month, -(points - 1 - idx))
+        end = _add_months_utc(start, 1)
+        key = f"{start.year:04d}-{start.month:02d}"
+        buckets.append(
+            {
+                "key": key,
+                "label": start.strftime("%b"),
+                "start": start,
+                "end": end,
+                "tests": 0,
+                "completed": 0,
+            }
+        )
+        index_by_key[key] = idx
+
+    query = (
+        TestLink.query
+        .with_entities(TestLink.session_id, TestLink.created_at)
+        .filter(TestLink.created_at >= buckets[0]["start"])
+        .filter(TestLink.created_at < buckets[-1]["end"])
+    )
+    if created_by:
+        query = query.filter(db.func.lower(TestLink.created_by) == created_by.strip().lower())
+
+    links = query.all()
+    if not links:
+        return [
+            {
+                "key": b["key"],
+                "label": b["label"],
+                "tests": 0,
+                "completed": 0,
+            }
+            for b in buckets
+        ]
+
+    link_entries = []
+    session_ids = set()
+    for row in links:
+        session_id = str(getattr(row, "session_id", "") or "").strip().lower()
+        created_at = getattr(row, "created_at", None)
+        if not session_id or not created_at:
+            continue
+        if created_at.tzinfo is None:
+            created_at = created_at.replace(tzinfo=timezone.utc)
+        key = f"{created_at.year:04d}-{created_at.month:02d}"
+        bucket_idx = index_by_key.get(key)
+        if bucket_idx is None:
+            continue
+        buckets[bucket_idx]["tests"] += 1
+        session_ids.add(session_id)
+        link_entries.append((session_id, bucket_idx))
+
+    completed_ids = set()
+    if session_ids:
+        completed_rows = (
+            db.session.query(db.func.lower(RoundResult.session_uuid))
+            .filter(db.func.lower(RoundResult.session_uuid).in_(session_ids))
+            .filter(RoundResult.status.in_(("PASS", "FAIL")))
+            .distinct()
+            .all()
+        )
+        completed_ids = {
+            str(r[0]).strip().lower()
+            for r in completed_rows
+            if r and r[0]
+        }
+
+    for session_id, bucket_idx in link_entries:
+        if session_id in completed_ids:
+            buckets[bucket_idx]["completed"] += 1
+
+    return [
+        {
+            "key": b["key"],
+            "label": b["label"],
+            "tests": int(b["tests"]),
+            "completed": int(b["completed"]),
+        }
+        for b in buckets
+    ]
 
 
 def search_candidates(query: str, role_filter: str = ""):
@@ -456,6 +642,70 @@ def get_latest_report_for_email(email: str) -> dict | None:
     }
 
 
+def get_latest_test_session_id_for_candidate(
+    email: str,
+    *,
+    created_by: str | None = None,
+    since: datetime | None = None,
+    until: datetime | None = None,
+    role_key: str = "",
+    batch_id: str = "",
+) -> int | None:
+    """Return latest test_session_id for a candidate with optional scope filters."""
+    email_key = str(email or "").strip().lower()
+    if not email_key:
+        return None
+
+    query = (
+        db.session.query(TestSession.id)
+        .join(Candidate, TestSession.candidate_id == Candidate.id)
+        .filter(db.func.lower(Candidate.email) == email_key)
+    )
+    if created_by:
+        query = query.filter(db.func.lower(TestSession.created_by) == str(created_by).strip().lower())
+    if since:
+        query = query.filter(TestSession.created_at >= since)
+    if until:
+        query = query.filter(TestSession.created_at < until)
+    if role_key:
+        query = query.filter(db.func.lower(TestSession.role_key) == str(role_key).strip().lower())
+    if batch_id:
+        query = query.filter(db.func.lower(TestSession.batch_id) == str(batch_id).strip().lower())
+
+    row = query.order_by(TestSession.created_at.desc(), TestSession.id.desc()).first()
+    if not row or not row[0]:
+        return None
+    return int(row[0])
+
+
+def get_latest_test_session_id_for_email(email: str) -> int | None:
+    """Backward-compatible alias for latest session lookup by email only."""
+    return get_latest_test_session_id_for_candidate(email)
+
+
+def get_round_session_uuids_for_test_session(test_session_id: int, attempted_only: bool = True) -> list[str]:
+    """Return unique round session_uuid values for a test_session_id."""
+    if not test_session_id:
+        return []
+
+    query = RoundResult.query.filter_by(test_session_id=int(test_session_id))
+    if attempted_only:
+        query = query.filter(
+            db.func.lower(RoundResult.status).notin_(("pending", "not attempted", ""))
+        )
+
+    rows = query.with_entities(RoundResult.session_uuid).all()
+    seen = set()
+    ordered = []
+    for row in rows:
+        session_uuid = str(row[0] if row else "").strip().lower()
+        if not session_uuid or session_uuid in seen:
+            continue
+        seen.add(session_uuid)
+        ordered.append(session_uuid)
+    return ordered
+
+
 def get_candidate_report_data(email: str) -> dict:
     """Get full candidate data for report generation."""
     candidate = Candidate.query.filter_by(email=email).first()
@@ -476,7 +726,7 @@ def get_candidate_report_data(email: str) -> dict:
     round_results = (
         RoundResult.query
         .filter_by(test_session_id=ts.id)
-        .order_by(RoundResult.round_key)
+        .order_by(RoundResult.round_key, RoundResult.created_at)
         .all()
     )
     for rr in round_results:

@@ -1,293 +1,1927 @@
 {% extends "base.html" %}
-{% block title %}Reports — Aziro Hiring Platform{% endblock %}
-{% block breadcrumb %}Reports{% endblock %}
-{% block head %}
-<style>
-    .reports-page { padding: 4px 0 14px; }
-    .search-section, .session-section {
-        background: var(--az-surface); border-radius: 10px; border: 1px solid var(--az-border);
-        padding: 20px 22px; box-shadow: var(--az-shadow-sm); margin-bottom: 20px;
-    }
-    .search-input { border-radius: 8px; padding: 10px 16px; font-size: 0.875rem; border: 1px solid var(--az-slate-300); }
-    .search-input:focus { border-color: var(--az-primary); box-shadow: 0 0 0 3px rgba(15,118,110,0.1); }
-    .section-title { font-size: 0.92rem; font-weight: 600; color: var(--az-slate-800); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-    .search-results { display:none; } .search-results.active { display:block; }
-    .empty-state { text-align: center; padding: 48px 20px; color: var(--az-slate-500); border: 1px dashed var(--az-slate-300); border-radius: 10px; background: var(--az-slate-50); }
-    .empty-state i { font-size: 2.4rem; color: var(--az-slate-300); margin-bottom: 12px; }
-    .badge-role { padding: 3px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 500; background: var(--az-primary-bg); color: var(--az-primary); border: 1px solid var(--az-primary-subtle); }
-    .report-card { border: 1px solid var(--az-border); border-radius: 10px; overflow: hidden; margin-bottom: 16px; box-shadow: var(--az-shadow-sm); background: var(--az-surface); transition: box-shadow 0.15s ease; }
-    .report-card:hover { box-shadow: var(--az-shadow); }
-    .report-card-header { padding:16px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
-    .cand-name { font-weight:600; font-size:0.95rem; color:var(--az-slate-900); }
-    .cand-meta { font-size:0.82rem; color:var(--az-slate-500); margin-top:2px; }
-    .report-actions { display:inline-flex; gap:6px; align-items:center; }
-    .report-actions .icon-btn { width:32px; height:32px; border-radius:8px; border:1px solid transparent; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.15s; text-decoration:none; font-size:0.82rem; }
-    .icon-btn.btn-gen { background:var(--az-primary); color:#fff; }
-    .icon-btn.btn-gen:hover { background:#0d6963; }
-    .icon-btn.btn-view { background:var(--az-primary-bg); color:var(--az-primary); border-color:var(--az-primary-subtle); }
-    .icon-btn.btn-view:hover { background:var(--az-primary-subtle); }
-    .icon-btn.btn-dl { background:#ecfdf5; color:#16a34a; border-color:#bbf7d0; }
-    .icon-btn.btn-dl:hover { background:#dcfce7; }
-    .icon-btn.btn-regen { background:#fffbeb; color:#d97706; border-color:#fde68a; }
-    .icon-btn.btn-regen:hover { background:#fef3c7; }
-    .icon-btn.btn-gallery { background:#eef2ff; color:#4f46e5; border-color:#c7d2fe; }
-    .icon-btn.btn-gallery:hover { background:#e0e7ff; }
-    .icon-btn.btn-loading { background:var(--az-slate-100); color:var(--az-slate-400); pointer-events:none; }
+{% block title %}Reports - Aziro Hiring Platform{% endblock %}
+{% block breadcrumb %}Candidate Reports{% endblock %}
 
-    .proctoring-modal {
-        position: fixed;
-        inset: 0;
-        background: rgba(15, 23, 42, 0.55);
-        display: none;
+{% macro initials(name) -%}
+    {%- set clean = (name or "").strip() -%}
+    {%- set parts = clean.split() -%}
+    {%- if parts|length >= 2 -%}
+        {{ (parts[0][:1] ~ parts[1][:1])|upper }}
+    {%- elif parts|length == 1 -%}
+        {{ parts[0][:2]|upper }}
+    {%- else -%}
+        NA
+    {%- endif -%}
+{%- endmacro %}
+
+{% block head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+    .sidebar,
+    .az-topbar,
+    .reports-replica {
+        font-family: "Poppins", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+
+    .reports-page-body nav[aria-label="breadcrumb"] { display: none; }
+    .reports-page-body footer { display: none; }
+    .reports-page-body .container-fluid { padding: 18px 20px 22px; }
+
+    .reports-replica {
+        position: relative;
+        overflow: visible;
+        border: 1px solid #dfe6f7;
+        border-radius: 20px;
+        padding: 14px 0 12px;
+        background:
+            radial-gradient(760px 280px at -6% -10%, rgba(45, 99, 218, 0.19) 0%, rgba(45, 99, 218, 0) 69%),
+            radial-gradient(520px 220px at 92% 0%, rgba(255, 122, 26, 0.16) 0%, rgba(255, 122, 26, 0) 71%),
+            linear-gradient(180deg, #fafbff 0%, #f4f3fc 62%, #efedf9 100%);
+        font-weight: 500;
+        font-style: normal;
+        letter-spacing: 0;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: geometricPrecision;
+    }
+
+    .reports-replica * {
+        font-style: normal;
+    }
+
+    .reports-inner {
+        width: 100%;
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 0 18px;
+    }
+
+    .reports-page-shell {
+        padding: 0 0 4px;
+    }
+
+    .reports-crumb {
+        display: inline-flex;
         align-items: center;
-        justify-content: center;
-        z-index: 2000;
-        padding: 24px;
+        gap: 9px;
+        color: #7181a7;
+        font-size: var(--az-fs-label);
+        margin: 0 8px 6px;
     }
-    .proctoring-modal.active { display: flex; }
-    .proctoring-modal-content {
-        background: #fff;
-        border-radius: 14px;
-        width: min(960px, 95vw);
-        max-height: 85vh;
+
+    .reports-crumb .crumb-link {
+        color: #6678a2;
+        text-decoration: none;
+    }
+
+    .reports-crumb .crumb-separator {
+        color: #9ca8c6;
+        font-size: 0.78rem;
+    }
+
+    .reports-heading-row {
+        margin: 0 8px 14px;
         display: flex;
-        flex-direction: column;
-        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
     }
-    .proctoring-modal-header {
-        padding: 16px 20px;
-        border-bottom: 1px solid var(--az-border);
+
+    .reports-heading {
+        margin: 0 8px 14px;
+    }
+
+    .reports-heading h1 {
+        margin: 0;
+        font-size: var(--az-fs-page-title);
+        line-height: 1.15;
+        font-weight: 600;
+        color: #1f3366;
+        letter-spacing: -0.01em;
+    }
+
+    .reports-heading p {
+        margin: 8px 0 0;
+        font-size: var(--az-fs-page-subtitle);
+        color: #4f5f89;
+        font-weight: 500;
+    }
+
+    .reports-panel {
+        border: 1px solid #dde4f3;
+        border-radius: 10px;
+        background: #f8f9fd;
+        box-shadow: 0 1px 2px rgba(22, 32, 63, 0.04);
+    }
+
+    .reports-toolbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
+        gap: 10px;
+        padding: 12px 14px;
+        margin-bottom: 9px;
     }
-    .proctoring-modal-title {
-        font-size: 1rem;
-        font-weight: 600;
-        color: var(--az-slate-900);
+
+    .reports-session {
+        display: inline-flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        min-width: 0;
     }
-    .proctoring-modal-close {
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-        border: 1px solid var(--az-border);
-        background: var(--az-slate-50);
-        color: var(--az-slate-600);
+
+    .session-indicator {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #2f65d8;
+        color: #ffffff;
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        font-size: 0.69rem;
+    }
+
+    .session-title {
+        font-size: var(--az-fs-heading);
+        font-weight: 700;
+        color: #13204e;
+        line-height: 1;
+    }
+
+    .session-count {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 11px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #ff8f2f 0%, #f96f14 100%);
+        color: #ffffff;
+        font-size: var(--az-fs-body);
+        line-height: 1;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+    }
+
+    .reports-period-nav {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-left: 4px;
+    }
+
+    .period-nav-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 7px;
+        border: 1px solid #d1daec;
+        background: #f0f3fb;
+        color: #2f3f6c;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 0.84rem;
+    }
+
+    .period-nav-btn.disabled {
+        opacity: 0.46;
+        pointer-events: none;
+    }
+
+    .reports-toolbar-right {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: auto;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .reports-consolidated-btn {
+        height: 40px;
+        min-width: 188px;
+        border: 1px solid #d58b47;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #ffb15c 0%, #f68026 100%);
+        color: #ffffff;
+        font-size: var(--az-fs-label);
+        font-weight: 600;
+        padding: 0 18px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        justify-content: center;
+        white-space: nowrap;
+        flex-shrink: 0;
+        margin-left: 4px;
+        box-shadow: 0 8px 18px rgba(245, 126, 34, 0.18);
+    }
+
+    .reports-heading-row .reports-consolidated-btn {
+        margin: 8px 0 0 auto;
+    }
+
+    .reports-consolidated-btn:disabled {
+        opacity: 0.6;
+        box-shadow: none;
+        cursor: not-allowed;
+    }
+
+    .reports-role-select {
+        height: 34px;
+        min-width: 128px;
+        border: 1px solid #ccd5ea;
+        border-radius: 8px;
+        background: #f8faff;
+        color: #1f2d59;
+        font-size: var(--az-fs-label);
+        font-weight: 500;
+        padding: 0 12px;
+        outline: none;
+    }
+
+    .reports-period-select,
+    .reports-date-input {
+        height: 34px;
+        min-width: 138px;
+        border: 1px solid #ccd5ea;
+        border-radius: 8px;
+        background: #f8faff;
+        color: #1f2d59;
+        font-size: var(--az-fs-label);
+        font-weight: 500;
+        padding: 0 12px;
+        outline: none;
+    }
+
+    .reports-date-input {
+        min-width: 150px;
+    }
+
+    .reports-date-input.is-hidden {
+        display: none;
+    }
+
+    .reports-search {
+        position: relative;
+    }
+
+    .reports-search i {
+        position: absolute;
+        left: 13px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #67779f;
+        font-size: 0.92rem;
+    }
+
+    .reports-search input {
+        height: 34px;
+        width: 210px;
+        border: 1px solid #ccd5ea;
+        border-radius: 8px;
+        padding: 0 12px 0 38px;
+        font-size: var(--az-fs-label);
+        color: #1f2d5a;
+        font-weight: 500;
+        background: #f8faff;
+        outline: none;
+    }
+
+    .reports-search input::placeholder { color: #7281a7; }
+
+    .reports-note {
+        margin: 0 4px 10px;
+        color: #60739d;
+        font-size: var(--az-fs-meta);
+    }
+
+    .reports-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        position: relative;
+        overflow: visible;
+    }
+
+    .candidate-item {
+        position: relative;
+        border: 1px solid #dbe2f1;
+        border-radius: 10px;
+        background: #f8f9fe;
+        box-shadow: 0 1px 1px rgba(29, 42, 80, 0.03);
+        padding: 12px 12px;
+        height: 86px;
+        overflow: visible;
+        z-index: 1;
+        transition: border-color 0.16s ease, box-shadow 0.2s ease, transform 0.18s ease, margin-bottom 0.18s ease;
+    }
+
+    .candidate-card.with-space {
+        margin-bottom: var(--overlay-space, 240px);
+    }
+
+    .candidate-item:hover {
+        border-color: #cdd9f0;
+        box-shadow: 0 5px 14px rgba(43, 71, 133, 0.06);
+    }
+
+    .candidate-item.is-active {
+        border-color: #c7d5ef;
+        box-shadow: 0 10px 22px rgba(43, 71, 133, 0.09);
+        z-index: 30;
+    }
+
+    .candidate-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .candidate-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
         cursor: pointer;
     }
-    .proctoring-modal-body {
-        padding: 16px 20px 22px;
+
+    .candidate-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        flex-shrink: 0;
+    }
+
+    .avatar-highlight {
+        background: radial-gradient(circle at 30% 25%, #ff9b6f 0%, #f07d45 44%, #ea6930 100%);
+    }
+
+    .avatar-blue {
+        background: radial-gradient(circle at 30% 25%, #6f9bff 0%, #3674e5 52%, #285ec0 100%);
+    }
+
+    .avatar-peach {
+        background: radial-gradient(circle at 30% 25%, #f8d8bf 0%, #edbf97 58%, #dfa776 100%);
+        color: #874f22;
+    }
+
+    .avatar-orange {
+        background: radial-gradient(circle at 30% 25%, #f9ab8b 0%, #f0895f 54%, #ec7143 100%);
+    }
+
+    .candidate-name {
+        font-size: var(--az-fs-heading);
+        line-height: 1;
+        margin: 0;
+        color: #172550;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+    }
+
+    .candidate-email-row {
+        margin-top: 4px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .candidate-email {
+        color: #526086;
+        font-size: var(--az-fs-body);
+        line-height: 1;
+        font-weight: 500;
+    }
+
+    .role-pill {
+        display: inline-flex;
+        align-items: center;
+        height: 24px;
+        border-radius: 20px;
+        padding: 0 11px;
+        background: linear-gradient(135deg, #d5d9f8 0%, #c5cdf3 100%);
+        color: #2a4aa3;
+        font-size: var(--az-fs-meta);
+        font-weight: 500;
+        line-height: 1;
+    }
+
+    .candidate-expanded-grid {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        width: 100%;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(300px, 350px);
+        gap: 8px;
+        padding: 10px;
+        border-radius: 12px;
+        border: 1px solid #d9e1f2;
+        background: #fbfcff;
+        box-shadow: 0 10px 30px rgba(18, 39, 89, 0.14);
+        opacity: 0;
+        transform: translateY(-10px) scale(0.98);
+        transform-origin: top center;
+        pointer-events: none;
+        will-change: transform, opacity;
+        transition:
+            transform 0.18s cubic-bezier(0.4, 0, 0.2, 1),
+            opacity 0.14s ease;
+    }
+
+    .candidate-item.is-active .candidate-expanded-grid {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0) scale(1);
+    }
+
+    .score-card,
+    .insight-card {
+        border: 1px solid #d9e1f2;
+        border-radius: 9px;
+        background: #f7f8fd;
+        padding: 12px;
+    }
+
+    .score-top {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-bottom: 1px solid #d9e1f2;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+    .score-ring {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: conic-gradient(#f9802b calc(var(--score) * 1%), #ffb66f calc(var(--score) * 1%), #e2e7f5 0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    .score-ring::before {
+        content: "";
+        position: absolute;
+        inset: 7px;
+        border-radius: 50%;
+        background: #f8f9fd;
+    }
+
+    .score-ring span {
+        position: relative;
+        z-index: 1;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #172550;
+    }
+
+    .score-title {
+        margin: 0;
+        font-size: var(--az-fs-page-subtitle);
+        color: #14224f;
+        line-height: 1.05;
+        font-weight: 700;
+    }
+
+    .score-title strong {
+        color: #f27b20;
+        font-weight: 700;
+    }
+
+    .skill-heading {
+        margin: 0 0 8px;
+        font-size: var(--az-fs-heading);
+        color: #182653;
+        font-weight: 700;
+    }
+
+    .skill-list {
+        display: grid;
+        gap: 7px;
+    }
+
+    .skill-item {
+        display: grid;
+        grid-template-columns: 146px minmax(0, 1fr) 38px;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .skill-label {
+        font-size: var(--az-fs-body);
+        color: #334271;
+        white-space: nowrap;
         overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .skill-track {
+        height: 12px;
+        border-radius: 5px;
+        background: #d9dff0;
+        overflow: hidden;
+    }
+
+    .skill-fill {
+        height: 100%;
+        border-radius: 5px;
+    }
+
+    .skill-tone-0 { background: linear-gradient(90deg, #f9883f 0%, #f46f16 100%); }
+    .skill-tone-1 { background: linear-gradient(90deg, #8d9be7 0%, #5f7de0 100%); }
+    .skill-tone-2 { background: linear-gradient(90deg, #f0ab85 0%, #ee7c45 100%); }
+    .skill-tone-3 { background: linear-gradient(90deg, #b3a2e1 0%, #9588d4 100%); }
+
+    .skill-value {
+        text-align: right;
+        font-size: var(--az-fs-body);
+        font-weight: 600;
+        color: #2f3d68;
+    }
+
+    .score-actions {
+        margin-top: 10px;
+        display: inline-flex;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #d2daed;
+    }
+
+    .score-action {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 12px;
+        font-size: var(--az-fs-btn);
+        font-weight: 500;
+        text-decoration: none;
+        border: none;
+        background: #f7f8fc;
+        color: #2f416f;
+    }
+
+    .score-action + .score-action {
+        border-left: 1px solid #d2daed;
+    }
+
+    .score-action.view {
+        color: #935323;
+        background: #f3e6da;
+    }
+
+    .insight-title {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin: 0 0 10px;
+        font-size: var(--az-fs-heading);
+        color: #1a2754;
+        line-height: 1;
+        font-weight: 600;
+    }
+
+    .insight-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ff983c 0%, #f06f21 100%);
+        color: #ffffff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.74rem;
+    }
+
+    .insight-actions {
+        margin-top: 12px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .insight-action {
+        border-radius: 8px;
+        border: 1px solid #ccd7ec;
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        text-decoration: none;
+        background: #f4f7ff;
+        color: #1e3368;
+        font-size: var(--az-fs-btn);
+        font-weight: 600;
+        padding: 0 10px;
+        line-height: 1.2;
+        text-align: center;
+        white-space: nowrap;
+        transition: border-color 0.14s ease, box-shadow 0.14s ease, transform 0.14s ease;
+    }
+
+    .insight-action:hover,
+    .insight-action:focus-visible {
+        border-color: #9db4e7;
+        box-shadow: 0 7px 16px rgba(49, 79, 144, 0.14);
+        transform: translateY(-1px);
+    }
+
+    .insight-action[disabled],
+    .insight-action.disabled {
+        pointer-events: none;
+        opacity: 0.54;
+        box-shadow: none;
+        transform: none;
+    }
+
+    .insight-action.report-generate {
+        color: #ffffff;
+        border: 1px solid transparent;
+        background: linear-gradient(135deg, #ff8f31 0%, #f36f17 100%);
+    }
+
+    .insight-action.primary {
+        color: #ffffff;
+        border: 1px solid transparent;
+        background: linear-gradient(135deg, #5d79db 0%, #2d57c7 100%);
+    }
+
+    .insight-action.report-regenerate {
+        border-color: #f0ba93;
+        color: #9a4e1c;
+        background: #fdf1e8;
+    }
+
+    .insight-action.report-download {
+        color: #203361;
+        background: #f2f5fd;
+    }
+
+    .action-hub-note {
+        margin: 0;
+        font-size: var(--az-fs-meta);
+        color: #5a6b96;
+        font-weight: 500;
+        line-height: 1.35;
+    }
+
+    .candidate-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        height: 100%;
+    }
+
+    .row-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .candidate-item.is-active .row-actions {
+        display: none;
+    }
+
+    .row-action-btn {
+        height: 34px;
+        border-radius: 7px;
+        border: 1px solid #ced7ea;
+        background: #f8f9fd;
+        color: #182653;
+        font-size: var(--az-fs-btn);
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 0 14px;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .row-action-btn.icon-only {
+        width: 34px;
+        min-width: 34px;
+        height: 34px;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .row-action-btn.icon-only i {
+        font-size: 0.96rem;
+    }
+
+    .row-action-btn.view i { color: #f06d17; }
+
+    .row-action-btn.generate {
+        border-color: #f2bb95;
+        color: #9b4e16;
+        background: #fdf0e7;
+    }
+
+    .row-action-btn.gallery {
+        border-color: #c5d3f1;
+        color: #29427f;
+        background: #eaf0ff;
+    }
+
+    .reports-gallery-modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(15, 24, 50, 0.66);
+        padding: 20px;
+        z-index: 2000;
+    }
+
+    .reports-gallery-modal.active {
+        display: flex;
+    }
+
+    .reports-gallery-dialog {
+        width: min(1080px, 96vw);
+        max-height: 90vh;
+        border-radius: 14px;
+        border: 1px solid #d5def1;
+        background: #f8faff;
+        box-shadow: 0 22px 52px rgba(16, 30, 65, 0.33);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .reports-gallery-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 12px 14px;
+        border-bottom: 1px solid #d9e2f4;
+        background: linear-gradient(180deg, #ffffff 0%, #f4f7ff 100%);
+    }
+
+    .reports-gallery-title {
+        margin: 0;
+        font-size: var(--az-fs-heading);
+        color: #172550;
+        font-weight: 700;
+    }
+
+    .reports-gallery-close {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        border: 1px solid #ccd7ed;
+        background: #f7f9ff;
+        color: #2c3f71;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .reports-gallery-meta {
+        padding: 8px 14px 0;
+        color: #51628f;
+        font-size: var(--az-fs-label);
+        font-weight: 500;
+    }
+
+    .reports-gallery-grid {
+        padding: 10px 14px 16px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 10px;
+        overflow: auto;
+    }
+
+    .reports-shot {
+        border: 1px solid #d4def1;
+        border-radius: 10px;
+        background: #ffffff;
+        box-shadow: 0 4px 10px rgba(31, 52, 96, 0.08);
+        overflow: hidden;
+    }
+
+    .reports-shot-link {
+        display: block;
+        text-decoration: none;
+        border-bottom: 1px solid #e2e9f8;
+    }
+
+    .reports-shot img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        display: block;
+        background: #eef3ff;
+    }
+
+    .reports-shot-body {
+        padding: 8px 9px 9px;
+    }
+
+    .reports-shot-time {
+        color: #1f315f;
+        font-size: var(--az-fs-btn);
+        font-weight: 600;
+        line-height: 1.3;
+    }
+
+    .reports-shot-time-utc {
+        margin-top: 2px;
+        color: #63739d;
+        font-size: var(--az-fs-meta);
+        line-height: 1.25;
+    }
+
+    .reports-shot-meta {
+        margin-top: 5px;
+        color: #495a86;
+        font-size: var(--az-fs-meta);
+        line-height: 1.3;
+    }
+
+    .reports-gallery-empty {
+        border: 1px dashed #cdd8ef;
+        border-radius: 10px;
+        background: #fbfcff;
+        padding: 24px;
+        text-align: center;
+        color: #5d6f9b;
+        font-size: var(--az-fs-body);
+        font-weight: 500;
+    }
+
+    .reports-consolidated-modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(15, 24, 50, 0.7);
+        padding: 18px;
+        z-index: 2100;
+    }
+
+    .reports-consolidated-modal.active {
+        display: flex;
+    }
+
+    .reports-consolidated-dialog {
+        width: min(1220px, 96vw);
+        max-height: 92vh;
+        border-radius: 18px;
+        border: 1px solid #d5def1;
+        background:
+            radial-gradient(720px 260px at 0% 0%, rgba(58, 104, 222, 0.1) 0%, rgba(58, 104, 222, 0) 70%),
+            linear-gradient(180deg, #fbfcff 0%, #f5f7ff 100%);
+        box-shadow: 0 24px 60px rgba(16, 30, 65, 0.35);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .reports-consolidated-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 16px 18px 14px;
+        border-bottom: 1px solid #d9e3f6;
+        background: linear-gradient(180deg, #ffffff 0%, #f6f8ff 100%);
+    }
+
+    .reports-consolidated-title {
+        margin: 0;
+        font-size: 1.18rem;
+        color: #172550;
+        font-weight: 700;
+    }
+
+    .reports-consolidated-subtitle {
+        margin: 5px 0 0;
+        color: #566891;
+        font-size: var(--az-fs-body);
+        font-weight: 500;
+    }
+
+    .reports-consolidated-close {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        border: 1px solid #cfdaf0;
+        background: #f8faff;
+        color: #284179;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .reports-consolidated-body {
+        min-height: 0;
+        display: grid;
+        grid-template-columns: minmax(320px, 360px) minmax(0, 1fr);
+        gap: 14px;
+        padding: 14px 18px;
+        overflow: hidden;
+    }
+
+    .consolidated-selection-panel,
+    .consolidated-output-panel {
+        min-height: 0;
+        border: 1px solid #d9e3f4;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 10px 24px rgba(33, 52, 94, 0.08);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .consolidated-selection-panel {
+        overflow-y: auto;
+        scrollbar-gutter: stable;
+    }
+
+    .consolidated-panel-header {
+        padding: 14px 14px 10px;
+        border-bottom: 1px solid #e2e9f8;
+    }
+
+    .consolidated-panel-header h4 {
+        margin: 0;
+        color: #17305d;
+        font-size: var(--az-fs-heading);
+        font-weight: 700;
+    }
+
+    .consolidated-panel-header p {
+        margin: 5px 0 0;
+        color: #5d6e97;
+        font-size: var(--az-fs-meta);
+    }
+
+    .consolidated-scope-card {
+        margin: 12px 14px 10px;
+        padding: 12px 13px;
+        border: 1px solid #d9e1f5;
+        border-radius: 12px;
+        background: linear-gradient(180deg, #fdfefe 0%, #f4f7ff 100%);
+        display: grid;
+        gap: 7px;
+        color: #264078;
+        font-size: var(--az-fs-label);
+    }
+
+    .consolidated-scope-card strong {
+        color: #182d58;
+    }
+
+    .consolidated-primary-filters {
+        padding: 0 14px 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .consolidated-primary-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .consolidated-primary-grid .wide {
+        grid-column: 1 / -1;
+    }
+
+    .consolidated-primary-grid select,
+    .consolidated-primary-grid input {
+        width: 100%;
+        height: 38px;
+        border: 1px solid #ced8ee;
+        border-radius: 10px;
+        background: #f8faff;
+        color: #1f315f;
+        font-size: var(--az-fs-label);
+        font-weight: 500;
+        padding: 0 12px;
+        outline: none;
+    }
+
+    .consolidated-primary-date.is-hidden {
+        display: none;
+    }
+
+    .consolidated-load-btn {
+        height: 38px;
+        border-radius: 10px;
+        border: 1px solid #ced8ee;
+        background: linear-gradient(135deg, #e9efff 0%, #dbe6ff 100%);
+        color: #24407c;
+        font-size: var(--az-fs-label);
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .consolidated-results-meta {
+        padding: 0 14px 10px;
+        color: #5b6d98;
+        font-size: var(--az-fs-meta);
+        font-weight: 600;
+    }
+
+    .consolidated-loaded-preview {
+        margin: 0 14px 12px;
+        padding: 12px 12px 10px;
+        border: 1px solid #d9e2f4;
+        border-radius: 12px;
+        background: #fbfcff;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        min-height: 52px;
+        max-height: 112px;
+        overflow-y: auto;
+        align-content: flex-start;
+        scrollbar-gutter: stable;
+    }
+
+    .consolidated-loaded-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 30px;
+        padding: 0 11px;
+        border-radius: 999px;
+        background: #edf3ff;
+        color: #23407a;
+        border: 1px solid #d2def7;
+        font-size: var(--az-fs-meta);
+        font-weight: 700;
+    }
+
+    .consolidated-loaded-empty {
+        color: #64759f;
+        font-size: var(--az-fs-meta);
+        font-weight: 600;
+    }
+
+    .consolidated-filter-row {
+        padding: 0 14px 10px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .consolidated-filter-row select,
+    .consolidated-filter-row input {
+        width: 100%;
+        height: 36px;
+        border: 1px solid #ced8ee;
+        border-radius: 10px;
+        background: #f8faff;
+        color: #1f315f;
+        font-size: var(--az-fs-label);
+        font-weight: 500;
+        padding: 0 12px;
+        outline: none;
+    }
+
+    .consolidated-secondary-label {
+        padding: 0 14px 8px;
+        color: #243f7b;
+        font-size: var(--az-fs-meta);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .consolidated-bulk-actions {
+        padding: 0 14px 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .consolidated-bulk-btn {
+        height: 31px;
+        border-radius: 999px;
+        border: 1px solid #ced9ef;
+        background: #f7f9ff;
+        color: #24407c;
+        padding: 0 11px;
+        font-size: var(--az-fs-meta);
+        font-weight: 600;
+    }
+
+    .consolidated-candidate-list {
+        padding: 0 14px 14px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex: 1 1 auto;
+        min-height: 220px;
+        max-height: 320px;
+        scrollbar-gutter: stable;
+    }
+
+    .consolidated-candidate-row {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        gap: 10px;
+        align-items: center;
+        padding: 10px 11px;
+        border: 1px solid #d9e2f4;
+        border-radius: 12px;
+        background: #fbfcff;
+        cursor: pointer;
+    }
+
+    .consolidated-candidate-row:hover {
+        border-color: #c7d4ef;
+        background: #f6f9ff;
+    }
+
+    .consolidated-candidate-row input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: #2f65d8;
+    }
+
+    .consolidated-candidate-main {
+        min-width: 0;
+    }
+
+    .consolidated-candidate-name {
+        color: #17305d;
+        font-size: var(--az-fs-body);
+        font-weight: 600;
+        line-height: 1.3;
+    }
+
+    .consolidated-candidate-email {
+        margin-top: 2px;
+        color: #63739d;
+        font-size: var(--az-fs-meta);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .consolidated-candidate-meta {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .consolidated-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 24px;
+        padding: 0 9px;
+        border-radius: 999px;
+        font-size: var(--az-fs-meta);
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .consolidated-badge.score {
+        background: #edf4ff;
+        color: #204185;
+        border: 1px solid #d5e3fb;
+    }
+
+    .consolidated-badge.verdict-rejected {
+        background: #fff1ef;
+        color: #b14432;
+        border: 1px solid #f0d1cb;
+    }
+
+    .consolidated-badge.verdict-selected {
+        background: #edf9f1;
+        color: #24714a;
+        border: 1px solid #cae8d6;
+    }
+
+    .consolidated-badge.verdict-progress {
+        background: #f5f2ff;
+        color: #654bb1;
+        border: 1px solid #ddd3fb;
+    }
+
+    .consolidated-badge.verdict-pending {
+        background: #f1f4fb;
+        color: #54658f;
+        border: 1px solid #d9e1f2;
+    }
+
+    .consolidated-empty-state {
+        border: 1px dashed #d0daee;
+        border-radius: 12px;
+        background: #fbfcff;
+        padding: 18px 14px;
+        text-align: center;
+        color: #61739d;
+        font-size: var(--az-fs-body);
+        font-weight: 500;
+    }
+
+    .consolidated-output-scroll {
+        flex: 1;
+        min-height: 0;
+        overflow: auto;
+        padding: 16px 18px 18px;
+    }
+
+    .consolidated-output-placeholder,
+    .consolidated-output-loading {
+        min-height: 220px;
+        border: 1px dashed #d6e0f4;
+        border-radius: 14px;
+        background: linear-gradient(180deg, #fbfcff 0%, #f4f7ff 100%);
+        padding: 26px 20px;
+        color: #5b6d97;
+        font-size: var(--az-fs-body);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .consolidated-output-content {
+        display: none;
+        color: #203360;
+    }
+
+    .consolidated-output-content.is-visible {
+        display: block;
+    }
+
+    .consolidated-summary-block {
         display: flex;
         flex-direction: column;
         gap: 12px;
     }
-    .proctoring-gallery-meta {
-        font-size: 0.8rem;
-        color: var(--az-slate-500);
+
+    .consolidated-summary-title {
+        margin: 0;
+        color: #132a57;
+        font-size: 1.08rem;
+        font-weight: 700;
     }
-    .proctoring-gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 12px;
-        overflow: auto;
-        padding-right: 4px;
+
+    .consolidated-summary-section {
+        margin: 0;
+        color: #19315c;
+        font-size: 0.97rem;
+        font-weight: 700;
     }
-    .proctoring-shot {
-        border: 1px solid var(--az-border);
-        border-radius: 10px;
-        padding: 6px;
-        background: var(--az-slate-50);
+
+    .consolidated-summary-paragraph {
+        margin: 0;
+        color: #3c4f7d;
+        font-size: var(--az-fs-body);
+        line-height: 1.65;
     }
-    .proctoring-shot img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        display: block;
-        cursor: zoom-in;
+
+    .consolidated-summary-list {
+        margin: 0;
+        padding-left: 18px;
+        color: #314572;
+        font-size: var(--az-fs-body);
+        line-height: 1.6;
     }
-    .proctoring-shot-meta {
+
+    .consolidated-summary-list li + li {
         margin-top: 6px;
-        font-size: 0.7rem;
-        color: var(--az-slate-500);
-        line-height: 1.2;
     }
-    .proctoring-viewer {
-        position: fixed;
-        inset: 0;
-        background: rgba(15, 23, 42, 0.78);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: 2100;
-        padding: 24px;
-    }
-    .proctoring-viewer.active { display: flex; }
-    .proctoring-viewer-frame {
-        position: relative;
-        background: #0b1220;
-        border-radius: 14px;
-        width: min(1100px, 96vw);
-        max-height: 88vh;
-        display: grid;
-        grid-template-rows: auto 1fr auto;
-        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.4);
-    }
-    .proctoring-viewer-header {
+
+    .reports-consolidated-footer {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 12px 16px;
-        color: #e2e8f0;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.2);
-        font-size: 0.85rem;
-    }
-    .proctoring-viewer-body {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 16px;
-        overflow: hidden;
-    }
-    .proctoring-viewer-body img {
-        max-width: 100%;
-        max-height: 68vh;
-        border-radius: 12px;
-        background: #0f172a;
-        cursor: zoom-out;
-    }
-    .proctoring-viewer-footer {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         gap: 10px;
-        padding: 12px 16px 16px;
+        padding: 14px 18px 16px;
+        border-top: 1px solid #d9e3f6;
+        background: linear-gradient(180deg, #fcfdff 0%, #f5f8ff 100%);
     }
-    .proctoring-viewer-btn {
-        border: 1px solid rgba(148, 163, 184, 0.3);
-        background: rgba(15, 23, 42, 0.6);
-        color: #e2e8f0;
+
+    .reports-consolidated-selection-meta {
+        color: #22345f;
+        font-size: var(--az-fs-body);
+        font-weight: 600;
+    }
+
+    .consolidated-footer-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .consolidated-footer-btn {
+        height: 36px;
         border-radius: 10px;
-        padding: 8px 14px;
-        font-size: 0.8rem;
-        cursor: pointer;
+        border: 1px solid #ced8ee;
+        background: #f8faff;
+        color: #223d78;
+        padding: 0 14px;
+        font-size: var(--az-fs-label);
+        font-weight: 600;
+    }
+
+    .consolidated-footer-btn.primary {
+        border-color: #d58b47;
+        background: linear-gradient(135deg, #ffb15c 0%, #f68026 100%);
+        color: #ffffff;
+        box-shadow: 0 10px 18px rgba(245, 126, 34, 0.18);
+    }
+
+    .consolidated-footer-btn:disabled {
+        opacity: 0.56;
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+
+    .reports-empty {
+        border: 1px dashed #cad4e9;
+        border-radius: 10px;
+        background: #fafbff;
+        padding: 30px 16px;
+        text-align: center;
+    }
+
+    .reports-empty h4 {
+        margin: 0 0 6px;
+        color: #1f2e5e;
+        font-weight: 600;
+    }
+
+    .reports-empty p {
+        margin: 0;
+        color: #5f6f96;
+    }
+
+    .reports-footer {
+        margin-top: 10px;
+        padding: 8px 2px 2px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .reports-count {
+        color: #23315f;
+        font-size: var(--az-fs-body);
+        font-weight: 500;
+    }
+
+    .reports-pagination {
         display: inline-flex;
         align-items: center;
         gap: 6px;
     }
-    .proctoring-viewer-btn:disabled {
-        opacity: 0.4;
-        cursor: not-allowed;
-    }
-    .proctoring-viewer-close {
-        width: 30px;
-        height: 30px;
-        border-radius: 8px;
-        border: 1px solid rgba(148, 163, 184, 0.3);
-        background: rgba(15, 23, 42, 0.7);
-        color: #e2e8f0;
+
+    .page-btn {
+        width: 36px;
+        height: 34px;
+        border-radius: 7px;
+        border: 1px solid #d1daec;
+        background: #f0f3fb;
+        color: #2f3f6c;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        cursor: pointer;
+        text-decoration: none;
+        font-size: var(--az-fs-body);
+        font-weight: 600;
+    }
+
+    .page-btn.active {
+        border-color: transparent;
+        color: #ffffff;
+        background: linear-gradient(135deg, #4a78df 0%, #295ccf 100%);
+    }
+
+    .page-btn.disabled {
+        opacity: 0.46;
+        pointer-events: none;
+    }
+
+    .page-size-wrap {
+        border: 1px solid #d1daec;
+        background: #f0f3fb;
+        border-radius: 7px;
+        padding: 0 8px;
+        height: 34px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        color: #394a74;
+        font-size: var(--az-fs-label);
+        font-weight: 500;
+    }
+
+    .page-size-wrap select {
+        border: none;
+        background: transparent;
+        color: #2c3d67;
+        font-size: var(--az-fs-label);
+        font-weight: 500;
+        outline: none;
+        padding-right: 6px;
+    }
+
+    @media (max-width: 1100px) {
+        .reports-toolbar { flex-direction: column; align-items: stretch; }
+        .reports-toolbar-right { margin-left: 0; flex-wrap: wrap; }
+        .reports-search { flex: 1; min-width: 210px; }
+        .reports-search input { width: 100%; }
+        .reports-period-nav { margin-left: auto; }
+        .candidate-item { height: auto; min-height: 86px; }
+        .candidate-expanded-grid { grid-template-columns: 1fr; }
+        .candidate-row { flex-direction: column; align-items: stretch; }
+        .row-actions { justify-content: flex-start; }
+        .reports-footer { flex-direction: column; align-items: flex-start; }
+        .reports-consolidated-body { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+        .reports-heading-row { flex-direction: column; }
+        .reports-heading h1 { font-size: 1.56rem; }
+        .session-title { font-size: 0.95rem; }
+        .session-count { font-size: 0.77rem; }
+        .candidate-name { font-size: 0.96rem; }
+        .skill-item { grid-template-columns: 1fr; gap: 4px; }
+        .skill-value { text-align: left; }
+        .insight-actions,
+        .score-actions,
+        .row-actions { width: 100%; }
+        .insight-action,
+        .score-action,
+        .row-action-btn { flex: 1; justify-content: center; }
+        .reports-heading-row .reports-consolidated-btn { margin: 0; width: 100%; }
+        .consolidated-primary-grid { grid-template-columns: 1fr; }
+        .reports-consolidated-footer { flex-direction: column; align-items: stretch; }
+        .consolidated-footer-actions { width: 100%; }
+        .consolidated-footer-btn { flex: 1; justify-content: center; display: inline-flex; align-items: center; }
+    }
+
+    @media (max-width: 640px) {
+        .reports-inner { padding: 0 10px; }
+        .reports-consolidated-modal { padding: 10px; }
+        .reports-consolidated-dialog { width: 100%; max-height: 94vh; border-radius: 14px; }
+        .reports-consolidated-header,
+        .reports-consolidated-body,
+        .reports-consolidated-footer { padding-left: 12px; padding-right: 12px; }
+        .consolidated-candidate-row { grid-template-columns: auto minmax(0, 1fr); }
+        .consolidated-candidate-meta { grid-column: 2; justify-content: flex-start; }
     }
 </style>
 {% endblock %}
+
 {% block content %}
-<div class="container-fluid reports-page">
-    <div class="mb-4">
-        <h4 style="font-weight:600; color:var(--az-slate-900); font-size:1.3rem;"><i class="fas fa-file-alt me-2" style="color:var(--az-primary);"></i>Reports</h4>
-        <p class="text-muted mb-0" style="font-size:0.82rem;">Generate and download candidate evaluation reports</p>
+{% set role_query = selected_role if selected_role != "All Roles" else None %}
+{% set date_query = specific_date if date_filter == "date" and specific_date else None %}
+{% set prev_offset = (date_offset | int) - 1 %}
+{% set next_offset = (date_offset | int) + 1 %}
+{% set next_disabled = (date_offset | int) >= 0 %}
+{% if date_filter == 'date' and specific_date %}
+    {% set prev_period_url = url_for('reports.reports', q=search_query or None, role=role_query, filter='date', date=specific_date, offset=prev_offset, per_page=per_page, page=1) %}
+    {% set next_period_url = url_for('reports.reports', q=search_query or None, role=role_query, filter='date', date=specific_date, offset=next_offset, per_page=per_page, page=1) %}
+{% else %}
+    {% set prev_period_url = url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, offset=prev_offset, per_page=per_page, page=1) %}
+    {% set next_period_url = url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, offset=next_offset, per_page=per_page, page=1) %}
+{% endif %}
+{% set window_start = page - 1 if page > 1 else 1 %}
+{% set window_end = window_start + 2 %}
+{% if window_end > total_pages %}
+    {% set window_end = total_pages %}
+    {% set window_start = window_end - 2 if window_end - 2 > 1 else 1 %}
+{% endif %}
+
+<div class="reports-replica">
+    <div class="reports-inner reports-page-shell">
+    <div class="reports-crumb">
+        <a href="/reports" class="crumb-link">Reports</a>
+        <span class="crumb-separator"><i class="bi bi-chevron-right"></i></span>
+        <span>Candidate Reports</span>
     </div>
-    <div class="search-section">
-        <div class="section-title"><i class="fas fa-search" style="color:var(--az-primary);"></i> Search Candidates</div>
-        <div class="input-group">
-            <input type="text" class="form-control search-input" id="searchInput" placeholder="Search by name, email, or role..." autocomplete="off">
-            <button class="btn btn-outline-secondary" style="border-radius:0 8px 8px 0; border-left:none;" id="searchBtn"><i class="fas fa-search"></i></button>
+
+    <div class="reports-heading-row">
+        <div class="reports-heading">
+            <h1>Reports</h1>
+            <p>Generate and download candidate evaluation reports</p>
         </div>
+        <button type="button" class="reports-consolidated-btn" id="reportsConsolidatedTrigger">
+            <i class="bi bi-collection"></i>
+            Consolidated Summary
+        </button>
     </div>
-    <div class="search-results session-section" id="searchResults">
-        <div class="section-title">
-            <i class="fas fa-history" style="color:var(--az-primary);"></i> Search Results
-            <button class="btn btn-sm btn-link text-muted" id="clearSearchBtn" style="margin-left:auto; font-size:0.78rem;"><i class="fas fa-times me-1"></i>Clear</button>
+
+    <div class="reports-panel reports-toolbar">
+        <div class="reports-session">
+            <span class="session-indicator"><i class="bi bi-info"></i></span>
+            <span class="session-title">{% if search_global_mode %}Search Results (All Candidates){% else %}{{ period_label }} Session{% endif %}</span>
+            <span class="session-count">{{ base_total_candidates }} Candidates</span>
+            <div class="reports-period-nav">
+                <a href="{{ prev_period_url }}" class="period-nav-btn" aria-label="Previous period"><i class="bi bi-chevron-left"></i></a>
+                <a href="{{ next_period_url }}" class="period-nav-btn {% if next_disabled %}disabled{% endif %}" aria-label="Next period"><i class="bi bi-chevron-right"></i></a>
+            </div>
         </div>
-        <div id="searchResultsList"></div>
+
+        <form class="reports-toolbar-right" id="reportsFilterForm" method="get" action="{{ url_for('reports.reports') }}">
+            <input type="hidden" name="page" id="reportsPageInput" value="1">
+            <input type="hidden" name="per_page" id="reportsPerPageInput" value="{{ per_page }}">
+            <input type="hidden" name="offset" id="reportsOffsetInput" value="{{ date_offset | int }}">
+            <select class="reports-role-select" name="role" id="reportsRoleSelect">
+                <option value="All Roles" {% if selected_role == "All Roles" %}selected{% endif %}>All Roles</option>
+                {% for role in role_options %}
+                <option value="{{ role }}" {% if selected_role == role %}selected{% endif %}>{{ role }}</option>
+                {% endfor %}
+            </select>
+            <select class="reports-period-select" name="filter" id="reportsPeriodSelect">
+                <option value="today" {% if date_filter == "today" %}selected{% endif %}>Today</option>
+                <option value="24h" {% if date_filter == "24h" %}selected{% endif %}>Last 24 Hours</option>
+                <option value="7d" {% if date_filter == "7d" %}selected{% endif %}>Last 7 Days</option>
+                <option value="28d" {% if date_filter == "28d" %}selected{% endif %}>Last 28 Days</option>
+                <option value="date" {% if date_filter == "date" %}selected{% endif %}>Custom Date</option>
+            </select>
+            <input
+                type="date"
+                class="reports-date-input {% if date_filter != 'date' %}is-hidden{% endif %}"
+                name="date"
+                id="reportsDateInput"
+                value="{{ specific_date }}"
+            >
+            <div class="reports-search">
+                <i class="bi bi-search"></i>
+                <input
+                    type="search"
+                    name="q"
+                    id="reportsSearchInput"
+                    value="{{ search_query }}"
+                    autocomplete="off"
+                    placeholder="Search all candidates (org-wide)"
+                >
+            </div>
+        </form>
     </div>
-    <div class="session-section">
-        <div class="section-title">
-            <i class="fas fa-clock" style="color:var(--az-primary);"></i> Last {{ recent_days }} Days
-            <span class="badge bg-primary ms-2" style="font-size:0.7rem; background:var(--az-primary) !important;">{{ session_candidates|length }} candidates</span>
-        </div>
+    <div class="reports-note">
+        {% if search_global_mode %}
+            Showing org-wide search results from database records.
+        {% else %}
+            Showing only candidates generated by you in {{ period_label|lower }}.
+        {% endif %}
+    </div>
+
+    <div class="reports-list">
         {% if session_candidates %}
             {% for cand in session_candidates %}
-            <div class="report-card">
-                <div class="report-card-header">
-                    <div>
-                        <div class="cand-name"><i class="fas fa-user me-1" style="color:var(--az-slate-400);"></i> {{ cand.name }} <span class="badge-role ms-2">{{ cand.role }}</span></div>
-                        <div class="cand-meta"><i class="fas fa-envelope me-1"></i> {{ cand.email }}</div>
-                    </div>
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="report-actions" id="actions-{{ loop.index }}" data-email="{{ cand.email|e }}">
+                {% set cand_score = (cand.summary.overall_percentage if cand.summary else 0) | float %}
+                {% set cand_verdict = cand.summary.overall_verdict if cand.summary else "Pending" %}
+                {% set cand_rounds = [] %}
+                {% if cand.rounds %}
+                    {% set cand_rounds = cand.rounds.values()|list %}
+                {% endif %}
+                {% set breakdown_rounds = cand_rounds[:4] %}
+                {% set avatar_class = "avatar-highlight" if loop.index0 % 4 == 0 else ("avatar-blue" if loop.index0 % 4 == 1 else ("avatar-peach" if loop.index0 % 4 == 2 else "avatar-orange")) %}
+                <div
+                    class="candidate-item candidate-card"
+                    data-candidate-card
+                    data-candidate-name="{{ cand.name|e }}"
+                    data-candidate-email="{{ cand.email|e }}"
+                    data-candidate-role="{{ cand.role|default('N/A')|e }}"
+                    data-candidate-score="{{ '%.0f'|format(cand_score) }}"
+                    data-candidate-verdict="{{ cand_verdict|e }}"
+                    data-candidate-rounds="{{ (cand.rounds or {})|tojson|forceescape }}"
+                    data-has-report="{{ 1 if cand.has_report and cand.report_filename else 0 }}"
+                    data-report-filename="{{ cand.report_filename or '' }}"
+                    data-candidate-proctoring-count="{{ (cand.proctoring_summary.total_count if cand.proctoring_summary else 0) }}"
+                >
+                    <div class="candidate-row candidate-summary">
+                        <div class="candidate-meta">
+                            <span class="candidate-avatar {{ avatar_class }}">{{ initials(cand.name) }}</span>
+                            <div>
+                                <h3 class="candidate-name">{{ cand.name }}</h3>
+                                <div class="candidate-email-row">
+                                    <span class="candidate-email">{{ cand.email }}</span>
+                                    <span class="role-pill">{{ cand.role or "General Role" }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-actions">
+                            <button
+                                type="button"
+                                class="row-action-btn icon-only gallery js-open-gallery"
+                                data-email="{{ cand.email|e }}"
+                                data-name="{{ cand.name|e }}"
+                                title="View Screenshots"
+                                aria-label="View Screenshots"
+                            >
+                                <i class="bi bi-images"></i>
+                            </button>
                             {% if cand.has_report and cand.report_filename %}
-                                <a href="/reports/view/{{ cand.report_filename }}" target="_blank" class="icon-btn btn-view" title="View"><i class="fas fa-eye"></i></a>
-                                <a href="/reports/download-file/{{ cand.report_filename }}" class="icon-btn btn-dl" title="Download"><i class="fas fa-download"></i></a>
-                                <button class="icon-btn btn-regen js-generate-report" data-email="{{ cand.email|e }}" data-container="actions-{{ loop.index }}" title="Regenerate"><i class="fas fa-redo"></i></button>
+                                <a class="row-action-btn icon-only view" href="/reports/view/{{ cand.report_filename }}" target="_blank" title="View Report" aria-label="View Report"><i class="bi bi-eye-fill"></i></a>
+                                <a class="row-action-btn icon-only" href="/reports/download-file/{{ cand.report_filename }}" title="Download PDF" aria-label="Download PDF"><i class="bi bi-download"></i></a>
+                                <button type="button" class="row-action-btn icon-only generate js-generate-report" data-email="{{ cand.email|e }}" title="Regenerate Report" aria-label="Regenerate Report"><i class="bi bi-arrow-repeat"></i></button>
                             {% else %}
-                                <button class="icon-btn btn-gen js-generate-report" data-email="{{ cand.email|e }}" data-container="actions-{{ loop.index }}" title="Generate Report"><i class="fas fa-file-pdf"></i></button>
+                                <button type="button" class="row-action-btn icon-only generate js-generate-report" data-email="{{ cand.email|e }}" title="Generate Report" aria-label="Generate Report"><i class="bi bi-file-earmark-pdf-fill"></i></button>
                             {% endif %}
-                            <button class="icon-btn btn-gallery js-open-proctoring" data-email="{{ cand.email|e }}" title="View Proctoring Screenshots"><i class="fas fa-images"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="candidate-expanded-grid">
+                        <div class="score-card">
+                            <div class="score-top">
+                                <div class="score-ring" style="--score: {{ cand_score }};">
+                                    <span>{{ '%.0f'|format(cand_score) }}%</span>
+                                </div>
+                                <p class="score-title">Overall Score: <strong>{{ '%.0f'|format(cand_score) }}%</strong></p>
+                            </div>
+
+                            <h4 class="skill-heading">Skill Breakdown</h4>
+                            <div class="skill-list">
+                                {% if breakdown_rounds %}
+                                    {% for round in breakdown_rounds %}
+                                        {% set round_label = round.round_label if round.round_label else ('Round ' ~ loop.index) %}
+                                        {% set round_percent = (round.percentage if round.percentage is not none else 0) | float %}
+                                        <div class="skill-item">
+                                            <div class="skill-label">{{ round_label }}</div>
+                                            <div class="skill-track">
+                                                <div class="skill-fill skill-tone-{{ loop.index0 % 4 }}" style="width: {{ round_percent }}%;"></div>
+                                            </div>
+                                            <div class="skill-value">{{ '%.0f'|format(round_percent) }}%</div>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="skill-item">
+                                        <div class="skill-label">Overall Assessment</div>
+                                        <div class="skill-track">
+                                            <div class="skill-fill skill-tone-1" style="width: {{ cand_score }}%;"></div>
+                                        </div>
+                                        <div class="skill-value">{{ '%.0f'|format(cand_score) }}%</div>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                        </div>
+
+                        <div class="insight-card">
+                            <h4 class="insight-title"><span class="insight-icon"><i class="bi bi-collection-play"></i></span> Report Actions</h4>
+                            <p class="action-hub-note">Generate and manage candidate report artifacts from one workflow panel.</p>
+                            <div class="insight-actions">
+                                {% if cand.has_report and cand.report_filename %}
+                                    <a class="insight-action primary js-view-report" data-action="view-report" href="/reports/view/{{ cand.report_filename }}" target="_blank">
+                                        <i class="bi bi-eye-fill"></i> View Report
+                                    </a>
+                                    <a class="insight-action report-download js-download-report" data-action="download-report" href="/reports/download-file/{{ cand.report_filename }}">
+                                        <i class="bi bi-download"></i> Download PDF
+                                    </a>
+                                    <button type="button" class="insight-action js-open-gallery" data-action="view-screenshots" data-email="{{ cand.email|e }}" data-name="{{ cand.name|e }}">
+                                        <i class="bi bi-images"></i> View Screenshots
+                                    </button>
+                                    <button type="button" class="insight-action report-regenerate js-generate-report" data-action="regenerate-report" data-email="{{ cand.email|e }}">
+                                        <i class="bi bi-arrow-repeat"></i> Regenerate Report
+                                    </button>
+                                {% else %}
+                                    <button type="button" class="insight-action report-generate js-generate-report" data-action="generate-report" data-email="{{ cand.email|e }}">
+                                        <i class="bi bi-file-earmark-pdf-fill"></i> Generate Report
+                                    </button>
+                                    <button type="button" class="insight-action report-download js-download-report disabled" data-action="download-report" disabled>
+                                        <i class="bi bi-download"></i> Download PDF
+                                    </button>
+                                    <button type="button" class="insight-action js-open-gallery" data-action="view-screenshots" data-email="{{ cand.email|e }}" data-name="{{ cand.name|e }}">
+                                        <i class="bi bi-images"></i> View Screenshots
+                                    </button>
+                                    <button type="button" class="insight-action report-regenerate js-generate-report disabled" data-action="regenerate-report" data-email="{{ cand.email|e }}" disabled>
+                                        <i class="bi bi-arrow-repeat"></i> Regenerate Report
+                                    </button>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             {% endfor %}
         {% else %}
-            <div class="empty-state">
-                <i class="fas fa-inbox d-block"></i>
-                <p class="mb-1" style="font-weight:500;">No candidates in the last {{ recent_days }} days</p>
-                <p style="font-size:0.8rem;">Create tests from the <a href="{{ url_for('dashboard.create_test') }}" style="color:var(--az-primary);">Create Test</a> page to see candidates here.</p>
+            <div class="reports-empty">
+                <h4>No candidates found</h4>
+                <p>Try changing role filters or search keywords to view report data.</p>
             </div>
         {% endif %}
     </div>
-</div>
 
-<div class="proctoring-modal" id="proctoringModal" aria-hidden="true">
-    <div class="proctoring-modal-content" role="dialog" aria-modal="true" aria-label="Proctoring Screenshots">
-        <div class="proctoring-modal-header">
-            <div class="proctoring-modal-title" id="proctoringModalTitle">Proctoring Screenshots</div>
-            <button class="proctoring-modal-close js-close-gallery" type="button" title="Close"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="proctoring-modal-body">
-            <div class="proctoring-gallery-meta" id="proctoringGalleryMeta">Loading screenshots...</div>
-            <div class="proctoring-gallery" id="proctoringGallery"></div>
+    <div class="reports-gallery-modal" id="reportsGalleryModal" aria-hidden="true">
+        <div class="reports-gallery-dialog" role="dialog" aria-modal="true" aria-labelledby="reportsGalleryTitle">
+            <div class="reports-gallery-header">
+                <h3 class="reports-gallery-title" id="reportsGalleryTitle">Proctoring Screenshots</h3>
+                <button type="button" class="reports-gallery-close js-close-gallery" aria-label="Close gallery">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <div class="reports-gallery-meta" id="reportsGalleryMeta">Loading screenshots...</div>
+            <div class="reports-gallery-grid" id="reportsGalleryGrid"></div>
         </div>
     </div>
-</div>
 
-<div class="proctoring-viewer" id="proctoringViewer" aria-hidden="true">
-    <div class="proctoring-viewer-frame" role="dialog" aria-modal="true" aria-label="Screenshot viewer">
-        <div class="proctoring-viewer-header">
-            <div id="proctoringViewerMeta">Screenshot</div>
-            <button class="proctoring-viewer-close js-close-viewer" type="button" title="Close"><i class="fas fa-times"></i></button>
+    <div class="reports-consolidated-modal" id="reportsConsolidatedModal" aria-hidden="true">
+        <div class="reports-consolidated-dialog" role="dialog" aria-modal="true" aria-labelledby="reportsConsolidatedTitle">
+            <div class="reports-consolidated-header">
+                <div>
+                    <h3 class="reports-consolidated-title" id="reportsConsolidatedTitle">Consolidated Summary</h3>
+                    <p class="reports-consolidated-subtitle" id="reportsConsolidatedScope">Choose role/date filters, verify the matching candidates, then generate one summary for the selected set.</p>
+                </div>
+                <button type="button" class="reports-consolidated-close js-close-consolidated" aria-label="Close consolidated summary">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <div class="reports-consolidated-body">
+                <aside class="consolidated-selection-panel">
+                    <div class="consolidated-panel-header">
+                        <h4>Select Candidates</h4>
+                        <p>First load candidates by role/date, then verify the filtered list before generating the summary.</p>
+                    </div>
+                    <div class="consolidated-scope-card">
+                        <div><strong>Role:</strong> <span id="consolidatedRoleValue">-</span></div>
+                        <div><strong>Period:</strong> <span id="consolidatedPeriodValue">-</span></div>
+                        <div><strong>Batch:</strong> <span id="consolidatedBatchValue">All Batches</span></div>
+                    </div>
+                    <div class="consolidated-primary-filters">
+                        <div class="consolidated-primary-grid">
+                            <select id="consolidatedRoleSelect" aria-label="Role filter">
+                                <option value="All Roles" {% if selected_role == "All Roles" %}selected{% endif %}>All Roles</option>
+                                {% for role in role_options %}
+                                <option value="{{ role }}" {% if selected_role == role %}selected{% endif %}>{{ role }}</option>
+                                {% endfor %}
+                            </select>
+                            <select id="consolidatedPeriodSelect" aria-label="Date range filter">
+                                <option value="today" {% if date_filter == "today" %}selected{% endif %}>All Done Today</option>
+                                <option value="24h" {% if date_filter == "24h" %}selected{% endif %}>Last 24 Hours</option>
+                                <option value="7d" {% if date_filter == "7d" %}selected{% endif %}>Last 7 Days</option>
+                                <option value="28d" {% if date_filter == "28d" %}selected{% endif %}>Last 28 Days</option>
+                                <option value="date" {% if date_filter == "date" %}selected{% endif %}>Specific Date</option>
+                            </select>
+                            <input
+                                type="date"
+                                id="consolidatedDateInput"
+                                class="consolidated-primary-date wide {% if date_filter != 'date' %}is-hidden{% endif %}"
+                                value="{{ specific_date }}"
+                            >
+                        </div>
+                        <button type="button" class="consolidated-load-btn" id="reportsConsolidatedPreview">
+                            <i class="bi bi-funnel"></i>
+                            Load Candidates
+                        </button>
+                    </div>
+                    <div class="consolidated-results-meta" id="reportsConsolidatedResultsMeta">
+                        Load candidates to preview the filtered result list.
+                    </div>
+                    <div class="consolidated-loaded-preview" id="reportsConsolidatedLoadedPreview">
+                        <div class="consolidated-loaded-empty">Loaded candidate names will appear here.</div>
+                    </div>
+                    <div class="consolidated-secondary-label">Refine Loaded Results</div>
+                    <div class="consolidated-filter-row">
+                        <select id="consolidatedBatchSelect" aria-label="Filter by batch">
+                            <option value="">All Batches</option>
+                        </select>
+                        <select id="consolidatedVerdictFilter" aria-label="Filter by verdict">
+                            <option value="">All Verdicts</option>
+                            <option value="Rejected">Rejected</option>
+                            <option value="Selected">Selected</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Pending">Pending</option>
+                        </select>
+                        <input type="search" id="consolidatedCandidateSearch" placeholder="Search candidates">
+                    </div>
+                    <div class="consolidated-bulk-actions">
+                        <button type="button" class="consolidated-bulk-btn" data-select-mode="all">Select All</button>
+                        <button type="button" class="consolidated-bulk-btn" data-select-mode="none">Clear</button>
+                        <button type="button" class="consolidated-bulk-btn" data-select-mode="rejected">Only Rejected</button>
+                        <button type="button" class="consolidated-bulk-btn" data-select-mode="attempted">Only Attempted</button>
+                    </div>
+                    <div class="consolidated-candidate-list" id="reportsConsolidatedCandidateList">
+                        <div class="consolidated-empty-state">Loading candidates...</div>
+                    </div>
+                </aside>
+                <section class="consolidated-output-panel">
+                    <div class="consolidated-panel-header">
+                        <h4>Summary Output</h4>
+                        <p>The generated summary will appear here without affecting individual report actions.</p>
+                    </div>
+                    <div class="consolidated-output-scroll">
+                        <div class="consolidated-output-placeholder" id="reportsConsolidatedPlaceholder">
+                            Select one or more candidates and click Generate Summary.
+                        </div>
+                        <div class="consolidated-output-loading" id="reportsConsolidatedLoading" style="display:none;">
+                            Building a consolidated summary...
+                        </div>
+                        <div class="consolidated-output-content" id="reportsConsolidatedContent"></div>
+                    </div>
+                </section>
+            </div>
+            <div class="reports-consolidated-footer">
+                <div class="reports-consolidated-selection-meta" id="reportsConsolidatedSelectionMeta">0 candidates selected</div>
+                <div class="consolidated-footer-actions">
+                    <button type="button" class="consolidated-footer-btn" id="reportsConsolidatedDownload" disabled title="Download summary PDF" aria-label="Download summary PDF">
+                        <i class="bi bi-download"></i>
+                    </button>
+                    <button type="button" class="consolidated-footer-btn" id="reportsConsolidatedCopy" disabled>Copy</button>
+                    <button type="button" class="consolidated-footer-btn primary" id="reportsConsolidatedGenerate" disabled>Generate Summary</button>
+                </div>
+            </div>
         </div>
-        <div class="proctoring-viewer-body">
-            <img id="proctoringViewerImage" alt="Proctoring screenshot">
+    </div>
+
+    <div class="reports-footer">
+        <div class="reports-count">Showing {{ showing_from }}-{{ showing_to }} of {{ filtered_total_candidates }} candidates</div>
+        <div class="reports-pagination">
+            <a
+                class="page-btn {% if page <= 1 %}disabled{% endif %}"
+                href="{{ url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, date=date_query, offset=date_offset, page=page-1, per_page=per_page) }}"
+                aria-label="Previous page"
+            >
+                <i class="bi bi-chevron-left"></i>
+            </a>
+
+            {% for p in range(window_start, window_end + 1) %}
+                <a
+                    class="page-btn {% if p == page %}active{% endif %}"
+                    href="{{ url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, date=date_query, offset=date_offset, page=p, per_page=per_page) }}"
+                >{{ p }}</a>
+            {% endfor %}
+
+            <a
+                class="page-btn {% if page >= total_pages %}disabled{% endif %}"
+                href="{{ url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, date=date_query, offset=date_offset, page=page+1, per_page=per_page) }}"
+                aria-label="Next page"
+            >
+                <i class="bi bi-chevron-right"></i>
+            </a>
+
+            <label class="page-size-wrap" for="reportsPerPageSelect">
+                <select id="reportsPerPageSelect" aria-label="Rows per page">
+                    {% for size in [5, 8, 10, 20, 50] %}
+                    <option value="{{ size }}" {% if per_page == size %}selected{% endif %}>{{ size }}</option>
+                    {% endfor %}
+                </select>
+                / page
+            </label>
         </div>
-        <div class="proctoring-viewer-footer">
-            <button class="proctoring-viewer-btn js-step-viewer" id="proctoringPrevBtn" type="button" data-step="-1">
-                <i class="fas fa-chevron-left"></i> Prev
-            </button>
-            <button class="proctoring-viewer-btn js-step-viewer" id="proctoringNextBtn" type="button" data-step="1">
-                Next <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
+    </div>
     </div>
 </div>
 {% endblock %}
+
+{% block page_instructions %}
+<p class="mb-2">Use Reports with this step-by-step flow:</p>
+<ol class="mb-0 ps-3">
+    <li><strong>Set period first:</strong> Pick Today/Last 24h/Last 7d/Last 28d/Custom Date to scope your generated candidates.</li>
+    <li><strong>Filter candidates:</strong> Use role and search to narrow the report list to relevant candidates.</li>
+    <li><strong>Open candidate details:</strong> Hover a row to expand details, then click the row to lock it open.</li>
+    <li><strong>Validate scores:</strong> Review overall score and round-level skill breakdown before sharing outcomes.</li>
+    <li><strong>Generate artifacts:</strong> Use <strong>Generate Report</strong> when report files are not yet available.</li>
+    <li><strong>Create drive-level insights:</strong> Use <strong>Consolidated Summary</strong> to select a filtered candidate batch and produce one summary across the group.</li>
+    <li><strong>Consume outputs:</strong> Use <strong>View Report</strong>, <strong>Download PDF</strong>, and <strong>View Screenshots</strong>.</li>
+    <li><strong>Maintain freshness:</strong> Use <strong>Regenerate Report</strong> after data updates to keep files current.</li>
+</ol>
+{% endblock %}
+
 {% block scripts %}
+<script>
+    document.body.classList.add("reports-page-body");
+</script>
 <script src="{{ url_for('static', filename='js/reports.js') }}?v={{ ASSET_VERSION }}"></script>
 {% endblock %}

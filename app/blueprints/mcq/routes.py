@@ -177,7 +177,9 @@ def _record_proctoring_event(session_id, event_type, details=None, ts=None, scre
 
 
 def _is_ajax_request():
-    return request.headers.get("X-Requested-With") == "XMLHttpRequest"
+    requested_with = str(request.headers.get("X-Requested-With", "") or "").strip().lower()
+    accept = str(request.headers.get("Accept", "") or "").strip().lower()
+    return requested_with == "xmlhttprequest" or "application/json" in accept
 
 
 def _proctoring_enabled():
@@ -606,12 +608,20 @@ def proctoring_webcam():
 @mcq_bp.route("/submit/<session_id>", methods=["GET", "POST"])
 def submit(session_id):
 
+    session_meta = MCQ_SESSION_REGISTRY.get(session_id)
+    if not session_meta:
+        return "Invalid or expired test link", 404
+
     if request.method == "POST":
         # Evaluate only once here
         EvaluationService.evaluate_mcq(session_id)
 
         # Free cookie space immediately after evaluation
         MCQSessionService.clear_session(session_id)
+
+        # Invalidate link immediately after successful submission.
+        db_service.expire_test_link_now(session_id)
+        MCQ_SESSION_REGISTRY.pop(session_id, None)
 
         completed_url = url_for("mcq.completed", session_id=session_id)
         if _is_ajax_request():
@@ -623,9 +633,9 @@ def submit(session_id):
 
     return render_template(
         "mcq/submit.html",
+        session_id=session_id,
         proctoring_enabled=_proctoring_enabled(),
     )
-
 
 # -------------------------------------------------
 # COMPLETION PAGE
@@ -636,3 +646,4 @@ def completed(session_id):
         "mcq/completed.html",
         proctoring_enabled=_proctoring_enabled(),
     )
+
