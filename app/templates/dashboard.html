@@ -2200,8 +2200,8 @@
         <span class="active">Dashboard</span>
     </div>
     <section class="dash-hero">
-        <h1 class="dash-greeting">Hi {{ user_name }} <span class="wave">&#128075;</span>, ready to pick top talent today?</h1>
-        <p class="dash-subtitle">Your TA command center is live.</p>
+        <h1 class="dash-greeting">Good afternoon, {{ user_name }} <span class="wave">&#128075;</span></h1>
+        <p class="dash-subtitle">Manage your hiring process efficiently with easy-to-use tools.</p>
     </section>
 
     <section class="dash-panel dash-carousel-panel">
@@ -2434,10 +2434,10 @@
                         <div class="dash-carousel-figure figure-media-only">
                             <img
                                 class="dash-carousel-media"
-                                src="{{ url_for('static', filename='images/dashboard_carousel_navigation_v3.svg', v=ASSET_VERSION) }}"
+                                src="{{ url_for('static', filename='images/dashboard_carousel_navigation_v2.svg', v=ASSET_VERSION) }}"
                                 alt="Quick navigation workflow map"
                                 loading="lazy"
-                                onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/dashboard_carousel_navigation_v3.svg') }}';"
+                                onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/dashboard_carousel_navigation_v2.svg') }}';"
                             >
                         </div>
                         <div class="dash-carousel-content">
@@ -2474,18 +2474,22 @@
             <button type="button" class="dash-detail-tab is-active" data-detail-toggle="overview" aria-selected="true" aria-controls="dash-detail-overview">
                 <span class="detail-icon"><i class="bi bi-calendar2-week"></i></span>
                 <span class="detail-title">Period Overview</span>
+                <span class="detail-link">View details</span>
             </button>
             <button type="button" class="dash-detail-tab" data-detail-toggle="performance" aria-selected="false" aria-controls="dash-detail-performance">
                 <span class="detail-icon"><i class="bi bi-bar-chart-line"></i></span>
                 <span class="detail-title">Performance</span>
+                <span class="detail-link">View details</span>
             </button>
             <button type="button" class="dash-detail-tab" data-detail-toggle="savings" aria-selected="false" aria-controls="dash-detail-savings">
                 <span class="detail-icon"><i class="bi bi-piggy-bank"></i></span>
                 <span class="detail-title">Cost Savings</span>
+                <span class="detail-link">View details</span>
             </button>
             <button type="button" class="dash-detail-tab" data-detail-toggle="my-stats" aria-selected="false" aria-controls="dash-detail-my-stats">
                 <span class="detail-icon"><i class="bi bi-person-badge"></i></span>
                 <span class="detail-title">My Statistics</span>
+                <span class="detail-link">View details</span>
             </button>
         </div>
     </section>
