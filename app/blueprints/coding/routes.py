@@ -17,6 +17,7 @@ from uuid import uuid4
 from flask import render_template, redirect, url_for, request, session, jsonify, current_app
 from . import coding_bp
 
+from app.services.coding_runtime_store import coding_session_key
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 from app.services.coding_submission_store import save_coding_submission
 from app.services.evaluation_store import EVALUATION_STORE
@@ -227,13 +228,14 @@ def start_test(session_id):
     session_meta = CODING_SESSION_REGISTRY.get(session_id)
     if not session_meta:
         return "Invalid or expired coding test link", 404
-    if session_meta.get("started"):
-        return "This test has already been started. Restart is not allowed.", 403
 
     # Clear ALL old test session data to keep cookie small
+    current_session_key = coding_session_key(session_id)
     stale_keys = [k for k in list(session.keys())
                   if k.startswith(("mcq_", "coding_"))]
     for k in stale_keys:
+        if k == current_session_key:
+            continue
         if k.startswith("coding_"):
             stale_session_id = k.replace("coding_", "", 1)
             if stale_session_id:
@@ -290,14 +292,11 @@ def begin_test(session_id):
         if _is_ajax_request():
             return jsonify({"status": "error", "reason": "invalid_session"}), 404
         return "Invalid or expired coding test link", 404
-    if session_meta.get("started"):
-        if _is_ajax_request():
-            return jsonify({"status": "locked", "reason": "already_started"}), 403
-        return "This test has already been started. Restart is not allowed.", 403
 
-    session_meta["started"] = True
-    session_meta["started_at"] = _utc_now_iso()
-    CODING_SESSION_REGISTRY[session_id] = session_meta
+    if not session_meta.get("started"):
+        session_meta["started"] = True
+        session_meta["started_at"] = _utc_now_iso()
+        CODING_SESSION_REGISTRY[session_id] = session_meta
 
     if _is_ajax_request():
         return jsonify({"status": "ok", "editor_url": url_for("coding.editor", session_id=session_id)})

@@ -707,12 +707,6 @@
                                     <div class="upload-label">Choose File</div>
                                     <div class="file-name"></div>
                                 </div>
-                                <div class="upload-zone upload-zone-secondary">
-                                    <input type="file" class="supporting-upload" accept=".pdf,.doc,.docx,.txt">
-                                    <div class="upload-icon" data-default-icon="fa-file-alt"><i class="fas fa-file-alt"></i></div>
-                                    <div class="upload-label">Choose File</div>
-                                    <div class="file-name"></div>
-                                </div>
                             </div>
                             <div class="upload-hint">PDF, DOC, DOCX, TXT Auto-extracts name &amp; email</div>
                         </div>
@@ -1217,7 +1211,6 @@ function applyJdResponse(row, payload) {
 function setupFileInputListeners(row) {
     const resumeInput = row.querySelector(".resume-upload");
     const jdInput = row.querySelector(".jd-upload");
-    const supportingInputs = row.querySelectorAll(".supporting-upload");
     const spinner = row.querySelector(".extract-spinner");
 
     const nameField = row.querySelector(".candidate-name");
@@ -1234,22 +1227,6 @@ function setupFileInputListeners(row) {
         roleField.addEventListener("change", () => clearFieldError(row, ".role-error"));
     }
     bindReviewSyncForRow(row);
-
-    supportingInputs.forEach((input) => {
-        input.addEventListener("change", function () {
-            const zone = this.closest(".upload-zone");
-            if (!zone) return;
-            if (this.files.length > 0) {
-                const file = this.files[0];
-                zone.classList.add("has-file");
-                zone.querySelector(".file-name").textContent = file.name;
-                zone.querySelector(".upload-icon").innerHTML = '<i class="fas fa-check-circle"></i>';
-                setAutofillStatus(row, "", "");
-            } else {
-                resetUploadZone(zone);
-            }
-        });
-    });
 
     if (resumeInput) {
         resumeInput.addEventListener("change", function () {

@@ -238,16 +238,13 @@ class CodingSessionService:
 
         existing = get_coding_session_data(session_id)
         if existing:
-            # Reset timer so it starts fresh each time the candidate opens the test,
-            # but preserve questions/code/answers.
-            if not existing.get("submitted"):
-                existing["start_time"] = int(time.time())
-                set_coding_session_data(session_id, existing)
+            session[session_key] = {"runtime_store": True}
+            session.modified = True
             return
 
         legacy = session.get(session_key)
         if isinstance(legacy, dict) and "question" in legacy and "language" in legacy:
-            legacy["start_time"] = int(time.time())
+            legacy["start_time"] = int(legacy.get("start_time", 0) or time.time())
             set_coding_session_data(session_id, legacy)
             session[session_key] = {"runtime_store": True}
             session.modified = True
@@ -640,7 +637,10 @@ class CodingSessionService:
         data = CodingSessionService.get_session_data(session_id)
         if not data:
             return 0
-        elapsed = int(time.time()) - data["start_time"]
+        start_time = int(data.get("start_time", 0) or 0)
+        if not start_time:
+            return data["duration_seconds"]
+        elapsed = int(time.time()) - start_time
         return max(0, data["duration_seconds"] - elapsed)
 
     @staticmethod

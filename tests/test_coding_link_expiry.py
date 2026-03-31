@@ -10,6 +10,7 @@ from flask import Flask
 
 from app.blueprints.coding import coding_bp
 from app.blueprints.coding import routes as coding_routes
+from app.blueprints.coding.services import CodingSessionService
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 from app.services.coding_runtime_store import clear_coding_session_data
 
@@ -71,6 +72,49 @@ def test_coding_submit_invalidates_link_for_reentry(monkeypatch):
         # Link must be invalid once candidate submits.
         retry_response = client.get(f"/coding/start/{session_id}")
         assert retry_response.status_code == 404
+    finally:
+        _cleanup_session(session_id)
+
+
+def test_coding_reentry_before_submit_preserves_timer_and_code(monkeypatch):
+    session_id = f"coding-resume-{uuid.uuid4().hex[:8]}"
+    _register_coding_session(session_id)
+
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    try:
+        start_response = client.get(f"/coding/start/{session_id}")
+        assert start_response.status_code == 200
+
+        begin_response = client.post(
+            f"/coding/begin/{session_id}",
+            headers={"X-Requested-With": "XMLHttpRequest"},
+        )
+        assert begin_response.status_code == 200
+        assert begin_response.get_json()["status"] == "ok"
+
+        CodingSessionService.save_code(session_id, "print('resume')")
+        runtime = CodingSessionService.get_session_data(session_id)
+        runtime["start_time"] -= 180
+        remaining_before = CodingSessionService.remaining_time(session_id)
+
+        retry_start = client.get(f"/coding/start/{session_id}")
+        assert retry_start.status_code == 200
+
+        retry_begin = client.post(
+            f"/coding/begin/{session_id}",
+            headers={"X-Requested-With": "XMLHttpRequest"},
+        )
+        assert retry_begin.status_code == 200
+        assert retry_begin.get_json()["status"] == "ok"
+
+        remaining_after = CodingSessionService.remaining_time(session_id)
+        assert abs(remaining_after - remaining_before) <= 1
+        assert CodingSessionService.get_code(session_id) == "print('resume')"
+
+        editor_response = client.get(f"/coding/editor/{session_id}")
+        assert editor_response.status_code == 200
     finally:
         _cleanup_session(session_id)
 

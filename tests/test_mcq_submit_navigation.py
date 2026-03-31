@@ -9,6 +9,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from flask import Flask
 
 from app.blueprints.mcq import mcq_bp
+from app.blueprints.mcq.services import MCQSessionService
 from app.services.evaluation_service import EvaluationService
 from app.services.evaluation_store import EVALUATION_STORE
 from app.services.mcq_runtime_store import clear_mcq_session_data
@@ -86,6 +87,46 @@ def test_mcq_question_post_accepts_json_accept_header_for_navigation(monkeypatch
         assert payload["done"] is False
         assert payload["question"]["q_index"] == 1
         assert payload["question"]["selected_answer"] is None
+    finally:
+        _cleanup_session(session_id)
+        EVALUATION_STORE.clear()
+
+
+def test_mcq_reentry_before_submit_preserves_timer_and_answers(monkeypatch):
+    session_id = f"mcq-resume-{uuid.uuid4().hex[:8]}"
+    _register_mcq_session(session_id)
+    EVALUATION_STORE.clear()
+
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    try:
+        start_response = client.get(f"/mcq/start/{session_id}")
+        assert start_response.status_code == 200
+
+        begin_response = client.post(f"/mcq/begin/{session_id}", follow_redirects=False)
+        assert begin_response.status_code == 302
+
+        answer_response = client.post(
+            f"/mcq/question/{session_id}?q=0",
+            data={"answer": "4", "nav": "next"},
+            headers={"Accept": "application/json"},
+        )
+        assert answer_response.status_code == 200
+
+        runtime = MCQSessionService.get_session_data(session_id)
+        runtime["start_time"] -= 120
+        remaining_before = MCQSessionService.remaining_time(session_id)
+
+        retry_start = client.get(f"/mcq/start/{session_id}")
+        assert retry_start.status_code == 200
+
+        retry_begin = client.post(f"/mcq/begin/{session_id}", follow_redirects=False)
+        assert retry_begin.status_code == 302
+
+        remaining_after = MCQSessionService.remaining_time(session_id)
+        assert abs(remaining_after - remaining_before) <= 1
+        assert MCQSessionService.get_answer(session_id, 0) == "4"
     finally:
         _cleanup_session(session_id)
         EVALUATION_STORE.clear()

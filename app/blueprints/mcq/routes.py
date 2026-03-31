@@ -12,6 +12,7 @@ from uuid import uuid4
 from flask import render_template, redirect, url_for, request, session, jsonify, current_app
 from . import mcq_bp
 
+from app.services.mcq_runtime_store import mcq_session_key
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
 from .services import MCQSessionService
 from app.services.evaluation_service import EvaluationService
@@ -212,16 +213,17 @@ def start_test(session_id):
     session_meta = MCQ_SESSION_REGISTRY.get(session_id)
     if not session_meta:
         return "Invalid or expired test link", 404
-    if session_meta.get("started"):
-        return "This test has already been started. Restart is not allowed.", 403
 
     # ✅ Clear ALL old test session data to keep cookie small
     #    (Flask's cookie-based session has a ~4 KB browser limit;
     #     accumulated question payloads from earlier rounds cause
     #     the Set-Cookie to be silently dropped.)
+    current_session_key = mcq_session_key(session_id)
     stale_keys = [k for k in list(session.keys())
                   if k.startswith(("mcq_", "coding_"))]
     for k in stale_keys:
+        if k == current_session_key:
+            continue
         session.pop(k)
 
     MCQSessionService.init_session(
@@ -229,7 +231,7 @@ def start_test(session_id):
         role_key=session_meta["role_key"],
         round_key=session_meta["round_key"],
         domain=session_meta.get("domain"),
-        force_reset=True
+        force_reset=False
     )
 
     return render_template(
@@ -255,12 +257,10 @@ def begin_test(session_id):
     session_meta = MCQ_SESSION_REGISTRY.get(session_id)
     if not session_meta:
         return "Invalid or expired test link", 404
-    if session_meta.get("started"):
-        return "This test has already been started. Restart is not allowed.", 403
-
-    session_meta["started"] = True
-    session_meta["started_at"] = _utc_now_iso()
-    MCQ_SESSION_REGISTRY[session_id] = session_meta
+    if not session_meta.get("started"):
+        session_meta["started"] = True
+        session_meta["started_at"] = _utc_now_iso()
+        MCQ_SESSION_REGISTRY[session_id] = session_meta
 
     return redirect(
         url_for("mcq.question", session_id=session_id, q=0)

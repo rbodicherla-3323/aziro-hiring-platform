@@ -36,18 +36,18 @@ class MCQSessionService:
     @staticmethod
     def init_session(session_id, role_key, round_key, domain=None, force_reset=False):
         session_key = mcq_session_key(session_id)
+        existing = get_mcq_session_data(session_id)
 
         if force_reset:
-            # Reset timer so it starts fresh each time the candidate opens the test,
-            # but preserve questions and answers.
-            existing = get_mcq_session_data(session_id)
             if existing:
-                existing["start_time"] = int(time.time())
-                set_mcq_session_data(session_id, existing)
+                session[session_key] = {"runtime_store": True}
+                session.modified = True
                 return
             session.pop(session_key, None)
 
-        if get_mcq_session_data(session_id):
+        if existing:
+            session[session_key] = {"runtime_store": True}
+            session.modified = True
             return
 
         loader = QuestionLoader(base_path="app/services/question_bank/data")
@@ -152,7 +152,11 @@ class MCQSessionService:
         if not data:
             return 0
 
-        elapsed = int(time.time()) - data["start_time"]
+        start_time = int(data.get("start_time", 0) or 0)
+        if not start_time:
+            return data["duration_seconds"]
+
+        elapsed = int(time.time()) - start_time
         return max(0, data["duration_seconds"] - elapsed)
 
     @staticmethod

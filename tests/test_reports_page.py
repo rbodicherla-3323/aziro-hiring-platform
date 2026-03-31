@@ -91,3 +91,49 @@ def test_reports_page_renders_for_attempted_candidate_scope(monkeypatch):
     body = response.get_data(as_text=True)
     assert "Alice Example" in body
     assert "C++ Developer" in body
+
+
+def test_reports_page_search_includes_report_backed_candidates(monkeypatch):
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    monkeypatch.setattr(reports_routes, "get_tests_for_user_in_range", lambda user_email, since: [])
+    monkeypatch.setattr(reports_routes.EvaluationAggregator, "get_candidates", staticmethod(lambda: []))
+    monkeypatch.setattr(reports_routes.db_service, "search_candidates", lambda query, role_filter="": [])
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "search_candidates_with_reports",
+        lambda query, role_filter="": [
+            {
+                "name": "Archived Candidate",
+                "email": "archived@example.com",
+                "role": "Python Developer",
+                "created_at": "2026-03-20 10:15",
+                "report_filename": "archived_candidate_report.pdf",
+            }
+        ],
+    )
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_latest_report_for_email",
+        lambda email: {
+            "filename": "archived_candidate_report.pdf",
+            "created_at": "2026-03-20 10:15",
+        },
+    )
+    monkeypatch.setattr(
+        reports_routes,
+        "build_proctoring_summary_by_email",
+        lambda emails, session_ids_by_email=None: {
+            email: reports_routes.blank_proctoring_summary() for email in emails
+        },
+    )
+    monkeypatch.setattr(reports_routes, "build_plagiarism_summary_by_candidates", lambda candidates: {})
+
+    response = client.get("/reports?q=archived")
+
+    assert response.status_code == 200
+    body = response.get_data(as_text=True)
+    assert "Archived Candidate" in body
+    assert "archived@example.com" in body
+    assert "archived_candidate_report.pdf" in body

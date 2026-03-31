@@ -253,8 +253,13 @@ def _collect_reports_scope(
         except Exception as exc:
             current_app.logger.exception("DB candidate search failed: %s", exc)
             db_matches = []
+        try:
+            report_matches = db_service.search_candidates_with_reports(q, db_role_filter)
+        except Exception as exc:
+            current_app.logger.exception("DB report search failed: %s", exc)
+            report_matches = []
 
-        for row in db_matches:
+        for row in [*db_matches, *report_matches]:
             email_key = _normalize_email(row.get("email", ""))
             if not email_key:
                 continue
@@ -266,9 +271,12 @@ def _collect_reports_scope(
                     existing["name"] = str(row.get("name", "")).strip() or email_key
                 if not existing.get("created_at"):
                     existing["created_at"] = str(row.get("created_at", "")).strip()
+                if row.get("report_filename"):
+                    existing["report_filename"] = str(row.get("report_filename", "")).strip()
+                    existing["has_report"] = True
                 continue
 
-            all_candidates_by_email[email_key] = {
+            candidate_row = {
                 "name": str(row.get("name", "")).strip() or email_key,
                 "email": email_key,
                 "role": str(row.get("role", "")).strip(),
@@ -285,6 +293,10 @@ def _collect_reports_scope(
                     "overall_verdict": "Pending",
                 },
             }
+            if row.get("report_filename"):
+                candidate_row["report_filename"] = str(row.get("report_filename", "")).strip()
+                candidate_row["has_report"] = True
+            all_candidates_by_email[email_key] = candidate_row
 
     session_candidates.sort(key=_created_sort_key, reverse=True)
     all_candidates_pool = list(all_candidates_by_email.values())
