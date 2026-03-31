@@ -1,5 +1,6 @@
 import uuid
 import sys
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -14,6 +15,7 @@ from app.services.evaluation_service import EvaluationService
 from app.services.evaluation_store import EVALUATION_STORE
 from app.services.mcq_runtime_store import clear_mcq_session_data
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
+from app.services import session_registry as registry_service
 
 
 def _register_mcq_session(session_id: str):
@@ -157,6 +159,39 @@ def test_mcq_submit_post_accepts_json_accept_header_and_returns_redirect(monkeyp
         # Link must be invalid once candidate submits.
         retry_response = client.get(f"/mcq/start/{session_id}")
         assert retry_response.status_code == 404
+    finally:
+        _cleanup_session(session_id)
+        EVALUATION_STORE.clear()
+
+
+def test_mcq_start_rejects_stale_cached_link_when_db_record_is_expired(monkeypatch):
+    session_id = f"mcq-expired-{uuid.uuid4().hex[:8]}"
+    _register_mcq_session(session_id)
+    EVALUATION_STORE.clear()
+
+    future_expiry = (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat()
+    expired_db_expiry = (datetime.now(timezone.utc) - timedelta(minutes=1)).isoformat()
+    MCQ_SESSION_REGISTRY._cache[session_id]["expires_at"] = future_expiry
+    MCQ_SESSION_REGISTRY._cache[session_id]["test_type"] = "mcq"
+
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    monkeypatch.setattr(
+        registry_service.db_service,
+        "get_test_link_meta",
+        lambda sid: {
+            **MCQ_SESSION_REGISTRY._cache.get(session_id, {}),
+            "session_id": sid,
+            "test_type": "mcq",
+            "expires_at": expired_db_expiry,
+        },
+    )
+
+    try:
+        response = client.get(f"/mcq/start/{session_id}")
+        assert response.status_code == 404
+        assert session_id not in MCQ_SESSION_REGISTRY._cache
     finally:
         _cleanup_session(session_id)
         EVALUATION_STORE.clear()

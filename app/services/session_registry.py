@@ -32,35 +32,55 @@ class PersistentSessionRegistry:
         self._cache = {}
         self._test_type = str(test_type or "").strip().lower()
 
+    def _matches_registry_type(self, meta):
+        record_type = str((meta or {}).get("test_type") or "").strip().lower()
+        if record_type and self._test_type and record_type != self._test_type:
+            return False
+        return True
+
     def get(self, session_id, default=None):
         sid = str(session_id or "").strip()
         if not sid:
             return default
 
-        meta = self._cache.get(sid)
-        if meta:
-            if _is_expired(meta):
-                self._cache.pop(sid, None)
-                return default
-            return meta
+        cached_meta = self._cache.get(sid)
+        if cached_meta and _is_expired(cached_meta):
+            self._cache.pop(sid, None)
+            cached_meta = None
 
+        record = None
+        fetched_from_db = False
         try:
             record = db_service.get_test_link_meta(sid)
         except Exception:
+            record = None
+        else:
+            fetched_from_db = True
+
+        if record:
+            if not self._matches_registry_type(record):
+                self._cache.pop(sid, None)
+                return default
+            if _is_expired(record):
+                self._cache.pop(sid, None)
+                return default
+            self._cache[sid] = record
+            return record
+
+        if fetched_from_db:
+            # DB is authoritative when available. Clear any stale worker-local cache
+            # so submitted/expired links cannot be reopened after a deploy or worker hop.
+            self._cache.pop(sid, None)
             return default
 
-        if not record:
+        if not cached_meta:
             return default
 
-        record_type = str(record.get("test_type") or "").strip().lower()
-        if record_type and self._test_type and record_type != self._test_type:
+        if not self._matches_registry_type(cached_meta):
+            self._cache.pop(sid, None)
             return default
 
-        if _is_expired(record):
-            return default
-
-        self._cache[sid] = record
-        return record
+        return cached_meta
 
     def __getitem__(self, session_id):
         meta = self.get(session_id)

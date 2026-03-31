@@ -1,5 +1,6 @@
 import uuid
 import sys
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -13,6 +14,7 @@ from app.blueprints.coding import routes as coding_routes
 from app.blueprints.coding.services import CodingSessionService
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 from app.services.coding_runtime_store import clear_coding_session_data
+from app.services import session_registry as registry_service
 
 
 def _register_coding_session(session_id: str):
@@ -115,6 +117,37 @@ def test_coding_reentry_before_submit_preserves_timer_and_code(monkeypatch):
 
         editor_response = client.get(f"/coding/editor/{session_id}")
         assert editor_response.status_code == 200
+    finally:
+        _cleanup_session(session_id)
+
+
+def test_coding_start_rejects_stale_cached_link_when_db_record_is_expired(monkeypatch):
+    session_id = f"coding-expired-{uuid.uuid4().hex[:8]}"
+    _register_coding_session(session_id)
+
+    future_expiry = (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat()
+    expired_db_expiry = (datetime.now(timezone.utc) - timedelta(minutes=1)).isoformat()
+    CODING_SESSION_REGISTRY._cache[session_id]["expires_at"] = future_expiry
+    CODING_SESSION_REGISTRY._cache[session_id]["test_type"] = "coding"
+
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    monkeypatch.setattr(
+        registry_service.db_service,
+        "get_test_link_meta",
+        lambda sid: {
+            **CODING_SESSION_REGISTRY._cache.get(session_id, {}),
+            "session_id": sid,
+            "test_type": "coding",
+            "expires_at": expired_db_expiry,
+        },
+    )
+
+    try:
+        response = client.get(f"/coding/start/{session_id}")
+        assert response.status_code == 404
+        assert session_id not in CODING_SESSION_REGISTRY._cache
     finally:
         _cleanup_session(session_id)
 
