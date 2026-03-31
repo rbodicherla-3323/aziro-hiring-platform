@@ -26,6 +26,21 @@ def _dt_to_iso(value) -> str:
     return str(value)
 
 
+def _parse_dt(value) -> datetime | None:
+    if isinstance(value, datetime):
+        dt = value
+    elif isinstance(value, str):
+        try:
+            dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        except (ValueError, TypeError):
+            return None
+    else:
+        return None
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt
+
+
 def save_proctoring_screenshot(
     *,
     session_uuid: str,
@@ -257,7 +272,30 @@ def get_test_link_meta(session_id: str) -> dict | None:
         "expires_at": _dt_to_iso(record.expires_at),
     }
 
-def expire_test_link_now(session_id: str, when: datetime | None = None) -> bool:
+def is_test_link_completed(session_id: str) -> bool:
+    sid = str(session_id or "").strip().lower()
+    if not sid:
+        return False
+
+    try:
+        row = (
+            RoundResult.query
+            .filter(db.func.lower(RoundResult.session_uuid) == sid)
+            .filter(RoundResult.status.in_(("PASS", "FAIL")))
+            .first()
+        )
+        return row is not None
+    except Exception:
+        return False
+
+
+def expire_test_link_now(
+    session_id: str,
+    when: datetime | None = None,
+    *,
+    meta: dict | None = None,
+    test_type: str = "",
+) -> bool:
     """
     Expire a test link immediately.
 
@@ -272,6 +310,16 @@ def expire_test_link_now(session_id: str, when: datetime | None = None) -> bool:
 
     try:
         record = TestLink.query.get(sid)
+        if not record and isinstance(meta, dict):
+            created_at = _parse_dt(meta.get("created_at")) or when
+            fallback_type = str(test_type or meta.get("test_type", "") or "mcq").strip().lower() or "mcq"
+            record = save_test_link(
+                meta=meta,
+                test_type=fallback_type,
+                created_by=str(meta.get("created_by", "") or "").strip().lower(),
+                created_at=created_at,
+                expires_at=when,
+            )
         if not record:
             return False
         record.expires_at = when

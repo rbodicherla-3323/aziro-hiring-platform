@@ -151,3 +151,38 @@ def test_coding_start_rejects_stale_cached_link_when_db_record_is_expired(monkey
     finally:
         _cleanup_session(session_id)
 
+
+def test_coding_start_rejects_completed_link_even_if_db_record_is_still_active(monkeypatch):
+    session_id = f"coding-completed-{uuid.uuid4().hex[:8]}"
+    _register_coding_session(session_id)
+
+    future_expiry = (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat()
+    CODING_SESSION_REGISTRY._cache[session_id]["expires_at"] = future_expiry
+    CODING_SESSION_REGISTRY._cache[session_id]["test_type"] = "coding"
+
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    monkeypatch.setattr(
+        registry_service.db_service,
+        "get_test_link_meta",
+        lambda sid: {
+            **CODING_SESSION_REGISTRY._cache.get(session_id, {}),
+            "session_id": sid,
+            "test_type": "coding",
+            "expires_at": future_expiry,
+        },
+    )
+    monkeypatch.setattr(
+        registry_service.db_service,
+        "is_test_link_completed",
+        lambda sid: str(sid or "").strip() == session_id,
+    )
+
+    try:
+        response = client.get(f"/coding/start/{session_id}")
+        assert response.status_code == 404
+        assert session_id not in CODING_SESSION_REGISTRY._cache
+    finally:
+        _cleanup_session(session_id)
+

@@ -61,6 +61,9 @@ class PersistentSessionRegistry:
             if not self._matches_registry_type(record):
                 self._cache.pop(sid, None)
                 return default
+            if db_service.is_test_link_completed(sid):
+                self._cache.pop(sid, None)
+                return default
             if _is_expired(record):
                 self._cache.pop(sid, None)
                 return default

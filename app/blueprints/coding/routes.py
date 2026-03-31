@@ -2325,7 +2325,11 @@ def submit(session_id):
         CodingSessionService.clear_session(session_id)
 
         # Invalidate link immediately after successful submission.
-        db_service.expire_test_link_now(session_id)
+        db_service.expire_test_link_now(
+            session_id,
+            meta=session_meta,
+            test_type="coding",
+        )
         CODING_SESSION_REGISTRY.pop(session_id, None)
 
         completed_url = url_for("coding.completed", session_id=session_id)

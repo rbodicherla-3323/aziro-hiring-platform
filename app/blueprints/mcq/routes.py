@@ -638,7 +638,11 @@ def submit(session_id):
         MCQSessionService.clear_session(session_id)
 
         # Invalidate link immediately after successful submission.
-        db_service.expire_test_link_now(session_id)
+        db_service.expire_test_link_now(
+            session_id,
+            meta=session_meta,
+            test_type="mcq",
+        )
         MCQ_SESSION_REGISTRY.pop(session_id, None)
 
         completed_url = url_for("mcq.completed", session_id=session_id)

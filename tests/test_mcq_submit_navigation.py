@@ -196,3 +196,40 @@ def test_mcq_start_rejects_stale_cached_link_when_db_record_is_expired(monkeypat
         _cleanup_session(session_id)
         EVALUATION_STORE.clear()
 
+
+def test_mcq_start_rejects_completed_link_even_if_db_record_is_still_active(monkeypatch):
+    session_id = f"mcq-completed-{uuid.uuid4().hex[:8]}"
+    _register_mcq_session(session_id)
+    EVALUATION_STORE.clear()
+
+    future_expiry = (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat()
+    MCQ_SESSION_REGISTRY._cache[session_id]["expires_at"] = future_expiry
+    MCQ_SESSION_REGISTRY._cache[session_id]["test_type"] = "mcq"
+
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    monkeypatch.setattr(
+        registry_service.db_service,
+        "get_test_link_meta",
+        lambda sid: {
+            **MCQ_SESSION_REGISTRY._cache.get(session_id, {}),
+            "session_id": sid,
+            "test_type": "mcq",
+            "expires_at": future_expiry,
+        },
+    )
+    monkeypatch.setattr(
+        registry_service.db_service,
+        "is_test_link_completed",
+        lambda sid: str(sid or "").strip() == session_id,
+    )
+
+    try:
+        response = client.get(f"/mcq/start/{session_id}")
+        assert response.status_code == 404
+        assert session_id not in MCQ_SESSION_REGISTRY._cache
+    finally:
+        _cleanup_session(session_id)
+        EVALUATION_STORE.clear()
+
