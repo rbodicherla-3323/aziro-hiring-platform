@@ -127,9 +127,9 @@ ENTERPRISE_BANK_POLICIES = {
         **SENIOR_POLICY_TEMPLATE,
         "role_key": "python_shared_senior",
         "round_key": "L2",
-        "bank_version": "enterprise_python_shared_hard_only_v4",
-        "difficulty_counts": {"easy": 0, "medium": 0, "hard": 35},
-        "debugging_counts": {"easy": 0, "medium": 0, "hard": 35},
+        "bank_version": "enterprise_python_shared_hard_pick_v5",
+        "difficulty_counts": {"easy": 10, "medium": 38, "hard": 37},
+        "debugging_counts": {"easy": 0, "medium": 20, "hard": 30},
         "selection_difficulty_mix": {"hard": 15},
         "required_topics": {
             "Data Structures and Performance",
