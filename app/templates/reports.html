@@ -1621,9 +1621,13 @@
                 <div
                     class="candidate-item candidate-card"
                     data-candidate-card
+                    data-candidate-key="{{ cand.candidate_key|default('')|e }}"
                     data-candidate-name="{{ cand.name|e }}"
                     data-candidate-email="{{ cand.email|e }}"
                     data-candidate-role="{{ cand.role|default('N/A')|e }}"
+                    data-candidate-role-key="{{ cand.role_key|default('')|e }}"
+                    data-candidate-batch-id="{{ cand.batch_id|default('')|e }}"
+                    data-candidate-test-session-id="{{ cand.test_session_id|default('') }}"
                     data-candidate-score="{{ '%.0f'|format(cand_score) }}"
                     data-candidate-verdict="{{ cand_verdict|e }}"
                     data-candidate-rounds="{{ (cand.rounds or {})|tojson|forceescape }}"
@@ -1649,6 +1653,7 @@
                                 class="row-action-btn icon-only gallery js-open-gallery"
                                 data-email="{{ cand.email|e }}"
                                 data-name="{{ cand.name|e }}"
+                                data-test-session-id="{{ cand.test_session_id|default('') }}"
                                 title="View Screenshots"
                                 aria-label="View Screenshots"
                             >
@@ -1657,9 +1662,9 @@
                             {% if cand.has_report and cand.report_filename %}
                                 <a class="row-action-btn icon-only view" href="/reports/view/{{ cand.report_filename }}" target="_blank" title="View Report" aria-label="View Report"><i class="bi bi-eye-fill"></i></a>
                                 <a class="row-action-btn icon-only" href="/reports/download-file/{{ cand.report_filename }}" title="Download PDF" aria-label="Download PDF"><i class="bi bi-download"></i></a>
-                                <button type="button" class="row-action-btn icon-only generate js-generate-report" data-email="{{ cand.email|e }}" title="Regenerate Report" aria-label="Regenerate Report"><i class="bi bi-arrow-repeat"></i></button>
+                                <button type="button" class="row-action-btn icon-only generate js-generate-report" data-email="{{ cand.email|e }}" data-test-session-id="{{ cand.test_session_id|default('') }}" title="Regenerate Report" aria-label="Regenerate Report"><i class="bi bi-arrow-repeat"></i></button>
                             {% else %}
-                                <button type="button" class="row-action-btn icon-only generate js-generate-report" data-email="{{ cand.email|e }}" title="Generate Report" aria-label="Generate Report"><i class="bi bi-file-earmark-pdf-fill"></i></button>
+                                <button type="button" class="row-action-btn icon-only generate js-generate-report" data-email="{{ cand.email|e }}" data-test-session-id="{{ cand.test_session_id|default('') }}" title="Generate Report" aria-label="Generate Report"><i class="bi bi-file-earmark-pdf-fill"></i></button>
                             {% endif %}
                         </div>
                     </div>
@@ -1711,23 +1716,23 @@
                                     <a class="insight-action report-download js-download-report" data-action="download-report" href="/reports/download-file/{{ cand.report_filename }}">
                                         <i class="bi bi-download"></i> Download PDF
                                     </a>
-                                    <button type="button" class="insight-action js-open-gallery" data-action="view-screenshots" data-email="{{ cand.email|e }}" data-name="{{ cand.name|e }}">
+                                    <button type="button" class="insight-action js-open-gallery" data-action="view-screenshots" data-email="{{ cand.email|e }}" data-name="{{ cand.name|e }}" data-test-session-id="{{ cand.test_session_id|default('') }}">
                                         <i class="bi bi-images"></i> View Screenshots
                                     </button>
-                                    <button type="button" class="insight-action report-regenerate js-generate-report" data-action="regenerate-report" data-email="{{ cand.email|e }}">
+                                    <button type="button" class="insight-action report-regenerate js-generate-report" data-action="regenerate-report" data-email="{{ cand.email|e }}" data-test-session-id="{{ cand.test_session_id|default('') }}">
                                         <i class="bi bi-arrow-repeat"></i> Regenerate Report
                                     </button>
                                 {% else %}
-                                    <button type="button" class="insight-action report-generate js-generate-report" data-action="generate-report" data-email="{{ cand.email|e }}">
+                                    <button type="button" class="insight-action report-generate js-generate-report" data-action="generate-report" data-email="{{ cand.email|e }}" data-test-session-id="{{ cand.test_session_id|default('') }}">
                                         <i class="bi bi-file-earmark-pdf-fill"></i> Generate Report
                                     </button>
                                     <button type="button" class="insight-action report-download js-download-report disabled" data-action="download-report" disabled>
                                         <i class="bi bi-download"></i> Download PDF
                                     </button>
-                                    <button type="button" class="insight-action js-open-gallery" data-action="view-screenshots" data-email="{{ cand.email|e }}" data-name="{{ cand.name|e }}">
+                                    <button type="button" class="insight-action js-open-gallery" data-action="view-screenshots" data-email="{{ cand.email|e }}" data-name="{{ cand.name|e }}" data-test-session-id="{{ cand.test_session_id|default('') }}">
                                         <i class="bi bi-images"></i> View Screenshots
                                     </button>
-                                    <button type="button" class="insight-action report-regenerate js-generate-report disabled" data-action="regenerate-report" data-email="{{ cand.email|e }}" disabled>
+                                    <button type="button" class="insight-action report-regenerate js-generate-report disabled" data-action="regenerate-report" data-email="{{ cand.email|e }}" data-test-session-id="{{ cand.test_session_id|default('') }}" disabled>
                                         <i class="bi bi-arrow-repeat"></i> Regenerate Report
                                     </button>
                                 {% endif %}

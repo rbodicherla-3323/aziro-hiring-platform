@@ -8,6 +8,7 @@ from math import ceil
 from flask import Blueprint, render_template, request, session, jsonify, send_file, abort, current_app
 
 from app.utils.auth_decorator import login_required
+from app.services.candidate_scope import get_candidate_key, matches_candidate_scope
 from app.services.generated_tests_store import get_tests_for_user_in_range, SESSION_RETENTION_DAYS
 from app.services.evaluation_aggregator import EvaluationAggregator
 from app.services import db_service
@@ -111,7 +112,12 @@ def _attach_report_info(candidate: dict):
         candidate["report_id"] = None
         return
     try:
-        info = db_service.get_latest_report_for_email(email_key)
+        info = db_service.get_latest_report_for_email(
+            email_key,
+            test_session_id=candidate.get("test_session_id"),
+            role_key=str(candidate.get("role_key", "") or "").strip(),
+            batch_id=str(candidate.get("batch_id", "") or "").strip(),
+        )
     except Exception as exc:
         current_app.logger.exception("Report lookup failed for %s: %s", email_key, exc)
         info = None
@@ -134,13 +140,20 @@ def _extract_test_session_ids(test_entry: dict) -> set[str]:
     return session_ids
 
 
-def _session_scope_by_email(test_entries) -> dict[str, set[str]]:
+def _session_scope_by_candidate_key(test_entries) -> dict[str, set[str]]:
     scope = {}
     for entry in test_entries or []:
-        email_key = _normalize_email((entry or {}).get("email", ""))
-        if not email_key or email_key in scope:
+        candidate_key = get_candidate_key(
+            {
+                "email": (entry or {}).get("email", ""),
+                "role_key": (entry or {}).get("role_key", ""),
+                "role": (entry or {}).get("role", ""),
+                "batch_id": (entry or {}).get("batch_id", ""),
+            }
+        )
+        if not candidate_key or candidate_key in scope:
             continue
-        scope[email_key] = set(_extract_test_session_ids(entry))
+        scope[candidate_key] = set(_extract_test_session_ids(entry))
     return scope
 
 
@@ -193,41 +206,60 @@ def _collect_reports_scope(
     ]
 
     user_tests_sorted = sorted(user_tests, key=_created_sort_key, reverse=True)
-    proctoring_scope = _session_scope_by_email(user_tests_sorted)
-    tests_by_email = {}
+    proctoring_scope = _session_scope_by_candidate_key(user_tests_sorted)
+    tests_by_candidate_key = {}
     for t in user_tests_sorted:
-        email_key = _normalize_email(t.get("email", ""))
-        if not email_key:
+        candidate_key = get_candidate_key(
+            {
+                "email": t.get("email", ""),
+                "role_key": t.get("role_key", ""),
+                "role": t.get("role", ""),
+                "batch_id": t.get("batch_id", ""),
+            }
+        )
+        if not candidate_key:
             continue
-        if email_key not in tests_by_email:
-            tests_by_email[email_key] = t
-    user_emails = set(tests_by_email.keys())
+        if candidate_key not in tests_by_candidate_key:
+            tests_by_candidate_key[candidate_key] = t
+    user_candidate_keys = set(tests_by_candidate_key.keys())
 
     all_candidates = EvaluationAggregator.get_candidates()
-    all_candidates_by_email = {}
+    all_candidates_by_key = {}
     for c in all_candidates:
-        email_key = _normalize_email(c.get("email", ""))
-        if not email_key or email_key in all_candidates_by_email:
+        candidate_key = str((c or {}).get("candidate_key", "")).strip() or get_candidate_key(c)
+        if not candidate_key or candidate_key in all_candidates_by_key:
             continue
-        if email_key in tests_by_email and not c.get("created_at"):
-            c["created_at"] = tests_by_email[email_key].get("created_at", "")
-        all_candidates_by_email[email_key] = c
+        if candidate_key in tests_by_candidate_key and not c.get("created_at"):
+            c["created_at"] = tests_by_candidate_key[candidate_key].get("created_at", "")
+        all_candidates_by_key[candidate_key] = c
 
     session_candidates = []
-    for email_key in user_emails:
-        candidate = all_candidates_by_email.get(email_key)
+    for candidate_key in user_candidate_keys:
+        candidate = all_candidates_by_key.get(candidate_key)
         if not candidate:
             continue
-        if email_key in tests_by_email:
-            candidate["created_at"] = tests_by_email[email_key].get("created_at", "")
+        if candidate_key in tests_by_candidate_key:
+            candidate["created_at"] = tests_by_candidate_key[candidate_key].get("created_at", "")
         session_candidates.append(candidate)
 
-    evaluated_emails = {_normalize_email(c.get("email", "")) for c in session_candidates}
+    evaluated_candidate_keys = {
+        str((c or {}).get("candidate_key", "")).strip() or get_candidate_key(c)
+        for c in session_candidates
+        if str((c or {}).get("candidate_key", "")).strip() or get_candidate_key(c)
+    }
     for t in user_tests_sorted:
-        email_key = _normalize_email(t.get("email", ""))
-        if not email_key or email_key in evaluated_emails:
+        candidate_key = get_candidate_key(
+            {
+                "email": t.get("email", ""),
+                "role_key": t.get("role_key", ""),
+                "role": t.get("role", ""),
+                "batch_id": t.get("batch_id", ""),
+            }
+        )
+        if not candidate_key or candidate_key in evaluated_candidate_keys:
             continue
         session_candidates.append({
+            "candidate_key": candidate_key,
             "name": t["name"],
             "email": t["email"],
             "role": t.get("role", ""),
@@ -243,8 +275,8 @@ def _collect_reports_scope(
                 "failed_rounds": 0,
             },
         })
-        evaluated_emails.add(email_key)
-        all_candidates_by_email[email_key] = session_candidates[-1]
+        evaluated_candidate_keys.add(candidate_key)
+        all_candidates_by_key[candidate_key] = session_candidates[-1]
 
     if search_global_mode:
         db_role_filter = role_filter if role_filter.lower() not in {"all", "all roles"} else ""
@@ -260,29 +292,45 @@ def _collect_reports_scope(
             report_matches = []
 
         for row in [*db_matches, *report_matches]:
-            email_key = _normalize_email(row.get("email", ""))
-            if not email_key:
+            candidate_key = get_candidate_key(
+                {
+                    "email": row.get("email", ""),
+                    "role_key": row.get("role_key", ""),
+                    "role": row.get("role", ""),
+                    "batch_id": row.get("batch_id", ""),
+                }
+            )
+            if not candidate_key:
                 continue
-            existing = all_candidates_by_email.get(email_key)
+            existing = all_candidates_by_key.get(candidate_key)
             if existing is not None:
                 if not existing.get("role"):
                     existing["role"] = str(row.get("role", "")).strip()
+                if not existing.get("role_key"):
+                    existing["role_key"] = str(row.get("role_key", "")).strip()
+                if not existing.get("batch_id"):
+                    existing["batch_id"] = str(row.get("batch_id", "")).strip()
                 if not existing.get("name"):
-                    existing["name"] = str(row.get("name", "")).strip() or email_key
+                    existing["name"] = str(row.get("name", "")).strip() or _normalize_email(row.get("email", ""))
                 if not existing.get("created_at"):
                     existing["created_at"] = str(row.get("created_at", "")).strip()
+                if not existing.get("test_session_id") and row.get("test_session_id"):
+                    existing["test_session_id"] = row.get("test_session_id")
                 if row.get("report_filename"):
                     existing["report_filename"] = str(row.get("report_filename", "")).strip()
                     existing["has_report"] = True
                 continue
 
+            email_key = _normalize_email(row.get("email", ""))
             candidate_row = {
+                "candidate_key": candidate_key,
                 "name": str(row.get("name", "")).strip() or email_key,
                 "email": email_key,
                 "role": str(row.get("role", "")).strip(),
-                "role_key": "",
-                "batch_id": "",
+                "role_key": str(row.get("role_key", "")).strip(),
+                "batch_id": str(row.get("batch_id", "")).strip(),
                 "created_at": str(row.get("created_at", "")).strip(),
+                "test_session_id": row.get("test_session_id"),
                 "rounds": {},
                 "summary": {
                     "total_rounds": 0,
@@ -296,10 +344,10 @@ def _collect_reports_scope(
             if row.get("report_filename"):
                 candidate_row["report_filename"] = str(row.get("report_filename", "")).strip()
                 candidate_row["has_report"] = True
-            all_candidates_by_email[email_key] = candidate_row
+            all_candidates_by_key[candidate_key] = candidate_row
 
     session_candidates.sort(key=_created_sort_key, reverse=True)
-    all_candidates_pool = list(all_candidates_by_email.values())
+    all_candidates_pool = list(all_candidates_by_key.values())
     all_candidates_pool.sort(key=_created_sort_key, reverse=True)
     base_candidates = list(all_candidates_pool) if search_global_mode else list(session_candidates)
     base_total_candidates = len(base_candidates)
@@ -352,10 +400,13 @@ def _collect_reports_scope(
 def _candidate_summary_list_item(candidate: dict) -> dict:
     summary = candidate.get("summary", {}) or {}
     return {
+        "candidate_key": str(candidate.get("candidate_key", "") or get_candidate_key(candidate)).strip(),
         "email": _normalize_email(candidate.get("email", "")),
         "name": str(candidate.get("name", "") or "").strip(),
         "role": str(candidate.get("role", "") or "").strip(),
+        "role_key": str(candidate.get("role_key", "") or "").strip(),
         "batch_id": str(candidate.get("batch_id", "") or "").strip(),
+        "test_session_id": candidate.get("test_session_id"),
         "created_at": str(candidate.get("created_at", "") or "").strip(),
         "overall_score": float(summary.get("overall_percentage", 0) or 0),
         "overall_verdict": str(summary.get("overall_verdict", "Pending") or "Pending"),
@@ -432,58 +483,52 @@ def reports():
     showing_to = start_idx + len(paged_candidates)
     for candidate in paged_candidates:
         _attach_report_info(candidate)
-
-    paged_email_keys = {
-        str((c or {}).get("email", "")).strip().lower()
-        for c in paged_candidates
-        if str((c or {}).get("email", "")).strip()
-    }
-    scoped_session_ids = {}
     for candidate in paged_candidates:
-        email_key = str((candidate or {}).get("email", "")).strip().lower()
-        if not email_key:
-            continue
-        session_ids = set()
-        attempted_rounds = _attempted_rounds(candidate)
-        if attempted_rounds > 0:
-            role_key = str((candidate or {}).get("role_key", "")).strip()
-            batch_id = str((candidate or {}).get("batch_id", "")).strip()
-            latest_session_id = None
-            try:
-                latest_session_id = db_service.get_latest_test_session_id_for_candidate(
-                    email_key,
-                    created_by=user_email,
-                    since=range_start,
-                    until=range_end,
-                    role_key=role_key,
-                    batch_id=batch_id,
-                )
-            except Exception as exc:
-                current_app.logger.exception(
-                    "Failed to resolve scoped test session for %s: %s",
-                    email_key,
-                    exc,
-                )
-
-            if not latest_session_id:
+        email_key = str(candidate.get("email", "")).strip().lower()
+        if _attempted_rounds(candidate) <= 0:
+            candidate["proctoring_summary"] = blank_proctoring_summary()
+        else:
+            session_ids = set()
+            test_session_id = candidate.get("test_session_id")
+            if not test_session_id:
+                role_key = str((candidate or {}).get("role_key", "")).strip()
+                batch_id = str((candidate or {}).get("batch_id", "")).strip()
                 try:
-                    latest_session_id = db_service.get_latest_test_session_id_for_candidate(
+                    test_session_id = db_service.get_latest_test_session_id_for_candidate(
                         email_key,
+                        created_by=user_email,
+                        since=range_start,
+                        until=range_end,
                         role_key=role_key,
                         batch_id=batch_id,
                     )
                 except Exception as exc:
                     current_app.logger.exception(
-                        "Fallback latest session lookup failed for %s: %s",
+                        "Failed to resolve scoped test session for %s: %s",
                         email_key,
                         exc,
                     )
 
-            if latest_session_id:
+                if not test_session_id:
+                    try:
+                        test_session_id = db_service.get_latest_test_session_id_for_candidate(
+                            email_key,
+                            role_key=role_key,
+                            batch_id=batch_id,
+                        )
+                    except Exception as exc:
+                        current_app.logger.exception(
+                            "Fallback latest session lookup failed for %s: %s",
+                            email_key,
+                            exc,
+                        )
+
+            if test_session_id:
+                candidate["test_session_id"] = test_session_id
                 try:
                     session_ids.update(
                         db_service.get_round_session_uuids_for_test_session(
-                            latest_session_id,
+                            test_session_id,
                             attempted_only=True,
                         )
                     )
@@ -491,33 +536,29 @@ def reports():
                     current_app.logger.exception(
                         "Failed to resolve round session UUIDs for %s (test_session_id=%s): %s",
                         email_key,
-                        latest_session_id,
+                        test_session_id,
                         exc,
                     )
 
             if not session_ids:
-                session_ids.update(proctoring_scope.get(email_key, set()))
+                session_ids.update(
+                    proctoring_scope.get(str((candidate or {}).get("candidate_key", "")).strip(), set())
+                )
 
-        scoped_session_ids[email_key] = session_ids
-    try:
-        summaries_by_email = build_proctoring_summary_by_email(
-            paged_email_keys,
-            session_ids_by_email=scoped_session_ids,
-        )
-    except Exception as exc:
-        current_app.logger.exception("Failed to build proctoring summaries: %s", exc)
-        summaries_by_email = {}
-    try:
-        plagiarism_by_email = build_plagiarism_summary_by_candidates(paged_candidates)
-    except Exception as exc:
-        current_app.logger.exception("Failed to build plagiarism summaries: %s", exc)
-        plagiarism_by_email = {}
-    for candidate in paged_candidates:
-        email_key = str(candidate.get("email", "")).strip().lower()
-        if _attempted_rounds(candidate) <= 0:
-            candidate["proctoring_summary"] = blank_proctoring_summary()
-        else:
+            try:
+                summaries_by_email = build_proctoring_summary_by_email(
+                    {email_key},
+                    session_ids_by_email={email_key: session_ids},
+                )
+            except Exception as exc:
+                current_app.logger.exception("Failed to build proctoring summary for %s: %s", email_key, exc)
+                summaries_by_email = {}
             candidate["proctoring_summary"] = summaries_by_email.get(email_key, blank_proctoring_summary())
+        try:
+            plagiarism_by_email = build_plagiarism_summary_by_candidates([candidate])
+        except Exception as exc:
+            current_app.logger.exception("Failed to build plagiarism summary for %s: %s", email_key, exc)
+            plagiarism_by_email = {}
         candidate["plagiarism_summary"] = plagiarism_by_email.get(email_key, blank_plagiarism_summary())
 
     return render_template(
@@ -555,24 +596,35 @@ def search_reports():
     results = []
     query_lower = query.lower()
 
-    found_emails = set()
+    found_keys = set()
 
     # 1. Search DB (reports generated for any candidate - org-wide)
     try:
         db_results = db_service.search_candidates_with_reports(query)
         for r in db_results:
-            email_key = str(r.get("email", "")).strip().lower()
-            if email_key and email_key not in found_emails:
+            candidate_key = get_candidate_key(
+                {
+                    "email": r.get("email", ""),
+                    "role_key": r.get("role_key", ""),
+                    "role": r.get("role", ""),
+                    "batch_id": r.get("batch_id", ""),
+                }
+            )
+            if candidate_key and candidate_key not in found_keys:
                 results.append({
                     "name": r.get("name", ""),
                     "email": r.get("email", ""),
                     "role": r.get("role", "N/A"),
+                    "role_key": r.get("role_key", ""),
+                    "batch_id": r.get("batch_id", ""),
+                    "candidate_key": candidate_key,
+                    "test_session_id": r.get("test_session_id"),
                     "created_at": r.get("created_at", ""),
                     "source": "database",
                     "has_report": True,
                     "report_filename": r.get("report_filename", ""),
                 })
-                found_emails.add(email_key)
+                found_keys.add(candidate_key)
     except Exception:
         pass
 
@@ -581,23 +633,38 @@ def search_reports():
     user_tests = get_tests_for_user_in_range(user_email, since)
     for t in user_tests:
         if (query_lower in t.get("name", "").lower()
-                or query_lower in t.get("email", "").lower()
-                or query_lower in t.get("role", "").lower()):
+            or query_lower in t.get("email", "").lower()
+            or query_lower in t.get("role", "").lower()):
+            candidate_key = get_candidate_key(
+                {
+                    "email": t.get("email", ""),
+                    "role_key": t.get("role_key", ""),
+                    "role": t.get("role", ""),
+                    "batch_id": t.get("batch_id", ""),
+                }
+            )
             email_key = str(t.get("email", "")).strip().lower()
-            if email_key and email_key not in found_emails:
+            if candidate_key and candidate_key not in found_keys:
                 try:
-                    info = db_service.get_latest_report_for_email(email_key)
+                    info = db_service.get_latest_report_for_email(
+                        email_key,
+                        role_key=str(t.get("role_key", "") or "").strip(),
+                        batch_id=str(t.get("batch_id", "") or "").strip(),
+                    )
                 except Exception:
                     info = None
                 results.append({
                     "name": t.get("name", ""),
                     "email": t.get("email", ""),
                     "role": t.get("role", "N/A"),
+                    "role_key": t.get("role_key", ""),
+                    "batch_id": t.get("batch_id", ""),
+                    "candidate_key": candidate_key,
                     "source": "session",
                     "has_report": bool(info),
                     "report_filename": info.get("filename") if info else "",
                 })
-                found_emails.add(email_key)
+                found_keys.add(candidate_key)
 
     def _normalize_for_search(value: str) -> str:
         raw = str(value or "").lower()
@@ -694,21 +761,29 @@ def generate_consolidated_summary():
         date_offset=payload.get("offset", "0"),
     )
     filtered_candidates = scope["filtered_candidates"]
-    candidates_by_email = {
-        _normalize_email(candidate.get("email", "")): candidate
+    candidates_by_key = {
+        str(candidate.get("candidate_key", "") or get_candidate_key(candidate)).strip(): candidate
         for candidate in filtered_candidates
     }
 
-    selected_emails = []
-    for raw_email in payload.get("candidate_emails", []) or []:
-        email_key = _normalize_email(raw_email)
-        if email_key and email_key not in selected_emails:
-            selected_emails.append(email_key)
+    selected_candidate_keys = []
+    for raw_candidate_key in payload.get("candidate_keys", []) or []:
+        candidate_key = str(raw_candidate_key or "").strip()
+        if candidate_key and candidate_key not in selected_candidate_keys:
+            selected_candidate_keys.append(candidate_key)
+    if not selected_candidate_keys:
+        for raw_email in payload.get("candidate_emails", []) or []:
+            email_key = _normalize_email(raw_email)
+            if not email_key:
+                continue
+            for candidate_key, candidate in candidates_by_key.items():
+                if _normalize_email(candidate.get("email", "")) == email_key and candidate_key not in selected_candidate_keys:
+                    selected_candidate_keys.append(candidate_key)
 
-    if not selected_emails:
+    if not selected_candidate_keys:
         return jsonify({"success": False, "error": "Select at least one candidate."}), 400
 
-    if len(selected_emails) > _MAX_CONSOLIDATED_SUMMARY_CANDIDATES:
+    if len(selected_candidate_keys) > _MAX_CONSOLIDATED_SUMMARY_CANDIDATES:
         return jsonify({
             "success": False,
             "error": (
@@ -718,9 +793,9 @@ def generate_consolidated_summary():
         }), 400
 
     selected_candidates = [
-        candidates_by_email[email_key]
-        for email_key in selected_emails
-        if email_key in candidates_by_email
+        candidates_by_key[candidate_key]
+        for candidate_key in selected_candidate_keys
+        if candidate_key in candidates_by_key
     ]
     if not selected_candidates:
         return jsonify({
@@ -795,21 +870,40 @@ def generate_report(email):
     email_key = str(email or "").strip().lower()
     if not email_key:
         return jsonify({"success": False, "error": "Candidate email is required"}), 400
+    role_key = str(request.args.get("role_key", "") or "").strip()
+    batch_id = str(request.args.get("batch_id", "") or "").strip()
+    candidate_key = str(request.args.get("candidate_key", "") or "").strip()
+    try:
+        test_session_id = int(request.args.get("test_session_id", "") or 0) or None
+    except (TypeError, ValueError):
+        test_session_id = None
 
     # First try from evaluation aggregator (in-memory data)
     all_candidates = EvaluationAggregator.get_candidates()
     candidate_data = None
     for c in all_candidates:
-        if str(c.get("email", "")).strip().lower() == email_key:
+        if matches_candidate_scope(
+            c,
+            candidate_key=candidate_key,
+            email=email_key,
+            role_key=role_key,
+            batch_id=batch_id,
+        ):
             candidate_data = c
             break
 
     # Fallback to DB
     if not candidate_data:
-        candidate_data = db_service.get_candidate_report_data(email_key)
+        candidate_data = db_service.get_candidate_report_data(
+            email_key,
+            test_session_id=test_session_id,
+            role_key=role_key,
+            batch_id=batch_id,
+        )
 
     if not candidate_data:
         return jsonify({"success": False, "error": f"No data found for candidate: {email_key}"}), 404
+    candidate_data["candidate_key"] = str(candidate_data.get("candidate_key", "") or candidate_key or get_candidate_key(candidate_data)).strip()
 
     attempted_rounds = _attempted_rounds(candidate_data)
     session_scope = set()
@@ -869,16 +963,25 @@ def generate_report(email):
 
     # Attach AI summaries for PDF rendering.
     try:
-        candidate_data["ai_overall_summary"] = EvaluationService.generate_candidate_overall_summary(email_key)
+        candidate_data["ai_overall_summary"] = EvaluationService.generate_candidate_overall_summary(
+            email_key,
+            candidate_data=candidate_data,
+        )
     except Exception:
         candidate_data["ai_overall_summary"] = None
 
     try:
-        candidate_data["ai_coding_summary"] = EvaluationService.generate_candidate_coding_round_summary(email_key)
+        candidate_data["ai_coding_summary"] = EvaluationService.generate_candidate_coding_round_summary(
+            email_key,
+            candidate_data=candidate_data,
+        )
     except Exception:
         candidate_data["ai_coding_summary"] = None
     try:
-        candidate_data["coding_round_data"] = EvaluationService.get_candidate_coding_round_data(email_key)
+        candidate_data["coding_round_data"] = EvaluationService.get_candidate_coding_round_data(
+            email_key,
+            candidate_data=candidate_data,
+        )
     except Exception:
         candidate_data["coding_round_data"] = None
 
@@ -916,8 +1019,12 @@ def generate_report(email):
 @login_required
 def list_proctoring_screenshots():
     email = request.args.get("email", "").strip()
-    if not email:
-        return jsonify({"screenshots": [], "error": "email required"}), 400
+    try:
+        test_session_id = int(request.args.get("test_session_id", "") or 0) or None
+    except (TypeError, ValueError):
+        test_session_id = None
+    if not email and not test_session_id:
+        return jsonify({"screenshots": [], "error": "email or test_session_id required"}), 400
 
     try:
         limit_raw = request.args.get("limit", "200")
@@ -925,7 +1032,14 @@ def list_proctoring_screenshots():
     except (TypeError, ValueError):
         limit = 200
 
-    records = db_service.get_proctoring_screenshots_by_email(email, limit=limit)
+    if test_session_id:
+        session_ids = db_service.get_round_session_uuids_for_test_session(
+            test_session_id,
+            attempted_only=False,
+        )
+        records = db_service.get_proctoring_screenshots_by_session_ids(session_ids, limit=limit)
+    else:
+        records = db_service.get_proctoring_screenshots_by_email(email, limit=limit)
     screenshots = []
     for rec in records:
         captured = rec.captured_at.isoformat() if rec.captured_at else ""
@@ -1021,7 +1135,7 @@ def preview_report(test_session_id):
     if not cand:
         return jsonify({"error": "Candidate not found"}), 404
 
-    data = db_service.get_candidate_report_data(cand.email)
+    data = db_service.get_candidate_report_data(cand.email, test_session_id=test_session_id)
     if not data:
         return jsonify({"error": "No report data available"}), 404
 
@@ -1064,9 +1178,10 @@ def generate_report_by_session():
     if not cand:
         return jsonify({"status": "error", "error": "Candidate not found"}), 404
 
-    candidate_data = db_service.get_candidate_report_data(cand.email)
+    candidate_data = db_service.get_candidate_report_data(cand.email, test_session_id=test_session_id)
     if not candidate_data:
         return jsonify({"status": "error", "error": "No data for candidate"}), 404
+    candidate_data["candidate_key"] = str(candidate_data.get("candidate_key", "") or get_candidate_key(candidate_data)).strip()
 
     email_key = str(cand.email or "").strip().lower()
     attempted_rounds = _attempted_rounds(candidate_data)
@@ -1094,6 +1209,28 @@ def generate_report_by_session():
         candidate_data["proctoring_summary"] = proctoring_by_email.get(email_key, blank_proctoring_summary())
     plagiarism_by_email = build_plagiarism_summary_by_candidates([candidate_data])
     candidate_data["plagiarism_summary"] = plagiarism_by_email.get(email_key, blank_plagiarism_summary())
+
+    try:
+        candidate_data["ai_overall_summary"] = EvaluationService.generate_candidate_overall_summary(
+            email_key,
+            candidate_data=candidate_data,
+        )
+    except Exception:
+        candidate_data["ai_overall_summary"] = None
+    try:
+        candidate_data["ai_coding_summary"] = EvaluationService.generate_candidate_coding_round_summary(
+            email_key,
+            candidate_data=candidate_data,
+        )
+    except Exception:
+        candidate_data["ai_coding_summary"] = None
+    try:
+        candidate_data["coding_round_data"] = EvaluationService.get_candidate_coding_round_data(
+            email_key,
+            candidate_data=candidate_data,
+        )
+    except Exception:
+        candidate_data["coding_round_data"] = None
 
     try:
         pdf_filename = generate_candidate_pdf(candidate_data)

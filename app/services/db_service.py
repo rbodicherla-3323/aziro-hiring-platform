@@ -5,6 +5,7 @@ Database service layer — CRUD operations for candidates, test sessions, round 
 import logging
 from datetime import datetime, timezone, timedelta
 
+from app.services.candidate_scope import build_candidate_key
 from app.extensions import db
 from app.models import Candidate, TestSession, RoundResult, Report, ProctoringScreenshot, TestLink
 
@@ -70,6 +71,24 @@ def get_proctoring_screenshots_by_email(email: str, limit: int = 200):
     q = (
         ProctoringScreenshot.query
         .filter_by(candidate_email=email.strip().lower())
+        .order_by(ProctoringScreenshot.captured_at.desc())
+        .limit(limit)
+    )
+    return q.all()
+
+
+def get_proctoring_screenshots_by_session_ids(session_ids, limit: int = 200):
+    normalized_session_ids = {
+        str(session_id or "").strip().lower()
+        for session_id in (session_ids or [])
+        if str(session_id or "").strip()
+    }
+    if not normalized_session_ids:
+        return []
+
+    q = (
+        ProctoringScreenshot.query
+        .filter(db.func.lower(ProctoringScreenshot.session_uuid).in_(normalized_session_ids))
         .order_by(ProctoringScreenshot.captured_at.desc())
         .limit(limit)
     )
@@ -470,7 +489,7 @@ def search_candidates(query: str, role_filter: str = ""):
     """Search candidates by name, email, or role."""
     like_query = f"%{query}%"
 
-    base = Candidate.query.join(TestSession)
+    base = db.session.query(Candidate, TestSession).join(TestSession)
 
     filters = []
     if query:
@@ -494,19 +513,29 @@ def search_candidates(query: str, role_filter: str = ""):
     if filters:
         base = base.filter(*filters)
 
-    candidates = base.distinct().limit(50).all()
+    rows = (
+        base
+        .order_by(TestSession.created_at.desc(), TestSession.id.desc())
+        .limit(100)
+        .all()
+    )
 
     results = []
-    for c in candidates:
-        sessions = TestSession.query.filter_by(candidate_id=c.id).all()
-        for ts in sessions:
-            results.append({
-                "name": c.name,
-                "email": c.email,
-                "role": ts.role_label or ts.role_key,
-                "created_at": ts.created_at.strftime("%Y-%m-%d %H:%M") if ts.created_at else "",
-                "test_session_id": ts.id,
-            })
+    seen = set()
+    for c, ts in rows:
+        dedupe_key = (c.id, ts.id)
+        if dedupe_key in seen:
+            continue
+        seen.add(dedupe_key)
+        results.append({
+            "name": c.name,
+            "email": c.email,
+            "role": ts.role_label or ts.role_key,
+            "role_key": ts.role_key or "",
+            "batch_id": ts.batch_id or "",
+            "created_at": ts.created_at.strftime("%Y-%m-%d %H:%M") if ts.created_at else "",
+            "test_session_id": ts.id,
+        })
     return results
 
 
@@ -557,11 +586,21 @@ def search_candidates_with_reports(query: str, role_filter: str = ""):
     )
 
     results = []
-    seen_emails = set()
+    seen_rows = set()
     for report, cand, ts in rows:
         email = (cand.email if cand else report.candidate_email) or ""
         email = email.strip().lower()
-        if not email or email in seen_emails:
+        role_key = ""
+        batch_id = ""
+        if ts:
+            role_key = ts.role_key or ""
+            batch_id = ts.batch_id or ""
+        dedupe_key = (
+            email,
+            int(ts.id) if ts else None,
+            int(report.id) if report else None,
+        )
+        if not email or dedupe_key in seen_rows:
             continue
         role = ""
         created_at = ""
@@ -576,12 +615,14 @@ def search_candidates_with_reports(query: str, role_filter: str = ""):
             "name": cand.name if cand and cand.name else email,
             "email": email,
             "role": role,
+            "role_key": role_key,
+            "batch_id": batch_id,
             "created_at": created_at,
             "test_session_id": test_session_id,
             "report_filename": report.filename if report else "",
             "report_id": report.id if report else None,
         })
-        seen_emails.add(email)
+        seen_rows.add(dedupe_key)
     return results
 
 
@@ -609,18 +650,26 @@ def has_report_for_email(email: str) -> bool:
     return linked is not None
 
 
-def get_latest_report_for_email(email: str) -> dict | None:
-    """Return latest report info for a candidate email (filename/id/created_at)."""
+def get_latest_report_for_email(
+    email: str,
+    *,
+    test_session_id: int | None = None,
+    role_key: str = "",
+    batch_id: str = "",
+) -> dict | None:
+    """Return latest report info for a candidate email, optionally scoped to one test session/role/batch."""
     if not email:
         return None
     email_lc = email.strip().lower()
 
-    report = (
-        Report.query
-        .filter(db.func.lower(Report.candidate_email) == email_lc)
-        .order_by(Report.created_at.desc())
-        .first()
-    )
+    report = None
+    if test_session_id:
+        report = (
+            Report.query
+            .filter(Report.test_session_id == int(test_session_id))
+            .order_by(Report.created_at.desc())
+            .first()
+        )
 
     if not report:
         report = (
@@ -628,6 +677,17 @@ def get_latest_report_for_email(email: str) -> dict | None:
             .join(TestSession, Report.test_session_id == TestSession.id)
             .join(Candidate, TestSession.candidate_id == Candidate.id)
             .filter(db.func.lower(Candidate.email) == email_lc)
+        )
+        if role_key:
+            report = report.filter(db.func.lower(TestSession.role_key) == str(role_key).strip().lower())
+        if batch_id:
+            report = report.filter(db.func.lower(TestSession.batch_id) == str(batch_id).strip().lower())
+        report = report.order_by(Report.created_at.desc()).first()
+
+    if not report:
+        report = (
+            Report.query
+            .filter(db.func.lower(Report.candidate_email) == email_lc)
             .order_by(Report.created_at.desc())
             .first()
         )
@@ -706,20 +766,48 @@ def get_round_session_uuids_for_test_session(test_session_id: int, attempted_onl
     return ordered
 
 
-def get_candidate_report_data(email: str) -> dict:
-    """Get full candidate data for report generation."""
-    candidate = Candidate.query.filter_by(email=email).first()
-    if not candidate:
+def get_candidate_report_data(
+    email: str,
+    *,
+    test_session_id: int | None = None,
+    role_key: str = "",
+    batch_id: str = "",
+) -> dict:
+    """Get full candidate data for report generation, optionally scoped to one test session/role/batch."""
+    email_key = str(email or "").strip().lower()
+    candidate = (
+        Candidate.query
+        .filter(db.func.lower(Candidate.email) == email_key)
+        .first()
+        if email_key
+        else None
+    )
+
+    ts = None
+    if test_session_id:
+        ts = TestSession.query.get(int(test_session_id))
+        if ts and not candidate:
+            candidate = Candidate.query.get(ts.candidate_id)
+    if not candidate and not ts:
         return None
 
-    # Get latest test session
-    ts = (
-        TestSession.query
-        .filter_by(candidate_id=candidate.id)
-        .order_by(TestSession.created_at.desc())
-        .first()
-    )
     if not ts:
+        query = TestSession.query.filter_by(candidate_id=candidate.id)
+        if role_key:
+            query = query.filter(db.func.lower(TestSession.role_key) == str(role_key).strip().lower())
+        if batch_id:
+            query = query.filter(db.func.lower(TestSession.batch_id) == str(batch_id).strip().lower())
+        ts = (
+            query
+            .order_by(TestSession.created_at.desc(), TestSession.id.desc())
+            .first()
+        )
+    if not ts:
+        return None
+
+    if not candidate:
+        candidate = Candidate.query.get(ts.candidate_id)
+    if not candidate:
         return None
 
     rounds = {}
@@ -766,9 +854,16 @@ def get_candidate_report_data(email: str) -> dict:
         overall_verdict = "In Progress"
 
     return {
+        "candidate_key": build_candidate_key(
+            email=candidate.email,
+            role_key=ts.role_key,
+            role_label=ts.role_label,
+            batch_id=ts.batch_id,
+        ),
         "name": candidate.name,
         "email": candidate.email,
         "role": ts.role_label or ts.role_key,
+        "role_key": ts.role_key,
         "batch_id": ts.batch_id,
         "test_session_id": ts.id,
         "rounds": rounds,
@@ -864,7 +959,7 @@ def get_all_candidates_with_results():
     for c in candidates:
         sessions = TestSession.query.filter_by(candidate_id=c.id).all()
         for ts in sessions:
-            data = get_candidate_report_data(c.email)
+            data = get_candidate_report_data(c.email, test_session_id=ts.id)
             if data:
                 # Attach report info
                 report = (

@@ -135,10 +135,10 @@
                 <div class="candidate-list">
                     {% for c in candidates %}
                     <div class="form-check">
-                        <input class="form-check-input candidate-checkbox" type="checkbox" name="candidates" value="{{ c.email }}" id="cand_{{ loop.index }}" {% if c.email in selected_emails %}checked{% endif %}>
+                        <input class="form-check-input candidate-checkbox" type="checkbox" name="candidates" value="{{ c.candidate_key }}" id="cand_{{ loop.index }}" {% if c.candidate_key in selected_candidate_keys %}checked{% endif %}>
                         <label class="form-check-label" for="cand_{{ loop.index }}">
                             <span class="fw-semibold" style="color:#0f172a;">{{ c.name }}</span>
-                            <div style="font-size:0.82rem; color:#64748b;">{{ c.email }} &nbsp;&middot;&nbsp; <span style="color:#0f766e;">{{ c.role }}</span></div>
+                            <div style="font-size:0.82rem; color:#64748b;">{{ c.email }} &nbsp;&middot;&nbsp; <span style="color:#0f766e;">{{ c.role }}</span>{% if c.batch_id %} &nbsp;&middot;&nbsp; <span>{{ c.batch_id }}</span>{% endif %}</div>
                         </label>
                     </div>
                     {% endfor %}

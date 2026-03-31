@@ -116,7 +116,7 @@ def test_reports_page_search_includes_report_backed_candidates(monkeypatch):
     monkeypatch.setattr(
         reports_routes.db_service,
         "get_latest_report_for_email",
-        lambda email: {
+        lambda email, **kwargs: {
             "filename": "archived_candidate_report.pdf",
             "created_at": "2026-03-20 10:15",
         },

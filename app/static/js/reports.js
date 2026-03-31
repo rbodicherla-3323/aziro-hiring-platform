@@ -38,10 +38,10 @@
   var consolidatedCopyBtn = document.getElementById("reportsConsolidatedCopy");
 
   var searchTimer = null;
-  var activeGalleryEmail = "";
+  var activeGalleryScopeKey = "";
   var consolidatedState = {
     candidates: [],
-    selectedEmails: {},
+    selectedCandidateKeys: {},
     visibleCandidates: [],
     rawSummary: "",
     summaryMeta: null,
@@ -100,6 +100,112 @@
     };
   }
 
+  function candidateSelectionKey(candidate) {
+    if (!candidate) return "";
+    var directKey = String(candidate.candidate_key || "").trim();
+    if (directKey) return directKey;
+
+    var email = String(candidate.email || "").trim().toLowerCase();
+    if (!email) return "";
+    var batchId = String(candidate.batch_id || "").trim().toLowerCase();
+    var roleKey = String(candidate.role_key || candidate.role || "").trim().toLowerCase();
+    return [email, batchId, roleKey].join("||");
+  }
+
+  function getCardCandidateContext(card, actionNode) {
+    var context = {
+      email: "",
+      name: "",
+      candidateKey: "",
+      roleKey: "",
+      batchId: "",
+      testSessionId: "",
+    };
+
+    if (card) {
+      context.email = String(card.getAttribute("data-candidate-email") || "").trim();
+      context.name = String(card.getAttribute("data-candidate-name") || "").trim();
+      context.candidateKey = String(card.getAttribute("data-candidate-key") || "").trim();
+      context.roleKey = String(card.getAttribute("data-candidate-role-key") || "").trim();
+      context.batchId = String(card.getAttribute("data-candidate-batch-id") || "").trim();
+      context.testSessionId = String(card.getAttribute("data-candidate-test-session-id") || "").trim();
+    }
+
+    if (actionNode) {
+      if (!context.email) {
+        context.email = String(actionNode.getAttribute("data-email") || "").trim();
+      }
+      if (!context.name) {
+        context.name = String(actionNode.getAttribute("data-name") || "").trim();
+      }
+      if (!context.candidateKey) {
+        context.candidateKey = String(actionNode.getAttribute("data-candidate-key") || "").trim();
+      }
+      if (!context.roleKey) {
+        context.roleKey = String(actionNode.getAttribute("data-role-key") || "").trim();
+      }
+      if (!context.batchId) {
+        context.batchId = String(actionNode.getAttribute("data-batch-id") || "").trim();
+      }
+      if (!context.testSessionId) {
+        context.testSessionId = String(actionNode.getAttribute("data-test-session-id") || "").trim();
+      }
+    }
+
+    return context;
+  }
+
+  function applyCandidateContextAttributes(node, context) {
+    if (!node || !context) return;
+    if (context.email) {
+      node.setAttribute("data-email", context.email);
+    }
+    if (context.name) {
+      node.setAttribute("data-name", context.name);
+    }
+    if (context.candidateKey) {
+      node.setAttribute("data-candidate-key", context.candidateKey);
+    }
+    if (context.roleKey) {
+      node.setAttribute("data-role-key", context.roleKey);
+    }
+    if (context.batchId) {
+      node.setAttribute("data-batch-id", context.batchId);
+    }
+    if (context.testSessionId) {
+      node.setAttribute("data-test-session-id", context.testSessionId);
+    }
+  }
+
+  function buildScopedReportUrl(context) {
+    var params = new URLSearchParams();
+    if (context.testSessionId) {
+      params.set("test_session_id", context.testSessionId);
+    }
+    if (context.candidateKey) {
+      params.set("candidate_key", context.candidateKey);
+    }
+    if (context.roleKey) {
+      params.set("role_key", context.roleKey);
+    }
+    if (context.batchId) {
+      params.set("batch_id", context.batchId);
+    }
+    var query = params.toString();
+    return "/reports/generate/" + encodeURIComponent(context.email) + (query ? "?" + query : "");
+  }
+
+  function buildScopedGalleryUrl(context) {
+    var params = new URLSearchParams();
+    if (context.testSessionId) {
+      params.set("test_session_id", context.testSessionId);
+    } else if (context.email) {
+      params.set("email", context.email);
+    }
+    params.set("limit", "300");
+    return "/reports/proctoring/screenshots?" + params.toString();
+  }
+
   function makeActionElement(config) {
     var node = config.href ? document.createElement("a") : document.createElement("button");
     var label = String(config.label || "");
@@ -114,11 +220,15 @@
     if (config.action) {
       node.setAttribute("data-action", config.action);
     }
-    if (config.email) {
-      node.setAttribute("data-email", config.email);
-    }
-    if (config.name) {
-      node.setAttribute("data-name", config.name);
+    if (config.context) {
+      applyCandidateContextAttributes(node, config.context);
+    } else {
+      if (config.email) {
+        node.setAttribute("data-email", config.email);
+      }
+      if (config.name) {
+        node.setAttribute("data-name", config.name);
+      }
     }
     if (config.href) {
       node.href = config.href;
@@ -157,16 +267,14 @@
     var rowActions = card ? card.querySelector(".row-actions") : null;
     if (!rowActions) return;
 
-    var email = String(card.getAttribute("data-candidate-email") || "");
-    var name = String(card.getAttribute("data-candidate-name") || "");
+    var context = getCardCandidateContext(card);
 
     rowActions.innerHTML = "";
 
     rowActions.appendChild(makeActionElement({
       className: "row-action-btn gallery js-open-gallery",
       action: "view-screenshots",
-      email: email,
-      name: name,
+      context: context,
       icon: '<i class="bi bi-images"></i>',
       label: "View Screenshots",
       iconOnly: true,
@@ -192,7 +300,7 @@
       rowActions.appendChild(makeActionElement({
         className: "row-action-btn generate js-generate-report",
         action: "regenerate-report",
-        email: email,
+        context: context,
         icon: '<i class="bi bi-arrow-repeat"></i>',
         label: "Regenerate Report",
         iconOnly: true,
@@ -203,7 +311,7 @@
     rowActions.appendChild(makeActionElement({
       className: "row-action-btn generate js-generate-report",
       action: "generate-report",
-      email: email,
+      context: context,
       icon: '<i class="bi bi-file-earmark-pdf-fill"></i>',
       label: "Generate Report",
       iconOnly: true,
@@ -214,8 +322,7 @@
     var actionGrid = card ? card.querySelector(".insight-actions") : null;
     if (!actionGrid) return;
 
-    var email = String(card.getAttribute("data-candidate-email") || "");
-    var name = String(card.getAttribute("data-candidate-name") || "");
+    var context = getCardCandidateContext(card);
 
     actionGrid.innerHTML = "";
 
@@ -240,7 +347,7 @@
       actionGrid.appendChild(makeActionElement({
         className: "insight-action report-generate js-generate-report",
         action: "generate-report",
-        email: email,
+        context: context,
         icon: '<i class="bi bi-file-earmark-pdf-fill"></i>',
         label: "Generate Report",
       }));
@@ -256,8 +363,7 @@
     actionGrid.appendChild(makeActionElement({
       className: "insight-action js-open-gallery",
       action: "view-screenshots",
-      email: email,
-      name: name,
+      context: context,
       icon: '<i class="bi bi-images"></i>',
       label: "View Screenshots",
     }));
@@ -265,7 +371,7 @@
     actionGrid.appendChild(makeActionElement({
       className: "insight-action report-regenerate js-generate-report" + (hasReport ? "" : " disabled"),
       action: "regenerate-report",
-      email: email,
+      context: context,
       icon: '<i class="bi bi-arrow-repeat"></i>',
       label: "Regenerate Report",
       disabled: !hasReport,
@@ -286,8 +392,9 @@
     renderActionHub(card, true, links);
   }
 
-  function generateReport(email, button, card) {
-    if (!email) return;
+  function generateReport(context, button, card) {
+    context = context || getCardCandidateContext(card, button);
+    if (!context.email) return;
 
     var originalLabel = button ? button.innerHTML : "";
     var originalTitle = button ? button.getAttribute("title") : "";
@@ -303,7 +410,7 @@
       }
     }
 
-    fetchJson("/reports/generate/" + encodeURIComponent(email), { credentials: "same-origin" })
+    fetchJson(buildScopedReportUrl(context), { credentials: "same-origin" })
       .then(function (payload) {
         if (!payload || !payload.success) {
           throw new Error((payload && payload.error) || "Report generation failed");
@@ -626,24 +733,26 @@
     galleryGrid.appendChild(fragment);
   }
 
-  function openGallery(email, candidateName) {
-    if (!galleryModal || !galleryMeta || !galleryGrid || !galleryTitle || !email) {
+  function openGallery(context) {
+    context = context || {};
+    var scopeKey = String(context.testSessionId || context.candidateKey || context.email || "").trim();
+    if (!galleryModal || !galleryMeta || !galleryGrid || !galleryTitle || !scopeKey) {
       return;
     }
 
-    activeGalleryEmail = String(email);
-    galleryTitle.textContent = "Proctoring Screenshots - " + (candidateName || email);
+    activeGalleryScopeKey = scopeKey;
+    galleryTitle.textContent = "Proctoring Screenshots - " + (context.name || context.email || "Candidate");
     galleryMeta.textContent = "Loading screenshots...";
     galleryGrid.innerHTML = '<div class="reports-gallery-empty">Loading screenshots...</div>';
     galleryModal.classList.add("active");
     galleryModal.setAttribute("aria-hidden", "false");
     syncBodyModalState();
 
-    fetchJson("/reports/proctoring/screenshots?email=" + encodeURIComponent(email) + "&limit=300", {
+    fetchJson(buildScopedGalleryUrl(context), {
       credentials: "same-origin",
     })
       .then(function (payload) {
-        if (activeGalleryEmail !== String(email)) {
+        if (activeGalleryScopeKey !== scopeKey) {
           return;
         }
         var screenshots = Array.isArray(payload && payload.screenshots) ? payload.screenshots : [];
@@ -661,7 +770,7 @@
 
   function closeGallery() {
     if (!galleryModal) return;
-    activeGalleryEmail = "";
+    activeGalleryScopeKey = "";
     galleryModal.classList.remove("active");
     galleryModal.setAttribute("aria-hidden", "true");
     syncBodyModalState();
@@ -689,7 +798,7 @@
       date: consolidatedDateInput ? consolidatedDateInput.value : "",
       offset: "0",
       q: "",
-      candidate_emails: getSelectedConsolidatedEmails(),
+      candidate_keys: getSelectedConsolidatedCandidateKeys(),
     };
   }
 
@@ -715,12 +824,12 @@
     syncConsolidatedDateFilterVisibility();
   }
 
-  function getSelectedConsolidatedEmails() {
+  function getSelectedConsolidatedCandidateKeys() {
     var selected = [];
     consolidatedState.candidates.forEach(function (candidate) {
-      var email = String(candidate.email || "");
-      if (email && consolidatedState.selectedEmails[email]) {
-        selected.push(email);
+      var candidateKey = candidateSelectionKey(candidate);
+      if (candidateKey && consolidatedState.selectedCandidateKeys[candidateKey]) {
+        selected.push(candidateKey);
       }
     });
     return selected;
@@ -940,7 +1049,7 @@
   }
 
   function updateConsolidatedFooterState() {
-    var selectedCount = getSelectedConsolidatedEmails().length;
+    var selectedCount = getSelectedConsolidatedCandidateKeys().length;
     var visibleCount = consolidatedState.visibleCandidates.length;
 
     if (consolidatedSelectionMeta) {
@@ -1001,14 +1110,15 @@
     var fragment = document.createDocumentFragment();
     visibleCandidates.forEach(function (candidate) {
       var email = String(candidate.email || "");
+      var candidateKey = candidateSelectionKey(candidate);
       var row = document.createElement("label");
       row.className = "consolidated-candidate-row";
-      row.setAttribute("data-email", email);
+      row.setAttribute("data-candidate-key", candidateKey);
 
       var checkbox = document.createElement("input");
       checkbox.type = "checkbox";
-      checkbox.checked = Boolean(consolidatedState.selectedEmails[email]);
-      checkbox.setAttribute("data-consolidated-email", email);
+      checkbox.checked = Boolean(candidateKey && consolidatedState.selectedCandidateKeys[candidateKey]);
+      checkbox.setAttribute("data-consolidated-candidate-key", candidateKey);
 
       var main = document.createElement("div");
       main.className = "consolidated-candidate-main";
@@ -1070,7 +1180,7 @@
 
     consolidatedState.isLoadingCandidates = true;
     consolidatedState.candidates = [];
-    consolidatedState.selectedEmails = {};
+    consolidatedState.selectedCandidateKeys = {};
     consolidatedState.visibleCandidates = [];
     consolidatedState.scope = null;
     resetConsolidatedOutput("Select candidates and click Generate Summary.");
@@ -1082,11 +1192,11 @@
       .then(function (payload) {
         consolidatedState.scope = payload && payload.scope ? payload.scope : {};
         consolidatedState.candidates = Array.isArray(payload && payload.candidates) ? payload.candidates : [];
-        consolidatedState.selectedEmails = {};
+        consolidatedState.selectedCandidateKeys = {};
         consolidatedState.candidates.forEach(function (candidate) {
-          var email = String(candidate.email || "");
-          if (email) {
-            consolidatedState.selectedEmails[email] = true;
+          var candidateKey = candidateSelectionKey(candidate);
+          if (candidateKey) {
+            consolidatedState.selectedCandidateKeys[candidateKey] = true;
           }
         });
         populateConsolidatedBatchOptions(Array.isArray(payload && payload.batch_options) ? payload.batch_options : []);
@@ -1095,7 +1205,7 @@
       .catch(function (error) {
         consolidatedState.scope = null;
         consolidatedState.candidates = [];
-        consolidatedState.selectedEmails = {};
+        consolidatedState.selectedCandidateKeys = {};
         if (typeof showToast === "function") {
           showToast(error.message || "Failed to load candidates", "danger");
         }
@@ -1133,39 +1243,39 @@
   function applyConsolidatedBulkSelection(mode) {
     var visibleCandidates = getVisibleConsolidatedCandidates();
     if (mode === "none") {
-      consolidatedState.selectedEmails = {};
+      consolidatedState.selectedCandidateKeys = {};
       renderConsolidatedCandidateList();
       return;
     }
 
     if (mode === "all") {
       visibleCandidates.forEach(function (candidate) {
-        var email = String(candidate.email || "");
-        if (email) {
-          consolidatedState.selectedEmails[email] = true;
+        var candidateKey = candidateSelectionKey(candidate);
+        if (candidateKey) {
+          consolidatedState.selectedCandidateKeys[candidateKey] = true;
         }
       });
       renderConsolidatedCandidateList();
       return;
     }
 
-    consolidatedState.selectedEmails = {};
+    consolidatedState.selectedCandidateKeys = {};
     visibleCandidates.forEach(function (candidate) {
-      var email = String(candidate.email || "");
-      if (!email) return;
+      var candidateKey = candidateSelectionKey(candidate);
+      if (!candidateKey) return;
       if (mode === "rejected" && String(candidate.overall_verdict || "") === "Rejected") {
-        consolidatedState.selectedEmails[email] = true;
+        consolidatedState.selectedCandidateKeys[candidateKey] = true;
       }
       if (mode === "attempted" && Number(candidate.attempted_rounds || 0) > 0) {
-        consolidatedState.selectedEmails[email] = true;
+        consolidatedState.selectedCandidateKeys[candidateKey] = true;
       }
     });
     renderConsolidatedCandidateList();
   }
 
   function generateConsolidatedSummary() {
-    var selectedEmails = getSelectedConsolidatedEmails();
-    if (!selectedEmails.length) {
+    var selectedCandidateKeys = getSelectedConsolidatedCandidateKeys();
+    if (!selectedCandidateKeys.length) {
       if (typeof showToast === "function") {
         showToast("Select at least one candidate", "warning");
       }
@@ -1410,11 +1520,11 @@
 
   if (consolidatedCandidateList) {
     consolidatedCandidateList.addEventListener("change", function (event) {
-      var checkbox = event.target.closest("[data-consolidated-email]");
+      var checkbox = event.target.closest("[data-consolidated-candidate-key]");
       if (!checkbox) return;
-      var email = String(checkbox.getAttribute("data-consolidated-email") || "");
-      if (!email) return;
-      consolidatedState.selectedEmails[email] = Boolean(checkbox.checked);
+      var candidateKey = String(checkbox.getAttribute("data-consolidated-candidate-key") || "");
+      if (!candidateKey) return;
+      consolidatedState.selectedCandidateKeys[candidateKey] = Boolean(checkbox.checked);
       updateConsolidatedFooterState();
     });
   }
@@ -1442,17 +1552,14 @@
     if (generateBtn) {
       event.preventDefault();
       var ownerCard = generateBtn.closest("[data-candidate-card]");
-      generateReport(generateBtn.getAttribute("data-email"), generateBtn, ownerCard);
+      generateReport(getCardCandidateContext(ownerCard, generateBtn), generateBtn, ownerCard);
       return;
     }
 
     var galleryBtn = event.target.closest(".js-open-gallery");
     if (galleryBtn) {
       event.preventDefault();
-      openGallery(
-        galleryBtn.getAttribute("data-email"),
-        galleryBtn.getAttribute("data-name")
-      );
+      openGallery(getCardCandidateContext(galleryBtn.closest("[data-candidate-card]"), galleryBtn));
       return;
     }
 

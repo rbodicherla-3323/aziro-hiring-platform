@@ -2,6 +2,7 @@ from app.services.evaluation_store import EVALUATION_STORE
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 from app.services.coding_submission_store import get_latest_coding_submission
+from app.services.candidate_scope import matches_candidate_scope
 from app.services.generated_tests_store import GENERATED_TESTS
 from app.services.ai_generator import (
     generate_evaluation_summary,
@@ -209,7 +210,12 @@ class EvaluationService:
             )
 
         if round_key == "L4":
-            latest_submission = get_latest_coding_submission(candidate_data.get("email", ""), round_key) or {}
+            latest_submission = get_latest_coding_submission(
+                candidate_data.get("email", ""),
+                round_key,
+                role_key=str((candidate_data or {}).get("role_key", "") or "").strip(),
+                batch_id=str((candidate_data or {}).get("batch_id", "") or "").strip(),
+            ) or {}
             latest_summary = {
                 "question_title": latest_submission.get("question_title", ""),
                 "question_text": latest_submission.get("question_text", ""),
@@ -218,6 +224,34 @@ class EvaluationService:
             base_details = EvaluationService._merge_submission_details(base_details, latest_summary)
 
         return base_details
+
+    @staticmethod
+    def _live_result_matches_candidate(candidate_data: dict, result: dict, session_id: str = "") -> bool:
+        if not isinstance(candidate_data, dict) or not isinstance(result, dict):
+            return False
+
+        candidate_email = EvaluationService._normalize_email(candidate_data.get("email", ""))
+        if not candidate_email:
+            return False
+        if EvaluationService._normalize_email(result.get("email", "")) != candidate_email:
+            return False
+
+        link_meta = EvaluationService._get_test_link_meta(session_id) if session_id else {}
+        scope_payload = {
+            "email": result.get("email", "") or link_meta.get("email", ""),
+            "role_key": result.get("role_key", "") or link_meta.get("role_key", ""),
+            "role_label": result.get("role_label", "") or link_meta.get("role_label", ""),
+            "role": result.get("role", "") or result.get("role_label", "") or link_meta.get("role_label", ""),
+            "batch_id": result.get("batch_id", "") or link_meta.get("batch_id", ""),
+        }
+        return matches_candidate_scope(
+            scope_payload,
+            candidate_key=str((candidate_data or {}).get("candidate_key", "")).strip(),
+            email=candidate_email,
+            role_key=str((candidate_data or {}).get("role_key", "")).strip(),
+            role_label=str((candidate_data or {}).get("role", "")).strip(),
+            batch_id=str((candidate_data or {}).get("batch_id", "")).strip(),
+        )
 
     @staticmethod
     def _gap_signal_label(response: dict) -> tuple[str, str, list[str]]:
@@ -796,7 +830,12 @@ class EvaluationService:
         if not l4:
             return candidate_data
 
-        latest_submission = get_latest_coding_submission(candidate_data.get("email", ""), "L4")
+        latest_submission = get_latest_coding_submission(
+            candidate_data.get("email", ""),
+            "L4",
+            role_key=str((candidate_data or {}).get("role_key", "") or "").strip(),
+            batch_id=str((candidate_data or {}).get("batch_id", "") or "").strip(),
+        )
         if not latest_submission:
             return candidate_data
 
@@ -827,11 +866,13 @@ class EvaluationService:
         """
         Generate an AI-based summary for candidate rounds using role-accurate labels/order.
         """
-        if isinstance(candidate_email, str):
-            candidate_email = candidate_email.strip()
+        candidate_email = EvaluationService._normalize_email(candidate_email)
 
         # Prefer caller-supplied candidate context so summary aligns with the selected report row.
-        if isinstance(candidate_data, dict) and str(candidate_data.get("email", "")).strip() == candidate_email:
+        if (
+            isinstance(candidate_data, dict)
+            and EvaluationService._normalize_email(candidate_data.get("email", "")) == candidate_email
+        ):
             try:
                 candidate_data = EvaluationService._enrich_l4_with_coding_submission(candidate_data)
                 summary_payload = EvaluationService._prepare_l1_l4_summary_payload(candidate_data)
@@ -842,7 +883,20 @@ class EvaluationService:
         # Prefer persisted DB report data when available.
         try:
             from app.services.db_service import get_candidate_report_data
-            db_candidate_data = get_candidate_report_data(candidate_email)
+            scoped_test_session_id = None
+            scoped_role_key = ""
+            scoped_batch_id = ""
+            if isinstance(candidate_data, dict):
+                scoped_test_session_id = candidate_data.get("test_session_id")
+                scoped_role_key = str(candidate_data.get("role_key", "") or "").strip()
+                scoped_batch_id = str(candidate_data.get("batch_id", "") or "").strip()
+
+            db_candidate_data = get_candidate_report_data(
+                candidate_email,
+                test_session_id=scoped_test_session_id,
+                role_key=scoped_role_key,
+                batch_id=scoped_batch_id,
+            )
             if db_candidate_data:
                 db_candidate_data = EvaluationService._enrich_l4_with_coding_submission(db_candidate_data)
                 summary_payload = EvaluationService._prepare_l1_l4_summary_payload(db_candidate_data)
@@ -853,7 +907,7 @@ class EvaluationService:
         # Aggregate in-memory round results for this candidate.
         all_round_results = [
             result for result in EVALUATION_STORE.values()
-            if result.get("email") == candidate_email
+            if EvaluationService._normalize_email(result.get("email", "")) == candidate_email
         ]
         if not all_round_results:
             candidate_data = {
@@ -909,12 +963,15 @@ class EvaluationService:
         return generate_consolidated_evaluation_summary(summary_payload)
 
     @staticmethod
-    def generate_candidate_coding_round_summary(candidate_email):
+    def generate_candidate_coding_round_summary(candidate_email, candidate_data=None):
         """
         Generate a separate summary only for L4 coding round, including question and submitted code.
         Skip AI summary entirely if the coding round was not attempted.
         """
-        coding_data = EvaluationService.get_candidate_coding_round_data(candidate_email)
+        coding_data = EvaluationService.get_candidate_coding_round_data(
+            candidate_email,
+            candidate_data=candidate_data,
+        )
         if not coding_data:
             return None
         # If not attempted or no submitted code, don't generate AI summary
@@ -925,14 +982,31 @@ class EvaluationService:
         return generate_coding_round_summary(coding_data)
 
     @staticmethod
-    def get_candidate_coding_round_data(candidate_email):
+    def get_candidate_coding_round_data(candidate_email, candidate_data=None):
         """
         Return structured L4 coding round data (question + submitted code when available).
         """
+        candidate_email = EvaluationService._normalize_email(candidate_email)
+        scoped_candidate = {}
+        if (
+            isinstance(candidate_data, dict)
+            and EvaluationService._normalize_email(candidate_data.get("email", "")) == candidate_email
+        ):
+            scoped_candidate = candidate_data
+
+        scoped_test_session_id = scoped_candidate.get("test_session_id")
+        scoped_role_key = str(scoped_candidate.get("role_key", "") or "").strip()
+        scoped_batch_id = str(scoped_candidate.get("batch_id", "") or "").strip()
+
         overall_context = {}
         try:
             from app.services.db_service import get_candidate_report_data
-            db_candidate_data = get_candidate_report_data(candidate_email)
+            db_candidate_data = get_candidate_report_data(
+                candidate_email,
+                test_session_id=scoped_test_session_id,
+                role_key=scoped_role_key,
+                batch_id=scoped_batch_id,
+            )
             if db_candidate_data:
                 overall_context = {
                     "overall_summary": db_candidate_data.get("summary", {}),
@@ -945,20 +1019,27 @@ class EvaluationService:
 
         # Prefer in-memory first for full submission details (question + code),
         # then fall back to DB round metrics if available.
-        coding_results = [
-            result for result in EVALUATION_STORE.values()
-            if result.get("email") == candidate_email and result.get("round_key") == "L4"
-        ]
+        matching_live_results = []
+        for session_id, result in EVALUATION_STORE.items():
+            if result.get("round_key") != "L4":
+                continue
+            if EvaluationService._normalize_email(result.get("email", "")) != candidate_email:
+                continue
+            if scoped_candidate and not EvaluationService._live_result_matches_candidate(scoped_candidate, result, session_id):
+                continue
+            matching_live_results.append((session_id, result))
 
-        if coding_results:
-            latest = sorted(
-                coding_results,
-                key=lambda r: r.get("time_taken_seconds", 0),
-                reverse=True
-            )[0]
+        if matching_live_results:
+            latest_session_id, latest = matching_live_results[-1]
 
             submission_details = latest.get("submission_details") or {}
-            latest_submission = get_latest_coding_submission(candidate_email, "L4") or {}
+            latest_submission = get_latest_coding_submission(
+                candidate_email,
+                "L4",
+                role_key=scoped_role_key,
+                batch_id=scoped_batch_id,
+                session_id=latest_session_id,
+            ) or {}
 
             def _pick(existing, fallback):
                 return existing if str(existing or "").strip() else fallback
@@ -966,7 +1047,7 @@ class EvaluationService:
             coding_data = {
                 "name": latest.get("candidate_name", "Candidate"),
                 "email": candidate_email,
-                "role": latest.get("role", "N/A"),
+                "role": latest.get("role") or latest.get("role_label") or overall_context.get("overall_role", "N/A"),
                 "round_label": latest.get("round_label", "Coding Challenge"),
                 "status": latest.get("status", "Not Attempted"),
                 "percentage": latest.get("percentage", 0),
@@ -985,11 +1066,21 @@ class EvaluationService:
 
         try:
             from app.services.db_service import get_candidate_report_data
-            db_candidate_data = get_candidate_report_data(candidate_email)
+            db_candidate_data = get_candidate_report_data(
+                candidate_email,
+                test_session_id=scoped_test_session_id,
+                role_key=scoped_role_key,
+                batch_id=scoped_batch_id,
+            )
             if db_candidate_data:
                 l4 = (db_candidate_data.get("rounds") or {}).get("L4") or {}
                 l4_submission_details = l4.get("submission_details") or {}
-                latest_submission = get_latest_coding_submission(candidate_email, "L4") or {}
+                latest_submission = get_latest_coding_submission(
+                    candidate_email,
+                    "L4",
+                    role_key=scoped_role_key,
+                    batch_id=scoped_batch_id,
+                ) or {}
 
                 def _pick(existing, fallback):
                     return existing if str(existing or "").strip() else fallback
@@ -1051,6 +1142,9 @@ class EvaluationService:
             result_data = {
                 "candidate_name": session_meta["candidate_name"],
                 "email": session_meta["email"],
+                "role_key": session_meta.get("role_key", ""),
+                "role_label": session_meta.get("role_label", ""),
+                "batch_id": session_meta.get("batch_id", ""),
                 "round_key": round_key,
                 "round_label": session_meta["round_label"],
                 "total_questions": 15,
@@ -1099,6 +1193,9 @@ class EvaluationService:
         EVALUATION_STORE[session_id] = {
             "candidate_name": session_meta["candidate_name"],
             "email": session_meta["email"],
+            "role_key": session_meta.get("role_key", ""),
+            "role_label": session_meta.get("role_label", ""),
+            "batch_id": session_meta.get("batch_id", ""),
             "round_key": round_key,
             "round_label": session_meta["round_label"],
             "total_questions": total_questions,

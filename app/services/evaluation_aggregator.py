@@ -5,6 +5,7 @@ from app.services.evaluation_store import EVALUATION_STORE
 from app.services.generated_tests_store import GENERATED_TESTS
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
+from app.services.candidate_scope import build_candidate_key
 from app.services.evaluation_service import EvaluationService
 from app.utils.round_order import ordered_present_round_keys, round_number_map
 from app.models import RoundResult, TestLink
@@ -15,6 +16,15 @@ class EvaluationAggregator:
     @staticmethod
     def _normalize_email(value):
         return str(value or "").strip().lower()
+
+    @staticmethod
+    def _candidate_key(email, role_key="", role="", batch_id=""):
+        return build_candidate_key(
+            email=email,
+            role_key=role_key,
+            role_label=role,
+            batch_id=batch_id,
+        )
 
     @staticmethod
     def _parse_dt(value):
@@ -40,19 +50,24 @@ class EvaluationAggregator:
         return 15
 
     @staticmethod
-    def _ensure_candidate(candidates_map, email, **payload):
-        entry = candidates_map.get(email)
+    def _ensure_candidate(candidates_map, candidate_key, email, **payload):
+        if not candidate_key or not email:
+            return None
+
+        entry = candidates_map.get(candidate_key)
         if entry is None:
             entry = {
+                "candidate_key": candidate_key,
                 "name": payload.get("name", "") or email,
                 "email": email,
                 "role": payload.get("role", "") or "",
                 "role_key": payload.get("role_key", "") or "",
                 "batch_id": payload.get("batch_id", "") or "",
+                "test_session_id": payload.get("test_session_id"),
                 "rounds": {},
                 "_latest_created_at": payload.get("created_at"),
             }
-            candidates_map[email] = entry
+            candidates_map[candidate_key] = entry
             return entry
 
         if payload.get("name"):
@@ -63,6 +78,8 @@ class EvaluationAggregator:
             entry["role_key"] = payload.get("role_key")
         if payload.get("batch_id"):
             entry["batch_id"] = payload.get("batch_id")
+        if payload.get("test_session_id"):
+            entry["test_session_id"] = payload.get("test_session_id")
 
         incoming_dt = payload.get("created_at")
         existing_dt = entry.get("_latest_created_at")
@@ -106,9 +123,16 @@ class EvaluationAggregator:
             if not email:
                 continue
 
+            candidate_key = EvaluationAggregator._candidate_key(
+                email,
+                role_key=str(item.get("role_key", "") or "").strip(),
+                role=str(item.get("role", "") or "").strip(),
+                batch_id=str(item.get("batch_id", "") or "").strip(),
+            )
             created_at = EvaluationAggregator._parse_dt(item.get("created_at"))
             candidate = EvaluationAggregator._ensure_candidate(
                 candidates_map,
+                candidate_key,
                 email,
                 name=str(item.get("name", "") or "").strip(),
                 role=str(item.get("role", "") or "").strip(),
@@ -124,13 +148,14 @@ class EvaluationAggregator:
                     continue
                 test_type = str((test or {}).get("type", "mcq") or "mcq").strip().lower()
                 round_label = str((test or {}).get("label", "") or f"Round {rk}").strip()
-                planned_rounds[email][rk] = {
+                planned_rounds[candidate_key][rk] = {
                     "round_label": round_label,
                     "test_type": test_type,
                 }
                 session_id = str((test or {}).get("session_id", "") or "").strip().lower()
                 if session_id:
                     link_by_session[session_id] = {
+                        "candidate_key": candidate_key,
                         "email": email,
                         "candidate_name": candidate.get("name", ""),
                         "role_key": candidate.get("role_key", ""),
@@ -158,13 +183,21 @@ class EvaluationAggregator:
 
             role_key = str(getattr(link, "role_key", "") or "").strip()
             role_label = str(getattr(link, "role_label", "") or role_key).strip()
+            batch_id = str(getattr(link, "batch_id", "") or "").strip()
+            candidate_key = EvaluationAggregator._candidate_key(
+                email,
+                role_key=role_key,
+                role=role_label,
+                batch_id=batch_id,
+            )
             candidate = EvaluationAggregator._ensure_candidate(
                 candidates_map,
+                candidate_key,
                 email,
                 name=str(getattr(link, "candidate_name", "") or email).strip(),
                 role=role_label,
                 role_key=role_key,
-                batch_id=str(getattr(link, "batch_id", "") or "").strip(),
+                batch_id=batch_id,
                 created_at=created_at,
             )
 
@@ -175,6 +208,7 @@ class EvaluationAggregator:
 
             if session_id:
                 link_by_session[session_id] = {
+                    "candidate_key": candidate_key,
                     "email": email,
                     "candidate_name": candidate.get("name", ""),
                     "role_key": role_key,
@@ -186,7 +220,7 @@ class EvaluationAggregator:
                 }
 
             if round_key:
-                planned_rounds[email][round_key] = {
+                planned_rounds[candidate_key][round_key] = {
                     "round_label": round_label,
                     "test_type": test_type,
                 }
@@ -199,8 +233,15 @@ class EvaluationAggregator:
             if not email:
                 continue
 
+            candidate_key = str(link_meta.get("candidate_key", "") or "").strip() or EvaluationAggregator._candidate_key(
+                email,
+                role_key=str(result.get("role_key", "") or link_meta.get("role_key", "")).strip(),
+                role=str(result.get("role_label", "") or link_meta.get("role_label", "")).strip(),
+                batch_id=str(result.get("batch_id", "") or link_meta.get("batch_id", "")).strip(),
+            )
             candidate = EvaluationAggregator._ensure_candidate(
                 candidates_map,
+                candidate_key,
                 email,
                 name=str(result.get("candidate_name", "") or link_meta.get("candidate_name", "") or email).strip(),
                 role=str(result.get("role_label", "") or link_meta.get("role_label", "")).strip(),
@@ -256,13 +297,21 @@ class EvaluationAggregator:
             if not email:
                 continue
 
+            candidate_key = str(link_meta.get("candidate_key", "") or "").strip() or EvaluationAggregator._candidate_key(
+                email,
+                role_key=role_key,
+                role=role_label,
+                batch_id=batch_id,
+            )
             candidate = EvaluationAggregator._ensure_candidate(
                 candidates_map,
+                candidate_key,
                 email,
                 name=candidate_name or email,
                 role=role_label,
                 role_key=role_key,
                 batch_id=batch_id,
+                test_session_id=getattr(rr, "test_session_id", None),
             )
 
             pass_threshold = (
@@ -287,15 +336,22 @@ class EvaluationAggregator:
             round_key = str(meta.get("round_key", "") or "").strip()
             if not email or not round_key:
                 continue
+            candidate_key = EvaluationAggregator._candidate_key(
+                email,
+                role_key=str(meta.get("role_key", "") or "").strip(),
+                role=str(meta.get("role_label", "") or "").strip(),
+                batch_id=str(meta.get("batch_id", "") or "").strip(),
+            )
             EvaluationAggregator._ensure_candidate(
                 candidates_map,
+                candidate_key,
                 email,
                 name=str(meta.get("candidate_name", "") or email).strip(),
                 role=str(meta.get("role_label", "") or "").strip(),
                 role_key=str(meta.get("role_key", "") or "").strip(),
                 batch_id=str(meta.get("batch_id", "") or "").strip(),
             )
-            planned_rounds[email].setdefault(
+            planned_rounds[candidate_key].setdefault(
                 round_key,
                 {
                     "round_label": str(meta.get("round_label", "") or f"Round {round_key}").strip(),
@@ -308,15 +364,22 @@ class EvaluationAggregator:
             round_key = str(meta.get("round_key", "") or "").strip()
             if not email or not round_key:
                 continue
+            candidate_key = EvaluationAggregator._candidate_key(
+                email,
+                role_key=str(meta.get("role_key", "") or "").strip(),
+                role=str(meta.get("role_label", "") or "").strip(),
+                batch_id=str(meta.get("batch_id", "") or "").strip(),
+            )
             EvaluationAggregator._ensure_candidate(
                 candidates_map,
+                candidate_key,
                 email,
                 name=str(meta.get("candidate_name", "") or email).strip(),
                 role=str(meta.get("role_label", "") or "").strip(),
                 role_key=str(meta.get("role_key", "") or "").strip(),
                 batch_id=str(meta.get("batch_id", "") or "").strip(),
             )
-            planned_rounds[email].setdefault(
+            planned_rounds[candidate_key].setdefault(
                 round_key,
                 {
                     "round_label": str(meta.get("round_label", "") or f"Round {round_key}").strip(),
@@ -324,8 +387,8 @@ class EvaluationAggregator:
                 },
             )
 
-        for email, candidate in candidates_map.items():
-            for round_key, plan in planned_rounds.get(email, {}).items():
+        for candidate_key, candidate in candidates_map.items():
+            for round_key, plan in planned_rounds.get(candidate_key, {}).items():
                 if round_key in candidate["rounds"]:
                     continue
                 candidate["rounds"][round_key] = EvaluationAggregator._round_row(

@@ -2129,6 +2129,9 @@ def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data
             result_data = {
                 "candidate_name": session_meta.get("candidate_name", ""),
                 "email": session_meta.get("email", ""),
+                "role_key": session_meta.get("role_key", ""),
+                "role_label": session_meta.get("role_label", ""),
+                "batch_id": session_meta.get("batch_id", ""),
                 "round_key": round_key,
                 "round_label": round_label,
                 "total_questions": latest_total,
@@ -2236,6 +2239,9 @@ def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data
     result_data = {
         "candidate_name": session_meta.get("candidate_name", ""),
         "email": session_meta.get("email", ""),
+        "role_key": session_meta.get("role_key", ""),
+        "role_label": session_meta.get("role_label", ""),
+        "batch_id": session_meta.get("batch_id", ""),
         "round_key": round_key,
         "round_label": round_label,
         "total_questions": total_questions,
