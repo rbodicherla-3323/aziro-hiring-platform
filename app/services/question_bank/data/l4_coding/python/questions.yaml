@@ -1,7 +1,10 @@
 - id: 2
   title: Reverse a Number
   difficulty: EASY
-  description: Write a program to reverse a number without using any inbuilt function.
+  description: >
+    Implement solve(n) to return the integer formed by reversing the decimal digits
+    of n. Do not use built-in reverse helpers. Leading zeros in the reversed
+    value should disappear naturally, so 100 becomes 1.
   function:
     python:
       name: solve
@@ -50,8 +53,10 @@
 - id: 3
   title: Square of Even and Cube of Odd
   difficulty: EASY
-  description: Given a list of first 10 natural numbers, write a program to find the square of all even numbers and cube of
-    all odd numbers and store them in another list.
+  description: >
+    Given a list of integers nums, build and return a new list of the same length.
+    For each value, place its square if the number is even and its cube if the
+    number is odd. Preserve the original order of the input list.
   function:
     python:
       name: solve
@@ -177,7 +182,10 @@
 - id: 4
   title: Check Anagrams
   difficulty: EASY
-  description: Write a function that accepts two strings and returns true if the two strings are anagrams of each other.
+  description: >
+    Return True if s1 and s2 contain exactly the same characters with the same
+    frequencies, otherwise return False. The comparison should be based on the
+    full input strings as provided.
   function:
     python:
       name: solve
@@ -239,8 +247,11 @@
 - id: 5
   title: Convert List to Key-Value Pairs
   difficulty: MEDIUM
-  description: 'Convert each list element to a key-value pair by splitting the digits. For example, 2323 becomes {23: 23},
-    82 becomes {8: 2}.'
+  description: >
+    For each integer in test_list, treat its decimal digits as a string and split
+    it into two parts. Use the first half of the digits as the key and the
+    remaining digits as the value, converting both parts back to integers and
+    storing them in the output dictionary.
   function:
     python:
       name: solve
@@ -312,8 +323,10 @@
 - id: 6
   title: Find Greatest and Smallest
   difficulty: EASY
-  description: Write a program to find the greatest and smallest number present in the list. Return as a vector where first
-    element is greatest and second is smallest.
+  description: >
+    Return a two-element list containing the largest value first and the smallest
+    value second from the input list nums. Determine both answers from the given
+    numbers and keep the output order as [max, min].
   function:
     python:
       name: solve
@@ -415,7 +428,10 @@
 - id: 7
   title: Right Rotate List by n
   difficulty: EASY
-  description: Write a program to right rotate a list by n positions.
+  description: >
+    Rotate lst to the right by n positions and return the rotated list. Elements
+    moved past the end should wrap around to the front, and values of n larger
+    than the list length should still work correctly.
   function:
     python:
       name: solve
@@ -566,8 +582,10 @@
 - id: 8
   title: Even Number Dictionary
   difficulty: MEDIUM
-  description: Create a map where the key is an even number from the given list and the value will be the occurrence of that
-    element in the list.
+  description: >
+    Build and return a dictionary that counts only the even numbers in nums. Each
+    key should be an even value from the input list, and its value should be the
+    number of times that even value appears.
   function:
     python:
       name: solve
@@ -682,7 +700,9 @@
 - id: 9
   title: Swap Elements at Positions
   difficulty: EASY
-  description: Write a function that swaps the elements present at positions i and j in the given list.
+  description: >
+    Return the list after swapping the elements located at zero-based indices i
+    and j. All other elements must remain in their original positions.
   function:
     python:
       name: solve
@@ -846,7 +866,10 @@
 - id: 10
   title: Sort by Last Character
   difficulty: MEDIUM
-  description: Write a program to sort the given list of strings based on the last character of each word.
+  description: >
+    Sort the list of strings based on the last character of each string and return
+    the reordered list. If two strings end with the same character, keep their
+    original relative order.
   function:
     python:
       name: solve
@@ -960,8 +983,10 @@
 - id: 11
   title: Find String Indices
   difficulty: MEDIUM
-  description: Find the indices of the start and end of string k in S. Return the pairs in format {start_index, end_index}.
-    If no match is found, return empty vector.
+  description: >
+    Find every occurrence of substring k inside s, including overlapping matches.
+    Return a list of [start_index, end_index] pairs in left-to-right order. If
+    no occurrence exists, return an empty list.
   function:
     python:
       name: solve
@@ -1055,8 +1080,11 @@
 - id: 17
   title: Count Alphabet in Alphanumeric String
   difficulty: HARD
-  description: Write a program to find the count of alphabet alone in the given alphanumeric string and format the output
-    with counts after each character.
+  description: >
+    Scan the alphanumeric string from left to right and build a formatted result.
+    For each alphabetic character, append that character followed by the total
+    number of times it appears in the full string. Numeric characters should stay
+    in the output in their original positions.
   function:
     python:
       name: solve
@@ -1105,8 +1133,10 @@
 - id: 20
   title: Valid Parentheses
   difficulty: MEDIUM
-  description: Write a program to check the validity of a string of parentheses. These brackets must be closed in the correct
-    order.
+  description: >
+    Return True if the bracket string is valid and False otherwise. The string may
+    contain (), {}, and [], and every opening bracket must be closed by the
+    correct type in the correct order with no unmatched brackets left over.
   function:
     python:
       name: solve
@@ -1155,7 +1185,10 @@
 - id: 27
   title: Remove Parenthesis Area
   difficulty: HARD
-  description: Write a program to remove parenthesis area in a string using regex.
+  description: >
+    Remove every substring enclosed in parentheses, including the parentheses
+    themselves, and return the cleaned string. If the input contains multiple
+    parenthesized sections, all of them should be removed.
   function:
     python:
       name: solve
@@ -1204,7 +1237,9 @@
 - id: 28
   title: Second Highest Number
   difficulty: MEDIUM
-  description: Write a program to find second highest number in an integer array without using inbuilt functions.
+  description: >
+    Return the second largest distinct value in nums. Do not rely on built-in
+    sorting helpers; determine the answer directly from the values in the list.
   function:
     python:
       name: solve
@@ -1287,7 +1322,10 @@
 - id: 29
   title: Remove Duplicates from Array
   difficulty: MEDIUM
-  description: Write a program to remove duplicate elements from array without using inbuilt functions.
+  description: >
+    Remove duplicate values from nums while keeping the first occurrence of each
+    value in its original order. Return the resulting list without using built-in
+    deduplication helpers.
   function:
     python:
       name: solve
@@ -1406,7 +1444,10 @@
 - id: 30
   title: Left Rotation of Array
   difficulty: EASY
-  description: Write a program to perform left rotation of array elements by two positions.
+  description: >
+    Perform a left rotation of the input list by exactly two positions and return
+    the rotated result. Elements shifted off the front should wrap around to the
+    end of the list.
   function:
     python:
       name: solve
@@ -1534,7 +1575,10 @@
 - id: 31
   title: Square of Prime Numbers
   difficulty: MEDIUM
-  description: From given list of numbers, create a list of square of prime numbers.
+  description: >
+    From the input list, keep only the numbers that are prime and return a new
+    list containing their squares. Preserve the order in which the prime numbers
+    appear in the original list.
   function:
     python:
       name: solve
@@ -1638,7 +1682,10 @@
 - id: 32
   title: Reverse String without Special Characters
   difficulty: HARD
-  description: Reverse the given string without changing the position of special characters.
+  description: >
+    Reverse only the letters and digits in the string while keeping every special
+    character in its original index. Return the transformed string with all
+    non-alphanumeric symbols left fixed in place.
   function:
     python:
       name: solve
@@ -1687,8 +1734,10 @@
 - id: 33
   title: Hide Credit Card Number
   difficulty: EASY
-  description: Write a function that accepts a credit card number. It should return a string where all characters are hidden
-    with an asterisk except the last four.
+  description: >
+    Mask the credit card number so that every character except the last four is
+    replaced with an asterisk. Return the masked string in the same length as the
+    input.
   function:
     python:
       name: solve
@@ -1737,7 +1786,10 @@
 - id: 34
   title: Average Word Length
   difficulty: EASY
-  description: For the given sentence, return the average word length after removing punctuation.
+  description: >
+    Remove punctuation from the sentence, split the remaining text into words, and
+    return the average word length as a float. The result should be based only on
+    the cleaned words.
   function:
     python:
       name: solve
@@ -1786,7 +1838,9 @@
 - id: 35
   title: Sort in Descending Order without Builtin
   difficulty: MEDIUM
-  description: Sort the list of integers in descending order without using inbuilt functions.
+  description: >
+    Sort the list of integers in descending order and return the sorted result.
+    Do not use built-in sorting helpers; implement the ordering logic yourself.
   function:
     python:
       name: solve
@@ -1920,8 +1974,10 @@
 - id: 36
   title: Square String Elements
   difficulty: EASY
-  description: From the given list, check if element is integer then return square and if string then return string 2 times.
-    Use variant type or string encoding.
+  description: >
+    Each element in items is a string. If an element represents an integer, square
+    its numeric value and return the squared result as a string. Otherwise, repeat
+    the string twice. Preserve the original order of the input list.
   function:
     python:
       name: solve
@@ -2035,8 +2091,10 @@
 - id: 37
   title: Fill Sentinel with Recent Value
   difficulty: MEDIUM
-  description: In the given list, check if element is -999 (sentinel for null), replace it with the most recent non-sentinel
-    value. If no previous value exists, keep -999.
+  description: >
+    In lst, the value -999 is a sentinel that represents a missing value. Replace
+    each sentinel with the most recent earlier non-sentinel value. If no previous
+    real value exists, leave that -999 unchanged.
   function:
     python:
       name: solve
@@ -2184,8 +2242,10 @@
 - id: 38
   title: Two Sum with Indices
   difficulty: MEDIUM
-  description: Check sum of 2 numbers from given list which matches target value and returns the indexes of those numbers.
-    Should not use more than 1 loop.
+  description: >
+    Find two numbers in nums whose sum equals target and return their zero-based
+    indices as a two-element list. You may assume a valid answer exists, and the
+    intended solution should avoid nested looping.
   function:
     python:
       name: solve
@@ -2312,7 +2372,9 @@
 - id: 39
   title: Sort without Inbuilt Function
   difficulty: MEDIUM
-  description: Sort the below list without using inbuilt function.
+  description: >
+    Sort the input list of integers in ascending order and return the sorted list.
+    Do not use built-in sorting helpers.
   function:
     python:
       name: solve
@@ -2450,8 +2512,10 @@
 - id: 40
   title: Palindrome Strings
   difficulty: EASY
-  description: Define a function which returns a list containing only the palindrome strings from the list of provided string
-    elements.
+  description: >
+    Return a list containing only those strings that read the same forward and
+    backward. Preserve the original order of the palindrome strings from the input
+    list.
   function:
     python:
       name: solve
@@ -2537,8 +2601,10 @@
 - id: 41
   title: Separate Even and Odd
   difficulty: EASY
-  description: Define logic for identifying the even numbers and odd numbers from the given list and generate a map with keys
-    "even" and "odd".
+  description: >
+    Split the numbers into two groups based on parity and return a dictionary with
+    keys "even" and "odd". Each value should be a list of numbers from the input
+    preserved in their original order.
   function:
     python:
       name: solve
@@ -2694,7 +2760,10 @@
 - id: 42
   title: Word Length Map
   difficulty: EASY
-  description: Define a function which returns a map that stores the words and its length from the given text.
+  description: >
+    Split the text into words using spaces and return a dictionary that maps each
+    word to its length. The output should contain one entry per word that appears
+    in the input.
   function:
     python:
       name: solve
@@ -2774,7 +2843,9 @@
 - id: 43
   title: Remove Special Characters
   difficulty: EASY
-  description: In the given string, remove the special characters and add a space instead of that.
+  description: >
+    Replace every special character in the string with a space and return the
+    resulting text. Keep letters and digits in their original order.
   function:
     python:
       name: solve
@@ -2823,7 +2894,10 @@
 - id: 44
   title: String with Index
   difficulty: EASY
-  description: Given a string, display the output with index numbers after each character.
+  description: >
+    Build a new string by appending the 1-based position of each character
+    immediately after that character. For example, the first character should be
+    followed by 1, the second by 2, and so on.
   function:
     python:
       name: solve
@@ -2872,8 +2946,9 @@
 - id: 45
   title: Common Substring
   difficulty: MEDIUM
-  description: Write a program in which two strings are given and determine if they share a common substring. Return either
-    "YES" or "NO".
+  description: >
+    Determine whether the two strings share at least one common character. Return
+    "YES" if they do and "NO" otherwise.
   function:
     python:
       name: solve
@@ -2935,7 +3010,10 @@
 - id: 46
   title: Leap Year Check
   difficulty: EASY
-  description: Create a function that accepts a year and returns true if the given year is a leap year, false otherwise.
+  description: >
+    Return True if the given year is a leap year in the Gregorian calendar and
+    False otherwise. A leap year is divisible by 4, except century years unless
+    they are also divisible by 400.
   function:
     python:
       name: solve
@@ -2984,7 +3062,10 @@
 - id: 47
   title: List Element to Key-Value Pair
   difficulty: HARD
-  description: Convert each list element to a key-value pair by splitting the digits in half.
+  description: >
+    For each integer in test_list, split its decimal digits into two parts, use
+    the left part as the dictionary key, and use the remaining digits as the
+    value. Convert both parts back to integers and return the final dictionary.
   function:
     python:
       name: solve
@@ -3056,8 +3137,10 @@
 - id: 48
   title: Longest Substring Without Repeating Characters
   difficulty: HARD
-  description: Given a string s, return the length of the longest substring without
-    repeating characters.
+  description: >
+    Given a string s, return the length of the longest contiguous substring that
+    contains no repeated characters. You only need to return the maximum length,
+    not the substring itself.
   function:
     python:
       name: solve
@@ -3091,8 +3174,10 @@
 - id: 49
   title: Minimum Window Substring
   difficulty: HARD
-  description: Given strings s and t, return the minimum window in s that contains
-    all characters of t. Return empty string if impossible.
+  description: >
+    Return the smallest contiguous substring of s that contains every character of
+    t with the required multiplicity. If no such window exists, return an empty
+    string.
   function:
     python:
       name: solve
@@ -3134,8 +3219,9 @@
 - id: 50
   title: Merge Overlapping Intervals
   difficulty: HARD
-  description: Given a list of intervals [start, end], merge all overlapping intervals
-    and return the merged result sorted by start.
+  description: >
+    Given a list of [start, end] intervals, merge every pair of intervals that
+    overlaps. Return the merged intervals sorted by their start values.
   function:
     python:
       name: solve
@@ -3224,7 +3310,9 @@
 - id: 51
   title: Kth Largest Element
   difficulty: HARD
-  description: Return the kth largest element in an unsorted array.
+  description: >
+    Return the kth largest value in the unsorted array nums. The answer is based
+    on sorted order by value, not on distinct elements.
   function:
     python:
       name: solve
@@ -3293,8 +3381,10 @@
 - id: 52
   title: Top K Frequent Elements
   difficulty: HARD
-  description: Return the top k frequent elements. If frequencies tie, return smaller
-    value first.
+  description: >
+    Return the k most frequent values from nums. Order the result by frequency in
+    descending order. If two values have the same frequency, place the smaller
+    numeric value first.
   function:
     python:
       name: solve
@@ -3383,8 +3473,10 @@
 - id: 53
   title: Word Ladder Length
   difficulty: HARD
-  description: Given beginWord, endWord, and a word list, return the length of the
-    shortest transformation sequence, or 0 if impossible.
+  description: >
+    Starting from begin_word, change one character at a time to reach end_word.
+    Every intermediate word must exist in word_list. Return the length of the
+    shortest valid transformation sequence, or 0 if no sequence exists.
   function:
     python:
       name: solve
@@ -3461,8 +3553,10 @@
 - id: 54
   title: Course Schedule Feasibility
   difficulty: HARD
-  description: Given number of courses and prerequisite pairs [a, b] (take b before
-    a), return true if all courses can be finished.
+  description: >
+    You are given num_courses and prerequisite pairs [a, b], meaning course b must
+    be completed before course a. Return True if it is possible to finish all
+    courses, and False if the dependency graph contains a cycle.
   function:
     python:
       name: solve
@@ -3528,8 +3622,10 @@
 - id: 55
   title: Number of Islands
   difficulty: HARD
-  description: Given a grid of '1' and '0' rows (as strings), return the number of
-    islands.
+  description: >
+    The grid is provided as a list of strings containing '1' for land and '0' for
+    water. Count how many separate islands exist, where land cells are connected
+    horizontally or vertically.
   function:
     python:
       name: solve
@@ -3573,8 +3669,10 @@
 - id: 56
   title: Shortest Path in Binary Matrix
   difficulty: HARD
-  description: Given an n x n binary matrix, return shortest clear path length from
-    top-left to bottom-right using 8 directions. Return -1 if impossible.
+  description: >
+    In the binary matrix, 0 means an open cell and 1 means blocked. Find the
+    length of the shortest clear path from the top-left cell to the bottom-right
+    cell using all 8 possible directions. Return -1 if no path exists.
   function:
     python:
       name: solve
@@ -3644,8 +3742,10 @@
 - id: 57
   title: Decode Encoded String
   difficulty: HARD
-  description: Decode strings encoded as k[encoded_string], where k is a positive
-    integer. Nested patterns are allowed.
+  description: >
+    Decode strings written in the form k[encoded_string], where the bracketed part
+    must be repeated k times. Nested encodings are allowed and must be fully
+    expanded in the output.
   function:
     python:
       name: solve
@@ -3679,8 +3779,10 @@
 - id: 58
   title: Daily Temperatures Wait Days
   difficulty: HARD
-  description: Given daily temperatures, return an array where answer[i] is number
-    of days until a warmer temperature. If none, 0.
+  description: >
+    For each day, return how many days must pass before a warmer temperature
+    occurs. If there is no future day with a warmer temperature, return 0 for
+    that position.
   function:
     python:
       name: solve
@@ -3768,8 +3870,10 @@
 - id: 59
   title: Next Greater Element in Circular Array
   difficulty: HARD
-  description: For each element, find next greater element traversing circularly.
-    If not found, return -1 for that index.
+  description: >
+    For every element in nums, find the next greater value while traversing the
+    array circularly. If no greater value exists for a position, return -1 for
+    that index.
   function:
     python:
       name: solve
@@ -3855,7 +3959,10 @@
 - id: 60
   title: Largest Rectangle in Histogram
   difficulty: HARD
-  description: Given bar heights of a histogram, return area of the largest rectangle.
+  description: >
+    The array heights represents adjacent histogram bars of width 1. Return the
+    maximum rectangular area that can be formed using one or more consecutive
+    bars.
   function:
     python:
       name: solve
@@ -3913,7 +4020,9 @@
 - id: 61
   title: Trapping Rain Water
   difficulty: HARD
-  description: Given elevation map heights, return total amount of trapped rain water.
+  description: >
+    Given the elevation map in height, compute how much rain water can be trapped
+    between the bars after raining. Return the total trapped volume.
   function:
     python:
       name: solve
@@ -3980,7 +4089,9 @@
 - id: 62
   title: Median of Two Sorted Arrays
   difficulty: HARD
-  description: Given two sorted arrays, return their median as a float.
+  description: >
+    Both input arrays are already sorted. Return the median of all values from the
+    two arrays combined as a float.
   function:
     python:
       name: solve
@@ -4033,8 +4144,9 @@
 - id: 63
   title: Longest Increasing Path in Matrix
   difficulty: HARD
-  description: Given a matrix of integers, return length of the longest strictly increasing
-    path moving up/down/left/right.
+  description: >
+    Return the length of the longest strictly increasing path in the matrix. From
+    any cell, you may move only up, down, left, or right to a larger value.
   function:
     python:
       name: solve
@@ -4105,8 +4217,10 @@
 - id: 64
   title: Coin Change Minimum Coins
   difficulty: HARD
-  description: Given coin denominations and amount, return minimum number of coins
-    needed. Return -1 if impossible.
+  description: >
+    Given the coin denominations in coins and a target amount, return the minimum
+    number of coins needed to make exactly that amount. If the amount cannot be
+    formed, return -1.
   function:
     python:
       name: solve
@@ -4158,8 +4272,9 @@
 - id: 65
   title: Edit Distance
   difficulty: HARD
-  description: Return the minimum number of operations (insert, delete, replace) to
-    convert word1 into word2.
+  description: >
+    Return the minimum number of single-character operations needed to convert
+    word1 into word2. The allowed operations are insert, delete, and replace.
   function:
     python:
       name: solve
@@ -4201,7 +4316,10 @@
 - id: 66
   title: N-Queens Count
   difficulty: HARD
-  description: Given n, return the number of distinct solutions to the n-queens puzzle.
+  description: >
+    For an n x n chessboard, count how many distinct ways n queens can be placed
+    so that no two queens attack each other. Return only the number of valid
+    arrangements.
   function:
     python:
       name: solve
@@ -4235,8 +4353,10 @@
 - id: 67
   title: Regular Expression Matching
   difficulty: HARD
-  description: Implement regex matching with support for '.' and '*'. Return true
-    if pattern fully matches the string.
+  description: >
+    Implement full-string regular expression matching for s against pattern p. The
+    pattern supports '.' for any single character and '*' for zero or more of the
+    preceding element. Return True only if the entire string matches.
   function:
     python:
       name: solve
@@ -4278,8 +4398,11 @@
 - id: 68
   title: LRU Cache Simulator
   difficulty: HARD
-  description: Simulate an LRU cache. Operations are put/get. Return outputs only
-    for get operations.
+  description: >
+    Implement an LRU cache with the given capacity. Each operation is either
+    ["put", key, value] or ["get", key]. Update recency on both successful get
+    and put operations. Return outputs only for get operations, using -1 when a
+    key does not exist.
   function:
     python:
       name: solve
@@ -4454,8 +4577,11 @@
 - id: 69
   title: LFU Cache Simulator
   difficulty: HARD
-  description: Simulate an LFU cache with LRU tie-breaker for same frequency. Return
-    outputs only for get operations.
+  description: >
+    Implement an LFU cache with the given capacity. Each operation is either
+    ["put", key, value] or ["get", key]. Evict the least frequently used key, and
+    if frequencies tie, evict the least recently used among them. Return outputs
+    only for get operations, using -1 when a key is missing.
   function:
     python:
       name: solve
@@ -4644,8 +4770,12 @@
 - id: 70
   title: Time-Based Key Value Store
   difficulty: HARD
-  description: Support set(key, value, timestamp) and get(key, timestamp) returning
-    the latest value with timestamp <= query timestamp.
+  description: >
+    Process operations on a time-based key-value store. A set operation stores a
+    value for a key at a timestamp. A get operation should return the latest value
+    for that key whose timestamp is less than or equal to the query time. Return
+    only the results of get operations, and use an empty string when no value is
+    available.
   function:
     python:
       name: solve
@@ -4803,8 +4933,10 @@
 - id: 71
   title: Trie Query Simulator
   difficulty: HARD
-  description: Implement Trie operations insert, search, startsWith. Return outputs
-    only for search and startsWith operations.
+  description: >
+    Implement a Trie that supports the operations insert, search, and startsWith.
+    The operations list contains those commands in order. Return outputs only for
+    search and startsWith operations.
   function:
     python:
       name: solve
@@ -4922,8 +5054,11 @@
 - id: 72
   title: In-Memory File System Simulator
   difficulty: HARD
-  description: Support mkdir, add (append content to file), read, and ls. Return outputs
-    only for ls and read operations.
+  description: >
+    Simulate an in-memory file system that supports mkdir, add, read, and ls.
+    The add operation appends content to a file, creating it if needed. The ls
+    operation should return the visible names for the target path in sorted order.
+    Return outputs only for ls and read operations.
   function:
     python:
       name: solve
@@ -5033,8 +5168,10 @@
 - id: 73
   title: Median Finder Stream Simulator
   difficulty: HARD
-  description: Support addNum and findMedian on a data stream. Return outputs only
-    for findMedian operations.
+  description: >
+    Maintain a running data stream of numbers with add and find operations.
+    Return outputs only for find operations, and each reported median should be a
+    float.
   function:
     python:
       name: solve
@@ -5128,8 +5265,10 @@
 - id: 74
   title: Calendar Booking Simulator
   difficulty: HARD
-  description: Simulate booking intervals [start, end). Return true if booking succeeds
-    (no overlap), else false.
+  description: >
+    Simulate a calendar where each booking is a half-open interval [start, end).
+    Return True for a booking if it does not overlap with any existing booking,
+    otherwise return False.
   function:
     python:
       name: solve
@@ -5251,8 +5390,10 @@
 - id: 75
   title: Disjoint Set Connectivity Simulator
   difficulty: HARD
-  description: Support union and connected operations for nodes 0..n-1. Return outputs
-    only for connected operations.
+  description: >
+    Manage n nodes labeled from 0 to n-1 using union and connected operations.
+    Union joins two sets, and connected checks whether two nodes currently belong
+    to the same set. Return outputs only for connected operations.
   function:
     python:
       name: solve
@@ -5382,8 +5523,11 @@
 - id: 76
   title: Dynamic Shortest Path Query Simulator
   difficulty: HARD
-  description: Given n nodes (0-indexed), support addEdge(u,v,w) and shortest(src,dst)
-    on directed weighted graph. Return outputs only for shortest queries (-1 if unreachable).
+  description: >
+    You are given a directed weighted graph with n nodes and an operation stream.
+    add adds an edge (u, v, w), and shortest asks for the minimum total weight
+    from src to dst using the edges added so far. Return outputs only for
+    shortest queries, using -1 when dst is unreachable.
   function:
     python:
       name: solve
@@ -5549,8 +5693,11 @@
 - id: 77
   title: Snapshot Array Simulator
   difficulty: HARD
-  description: Support set(index,val), snap(), and get(index,snap_id). Return outputs
-    for snap and get operations.
+  description: >
+    Implement a snapshot array of the given length. set updates an index, snap
+    stores the current version and returns its snapshot id, and get retrieves the
+    value stored at an index for a specific snapshot. Return outputs for snap and
+    get operations in order.
   function:
     python:
       name: solve
