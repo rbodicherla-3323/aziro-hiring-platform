@@ -327,6 +327,7 @@ def create_test():
     auto_send_enabled = str(os.getenv("AUTO_SEND_TEST_EMAILS", "true")).strip().lower() not in {
         "0", "false", "no"
     }
+    email_provider = str(os.getenv("EMAIL_PROVIDER", "smtp")).strip().lower()
     delegated_access_token = get_valid_graph_delegated_token(user_email)
     if not delegated_access_token:
         delegated_access_token = get_valid_graph_delegated_token_from_session(
@@ -338,7 +339,7 @@ def create_test():
 
     auto_sent = 0
     auto_failures = []
-    auto_send_blocked = auto_send_enabled and not delegated_access_token
+    auto_send_blocked = auto_send_enabled and email_provider == "graph_delegated" and not delegated_access_token
 
     for i in range(len(names)):
         name = names[i].strip()
@@ -595,7 +596,7 @@ def create_test():
             "created_at": datetime.now(timezone.utc).isoformat(),
         })
 
-        if auto_send_enabled and delegated_access_token and tests:
+        if auto_send_enabled and tests and not auto_send_blocked:
             sent, error = send_candidate_test_links_email(
                 candidate_name=name,
                 candidate_email=email,
@@ -603,7 +604,6 @@ def create_test():
                 tests=tests,
                 delegated_access_token=delegated_access_token,
                 delegated_sender_email=user_email,
-                force_delegated=True,
             )
             if sent:
                 auto_sent += 1

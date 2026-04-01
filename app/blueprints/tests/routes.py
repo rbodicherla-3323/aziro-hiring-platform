@@ -293,7 +293,6 @@ def send_generated_tests_emails():
             tests=candidate.get("tests", {}),
             delegated_access_token=delegated_access_token,
             delegated_sender_email=user_email,
-            force_delegated=True,
         )
         if sent:
             sent_count += 1
