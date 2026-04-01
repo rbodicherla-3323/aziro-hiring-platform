@@ -1,420 +1,6 @@
-- id: 2
-  title: Reverse a Number
-  difficulty: EASY
-  description: Write a program to reverse a number without using any inbuilt function.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(n):'
-  public_tests:
-  - input:
-    - 123
-    expected: 321
-  - input:
-    - 100
-    expected: 1
-  - input:
-    - 0
-    expected: 0
-  hidden_tests:
-  - input:
-    - 456
-    expected: 654
-  - input:
-    - 9
-    expected: 9
-  - input:
-    - 1000
-    expected: 1
-  - input:
-    - 12345
-    expected: 54321
-  - input:
-    - 100
-    expected: 1
-  - input:
-    - 505
-    expected: 505
-  - input:
-    - 1001
-    expected: 1001
-  - input:
-    - 9876
-    expected: 6789
-  - input:
-    - 1230
-    expected: 321
-  - input:
-    - 555
-    expected: 555
-- id: 3
-  title: Square of Even and Cube of Odd
-  difficulty: EASY
-  description: Given a list of numbers, write a program to find the square of all even numbers and cube of all odd numbers
-    and store them in another list.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(nums):'
-  public_tests:
-  - input:
-    - - 1
-      - 2
-      - 3
-      - 4
-      - 5
-    expected:
-    - 1
-    - 4
-    - 27
-    - 16
-    - 125
-  - input:
-    - - 2
-      - 4
-      - 6
-    expected:
-    - 4
-    - 16
-    - 36
-  - input:
-    - - 1
-      - 3
-      - 5
-    expected:
-    - 1
-    - 27
-    - 125
-  hidden_tests:
-  - input:
-    - - 1
-    expected:
-    - 1
-  - input:
-    - - 2
-    expected:
-    - 4
-  - input:
-    - - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-      - 7
-      - 8
-      - 9
-      - 10
-    expected:
-    - 1
-    - 4
-    - 27
-    - 16
-    - 125
-    - 36
-    - 343
-    - 64
-    - 729
-    - 100
-  - input:
-    - - 10
-      - 9
-      - 8
-      - 7
-    expected:
-    - 100
-    - 729
-    - 64
-    - 343
-  - input:
-    - - 2
-      - 4
-      - 6
-      - 8
-      - 10
-    expected:
-    - 4
-    - 16
-    - 36
-    - 64
-    - 100
-  - input:
-    - - 1
-      - 3
-      - 5
-      - 7
-      - 9
-    expected:
-    - 1
-    - 27
-    - 125
-    - 343
-    - 729
-  - input:
-    - - 5
-      - 5
-    expected:
-    - 125
-    - 125
-  - input:
-    - - 4
-      - 4
-    expected:
-    - 16
-    - 16
-  - input:
-    - - 1
-      - 2
-    expected:
-    - 1
-    - 4
-  - input:
-    - - 3
-      - 6
-    expected:
-    - 27
-    - 36
-- id: 4
-  title: Check Anagrams
-  difficulty: EASY
-  description: Write a function that accepts two strings and returns true if the two strings are anagrams of each other.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(s1, s2):'
-  public_tests:
-  - input:
-    - listen
-    - silent
-    expected: true
-  - input:
-    - hello
-    - world
-    expected: false
-  - input:
-    - a
-    - a
-    expected: true
-  hidden_tests:
-  - input:
-    - abc
-    - bca
-    expected: true
-  - input:
-    - abc
-    - def
-    expected: false
-  - input:
-    - Ravi
-    - Vair
-    expected: true
-  - input:
-    - evil
-    - vile
-    expected: true
-  - input:
-    - python
-    - typhon
-    expected: true
-  - input:
-    - ''
-    - ''
-    expected: true
-  - input:
-    - a
-    - b
-    expected: false
-  - input:
-    - aab
-    - aba
-    expected: true
-  - input:
-    - test
-    - best
-    expected: false
-  - input:
-    - aaa
-    - aaa
-    expected: true
-- id: 5
-  title: Convert List to Key-Value Pairs
-  difficulty: MEDIUM
-  description: 'Convert each list element to a key-value pair by splitting the digits. For example, 2323 becomes {23: 23},
-    82 becomes {8: 2}.'
-  function:
-    python:
-      name: solve
-      signature: 'def solve(test_list):'
-  public_tests:
-  - input:
-    - - 2323
-      - 82
-      - 129388
-      - 95
-    expected:
-      23: 23
-      8: 2
-      129: 388
-      9: 5
-  - input:
-    - - 11
-      - 22
-    expected:
-      1: 1
-      2: 2
-  - input:
-    - - 100
-    expected:
-      10: 0
-  hidden_tests:
-  - input:
-    - - 12
-    expected:
-      1: 2
-  - input:
-    - - 99
-    expected:
-      9: 9
-  - input:
-    - - 1234
-    expected:
-      12: 34
-  - input:
-    - - 505
-    expected:
-      50: 5
-  - input:
-    - - 123456
-    expected:
-      123: 456
-  - input:
-    - - 10
-    expected:
-      1: 0
-  - input:
-    - - 200
-    expected:
-      20: 0
-  - input:
-    - - 77
-    expected:
-      7: 7
-  - input:
-    - - 4567
-    expected:
-      45: 67
-  - input:
-    - - 88
-      - 99
-    expected:
-      8: 8
-      9: 9
-- id: 6
-  title: Find Greatest and Smallest
-  difficulty: EASY
-  description: Write a program to find the greatest and smallest number present in the list. Return a list where the first
-    element is the greatest and the second is the smallest.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(nums):'
-  public_tests:
-  - input:
-    - - 45
-      - 7
-      - 32
-      - 567
-      - 90
-      - 54
-      - 99
-    expected:
-    - 567
-    - 7
-  - input:
-    - - 1
-      - 2
-      - 3
-    expected:
-    - 3
-    - 1
-  - input:
-    - - 5
-    expected:
-    - 5
-    - 5
-  hidden_tests:
-  - input:
-    - - 10
-      - 20
-      - 30
-    expected:
-    - 30
-    - 10
-  - input:
-    - - 100
-      - 50
-    expected:
-    - 100
-    - 50
-  - input:
-    - - 9
-      - 9
-      - 9
-    expected:
-    - 9
-    - 9
-  - input:
-    - - 1
-      - 100
-      - 50
-      - 75
-    expected:
-    - 100
-    - 1
-  - input:
-    - - 50
-      - 25
-      - 75
-      - 100
-    expected:
-    - 100
-    - 25
-  - input:
-    - - 0
-    expected:
-    - 0
-    - 0
-  - input:
-    - - -5
-      - -10
-      - -1
-    expected:
-    - -1
-    - -10
-  - input:
-    - - 1
-      - -1
-    expected:
-    - 1
-    - -1
-  - input:
-    - - 15
-      - 8
-      - 23
-      - 4
-    expected:
-    - 23
-    - 4
-  - input:
-    - - 999
-      - 1
-      - 500
-    expected:
-    - 999
-    - 1
-- id: 7
+- id: 1
   title: Right Rotate List by n
-  difficulty: EASY
+  difficulty: MEDIUM
   description: Write a program to right rotate a list by n positions.
   function:
     python:
@@ -563,7 +149,8 @@
     - 9
     - 10
     - 7
-- id: 8
+
+- id: 2
   title: Even Number Dictionary
   difficulty: MEDIUM
   description: Create a map where the key is an even number from the given list and the value will be the occurrence of that
@@ -679,171 +266,8 @@
     expected:
       10: 2
       12: 1
-- id: 9
-  title: Swap Elements at Positions
-  difficulty: EASY
-  description: Write a function that swaps the elements present at positions i and j in the given list.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(lst, i, j):'
-  public_tests:
-  - input:
-    - - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-      - 7
-      - 8
-    - 0
-    - 7
-    expected:
-    - 8
-    - 2
-    - 3
-    - 4
-    - 5
-    - 6
-    - 7
-    - 1
-  - input:
-    - - 1
-      - 2
-      - 3
-    - 0
-    - 1
-    expected:
-    - 2
-    - 1
-    - 3
-  - input:
-    - - 5
-      - 10
-    - 0
-    - 1
-    expected:
-    - 10
-    - 5
-  hidden_tests:
-  - input:
-    - - 1
-      - 2
-    - 0
-    - 1
-    expected:
-    - 2
-    - 1
-  - input:
-    - - 1
-      - 2
-      - 3
-      - 4
-      - 5
-    - 1
-    - 3
-    expected:
-    - 1
-    - 4
-    - 3
-    - 2
-    - 5
-  - input:
-    - - 10
-      - 20
-      - 30
-    - 0
-    - 2
-    expected:
-    - 30
-    - 20
-    - 10
-  - input:
-    - - 1
-      - 2
-      - 3
-    - 0
-    - 0
-    expected:
-    - 1
-    - 2
-    - 3
-  - input:
-    - - 5
-      - 6
-      - 7
-      - 8
-    - 1
-    - 2
-    expected:
-    - 5
-    - 7
-    - 6
-    - 8
-  - input:
-    - - 100
-      - 200
-      - 300
-      - 400
-    - 0
-    - 3
-    expected:
-    - 400
-    - 200
-    - 300
-    - 100
-  - input:
-    - - 9
-      - 8
-      - 7
-      - 6
-      - 5
-    - 2
-    - 4
-    expected:
-    - 9
-    - 8
-    - 5
-    - 6
-    - 7
-  - input:
-    - - 1
-      - 1
-      - 1
-    - 0
-    - 2
-    expected:
-    - 1
-    - 1
-    - 1
-  - input:
-    - - 11
-      - 22
-      - 33
-      - 44
-    - 1
-    - 3
-    expected:
-    - 11
-    - 44
-    - 33
-    - 22
-  - input:
-    - - 7
-      - 14
-      - 21
-      - 28
-      - 35
-    - 0
-    - 4
-    expected:
-    - 35
-    - 14
-    - 21
-    - 28
-    - 7
-- id: 10
+
+- id: 3
   title: Sort by Last Character
   difficulty: MEDIUM
   description: Write a program to sort the given list of strings based on the last character of each string.
@@ -957,7 +381,8 @@
     - box
     - fox
     - sox
-- id: 11
+
+- id: 4
   title: Find String Indices
   difficulty: MEDIUM
   description: Find all start and end index pairs of string k in s. Return the pairs in the format [start_index, end_index].
@@ -1052,9 +477,10 @@
     expected:
     - - 0
       - 5
-- id: 17
+
+- id: 5
   title: Count Alphabet in Alphanumeric String
-  difficulty: HARD
+  difficulty: MEDIUM
   description: Write a program to count only the alphabetic characters in the given alphanumeric string and format the
     output with counts after each alphabetic character.
   function:
@@ -1102,7 +528,8 @@
   - input:
     - ab1ab
     expected: a1b1a1b1
-- id: 20
+
+- id: 6
   title: Valid Parentheses
   difficulty: MEDIUM
   description: Write a program to check the validity of a string of parentheses. These brackets must be closed in the correct
@@ -1152,9 +579,10 @@
   - input:
     - ([{}])(){}[]
     expected: true
-- id: 27
+
+- id: 7
   title: Remove Parenthesis Area
-  difficulty: HARD
+  difficulty: MEDIUM
   description: Write a program to remove the text inside parentheses from a string.
   function:
     python:
@@ -1201,7 +629,8 @@
   - input:
     - style (.css)
     expected: style
-- id: 28
+
+- id: 8
   title: Second Highest Number
   difficulty: MEDIUM
   description: Write a program to find the second highest distinct number in an integer array without using inbuilt functions.
@@ -1284,361 +713,10 @@
       - 10
       - 20
     expected: 15
-- id: 29
-  title: Remove Duplicates from Array
-  difficulty: MEDIUM
-  description: Write a program to remove duplicate elements from array without using inbuilt functions. Keep the original
-    order of the remaining elements.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(nums):'
-  public_tests:
-  - input:
-    - - 1
-      - 2
-      - 2
-      - 3
-      - 3
-      - 3
-    expected:
-    - 1
-    - 2
-    - 3
-  - input:
-    - - 5
-      - 5
-      - 5
-    expected:
-    - 5
-  - input:
-    - - 1
-      - 2
-      - 3
-    expected:
-    - 1
-    - 2
-    - 3
-  hidden_tests:
-  - input:
-    - - 1
-      - 1
-      - 2
-      - 2
-      - 3
-    expected:
-    - 1
-    - 2
-    - 3
-  - input:
-    - - 4
-      - 4
-      - 4
-      - 4
-    expected:
-    - 4
-  - input:
-    - - 1
-      - 2
-      - 1
-      - 2
-    expected:
-    - 1
-    - 2
-  - input:
-    - - 10
-      - 20
-      - 10
-    expected:
-    - 10
-    - 20
-  - input:
-    - - 7
-      - 8
-      - 7
-      - 9
-    expected:
-    - 7
-    - 8
-    - 9
-  - input:
-    - - 100
-    expected:
-    - 100
-  - input:
-    - - 1
-      - 1
-      - 1
-      - 2
-      - 2
-      - 3
-    expected:
-    - 1
-    - 2
-    - 3
-  - input:
-    - - 5
-      - 6
-      - 5
-      - 7
-      - 6
-    expected:
-    - 5
-    - 6
-    - 7
-  - input:
-    - - 3
-      - 3
-      - 2
-      - 2
-      - 1
-    expected:
-    - 3
-    - 2
-    - 1
-  - input:
-    - - 9
-      - 8
-      - 9
-      - 8
-    expected:
-    - 9
-    - 8
-- id: 30
-  title: Left Rotation of Array
-  difficulty: EASY
-  description: Write a program to perform left rotation of array elements by two positions.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(nums):'
-  public_tests:
-  - input:
-    - - 1
-      - 2
-      - 3
-      - 4
-      - 5
-    expected:
-    - 3
-    - 4
-    - 5
-    - 1
-    - 2
-  - input:
-    - - 10
-      - 20
-      - 30
-    expected:
-    - 30
-    - 10
-    - 20
-  - input:
-    - - 1
-      - 2
-    expected:
-    - 2
-    - 1
-  hidden_tests:
-  - input:
-    - - 1
-      - 2
-      - 3
-    expected:
-    - 3
-    - 1
-    - 2
-  - input:
-    - - 5
-      - 10
-      - 15
-      - 20
-    expected:
-    - 15
-    - 20
-    - 5
-    - 10
-  - input:
-    - - 1
-    expected:
-    - 1
-  - input:
-    - - 7
-      - 8
-    expected:
-    - 8
-    - 7
-  - input:
-    - - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-    expected:
-    - 3
-    - 4
-    - 5
-    - 6
-    - 1
-    - 2
-  - input:
-    - - 100
-      - 200
-      - 300
-    expected:
-    - 300
-    - 100
-    - 200
-  - input:
-    - - 9
-      - 8
-      - 7
-      - 6
-    expected:
-    - 7
-    - 6
-    - 9
-    - 8
-  - input:
-    - - 2
-      - 4
-      - 6
-      - 8
-      - 10
-    expected:
-    - 6
-    - 8
-    - 10
-    - 2
-    - 4
-  - input:
-    - - 50
-      - 60
-      - 70
-    expected:
-    - 70
-    - 50
-    - 60
-  - input:
-    - - 11
-      - 22
-      - 33
-      - 44
-      - 55
-    expected:
-    - 33
-    - 44
-    - 55
-    - 11
-    - 22
-- id: 31
-  title: Square of Prime Numbers
-  difficulty: MEDIUM
-  description: From given list of numbers, create a list of square of prime numbers.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(nums):'
-  public_tests:
-  - input:
-    - - 1
-      - 4
-      - 6
-      - 11
-      - 15
-      - 24
-      - 19
-      - 25
-      - 27
-      - 30
-      - 17
-    expected:
-    - 121
-    - 361
-    - 289
-  - input:
-    - - 2
-      - 3
-      - 4
-    expected:
-    - 4
-    - 9
-  - input:
-    - - 7
-      - 11
-      - 13
-    expected:
-    - 49
-    - 121
-    - 169
-  hidden_tests:
-  - input:
-    - - 2
-    expected:
-    - 4
-  - input:
-    - - 1
-      - 2
-      - 3
-    expected:
-    - 4
-    - 9
-  - input:
-    - - 5
-      - 7
-      - 9
-    expected:
-    - 25
-    - 49
-  - input:
-    - - 10
-      - 11
-      - 12
-    expected:
-    - 121
-  - input:
-    - - 17
-      - 19
-      - 21
-    expected:
-    - 289
-    - 361
-  - input:
-    - - 2
-      - 3
-      - 5
-      - 7
-    expected:
-    - 4
-    - 9
-    - 25
-    - 49
-  - input:
-    - - 4
-      - 6
-      - 8
-    expected: []
-  - input:
-    - - 1
-      - 1
-      - 1
-    expected: []
-  - input:
-    - - 23
-      - 29
-    expected:
-    - 529
-    - 841
-  - input:
-    - - 13
-      - 14
-      - 15
-    expected:
-    - 169
-- id: 32
+
+- id: 9
   title: Reverse String without Special Characters
-  difficulty: HARD
+  difficulty: MEDIUM
   description: Reverse the given string without changing the position of special characters.
   function:
     python:
@@ -1685,9 +763,10 @@
   - input:
     - python%lang
     expected: gnal%nohtyp
-- id: 33
+
+- id: 10
   title: Hide Credit Card Number
-  difficulty: EASY
+  difficulty: MEDIUM
   description: Write a function that accepts a credit card number. It should return a string where all characters are hidden
     with an asterisk except the last four.
   function:
@@ -1735,454 +814,8 @@
   - input:
     - '4024007134432509'
     expected: '************2509'
-- id: 34
-  title: Average Word Length
-  difficulty: EASY
-  description: For the given sentence, return the average word length after removing punctuation.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(sentence):'
-  public_tests:
-  - input:
-    - I need to work very hard to learn more about algorithms in Python!
-    expected: 4.923076923
-  - input:
-    - Hello world.
-    expected: 5.5
-  - input:
-    - Hi!
-    expected: 2.0
-  hidden_tests:
-  - input:
-    - Python is great.
-    expected: 4.5
-  - input:
-    - a b c.
-    expected: 1.0
-  - input:
-    - Hello World Python.
-    expected: 5.666666667
-  - input:
-    - The quick brown fox.
-    expected: 4.25
-  - input:
-    - I am learning coding.
-    expected: 4.4
-  - input:
-    - Java is fun!
-    expected: 4.0
-  - input:
-    - Test case.
-    expected: 4.5
-  - input:
-    - One two three four five.
-    expected: 3.6
-  - input:
-    - Programming is awesome!
-    expected: 9.666666667
-  - input:
-    - Data science rocks.
-    expected: 5.666666667
-- id: 35
-  title: Sort in Descending Order without Builtin
-  difficulty: MEDIUM
-  description: Sort the list of integers in descending order without using inbuilt functions.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(nums):'
-  public_tests:
-  - input:
-    - - 56
-      - 2
-      - 13
-      - 1
-      - 78
-      - 4
-      - 6
-    expected:
-    - 78
-    - 56
-    - 13
-    - 6
-    - 4
-    - 2
-    - 1
-  - input:
-    - - 3
-      - 1
-      - 2
-    expected:
-    - 3
-    - 2
-    - 1
-  - input:
-    - - 5
-    expected:
-    - 5
-  hidden_tests:
-  - input:
-    - - 1
-      - 2
-      - 3
-      - 4
-      - 5
-    expected:
-    - 5
-    - 4
-    - 3
-    - 2
-    - 1
-  - input:
-    - - 10
-      - 5
-      - 8
-    expected:
-    - 10
-    - 8
-    - 5
-  - input:
-    - - 100
-      - 50
-      - 75
-    expected:
-    - 100
-    - 75
-    - 50
-  - input:
-    - - 1
-      - 1
-      - 1
-    expected:
-    - 1
-    - 1
-    - 1
-  - input:
-    - - 9
-      - 3
-      - 7
-      - 1
-    expected:
-    - 9
-    - 7
-    - 3
-    - 1
-  - input:
-    - - 45
-      - 23
-      - 67
-      - 12
-    expected:
-    - 67
-    - 45
-    - 23
-    - 12
-  - input:
-    - - 5
-      - 5
-      - 3
-      - 3
-      - 1
-    expected:
-    - 5
-    - 5
-    - 3
-    - 3
-    - 1
-  - input:
-    - - 20
-      - 10
-      - 30
-    expected:
-    - 30
-    - 20
-    - 10
-  - input:
-    - - 7
-      - 2
-      - 9
-      - 4
-    expected:
-    - 9
-    - 7
-    - 4
-    - 2
-  - input:
-    - - 15
-      - 8
-      - 20
-      - 3
-    expected:
-    - 20
-    - 15
-    - 8
-    - 3
-- id: 36
-  title: Square String Elements
-  difficulty: EASY
-  description: From the given list, if an element is a numeric string then return its square, and if it is a non-numeric
-    string then return the string 2 times.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(items):'
-  public_tests:
-  - input:
-    - - '8'
-      - '9'
-      - '10'
-      - f
-      - '5'
-      - '8'
-      - d
-    expected:
-    - '64'
-    - '81'
-    - '100'
-    - ff
-    - '25'
-    - '64'
-    - dd
-  - input:
-    - - '2'
-      - a
-    expected:
-    - '4'
-    - aa
-  - input:
-    - - '3'
-      - '4'
-      - x
-      - y
-    expected:
-    - '9'
-    - '16'
-    - xx
-    - yy
-  hidden_tests:
-  - input:
-    - - '5'
-      - hello
-    expected:
-    - '25'
-    - hellohello
-  - input:
-    - - '1'
-      - '2'
-      - a
-      - b
-    expected:
-    - '1'
-    - '4'
-    - aa
-    - bb
-  - input:
-    - - x
-    expected:
-    - xx
-  - input:
-    - - '10'
-    expected:
-    - '100'
-  - input:
-    - - '3'
-      - test
-      - '4'
-    expected:
-    - '9'
-    - testtest
-    - '16'
-  - input:
-    - - '7'
-      - '8'
-      - abc
-    expected:
-    - '49'
-    - '64'
-    - abcabc
-  - input:
-    - - code
-      - '2'
-      - '3'
-    expected:
-    - codecode
-    - '4'
-    - '9'
-  - input:
-    - - '0'
-      - zero
-    expected:
-    - '0'
-    - zerozero
-  - input:
-    - - '6'
-      - string
-      - '7'
-    expected:
-    - '36'
-    - stringstring
-    - '49'
-  - input:
-    - - a
-      - b
-      - '5'
-      - '6'
-    expected:
-    - aa
-    - bb
-    - '25'
-    - '36'
-- id: 37
-  title: Fill Sentinel with Recent Value
-  difficulty: MEDIUM
-  description: In the given list, check if element is -999 (sentinel for null), replace it with the most recent non-sentinel
-    value. If no previous value exists, keep -999.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(lst):'
-  public_tests:
-  - input:
-    - - 1
-      - -999
-      - -999
-      - 3
-      - -999
-      - 4
-    expected:
-    - 1
-    - 1
-    - 1
-    - 3
-    - 3
-    - 4
-  - input:
-    - - 2
-      - -999
-      - 5
-    expected:
-    - 2
-    - 2
-    - 5
-  - input:
-    - - 10
-      - -999
-      - -999
-      - -999
-    expected:
-    - 10
-    - 10
-    - 10
-    - 10
-  hidden_tests:
-  - input:
-    - - 5
-      - -999
-      - 7
-    expected:
-    - 5
-    - 5
-    - 7
-  - input:
-    - - 1
-      - 2
-      - -999
-      - -999
-      - 5
-    expected:
-    - 1
-    - 2
-    - 2
-    - 2
-    - 5
-  - input:
-    - - 3
-      - -999
-      - -999
-      - 4
-      - -999
-    expected:
-    - 3
-    - 3
-    - 3
-    - 4
-    - 4
-  - input:
-    - - 1
-      - 1
-      - -999
-      - 1
-    expected:
-    - 1
-    - 1
-    - 1
-    - 1
-  - input:
-    - - 7
-      - -999
-      - 8
-      - -999
-      - 9
-    expected:
-    - 7
-    - 7
-    - 8
-    - 8
-    - 9
-  - input:
-    - - -999
-      - 1
-      - -999
-    expected:
-    - -999
-    - 1
-    - 1
-  - input:
-    - - 10
-      - -999
-      - -999
-      - 20
-    expected:
-    - 10
-    - 10
-    - 10
-    - 20
-  - input:
-    - - 2
-      - -999
-      - 3
-      - -999
-      - -999
-    expected:
-    - 2
-    - 2
-    - 3
-    - 3
-    - 3
-  - input:
-    - - 6
-      - 6
-      - -999
-      - 6
-    expected:
-    - 6
-    - 6
-    - 6
-    - 6
-  - input:
-    - - 1
-      - -999
-      - 2
-      - -999
-      - 3
-    expected:
-    - 1
-    - 1
-    - 2
-    - 2
-    - 3
-- id: 38
+
+- id: 11
   title: Two Sum with Indices
   difficulty: MEDIUM
   description: Check sum of 2 numbers from given list which matches target value and returns the indexes of those numbers.
@@ -2310,567 +943,8 @@
     expected:
     - 1
     - 3
-- id: 39
-  title: Sort without Inbuilt Function
-  difficulty: MEDIUM
-  description: Sort the below list without using inbuilt function.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(nums):'
-  public_tests:
-  - input:
-    - - 2
-      - 3
-      - -5
-      - -7
-      - 9
-      - 4
-      - 6
-      - -1
-      - -8
-      - 0
-    expected:
-    - -8
-    - -7
-    - -5
-    - -1
-    - 0
-    - 2
-    - 3
-    - 4
-    - 6
-    - 9
-  - input:
-    - - 5
-      - 2
-      - 8
-      - 1
-    expected:
-    - 1
-    - 2
-    - 5
-    - 8
-  - input:
-    - - 3
-    expected:
-    - 3
-  hidden_tests:
-  - input:
-    - - 1
-      - 2
-      - 3
-    expected:
-    - 1
-    - 2
-    - 3
-  - input:
-    - - 3
-      - 2
-      - 1
-    expected:
-    - 1
-    - 2
-    - 3
-  - input:
-    - - -5
-      - -10
-      - 0
-    expected:
-    - -10
-    - -5
-    - 0
-  - input:
-    - - 5
-      - 5
-      - 5
-    expected:
-    - 5
-    - 5
-    - 5
-  - input:
-    - - 10
-      - -10
-      - 5
-      - -5
-    expected:
-    - -10
-    - -5
-    - 5
-    - 10
-  - input:
-    - - 7
-      - 2
-      - 9
-      - 1
-      - 5
-    expected:
-    - 1
-    - 2
-    - 5
-    - 7
-    - 9
-  - input:
-    - - -1
-      - -2
-      - -3
-    expected:
-    - -3
-    - -2
-    - -1
-  - input:
-    - - 0
-      - 0
-      - 0
-    expected:
-    - 0
-    - 0
-    - 0
-  - input:
-    - - 100
-      - 50
-      - 75
-      - 25
-    expected:
-    - 25
-    - 50
-    - 75
-    - 100
-  - input:
-    - - 6
-      - 4
-      - 8
-      - 2
-      - 1
-    expected:
-    - 1
-    - 2
-    - 4
-    - 6
-    - 8
-- id: 40
-  title: Palindrome Strings
-  difficulty: EASY
-  description: Define a function which returns a list containing only the palindrome strings from the list of provided string
-    elements.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(strings):'
-  public_tests:
-  - input:
-    - - a
-      - bb
-      - abc
-      - aba
-      - racecar
-    expected:
-    - a
-    - bb
-    - aba
-    - racecar
-  - input:
-    - - hello
-      - mom
-      - dad
-    expected:
-    - mom
-    - dad
-  - input:
-    - - x
-      - yy
-      - z
-    expected:
-    - x
-    - yy
-    - z
-  hidden_tests:
-  - input:
-    - - level
-      - hello
-    expected:
-    - level
-  - input:
-    - - noon
-      - test
-    expected:
-    - noon
-  - input:
-    - - a
-    expected:
-    - a
-  - input:
-    - - ab
-      - ba
-    expected: []
-  - input:
-    - - madam
-      - hello
-      - radar
-    expected:
-    - madam
-    - radar
-  - input:
-    - - refer
-      - defer
-    expected:
-    - refer
-  - input:
-    - - civic
-      - logic
-    expected:
-    - civic
-  - input:
-    - - kayak
-      - test
-    expected:
-    - kayak
-  - input:
-    - - stats
-      - doors
-    expected:
-    - stats
-  - input:
-    - - pop
-      - push
-    expected:
-    - pop
-- id: 41
-  title: Separate Even and Odd
-  difficulty: EASY
-  description: Define logic for identifying the even numbers and odd numbers from the given list and generate a map with keys
-    "even" and "odd".
-  function:
-    python:
-      name: solve
-      signature: 'def solve(numbers):'
-  public_tests:
-  - input:
-    - - 4
-      - 5
-      - 7
-      - 2
-      - 9
-      - 8
-    expected:
-      even:
-      - 4
-      - 2
-      - 8
-      odd:
-      - 5
-      - 7
-      - 9
-  - input:
-    - - 2
-      - 4
-      - 6
-    expected:
-      even:
-      - 2
-      - 4
-      - 6
-      odd: []
-  - input:
-    - - 1
-      - 3
-      - 5
-    expected:
-      even: []
-      odd:
-      - 1
-      - 3
-      - 5
-  hidden_tests:
-  - input:
-    - - 1
-      - 2
-    expected:
-      even:
-      - 2
-      odd:
-      - 1
-  - input:
-    - - 10
-      - 11
-      - 12
-      - 13
-    expected:
-      even:
-      - 10
-      - 12
-      odd:
-      - 11
-      - 13
-  - input:
-    - - 0
-    expected:
-      even:
-      - 0
-      odd: []
-  - input:
-    - - 7
-      - 14
-      - 21
-      - 28
-    expected:
-      even:
-      - 14
-      - 28
-      odd:
-      - 7
-      - 21
-  - input:
-    - - 5
-      - 5
-      - 5
-    expected:
-      even: []
-      odd:
-      - 5
-      - 5
-      - 5
-  - input:
-    - - 6
-      - 6
-    expected:
-      even:
-      - 6
-      - 6
-      odd: []
-  - input:
-    - - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-    expected:
-      even:
-      - 2
-      - 4
-      - 6
-      odd:
-      - 1
-      - 3
-      - 5
-  - input:
-    - - 9
-      - 18
-      - 27
-      - 36
-    expected:
-      even:
-      - 18
-      - 36
-      odd:
-      - 9
-      - 27
-  - input:
-    - - 2
-      - 4
-      - 8
-      - 16
-    expected:
-      even:
-      - 2
-      - 4
-      - 8
-      - 16
-      odd: []
-  - input:
-    - - 1
-      - 1
-      - 1
-      - 2
-      - 2
-    expected:
-      even:
-      - 2
-      - 2
-      odd:
-      - 1
-      - 1
-      - 1
-- id: 42
-  title: Word Length Map
-  difficulty: EASY
-  description: Define a function which returns a map that stores the words and its length from the given text.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(text):'
-  public_tests:
-  - input:
-    - Be happy
-    expected:
-      Be: 2
-      happy: 5
-  - input:
-    - Hello World
-    expected:
-      Hello: 5
-      World: 5
-  - input:
-    - a b c
-    expected:
-      a: 1
-      b: 1
-      c: 1
-  hidden_tests:
-  - input:
-    - Python
-    expected:
-      Python: 6
-  - input:
-    - code is fun
-    expected:
-      code: 4
-      is: 2
-      fun: 3
-  - input:
-    - test
-    expected:
-      test: 4
-  - input:
-    - I am learning
-    expected:
-      I: 1
-      am: 2
-      learning: 8
-  - input:
-    - The quick brown
-    expected:
-      The: 3
-      quick: 5
-      brown: 5
-  - input:
-    - a bb ccc
-    expected:
-      a: 1
-      bb: 2
-      ccc: 3
-  - input:
-    - data science
-    expected:
-      data: 4
-      science: 7
-  - input:
-    - java script
-    expected:
-      java: 4
-      script: 6
-  - input:
-    - x y z
-    expected:
-      x: 1
-      y: 1
-      z: 1
-  - input:
-    - machine learning algorithms
-    expected:
-      machine: 7
-      learning: 8
-      algorithms: 10
-- id: 43
-  title: Remove Special Characters
-  difficulty: EASY
-  description: In the given string, remove the special characters and add a space instead of that.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(s):'
-  public_tests:
-  - input:
-    - Msys&Technologies@Chennai*
-    expected: 'Msys Technologies Chennai '
-  - input:
-    - hello!world#
-    expected: 'hello world '
-  - input:
-    - a@b$c
-    expected: a b c
-  hidden_tests:
-  - input:
-    - test!
-    expected: 'test '
-  - input:
-    - code@python
-    expected: code python
-  - input:
-    - hello-world
-    expected: hello world
-  - input:
-    - a#b#c#d
-    expected: a b c d
-  - input:
-    - java&script
-    expected: java script
-  - input:
-    - test*case
-    expected: test case
-  - input:
-    - x$y$z
-    expected: x y z
-  - input:
-    - data!science
-    expected: data science
-  - input:
-    - web@design
-    expected: web design
-  - input:
-    - python*code
-    expected: python code
-- id: 44
-  title: String with Index
-  difficulty: EASY
-  description: Given a string, display the output with index numbers after each character.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(s):'
-  public_tests:
-  - input:
-    - abcde
-    expected: a1b2c3d4e5
-  - input:
-    - ab
-    expected: a1b2
-  - input:
-    - x
-    expected: x1
-  hidden_tests:
-  - input:
-    - abc
-    expected: a1b2c3
-  - input:
-    - hello
-    expected: h1e2l3l4o5
-  - input:
-    - xy
-    expected: x1y2
-  - input:
-    - test
-    expected: t1e2s3t4
-  - input:
-    - a
-    expected: a1
-  - input:
-    - python
-    expected: p1y2t3h4o5n6
-  - input:
-    - code
-    expected: c1o2d3e4
-  - input:
-    - data
-    expected: d1a2t3a4
-  - input:
-    - java
-    expected: j1a2v3a4
-  - input:
-    - script
-    expected: s1c2r3i4p5t6
-- id: 45
+
+- id: 12
   title: Common Substring
   difficulty: MEDIUM
   description: Write a program in which two strings are given and determine if they share a common substring. Return either
@@ -2933,9 +1007,10 @@
     - script
     - crypt
     expected: 'YES'
-- id: 46
+
+- id: 13
   title: Leap Year Check
-  difficulty: EASY
+  difficulty: MEDIUM
   description: Create a function that accepts a year and returns true if the given year is a leap year, false otherwise.
   function:
     python:
@@ -2982,159 +1057,10 @@
   - input:
     - 2001
     expected: false
-- id: 47
-  title: List Element to Key-Value Pair
-  difficulty: HARD
-  description: Convert each list element to a key-value pair by splitting the digits in half.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(test_list):'
-  public_tests:
-  - input:
-    - - 2323
-      - 82
-      - 129388
-      - 95
-    expected:
-      23: 23
-      8: 2
-      129: 388
-      9: 5
-  - input:
-    - - 11
-      - 22
-    expected:
-      1: 1
-      2: 2
-  - input:
-    - - 1234
-    expected:
-      12: 34
-  hidden_tests:
-  - input:
-    - - 12
-    expected:
-      1: 2
-  - input:
-    - - 99
-    expected:
-      9: 9
-  - input:
-    - - 5678
-    expected:
-      56: 78
-  - input:
-    - - 100
-    expected:
-      10: 0
-  - input:
-    - - 4567
-    expected:
-      45: 67
-  - input:
-    - - 77
-    expected:
-      7: 7
-  - input:
-    - - 200
-    expected:
-      20: 0
-  - input:
-    - - 123456
-    expected:
-      123: 456
-  - input:
-    - - 88
-      - 99
-    expected:
-      8: 8
-      9: 9
-  - input:
-    - - 1010
-    expected:
-      10: 10
-- id: 48
-  title: Longest Substring Without Repeating Characters
-  difficulty: HARD
-  description: Given a string s, return the length of the longest substring without
-    repeating characters.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(s):'
-  public_tests:
-  - input:
-    - abcabcbb
-    expected: 3
-  - input:
-    - bbbbb
-    expected: 1
-  - input:
-    - pwwkew
-    expected: 3
-  hidden_tests:
-  - input:
-    - ''
-    expected: 0
-  - input:
-    - dvdf
-    expected: 3
-  - input:
-    - abba
-    expected: 2
-  - input:
-    - anviaj
-    expected: 5
-  - input:
-    - tmmzuxt
-    expected: 5
-- id: 49
-  title: Minimum Window Substring
-  difficulty: HARD
-  description: Given strings s and t, return the minimum window in s that contains
-    all characters of t. Return empty string if impossible.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(s, t):'
-  public_tests:
-  - input:
-    - ADOBECODEBANC
-    - ABC
-    expected: BANC
-  - input:
-    - a
-    - a
-    expected: a
-  - input:
-    - a
-    - aa
-    expected: ''
-  hidden_tests:
-  - input:
-    - aa
-    - aa
-    expected: aa
-  - input:
-    - ab
-    - b
-    expected: b
-  - input:
-    - bdab
-    - ab
-    expected: ab
-  - input:
-    - cabefgecdaecf
-    - cae
-    expected: aec
-  - input:
-    - bba
-    - ab
-    expected: ba
-- id: 50
+
+- id: 14
   title: Merge Overlapping Intervals
-  difficulty: HARD
+  difficulty: MEDIUM
   description: Given a list of intervals [start, end], merge all overlapping intervals
     and return the merged result sorted by start.
   function:
@@ -3222,9 +1148,10 @@
   - input:
     - []
     expected: []
-- id: 51
+
+- id: 15
   title: Kth Largest Element
-  difficulty: HARD
+  difficulty: MEDIUM
   description: Return the kth largest element in an unsorted array.
   function:
     python:
@@ -3291,9 +1218,10 @@
       - 98
     - 2
     expected: 100
-- id: 52
+
+- id: 16
   title: Top K Frequent Elements
-  difficulty: HARD
+  difficulty: MEDIUM
   description: Return the top k frequent elements. If frequencies tie, return smaller
     value first.
   function:
@@ -3381,305 +1309,10 @@
     - 1
     expected:
     - 0
-- id: 53
-  title: Word Ladder Length
-  difficulty: HARD
-  description: Given beginWord, endWord, and a word list, return the length of the
-    shortest transformation sequence, or 0 if impossible.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(begin_word, end_word, word_list):'
-  public_tests:
-  - input:
-    - hit
-    - cog
-    - - hot
-      - dot
-      - dog
-      - lot
-      - log
-      - cog
-    expected: 5
-  - input:
-    - hit
-    - cog
-    - - hot
-      - dot
-      - dog
-      - lot
-      - log
-    expected: 0
-  - input:
-    - a
-    - c
-    - - a
-      - b
-      - c
-    expected: 2
-  hidden_tests:
-  - input:
-    - red
-    - tax
-    - - ted
-      - tex
-      - red
-      - tax
-      - tad
-      - den
-      - rex
-      - pee
-    expected: 4
-  - input:
-    - lost
-    - cost
-    - - most
-      - fist
-      - lost
-      - cost
-      - fost
-      - fish
-    expected: 2
-  - input:
-    - same
-    - same
-    - - same
-    expected: 1
-  - input:
-    - ab
-    - cd
-    - - ab
-      - cb
-      - cd
-    expected: 3
-  - input:
-    - aaa
-    - bbb
-    - - aab
-      - abb
-      - bbb
-    expected: 4
-- id: 54
-  title: Course Schedule Feasibility
-  difficulty: HARD
-  description: Given number of courses and prerequisite pairs [a, b] (take b before
-    a), return true if all courses can be finished.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(num_courses, prerequisites):'
-  public_tests:
-  - input:
-    - 2
-    - - - 1
-        - 0
-    expected: true
-  - input:
-    - 2
-    - - - 1
-        - 0
-      - - 0
-        - 1
-    expected: false
-  - input:
-    - 4
-    - - - 1
-        - 0
-      - - 2
-        - 1
-      - - 3
-        - 2
-    expected: true
-  hidden_tests:
-  - input:
-    - 3
-    - - - 1
-        - 0
-      - - 1
-        - 2
-      - - 0
-        - 1
-    expected: false
-  - input:
-    - 5
-    - []
-    expected: true
-  - input:
-    - 3
-    - - - 0
-        - 1
-      - - 0
-        - 2
-      - - 1
-        - 2
-    expected: true
-  - input:
-    - 3
-    - - - 0
-        - 1
-      - - 1
-        - 2
-      - - 2
-        - 0
-    expected: false
-  - input:
-    - 1
-    - []
-    expected: true
-- id: 55
-  title: Number of Islands
-  difficulty: HARD
-  description: Given a grid of '1' and '0' rows (as strings), return the number of
-    islands.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(grid):'
-  public_tests:
-  - input:
-    - - '11110'
-      - '11010'
-      - '11000'
-      - '00000'
-    expected: 1
-  - input:
-    - - '11000'
-      - '11000'
-      - '00100'
-      - '00011'
-    expected: 3
-  - input:
-    - []
-    expected: 0
-  hidden_tests:
-  - input:
-    - - '1'
-    expected: 1
-  - input:
-    - - '0'
-    expected: 0
-  - input:
-    - - '10101'
-    expected: 3
-  - input:
-    - - '111'
-      - '010'
-      - '111'
-    expected: 1
-  - input:
-    - - '100'
-      - '001'
-      - '010'
-    expected: 3
-- id: 56
-  title: Shortest Path in Binary Matrix
-  difficulty: HARD
-  description: Given an n x n binary matrix, return shortest clear path length from
-    top-left to bottom-right using 8 directions. Return -1 if impossible.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(grid):'
-  public_tests:
-  - input:
-    - - - 0
-        - 1
-      - - 1
-        - 0
-    expected: 2
-  - input:
-    - - - 0
-        - 0
-        - 0
-      - - 1
-        - 1
-        - 0
-      - - 1
-        - 1
-        - 0
-    expected: 4
-  - input:
-    - - - 1
-        - 0
-      - - 1
-        - 0
-    expected: -1
-  hidden_tests:
-  - input:
-    - - - 0
-    expected: 1
-  - input:
-    - - - 0
-        - 0
-      - - 0
-        - 0
-    expected: 2
-  - input:
-    - - - 0
-        - 1
-        - 1
-      - - 1
-        - 1
-        - 0
-      - - 1
-        - 1
-        - 0
-    expected: -1
-  - input:
-    - - - 0
-        - 0
-        - 1
-      - - 1
-        - 0
-        - 1
-      - - 1
-        - 0
-        - 0
-    expected: 4
-  - input:
-    - - - 0
-        - 1
-      - - 0
-        - 0
-    expected: 2
-- id: 57
-  title: Decode Encoded String
-  difficulty: HARD
-  description: Decode strings encoded as k[encoded_string], where k is a positive
-    integer. Nested patterns are allowed.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(s):'
-  public_tests:
-  - input:
-    - 3[a]2[bc]
-    expected: aaabcbc
-  - input:
-    - 3[a2[c]]
-    expected: accaccacc
-  - input:
-    - 2[abc]3[cd]ef
-    expected: abcabccdcdcdef
-  hidden_tests:
-  - input:
-    - 10[a]
-    expected: aaaaaaaaaa
-  - input:
-    - 2[ab3[c]]
-    expected: abcccabccc
-  - input:
-    - 1[z]
-    expected: z
-  - input:
-    - 3[a]2[b4[F]c]
-    expected: aaabFFFFcbFFFFc
-  - input:
-    - 0[a]
-    expected: ''
-- id: 58
+
+- id: 17
   title: Daily Temperatures Wait Days
-  difficulty: HARD
+  difficulty: MEDIUM
   description: Given daily temperatures, return an array where answer[i] is number
     of days until a warmer temperature. If none, 0.
   function:
@@ -3766,221 +1399,10 @@
     - 2
     - 1
     - 0
-- id: 59
-  title: Next Greater Element in Circular Array
-  difficulty: HARD
-  description: For each element, find next greater element traversing circularly.
-    If not found, return -1 for that index.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(nums):'
-  public_tests:
-  - input:
-    - - 1
-      - 2
-      - 1
-    expected:
-    - 2
-    - -1
-    - 2
-  - input:
-    - - 1
-      - 2
-      - 3
-      - 4
-      - 3
-    expected:
-    - 2
-    - 3
-    - 4
-    - -1
-    - 4
-  - input:
-    - - 5
-      - 4
-      - 3
-      - 2
-      - 1
-    expected:
-    - -1
-    - 5
-    - 5
-    - 5
-    - 5
-  hidden_tests:
-  - input:
-    - - 2
-      - 2
-      - 2
-    expected:
-    - -1
-    - -1
-    - -1
-  - input:
-    - - 1
-    expected:
-    - -1
-  - input:
-    - - 3
-      - 1
-      - 2
-    expected:
-    - -1
-    - 2
-    - 3
-  - input:
-    - - 2
-      - 1
-      - 2
-      - 4
-      - 3
-    expected:
-    - 4
-    - 2
-    - 4
-    - -1
-    - 4
-  - input:
-    - - 9
-      - 8
-      - 7
-      - 3
-      - 2
-    expected:
-    - -1
-    - 9
-    - 9
-    - 9
-    - 9
-- id: 60
-  title: Largest Rectangle in Histogram
-  difficulty: HARD
-  description: Given bar heights of a histogram, return area of the largest rectangle.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(heights):'
-  public_tests:
-  - input:
-    - - 2
-      - 1
-      - 5
-      - 6
-      - 2
-      - 3
-    expected: 10
-  - input:
-    - - 2
-      - 4
-    expected: 4
-  - input:
-    - - 2
-      - 1
-      - 2
-    expected: 3
-  hidden_tests:
-  - input:
-    - - 1
-      - 1
-      - 1
-      - 1
-    expected: 4
-  - input:
-    - - 6
-      - 2
-      - 5
-      - 4
-      - 5
-      - 1
-      - 6
-    expected: 12
-  - input:
-    - - 1
-    expected: 1
-  - input:
-    - - 4
-      - 3
-      - 2
-      - 1
-    expected: 6
-  - input:
-    - - 1
-      - 2
-      - 3
-      - 4
-      - 5
-    expected: 9
-- id: 61
-  title: Trapping Rain Water
-  difficulty: HARD
-  description: Given elevation map heights, return total amount of trapped rain water.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(height):'
-  public_tests:
-  - input:
-    - - 0
-      - 1
-      - 0
-      - 2
-      - 1
-      - 0
-      - 1
-      - 3
-      - 2
-      - 1
-      - 2
-      - 1
-    expected: 6
-  - input:
-    - - 4
-      - 2
-      - 0
-      - 3
-      - 2
-      - 5
-    expected: 9
-  - input:
-    - - 1
-      - 2
-      - 3
-      - 4
-    expected: 0
-  hidden_tests:
-  - input:
-    - - 5
-      - 4
-      - 1
-      - 2
-    expected: 1
-  - input:
-    - - 2
-      - 0
-      - 2
-    expected: 2
-  - input:
-    - - 3
-      - 0
-      - 1
-      - 3
-      - 0
-      - 5
-    expected: 8
-  - input:
-    - - 0
-    expected: 0
-  - input:
-    - - 2
-      - 1
-      - 0
-      - 1
-      - 3
-    expected: 4
-- id: 62
+
+- id: 18
   title: Median of Two Sorted Arrays
-  difficulty: HARD
+  difficulty: MEDIUM
   description: Given two sorted arrays, return their median as a float.
   function:
     python:
@@ -4031,134 +1453,10 @@
       - 5
       - 6
     expected: 3.5
-- id: 63
-  title: Longest Increasing Path in Matrix
-  difficulty: HARD
-  description: Given a matrix of integers, return length of the longest strictly increasing
-    path moving up/down/left/right.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(matrix):'
-  public_tests:
-  - input:
-    - - - 9
-        - 9
-        - 4
-      - - 6
-        - 6
-        - 8
-      - - 2
-        - 1
-        - 1
-    expected: 4
-  - input:
-    - - - 3
-        - 4
-        - 5
-      - - 3
-        - 2
-        - 6
-      - - 2
-        - 2
-        - 1
-    expected: 4
-  - input:
-    - - - 1
-    expected: 1
-  hidden_tests:
-  - input:
-    - - - 1
-        - 2
-      - - 3
-        - 4
-    expected: 3
-  - input:
-    - - - 7
-        - 7
-        - 7
-      - - 7
-        - 7
-        - 7
-    expected: 1
-  - input:
-    - - - 1
-        - 2
-        - 3
-      - - 6
-        - 5
-        - 4
-    expected: 6
-  - input:
-    - - - 5
-    expected: 1
-  - input:
-    - - - 1
-        - 2
-        - 1
-      - - 2
-        - 3
-        - 2
-      - - 1
-        - 2
-        - 1
-    expected: 3
-- id: 64
-  title: Coin Change Minimum Coins
-  difficulty: HARD
-  description: Given coin denominations and amount, return minimum number of coins
-    needed. Return -1 if impossible.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(coins, amount):'
-  public_tests:
-  - input:
-    - - 1
-      - 2
-      - 5
-    - 11
-    expected: 3
-  - input:
-    - - 2
-    - 3
-    expected: -1
-  - input:
-    - - 1
-    - 0
-    expected: 0
-  hidden_tests:
-  - input:
-    - - 1
-    - 2
-    expected: 2
-  - input:
-    - - 2
-      - 5
-      - 10
-      - 1
-    - 27
-    expected: 4
-  - input:
-    - - 186
-      - 419
-      - 83
-      - 408
-    - 6249
-    expected: 20
-  - input:
-    - - 3
-      - 7
-    - 1
-    expected: -1
-  - input:
-    - - 2
-      - 4
-    - 8
-    expected: 2
-- id: 65
+
+- id: 19
   title: Edit Distance
-  difficulty: HARD
+  difficulty: MEDIUM
   description: Return the minimum number of operations (insert, delete, replace) to
     convert word1 into word2.
   function:
@@ -4199,43 +1497,10 @@
     - ''
     - ''
     expected: 0
-- id: 66
-  title: N-Queens Count
-  difficulty: HARD
-  description: Given n, return the number of distinct solutions to the n-queens puzzle.
-  function:
-    python:
-      name: solve
-      signature: 'def solve(n):'
-  public_tests:
-  - input:
-    - 1
-    expected: 1
-  - input:
-    - 4
-    expected: 2
-  - input:
-    - 5
-    expected: 10
-  hidden_tests:
-  - input:
-    - 6
-    expected: 4
-  - input:
-    - 7
-    expected: 40
-  - input:
-    - 8
-    expected: 92
-  - input:
-    - 2
-    expected: 0
-  - input:
-    - 3
-    expected: 0
-- id: 67
+
+- id: 20
   title: Regular Expression Matching
-  difficulty: HARD
+  difficulty: MEDIUM
   description: Implement regex matching with support for '.' and '*'. Return true
     if pattern fully matches the string.
   function:
@@ -4276,1417 +1541,808 @@
     - abcd
     - d*
     expected: false
-- id: 68
-  title: LRU Cache Simulator
-  difficulty: HARD
-  description: Simulate an LRU cache. Operations are put/get. Return outputs only
-    for get operations.
+
+- id: 21
+  title: Normalize Email Addresses
+  difficulty: MEDIUM
+  description: Normalize email addresses by removing dots (.) in the local part and ignoring everything after '+' before '@'. Return unique normalized emails.
   function:
     python:
       name: solve
-      signature: 'def solve(capacity, operations):'
+      signature: 'def solve(emails):'
   public_tests:
-  - input:
-    - 2
-    - - - put
-        - 1
-        - 1
-      - - put
-        - 2
-        - 2
-      - - get
-        - 1
-      - - put
-        - 3
-        - 3
-      - - get
-        - 2
-      - - put
-        - 4
-        - 4
-      - - get
-        - 1
-      - - get
-        - 3
-      - - get
-        - 4
-    expected:
-    - 1
-    - -1
-    - -1
-    - 3
-    - 4
-  - input:
-    - 1
-    - - - put
-        - 2
-        - 1
-      - - get
-        - 2
-      - - put
-        - 3
-        - 2
-      - - get
-        - 2
-      - - get
-        - 3
-    expected:
-    - 1
-    - -1
-    - 2
-  - input:
-    - 2
-    - - - get
-        - 9
-      - - put
-        - 9
-        - 9
-      - - get
-        - 9
-    expected:
-    - -1
-    - 9
+    - input:
+        - ["test.email+alex@gmail.com", "test.e.mail@gmail.com"]
+      expected:
+        - "testemail@gmail.com"
+    - input:
+        - ["a.b+c@xyz.com", "ab@xyz.com"]
+      expected:
+        - "ab@xyz.com"
+    - input:
+        - ["user+tag@domain.com"]
+      expected:
+        - "user@domain.com"
   hidden_tests:
-  - input:
-    - 2
-    - - - put
-        - 1
-        - 10
-      - - put
-        - 2
-        - 20
-      - - put
-        - 1
-        - 15
-      - - get
-        - 1
-      - - put
-        - 3
-        - 30
-      - - get
-        - 2
-    expected:
-    - 15
-    - -1
-  - input:
-    - 3
-    - - - put
-        - 1
-        - 1
-      - - put
-        - 2
-        - 2
-      - - put
-        - 3
-        - 3
-      - - get
-        - 2
-      - - put
-        - 4
-        - 4
-      - - get
-        - 1
-      - - get
-        - 3
-      - - get
-        - 4
-    expected:
-    - 2
-    - -1
-    - 3
-    - 4
-  - input:
-    - 1
-    - - - get
-        - 1
-      - - put
-        - 1
-        - 100
-      - - get
-        - 1
-      - - put
-        - 2
-        - 200
-      - - get
-        - 1
-      - - get
-        - 2
-    expected:
-    - -1
-    - 100
-    - -1
-    - 200
-  - input:
-    - 2
-    - - - put
-        - 5
-        - 5
-      - - put
-        - 6
-        - 6
-      - - get
-        - 5
-      - - get
-        - 6
-    expected:
-    - 5
-    - 6
-  - input:
-    - 2
-    - - - put
-        - 1
-        - 1
-      - - put
-        - 2
-        - 2
-      - - put
-        - 3
-        - 3
-      - - get
-        - 1
-      - - get
-        - 2
-      - - get
-        - 3
-    expected:
-    - -1
-    - 2
-    - 3
-- id: 69
-  title: LFU Cache Simulator
-  difficulty: HARD
-  description: Simulate an LFU cache with LRU tie-breaker for same frequency. Return
-    outputs only for get operations.
+    - input: [["abc+d@x.com","a.bc@x.com"]]
+      expected: ["abc@x.com"]
+    - input: [["u.ser+1@a.com","user@a.com"]]
+      expected: ["user@a.com"]
+    - input: [["x@y.com"]]
+      expected: ["x@y.com"]
+    - input: [["a.b.c+d@z.com"]]
+      expected: ["abc@z.com"]
+    - input: [["a@b.com","a@b.com"]]
+      expected: ["a@b.com"]
+    - input: [["ab+cd@e.com","a.b@e.com"]]
+      expected: ["ab@e.com"]
+    - input: [["test+spam@x.com","t.e.s.t@x.com"]]
+      expected: ["test@x.com"]
+    - input: [["one+two@a.com","o.n.e@a.com"]]
+      expected: ["one@a.com"]
+    - input: [["abc@x.com","abc+1@x.com"]]
+      expected: ["abc@x.com"]
+    - input: [["a+b+c@x.com"]]
+      expected: ["a@x.com"]
+    - input: [["a.b@c.com","ab@c.com"]]
+      expected: ["ab@c.com"]
+    - input: [["long.email+tag@domain.com"]]
+      expected: ["longemail@domain.com"]
+    - input: [["simple@test.com"]]
+      expected: ["simple@test.com"]
+    - input: [["a.b.c@d.com"]]
+      expected: ["abc@d.com"]
+    - input: [["z+y@x.com","z@x.com"]]
+      expected: ["z@x.com"]
+
+- id: 22
+  title: First Non-Repeating Character
+  difficulty: MEDIUM
+  description: Return the first non-repeating character in a string. Return empty string if none exists.
   function:
     python:
       name: solve
-      signature: 'def solve(capacity, operations):'
+      signature: 'def solve(s):'
   public_tests:
-  - input:
-    - 2
-    - - - put
-        - 1
-        - 1
-      - - put
-        - 2
-        - 2
-      - - get
-        - 1
-      - - put
-        - 3
-        - 3
-      - - get
-        - 2
-      - - get
-        - 3
-    expected:
-    - 1
-    - -1
-    - 3
-  - input:
-    - 2
-    - - - put
-        - 2
-        - 2
-      - - put
-        - 1
-        - 1
-      - - get
-        - 2
-      - - get
-        - 1
-      - - get
-        - 2
-      - - put
-        - 3
-        - 3
-      - - get
-        - 1
-      - - get
-        - 2
-      - - get
-        - 3
-    expected:
-    - 2
-    - 1
-    - 2
-    - -1
-    - 2
-    - 3
-  - input:
-    - 0
-    - - - put
-        - 1
-        - 1
-      - - get
-        - 1
-    expected:
-    - -1
+    - input: ["leetcode"]
+      expected: "l"
+    - input: ["aabb"]
+      expected: ""
+    - input: ["abcabcde"]
+      expected: "d"
   hidden_tests:
-  - input:
-    - 1
-    - - - put
-        - 1
-        - 1
-      - - get
-        - 1
-      - - put
-        - 2
-        - 2
-      - - get
-        - 1
-      - - get
-        - 2
-    expected:
-    - 1
-    - -1
-    - 2
-  - input:
-    - 2
-    - - - put
-        - 1
-        - 10
-      - - put
-        - 2
-        - 20
-      - - put
-        - 3
-        - 30
-      - - get
-        - 1
-      - - get
-        - 2
-      - - get
-        - 3
-    expected:
-    - -1
-    - 20
-    - 30
-  - input:
-    - 2
-    - - - put
-        - 1
-        - 1
-      - - put
-        - 2
-        - 2
-      - - get
-        - 1
-      - - put
-        - 2
-        - 22
-      - - put
-        - 3
-        - 3
-      - - get
-        - 1
-      - - get
-        - 2
-      - - get
-        - 3
-    expected:
-    - 1
-    - 1
-    - -1
-    - 3
-  - input:
-    - 2
-    - - - put
-        - 1
-        - 1
-      - - put
-        - 2
-        - 2
-      - - get
-        - 2
-      - - put
-        - 3
-        - 3
-      - - get
-        - 1
-      - - get
-        - 2
-      - - get
-        - 3
-    expected:
-    - -1
-    - 2
-    - 3
-  - input:
-    - 3
-    - - - put
-        - 1
-        - 1
-      - - put
-        - 2
-        - 2
-      - - put
-        - 3
-        - 3
-      - - get
-        - 1
-      - - get
-        - 1
-      - - get
-        - 2
-      - - put
-        - 4
-        - 4
-      - - get
-        - 3
-      - - get
-        - 4
-    expected:
-    - 1
-    - 1
-    - 2
-    - -1
-    - 4
-- id: 70
-  title: Time-Based Key Value Store
-  difficulty: HARD
-  description: Support set(key, value, timestamp) and get(key, timestamp) returning
-    the latest value with timestamp <= query timestamp.
+    - input: ["loveleetcode"]
+      expected: "v"
+    - input: [""]
+      expected: ""
+    - input: ["a"]
+      expected: "a"
+    - input: ["aa"]
+      expected: ""
+    - input: ["abacabad"]
+      expected: "c"
+    - input: ["zzzyx"]
+      expected: "y"
+    - input: ["abcd"]
+      expected: "a"
+    - input: ["aabbccdde"]
+      expected: "e"
+    - input: ["abcabc"]
+      expected: ""
+    - input: ["xxyz"]
+      expected: "y"
+    - input: ["xyyxz"]
+      expected: "z"
+    - input: ["ppqqrrs"]
+      expected: "s"
+    - input: ["abcdefa"]
+      expected: "b"
+    - input: ["1122334"]
+      expected: "4"
+    - input: ["!!@@##$"]
+      expected: "$"
+
+- id: 23
+  title: String Compression
+  difficulty: MEDIUM
+  description: Compress the string using character counts (run-length encoding).
   function:
     python:
       name: solve
-      signature: 'def solve(operations):'
+      signature: 'def solve(s):'
   public_tests:
-  - input:
-    - - - set
-        - foo
-        - bar
-        - 1
-      - - get
-        - foo
-        - 1
-      - - get
-        - foo
-        - 3
-      - - set
-        - foo
-        - bar2
-        - 4
-      - - get
-        - foo
-        - 4
-      - - get
-        - foo
-        - 5
-    expected:
-    - bar
-    - bar
-    - bar2
-    - bar2
-  - input:
-    - - - set
-        - a
-        - x
-        - 10
-      - - get
-        - a
-        - 9
-      - - get
-        - a
-        - 10
-      - - get
-        - a
-        - 11
-    expected:
-    - ''
-    - x
-    - x
-  - input:
-    - - - get
-        - none
-        - 100
-      - - set
-        - k
-        - v
-        - 2
-      - - get
-        - k
-        - 1
-      - - get
-        - k
-        - 2
-    expected:
-    - ''
-    - ''
-    - v
+    - input: ["aaabbc"]
+      expected: "a3b2c1"
+    - input: ["abc"]
+      expected: "a1b1c1"
+    - input: ["aaaa"]
+      expected: "a4"
   hidden_tests:
-  - input:
-    - - - set
-        - k
-        - v1
-        - 1
-      - - set
-        - k
-        - v2
-        - 2
-      - - set
-        - k
-        - v3
-        - 3
-      - - get
-        - k
-        - 2
-    expected:
-    - v2
-  - input:
-    - - - set
-        - x
-        - a
-        - 5
-      - - get
-        - x
-        - 4
-      - - get
-        - x
-        - 5
-      - - get
-        - x
-        - 100
-    expected:
-    - ''
-    - a
-    - a
-  - input:
-    - - - set
-        - u
-        - '1'
-        - 1
-      - - set
-        - v
-        - '2'
-        - 1
-      - - get
-        - u
-        - 1
-      - - get
-        - v
-        - 1
-    expected:
-    - '1'
-    - '2'
-  - input:
-    - - - set
-        - x
-        - first
-        - 2
-      - - set
-        - x
-        - second
-        - 2
-      - - get
-        - x
-        - 2
-    expected:
-    - second
-  - input:
-    - - - set
-        - a
-        - z
-        - 7
-      - - get
-        - a
-        - 6
-      - - get
-        - a
-        - 7
-      - - get
-        - a
-        - 8
-    expected:
-    - ''
-    - z
-    - z
-- id: 71
-  title: Trie Query Simulator
-  difficulty: HARD
-  description: Implement Trie operations insert, search, startsWith. Return outputs
-    only for search and startsWith operations.
+    - input: ["a"]
+      expected: "a1"
+    - input: ["bb"]
+      expected: "b2"
+    - input: ["aabbaa"]
+      expected: "a2b2a2"
+    - input: [""]
+      expected: ""
+    - input: ["xyz"]
+      expected: "x1y1z1"
+    - input: ["xxxyyyzz"]
+      expected: "x3y3z2"
+    - input: ["111"]
+      expected: "13"
+    - input: ["aaAA"]
+      expected: "a2A2"
+    - input: ["abab"]
+      expected: "a1b1a1b1"
+    - input: ["zzzzzz"]
+      expected: "z6"
+    - input: ["mnop"]
+      expected: "m1n1o1p1"
+    - input: ["ppqqpp"]
+      expected: "p2q2p2"
+    - input: ["t"]
+      expected: "t1"
+    - input: ["qqqrr"]
+      expected: "q3r2"
+    - input: ["cccaaa"]
+      expected: "c3a3"
+
+- id: 24
+  title: Remove Duplicates Preserve Order
+  difficulty: MEDIUM
+  description: Remove duplicates from list while preserving order.
   function:
     python:
       name: solve
-      signature: 'def solve(operations):'
+      signature: 'def solve(nums):'
   public_tests:
-  - input:
-    - - - insert
-        - apple
-      - - search
-        - apple
-      - - search
-        - app
-      - - startsWith
-        - app
-      - - insert
-        - app
-      - - search
-        - app
-    expected:
-    - true
-    - false
-    - true
-    - true
-  - input:
-    - - - search
-        - a
-      - - insert
-        - a
-      - - search
-        - a
-      - - startsWith
-        - a
-      - - startsWith
-        - b
-    expected:
-    - false
-    - true
-    - true
-    - false
-  - input:
-    - - - insert
-        - cat
-      - - insert
-        - car
-      - - search
-        - car
-      - - startsWith
-        - ca
-    expected:
-    - true
-    - true
+    - input: [[1,2,2,3,1,4]]
+      expected: [1,2,3,4]
+    - input: [[5,5,5]]
+      expected: [5]
+    - input: [[]]
+      expected: []
   hidden_tests:
-  - input:
-    - - - insert
-        - abc
-      - - insert
-        - abcd
-      - - search
-        - abc
-      - - search
-        - ab
-      - - startsWith
-        - abcd
-    expected:
-    - true
-    - false
-    - true
-  - input:
-    - - - insert
-        - x
-      - - insert
-        - xy
-      - - insert
-        - xyz
-      - - search
-        - xyz
-      - - startsWith
-        - xy
-    expected:
-    - true
-    - true
-  - input:
-    - - - startsWith
-        - 'no'
-      - - insert
-        - note
-      - - startsWith
-        - 'no'
-      - - search
-        - not
-    expected:
-    - false
-    - true
-    - false
-  - input:
-    - - - insert
-        - same
-      - - insert
-        - same
-      - - search
-        - same
-      - - startsWith
-        - sam
-    expected:
-    - true
-    - true
-  - input:
-    - - - search
-        - ''
-      - - startsWith
-        - ''
-    expected:
-    - false
-    - true
-- id: 72
-  title: In-Memory File System Simulator
-  difficulty: HARD
-  description: Support mkdir, add (append content to file), read, and ls. Return outputs
-    only for ls and read operations.
+    - input: [[1,1,2,2,3]]
+      expected: [1,2,3]
+    - input: [[3,2,1,2,3]]
+      expected: [3,2,1]
+    - input: [[0,0,0]]
+      expected: [0]
+    - input: [[-1,-1,0,1]]
+      expected: [-1,0,1]
+    - input: [[1]]
+      expected: [1]
+    - input: [[1,2,3]]
+      expected: [1,2,3]
+    - input: [[2,1,2,1]]
+      expected: [2,1]
+    - input: [[9,8,7,7,8,9]]
+      expected: [9,8,7]
+    - input: [[4,4,4,4]]
+      expected: [4]
+    - input: [[1,2,1,2,1]]
+      expected: [1,2]
+    - input: [[10,20,10]]
+      expected: [10,20]
+    - input: [[-2,-2,-2]]
+      expected: [-2]
+    - input: [[1,0,1,0]]
+      expected: [1,0]
+    - input: [[3,3,2,2,1]]
+      expected: [3,2,1]
+    - input: [[5,4,3,2,1]]
+      expected: [5,4,3,2,1]
+
+- id: 25
+  title: Find Pairs with Given Sum
+  difficulty: MEDIUM
+  description: Return unique pairs whose sum equals target.
   function:
     python:
       name: solve
-      signature: 'def solve(operations):'
+      signature: 'def solve(nums, target):'
   public_tests:
-  - input:
-    - - - mkdir
-        - /a/b
-      - - add
-        - /a/b/file.txt
-        - hello
-      - - add
-        - /a/b/file.txt
-        - ' world'
-      - - read
-        - /a/b/file.txt
-      - - ls
-        - /a/b
-    expected:
-    - hello world
-    - - file.txt
-  - input:
-    - - - mkdir
-        - /z
-      - - ls
-        - /
-      - - add
-        - /z/t.txt
-        - x
-      - - ls
-        - /z
-      - - read
-        - /z/t.txt
-    expected:
-    - - z
-    - - t.txt
-    - x
-  - input:
-    - - - add
-        - /m/n.txt
-        - a
-      - - ls
-        - /m
-      - - read
-        - /m/n.txt
-    expected:
-    - - n.txt
-    - a
+    - input: [[1,2,3,4,5],6]
+      expected: [[1,5],[2,4]]
+    - input: [[2,2,4],6]
+      expected: [[2,4]]
+    - input: [[],5]
+      expected: []
   hidden_tests:
-  - input:
-    - - - mkdir
-        - /a
-      - - mkdir
-        - /a/c
-      - - mkdir
-        - /a/b
-      - - ls
-        - /a
-    expected:
-    - - b
-      - c
-  - input:
-    - - - add
-        - /x.txt
-        - p
-      - - ls
-        - /
-      - - read
-        - /x.txt
-    expected:
-    - - x.txt
-    - p
-  - input:
-    - - - mkdir
-        - /d/e/f
-      - - ls
-        - /d/e
-      - - add
-        - /d/e/f/k
-        - '1'
-      - - read
-        - /d/e/f/k
-    expected:
-    - - f
-    - '1'
-  - input:
-    - - - add
-        - /r.txt
-        - ab
-      - - add
-        - /r.txt
-        - cd
-      - - read
-        - /r.txt
-    expected:
-    - abcd
-  - input:
-    - - - mkdir
-        - /a
-      - - add
-        - /a/f
-        - z
-      - - ls
-        - /a/f
-    expected:
-    - - f
-- id: 73
-  title: Median Finder Stream Simulator
-  difficulty: HARD
-  description: Support addNum and findMedian on a data stream. Return outputs only
-    for findMedian operations.
+    - input: [[1,1,5,5],6]
+      expected: [[1,5]]
+    - input: [[3,3,3],6]
+      expected: [[3,3]]
+    - input: [[0,6],6]
+      expected: [[0,6]]
+    - input: [[-1,7],6]
+      expected: [[-1,7]]
+    - input: [[2,4,6],10]
+      expected: [[4,6]]
+    - input: [[1,2,3],7]
+      expected: []
+    - input: [[5,1,5,1],6]
+      expected: [[1,5]]
+    - input: [[10,-4],6]
+      expected: [[-4,10]]
+    - input: [[3,2,4],6]
+      expected: [[2,4]]
+    - input: [[6,0],6]
+      expected: [[0,6]]
+    - input: [[8,-2],6]
+      expected: [[-2,8]]
+    - input: [[1,2,3,4],5]
+      expected: [[1,4],[2,3]]
+    - input: [[7,-1],6]
+      expected: [[-1,7]]
+    - input: [[6],6]
+      expected: []
+    - input: [[-3,9],6]
+      expected: [[-3,9]]
+
+- id: 26
+  title: Flatten One Level List
+  difficulty: MEDIUM
+  description: Flatten only one level of nested list.
   function:
     python:
       name: solve
-      signature: 'def solve(operations):'
+      signature: 'def solve(lst):'
   public_tests:
-  - input:
-    - - - add
-        - 1
-      - - add
-        - 2
-      - - find
-      - - add
-        - 3
-      - - find
-    expected:
-    - 1.5
-    - 2.0
-  - input:
-    - - - add
-        - 5
-      - - find
-      - - add
-        - 10
-      - - find
-      - - add
-        - 100
-      - - find
-    expected:
-    - 5.0
-    - 7.5
-    - 10.0
-  - input:
-    - - - add
-        - -1
-      - - add
-        - -2
-      - - find
-    expected:
-    - -1.5
+    - input: [[1,[2,3],[4,[5]]]]
+      expected: [1,2,3,4,[5]]
+    - input: [[[1,2],3]]
+      expected: [1,2,3]
+    - input: [[1,2,3]]
+      expected: [1,2,3]
   hidden_tests:
-  - input:
-    - - - add
-        - 2
-      - - add
-        - 2
-      - - find
-    expected:
-    - 2.0
-  - input:
-    - - - add
-        - 1
-      - - add
-        - 4
-      - - add
-        - 2
-      - - add
-        - 3
-      - - find
-    expected:
-    - 2.5
-  - input:
-    - - - add
-        - 1000
-      - - find
-    expected:
-    - 1000.0
-  - input:
-    - - - add
-        - 7
-      - - add
-        - 8
-      - - add
-        - 9
-      - - find
-      - - add
-        - 10
-      - - find
-    expected:
-    - 8.0
-    - 8.5
-  - input:
-    - - - add
-        - 0
-      - - add
-        - 0
-      - - add
-        - 0
-      - - find
-    expected:
-    - 0.0
-- id: 74
-  title: Calendar Booking Simulator
-  difficulty: HARD
-  description: Simulate booking intervals [start, end). Return true if booking succeeds
-    (no overlap), else false.
+    - input: [[[1],[2],[3]]]
+      expected: [1,2,3]
+    - input: [[[]]]
+      expected: []
+    - input: [[1,[2],3]]
+      expected: [1,2,3]
+    - input: [[[1,[2]]]]
+      expected: [1,[2]]
+    - input: [[1]]
+      expected: [1]
+    - input: [[1,[2,3,4]]]
+      expected: [1,2,3,4]
+    - input: [[[1],2,[3]]]
+      expected: [1,2,3]
+    - input: [[[],[1]]]
+      expected: [1]
+    - input: [[[[]]]]
+      expected: [[]]
+    - input: [[1,[2,[3]]]]
+      expected: [1,2,[3]]
+    - input: [[[1,2,3]]]
+      expected: [1,2,3]
+    - input: [[0,[0,0]]]
+      expected: [0,0,0]
+    - input: [[[True],False]]
+      expected: [True,False]
+    - input: [[[None]]]
+      expected: [None]
+    - input: [[["a","b"],"c"]]
+      expected: ["a","b","c"]
+
+- id: 27
+  title: Invert Dictionary with Duplicates
+  difficulty: MEDIUM
+  description: Invert dictionary keys and values. If duplicate values exist, group keys into list.
   function:
     python:
       name: solve
-      signature: 'def solve(operations):'
+      signature: 'def solve(d):'
   public_tests:
-  - input:
-    - - - book
-        - 10
-        - 20
-      - - book
-        - 15
-        - 25
-      - - book
-        - 20
-        - 30
-    expected:
-    - true
-    - false
-    - true
-  - input:
-    - - - book
-        - 1
-        - 5
-      - - book
-        - 5
-        - 10
-      - - book
-        - 2
-        - 3
-    expected:
-    - true
-    - true
-    - false
-  - input:
-    - - - book
-        - 5
-        - 10
-      - - book
-        - 10
-        - 15
-      - - book
-        - 15
-        - 20
-    expected:
-    - true
-    - true
-    - true
+    - input: [{"a":1,"b":2,"c":1}]
+      expected: {1:["a","c"],2:["b"]}
+    - input: [{"x":10}]
+      expected: {10:["x"]}
+    - input: [{}]
+      expected: {}
   hidden_tests:
-  - input:
-    - - - book
-        - 0
-        - 1
-      - - book
-        - 1
-        - 2
-      - - book
-        - 0
-        - 2
-    expected:
-    - true
-    - true
-    - false
-  - input:
-    - - - book
-        - 3
-        - 7
-      - - book
-        - 7
-        - 8
-      - - book
-        - 2
-        - 3
-    expected:
-    - true
-    - true
-    - true
-  - input:
-    - - - book
-        - 4
-        - 9
-      - - book
-        - 6
-        - 7
-      - - book
-        - 9
-        - 10
-    expected:
-    - true
-    - false
-    - true
-  - input:
-    - - - book
-        - 1
-        - 100
-      - - book
-        - 50
-        - 60
-      - - book
-        - 100
-        - 101
-    expected:
-    - true
-    - false
-    - true
-  - input:
-    - - - book
-        - 8
-        - 12
-      - - book
-        - 12
-        - 16
-      - - book
-        - 7
-        - 8
-    expected:
-    - true
-    - true
-    - true
-- id: 75
-  title: Disjoint Set Connectivity Simulator
-  difficulty: HARD
-  description: Support union and connected operations for nodes 0..n-1. Return outputs
-    only for connected operations.
+    - input: [{"a":1,"b":1}]
+      expected: {1:["a","b"]}
+    - input: [{"a":2,"b":3}]
+      expected: {2:["a"],3:["b"]}
+    - input: [{"k":5,"l":5,"m":5}]
+      expected: {5:["k","l","m"]}
+    - input: [{"z":0}]
+      expected: {0:["z"]}
+    - input: [{"a":1}]
+      expected: {1:["a"]}
+    - input: [{"a":1,"b":2,"c":3}]
+      expected: {1:["a"],2:["b"],3:["c"]}
+    - input: [{"a":1,"b":2,"c":2}]
+      expected: {1:["a"],2:["b","c"]}
+    - input: [{"p":9,"q":9,"r":8}]
+      expected: {9:["p","q"],8:["r"]}
+    - input: [{"x":0,"y":0}]
+      expected: {0:["x","y"]}
+    - input: [{"n":7}]
+      expected: {7:["n"]}
+    - input: [{"a":1,"b":1,"c":1,"d":2}]
+      expected: {1:["a","b","c"],2:["d"]}
+    - input: [{"u":4,"v":5}]
+      expected: {4:["u"],5:["v"]}
+    - input: [{"t":3,"s":3}]
+      expected: {3:["t","s"]}
+    - input: [{"a":0}]
+      expected: {0:["a"]}
+    - input: [{"a":1,"b":2,"c":1,"d":2}]
+      expected: {1:["a","c"],2:["b","d"]}
+
+- id: 28
+  title: Group Anagrams
+  difficulty: MEDIUM
+  description: Group words that are anagrams.
   function:
     python:
       name: solve
-      signature: 'def solve(n, operations):'
+      signature: 'def solve(words):'
   public_tests:
-  - input:
-    - 5
-    - - - union
-        - 0
-        - 1
-      - - union
-        - 1
-        - 2
-      - - connected
-        - 0
-        - 2
-      - - connected
-        - 3
-        - 4
-    expected:
-    - true
-    - false
-  - input:
-    - 4
-    - - - connected
-        - 0
-        - 1
-      - - union
-        - 2
-        - 3
-      - - connected
-        - 2
-        - 3
-    expected:
-    - false
-    - true
-  - input:
-    - 3
-    - - - union
-        - 0
-        - 1
-      - - union
-        - 1
-        - 2
-      - - connected
-        - 0
-        - 2
-    expected:
-    - true
+    - input: [["eat","tea","tan","ate"]]
+      expected: [["eat","tea","ate"],["tan"]]
+    - input: [["abc","bca","cab"]]
+      expected: [["abc","bca","cab"]]
+    - input: [["a"]]
+      expected: [["a"]]
   hidden_tests:
-  - input:
-    - 6
-    - - - union
-        - 0
-        - 1
-      - - union
-        - 2
-        - 3
-      - - union
-        - 1
-        - 2
-      - - connected
-        - 0
-        - 3
-      - - connected
-        - 4
-        - 5
-    expected:
-    - true
-    - false
-  - input:
-    - 2
-    - - - connected
-        - 0
-        - 0
-      - - connected
-        - 0
-        - 1
-    expected:
-    - true
-    - false
-  - input:
-    - 7
-    - - - union
-        - 5
-        - 6
-      - - connected
-        - 5
-        - 6
-      - - union
-        - 0
-        - 6
-      - - connected
-        - 0
-        - 5
-    expected:
-    - true
-    - true
-  - input:
-    - 5
-    - - - union
-        - 1
-        - 1
-      - - connected
-        - 1
-        - 1
-      - - connected
-        - 1
-        - 2
-    expected:
-    - true
-    - false
-  - input:
-    - 3
-    - - - union
-        - 0
-        - 2
-      - - connected
-        - 2
-        - 0
-      - - connected
-        - 1
-        - 2
-    expected:
-    - true
-    - false
-- id: 76
-  title: Dynamic Shortest Path Query Simulator
-  difficulty: HARD
-  description: Given n nodes (0-indexed), support addEdge(u,v,w) and shortest(src,dst)
-    on directed weighted graph. Return outputs only for shortest queries (-1 if unreachable).
+    - input: [["ab","ba","cd"]]
+      expected: [["ab","ba"],["cd"]]
+    - input: [[""]]
+      expected: [[""]]
+    - input: [["a","b","c"]]
+      expected: [["a"],["b"],["c"]]
+    - input: [["aa","aa"]]
+      expected: [["aa","aa"]]
+    - input: [["abc","def"]]
+      expected: [["abc"],["def"]]
+    - input: [["abc","acb","bac","xyz"]]
+      expected: [["abc","acb","bac"],["xyz"]]
+    - input: [["listen","silent"]]
+      expected: [["listen","silent"]]
+    - input: [["rat","tar","art"]]
+      expected: [["rat","tar","art"]]
+    - input: [["abc"]]
+      expected: [["abc"]]
+    - input: [["zzz","zzz"]]
+      expected: [["zzz","zzz"]]
+    - input: [["ab","bc","ca"]]
+      expected: [["ab"],["bc"],["ca"]]
+    - input: [["abcd","dcba"]]
+      expected: [["abcd","dcba"]]
+    - input: [["aabb","bbaa"]]
+      expected: [["aabb","bbaa"]]
+    - input: [["x"]]
+      expected: [["x"]]
+    - input: [["ab","ba","ab"]]
+      expected: [["ab","ba","ab"]]
+
+- id: 29
+  title: Chunk List
+  difficulty: MEDIUM
+  description: Split list into chunks of given size.
   function:
     python:
       name: solve
-      signature: 'def solve(n, operations):'
+      signature: 'def solve(lst, size):'
   public_tests:
-  - input:
-    - 4
-    - - - add
-        - 0
-        - 1
-        - 5
-      - - add
-        - 1
-        - 2
-        - 3
-      - - shortest
-        - 0
-        - 2
-      - - shortest
-        - 2
-        - 0
-    expected:
-    - 8
-    - -1
-  - input:
-    - 3
-    - - - add
-        - 0
-        - 1
-        - 2
-      - - add
-        - 0
-        - 2
-        - 10
-      - - add
-        - 1
-        - 2
-        - 1
-      - - shortest
-        - 0
-        - 2
-    expected:
-    - 3
-  - input:
-    - 2
-    - - - shortest
-        - 0
-        - 1
-      - - add
-        - 0
-        - 1
-        - 7
-      - - shortest
-        - 0
-        - 1
-    expected:
-    - -1
-    - 7
+    - input: [[1,2,3,4,5,6],2]
+      expected: [[1,2],[3,4],[5,6]]
+    - input: [[1,2,3,4,5],2]
+      expected: [[1,2],[3,4],[5]]
+    - input: [[1],1]
+      expected: [[1]]
   hidden_tests:
-  - input:
-    - 5
-    - - - add
-        - 0
-        - 1
-        - 2
-      - - add
-        - 1
-        - 2
-        - 2
-      - - add
-        - 0
-        - 2
-        - 10
-      - - shortest
-        - 0
-        - 2
-      - - add
-        - 2
-        - 3
-        - 1
-      - - shortest
-        - 0
-        - 3
-    expected:
-    - 4
-    - 5
-  - input:
-    - 3
-    - - - add
-        - 0
-        - 1
-        - 1
-      - - add
-        - 1
-        - 0
-        - 1
-      - - shortest
-        - 0
-        - 2
-    expected:
-    - -1
-  - input:
-    - 4
-    - - - add
-        - 0
-        - 1
-        - 4
-      - - add
-        - 1
-        - 2
-        - 4
-      - - add
-        - 0
-        - 2
-        - 9
-      - - shortest
-        - 0
-        - 2
-      - - add
-        - 2
-        - 3
-        - 1
-      - - shortest
-        - 0
-        - 3
-    expected:
-    - 8
-    - 9
-  - input:
-    - 3
-    - - - add
-        - 0
-        - 1
-        - 5
-      - - add
-        - 0
-        - 1
-        - 2
-      - - shortest
-        - 0
-        - 1
-    expected:
-    - 2
-  - input:
-    - 3
-    - - - add
-        - 0
-        - 2
-        - 6
-      - - add
-        - 0
-        - 1
-        - 2
-      - - add
-        - 1
-        - 2
-        - 2
-      - - shortest
-        - 0
-        - 2
-    expected:
-    - 4
-- id: 77
-  title: Snapshot Array Simulator
-  difficulty: HARD
-  description: Support set(index,val), snap(), and get(index,snap_id). Return outputs
-    for snap and get operations.
+    - input: [[1,2,3],1]
+      expected: [[1],[2],[3]]
+    - input: [[1,2,3],5]
+      expected: [[1,2,3]]
+    - input: [[],2]
+      expected: []
+    - input: [[0,0,0,0],2]
+      expected: [[0,0],[0,0]]
+    - input: [[1,2],3]
+      expected: [[1,2]]
+    - input: [[1,2,3,4],4]
+      expected: [[1,2,3,4]]
+    - input: [[1,2,3,4,5],3]
+      expected: [[1,2,3],[4,5]]
+    - input: [[-1,-2,-3],2]
+      expected: [[-1,-2],[-3]]
+    - input: [[1,2,3,4,5,6,7],3]
+      expected: [[1,2,3],[4,5,6],[7]]
+    - input: [[10,20,30],2]
+      expected: [[10,20],[30]]
+    - input: [[1,2,3],2]
+      expected: [[1,2],[3]]
+    - input: [[5,6,7,8],1]
+      expected: [[5],[6],[7],[8]]
+    - input: [[1,2,3,4,5],4]
+      expected: [[1,2,3,4],[5]]
+    - input: [[9],2]
+      expected: [[9]]
+    - input: [[1,2],1]
+      expected: [[1],[2]]
+
+- id: 30
+  title: Advanced Palindrome Check
+  difficulty: MEDIUM
+  description: Check if a string is a palindrome ignoring spaces, punctuation, and case.
   function:
     python:
       name: solve
-      signature: 'def solve(length, operations):'
+      signature: 'def solve(s):'
   public_tests:
-  - input:
-    - 3
-    - - - set
-        - 0
-        - 5
-      - - snap
-      - - set
-        - 0
-        - 6
-      - - get
-        - 0
-        - 0
-    expected:
-    - 0
-    - 5
-  - input:
-    - 1
-    - - - snap
-      - - get
-        - 0
-        - 0
-      - - set
-        - 0
-        - 9
-      - - snap
-      - - get
-        - 0
-        - 1
-    expected:
-    - 0
-    - 0
-    - 1
-    - 9
-  - input:
-    - 2
-    - - - set
-        - 1
-        - 7
-      - - snap
-      - - get
-        - 1
-        - 0
-      - - get
-        - 0
-        - 0
-    expected:
-    - 0
-    - 7
-    - 0
+    - input: ["A man, a plan, a canal: Panama"]
+      expected: true
+    - input: ["race a car"]
+      expected: false
+    - input: ["No lemon, no melon"]
+      expected: true
   hidden_tests:
-  - input:
-    - 2
-    - - - set
-        - 0
-        - 1
-      - - set
-        - 0
-        - 2
-      - - snap
-      - - get
-        - 0
-        - 0
-    expected:
-    - 0
-    - 2
-  - input:
-    - 2
-    - - - snap
-      - - snap
-      - - get
-        - 1
-        - 0
-      - - get
-        - 1
-        - 1
-    expected:
-    - 0
-    - 1
-    - 0
-    - 0
-  - input:
-    - 3
-    - - - set
-        - 2
-        - 4
-      - - snap
-      - - set
-        - 2
-        - 8
-      - - snap
-      - - get
-        - 2
-        - 0
-      - - get
-        - 2
-        - 1
-    expected:
-    - 0
-    - 1
-    - 4
-    - 8
-  - input:
-    - 1
-    - - - set
-        - 0
-        - 3
-      - - set
-        - 0
-        - 5
-      - - snap
-      - - get
-        - 0
-        - 0
-    expected:
-    - 0
-    - 5
-  - input:
-    - 4
-    - - - get
-        - 3
-        - 0
-      - - snap
-      - - get
-        - 3
-        - 0
-      - - get
-        - 3
-        - 1
-    expected:
-    - 0
-    - 0
-    - 0
-    - 0
+    - input: [" "]
+      expected: true
+    - input: ["a"]
+      expected: true
+    - input: ["ab"]
+      expected: false
+    - input: ["Madam"]
+      expected: true
+    - input: ["12321"]
+      expected: true
+    - input: ["1231"]
+      expected: false
+    - input: ["Was it a car or a cat I saw?"]
+      expected: true
+    - input: ["hello"]
+      expected: false
+    - input: ["Able was I ere I saw Elba"]
+      expected: true
+    - input: ["!!"]
+      expected: true
+    - input: ["abcba"]
+      expected: true
+    - input: ["abcde"]
+      expected: false
+    - input: ["1a2"]
+      expected: false
+    - input: ["1a1"]
+      expected: true
+    - input: [""]
+      expected: true
+
+- id: 31
+  title: Frequency Sort Stable
+  difficulty: MEDIUM
+  description: Sort characters by frequency descending while preserving original order for equal frequency.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(s):'
+  public_tests:
+    - input: ["tree"]
+      expected: "eetr"
+    - input: ["cccaaa"]
+      expected: "cccaaa"
+    - input: ["aabb"]
+      expected: "aabb"
+  hidden_tests:
+    - input: ["abc"]
+      expected: "abc"
+    - input: ["bbbaa"]
+      expected: "bbbaa"
+    - input: ["xyzxyz"]
+      expected: "xxyyzz"
+    - input: ["a"]
+      expected: "a"
+    - input: [""]
+      expected: ""
+    - input: ["zzzyyyxxx"]
+      expected: "zzzyyyxxx"
+    - input: ["abab"]
+      expected: "aabb"
+    - input: ["112233"]
+      expected: "112233"
+    - input: ["bbaacc"]
+      expected: "bbaacc"
+    - input: ["abcdabcd"]
+      expected: "aabbccdd"
+    - input: ["ppqqrrss"]
+      expected: "ppqqrrss"
+    - input: ["zxy"]
+      expected: "zxy"
+    - input: ["mmnnmm"]
+      expected: "mmmmnn"
+    - input: ["qwerty"]
+      expected: "qwerty"
+    - input: ["aaaabbbbcc"]
+      expected: "aaaabbbbcc"
+
+- id: 32
+  title: Rotate String Check
+  difficulty: MEDIUM
+  description: Check if string B is a rotation of string A without using direct substring checks.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(a, b):'
+  public_tests:
+    - input: ["abcde","cdeab"]
+      expected: true
+    - input: ["abc","acb"]
+      expected: false
+    - input: ["waterbottle","erbottlewat"]
+      expected: true
+  hidden_tests:
+    - input: ["",""]
+      expected: true
+    - input: ["a","a"]
+      expected: true
+    - input: ["ab","ba"]
+      expected: true
+    - input: ["ab","ab"]
+      expected: true
+    - input: ["abc","cab"]
+      expected: true
+    - input: ["abc","bca"]
+      expected: true
+    - input: ["abc","abcabc"]
+      expected: false
+    - input: ["abcd","dcba"]
+      expected: false
+    - input: ["aaaa","aaaa"]
+      expected: true
+    - input: ["abab","baba"]
+      expected: true
+    - input: ["abcde","abced"]
+      expected: false
+    - input: ["xyz","yzx"]
+      expected: true
+    - input: ["xyz","xzy"]
+      expected: false
+    - input: ["rotation","tationro"]
+      expected: true
+    - input: ["rotation","ationtor"]
+      expected: false
+
+- id: 33
+  title: Smart Deduplication
+  difficulty: MEDIUM
+  description: Return elements that appear more than once, preserving order of first appearance.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(nums):'
+  public_tests:
+    - input: [[1,2,2,3,1,4]]
+      expected: [1,2]
+    - input: [[5,5,5]]
+      expected: [5]
+    - input: [[1,2,3]]
+      expected: []
+  hidden_tests:
+    - input: [[1,1,2,2,3,3]]
+      expected: [1,2,3]
+    - input: [[3,2,1,2,3]]
+      expected: [3,2]
+    - input: [[0,0,0]]
+      expected: [0]
+    - input: [[-1,-1,0,1]]
+      expected: [-1]
+    - input: [[1]]
+      expected: []
+    - input: [[2,1,2,1]]
+      expected: [2,1]
+    - input: [[9,8,7]]
+      expected: []
+    - input: [[4,4,4,4]]
+      expected: [4]
+    - input: [[1,2,1,2,1]]
+      expected: [1,2]
+    - input: [[10,20,10]]
+      expected: [10]
+    - input: [[-2,-2,-2]]
+      expected: [-2]
+    - input: [[1,0,1,0]]
+      expected: [1,0]
+    - input: [[3,3,2,2,1]]
+      expected: [3,2]
+    - input: [[5,4,3,2,1]]
+      expected: []
+    - input: [[7,7,8,8,9]]
+      expected: [7,8]
+
+- id: 34
+  title: Extended Balanced String
+  difficulty: MEDIUM
+  description: Check if brackets (), {}, [], <> are balanced. Ignore other characters. Return index of first failure or -1 if valid.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(s):'
+  public_tests:
+    - input: ["{[()]}"]
+      expected: -1
+    - input: ["{[(])}"]
+      expected: 3
+    - input: ["a+(b*c)-{d/e}"]
+      expected: -1
+  hidden_tests:
+    - input: [""]
+      expected: -1
+    - input: ["()"]
+      expected: -1
+    - input: ["("]
+      expected: 0
+    - input: [")"]
+      expected: 0
+    - input: ["<[]>"]
+      expected: -1
+    - input: ["<[>]>"]
+      expected: 2
+    - input: ["{[<()>]}"]
+      expected: -1
+    - input: ["{[<]>}"]
+      expected: 3
+    - input: ["abc"]
+      expected: -1
+    - input: ["((()))"]
+      expected: -1
+    - input: ["((())"]
+      expected: 4
+    - input: ["())"]
+      expected: 2
+    - input: ["<({})>"]
+      expected: -1
+    - input: ["<({)}>"]
+      expected: 4
+    - input: ["[<]>"]
+      expected: 2
+
+- id: 35
+  title: Case-Insensitive Anagram Groups
+  difficulty: MEDIUM
+  description: Group words that are anagrams ignoring case, but preserve original words in output.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(words):'
+  public_tests:
+    - input: [["Eat","Tea","tan","Ate"]]
+      expected: [["Eat","Tea","Ate"],["tan"]]
+    - input: [["abc","bca","CAB"]]
+      expected: [["abc","bca","CAB"]]
+    - input: [["a"]]
+      expected: [["a"]]
+  hidden_tests:
+    - input: [["ab","ba","AB"]]
+      expected: [["ab","ba","AB"]]
+    - input: [["abc","def"]]
+      expected: [["abc"],["def"]]
+    - input: [["Aa","aA"]]
+      expected: [["Aa","aA"]]
+    - input: [["xyz","ZYX","yxz"]]
+      expected: [["xyz","ZYX","yxz"]]
+    - input: [["a","A","b"]]
+      expected: [["a","A"],["b"]]
+    - input: [["listen","silent","LISTEN"]]
+      expected: [["listen","silent","LISTEN"]]
+    - input: [["rat","tar","art","car"]]
+      expected: [["rat","tar","art"],["car"]]
+    - input: [[""]]
+      expected: [[""]]
+    - input: [["aa","AA","bb"]]
+      expected: [["aa","AA"],["bb"]]
+    - input: [["abc"]]
+      expected: [["abc"]]
+    - input: [["abc","acb","bac","xyz","zyx"]]
+      expected: [["abc","acb","bac"],["xyz","zyx"]]
+    - input: [["x","X"]]
+      expected: [["x","X"]]
+    - input: [["abc","def","fed"]]
+      expected: [["abc"],["def","fed"]]
+    - input: [["aabb","bbaa","ABAB"]]
+      expected: [["aabb","bbaa","ABAB"]]
+    - input: [["one","neo","eon","two"]]
+      expected: [["one","neo","eon"],["two"]]
+
+- id: 36
+  title: First Duplicate Element (Earliest Second Occurrence)
+  difficulty: MEDIUM
+  description: Return the element whose second occurrence appears earliest. If no duplicates, return -1.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(nums):'
+  public_tests:
+    - input: [[2,1,3,5,3,2]]
+      expected: 3
+    - input: [[1,2,3,4]]
+      expected: -1
+    - input: [[1,1,2,2]]
+      expected: 1
+  hidden_tests:
+    - input: [[5,3,4,3,5,6]]
+      expected: 3
+    - input: [[2,2,1,1]]
+      expected: 2
+    - input: [[1]]
+      expected: -1
+    - input: [[]]
+      expected: -1
+    - input: [[7,8,9,7]]
+      expected: 7
+    - input: [[1,2,3,1,2,3]]
+      expected: 1
+    - input: [[4,5,6,4,5]]
+      expected: 4
+    - input: [[9,8,7,6]]
+      expected: -1
+    - input: [[10,20,10,20]]
+      expected: 10
+    - input: [[0,0,1]]
+      expected: 0
+    - input: [[-1,-2,-1]]
+      expected: -1
+    - input: [[3,1,2,2,1]]
+      expected: 2
+    - input: [[8,8,8]]
+      expected: 8
+    - input: [[1,2,3,4,5,1]]
+      expected: 1
+    - input: [[6,7,6,7,6]]
+      expected: 6
+
+- id: 37
+  title: Alternate Merge Strings
+  difficulty: MEDIUM
+  description: Merge two strings alternately. If one string is longer, append remaining characters at the end.
+  function:
+    python:
+      name: solve
+      signature: 'def solve(s1, s2):'
+  public_tests:
+    - input: ["abc","xyz"]
+      expected: "axbycz"
+    - input: ["ab","pqrs"]
+      expected: "apbqrs"
+    - input: ["abcd","xy"]
+      expected: "axbycd"
+  hidden_tests:
+    - input: ["","abc"]
+      expected: "abc"
+    - input: ["abc",""]
+      expected: "abc"
+    - input: ["a","b"]
+      expected: "ab"
+    - input: ["abc","defg"]
+      expected: "adbecfg"
+    - input: ["abcd","ef"]
+      expected: "aebfcd"
+    - input: ["123","456"]
+      expected: "142536"
+    - input: ["x","yz"]
+      expected: "xyz"
+    - input: ["hello","world"]
+      expected: "hweolrllod"
+    - input: ["aa","bb"]
+      expected: "abab"
+    - input: ["long","short"]
+      expected: "lsohnogr t"
+    - input: ["A","BCDE"]
+      expected: "ABCDE"
+    - input: ["ABC","d"]
+      expected: "AdBC"
+    - input: ["12","3456"]
+      expected: "132456"
+    - input: ["!@","#$%^"]
+      expected: "!#@$%^"
+    - input: ["cat","dog"]
+      expected: "cdaotg"
