@@ -1,7 +1,7 @@
 [
     {
         "id": "python-python-senior-theory-debug-001",
-        "question": "A snippet runs with the following behavior. Which output is correct?\ndef outer(): x = 10 def inner(): return x return inner\nprint(outer()())?",
+        "question": "A snippet runs with the following behavior. Which output is correct?\ndef outer():\n    x = 10\n    def inner():\n        return x\n    return inner\n\nprint(outer()())",
         "options": [
             "10 is printed here",
             "inner is returned",
@@ -26,7 +26,7 @@
     },
     {
         "id": "python-python-senior-theory-debug-002",
-        "question": "A snippet runs with the following behavior. Which output is correct?\nclass A: def __repr__(self): return 'A()'\na = A()\nprint([a])?",
+        "question": "A snippet runs with the following behavior. Which output is correct?\nclass A:\n    def __repr__(self):\n        return 'A()'\n\na = A()\nprint([a])",
         "options": [
             "[A()]",
             "A()",
@@ -77,7 +77,7 @@
     },
     {
         "id": "python-python-senior-theory-debug-004",
-        "question": "A snippet runs with the following behavior. Which output is correct?\ndef gen(): yield 1 yield 2\ng = gen()\nprint(next(g), next(g))?",
+        "question": "A snippet runs with the following behavior. Which output is correct?\ndef gen():\n    yield 1\n    yield 2\n\ng = gen()\nprint(next(g), next(g))",
         "options": [
             "1 2",
             "1 1",
@@ -178,7 +178,7 @@
     },
     {
         "id": "python-python-senior-theory-debug-008",
-        "question": "A snippet runs with the following behavior. Which output is correct?\nclass B(Exception): pass\ntry: raise B('oops')\nexcept Exception as e: print(type(e).__name__)?",
+        "question": "A snippet runs with the following behavior. Which output is correct?\nclass B(Exception):\n    pass\n\ntry:\n    raise B('oops')\nexcept Exception as e:\n    print(type(e).__name__)",
         "options": [
             "B is printed here",
             "oops is printed",
@@ -205,7 +205,7 @@
     },
     {
         "id": "python-python-senior-theory-debug-009",
-        "question": "A snippet runs with the following behavior. Which output is correct?\ndef deco(f): def wrap(): return f() + 1 return wrap\n@deco\ndef five(): return 5\nprint(five())?",
+        "question": "A snippet runs with the following behavior. Which output is correct?\ndef deco(f):\n    def wrap():\n        return f() + 1\n    return wrap\n\n@deco\ndef five():\n    return 5\n\nprint(five())",
         "options": [
             "6",
             "None",
@@ -306,7 +306,7 @@
     },
     {
         "id": "python-python-senior-theory-debug-013",
-        "question": "A snippet runs with the following behavior. Which output is correct?\nclass M(type): pass\nclass A(metaclass=M): pass\nprint(type(A).__name__)?",
+        "question": "A snippet runs with the following behavior. Which output is correct?\nclass M(type):\n    pass\n\nclass A(metaclass=M):\n    pass\n\nprint(type(A).__name__)",
         "options": [
             "M",
             "object",
@@ -383,7 +383,7 @@
     },
     {
         "id": "python-python-senior-theory-debug-016",
-        "question": "A snippet runs with the following behavior. Which output is correct?\ndef f(): try: return 1 finally: return 2\nprint(f())?",
+        "question": "A snippet runs with the following behavior. Which output is correct?\ndef f():\n    try:\n        return 1\n    finally:\n        return 2\n\nprint(f())",
         "options": [
             "2",
             "Error",
@@ -458,7 +458,7 @@
     },
     {
         "id": "python-python-senior-theory-debug-019",
-        "question": "A snippet runs with the following behavior. Which output is correct?\ndef gen(): return (x**2 for x in range(3))\nprint(list(gen()))?",
+        "question": "A snippet runs with the following behavior. Which output is correct?\ndef gen():\n    return (x**2 for x in range(3))\n\nprint(list(gen()))",
         "options": [
             "[0, 1, 4]",
             "Error",
@@ -484,7 +484,7 @@
     },
     {
         "id": "python-python-senior-theory-debug-020",
-        "question": "A snippet runs with the following behavior. Which output is correct?\nclass A: def __len__(self): return 5\nprint(len(A()))?",
+        "question": "A snippet runs with the following behavior. Which output is correct?\nclass A:\n    def __len__(self):\n        return 5\n\nprint(len(A()))",
         "options": [
             "5",
             "None",
@@ -535,7 +535,7 @@
     },
     {
         "id": "python-python-senior-theory-debug-022",
-        "question": "A snippet runs with the following behavior. Which output is correct?\ntry: raise ValueError('test')\nexcept ValueError as e: print(str(e))?",
+        "question": "A snippet runs with the following behavior. Which output is correct?\ntry:\n    raise ValueError('test')\nexcept ValueError as e:\n    print(str(e))",
         "options": [
             "test",
             "None",
@@ -586,7 +586,7 @@
     },
     {
         "id": "python-python-senior-theory-debug-024",
-        "question": "A snippet runs with the following behavior. Which output is correct?\nclass A: pass\nclass B(A): pass\nprint(issubclass(B, A))?",
+        "question": "A snippet runs with the following behavior. Which output is correct?\nclass A:\n    pass\n\nclass B(A):\n    pass\n\nprint(issubclass(B, A))",
         "options": [
             "True",
             "None",
@@ -637,7 +637,7 @@
     },
     {
         "id": "python-python-senior-theory-debug-026",
-        "question": "A snippet runs with the following behavior. Which output is correct?\ndef f(*a, **k): print(len(a), len(k))\nf(1,2,x=3,y=4)?",
+        "question": "A snippet runs with the following behavior. Which output is correct?\ndef f(*a, **k):\n    print(len(a), len(k))\n\nf(1, 2, x=3, y=4)",
         "options": [
             "2 2",
             "4 0",
@@ -713,14 +713,14 @@
     },
     {
         "id": "python-python-senior-theory-debug-029",
-        "question": "A snippet runs with the following behavior. Which output is correct?\nclass A: def __add__(self, o): return 42\nprint(A() + A())?",
+        "question": "A snippet runs with the following behavior. Which output is correct?\nclass A:\n    def __add__(self, o):\n        return 42\n\nprint(A() + A())",
         "options": [
-            "42 is returned",
+            "42 is printed here",
             "None is returned",
             "TypeError is raised",
             "A() is printed"
         ],
-        "correct_answer": "42 is returned",
+        "correct_answer": "42 is printed here",
         "topic": "OOP and Design",
         "difficulty": "hard",
         "style": "debugging",
