@@ -1,4 +1,4 @@
-﻿[
+[
     {
         "id":  "python-qa-shared-083",
         "question":  "When should PUT method be used instead of PATCH in REST APIs?",
