@@ -1,2940 +1,1562 @@
-[
-  {
-    "id": "python-qa-shared-001",
-    "question": "In Selenium 4, what is the primary difference between W3C protocol and JSON Wire Protocol?",
-    "options": [
-      "W3C is a W3C standard and JSON Wire Protocol is deprecated",
-      "W3C requires additional licensing",
-      "JSON Wire Protocol is faster than W3C",
-      "W3C is proprietary to Chrome while JSON Wire is universal under production constraints"
-    ],
-    "correct_answer": "W3C is a W3C standard and JSON Wire Protocol is deprecated",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-002",
-    "question": "When using Selenium 4 with the W3C protocol, which capability flag ensures compatibility with older Selenium 3 implementations?",
-    "options": [
-      "goog:chromeOptions",
-      "useJsonWireProtocol",
-      "seleniumProtocol",
-      "webdriver.chrome.version"
-    ],
-    "correct_answer": "goog:chromeOptions",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-003",
-    "question": "In the Selenium architecture, what role does the Local WebDriver end represent?",
-    "options": [
-      "Manages browser lifecycle and executes commands",
-      "Handles HTTP requests only",
-      "Manages test data only",
-      "Connects to remote Selenium Grid under production constraints"
-    ],
-    "correct_answer": "Manages browser lifecycle and executes commands",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "architecture",
-    "tags": [
-      "selenium-webdriver",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-004",
-    "question": "When configuring Selenium 4 with ChromeDriver, which parameter specifies the port for local webdriver communication?",
-    "options": [
-      "port in enterprise environments",
-      "webdriverPort in enterprise environments",
-      "localPort",
-      "chromePort"
-    ],
-    "correct_answer": "port in enterprise environments",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-005",
-    "question": "In Selenium Grid architecture, what is the primary responsibility of the Hub node?",
-    "options": [
-      "Route session requests to appropriate Node",
-      "Monitor network traffic only",
-      "Execute test scripts on the browser",
-      "Store test data and manage test cases under production constraints"
-    ],
-    "correct_answer": "Route session requests to appropriate Node",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "selenium-webdriver",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-006",
-    "question": "When a Selenium Grid Node goes offline, how should the Hub handle incoming requests for that Node?",
-    "options": [
-      "Mark the Node as unavailable and route to other Nodes",
-      "Throw immediate timeout error",
-      "Queue requests indefinitely",
-      "Automatically restart the Node under production constraints"
-    ],
-    "correct_answer": "Mark the Node as unavailable and route to other Nodes",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-007",
-    "question": "In Selenium 4 architecture, what is the significance of the Remote WebDriver endpoint?",
-    "options": [
-      "It communicates with remote browser instances via HTTP",
-      "It only supports Safari browser",
-      "It manages only test data",
-      "It replaces local WebDriver completely under production constraints"
-    ],
-    "correct_answer": "It communicates with remote browser instances via HTTP",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "architecture",
-    "tags": [
-      "selenium-webdriver",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-008",
-    "question": "When using Docker containers for Selenium Grid, which component is typically containerized along with the browser?",
-    "options": [
-      "Browser and Node with standalone or standalone-chrome image",
-      "Only the Hub",
-      "Only the database",
-      "Only the test scripts under production constraints in enterprise environments"
-    ],
-    "correct_answer": "Browser and Node with standalone or standalone-chrome image",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "operations",
-    "tags": [
-      "selenium-webdriver",
-      "operations"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-009",
-    "question": "In the W3C WebDriver protocol, what does the /session endpoint return after successful browser initialization?",
-    "options": [
-      "Session ID and browser capabilities",
-      "Browser version string only",
-      "List of all browser drivers",
-      "Network configuration details under production constraints"
-    ],
-    "correct_answer": "Session ID and browser capabilities",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-010",
-    "question": "When Selenium Grid is configured with multiple Node machines, what protocol is used for Hub-Node communication?",
-    "options": [
-      "HTTP/HTTPS REST API",
-      "FTP protocol",
-      "TCP only",
-      "Websockets exclusively"
-    ],
-    "correct_answer": "HTTP/HTTPS REST API",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-011",
-    "question": "Which XPath axis is used to locate an element's parent in a deeply nested DOM structure?",
-    "options": [
-      "parent in enterprise environments",
-      "following",
-      "preceding-sibling in enterprise environments",
-      "ancestor"
-    ],
-    "correct_answer": "parent in enterprise environments",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-012",
-    "question": "When using dynamic XPath with following-sibling axis, what is the typical use case?",
-    "options": [
-      "Finding elements below the current element that share the same parent",
-      "Finding the element's grandparent",
-      "Finding elements above the current element under production constraints",
-      "Finding elements in a different DOM branch"
-    ],
-    "correct_answer": "Finding elements below the current element that share the same parent",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-013",
-    "question": "In CSS selectors, what is the difference between using '>' and ' ' (space) combinator?",
-    "options": [
-      "'>' selects immediate children, space selects all descendants",
-      "Space is faster than '>'",
-      "'>' is deprecated in modern CSS",
-      "Both have identical functionality under production constraints"
-    ],
-    "correct_answer": "'>' selects immediate children, space selects all descendants",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-014",
-    "question": "When handling Shadow DOM elements in Selenium 4, what is the recommended approach?",
-    "options": [
-      "Use getShadowRoot() method and query elements within shadow tree",
-      "Use regular XPath as Shadow DOM is transparent",
-      "Shadow DOM cannot be automated with Selenium",
-      "Use only CSS selectors without shadow penetration under production constraints"
-    ],
-    "correct_answer": "Use getShadowRoot() method and query elements within shadow tree",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-015",
-    "question": "Which XPath axis would you use to find all preceding elements in the DOM tree before the current element?",
-    "options": [
-      "preceding",
-      "ancestor-or-self",
-      "preceding-or-self",
-      "ancestor"
-    ],
-    "correct_answer": "preceding",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-016",
-    "question": "When using CSS attribute selectors for dynamic attributes, what syntax locates elements with attributes containing specific values?",
-    "options": [
-      "[attr*=value]",
-      "[attr^=value]",
-      "[attr=value]",
-      "[attr$=value]"
-    ],
-    "correct_answer": "[attr*=value]",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-017",
-    "question": "In a QA automation scenario with nested iFrames, how should you locate elements in the inner-most iFrame?",
-    "options": [
-      "Switch to outer iFrame first, then switch to nested iFrame",
-      "XPath automatically traverses all iFrames",
-      "Use JavaScriptExecutor to bypass iFrame boundaries under production constraints",
-      "iFrames cannot contain locatable elements"
-    ],
-    "correct_answer": "Switch to outer iFrame first, then switch to nested iFrame",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-018",
-    "question": "When using XPath text() function for dynamic elements with varying whitespace, what approach is most robust?",
-    "options": [
-      "Use contains() with normalize-space() function",
-      "Use exact text match only",
-      "XPath text() is unreliable for automation under production constraints",
-      "Avoid text-based locators entirely"
-    ],
-    "correct_answer": "Use contains() with normalize-space() function",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-019",
-    "question": "In CSS selectors, how do you target an element that is the first child of its parent?",
-    "options": [
-      ":first-child in enterprise environments",
-      ":nth-child(1)",
-      ":first-of-type",
-      "All of the above are equivalent in enterprise environments"
-    ],
-    "correct_answer": ":first-child in enterprise environments",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-020",
-    "question": "When a web application dynamically loads elements via JavaScript, which locator strategy is most affected by timing?",
-    "options": [
-      "Dynamic XPath with wait conditions",
-      "CSS selectors",
-      "Static XPath",
-      "ID-based locators under production constraints"
-    ],
-    "correct_answer": "Dynamic XPath with wait conditions",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "selenium-webdriver",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-021",
-    "question": "What is the key difference between implicit wait and explicit wait in Selenium?",
-    "options": [
-      "Implicit is global, explicit is scoped to specific element conditions",
-      "Implicit is faster than explicit",
-      "Implicit waits are preferred in modern Selenium",
-      "Explicit cannot handle StaleElementReferenceException under production constraints"
-    ],
-    "correct_answer": "Implicit is global, explicit is scoped to specific element conditions",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-022",
-    "question": "When using Explicit Wait with WebDriverWait, what exception is thrown if the condition is not met within timeout?",
-    "options": [
-      "TimeoutException",
-      "WaitException",
-      "InterruptedException",
-      "NoSuchElementException"
-    ],
-    "correct_answer": "TimeoutException",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "selenium-webdriver",
-      "debugging"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-023",
-    "question": "In Selenium, what is the main purpose of Fluent Wait compared to WebDriverWait?",
-    "options": [
-      "Fluent Wait allows custom polling interval and ignored exceptions",
-      "Fluent Wait is deprecated under production constraints in enterprise environments",
-      "Fluent Wait is faster",
-      "They are identical"
-    ],
-    "correct_answer": "Fluent Wait allows custom polling interval and ignored exceptions",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-024",
-    "question": "When using ExpectedConditions.presenceOfElementLocated(), what does 'presence' specifically mean?",
-    "options": [
-      "Element exists in DOM regardless of visibility",
-      "Element has CSS styling applied under production constraints",
-      "Element is visible on the page",
-      "Element is clickable"
-    ],
-    "correct_answer": "Element exists in DOM regardless of visibility",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-025",
-    "question": "Which ExpectedCondition should be used when you need to click an element that might be covered by an overlay?",
-    "options": [
-      "elementToBeClickable in enterprise environments",
-      "presenceOfAllElementsLocatedBy in enterprise environments",
-      "visibilityOfElementLocated",
-      "presenceOfElementLocated"
-    ],
-    "correct_answer": "elementToBeClickable in enterprise environments",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-026",
-    "question": "In a scenario with AJAX requests completing before element visibility, what is the appropriate wait strategy?",
-    "options": [
-      "Use explicit wait for element visibility after AJAX completion",
-      "Wait conditions are unnecessary under production constraints in enterprise environments",
-      "Use Thread.sleep()",
-      "Rely on implicit wait only"
-    ],
-    "correct_answer": "Use explicit wait for element visibility after AJAX completion",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "selenium-webdriver",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-027",
-    "question": "When handling TimeoutException during explicit wait, what should be verified in test logs?",
-    "options": [
-      "Whether condition was met, expected elements, DOM state before timeout",
-      "Only the timeout duration under production constraints in enterprise environments",
-      "Browser version number",
-      "Network connectivity only"
-    ],
-    "correct_answer": "Whether condition was met, expected elements, DOM state before timeout",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-028",
-    "question": "What is the relationship between implicit wait timeout and explicit wait timeout when both are configured?",
-    "options": [
-      "Explicit timeout is checked in addition to implicit timeout",
-      "Implicit timeout overrides explicit under production constraints",
-      "They cancel each other out",
-      "Only one can be used at a time"
-    ],
-    "correct_answer": "Explicit timeout is checked in addition to implicit timeout",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "selenium-webdriver",
-      "debugging"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-029",
-    "question": "When using Fluent Wait with ignoreException(StaleElementReferenceException.class), what behavior occurs?",
-    "options": [
-      "StaleElementReferenceException is caught and poll continues",
-      "Exception is logged only",
-      "Element is automatically refreshed",
-      "Test fails immediately on StaleElementReferenceException under production constraints"
-    ],
-    "correct_answer": "StaleElementReferenceException is caught and poll continues",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-030",
-    "question": "In Selenium 4, what is the significance of the wait condition for 'stalenessOf' an element?",
-    "options": [
-      "Waits until element is no longer attached to DOM",
-      "Waits until element is loaded",
-      "Waits until element becomes clickable under production constraints",
-      "Waits until element is visible"
-    ],
-    "correct_answer": "Waits until element is no longer attached to DOM",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-031",
-    "question": "When using Actions class for drag-and-drop in Selenium, what is the correct method sequence?",
-    "options": [
-      "moveToElement(source).clickAndHold().moveToElement(target).release().perform()",
-      "Only dragAndDrop() method exists",
-      "Drag-and-drop cannot be automated with Actions under production constraints in enterprise environments",
-      "dragAndDrop(source, target) directly"
-    ],
-    "correct_answer": "moveToElement(source).clickAndHold().moveToElement(target).release().perform()",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-032",
-    "question": "What is the difference between Actions.doubleClick() and manually clicking twice with click()?",
-    "options": [
-      "doubleClick() triggers native double-click event with single DOM event",
-      "doubleClick() is not supported in Selenium",
-      "click() twice is more reliable",
-      "No difference, both trigger click event twice under production constraints"
-    ],
-    "correct_answer": "doubleClick() triggers native double-click event with single DOM event",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-033",
-    "question": "When using Actions.moveToElement() for hover operations, what should happen after movement?",
-    "options": [
-      "Must call perform() to execute the action chain",
-      "No further action needed",
-      "Must click after hover",
-      "Hover automatically triggers mouseenter event under production constraints"
-    ],
-    "correct_answer": "Must call perform() to execute the action chain",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-034",
-    "question": "In what scenario would you use Robot class instead of Actions class in Selenium?",
-    "options": [
-      "For OS-level interactions like keyboard shortcuts, file uploads outside browser",
-      "Robot cannot interact with web elements under production constraints in enterprise environments",
-      "Robot is always preferred",
-      "Robot is deprecated"
-    ],
-    "correct_answer": "For OS-level interactions like keyboard shortcuts, file uploads outside browser",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-035",
-    "question": "When performing multi-element drag operations, what does Actions.dragAndDrop(source, target).perform() return?",
-    "options": [
-      "Void/null after performing the action",
-      "The source element",
-      "The target element",
-      "A boolean indicating success under production constraints"
-    ],
-    "correct_answer": "Void/null after performing the action",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-036",
-    "question": "How should you handle interactions with dynamically positioned elements that may move during action execution?",
-    "options": [
-      "Use wait conditions to ensure element is stable before interaction",
-      "Ignore positioning changes",
-      "Actions automatically handle dynamic positioning under production constraints",
-      "Reposition elements using JavaScriptExecutor"
-    ],
-    "correct_answer": "Use wait conditions to ensure element is stable before interaction",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-037",
-    "question": "When using Actions.keyDown(Keys.SHIFT).click(element).keyUp(Keys.SHIFT), what modifier is applied?",
-    "options": [
-      "Shift key pressed during click",
-      "Alt modifier",
-      "Caps Lock toggle under production constraints",
-      "Ctrl modifier"
-    ],
-    "correct_answer": "Shift key pressed during click",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-038",
-    "question": "In Selenium, what is the purpose of Actions.pause() method?",
-    "options": [
-      "Adds time delay within action chain before next action",
-      "Pauses the browser",
-      "Cancels the action chain",
-      "Pauses execution like Thread.sleep() under production constraints"
-    ],
-    "correct_answer": "Adds time delay within action chain before next action",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-039",
-    "question": "When performing context menu operations, what key combination should be used with Actions class?",
-    "options": [
-      "Right-click via contextClick() method",
-      "Alt + Click",
-      "Context menus cannot be automated under production constraints",
-      "Shift + Click"
-    ],
-    "correct_answer": "Right-click via contextClick() method",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-040",
-    "question": "How do you chain multiple Actions operations without calling perform() between each operation?",
-    "options": [
-      "Chain operations and call perform() once at the end",
-      "Each operation requires separate perform() call under production constraints",
-      "Actions cannot be chained",
-      "Chaining is not recommended"
-    ],
-    "correct_answer": "Chain operations and call perform() once at the end",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-041",
-    "question": "When switching between multiple browser windows opened via target='_blank', what identifier should be used?",
-    "options": [
-      "Window handle obtained from driver.getWindowHandles()",
-      "Cannot switch between windows under production constraints",
-      "Window number",
-      "Window title only"
-    ],
-    "correct_answer": "Window handle obtained from driver.getWindowHandles()",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-042",
-    "question": "In a scenario with nested iFrames (iFrame within iFrame), how should context switching be performed?",
-    "options": [
-      "Switch to parent iFrame first, then to nested iFrame",
-      "Switch directly to innermost iFrame",
-      "Use switchTo().parentFrame() instead under production constraints",
-      "Nested iFrames cannot be automated"
-    ],
-    "correct_answer": "Switch to parent iFrame first, then to nested iFrame",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-043",
-    "question": "After switching to an iFrame, how do you switch back to the main page content?",
-    "options": [
-      "switchTo().defaultContent()",
-      "switchTo().parentContent()",
-      "switchTo().mainFrame()",
-      "No method exists for switching back"
-    ],
-    "correct_answer": "switchTo().defaultContent()",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-044",
-    "question": "When handling a web application with dynamically created iFrames, what challenge occurs with iFrame switching?",
-    "options": [
-      "iFrame IDs or names may change, requiring dynamic locators",
-      "iFrame IDs are always consistent",
-      "No special handling is needed",
-      "iFrames cannot be tested dynamically under production constraints"
-    ],
-    "correct_answer": "iFrame IDs or names may change, requiring dynamic locators",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-045",
-    "question": "In Selenium 4, what method retrieves all window handles currently open in the session?",
-    "options": [
-      "getWindowHandles()",
-      "getWindowHandle() under production constraints",
-      "getAllWindows()",
-      "getWindow()"
-    ],
-    "correct_answer": "getWindowHandles()",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-046",
-    "question": "When a new window opens via JavaScript window.open(), what must happen before accessing elements in that window?",
-    "options": [
-      "Driver must switch to the new window handle",
-      "The window cannot be accessed",
-      "A new WebDriver instance must be created",
-      "Nothing, elements are accessible automatically"
-    ],
-    "correct_answer": "Driver must switch to the new window handle",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-047",
-    "question": "What is the difference between switchTo().window() and switchTo().frame()?",
-    "options": [
-      "window() switches browser windows/tabs, frame() switches iFrames within same window",
-      "frame() applies to all browser windows under production constraints in enterprise environments",
-      "No difference",
-      "window() is deprecated"
-    ],
-    "correct_answer": "window() switches browser windows/tabs, frame() switches iFrames within same window",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-048",
-    "question": "In a test with multiple pop-up windows, how should you handle window order unpredictability?",
-    "options": [
-      "Use window title/URL to identify and switch to specific window",
-      "Assume first window is always the popup under production constraints",
-      "Pop-ups appear in consistent order",
-      "Pop-ups cannot be reliably handled"
-    ],
-    "correct_answer": "Use window title/URL to identify and switch to specific window",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-049",
-    "question": "When switching to an alert dialog using switchTo().alert(), what happens if no alert is present?",
-    "options": [
-      "Throws NoAlertPresentException",
-      "Waits for alert to appear under production constraints",
-      "Creates a new alert",
-      "Returns null"
-    ],
-    "correct_answer": "Throws NoAlertPresentException",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "operations",
-    "tags": [
-      "selenium-webdriver",
-      "operations"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-050",
-    "question": "After handling an alert with alert.accept() or alert.dismiss(), what is the WebDriver context?",
-    "options": [
-      "Reverts to previous web page context",
-      "Remains on alert context",
-      "Requires explicit context switch under production constraints",
-      "Context is undefined"
-    ],
-    "correct_answer": "Reverts to previous web page context",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "operations",
-    "tags": [
-      "selenium-webdriver",
-      "operations"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-051",
-    "question": "When using JavaScriptExecutor to scroll to a hidden element, what JavaScript property is typically modified?",
-    "options": [
-      "element.scrollIntoView()",
-      "element.position",
-      "window.scrollTo()",
-      "element.style.visibility"
-    ],
-    "correct_answer": "element.scrollIntoView()",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-052",
-    "question": "In JavaScriptExecutor, what is the difference between executeScript() and executeAsyncScript()?",
-    "options": [
-      "executeScript() executes synchronously, executeAsyncScript() allows asynchronous completion",
-      "executeAsyncScript() is faster",
-      "executeScript() cannot modify DOM under production constraints in enterprise environments for large-scale systems",
-      "No difference"
-    ],
-    "correct_answer": "executeScript() executes synchronously, executeAsyncScript() allows asynchronous completion",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-053",
-    "question": "When clicking a hidden element using JavaScriptExecutor, what should be the last action?",
-    "options": [
-      "Use click() method after making element visible via display or opacity",
-      "Just modify display property",
-      "Use click() even without visibility under production constraints in enterprise environments",
-      "Hidden elements cannot be clicked"
-    ],
-    "correct_answer": "Use click() method after making element visible via display or opacity",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-054",
-    "question": "What is the correct syntax to get page title using JavaScriptExecutor in Selenium?",
-    "options": [
-      "executor.executeScript(\"return document.title\")",
-      "executor.executeScript(\"return title\")",
-      "Cannot retrieve page title via JavaScriptExecutor",
-      "executor.executeScript(\"return document.getTitle()\")"
-    ],
-    "correct_answer": "executor.executeScript(\"return document.title\")",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-055",
-    "question": "When using JavaScriptExecutor to modify DOM attributes, what is the typical use case in QA automation?",
-    "options": [
-      "Modify read-only or protected attributes for test scenarios",
-      "Attributes should never be changed",
-      "Avoid attribute modification as it violates test principles",
-      "JavaScriptExecutor cannot modify attributes"
-    ],
-    "correct_answer": "Modify read-only or protected attributes for test scenarios",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-056",
-    "question": "In JavaScriptExecutor.executeAsyncScript(), what parameter indicates completion of asynchronous operation?",
-    "options": [
-      "arguments[arguments.length - 1]",
-      "arguments[0] under production constraints",
-      "callback",
-      "completion()"
-    ],
-    "correct_answer": "arguments[arguments.length - 1]",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-057",
-    "question": "What is returned when JavaScriptExecutor.executeScript() executes JavaScript without an explicit return statement?",
-    "options": [
-      "null in enterprise environments",
-      "The last expression value in enterprise environments",
-      "undefined",
-      "The script result"
-    ],
-    "correct_answer": "null in enterprise environments",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-058",
-    "question": "When passing WebElement objects to JavaScriptExecutor as parameters, how are they accessible in JavaScript?",
-    "options": [
-      "Elements are automatically converted to DOM nodes",
-      "Must convert to strings first",
-      "As JavaScript objects directly",
-      "Elements cannot be passed as parameters under production constraints"
-    ],
-    "correct_answer": "Elements are automatically converted to DOM nodes",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-059",
-    "question": "For changing element text content via JavaScriptExecutor, what property should be modified?",
-    "options": [
-      "element.textContent or element.innerText",
-      "element.innerHTML under production constraints",
-      "element.value",
-      "element.text"
-    ],
-    "correct_answer": "element.textContent or element.innerText",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-060",
-    "question": "When using JavaScriptExecutor to handle AJAX requests, what should be checked before proceeding?",
-    "options": [
-      "Check jQuery.active or XMLHttpRequest readyState before proceeding",
-      "Just wait a fixed duration",
-      "AJAX cannot be verified",
-      "Skip verification in automation under production constraints in enterprise environments"
-    ],
-    "correct_answer": "Check jQuery.active or XMLHttpRequest readyState before proceeding",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-061",
-    "question": "What causes StaleElementReferenceException in Selenium and how should it be handled?",
-    "options": [
-      "Element was removed from DOM and needs to be re-located, handle with retry logic or fresh locator",
-      "Browser version incompatibility",
-      "Element is hidden",
-      "Network timeout during element access under production constraints in enterprise environments for large-scale systems"
-    ],
-    "correct_answer": "Element was removed from DOM and needs to be re-located, handle with retry logic or fresh locator",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-062",
-    "question": "When does NoSuchElementException occur in Selenium and what is the appropriate recovery strategy?",
-    "options": [
-      "Element doesn't exist in DOM; verify locator, DOM structure, or use explicit wait",
-      "Browser crashed",
-      "Element exists but is not visible under production constraints in enterprise environments",
-      "Selenium version issue"
-    ],
-    "correct_answer": "Element doesn't exist in DOM; verify locator, DOM structure, or use explicit wait",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "selenium-webdriver",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-063",
-    "question": "In a QA test with UnhandledAlertException, what indicates the root cause?",
-    "options": [
-      "Unexpected alert appeared during execution; must handle alert before continuing",
-      "Alert was expected and properly handled under production constraints in enterprise environments",
-      "Test execution is incomplete",
-      "Alert handling is not supported"
-    ],
-    "correct_answer": "Unexpected alert appeared during execution; must handle alert before continuing",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "selenium-webdriver",
-      "debugging"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-064",
-    "question": "What is the relationship between TimeoutException and implicit/explicit waits?",
-    "options": [
-      "Thrown when explicit wait condition is not met within timeout period",
-      "TimeoutException only occurs with implicit wait under production constraints",
-      "TimeoutException indicates network failure",
-      "No relationship exists"
-    ],
-    "correct_answer": "Thrown when explicit wait condition is not met within timeout period",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-065",
-    "question": "When handling InvalidElementStateException, what scenario typically causes it?",
-    "options": [
-      "Attempting interaction with disabled or read-only element; verify element state before interaction",
-      "Element is not found",
-      "Driver not initialized under production constraints in enterprise environments for large-scale systems",
-      "Browser version issue"
-    ],
-    "correct_answer": "Attempting interaction with disabled or read-only element; verify element state before interaction",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-066",
-    "question": "What does InvalidSessionIdException indicate in Selenium Grid environment?",
-    "options": [
-      "Session was terminated or Node crashed; re-establish session",
-      "WebDriver version mismatch",
-      "Element locator is incorrect under production constraints in enterprise environments",
-      "Browser window closed"
-    ],
-    "correct_answer": "Session was terminated or Node crashed; re-establish session",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-067",
-    "question": "In a flaky test with intermittent ElementNotInteractableException, what is the root cause?",
-    "options": [
-      "Element exists but is covered by overlay or off-screen; use scrolling or wait for visibility",
-      "Test is poorly written under production constraints in enterprise environments for large-scale systems",
-      "Always a false failure",
-      "Network latency"
-    ],
-    "correct_answer": "Element exists but is covered by overlay or off-screen; use scrolling or wait for visibility",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "selenium-webdriver",
-      "debugging"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-068",
-    "question": "What should be checked when NoSuchSessionException occurs in Selenium Grid?",
-    "options": [
-      "WebDriver session ID is invalid or Node crashed; recreate driver",
-      "Element was not found",
-      "Browser incompatibility under production constraints in enterprise environments",
-      "Test timeout"
-    ],
-    "correct_answer": "WebDriver session ID is invalid or Node crashed; recreate driver",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-069",
-    "question": "When handling WebDriverException as a general exception, what information is crucial for debugging?",
-    "options": [
-      "Exception type, message, stack trace, screenshot, and browser logs",
-      "Only the exception message under production constraints in enterprise environments",
-      "Test duration",
-      "Browser type only"
-    ],
-    "correct_answer": "Exception type, message, stack trace, screenshot, and browser logs",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "selenium-webdriver",
-      "debugging"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-070",
-    "question": "In a test with ScreenshotException during failure capture, what is the appropriate handling?",
-    "options": [
-      "Log exception but continue execution to verify test state",
-      "Ignore the exception",
-      "Stop test immediately",
-      "Screenshots are not necessary under production constraints"
-    ],
-    "correct_answer": "Log exception but continue execution to verify test state",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "selenium-webdriver",
-      "debugging"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-071",
-    "question": "In Selenium Grid setup, what is the role of the Hub in a distributed testing environment?",
-    "options": [
-      "Acts as a central router that receives requests and distributes them to Nodes",
-      "Manages test data",
-      "Executes test scripts under production constraints in enterprise environments for large-scale systems",
-      "Stores test results"
-    ],
-    "correct_answer": "Acts as a central router that receives requests and distributes them to Nodes",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-072",
-    "question": "When configuring multiple Nodes in Selenium Grid, what parameter ensures each Node is unique?",
-    "options": [
-      "nodeId or unique identifier",
-      "Browser type only under production constraints",
-      "Node name",
-      "Machine IP alone"
-    ],
-    "correct_answer": "nodeId or unique identifier",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-073",
-    "question": "In Selenium Grid with Docker containerization, what is the advantage of isolated containers per Node?",
-    "options": [
-      "Each Node runs independently without OS conflicts; multiple browsers on same machine",
-      "No advantage",
-      "Docker containers are slower",
-      "Containers cannot communicate under production constraints in enterprise environments"
-    ],
-    "correct_answer": "Each Node runs independently without OS conflicts; multiple browsers on same machine",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "operations",
-    "tags": [
-      "selenium-webdriver",
-      "operations"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-074",
-    "question": "When a Hub node receives a request that no Node can fulfill, what is the expected behavior?",
-    "options": [
-      "Hub returns error; session cannot be created if no matching Node",
-      "Automatically creates new Node under production constraints in enterprise environments",
-      "Request is queued indefinitely",
-      "Hub retries eternally"
-    ],
-    "correct_answer": "Hub returns error; session cannot be created if no matching Node",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-075",
-    "question": "In parallel execution with Selenium Grid, what metric should be monitored to prevent resource exhaustion?",
-    "options": [
-      "Browser instances, memory usage per Node, and session limits",
-      "Disk space only",
-      "Network bandwidth",
-      "Test execution time only under production constraints in enterprise environments"
-    ],
-    "correct_answer": "Browser instances, memory usage per Node, and session limits",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "selenium-webdriver",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-076",
-    "question": "When setting up Selenium Grid with browser capabilities, what happens if requested capability is not available?",
-    "options": [
-      "Session creation fails; error indicates unavailable capability",
-      "Hub modifies requested capabilities",
-      "Random Node is assigned",
-      "Hub waits for Node to support capability under production constraints"
-    ],
-    "correct_answer": "Session creation fails; error indicates unavailable capability",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-077",
-    "question": "In a Dockerized Selenium Grid, what is the typical network configuration between Hub and Nodes?",
-    "options": [
-      "Docker network bridge allowing inter-container communication via HTTP",
-      "Nodes cannot communicate with Hub in Docker under production constraints",
-      "Direct network socket connection",
-      "Requires manual network setup"
-    ],
-    "correct_answer": "Docker network bridge allowing inter-container communication via HTTP",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-078",
-    "question": "When scaling Selenium Grid horizontally with multiple Nodes, what becomes a potential bottleneck?",
-    "options": [
-      "Hub capacity to route requests; may require load balancing",
-      "Network cables",
-      "All systems scale infinitely under production constraints in enterprise environments",
-      "Browser installation"
-    ],
-    "correct_answer": "Hub capacity to route requests; may require load balancing",
-    "topic": "Selenium WebDriver",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-079",
-    "question": "In a Selenium Grid with scheduled cleanup, what should be terminated after test completion?",
-    "options": [
-      "WebDriver session and browser instance to free resources",
-      "Entire Grid infrastructure under production constraints in enterprise environments",
-      "Node process",
-      "Hub process"
-    ],
-    "correct_answer": "WebDriver session and browser instance to free resources",
-    "topic": "Selenium WebDriver",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-080",
-    "question": "When monitoring Selenium Grid performance, what indicates Node saturation?",
-    "options": [
-      "Session queue buildup and timeout errors; new requests cannot be fulfilled",
-      "High CPU usage under production constraints in enterprise environments for large-scale systems",
-      "High memory",
-      "Low disk space"
-    ],
-    "correct_answer": "Session queue buildup and timeout errors; new requests cannot be fulfilled",
-    "topic": "Selenium WebDriver",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "selenium-webdriver",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-109",
-    "question": "In REST Assured XPath validation, when should you use XPath instead of JsonPath?",
-    "options": [
-      "XPath is used for XML responses, JsonPath for JSON responses",
-      "Both are equivalent",
-      "XPath is always faster under production constraints in enterprise environments",
-      "XPath is deprecated"
-    ],
-    "correct_answer": "XPath is used for XML responses, JsonPath for JSON responses",
-    "topic": "REST Assured",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "rest-assured",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-121",
-    "question": "Which locator strategy is most stable for long-term UI automation?",
-    "options": [
-      "Dedicated data-testid attribute",
-      "Dynamic XPath with index",
-      "CSS path from full DOM",
-      "Absolute XPath from html tag under production constraints"
-    ],
-    "correct_answer": "Dedicated data-testid attribute",
-    "topic": "UI Automation",
-    "difficulty": "easy",
-    "style": "architecture",
-    "tags": [
-      "ui-automation",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-122",
-    "question": "What is the best wait strategy for elements loaded after an API response?",
-    "options": [
-      "Explicit wait for expected condition",
-      "Thread.sleep with fixed delay under production constraints",
-      "Implicit wait only",
-      "No wait needed"
-    ],
-    "correct_answer": "Explicit wait for expected condition",
-    "topic": "UI Automation",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "ui-automation",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-124",
-    "question": "Which pattern improves maintainability in Selenium UI suites?",
-    "options": [
-      "Page Object Model in enterprise environments",
-      "Hardcode locators in tests in enterprise environments",
-      "Single giant test method",
-      "Random execution order"
-    ],
-    "correct_answer": "Page Object Model in enterprise environments",
-    "topic": "UI Automation",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "ui-automation",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-126",
-    "question": "For cross-browser UI testing, what is a practical minimum set?",
-    "options": [
-      "Chrome, Firefox, and one WebKit-based browser",
-      "Only latest Chrome",
-      "All browser versions ever released under production constraints",
-      "Only Safari"
-    ],
-    "correct_answer": "Chrome, Firefox, and one WebKit-based browser",
-    "topic": "UI Automation",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "ui-automation",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-129",
-    "question": "In CI, what is a good first step for debugging failing UI tests?",
-    "options": [
-      "Capture screenshot, DOM snapshot, and browser logs",
-      "Re-run until pass without logs",
-      "Increase all waits to 60 seconds under production constraints",
-      "Disable assertions"
-    ],
-    "correct_answer": "Capture screenshot, DOM snapshot, and browser logs",
-    "topic": "UI Automation",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "ui-automation",
-      "debugging"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-130",
-    "question": "When should you prefer CSS selectors over XPath?",
-    "options": [
-      "For stable attributes and simpler DOM traversal",
-      "Never",
-      "Only for text matching under production constraints",
-      "Only in Firefox"
-    ],
-    "correct_answer": "For stable attributes and simpler DOM traversal",
-    "topic": "UI Automation",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "ui-automation",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-132",
-    "question": "How should dynamic tables be validated in UI tests?",
-    "options": [
-      "Locate rows by unique business value and then validate columns",
-      "Hardcode row index assertions only under production constraints",
-      "Validate first row only",
-      "Skip table validations"
-    ],
-    "correct_answer": "Locate rows by unique business value and then validate columns",
-    "topic": "UI Automation",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "ui-automation",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-178",
-    "question": "A Python API uses JWTs stored in localStorage in a browser. Which security risk must be carefully mitigated?",
-    "options": [
-      "XSS allowing token theft via JavaScript",
-      "SQL injection",
-      "CSRF",
-      "Insecure deserialization under production constraints"
-    ],
-    "correct_answer": "XSS allowing token theft via JavaScript",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "web-frameworks-api-design",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-186",
-    "question": "What is a common way to document REST APIs in a Python backend to share with frontend teams?",
-    "options": [
-      "Swagger/OpenAPI definitions exposed via /docs",
-      "Inline comments only under production constraints",
-      "Readme.txt files",
-      "Email descriptions"
-    ],
-    "correct_answer": "Swagger/OpenAPI definitions exposed via /docs",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "web-frameworks-api-design",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-236",
-    "question": "In a Python system, where should domain business logic ideally reside?",
-    "options": [
-      "In dedicated service/domain modules separate from framework-specific code",
-      "Only in database triggers",
-      "Directly in the web routing layer under production constraints in enterprise environments",
-      "In HTML templates"
-    ],
-    "correct_answer": "In dedicated service/domain modules separate from framework-specific code",
-    "topic": "Architecture & System Design",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "architecture-system-design",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-259",
-    "question": "A browser-based frontend on https://app.example.com calls a Python API on https://api.example.com and gets CORS errors. What is the likely cause?",
-    "options": [
-      "API not sending appropriate Access-Control-Allow-Origin headers",
-      "DNS misconfiguration",
-      "Expired TLS certificate",
-      "Missing Content-Type header under production constraints in enterprise environments"
-    ],
-    "correct_answer": "API not sending appropriate Access-Control-Allow-Origin headers",
-    "topic": "Frontend Awareness",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "frontend-awareness",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-260",
-    "question": "To allow JavaScript running in a browser to include cookies in cross-site requests to a Python API, which CORS setting is required in addition to Allow-Origin?",
-    "options": [
-      "Access-Control-Allow-Credentials: true",
-      "Access-Control-Max-Age: 0",
-      "Access-Control-Expose-Headers: *",
-      "Access-Control-Allow-Methods: POST under production constraints"
-    ],
-    "correct_answer": "Access-Control-Allow-Credentials: true",
-    "topic": "Frontend Awareness",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "frontend-awareness",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-261",
-    "question": "Which HTTP feature enables browsers to ask a Python API which methods and headers are allowed before sending the actual request?",
-    "options": [
-      "OPTIONS preflight requests",
-      "TRACE method",
-      "HEAD requests",
-      "CONNECT method under production constraints"
-    ],
-    "correct_answer": "OPTIONS preflight requests",
-    "topic": "Frontend Awareness",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "frontend-awareness",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-262",
-    "question": "A Python backend needs to support real-time chat between browser clients. Which technology is most appropriate?",
-    "options": [
-      "WebSockets",
-      "FTP",
-      "Long polling only",
-      "Batch REST requests"
-    ],
-    "correct_answer": "WebSockets",
-    "topic": "Frontend Awareness",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "frontend-awareness",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-263",
-    "question": "From a browser developer tools perspective, which tab is most useful for inspecting Python API request/response payloads and headers?",
-    "options": [
-      "Network",
-      "Sources",
-      "Console only",
-      "Elements"
-    ],
-    "correct_answer": "Network",
-    "topic": "Frontend Awareness",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "frontend-awareness",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-264",
-    "question": "A frontend developer reports that JSON responses from the Python API are not being parsed correctly due to missing Content-Type. What should the API set?",
-    "options": [
-      "Content-Type: application/json",
-      "Accept: application/json under production constraints",
-      "Content-Type: text/plain",
-      "X-Content-Type: json"
-    ],
-    "correct_answer": "Content-Type: application/json",
-    "topic": "Frontend Awareness",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "frontend-awareness",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-265",
-    "question": "To help frontend teams understand available endpoints and models, what should a Python backend provide?",
-    "options": [
-      "Interactive API documentation (Swagger/OpenAPI UI)",
-      "Source code access",
-      "Database ER diagrams only under production constraints",
-      "Email-based docs"
-    ],
-    "correct_answer": "Interactive API documentation (Swagger/OpenAPI UI)",
-    "topic": "Frontend Awareness",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "frontend-awareness",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-266",
-    "question": "Which HTTP status code is most appropriate when a browser sends a request to an outdated URL that has been permanently moved to a new endpoint?",
-    "options": [
-      "301 Moved Permanently",
-      "307 Temporary Redirect",
-      "302 Found",
-      "410 Gone"
-    ],
-    "correct_answer": "301 Moved Permanently",
-    "topic": "Frontend Awareness",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "frontend-awareness",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-267",
-    "question": "A Python API supports both JSON and XML. How should the client tell the API which response format it prefers?",
-    "options": [
-      "Using the Accept header (e.g., Accept: application/json)",
-      "Using the Host header",
-      "By URL query parameter only under production constraints",
-      "Using User-Agent header"
-    ],
-    "correct_answer": "Using the Accept header (e.g., Accept: application/json)",
-    "topic": "Frontend Awareness",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "frontend-awareness",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-268",
-    "question": "You add an OpenAPI/Swagger definition for a Python REST API. What is the main benefit for frontend developers?",
-    "options": [
-      "Clear, machine-readable contract for endpoints, types, and error codes",
-      "Faster Python execution",
-      "Improved database performance under production constraints in enterprise environments",
-      "Automatic scaling"
-    ],
-    "correct_answer": "Clear, machine-readable contract for endpoints, types, and error codes",
-    "topic": "Frontend Awareness",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "frontend-awareness",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-269",
-    "question": "A React frontend running on https://frontend.local calls a FastAPI backend on http://localhost:8000 during local development. What is the cleanest way to avoid CORS issues without disabling CORS entirely?",
-    "options": [
-      "Serve the frontend through the backend's domain or configure specific CORS origins",
-      "Set Access-Control-Allow-Origin: * and Allow-Credentials: true together under production constraints",
-      "Use only HTTP instead of HTTPS",
-      "Disable CSRF protection in the backend"
-    ],
-    "correct_answer": "Serve the frontend through the backend's domain or configure specific CORS origins",
-    "topic": "Frontend Awareness",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "frontend-awareness",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-270",
-    "question": "A Python backend pushes live stock price updates to a trading dashboard. Which combination provides the most efficient real-time channel?",
-    "options": [
-      "Server-Sent Events (SSE) or WebSockets",
-      "Periodic polling over REST under production constraints",
-      "FTP file drops",
-      "Email notifications"
-    ],
-    "correct_answer": "Server-Sent Events (SSE) or WebSockets",
-    "topic": "Frontend Awareness",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "frontend-awareness",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-271",
-    "question": "A JSON response from a Python API includes fields in snake_case, but the frontend uses camelCase. What is a good backend practice to ease integration?",
-    "options": [
-      "Use a serialization layer (e.g., DRF serializer or Pydantic) to map snake_case to camelCase",
-      "Rename database columns",
-      "Send both versions of each field under production constraints in enterprise environments for large-scale systems",
-      "Force the frontend to adapt"
-    ],
-    "correct_answer": "Use a serialization layer (e.g., DRF serializer or Pydantic) to map snake_case to camelCase",
-    "topic": "Frontend Awareness",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "frontend-awareness",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-272",
-    "question": "During debugging, a frontend engineer shows a 422 Unprocessable Entity response from a FastAPI backend. Where should the Python developer look first to understand which field failed validation?",
-    "options": [
-      "The error details in the JSON response body",
-      "The HTML source",
-      "The TLS certificate under production constraints",
-      "The browser cache"
-    ],
-    "correct_answer": "The error details in the JSON response body",
-    "topic": "Frontend Awareness",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "frontend-awareness",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-273",
-    "question": "The frontend sends large file uploads to a Python API and the browser shows network failures after 30 seconds. Which backend or infrastructure setting is most likely involved?",
-    "options": [
-      "Reverse proxy or web server request timeout (e.g., Nginx/Gunicorn timeout)",
-      "Number of workers",
-      "Database idle timeout under production constraints in enterprise environments",
-      "DNS TTL"
-    ],
-    "correct_answer": "Reverse proxy or web server request timeout (e.g., Nginx/Gunicorn timeout)",
-    "topic": "Frontend Awareness",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "frontend-awareness",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-274",
-    "question": "A Python API defines rate limits per IP. Frontend requests are routed through a shared gateway, causing unexpected throttling. Which header can help the backend identify the originating client correctly?",
-    "options": [
-      "X-Forwarded-For or a similar forwarded IP header",
-      "Accept-Encoding under production constraints in enterprise environments",
-      "User-Agent",
-      "Referer"
-    ],
-    "correct_answer": "X-Forwarded-For or a similar forwarded IP header",
-    "topic": "Frontend Awareness",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "frontend-awareness",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-275",
-    "question": "Your OpenAPI schema for a Python backend is used by frontend teams to generate clients. What must be kept in sync to avoid breaking their builds?",
-    "options": [
-      "The OpenAPI spec and the actual implemented request/response shapes",
-      "Only log formats",
-      "Internal variable names under production constraints in enterprise environments",
-      "Database indexes"
-    ],
-    "correct_answer": "The OpenAPI spec and the actual implemented request/response shapes",
-    "topic": "Frontend Awareness",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "frontend-awareness",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-308",
-    "question": "Why are contract tests useful between frontend and backend?",
-    "options": [
-      "Catch breaking API changes early",
-      "Increase UI flakiness under production constraints",
-      "Replace monitoring",
-      "Eliminate versioning"
-    ],
-    "correct_answer": "Catch breaking API changes early",
-    "topic": "Testing",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "testing",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-309",
-    "question": "What is a common cause of flaky UI tests?",
-    "options": [
-      "Timing/synchronization issues",
-      "Using assertions",
-      "Small test data",
-      "Headless browser support under production constraints"
-    ],
-    "correct_answer": "Timing/synchronization issues",
-    "topic": "Testing",
-    "difficulty": "hard",
-    "style": "debugging",
-    "tags": [
-      "testing",
-      "debugging"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-324",
-    "question": "Which frontend concept is critical for API integration debugging?",
-    "options": [
-      "Browser network tab request/response inspection",
-      "DOM paint order only under production constraints",
-      "Font loading",
-      "Favicon caching"
-    ],
-    "correct_answer": "Browser network tab request/response inspection",
-    "topic": "Frontend Awareness",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "frontend-awareness",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-325",
-    "question": "What is CORS mainly about?",
-    "options": [
-      "Browser-controlled cross-origin request policy",
-      "Database replication under production constraints",
-      "Server CPU quota",
-      "JWT encryption"
-    ],
-    "correct_answer": "Browser-controlled cross-origin request policy",
-    "topic": "Frontend Awareness",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "frontend-awareness",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-326",
-    "question": "Which response header is essential for allowing browser cross-origin calls?",
-    "options": [
-      "Access-Control-Allow-Origin",
-      "X-Powered-By",
-      "Content-Length under production constraints",
-      "Server"
-    ],
-    "correct_answer": "Access-Control-Allow-Origin",
-    "topic": "Frontend Awareness",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "frontend-awareness",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  }
+﻿[
+    {
+        "id":  "python-qa-shared-001",
+        "question":  "In Selenium 4, what is the primary difference between W3C protocol and JSON Wire Protocol?",
+        "options":  [
+                        "W3C is a W3C standard and JSON Wire Protocol is deprecated",
+                        "W3C requires additional licensing",
+                        "JSON Wire Protocol is faster than W3C",
+                        "W3C is proprietary to Chrome while JSON Wire is universal under production constraints"
+                    ],
+        "correct_answer":  "W3C is a W3C standard and JSON Wire Protocol is deprecated",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "selenium-webdriver",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-002",
+        "question":  "When using Selenium 4 with the W3C protocol, which capability flag ensures compatibility with older Selenium 3 implementations?",
+        "options":  [
+                        "goog:chromeOptions",
+                        "useJsonWireProtocol",
+                        "seleniumProtocol",
+                        "webdriver.chrome.version"
+                    ],
+        "correct_answer":  "goog:chromeOptions",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-003",
+        "question":  "In the Selenium architecture, what role does the Local WebDriver end represent?",
+        "options":  [
+                        "Manages browser lifecycle and executes commands",
+                        "Handles HTTP requests only",
+                        "Manages test data only",
+                        "Connects to remote Selenium Grid under production constraints"
+                    ],
+        "correct_answer":  "Manages browser lifecycle and executes commands",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "architecture",
+        "tags":  [
+                     "selenium-webdriver",
+                     "architecture"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-005",
+        "question":  "In Selenium Grid architecture, what is the primary responsibility of the Hub node?",
+        "options":  [
+                        "Route session requests to appropriate Node",
+                        "Monitor network traffic only",
+                        "Execute test scripts on the browser",
+                        "Store test data and manage test cases under production constraints"
+                    ],
+        "correct_answer":  "Route session requests to appropriate Node",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "architecture",
+        "tags":  [
+                     "selenium-webdriver",
+                     "architecture"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-006",
+        "question":  "When a Selenium Grid Node goes offline, how should the Hub handle incoming requests for that Node?",
+        "options":  [
+                        "Mark the Node as unavailable and route to other Nodes",
+                        "Throw immediate timeout error",
+                        "Queue requests indefinitely",
+                        "Automatically restart the Node under production constraints"
+                    ],
+        "correct_answer":  "Mark the Node as unavailable and route to other Nodes",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-008",
+        "question":  "When using Docker containers for Selenium Grid, which component is typically containerized along with the browser?",
+        "options":  [
+                        "Browser and Node with standalone or standalone-chrome image",
+                        "Only the Hub",
+                        "Only the database",
+                        "Only the test scripts under production constraints in enterprise environments"
+                    ],
+        "correct_answer":  "Browser and Node with standalone or standalone-chrome image",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "operations",
+        "tags":  [
+                     "selenium-webdriver",
+                     "operations"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-009",
+        "question":  "In the W3C WebDriver protocol, what does the /session endpoint return after successful browser initialization?",
+        "options":  [
+                        "Session ID and browser capabilities",
+                        "Browser version string only",
+                        "List of all browser drivers",
+                        "Network configuration details under production constraints"
+                    ],
+        "correct_answer":  "Session ID and browser capabilities",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-011",
+        "question":  "Which XPath axis is used to locate an element\u0027s parent in a deeply nested DOM structure?",
+        "options":  [
+                        "parent in enterprise environments",
+                        "following",
+                        "preceding-sibling in enterprise environments",
+                        "ancestor"
+                    ],
+        "correct_answer":  "parent in enterprise environments",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-012",
+        "question":  "When using dynamic XPath with following-sibling axis, what is the typical use case?",
+        "options":  [
+                        "Finding elements below the current element that share the same parent",
+                        "Finding the element\u0027s grandparent",
+                        "Finding elements above the current element under production constraints",
+                        "Finding elements in a different DOM branch"
+                    ],
+        "correct_answer":  "Finding elements below the current element that share the same parent",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-014",
+        "question":  "When handling Shadow DOM elements in Selenium 4, what is the recommended approach?",
+        "options":  [
+                        "Use getShadowRoot() method and query elements within shadow tree",
+                        "Use regular XPath as Shadow DOM is transparent",
+                        "Shadow DOM cannot be automated with Selenium",
+                        "Use only CSS selectors without shadow penetration under production constraints"
+                    ],
+        "correct_answer":  "Use getShadowRoot() method and query elements within shadow tree",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-015",
+        "question":  "Which XPath axis would you use to find all preceding elements in the DOM tree before the current element?",
+        "options":  [
+                        "preceding",
+                        "ancestor-or-self",
+                        "preceding-or-self",
+                        "ancestor"
+                    ],
+        "correct_answer":  "preceding",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-017",
+        "question":  "In a QA automation scenario with nested iFrames, how should you locate elements in the inner-most iFrame?",
+        "options":  [
+                        "Switch to outer iFrame first, then switch to nested iFrame",
+                        "XPath automatically traverses all iFrames",
+                        "Use JavaScriptExecutor to bypass iFrame boundaries under production constraints",
+                        "iFrames cannot contain locatable elements"
+                    ],
+        "correct_answer":  "Switch to outer iFrame first, then switch to nested iFrame",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-018",
+        "question":  "When using XPath text() function for dynamic elements with varying whitespace, what approach is most robust?",
+        "options":  [
+                        "Use contains() with normalize-space() function",
+                        "Use exact text match only",
+                        "XPath text() is unreliable for automation under production constraints",
+                        "Avoid text-based locators entirely"
+                    ],
+        "correct_answer":  "Use contains() with normalize-space() function",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-020",
+        "question":  "When a web application dynamically loads elements via JavaScript, which locator strategy is most affected by timing?",
+        "options":  [
+                        "Dynamic XPath with wait conditions",
+                        "CSS selectors",
+                        "Static XPath",
+                        "ID-based locators under production constraints"
+                    ],
+        "correct_answer":  "Dynamic XPath with wait conditions",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "architecture",
+        "tags":  [
+                     "selenium-webdriver",
+                     "architecture"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-021",
+        "question":  "What is the key difference between implicit wait and explicit wait in Selenium?",
+        "options":  [
+                        "Implicit is global, explicit is scoped to specific element conditions",
+                        "Implicit is faster than explicit",
+                        "Implicit waits are preferred in modern Selenium",
+                        "Explicit cannot handle StaleElementReferenceException under production constraints"
+                    ],
+        "correct_answer":  "Implicit is global, explicit is scoped to specific element conditions",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "concept",
+        "tags":  [
+                     "selenium-webdriver",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-023",
+        "question":  "In Selenium, what is the main purpose of Fluent Wait compared to WebDriverWait?",
+        "options":  [
+                        "Fluent Wait allows custom polling interval and ignored exceptions",
+                        "Fluent Wait is deprecated under production constraints in enterprise environments",
+                        "Fluent Wait is faster",
+                        "They are identical"
+                    ],
+        "correct_answer":  "Fluent Wait allows custom polling interval and ignored exceptions",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "concept",
+        "tags":  [
+                     "selenium-webdriver",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-024",
+        "question":  "When using ExpectedConditions.presenceOfElementLocated(), what does \u0027presence\u0027 specifically mean?",
+        "options":  [
+                        "Element exists in DOM regardless of visibility",
+                        "Element has CSS styling applied under production constraints",
+                        "Element is visible on the page",
+                        "Element is clickable"
+                    ],
+        "correct_answer":  "Element exists in DOM regardless of visibility",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-026",
+        "question":  "In a scenario with AJAX requests completing before element visibility, what is the appropriate wait strategy?",
+        "options":  [
+                        "Use explicit wait for element visibility after AJAX completion",
+                        "Wait conditions are unnecessary under production constraints in enterprise environments",
+                        "Use Thread.sleep()",
+                        "Rely on implicit wait only"
+                    ],
+        "correct_answer":  "Use explicit wait for element visibility after AJAX completion",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "architecture",
+        "tags":  [
+                     "selenium-webdriver",
+                     "architecture"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-027",
+        "question":  "When handling TimeoutException during explicit wait, what should be verified in test logs?",
+        "options":  [
+                        "Whether condition was met, expected elements, DOM state before timeout",
+                        "Only the timeout duration under production constraints in enterprise environments",
+                        "Browser version number",
+                        "Network connectivity only"
+                    ],
+        "correct_answer":  "Whether condition was met, expected elements, DOM state before timeout",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-029",
+        "question":  "When using Fluent Wait with ignoreException(StaleElementReferenceException.class), what behavior occurs?",
+        "options":  [
+                        "StaleElementReferenceException is caught and poll continues",
+                        "Exception is logged only",
+                        "Element is automatically refreshed",
+                        "Test fails immediately on StaleElementReferenceException under production constraints"
+                    ],
+        "correct_answer":  "StaleElementReferenceException is caught and poll continues",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-030",
+        "question":  "In Selenium 4, what is the significance of the wait condition for \u0027stalenessOf\u0027 an element?",
+        "options":  [
+                        "Waits until element is no longer attached to DOM",
+                        "Waits until element is loaded",
+                        "Waits until element becomes clickable under production constraints",
+                        "Waits until element is visible"
+                    ],
+        "correct_answer":  "Waits until element is no longer attached to DOM",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "concept",
+        "tags":  [
+                     "selenium-webdriver",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-032",
+        "question":  "What is the difference between Actions.doubleClick() and manually clicking twice with click()?",
+        "options":  [
+                        "doubleClick() triggers native double-click event with single DOM event",
+                        "doubleClick() is not supported in Selenium",
+                        "click() twice is more reliable",
+                        "No difference, both trigger click event twice under production constraints"
+                    ],
+        "correct_answer":  "doubleClick() triggers native double-click event with single DOM event",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "concept",
+        "tags":  [
+                     "selenium-webdriver",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-033",
+        "question":  "When using Actions.moveToElement() for hover operations, what should happen after movement?",
+        "options":  [
+                        "Must call perform() to execute the action chain",
+                        "No further action needed",
+                        "Must click after hover",
+                        "Hover automatically triggers mouseenter event under production constraints"
+                    ],
+        "correct_answer":  "Must call perform() to execute the action chain",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-035",
+        "question":  "When performing multi-element drag operations, what does Actions.dragAndDrop(source, target).perform() return?",
+        "options":  [
+                        "Void/null after performing the action",
+                        "The source element",
+                        "The target element",
+                        "A boolean indicating success under production constraints"
+                    ],
+        "correct_answer":  "Void/null after performing the action",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-036",
+        "question":  "How should you handle interactions with dynamically positioned elements that may move during action execution?",
+        "options":  [
+                        "Use wait conditions to ensure element is stable before interaction",
+                        "Ignore positioning changes",
+                        "Actions automatically handle dynamic positioning under production constraints",
+                        "Reposition elements using JavaScriptExecutor"
+                    ],
+        "correct_answer":  "Use wait conditions to ensure element is stable before interaction",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-038",
+        "question":  "In Selenium, what is the purpose of Actions.pause() method?",
+        "options":  [
+                        "Adds time delay within action chain before next action",
+                        "Pauses the browser",
+                        "Cancels the action chain",
+                        "Pauses execution like Thread.sleep() under production constraints"
+                    ],
+        "correct_answer":  "Adds time delay within action chain before next action",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "concept",
+        "tags":  [
+                     "selenium-webdriver",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-039",
+        "question":  "When performing context menu operations, what key combination should be used with Actions class?",
+        "options":  [
+                        "Right-click via contextClick() method",
+                        "Alt + Click",
+                        "Context menus cannot be automated under production constraints",
+                        "Shift + Click"
+                    ],
+        "correct_answer":  "Right-click via contextClick() method",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-041",
+        "question":  "When switching between multiple browser windows opened via target=\u0027_blank\u0027, what identifier should be used?",
+        "options":  [
+                        "Window handle obtained from driver.getWindowHandles()",
+                        "Cannot switch between windows under production constraints",
+                        "Window number",
+                        "Window title only"
+                    ],
+        "correct_answer":  "Window handle obtained from driver.getWindowHandles()",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-042",
+        "question":  "In a scenario with nested iFrames (iFrame within iFrame), how should context switching be performed?",
+        "options":  [
+                        "Switch to parent iFrame first, then to nested iFrame",
+                        "Switch directly to innermost iFrame",
+                        "Use switchTo().parentFrame() instead under production constraints",
+                        "Nested iFrames cannot be automated"
+                    ],
+        "correct_answer":  "Switch to parent iFrame first, then to nested iFrame",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-044",
+        "question":  "When handling a web application with dynamically created iFrames, what challenge occurs with iFrame switching?",
+        "options":  [
+                        "iFrame IDs or names may change, requiring dynamic locators",
+                        "iFrame IDs are always consistent",
+                        "No special handling is needed",
+                        "iFrames cannot be tested dynamically under production constraints"
+                    ],
+        "correct_answer":  "iFrame IDs or names may change, requiring dynamic locators",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-045",
+        "question":  "In Selenium 4, what method retrieves all window handles currently open in the session?",
+        "options":  [
+                        "getWindowHandles()",
+                        "getWindowHandle() under production constraints",
+                        "getAllWindows()",
+                        "getWindow()"
+                    ],
+        "correct_answer":  "getWindowHandles()",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "concept",
+        "tags":  [
+                     "selenium-webdriver",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-047",
+        "question":  "What is the difference between switchTo().window() and switchTo().frame()?",
+        "options":  [
+                        "window() switches browser windows/tabs, frame() switches iFrames within same window",
+                        "frame() applies to all browser windows under production constraints in enterprise environments",
+                        "No difference",
+                        "window() is deprecated"
+                    ],
+        "correct_answer":  "window() switches browser windows/tabs, frame() switches iFrames within same window",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "concept",
+        "tags":  [
+                     "selenium-webdriver",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-048",
+        "question":  "In a test with multiple pop-up windows, how should you handle window order unpredictability?",
+        "options":  [
+                        "Use window title/URL to identify and switch to specific window",
+                        "Assume first window is always the popup under production constraints",
+                        "Pop-ups appear in consistent order",
+                        "Pop-ups cannot be reliably handled"
+                    ],
+        "correct_answer":  "Use window title/URL to identify and switch to specific window",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-050",
+        "question":  "After handling an alert with alert.accept() or alert.dismiss(), what is the WebDriver context?",
+        "options":  [
+                        "Reverts to previous web page context",
+                        "Remains on alert context",
+                        "Requires explicit context switch under production constraints",
+                        "Context is undefined"
+                    ],
+        "correct_answer":  "Reverts to previous web page context",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "operations",
+        "tags":  [
+                     "selenium-webdriver",
+                     "operations"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-051",
+        "question":  "When using JavaScriptExecutor to scroll to a hidden element, what JavaScript property is typically modified?",
+        "options":  [
+                        "element.scrollIntoView()",
+                        "element.position",
+                        "window.scrollTo()",
+                        "element.style.visibility"
+                    ],
+        "correct_answer":  "element.scrollIntoView()",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-053",
+        "question":  "When clicking a hidden element using JavaScriptExecutor, what should be the last action?",
+        "options":  [
+                        "Use click() method after making element visible via display or opacity",
+                        "Just modify display property",
+                        "Use click() even without visibility under production constraints in enterprise environments",
+                        "Hidden elements cannot be clicked"
+                    ],
+        "correct_answer":  "Use click() method after making element visible via display or opacity",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-056",
+        "question":  "In JavaScriptExecutor.executeAsyncScript(), what parameter indicates completion of asynchronous operation?",
+        "options":  [
+                        "arguments[arguments.length - 1]",
+                        "arguments[0] under production constraints",
+                        "callback",
+                        "completion()"
+                    ],
+        "correct_answer":  "arguments[arguments.length - 1]",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "concept",
+        "tags":  [
+                     "selenium-webdriver",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-057",
+        "question":  "What is returned when JavaScriptExecutor.executeScript() executes JavaScript without an explicit return statement?",
+        "options":  [
+                        "null in enterprise environments",
+                        "The last expression value in enterprise environments",
+                        "undefined",
+                        "The script result"
+                    ],
+        "correct_answer":  "null in enterprise environments",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-060",
+        "question":  "When using JavaScriptExecutor to handle AJAX requests, what should be checked before proceeding?",
+        "options":  [
+                        "Check jQuery.active or XMLHttpRequest readyState before proceeding",
+                        "Just wait a fixed duration",
+                        "AJAX cannot be verified",
+                        "Skip verification in automation under production constraints in enterprise environments"
+                    ],
+        "correct_answer":  "Check jQuery.active or XMLHttpRequest readyState before proceeding",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-061",
+        "question":  "What causes StaleElementReferenceException in Selenium and how should it be handled?",
+        "options":  [
+                        "Element was removed from DOM and needs to be re-located, handle with retry logic or fresh locator",
+                        "Browser version incompatibility",
+                        "Element is hidden",
+                        "Network timeout during element access under production constraints in enterprise environments for large-scale systems"
+                    ],
+        "correct_answer":  "Element was removed from DOM and needs to be re-located, handle with retry logic or fresh locator",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "selenium-webdriver",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-062",
+        "question":  "When does NoSuchElementException occur in Selenium and what is the appropriate recovery strategy?",
+        "options":  [
+                        "Element doesn\u0027t exist in DOM; verify locator, DOM structure, or use explicit wait",
+                        "Browser crashed",
+                        "Element exists but is not visible under production constraints in enterprise environments",
+                        "Selenium version issue"
+                    ],
+        "correct_answer":  "Element doesn\u0027t exist in DOM; verify locator, DOM structure, or use explicit wait",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "architecture",
+        "tags":  [
+                     "selenium-webdriver",
+                     "architecture"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-063",
+        "question":  "In a QA test with UnhandledAlertException, what indicates the root cause?",
+        "options":  [
+                        "Unexpected alert appeared during execution; must handle alert before continuing",
+                        "Alert was expected and properly handled under production constraints in enterprise environments",
+                        "Test execution is incomplete",
+                        "Alert handling is not supported"
+                    ],
+        "correct_answer":  "Unexpected alert appeared during execution; must handle alert before continuing",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "selenium-webdriver",
+                     "debugging"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-065",
+        "question":  "When handling InvalidElementStateException, what scenario typically causes it?",
+        "options":  [
+                        "Attempting interaction with disabled or read-only element; verify element state before interaction",
+                        "Element is not found",
+                        "Driver not initialized under production constraints in enterprise environments for large-scale systems",
+                        "Browser version issue"
+                    ],
+        "correct_answer":  "Attempting interaction with disabled or read-only element; verify element state before interaction",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-066",
+        "question":  "What does InvalidSessionIdException indicate in Selenium Grid environment?",
+        "options":  [
+                        "Session was terminated or Node crashed; re-establish session",
+                        "WebDriver version mismatch",
+                        "Element locator is incorrect under production constraints in enterprise environments",
+                        "Browser window closed"
+                    ],
+        "correct_answer":  "Session was terminated or Node crashed; re-establish session",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "concept",
+        "tags":  [
+                     "selenium-webdriver",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-068",
+        "question":  "What should be checked when NoSuchSessionException occurs in Selenium Grid?",
+        "options":  [
+                        "WebDriver session ID is invalid or Node crashed; recreate driver",
+                        "Element was not found",
+                        "Browser incompatibility under production constraints in enterprise environments",
+                        "Test timeout"
+                    ],
+        "correct_answer":  "WebDriver session ID is invalid or Node crashed; recreate driver",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-069",
+        "question":  "When handling WebDriverException as a general exception, what information is crucial for debugging?",
+        "options":  [
+                        "Exception type, message, stack trace, screenshot, and browser logs",
+                        "Only the exception message under production constraints in enterprise environments",
+                        "Test duration",
+                        "Browser type only"
+                    ],
+        "correct_answer":  "Exception type, message, stack trace, screenshot, and browser logs",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "selenium-webdriver",
+                     "debugging"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-072",
+        "question":  "When configuring multiple Nodes in Selenium Grid, what parameter ensures each Node is unique?",
+        "options":  [
+                        "nodeId or unique identifier",
+                        "Browser type only under production constraints",
+                        "Node name",
+                        "Machine IP alone"
+                    ],
+        "correct_answer":  "nodeId or unique identifier",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-074",
+        "question":  "When a Hub node receives a request that no Node can fulfill, what is the expected behavior?",
+        "options":  [
+                        "Hub returns error; session cannot be created if no matching Node",
+                        "Automatically creates new Node under production constraints in enterprise environments",
+                        "Request is queued indefinitely",
+                        "Hub retries eternally"
+                    ],
+        "correct_answer":  "Hub returns error; session cannot be created if no matching Node",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-075",
+        "question":  "In parallel execution with Selenium Grid, what metric should be monitored to prevent resource exhaustion?",
+        "options":  [
+                        "Browser instances, memory usage per Node, and session limits",
+                        "Disk space only",
+                        "Network bandwidth",
+                        "Test execution time only under production constraints in enterprise environments"
+                    ],
+        "correct_answer":  "Browser instances, memory usage per Node, and session limits",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "concept",
+        "tags":  [
+                     "selenium-webdriver",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-077",
+        "question":  "In a Dockerized Selenium Grid, what is the typical network configuration between Hub and Nodes?",
+        "options":  [
+                        "Docker network bridge allowing inter-container communication via HTTP",
+                        "Nodes cannot communicate with Hub in Docker under production constraints",
+                        "Direct network socket connection",
+                        "Requires manual network setup"
+                    ],
+        "correct_answer":  "Docker network bridge allowing inter-container communication via HTTP",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-078",
+        "question":  "When scaling Selenium Grid horizontally with multiple Nodes, what becomes a potential bottleneck?",
+        "options":  [
+                        "Hub capacity to route requests; may require load balancing",
+                        "Network cables",
+                        "All systems scale infinitely under production constraints in enterprise environments",
+                        "Browser installation"
+                    ],
+        "correct_answer":  "Hub capacity to route requests; may require load balancing",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-080",
+        "question":  "When monitoring Selenium Grid performance, what indicates Node saturation?",
+        "options":  [
+                        "Session queue buildup and timeout errors; new requests cannot be fulfilled",
+                        "High CPU usage under production constraints in enterprise environments for large-scale systems",
+                        "High memory",
+                        "Low disk space"
+                    ],
+        "correct_answer":  "Session queue buildup and timeout errors; new requests cannot be fulfilled",
+        "topic":  "Selenium WebDriver",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "selenium-webdriver",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-121",
+        "question":  "Which locator strategy is most stable for long-term UI automation?",
+        "options":  [
+                        "Dedicated data-testid attribute",
+                        "Dynamic XPath with index",
+                        "CSS path from full DOM",
+                        "Absolute XPath from html tag under production constraints"
+                    ],
+        "correct_answer":  "Dedicated data-testid attribute",
+        "topic":  "UI Automation",
+        "difficulty":  "easy",
+        "style":  "architecture",
+        "tags":  [
+                     "ui-automation",
+                     "architecture"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-122",
+        "question":  "What is the best wait strategy for elements loaded after an API response?",
+        "options":  [
+                        "Explicit wait for expected condition",
+                        "Thread.sleep with fixed delay under production constraints",
+                        "Implicit wait only",
+                        "No wait needed"
+                    ],
+        "correct_answer":  "Explicit wait for expected condition",
+        "topic":  "UI Automation",
+        "difficulty":  "medium",
+        "style":  "architecture",
+        "tags":  [
+                     "ui-automation",
+                     "architecture"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-124",
+        "question":  "Which pattern improves maintainability in Selenium UI suites?",
+        "options":  [
+                        "Page Object Model in enterprise environments",
+                        "Hardcode locators in tests in enterprise environments",
+                        "Single giant test method",
+                        "Random execution order"
+                    ],
+        "correct_answer":  "Page Object Model in enterprise environments",
+        "topic":  "UI Automation",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "ui-automation",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-126",
+        "question":  "For cross-browser UI testing, what is a practical minimum set?",
+        "options":  [
+                        "Chrome, Firefox, and one WebKit-based browser",
+                        "Only latest Chrome",
+                        "All browser versions ever released under production constraints",
+                        "Only Safari"
+                    ],
+        "correct_answer":  "Chrome, Firefox, and one WebKit-based browser",
+        "topic":  "UI Automation",
+        "difficulty":  "hard",
+        "style":  "concept",
+        "tags":  [
+                     "ui-automation",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-129",
+        "question":  "In CI, what is a good first step for debugging failing UI tests?",
+        "options":  [
+                        "Capture screenshot, DOM snapshot, and browser logs",
+                        "Re-run until pass without logs",
+                        "Increase all waits to 60 seconds under production constraints",
+                        "Disable assertions"
+                    ],
+        "correct_answer":  "Capture screenshot, DOM snapshot, and browser logs",
+        "topic":  "UI Automation",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "ui-automation",
+                     "debugging"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-130",
+        "question":  "When should you prefer CSS selectors over XPath?",
+        "options":  [
+                        "For stable attributes and simpler DOM traversal",
+                        "Never",
+                        "Only for text matching under production constraints",
+                        "Only in Firefox"
+                    ],
+        "correct_answer":  "For stable attributes and simpler DOM traversal",
+        "topic":  "UI Automation",
+        "difficulty":  "easy",
+        "style":  "scenario",
+        "tags":  [
+                     "ui-automation",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-132",
+        "question":  "How should dynamic tables be validated in UI tests?",
+        "options":  [
+                        "Locate rows by unique business value and then validate columns",
+                        "Hardcode row index assertions only under production constraints",
+                        "Validate first row only",
+                        "Skip table validations"
+                    ],
+        "correct_answer":  "Locate rows by unique business value and then validate columns",
+        "topic":  "UI Automation",
+        "difficulty":  "hard",
+        "style":  "concept",
+        "tags":  [
+                     "ui-automation",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-309",
+        "question":  "What is a common cause of flaky UI tests?",
+        "options":  [
+                        "Timing/synchronization issues",
+                        "Using assertions",
+                        "Small test data",
+                        "Headless browser support under production constraints"
+                    ],
+        "correct_answer":  "Timing/synchronization issues",
+        "topic":  "Testing",
+        "difficulty":  "hard",
+        "style":  "debugging",
+        "tags":  [
+                     "testing",
+                     "debugging"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    }
 ]

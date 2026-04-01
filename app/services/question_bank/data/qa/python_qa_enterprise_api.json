@@ -1,2732 +1,756 @@
-[
-  {
-    "id": "python-qa-shared-081",
-    "question": "What is the primary difference between GET and POST in terms of request data?",
-    "options": [
-      "GET uses query parameters/URL, POST uses request body",
-      "Both are identical",
-      "GET uses request body for data, POST uses query parameters",
-      "GET is deprecated"
-    ],
-    "correct_answer": "GET uses query parameters/URL, POST uses request body",
-    "topic": "API Testing Basics",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "api-testing-basics",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-082",
-    "question": "In RESTful API design, what is the idempotency property of GET, PUT, and DELETE methods?",
-    "options": [
-      "GET, PUT, DELETE are idempotent; multiple calls produce same result",
-      "All methods are idempotent under production constraints in enterprise environments",
-      "No methods are idempotent",
-      "POST is idempotent"
-    ],
-    "correct_answer": "GET, PUT, DELETE are idempotent; multiple calls produce same result",
-    "topic": "API Testing Basics",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "api-testing-basics",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-083",
-    "question": "When should PUT method be used instead of PATCH in REST APIs?",
-    "options": [
-      "PUT replaces entire resource, PATCH modifies specific fields",
-      "PUT modifies single field, PATCH replaces entire resource under production constraints",
-      "Both are identical",
-      "PATCH is not supported"
-    ],
-    "correct_answer": "PUT replaces entire resource, PATCH modifies specific fields",
-    "topic": "API Testing Basics",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "api-testing-basics",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-084",
-    "question": "What is the implication of POST method not being idempotent?",
-    "options": [
-      "Multiple POST calls may create duplicate resources; each call produces new resource",
-      "POST calls are faster",
-      "POST cannot be used safely under production constraints in enterprise environments for large-scale systems",
-      "POST is less secure"
-    ],
-    "correct_answer": "Multiple POST calls may create duplicate resources; each call produces new resource",
-    "topic": "API Testing Basics",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "api-testing-basics",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-085",
-    "question": "In a QA test scenario requiring idempotent operations, which HTTP methods are safe to retry?",
-    "options": [
-      "GET, PUT, DELETE can be safely retried without side effects",
-      "All methods are equally safe under production constraints in enterprise environments",
-      "No methods are safe",
-      "POST and PATCH"
-    ],
-    "correct_answer": "GET, PUT, DELETE can be safely retried without side effects",
-    "topic": "API Testing Basics",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "api-testing-basics",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-086",
-    "question": "What happens when DELETE is called on a resource that doesn't exist?",
-    "options": [
-      "Idempotent: returns success or appropriate status (404 or 204) consistently",
-      "Always fails",
-      "Same behavior as deleting existing resource under production constraints in enterprise environments",
-      "Creates new resource"
-    ],
-    "correct_answer": "Idempotent: returns success or appropriate status (404 or 204) consistently",
-    "topic": "API Testing Basics",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "api-testing-basics",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-087",
-    "question": "In API testing with concurrent requests, how does idempotency prevent data corruption?",
-    "options": [
-      "Idempotent operations ensure consistent state even with duplicate concurrent calls",
-      "Idempotency has no effect on concurrency under production constraints in enterprise environments",
-      "Concurrency is always unsafe",
-      "Idempotency slows down requests"
-    ],
-    "correct_answer": "Idempotent operations ensure consistent state even with duplicate concurrent calls",
-    "topic": "API Testing Basics",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "api-testing-basics",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-088",
-    "question": "What is the difference between a safe method and an idempotent method in HTTP?",
-    "options": [
-      "Safe methods don't modify resources; idempotent methods produce same result on repeated calls",
-      "No difference",
-      "Idempotent is deprecated under production constraints in enterprise environments for large-scale systems",
-      "Safe is faster"
-    ],
-    "correct_answer": "Safe methods don't modify resources; idempotent methods produce same result on repeated calls",
-    "topic": "API Testing Basics",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "api-testing-basics",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-089",
-    "question": "Which HTTP method should be used for retrieving data without side effects?",
-    "options": [
-      "GET - it is safe and idempotent",
-      "PUT",
-      "DELETE under production constraints",
-      "POST"
-    ],
-    "correct_answer": "GET - it is safe and idempotent",
-    "topic": "API Testing Basics",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "api-testing-basics",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-090",
-    "question": "In test automation with retryable requests, why are idempotent operations critical?",
-    "options": [
-      "They ensure repeated retries don't cause unintended side effects or duplicates",
-      "They reduce server load",
-      "They are not necessary",
-      "They improve response time under production constraints in enterprise environments"
-    ],
-    "correct_answer": "They ensure repeated retries don't cause unintended side effects or duplicates",
-    "topic": "API Testing Basics",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "api-testing-basics",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-091",
-    "question": "What does HTTP status code 201 indicate?",
-    "options": [
-      "Resource created successfully",
-      "Content moved",
-      "Server error",
-      "Request accepted under production constraints"
-    ],
-    "correct_answer": "Resource created successfully",
-    "topic": "API Testing Basics",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "api-testing-basics",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-092",
-    "question": "In RESTful API testing, what is the difference between 400 and 422 status codes?",
-    "options": [
-      "400 is malformed syntax, 422 is well-formed but semantically invalid data",
-      "No difference",
-      "400 is deprecated",
-      "422 is always an error under production constraints in enterprise environments"
-    ],
-    "correct_answer": "400 is malformed syntax, 422 is well-formed but semantically invalid data",
-    "topic": "API Testing Basics",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "api-testing-basics",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-093",
-    "question": "When should HTTP 301 (Moved Permanently) be used instead of 302 (Found)?",
-    "options": [
-      "When redirect is permanent and clients should update bookmarks",
-      "302 is preferred",
-      "301 is faster",
-      "Both are identical under production constraints in enterprise environments"
-    ],
-    "correct_answer": "When redirect is permanent and clients should update bookmarks",
-    "topic": "API Testing Basics",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "api-testing-basics",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-094",
-    "question": "What does HTTP 429 status code signify in API rate limiting context?",
-    "options": [
-      "Too many requests; client has exceeded rate limit and should retry after delay",
-      "Authentication failure under production constraints in enterprise environments for large-scale systems",
-      "Server overloaded",
-      "Request accepted"
-    ],
-    "correct_answer": "Too many requests; client has exceeded rate limit and should retry after delay",
-    "topic": "API Testing Basics",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "api-testing-basics",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-095",
-    "question": "In API testing, how should 5xx status codes be handled differently from 4xx codes?",
-    "options": [
-      "4xx are client errors (retry without change), 5xx are server errors (may retry with exponential backoff)",
-      "Both require identical handling under production constraints in enterprise environments for large-scale systems",
-      "4xx require client modification",
-      "5xx should be ignored"
-    ],
-    "correct_answer": "4xx are client errors (retry without change), 5xx are server errors (may retry with exponential backoff)",
-    "topic": "API Testing Basics",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "api-testing-basics",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-096",
-    "question": "What is the purpose of HTTP 204 (No Content) response?",
-    "options": [
-      "Operation succeeded but no response body needed (e.g., successful DELETE)",
-      "Response is empty by mistake under production constraints in enterprise environments",
-      "Request failed",
-      "Client error"
-    ],
-    "correct_answer": "Operation succeeded but no response body needed (e.g., successful DELETE)",
-    "topic": "API Testing Basics",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "api-testing-basics",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-097",
-    "question": "When testing API error scenarios, what should be verified for 401 vs 403 status codes?",
-    "options": [
-      "401 is authentication failure, 403 is authorization failure (authenticated but not allowed)",
-      "Both indicate same error",
-      "401 is deprecated",
-      "403 is always a server error under production constraints in enterprise environments for large-scale systems"
-    ],
-    "correct_answer": "401 is authentication failure, 403 is authorization failure (authenticated but not allowed)",
-    "topic": "API Testing Basics",
-    "difficulty": "easy",
-    "style": "debugging",
-    "tags": [
-      "api-testing-basics",
-      "debugging"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-098",
-    "question": "In QA testing, what does HTTP 304 (Not Modified) indicate?",
-    "options": [
-      "Client cache is valid; no new content needed (based on ETag/Last-Modified)",
-      "Resource not found",
-      "Authentication failed under production constraints in enterprise environments",
-      "Request succeeded"
-    ],
-    "correct_answer": "Client cache is valid; no new content needed (based on ETag/Last-Modified)",
-    "topic": "API Testing Basics",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "api-testing-basics",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-099",
-    "question": "What is appropriate behavior when receiving HTTP 503 (Service Unavailable)?",
-    "options": [
-      "Implement retry logic with exponential backoff and check Retry-After header",
-      "Continue without retry",
-      "Fail the test immediately",
-      "Proceed with request immediately under production constraints in enterprise environments"
-    ],
-    "correct_answer": "Implement retry logic with exponential backoff and check Retry-After header",
-    "topic": "API Testing Basics",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "api-testing-basics",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-100",
-    "question": "When testing pagination APIs, what status code indicates successful retrieval of empty page?",
-    "options": [
-      "200 OK with empty results array",
-      "404",
-      "204 No Content",
-      "400 Bad Request under production constraints"
-    ],
-    "correct_answer": "200 OK with empty results array",
-    "topic": "API Testing Basics",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "api-testing-basics",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-101",
-    "question": "In REST Assured BDD syntax, what is the purpose of the given() method?",
-    "options": [
-      "Sets up request specifications and preconditions",
-      "Executes the request under production constraints",
-      "Logs response data",
-      "Validates response"
-    ],
-    "correct_answer": "Sets up request specifications and preconditions",
-    "topic": "REST Assured",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "rest-assured",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-102",
-    "question": "When using REST Assured validations with Hamcrest matchers, what does equalTo() verify?",
-    "options": [
-      "Exact value equality",
-      "Contains substring",
-      "Greater than comparison",
-      "Starts with comparison"
-    ],
-    "correct_answer": "Exact value equality",
-    "topic": "REST Assured",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "rest-assured",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-103",
-    "question": "In REST Assured with RequestSpecBuilder, how are common headers and base URI configured?",
-    "options": [
-      "Built once and reused across multiple tests to avoid duplication",
-      "RequestSpecBuilder is not recommended under production constraints",
-      "Headers cannot be reused",
-      "Configured in each test individually"
-    ],
-    "correct_answer": "Built once and reused across multiple tests to avoid duplication",
-    "topic": "REST Assured",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "rest-assured",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-104",
-    "question": "What is the purpose of log().ifValidationFails() in REST Assured?",
-    "options": [
-      "Logs request and response only if assertion fails for debugging",
-      "Disables logging",
-      "Logs success responses under production constraints in enterprise environments",
-      "Logs all requests"
-    ],
-    "correct_answer": "Logs request and response only if assertion fails for debugging",
-    "topic": "REST Assured",
-    "difficulty": "medium",
-    "style": "operations",
-    "tags": [
-      "rest-assured",
-      "operations"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-105",
-    "question": "When validating JSON arrays in REST Assured, what Hamcrest matcher checks if array contains specific item?",
-    "options": [
-      "hasItems()",
-      "hasSize()",
-      "contains()",
-      "equalTo()"
-    ],
-    "correct_answer": "hasItems()",
-    "topic": "REST Assured",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "rest-assured",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-106",
-    "question": "In REST Assured JSON path extraction, how do you get nested values like response.user.name?",
-    "options": [
-      "response.path(\"user.name\")",
-      "response.get(\"user.name\")",
-      "Cannot extract nested values",
-      "Both are equivalent"
-    ],
-    "correct_answer": "response.path(\"user.name\")",
-    "topic": "REST Assured",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "rest-assured",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-107",
-    "question": "When using REST Assured with POJO deserialization, what libraries can be used for mapping?",
-    "options": [
-      "Jackson or Gson for automatic JSON-to-Java object mapping",
-      "Manual mapping required",
-      "Only Jackson",
-      "REST Assured does not support deserialization under production constraints"
-    ],
-    "correct_answer": "Jackson or Gson for automatic JSON-to-Java object mapping",
-    "topic": "REST Assured",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "rest-assured",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-108",
-    "question": "What is the purpose of ResponseSpecBuilder in REST Assured?",
-    "options": [
-      "Creates reusable response validation specifications across multiple tests",
-      "Builds request specifications",
-      "Only for logging",
-      "ResponseSpecBuilder is deprecated under production constraints in enterprise environments"
-    ],
-    "correct_answer": "Creates reusable response validation specifications across multiple tests",
-    "topic": "REST Assured",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "rest-assured",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-110",
-    "question": "When validating response body with multiple assertions in REST Assured, what happens if first assertion fails?",
-    "options": [
-      "Execution stops at first failure; subsequent assertions are skipped",
-      "Assertions are reordered",
-      "Second assertion overrides first under production constraints in enterprise environments",
-      "All assertions are executed"
-    ],
-    "correct_answer": "Execution stops at first failure; subsequent assertions are skipped",
-    "topic": "REST Assured",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "rest-assured",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-133",
-    "question": "Which HTTP method is typically used for partial resource updates?",
-    "options": [
-      "PATCH",
-      "GET",
-      "PUT",
-      "DELETE"
-    ],
-    "correct_answer": "PATCH",
-    "topic": "API Automation",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "api-automation",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-134",
-    "question": "What should be validated in every API response besides status code?",
-    "options": [
-      "Schema, mandatory fields, and business rules",
-      "Only response time under production constraints",
-      "Only headers",
-      "Only response size"
-    ],
-    "correct_answer": "Schema, mandatory fields, and business rules",
-    "topic": "API Automation",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "api-automation",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-135",
-    "question": "Why is idempotency important when testing retry behavior?",
-    "options": [
-      "It avoids unintended duplicate side effects",
-      "It increases payload size",
-      "It disables authentication under production constraints",
-      "It guarantees zero latency"
-    ],
-    "correct_answer": "It avoids unintended duplicate side effects",
-    "topic": "API Automation",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "api-automation",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-136",
-    "question": "Which status code is expected for successful resource creation in most REST APIs?",
-    "options": [
-      "201",
-      "200",
-      "204",
-      "302"
-    ],
-    "correct_answer": "201",
-    "topic": "API Automation",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "api-automation",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-137",
-    "question": "What is the right way to test authentication-protected APIs?",
-    "options": [
-      "Cover valid token, expired token, missing token, and wrong scope",
-      "Test only happy path token",
-      "Disable auth in all environments under production constraints in enterprise environments",
-      "Use UI tests instead"
-    ],
-    "correct_answer": "Cover valid token, expired token, missing token, and wrong scope",
-    "topic": "API Automation",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "api-automation",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-138",
-    "question": "How should contract testing help API automation?",
-    "options": [
-      "Detect producer-consumer schema breaking changes early",
-      "Replace all functional tests under production constraints",
-      "Only test status codes",
-      "Avoid versioning"
-    ],
-    "correct_answer": "Detect producer-consumer schema breaking changes early",
-    "topic": "API Automation",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "api-automation",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-139",
-    "question": "Which approach is best for validating paginated APIs?",
-    "options": [
-      "Validate page size, ordering, boundaries, and next/prev behavior",
-      "Validate only first page",
-      "Ignore metadata",
-      "Assume backend handles it under production constraints in enterprise environments"
-    ],
-    "correct_answer": "Validate page size, ordering, boundaries, and next/prev behavior",
-    "topic": "API Automation",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "api-automation",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-140",
-    "question": "What should you do when API tests are flaky due to shared test data?",
-    "options": [
-      "Use isolated test data per run and cleanup hooks",
-      "Run tests serially forever under production constraints",
-      "Disable failing tests",
-      "Increase timeout only"
-    ],
-    "correct_answer": "Use isolated test data per run and cleanup hooks",
-    "topic": "API Automation",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "api-automation",
-      "debugging"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-141",
-    "question": "How do you typically validate JSON schema in automation frameworks?",
-    "options": [
-      "Use schema validator against expected JSON schema",
-      "String compare full response under production constraints",
-      "Check only top-level keys",
-      "Skip schema checks"
-    ],
-    "correct_answer": "Use schema validator against expected JSON schema",
-    "topic": "API Automation",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "api-automation",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-142",
-    "question": "What is a strong assertion for DELETE endpoint behavior?",
-    "options": [
-      "Delete resource, then verify it is no longer retrievable",
-      "Only check 200",
-      "Verify response time only under production constraints in enterprise environments",
-      "Check headers only"
-    ],
-    "correct_answer": "Delete resource, then verify it is no longer retrievable",
-    "topic": "API Automation",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "api-automation",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-143",
-    "question": "Why should API automation include negative test cases?",
-    "options": [
-      "To verify validation, error handling, and security boundaries",
-      "To increase line count",
-      "Only for performance tests",
-      "They are optional in production under production constraints in enterprise environments"
-    ],
-    "correct_answer": "To verify validation, error handling, and security boundaries",
-    "topic": "API Automation",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "api-automation",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-144",
-    "question": "What is the role of correlation IDs in API test diagnostics?",
-    "options": [
-      "They help trace a request across distributed services",
-      "They encrypt payloads",
-      "They replace authentication under production constraints",
-      "They reduce response size"
-    ],
-    "correct_answer": "They help trace a request across distributed services",
-    "topic": "API Automation",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "api-automation",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-145",
-    "question": "How should UI and API automation be combined for faster feedback?",
-    "options": [
-      "Keep majority in API/service tests and a thin critical UI layer",
-      "Run only end-to-end UI tests under production constraints in enterprise environments",
-      "Run only manual tests",
-      "Keep all checks in UI"
-    ],
-    "correct_answer": "Keep majority in API/service tests and a thin critical UI layer",
-    "topic": "Test Strategy",
-    "difficulty": "easy",
-    "style": "architecture",
-    "tags": [
-      "test-strategy",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-148",
-    "question": "For API performance checks in functional suites, what is a reasonable practice?",
-    "options": [
-      "Track baseline response time and alert on regression thresholds",
-      "Add strict millisecond assertion for every endpoint under production constraints",
-      "Ignore performance in automation",
-      "Run load test on each PR"
-    ],
-    "correct_answer": "Track baseline response time and alert on regression thresholds",
-    "topic": "API Automation",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "api-automation",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-149",
-    "question": "When testing eventually consistent APIs, what is the right validation pattern?",
-    "options": [
-      "Use bounded polling with timeout and clear failure logs",
-      "Assert immediately once",
-      "Add Thread.sleep(120000) under production constraints in enterprise environments",
-      "Skip test in CI"
-    ],
-    "correct_answer": "Use bounded polling with timeout and clear failure logs",
-    "topic": "API Automation",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "api-automation",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-151",
-    "question": "How should secrets be handled in API automation projects?",
-    "options": [
-      "Store in env variables or secret manager and mask in logs",
-      "Hardcode in test files",
-      "Commit.env to repo",
-      "Print tokens for debugging under production constraints in enterprise environments"
-    ],
-    "correct_answer": "Store in env variables or secret manager and mask in logs",
-    "topic": "Automation Practices",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "automation-practices",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-152",
-    "question": "What is the most useful failure artifact combination for API test failures in CI?",
-    "options": [
-      "Request, response, headers, correlation ID, and assertion diff",
-      "Only stack trace",
-      "Only response body under production constraints in enterprise environments",
-      "Only status code"
-    ],
-    "correct_answer": "Request, response, headers, correlation ID, and assertion diff",
-    "topic": "API Automation",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "api-automation",
-      "debugging"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-155",
-    "question": "What should be automated first for a new feature with UI and API layers?",
-    "options": [
-      "Critical API validations first, then one or two key UI journeys",
-      "Full UI regression only",
-      "Only exploratory manual testing under production constraints in enterprise environments",
-      "Non-functional tests first"
-    ],
-    "correct_answer": "Critical API validations first, then one or two key UI journeys",
-    "topic": "Test Strategy",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "test-strategy",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-156",
-    "question": "A team is building a large, database-heavy internal tool with admin panels, ORM, and built-in auth. Which Python web framework is most appropriate to minimize boilerplate?",
-    "options": [
-      "Django",
-      "Flask",
-      "Falcon",
-      "FastAPI"
-    ],
-    "correct_answer": "Django",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "hard",
-    "style": "architecture",
-    "tags": [
-      "web-frameworks-api-design",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-157",
-    "question": "You need a minimal, highly customizable microservice where you will manually choose extensions for ORM, auth, and validation. Which framework fits best?",
-    "options": [
-      "Flask in enterprise environments",
-      "FastAPI in enterprise environments",
-      "Pyramid",
-      "Django"
-    ],
-    "correct_answer": "Flask in enterprise environments",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "easy",
-    "style": "architecture",
-    "tags": [
-      "web-frameworks-api-design",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-158",
-    "question": "A new Python API needs to support high-throughput async I/O with automatic OpenAPI docs generation and type hints. Which framework is most suitable?",
-    "options": [
-      "FastAPI",
-      "Bottle under production constraints",
-      "Flask",
-      "Django"
-    ],
-    "correct_answer": "FastAPI",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "web-frameworks-api-design",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-159",
-    "question": "In a RESTful API, which HTTP method should be used for an idempotent update of a full resource representation?",
-    "options": [
-      "PUT in enterprise environments",
-      "PATCH",
-      "DELETE in enterprise environments",
-      "POST"
-    ],
-    "correct_answer": "PUT in enterprise environments",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "web-frameworks-api-design",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-160",
-    "question": "A client sends multiple identical requests to update a user's profile using PUT /users/123. What should be true about this operation in a properly designed REST API?",
-    "options": [
-      "The operation is idempotent and results in the same final state",
-      "It must return 409 Conflict each time under production constraints",
-      "Only the first request succeeds",
-      "Each request creates a new resource"
-    ],
-    "correct_answer": "The operation is idempotent and results in the same final state",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "web-frameworks-api-design",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-161",
-    "question": "Which HTTP status code is most appropriate when a client sends a well-formed request that violates business rules (e.g., duplicate email)?",
-    "options": [
-      "409 Conflict",
-      "200 OK",
-      "400 Bad Request",
-      "500 Internal Server Error"
-    ],
-    "correct_answer": "409 Conflict",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "medium",
-    "style": "scenario",
-    "tags": [
-      "web-frameworks-api-design",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-162",
-    "question": "A GET /users/123 endpoint is called with a non-existent user ID. Which HTTP status code is most appropriate?",
-    "options": [
-      "404 Not Found",
-      "422 Unprocessable Entity",
-      "400 Bad Request",
-      "200 OK"
-    ],
-    "correct_answer": "404 Not Found",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "web-frameworks-api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-163",
-    "question": "Which response best demonstrates HATEOAS in a REST API returning a user resource?",
-    "options": [
-      "User JSON plus links to related actions/endpoints (e.g., update, delete, list posts)",
-      "HTML with embedded forms only",
-      "Plain text description of endpoints",
-      "Only raw JSON fields of the user without any links under production constraints in enterprise environments"
-    ],
-    "correct_answer": "User JSON plus links to related actions/endpoints (e.g., update, delete, list posts)",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "web-frameworks-api-design",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-164",
-    "question": "In Django REST Framework, what is the primary purpose of a Serializer class?",
-    "options": [
-      "Convert complex types to JSON and validate input data",
-      "Define database schema",
-      "Configure URL routing",
-      "Handle WebSocket connections under production constraints"
-    ],
-    "correct_answer": "Convert complex types to JSON and validate input data",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "web-frameworks-api-design",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-165",
-    "question": "FastAPI relies heavily on which library for data validation and serialization?",
-    "options": [
-      "Pydantic",
-      "Cerberus",
-      "WTForms",
-      "Marshmallow"
-    ],
-    "correct_answer": "Pydantic",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "web-frameworks-api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-166",
-    "question": "A Flask API returns Python datetime objects directly in JSON responses, causing serialization errors. What is the correct approach?",
-    "options": [
-      "Convert datetimes to ISO 8601 strings before serialization",
-      "Change HTTP method to POST",
-      "Use repr(datetime) in JSON",
-      "Return datetime as-is; the client should handle it under production constraints"
-    ],
-    "correct_answer": "Convert datetimes to ISO 8601 strings before serialization",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "web-frameworks-api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-167",
-    "question": "A backend uses JWT for stateless authentication. Where should the server store user session state?",
-    "options": [
-      "JWT payload itself contains claims; no server-side session needed",
-      "In a local file on disk",
-      "In a database row per JWT",
-      "In server memory for each JWT under production constraints in enterprise environments"
-    ],
-    "correct_answer": "JWT payload itself contains claims; no server-side session needed",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "web-frameworks-api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-168",
-    "question": "Which OAuth2 grant type is most appropriate for a single-page application calling a Python backend API?",
-    "options": [
-      "Authorization Code Grant with PKCE",
-      "Resource Owner Password Credentials Grant",
-      "Client Credentials Grant",
-      "Implicit Grant (legacy)"
-    ],
-    "correct_answer": "Authorization Code Grant with PKCE",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "web-frameworks-api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-169",
-    "question": "In a session-based Django app, what mechanism is commonly used to prevent session hijacking via network sniffing?",
-    "options": [
-      "Setting the session cookie with Secure and HttpOnly flags and using HTTPS",
-      "Storing session ID in URL query string under production constraints in enterprise environments",
-      "Serving over HTTP only",
-      "Disabling CSRF protection"
-    ],
-    "correct_answer": "Setting the session cookie with Secure and HttpOnly flags and using HTTPS",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "web-frameworks-api-design",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-170",
-    "question": "Your API returns stack traces and SQL queries in 500 error responses in production. Which OWASP Top 10 category does this primarily violate?",
-    "options": [
-      "Security Misconfiguration",
-      "Sensitive Data Exposure under production constraints",
-      "Broken Access Control",
-      "Injection"
-    ],
-    "correct_answer": "Security Misconfiguration",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "web-frameworks-api-design",
-      "debugging"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-171",
-    "question": "A developer concatenates user input directly into an SQL string in a Django view. Which OWASP risk is this?",
-    "options": [
-      "SQL Injection in enterprise environments",
-      "Insecure Deserialization",
-      "Cross-Site Request Forgery (CSRF) in enterprise environments",
-      "Cross-Site Scripting (XSS)"
-    ],
-    "correct_answer": "SQL Injection in enterprise environments",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "hard",
-    "style": "scenario",
-    "tags": [
-      "web-frameworks-api-design",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-172",
-    "question": "To prevent XSS in a Jinja2 template, what is the default and recommended behavior when rendering user-supplied strings?",
-    "options": [
-      "Escape HTML characters by default",
-      "Trust all content from the database",
-      "Disable escaping globally",
-      "Strip all tags server-side"
-    ],
-    "correct_answer": "Escape HTML characters by default",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "web-frameworks-api-design",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-173",
-    "question": "In Django, what is the primary purpose of the CSRF token added to forms?",
-    "options": [
-      "Prevent cross-site request forgery attacks",
-      "Speed up form submissions under production constraints",
-      "Prevent SQL injection",
-      "Encrypt form fields"
-    ],
-    "correct_answer": "Prevent cross-site request forgery attacks",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "web-frameworks-api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-174",
-    "question": "A Python REST API should indicate that a new resource was successfully created. Which HTTP status code is most appropriate?",
-    "options": [
-      "201 Created",
-      "200 OK",
-      "202 Accepted",
-      "204 No Content"
-    ],
-    "correct_answer": "201 Created",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "web-frameworks-api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-175",
-    "question": "When a client sends an invalid JSON body that cannot be parsed, which HTTP status code is the best fit?",
-    "options": [
-      "400 Bad Request",
-      "401 Unauthorized",
-      "500 Internal Server Error",
-      "404 Not Found"
-    ],
-    "correct_answer": "400 Bad Request",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "web-frameworks-api-design",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-176",
-    "question": "In FastAPI, how are request body models typically defined to enable validation and automatic documentation?",
-    "options": [
-      "Pydantic BaseModel subclasses",
-      "Marshmallow Schemas only",
-      "Custom JSONEncoder subclasses",
-      "Plain Python dicts"
-    ],
-    "correct_answer": "Pydantic BaseModel subclasses",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "web-frameworks-api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-177",
-    "question": "Django REST Framework viewsets are used primarily to:",
-    "options": [
-      "Bundle common CRUD actions (list, create, retrieve, update, destroy) for a resource",
-      "Serve static files",
-      "Configure middleware",
-      "Generate admin panels automatically under production constraints in enterprise environments"
-    ],
-    "correct_answer": "Bundle common CRUD actions (list, create, retrieve, update, destroy) for a resource",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "hard",
-    "style": "architecture",
-    "tags": [
-      "web-frameworks-api-design",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-179",
-    "question": "Which header is typically used to send a Bearer JWT to a Python REST API?",
-    "options": [
-      "Authorization: Bearer <token>",
-      "Cookie: jwt=<token> under production constraints",
-      "X-JWT-Token",
-      "X-Auth-Token"
-    ],
-    "correct_answer": "Authorization: Bearer <token>",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "web-frameworks-api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-180",
-    "question": "Your Flask API defines multiple endpoints for the same resource but uses different nouns (e.g., /createUser, /getUser). This violates which REST principle?",
-    "options": [
-      "Uniform interface using resources and HTTP verbs",
-      "Cacheability",
-      "Statelessness",
-      "Layered system under production constraints in enterprise environments"
-    ],
-    "correct_answer": "Uniform interface using resources and HTTP verbs",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "web-frameworks-api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-181",
-    "question": "In Django, when using the ORM, how can you prevent SQL injection without manually escaping values?",
-    "options": [
-      "Use ORM query methods with parameterization (e.g., filter(name=value))",
-      "Escape all user input with HTML escape under production constraints in enterprise environments",
-      "Build raw SQL strings carefully",
-      "Disable DEBUG mode"
-    ],
-    "correct_answer": "Use ORM query methods with parameterization (e.g., filter(name=value))",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "web-frameworks-api-design",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-182",
-    "question": "A Python backend uses OAuth2 with scopes like 'read:orders' and 'write:orders'. What is the primary purpose of scopes?",
-    "options": [
-      "Limit the actions a token holder can perform",
-      "Validate refresh tokens under production constraints",
-      "Identify clients",
-      "Encrypt access tokens"
-    ],
-    "correct_answer": "Limit the actions a token holder can perform",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "web-frameworks-api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-183",
-    "question": "Which HTTP status code best indicates that authentication is required and has failed or not been provided?",
-    "options": [
-      "401 Unauthorized",
-      "403 Forbidden",
-      "400 Bad Request under production constraints",
-      "404 Not Found"
-    ],
-    "correct_answer": "401 Unauthorized",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "web-frameworks-api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-184",
-    "question": "Which HTTP status code best indicates that the user is authenticated but not allowed to perform an action on a Python API?",
-    "options": [
-      "403 Forbidden",
-      "404 Not Found",
-      "400 Bad Request",
-      "401 Unauthorized"
-    ],
-    "correct_answer": "403 Forbidden",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "web-frameworks-api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-185",
-    "question": "A FastAPI endpoint uses async def but internally calls a blocking database driver. What issue can this cause?",
-    "options": [
-      "Blocking the event loop and reducing concurrency",
-      "Type hint errors only",
-      "Increased throughput",
-      "Automatic connection pooling under production constraints"
-    ],
-    "correct_answer": "Blocking the event loop and reducing concurrency",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "web-frameworks-api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-187",
-    "question": "In Django REST Framework, which class is typically used to restrict access to authenticated users only?",
-    "options": [
-      "IsAuthenticated",
-      "ReadOnly",
-      "IsAdminUser under production constraints",
-      "AllowAny"
-    ],
-    "correct_answer": "IsAuthenticated",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "easy",
-    "style": "architecture",
-    "tags": [
-      "web-frameworks-api-design",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-188",
-    "question": "Your Python API supports conditional GETs. Which HTTP header combination is used to allow clients to cache and revalidate resources?",
-    "options": [
-      "ETag and If-None-Match",
-      "Content-Type and Accept",
-      "Authorization and Cookie",
-      "Host and User-Agent"
-    ],
-    "correct_answer": "ETag and If-None-Match",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "web-frameworks-api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-189",
-    "question": "A REST endpoint returns 200 OK but includes an 'errors' array in the body for validation failures. What is a better design choice?",
-    "options": [
-      "Use 400 Bad Request or 422 Unprocessable Entity with validation error details",
-      "Keep 200 OK and errors in body under production constraints in enterprise environments",
-      "Use 500 Internal Server Error",
-      "Return 204 No Content"
-    ],
-    "correct_answer": "Use 400 Bad Request or 422 Unprocessable Entity with validation error details",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "web-frameworks-api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-190",
-    "question": "Which OWASP Top 10 risk is mitigated by validating and sanitizing file upload types in a Python API?",
-    "options": [
-      "Insecure File Upload / Vulnerable Components",
-      "Security Misconfiguration under production constraints",
-      "Injection",
-      "Broken Authentication"
-    ],
-    "correct_answer": "Insecure File Upload / Vulnerable Components",
-    "topic": "Web Frameworks & API Design",
-    "difficulty": "easy",
-    "style": "scenario",
-    "tags": [
-      "web-frameworks-api-design",
-      "scenario"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-191",
-    "question": "A PostgreSQL table backing a Python API endpoint experiences slow SELECTs on a frequently filtered 'email' column. What is the first optimization to consider?",
-    "options": [
-      "Add an index on the email column",
-      "Switch to a NoSQL database",
-      "Increase application server threads",
-      "Use SELECT * instead of specific columns"
-    ],
-    "correct_answer": "Add an index on the email column",
-    "topic": "Database Management & ORMs",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "database-management-orms",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-194",
-    "question": "Which SQL clause is essential to limit result size and avoid returning millions of rows to a Python API client?",
-    "options": [
-      "LIMIT/OFFSET",
-      "JOIN",
-      "WHERE",
-      "GROUP BY under production constraints"
-    ],
-    "correct_answer": "LIMIT/OFFSET",
-    "topic": "Database Management & ORMs",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "database-management-orms",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-197",
-    "question": "You need a fast in-memory cache for storing session tokens and rate-limiting counters for a Python API. Which datastore is best suited?",
-    "options": [
-      "Redis",
-      "Elasticsearch",
-      "MongoDB",
-      "MySQL"
-    ],
-    "correct_answer": "Redis",
-    "topic": "Database Management & ORMs",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "database-management-orms",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-210",
-    "question": "A Python API frequently performs SELECT * on large tables and then filters in Python. What is a better approach?",
-    "options": [
-      "Filter and project only needed columns in SQL",
-      "Increase network bandwidth under production constraints",
-      "Disable indexes",
-      "Add more API replicas"
-    ],
-    "correct_answer": "Filter and project only needed columns in SQL",
-    "topic": "Database Management & ORMs",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "database-management-orms",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-212",
-    "question": "A Python application uses Django ORM and you see hundreds of queries per request in debug toolbar. What is a likely cause?",
-    "options": [
-      "N+1 query patterns on related objects",
-      "Missing migrations",
-      "Too much caching",
-      "Excessive use of select_related under production constraints"
-    ],
-    "correct_answer": "N+1 query patterns on related objects",
-    "topic": "Database Management & ORMs",
-    "difficulty": "medium",
-    "style": "debugging",
-    "tags": [
-      "database-management-orms",
-      "debugging"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-217",
-    "question": "When two Python services communicate synchronously over HTTP, what is the main drawback compared to async messaging via a queue?",
-    "options": [
-      "Tighter coupling and increased latency during downstream outages",
-      "Natural backpressure",
-      "Higher throughput",
-      "Easier error handling under production constraints in enterprise environments"
-    ],
-    "correct_answer": "Tighter coupling and increased latency during downstream outages",
-    "topic": "Architecture & System Design",
-    "difficulty": "easy",
-    "style": "architecture",
-    "tags": [
-      "architecture-system-design",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-219",
-    "question": "A Django app must handle CPU-intensive report generation without blocking web requests. Which approach is most appropriate?",
-    "options": [
-      "Use Celery with a message broker for background tasks",
-      "Switch to async views",
-      "Increase gunicorn workers only",
-      "Run reports inside the request thread under production constraints"
-    ],
-    "correct_answer": "Use Celery with a message broker for background tasks",
-    "topic": "Architecture & System Design",
-    "difficulty": "hard",
-    "style": "architecture",
-    "tags": [
-      "architecture-system-design",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-224",
-    "question": "Your Python API uses Redis as a cache in front of PostgreSQL. What is a typical cache invalidation strategy when data changes?",
-    "options": [
-      "Write-through or delete related cache keys on database update",
-      "Disable caching during writes under production constraints in enterprise environments",
-      "Never invalidate cache",
-      "Rebuild entire cache nightly"
-    ],
-    "correct_answer": "Write-through or delete related cache keys on database update",
-    "topic": "Architecture & System Design",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "architecture-system-design",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-227",
-    "question": "A dashboard API needs near real-time data but can tolerate slight staleness to reduce DB load. What is an appropriate caching TTL strategy?",
-    "options": [
-      "Very short TTL (e.g., a few seconds) with periodic refresh",
-      "Cache forever",
-      "TTL of several hours under production constraints in enterprise environments",
-      "No cache"
-    ],
-    "correct_answer": "Very short TTL (e.g., a few seconds) with periodic refresh",
-    "topic": "Architecture & System Design",
-    "difficulty": "medium",
-    "style": "architecture",
-    "tags": [
-      "architecture-system-design",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-244",
-    "question": "A Python app needs to store user-uploaded files and serve them back over HTTP with high durability. Which AWS service is a natural fit?",
-    "options": [
-      "Amazon S3 in enterprise environments",
-      "AWS Lambda",
-      "EC2 instance store in enterprise environments",
-      "Amazon RDS"
-    ],
-    "correct_answer": "Amazon S3 in enterprise environments",
-    "topic": "DevOps & Infrastructure",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "devops-infrastructure",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-245",
-    "question": "You want to deploy a Python API with minimal management of servers and automatic scaling based on requests. Which AWS service is most suitable?",
-    "options": [
-      "AWS Lambda behind API Gateway",
-      "EC2 only",
-      "EBS volumes under production constraints",
-      "ElastiCache"
-    ],
-    "correct_answer": "AWS Lambda behind API Gateway",
-    "topic": "DevOps & Infrastructure",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "devops-infrastructure",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-258",
-    "question": "Deployment strategy requires zero-downtime deployments of a containerized Python API. Which Kubernetes deployment type helps with this?",
-    "options": [
-      "RollingUpdate",
-      "Blue-only under production constraints",
-      "Recreate",
-      "Oneshot"
-    ],
-    "correct_answer": "RollingUpdate",
-    "topic": "DevOps & Infrastructure",
-    "difficulty": "hard",
-    "style": "architecture",
-    "tags": [
-      "devops-infrastructure",
-      "architecture"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-286",
-    "question": "Which HTTP method is typically non-idempotent?",
-    "options": [
-      "POST",
-      "GET",
-      "PUT",
-      "DELETE"
-    ],
-    "correct_answer": "POST",
-    "topic": "API Design",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-287",
-    "question": "Which status code should be returned for successful resource creation?",
-    "options": [
-      "201",
-      "200",
-      "204",
-      "409"
-    ],
-    "correct_answer": "201",
-    "topic": "API Design",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-288",
-    "question": "What does HTTP 401 represent?",
-    "options": [
-      "Authentication required/failed",
-      "Authenticated but forbidden under production constraints",
-      "Resource missing",
-      "Server unavailable"
-    ],
-    "correct_answer": "Authentication required/failed",
-    "topic": "API Design",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-289",
-    "question": "What does HTTP 403 represent?",
-    "options": [
-      "Authenticated but not authorized",
-      "Authentication missing under production constraints",
-      "Duplicate request",
-      "Rate limit exceeded"
-    ],
-    "correct_answer": "Authenticated but not authorized",
-    "topic": "API Design",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-290",
-    "question": "Why are API versioning strategies (e.g., /v1) important?",
-    "options": [
-      "Support backward compatibility during changes",
-      "Reduce TLS cost",
-      "Avoid validation under production constraints",
-      "Remove docs"
-    ],
-    "correct_answer": "Support backward compatibility during changes",
-    "topic": "API Design",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-291",
-    "question": "What is the main benefit of OpenAPI/Swagger definitions?",
-    "options": [
-      "Machine-readable API contract and docs",
-      "Database indexing under production constraints",
-      "Token encryption",
-      "Lower latency"
-    ],
-    "correct_answer": "Machine-readable API contract and docs",
-    "topic": "API Design",
-    "difficulty": "hard",
-    "style": "concept",
-    "tags": [
-      "api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-292",
-    "question": "What is a practical pagination approach for REST APIs?",
-    "options": [
-      "offset/limit or cursor-based pagination",
-      "Return all rows",
-      "Use only headers under production constraints",
-      "Use POST only"
-    ],
-    "correct_answer": "offset/limit or cursor-based pagination",
-    "topic": "API Design",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-293",
-    "question": "What is the key purpose of input validation in APIs?",
-    "options": [
-      "Protect integrity and security",
-      "Increase payload size",
-      "Replace authentication under production constraints",
-      "Reduce logging"
-    ],
-    "correct_answer": "Protect integrity and security",
-    "topic": "API Design",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-307",
-    "question": "What is a good API test assertion set?",
-    "options": [
-      "Status + schema + business rules",
-      "Status only",
-      "Response time only under production constraints",
-      "Header only"
-    ],
-    "correct_answer": "Status + schema + business rules",
-    "topic": "Testing",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "testing",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-320",
-    "question": "What does HTTPS primarily guarantee?",
-    "options": [
-      "Transport encryption and integrity",
-      "No server bugs",
-      "Faster responses always under production constraints",
-      "No auth needed"
-    ],
-    "correct_answer": "Transport encryption and integrity",
-    "topic": "Security",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "security",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-322",
-    "question": "Why use pull requests in team workflows?",
-    "options": [
-      "Enable review, discussion, and quality checks",
-      "Avoid branching under production constraints in enterprise environments",
-      "Reduce testing",
-      "Skip CI"
-    ],
-    "correct_answer": "Enable review, discussion, and quality checks",
-    "topic": "Git & Collaboration",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "git-collaboration",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-331",
-    "question": "Which metric best indicates API reliability in production?",
-    "options": [
-      "Error rate and latency percentiles (e.g., p95)",
-      "Code line count",
-      "Number of endpoints",
-      "Container image size under production constraints"
-    ],
-    "correct_answer": "Error rate and latency percentiles (e.g., p95)",
-    "topic": "Engineering Practices",
-    "difficulty": "easy",
-    "style": "concept",
-    "tags": [
-      "engineering-practices",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  },
-  {
-    "id": "python-qa-shared-332",
-    "question": "What is the core purpose of rate limiting public APIs?",
-    "options": [
-      "Protect service availability and prevent abuse",
-      "Improve HTML rendering under production constraints",
-      "Replace auth",
-      "Reduce payload schema"
-    ],
-    "correct_answer": "Protect service availability and prevent abuse",
-    "topic": "API Design",
-    "difficulty": "medium",
-    "style": "concept",
-    "tags": [
-      "api-design",
-      "concept"
-    ],
-    "role_target": "python_qa_shared",
-    "round_target": "L3",
-    "version_scope": [
-      "python311",
-      "pytest",
-      "selenium4",
-      "linux"
-    ]
-  }
+﻿[
+    {
+        "id":  "python-qa-shared-083",
+        "question":  "When should PUT method be used instead of PATCH in REST APIs?",
+        "options":  [
+                        "PUT replaces entire resource, PATCH modifies specific fields",
+                        "PUT modifies single field, PATCH replaces entire resource under production constraints",
+                        "Both are identical",
+                        "PATCH is not supported"
+                    ],
+        "correct_answer":  "PUT replaces entire resource, PATCH modifies specific fields",
+        "topic":  "API Testing Basics",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "api-testing-basics",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-087",
+        "question":  "In API testing with concurrent requests, how does idempotency prevent data corruption?",
+        "options":  [
+                        "Idempotent operations ensure consistent state even with duplicate concurrent calls",
+                        "Idempotency has no effect on concurrency under production constraints in enterprise environments",
+                        "Concurrency is always unsafe",
+                        "Idempotency slows down requests"
+                    ],
+        "correct_answer":  "Idempotent operations ensure consistent state even with duplicate concurrent calls",
+        "topic":  "API Testing Basics",
+        "difficulty":  "hard",
+        "style":  "concept",
+        "tags":  [
+                     "api-testing-basics",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-090",
+        "question":  "In test automation with retryable requests, why are idempotent operations critical?",
+        "options":  [
+                        "They ensure repeated retries don\u0027t cause unintended side effects or duplicates",
+                        "They reduce server load",
+                        "They are not necessary",
+                        "They improve response time under production constraints in enterprise environments"
+                    ],
+        "correct_answer":  "They ensure repeated retries don\u0027t cause unintended side effects or duplicates",
+        "topic":  "API Testing Basics",
+        "difficulty":  "hard",
+        "style":  "concept",
+        "tags":  [
+                     "api-testing-basics",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-092",
+        "question":  "In RESTful API testing, what is the difference between 400 and 422 status codes?",
+        "options":  [
+                        "400 is malformed syntax, 422 is well-formed but semantically invalid data",
+                        "No difference",
+                        "400 is deprecated",
+                        "422 is always an error under production constraints in enterprise environments"
+                    ],
+        "correct_answer":  "400 is malformed syntax, 422 is well-formed but semantically invalid data",
+        "topic":  "API Testing Basics",
+        "difficulty":  "medium",
+        "style":  "concept",
+        "tags":  [
+                     "api-testing-basics",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-093",
+        "question":  "When should HTTP 301 (Moved Permanently) be used instead of 302 (Found)?",
+        "options":  [
+                        "When redirect is permanent and clients should update bookmarks",
+                        "302 is preferred",
+                        "301 is faster",
+                        "Both are identical under production constraints in enterprise environments"
+                    ],
+        "correct_answer":  "When redirect is permanent and clients should update bookmarks",
+        "topic":  "API Testing Basics",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "api-testing-basics",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-095",
+        "question":  "In API testing, how should 5xx status codes be handled differently from 4xx codes?",
+        "options":  [
+                        "4xx are client errors (retry without change), 5xx are server errors (may retry with exponential backoff)",
+                        "Both require identical handling under production constraints in enterprise environments for large-scale systems",
+                        "4xx require client modification",
+                        "5xx should be ignored"
+                    ],
+        "correct_answer":  "4xx are client errors (retry without change), 5xx are server errors (may retry with exponential backoff)",
+        "topic":  "API Testing Basics",
+        "difficulty":  "medium",
+        "style":  "concept",
+        "tags":  [
+                     "api-testing-basics",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-097",
+        "question":  "When testing API error scenarios, what should be verified for 401 vs 403 status codes?",
+        "options":  [
+                        "401 is authentication failure, 403 is authorization failure (authenticated but not allowed)",
+                        "Both indicate same error",
+                        "401 is deprecated",
+                        "403 is always a server error under production constraints in enterprise environments for large-scale systems"
+                    ],
+        "correct_answer":  "401 is authentication failure, 403 is authorization failure (authenticated but not allowed)",
+        "topic":  "API Testing Basics",
+        "difficulty":  "easy",
+        "style":  "debugging",
+        "tags":  [
+                     "api-testing-basics",
+                     "debugging"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-099",
+        "question":  "What is appropriate behavior when receiving HTTP 503 (Service Unavailable)?",
+        "options":  [
+                        "Implement retry logic with exponential backoff and check Retry-After header",
+                        "Continue without retry",
+                        "Fail the test immediately",
+                        "Proceed with request immediately under production constraints in enterprise environments"
+                    ],
+        "correct_answer":  "Implement retry logic with exponential backoff and check Retry-After header",
+        "topic":  "API Testing Basics",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "api-testing-basics",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-104",
+        "question":  "What is the purpose of log().ifValidationFails() in REST Assured?",
+        "options":  [
+                        "Logs request and response only if assertion fails for debugging",
+                        "Disables logging",
+                        "Logs success responses under production constraints in enterprise environments",
+                        "Logs all requests"
+                    ],
+        "correct_answer":  "Logs request and response only if assertion fails for debugging",
+        "topic":  "REST Assured",
+        "difficulty":  "medium",
+        "style":  "operations",
+        "tags":  [
+                     "rest-assured",
+                     "operations"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-105",
+        "question":  "When validating JSON arrays in REST Assured, what Hamcrest matcher checks if array contains specific item?",
+        "options":  [
+                        "hasItems()",
+                        "hasSize()",
+                        "contains()",
+                        "equalTo()"
+                    ],
+        "correct_answer":  "hasItems()",
+        "topic":  "REST Assured",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "rest-assured",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-107",
+        "question":  "When using REST Assured with POJO deserialization, what libraries can be used for mapping?",
+        "options":  [
+                        "Jackson or Gson for automatic JSON-to-Java object mapping",
+                        "Manual mapping required",
+                        "Only Jackson",
+                        "REST Assured does not support deserialization under production constraints"
+                    ],
+        "correct_answer":  "Jackson or Gson for automatic JSON-to-Java object mapping",
+        "topic":  "REST Assured",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "rest-assured",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-110",
+        "question":  "When validating response body with multiple assertions in REST Assured, what happens if first assertion fails?",
+        "options":  [
+                        "Execution stops at first failure; subsequent assertions are skipped",
+                        "Assertions are reordered",
+                        "Second assertion overrides first under production constraints in enterprise environments",
+                        "All assertions are executed"
+                    ],
+        "correct_answer":  "Execution stops at first failure; subsequent assertions are skipped",
+        "topic":  "REST Assured",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "rest-assured",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-134",
+        "question":  "What should be validated in every API response besides status code?",
+        "options":  [
+                        "Schema, mandatory fields, and business rules",
+                        "Only response time under production constraints",
+                        "Only headers",
+                        "Only response size"
+                    ],
+        "correct_answer":  "Schema, mandatory fields, and business rules",
+        "topic":  "API Automation",
+        "difficulty":  "medium",
+        "style":  "concept",
+        "tags":  [
+                     "api-automation",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-135",
+        "question":  "Why is idempotency important when testing retry behavior?",
+        "options":  [
+                        "It avoids unintended duplicate side effects",
+                        "It increases payload size",
+                        "It disables authentication under production constraints",
+                        "It guarantees zero latency"
+                    ],
+        "correct_answer":  "It avoids unintended duplicate side effects",
+        "topic":  "API Automation",
+        "difficulty":  "hard",
+        "style":  "scenario",
+        "tags":  [
+                     "api-automation",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-137",
+        "question":  "What is the right way to test authentication-protected APIs?",
+        "options":  [
+                        "Cover valid token, expired token, missing token, and wrong scope",
+                        "Test only happy path token",
+                        "Disable auth in all environments under production constraints in enterprise environments",
+                        "Use UI tests instead"
+                    ],
+        "correct_answer":  "Cover valid token, expired token, missing token, and wrong scope",
+        "topic":  "API Automation",
+        "difficulty":  "medium",
+        "style":  "concept",
+        "tags":  [
+                     "api-automation",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-138",
+        "question":  "How should contract testing help API automation?",
+        "options":  [
+                        "Detect producer-consumer schema breaking changes early",
+                        "Replace all functional tests under production constraints",
+                        "Only test status codes",
+                        "Avoid versioning"
+                    ],
+        "correct_answer":  "Detect producer-consumer schema breaking changes early",
+        "topic":  "API Automation",
+        "difficulty":  "hard",
+        "style":  "concept",
+        "tags":  [
+                     "api-automation",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-139",
+        "question":  "Which approach is best for validating paginated APIs?",
+        "options":  [
+                        "Validate page size, ordering, boundaries, and next/prev behavior",
+                        "Validate only first page",
+                        "Ignore metadata",
+                        "Assume backend handles it under production constraints in enterprise environments"
+                    ],
+        "correct_answer":  "Validate page size, ordering, boundaries, and next/prev behavior",
+        "topic":  "API Automation",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "api-automation",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-140",
+        "question":  "What should you do when API tests are flaky due to shared test data?",
+        "options":  [
+                        "Use isolated test data per run and cleanup hooks",
+                        "Run tests serially forever under production constraints",
+                        "Disable failing tests",
+                        "Increase timeout only"
+                    ],
+        "correct_answer":  "Use isolated test data per run and cleanup hooks",
+        "topic":  "API Automation",
+        "difficulty":  "medium",
+        "style":  "debugging",
+        "tags":  [
+                     "api-automation",
+                     "debugging"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-141",
+        "question":  "How do you typically validate JSON schema in automation frameworks?",
+        "options":  [
+                        "Use schema validator against expected JSON schema",
+                        "String compare full response under production constraints",
+                        "Check only top-level keys",
+                        "Skip schema checks"
+                    ],
+        "correct_answer":  "Use schema validator against expected JSON schema",
+        "topic":  "API Automation",
+        "difficulty":  "hard",
+        "style":  "concept",
+        "tags":  [
+                     "api-automation",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-142",
+        "question":  "What is a strong assertion for DELETE endpoint behavior?",
+        "options":  [
+                        "Delete resource, then verify it is no longer retrievable",
+                        "Only check 200",
+                        "Verify response time only under production constraints in enterprise environments",
+                        "Check headers only"
+                    ],
+        "correct_answer":  "Delete resource, then verify it is no longer retrievable",
+        "topic":  "API Automation",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "api-automation",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-143",
+        "question":  "Why should API automation include negative test cases?",
+        "options":  [
+                        "To verify validation, error handling, and security boundaries",
+                        "To increase line count",
+                        "Only for performance tests",
+                        "They are optional in production under production constraints in enterprise environments"
+                    ],
+        "correct_answer":  "To verify validation, error handling, and security boundaries",
+        "topic":  "API Automation",
+        "difficulty":  "medium",
+        "style":  "concept",
+        "tags":  [
+                     "api-automation",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-144",
+        "question":  "What is the role of correlation IDs in API test diagnostics?",
+        "options":  [
+                        "They help trace a request across distributed services",
+                        "They encrypt payloads",
+                        "They replace authentication under production constraints",
+                        "They reduce response size"
+                    ],
+        "correct_answer":  "They help trace a request across distributed services",
+        "topic":  "API Automation",
+        "difficulty":  "hard",
+        "style":  "concept",
+        "tags":  [
+                     "api-automation",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-148",
+        "question":  "For API performance checks in functional suites, what is a reasonable practice?",
+        "options":  [
+                        "Track baseline response time and alert on regression thresholds",
+                        "Add strict millisecond assertion for every endpoint under production constraints",
+                        "Ignore performance in automation",
+                        "Run load test on each PR"
+                    ],
+        "correct_answer":  "Track baseline response time and alert on regression thresholds",
+        "topic":  "API Automation",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "api-automation",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-149",
+        "question":  "When testing eventually consistent APIs, what is the right validation pattern?",
+        "options":  [
+                        "Use bounded polling with timeout and clear failure logs",
+                        "Assert immediately once",
+                        "Add Thread.sleep(120000) under production constraints in enterprise environments",
+                        "Skip test in CI"
+                    ],
+        "correct_answer":  "Use bounded polling with timeout and clear failure logs",
+        "topic":  "API Automation",
+        "difficulty":  "medium",
+        "style":  "scenario",
+        "tags":  [
+                     "api-automation",
+                     "scenario"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-151",
+        "question":  "How should secrets be handled in API automation projects?",
+        "options":  [
+                        "Store in env variables or secret manager and mask in logs",
+                        "Hardcode in test files",
+                        "Commit.env to repo",
+                        "Print tokens for debugging under production constraints in enterprise environments"
+                    ],
+        "correct_answer":  "Store in env variables or secret manager and mask in logs",
+        "topic":  "Automation Practices",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "automation-practices",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-152",
+        "question":  "What is the most useful failure artifact combination for API test failures in CI?",
+        "options":  [
+                        "Request, response, headers, correlation ID, and assertion diff",
+                        "Only stack trace",
+                        "Only response body under production constraints in enterprise environments",
+                        "Only status code"
+                    ],
+        "correct_answer":  "Request, response, headers, correlation ID, and assertion diff",
+        "topic":  "API Automation",
+        "difficulty":  "medium",
+        "style":  "debugging",
+        "tags":  [
+                     "api-automation",
+                     "debugging"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-188",
+        "question":  "Your Python API supports conditional GETs. Which HTTP header combination is used to allow clients to cache and revalidate resources?",
+        "options":  [
+                        "ETag and If-None-Match",
+                        "Content-Type and Accept",
+                        "Authorization and Cookie",
+                        "Host and User-Agent"
+                    ],
+        "correct_answer":  "ETag and If-None-Match",
+        "topic":  "Web Frameworks \u0026 API Design",
+        "difficulty":  "medium",
+        "style":  "concept",
+        "tags":  [
+                     "web-frameworks-api-design",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-189",
+        "question":  "A REST endpoint returns 200 OK but includes an \u0027errors\u0027 array in the body for validation failures. What is a better design choice?",
+        "options":  [
+                        "Use 400 Bad Request or 422 Unprocessable Entity with validation error details",
+                        "Keep 200 OK and errors in body under production constraints in enterprise environments",
+                        "Use 500 Internal Server Error",
+                        "Return 204 No Content"
+                    ],
+        "correct_answer":  "Use 400 Bad Request or 422 Unprocessable Entity with validation error details",
+        "topic":  "Web Frameworks \u0026 API Design",
+        "difficulty":  "hard",
+        "style":  "concept",
+        "tags":  [
+                     "web-frameworks-api-design",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    },
+    {
+        "id":  "python-qa-shared-307",
+        "question":  "What is a good API test assertion set?",
+        "options":  [
+                        "Status + schema + business rules",
+                        "Status only",
+                        "Response time only under production constraints",
+                        "Header only"
+                    ],
+        "correct_answer":  "Status + schema + business rules",
+        "topic":  "Testing",
+        "difficulty":  "easy",
+        "style":  "concept",
+        "tags":  [
+                     "testing",
+                     "concept"
+                 ],
+        "role_target":  "python_qa_shared",
+        "round_target":  "L3",
+        "version_scope":  [
+                              "python311",
+                              "pytest",
+                              "selenium4",
+                              "linux"
+                          ]
+    }
 ]
