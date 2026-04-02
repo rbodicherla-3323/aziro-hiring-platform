@@ -64,6 +64,37 @@ def _prepare_question_for_view(session_id, q_index, question):
     return view_question
 
 
+def _normalize_option_compare(value):
+    text = str(value or "").replace("\r\n", "\n").replace("\r", "\n")
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def _decode_submitted_answer(raw_answer, question):
+    answer = str(raw_answer or "")
+    if not answer.startswith("b64:"):
+        return answer
+
+    token = answer[4:].strip()
+    if not token:
+        return ""
+
+    padding = "=" * (-len(token) % 4)
+    try:
+        decoded = base64.urlsafe_b64decode(f"{token}{padding}".encode("ascii")).decode("utf-8")
+    except (binascii.Error, ValueError, UnicodeDecodeError):
+        return answer
+
+    options = question.get("options", []) if isinstance(question, dict) else []
+    if decoded in options:
+        return decoded
+
+    normalized_decoded = _normalize_option_compare(decoded)
+    for option in options:
+        if _normalize_option_compare(option) == normalized_decoded:
+            return option
+    return answer
+
+
 def _extract_session_id_from_context(payload):
     session_id = str(payload.get("session_id", "")).strip()
     if session_id:
@@ -298,7 +329,7 @@ def question(session_id):
         )
 
     if request.method == "POST":
-        selected_answer = request.form.get("answer")
+        selected_answer = _decode_submitted_answer(request.form.get("answer"), question)
         if selected_answer:
             MCQSessionService.save_answer(
                 session_id,

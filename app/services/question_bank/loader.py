@@ -55,6 +55,11 @@ OUTPUT_FALLBACK_OPTIONS = (
     "ValueError",
 )
 
+CODE_TEXT_PATTERN = re.compile(
+    r"(```|^\s*(from\s+[A-Za-z_][A-Za-z0-9_.]*\s+import|import\s+[A-Za-z_][A-Za-z0-9_.]*|def\s+[A-Za-z_][A-Za-z0-9_]*|class\s+[A-Za-z_][A-Za-z0-9_]*|if\s*\(|for\s*\(|while\s*\(|try\s*:|except\b|finally\s*:|#include\b)|[{};]|=>|::|[A-Za-z_][A-Za-z0-9_]*\s*=\s*[^=\s])",
+    flags=re.IGNORECASE | re.MULTILINE,
+)
+
 SNIPPET_PROMPT_INLINE_PATTERN = re.compile(
     r"^(A snippet runs with the following behavior\.\s*Which output is correct\?)\s*(.+)$",
     flags=re.IGNORECASE | re.DOTALL,
@@ -98,6 +103,38 @@ def _normalize_plain_text(value: str) -> str:
     return re.sub(r"\s+", " ", str(value or "")).strip()
 
 
+def _normalize_code_text(value: str) -> str:
+    return _normalize_question_text(value)
+
+
+def _looks_like_code_text(value: str) -> bool:
+    text = str(value or "").replace("\r\n", "\n").replace("\r", "\n")
+    if not text.strip():
+        return False
+    if "```" in text:
+        return True
+
+    lines = [line for line in text.split("\n") if line.strip()]
+    if not lines:
+        return False
+
+    strong_lines = sum(1 for line in lines if CODE_TEXT_PATTERN.search(line))
+    if len(lines) == 1:
+        single = lines[0].strip()
+        if not re.search(r"[{};=()]|=>|::|->", single):
+            return False
+
+    if strong_lines >= 2:
+        return True
+
+    if len(lines) >= 2:
+        indented_lines = sum(1 for line in lines if re.match(r"^\s{2,}\S", line))
+        if indented_lines >= 1 and strong_lines >= 1:
+            return True
+
+    return bool(CODE_TEXT_PATTERN.search(text))
+
+
 def _strip_injected_suffixes(value: str) -> str:
     text = _normalize_plain_text(value)
     if not text:
@@ -134,7 +171,13 @@ def _clean_question_text(value: str) -> str:
 
 
 def _clean_option_text(value: str) -> str:
-    text = _strip_injected_suffixes(value)
+    raw_text = str(value or "")
+    if _looks_like_code_text(raw_text):
+        text = _normalize_code_text(raw_text)
+        text = re.sub(r"^\s*\(?[A-Za-z0-9IVXivx]+\)?[.)\-:]\s*", "", text, count=1)
+        return text.strip()
+
+    text = _strip_injected_suffixes(raw_text)
     text = re.sub(r"\?{2,}", "?", text)
     text = re.sub(r"^\(?[A-Za-z0-9IVXivx]+\)?[.)\-:]\s*", "", text)
     text = re.sub(r"\s+([?.!,;:])", r"\1", text)
