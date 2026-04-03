@@ -628,10 +628,12 @@ def create_test():
 @dashboard_bp.route("/api/dashboard-lifetime")
 @login_required
 def dashboard_lifetime():
-    from app.models import Candidate
     from flask import jsonify
     try:
-        total = Candidate.query.count()
+        total = db_service.get_candidate_count()
     except Exception:
         total = 0
     return jsonify({"total_interviews": total})
+
+
+
