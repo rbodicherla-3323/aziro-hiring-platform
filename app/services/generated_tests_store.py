@@ -172,6 +172,13 @@ def _load_db_tests_for_user(user_email: str, since: datetime | None = None) -> l
     return sorted(grouped.values(), key=_sort_key, reverse=True)
 
 
+def _safe_db_tests_for_user(user_email: str, since: datetime | None = None) -> list[dict]:
+    try:
+        return _load_db_tests_for_user(user_email, since=since)
+    except Exception:
+        return []
+
+
 def add_generated_test(entry: dict):
     """Add or replace a generated test entry with user/timestamp tracking.
 
@@ -243,7 +250,7 @@ def get_tests_for_user_today(user_email: str):
             in_memory_results.append(t)
 
     since = datetime.now(timezone.utc) - timedelta(days=SESSION_RETENTION_DAYS)
-    db_results = _load_db_tests_for_user(user_key, since=since)
+    db_results = _safe_db_tests_for_user(user_key, since=since)
     return _merge_entry_lists(in_memory_results, db_results)
 
 
@@ -279,7 +286,7 @@ def get_tests_for_user_in_range(user_email: str, since: datetime):
         if dt >= since:
             in_memory_results.append(t)
 
-    db_results = _load_db_tests_for_user(user_key, since=since)
+    db_results = _safe_db_tests_for_user(user_key, since=since)
     return _merge_entry_lists(in_memory_results, db_results)
 
 

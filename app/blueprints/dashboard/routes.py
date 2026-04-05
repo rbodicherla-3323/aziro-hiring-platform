@@ -120,6 +120,61 @@ def _trend_payload(current: int | float, previous: int | float) -> dict:
     }
 
 
+def _safe_dashboard_value(loader, default, label: str):
+    try:
+        return loader()
+    except Exception:
+        current_app.logger.exception("Dashboard fallback used for %s", label)
+        return default
+
+
+def _empty_stats() -> dict:
+    return {
+        "total_candidates": 0,
+        "total_tests": 0,
+        "completed": 0,
+        "pending": 0,
+    }
+
+
+def _empty_monthly_series(points: int) -> list[dict]:
+    points = max(2, int(points or 6))
+    return [
+        {
+            "key": f"fallback-{idx}",
+            "label": "",
+            "tests": 0,
+            "completed": 0,
+        }
+        for idx in range(points)
+    ]
+
+
+def _persist_test_link_record(
+    *,
+    meta: dict,
+    test_type: str,
+    created_by: str,
+    created_at: datetime,
+    expires_at: datetime,
+) -> None:
+    try:
+        db_service.save_test_link(
+            meta=meta,
+            test_type=test_type,
+            created_by=created_by,
+            created_at=created_at,
+            expires_at=expires_at,
+        )
+    except Exception:
+        current_app.logger.exception(
+            "Failed to persist test link session_id=%s type=%s candidate=%s",
+            str((meta or {}).get("session_id", "") or "").strip(),
+            str(test_type or "").strip().lower(),
+            str((meta or {}).get("email", "") or "").strip().lower(),
+        )
+
+
 # --------------------------------------------
 # Dashboard
 # --------------------------------------------
@@ -144,40 +199,60 @@ def dashboard():
 
     # Today's stats scoped to current user.
     today_start, today_end = _resolve_date_range("today")
-    today_stats = db_service.get_test_link_stats(
-        since=today_start,
-        until=today_end,
-        created_by=user_email,
+    today_stats = _safe_dashboard_value(
+        lambda: db_service.get_test_link_stats(
+            since=today_start,
+            until=today_end,
+            created_by=user_email,
+        ),
+        _empty_stats(),
+        "today_stats",
     )
 
     # Kept for template compatibility.
     my_today_stats = today_stats
-    active_sessions = db_service.get_active_test_session_count(
-        created_by=user_email,
-        since=today_start,
-        until=today_end,
+    active_sessions = _safe_dashboard_value(
+        lambda: db_service.get_active_test_session_count(
+            created_by=user_email,
+            since=today_start,
+            until=today_end,
+        ),
+        0,
+        "active_sessions",
     )
 
     # My stats with date filter
     range_start, range_end = _resolve_date_range(date_filter, specific_date, date_offset)
-    overall_stats = db_service.get_test_link_stats(
-        since=range_start,
-        until=range_end,
+    overall_stats = _safe_dashboard_value(
+        lambda: db_service.get_test_link_stats(
+            since=range_start,
+            until=range_end,
+        ),
+        _empty_stats(),
+        "overall_stats",
     )
-    my_stats = db_service.get_test_link_stats(
-        since=range_start,
-        until=range_end,
-        created_by=user_email,
+    my_stats = _safe_dashboard_value(
+        lambda: db_service.get_test_link_stats(
+            since=range_start,
+            until=range_end,
+            created_by=user_email,
+        ),
+        _empty_stats(),
+        "my_stats",
     )
 
     # Previous-period stats (same duration) for real trend percentages.
     prev_stats = {"total_candidates": 0, "total_tests": 0, "completed": 0, "pending": 0}
     if range_start and range_end and range_end > range_start:
         window = range_end - range_start
-        prev_stats = db_service.get_test_link_stats(
-            since=range_start - window,
-            until=range_start,
-            created_by=user_email,
+        prev_stats = _safe_dashboard_value(
+            lambda: db_service.get_test_link_stats(
+                since=range_start - window,
+                until=range_start,
+                created_by=user_email,
+            ),
+            _empty_stats(),
+            "prev_stats",
         )
 
     tests_trend = _trend_payload(my_stats.get("total_tests", 0), prev_stats.get("total_tests", 0))
@@ -248,14 +323,22 @@ def dashboard():
         }
 
     # Member (current HR) monthly chart.
-    performance_series = db_service.get_test_link_monthly_series(
-        points=6,
-        created_by=user_email,
+    performance_series = _safe_dashboard_value(
+        lambda: db_service.get_test_link_monthly_series(
+            points=6,
+            created_by=user_email,
+        ),
+        _empty_monthly_series(6),
+        "my_monthly_series",
     )
     my_chart = _build_chart_payload(performance_series)
 
     # Organization-wide monthly chart.
-    overall_performance_series = db_service.get_test_link_monthly_series(points=8)
+    overall_performance_series = _safe_dashboard_value(
+        lambda: db_service.get_test_link_monthly_series(points=8),
+        _empty_monthly_series(8),
+        "overall_monthly_series",
+    )
     overall_chart = _build_chart_payload(overall_performance_series)
 
     chart_points = my_chart["points"]
@@ -485,7 +568,7 @@ def create_test():
             if frozen_payload:
                 mcq_meta.update(frozen_payload)
             MCQ_SESSION_REGISTRY[session_id] = mcq_meta
-            db_service.save_test_link(
+            _persist_test_link_record(
                 meta=mcq_meta,
                 test_type="mcq",
                 created_by=user_email,
@@ -526,7 +609,7 @@ def create_test():
                 "test_url": test_url,
             }
             CODING_SESSION_REGISTRY[session_id] = coding_meta
-            db_service.save_test_link(
+            _persist_test_link_record(
                 meta=coding_meta,
                 test_type="coding",
                 created_by=user_email,
@@ -566,7 +649,7 @@ def create_test():
                 "test_url": test_url,
             }
             MCQ_SESSION_REGISTRY[session_id] = mcq_domain_meta
-            db_service.save_test_link(
+            _persist_test_link_record(
                 meta=mcq_domain_meta,
                 test_type="mcq",
                 created_by=user_email,
