@@ -41,6 +41,10 @@ def _get_pdf_service():
         return None, None
 
 
+def _log_non_blocking_report_issue(message: str, *args):
+    current_app.logger.exception(message, *args)
+
+
 def _resolve_date_range(filter_type: str, specific_date: str = "", offset: int = 0):
     now = datetime.now(timezone.utc)
     offset = int(offset or 0)
@@ -869,6 +873,20 @@ def download_consolidated_summary_pdf():
     })
 
 
+def _save_report_metadata_best_effort(*, identifier, filename: str, generated_by: str = ""):
+    try:
+        record = db_service.save_report(identifier, filename, generated_by)
+        return record, True
+    except Exception as exc:
+        _log_non_blocking_report_issue(
+            "Report metadata save failed for identifier=%s filename=%s: %s",
+            identifier,
+            filename,
+            exc,
+        )
+        return None, False
+
+
 @reports_bp.route("/reports/generate/<path:email>")
 @login_required
 def generate_report(email):
@@ -1001,31 +1019,19 @@ def generate_report(email):
 
         filename = generate_candidate_pdf(candidate_data)
 
-        # Save report record to DB (required for persistent report-state in UI).
-        report_record = None
-        save_error = None
-        try:
-            if ts and getattr(ts, "id", None):
-                report_record = db_service.save_report(ts.id, filename, user.get("email", ""))
-            else:
-                report_record = db_service.save_report(email_key, filename, user.get("email", ""))
-        except Exception as exc:
-            save_error = exc
-
-        if not report_record:
-            try:
-                report_record = db_service.save_report(email_key, filename, user.get("email", ""))
-            except Exception as fallback_exc:
-                current_app.logger.exception(
-                    "Report generated but metadata save failed for %s: %s (fallback: %s)",
-                    email_key,
-                    save_error,
-                    fallback_exc,
-                )
-                return jsonify({
-                    "success": False,
-                    "error": "Report PDF was generated, but saving report metadata failed. Please retry.",
-                }), 500
+        metadata_saved = False
+        if ts and getattr(ts, "id", None):
+            _, metadata_saved = _save_report_metadata_best_effort(
+                identifier=ts.id,
+                filename=filename,
+                generated_by=user.get("email", ""),
+            )
+        if not metadata_saved:
+            _, metadata_saved = _save_report_metadata_best_effort(
+                identifier=email_key,
+                filename=filename,
+                generated_by=user.get("email", ""),
+            )
 
         return jsonify({
             "success": True,
@@ -1033,6 +1039,7 @@ def generate_report(email):
             "candidate": candidate_data.get("name", email),
             "view_url": f"/reports/view/{filename}",
             "download_url": f"/reports/download-file/{filename}",
+            "metadata_saved": metadata_saved,
         })
     except Exception as e:
         return jsonify({"success": False, "error": f"Failed to generate report: {str(e)}"}), 500
@@ -1055,14 +1062,23 @@ def list_proctoring_screenshots():
     except (TypeError, ValueError):
         limit = 200
 
-    if test_session_id:
-        session_ids = db_service.get_round_session_uuids_for_test_session(
+    try:
+        if test_session_id:
+            session_ids = db_service.get_round_session_uuids_for_test_session(
+                test_session_id,
+                attempted_only=False,
+            )
+            records = db_service.get_proctoring_screenshots_by_session_ids(session_ids, limit=limit)
+        else:
+            records = db_service.get_proctoring_screenshots_by_email(email, limit=limit)
+    except Exception as exc:
+        current_app.logger.exception(
+            "Failed to load proctoring screenshots for email=%s test_session_id=%s: %s",
+            email,
             test_session_id,
-            attempted_only=False,
+            exc,
         )
-        records = db_service.get_proctoring_screenshots_by_session_ids(session_ids, limit=limit)
-    else:
-        records = db_service.get_proctoring_screenshots_by_email(email, limit=limit)
+        return jsonify({"screenshots": []})
     screenshots = []
     for rec in records:
         captured = rec.captured_at.isoformat() if rec.captured_at else ""
@@ -1081,13 +1097,21 @@ def list_proctoring_screenshots():
 @reports_bp.route("/reports/proctoring/screenshot/<int:screenshot_id>")
 @login_required
 def get_proctoring_screenshot(screenshot_id):
-    rec = db_service.get_proctoring_screenshot_by_id(screenshot_id)
+    try:
+        rec = db_service.get_proctoring_screenshot_by_id(screenshot_id)
+    except Exception as exc:
+        current_app.logger.exception(
+            "Failed to load proctoring screenshot id=%s: %s",
+            screenshot_id,
+            exc,
+        )
+        abort(404, description="Screenshot not found")
     if not rec or not rec.image_bytes:
         abort(404, description="Screenshot not found")
 
     filename = f"proctoring_{rec.id}.png"
     return send_file(
-        BytesIO(rec.image_bytes),
+        BytesIO(bytes(rec.image_bytes)),
         mimetype=rec.mime_type or "image/png",
         download_name=filename,
         as_attachment=False,
@@ -1258,8 +1282,12 @@ def generate_report_by_session():
     try:
         pdf_filename = generate_candidate_pdf(candidate_data)
         user = session.get("user", {})
-        db_service.save_report(test_session_id, pdf_filename, user.get("email", ""))
-        return jsonify({"status": "ok", "filename": pdf_filename})
+        _, metadata_saved = _save_report_metadata_best_effort(
+            identifier=test_session_id,
+            filename=pdf_filename,
+            generated_by=user.get("email", ""),
+        )
+        return jsonify({"status": "ok", "filename": pdf_filename, "metadata_saved": metadata_saved})
     except Exception as e:
         return jsonify({"status": "error", "error": str(e)}), 500
 

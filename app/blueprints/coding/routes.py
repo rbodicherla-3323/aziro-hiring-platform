@@ -2354,7 +2354,10 @@ def submit(session_id):
 def completed(session_id):
     candidate_name = CODING_SESSION_REGISTRY.get(session_id, {}).get("candidate_name", "")
     if not candidate_name:
-        persisted_meta = db_service.get_test_link_meta(session_id) or {}
+        try:
+            persisted_meta = db_service.get_test_link_meta(session_id) or {}
+        except Exception:
+            persisted_meta = {}
         candidate_name = persisted_meta.get("candidate_name", "")
 
     return render_template(

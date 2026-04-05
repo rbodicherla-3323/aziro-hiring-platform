@@ -344,6 +344,81 @@ def test_reports_generate_uses_selected_candidate_scope(monkeypatch):
     assert captured["candidate_data"]["candidate_key"] == qa_candidate["candidate_key"]
 
 
+def test_reports_generate_succeeds_even_when_report_metadata_save_fails(monkeypatch):
+    qa_candidate = _candidate_payload(
+        role="Python QA",
+        role_key="python_qa",
+        batch_id="batch_qa_1",
+        test_session_id=351,
+    )
+
+    app = _create_route_app(monkeypatch, reports_bp)
+    client = app.test_client()
+
+    monkeypatch.setattr(
+        reports_routes.EvaluationAggregator,
+        "get_candidates",
+        staticmethod(lambda: [qa_candidate]),
+    )
+    monkeypatch.setattr(
+        reports_routes,
+        "build_proctoring_summary_by_email",
+        lambda emails, session_ids_by_email=None: {
+            email: reports_routes.blank_proctoring_summary() for email in emails
+        },
+    )
+    monkeypatch.setattr(reports_routes, "build_plagiarism_summary_by_candidates", lambda candidates: {})
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_round_session_uuids_for_test_session",
+        lambda *args, **kwargs: {"qa-l2-session"},
+    )
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "ensure_candidate_session_for_report",
+        lambda *args, **kwargs: SimpleNamespace(id=qa_candidate["test_session_id"]),
+    )
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "save_report",
+        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("report metadata unavailable")),
+    )
+    monkeypatch.setattr(
+        reports_routes.EvaluationService,
+        "generate_candidate_overall_summary",
+        staticmethod(lambda email, candidate_data=None: "overall summary"),
+    )
+    monkeypatch.setattr(
+        reports_routes.EvaluationService,
+        "generate_candidate_coding_round_summary",
+        staticmethod(lambda email, candidate_data=None: None),
+    )
+    monkeypatch.setattr(
+        reports_routes.EvaluationService,
+        "get_candidate_coding_round_data",
+        staticmethod(lambda email, candidate_data=None: None),
+    )
+    monkeypatch.setattr(
+        reports_routes,
+        "generate_candidate_pdf",
+        lambda candidate_data: "shared_candidate_python_qa.pdf",
+    )
+
+    response = client.get(
+        "/reports/generate/shared@example.com"
+        f"?candidate_key={qa_candidate['candidate_key']}"
+        "&role_key=python_qa"
+        "&batch_id=batch_qa_1"
+        f"&test_session_id={qa_candidate['test_session_id']}"
+    )
+
+    assert response.status_code == 200
+    payload = response.get_json()
+    assert payload["success"] is True
+    assert payload["filename"] == "shared_candidate_python_qa.pdf"
+    assert payload["metadata_saved"] is False
+
+
 def test_reports_search_keeps_same_email_candidates_separate_by_role(monkeypatch):
     app = _create_route_app(monkeypatch, reports_bp)
     client = app.test_client()
