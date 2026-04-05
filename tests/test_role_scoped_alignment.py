@@ -172,6 +172,8 @@ def test_evaluation_aggregator_keeps_same_email_roles_separate(monkeypatch):
         raising=False,
     )
     monkeypatch.setattr(evaluation_aggregator, "RoundResult", fake_round_model, raising=False)
+    monkeypatch.setattr(evaluation_aggregator, "MCQ_SESSION_REGISTRY", {}, raising=False)
+    monkeypatch.setattr(evaluation_aggregator, "CODING_SESSION_REGISTRY", {}, raising=False)
 
     candidates = EvaluationAggregator.get_candidates()
     by_key = {candidate["candidate_key"]: candidate for candidate in candidates}

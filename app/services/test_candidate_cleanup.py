@@ -194,7 +194,7 @@ def purge_expired_test_candidates(now: datetime | None = None) -> dict:
         .all()
     )
     for report in expired_reports:
-        _safe_unlink(REPORTS_DIR / str(report.filename or "").strip())
+        _safe_unlink(str(report.filename or "").strip())
         db.session.delete(report)
     summary["reports_removed"] = len(expired_reports)
 

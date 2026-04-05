@@ -14,7 +14,7 @@ from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 from app.services.evaluation_store import EVALUATION_STORE
 from app.services.generated_tests_store import GENERATED_TESTS
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
-from app.services.pdf_service import REPORTS_DIR
+from app.services import test_candidate_cleanup as cleanup_service
 from app.services.test_candidate_cleanup import purge_expired_test_candidates
 
 
@@ -37,7 +37,7 @@ def _clear_stores():
     CODING_SESSION_REGISTRY.clear()
 
 
-def test_expired_test_candidate_cleanup_purges_old_records_only():
+def test_expired_test_candidate_cleanup_purges_old_records_only(monkeypatch):
     app = _create_db_app()
     _clear_stores()
 
@@ -45,9 +45,19 @@ def test_expired_test_candidate_cleanup_purges_old_records_only():
     old_time = now - timedelta(minutes=61)
     recent_time = now - timedelta(minutes=30)
 
-    old_report_path = REPORTS_DIR / "test_old_candidate_report.pdf"
+    report_dir = PROJECT_ROOT / ".tmp_cleanup_reports"
+    report_dir.mkdir(parents=True, exist_ok=True)
+    monkeypatch.setattr(cleanup_service, "REPORTS_DIR", report_dir)
+    deleted_paths = []
+    monkeypatch.setattr(
+        cleanup_service,
+        "_safe_unlink",
+        lambda path_value: deleted_paths.append(str(path_value)) or True,
+    )
+
+    old_report_path = report_dir / "test_old_candidate_report.pdf"
     old_report_path.write_text("old report", encoding="utf-8")
-    old_screenshot_path = REPORTS_DIR / "test_old_candidate_shot.png"
+    old_screenshot_path = report_dir / "test_old_candidate_shot.png"
     old_screenshot_path.write_text("old screenshot", encoding="utf-8")
 
     try:
@@ -301,14 +311,20 @@ def test_expired_test_candidate_cleanup_purges_old_records_only():
             assert ProctoringScreenshot.query.filter_by(session_uuid="old-session").count() == 0
             assert ProctoringScreenshot.query.filter_by(session_uuid="recent-session").count() == 1
 
-        assert old_report_path.exists() is False
-        assert old_screenshot_path.exists() is False
+        assert old_report_path.name in deleted_paths
+        assert str(old_screenshot_path.resolve()) in deleted_paths
     finally:
         _clear_stores()
-        if old_report_path.exists():
-            old_report_path.unlink()
-        if old_screenshot_path.exists():
-            old_screenshot_path.unlink()
+        if report_dir.exists():
+            for path in report_dir.iterdir():
+                try:
+                    path.unlink()
+                except OSError:
+                    pass
+            try:
+                report_dir.rmdir()
+            except OSError:
+                pass
 
 
 
