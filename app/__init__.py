@@ -20,7 +20,6 @@ from .blueprints.coding import coding_bp
 from .blueprints.reports import reports_bp
 from .blueprints.auth import auth_bp
 from .blueprints.access import access_bp
-from .services.test_candidate_cleanup import purge_expired_test_candidates
 
 
 def create_app():
@@ -88,6 +87,7 @@ def create_app():
         if req.path.startswith("/static"):
             return
         try:
+            from .services.test_candidate_cleanup import purge_expired_test_candidates
             purge_expired_test_candidates()
         except Exception:
             app.logger.exception("Failed to purge expired Test_ candidate data")

@@ -7,11 +7,11 @@ from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 from app.services.evaluation_store import EVALUATION_STORE
 from app.services.generated_tests_store import GENERATED_TESTS
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
-from app.services.pdf_service import REPORTS_DIR
 
 TEST_CANDIDATE_NAME_PREFIX = "test_"
 TEST_CANDIDATE_SQL_NAME_PREFIX_PATTERN = r"test\_%"
 TEST_CANDIDATE_TTL_MINUTES = 60
+REPORTS_DIR = Path(__file__).resolve().parent.parent / "runtime" / "reports"
 
 
 def _now_utc() -> datetime:
