@@ -111,13 +111,19 @@ def _attach_report_info(candidate: dict):
         candidate["report_filename"] = ""
         candidate["report_id"] = None
         return
+    role_key = str(candidate.get("role_key", "") or "").strip()
+    batch_id = str(candidate.get("batch_id", "") or "").strip()
     try:
         info = db_service.get_latest_report_for_email(
             email_key,
             test_session_id=candidate.get("test_session_id"),
-            role_key=str(candidate.get("role_key", "") or "").strip(),
-            batch_id=str(candidate.get("batch_id", "") or "").strip(),
+            role_key=role_key,
+            batch_id=batch_id,
         )
+        # If a scoped lookup misses, keep report visibility stable by falling back
+        # to any historical report for the same candidate email.
+        if not info:
+            info = db_service.get_latest_report_for_email(email_key)
     except Exception as exc:
         current_app.logger.exception("Report lookup failed for %s: %s", email_key, exc)
         info = None
@@ -995,14 +1001,31 @@ def generate_report(email):
 
         filename = generate_candidate_pdf(candidate_data)
 
-        # Save report record to DB
+        # Save report record to DB (required for persistent report-state in UI).
+        report_record = None
+        save_error = None
         try:
             if ts and getattr(ts, "id", None):
-                db_service.save_report(ts.id, filename, user.get("email", ""))
+                report_record = db_service.save_report(ts.id, filename, user.get("email", ""))
             else:
-                db_service.save_report(email_key, filename, user.get("email", ""))
-        except Exception:
-            pass
+                report_record = db_service.save_report(email_key, filename, user.get("email", ""))
+        except Exception as exc:
+            save_error = exc
+
+        if not report_record:
+            try:
+                report_record = db_service.save_report(email_key, filename, user.get("email", ""))
+            except Exception as fallback_exc:
+                current_app.logger.exception(
+                    "Report generated but metadata save failed for %s: %s (fallback: %s)",
+                    email_key,
+                    save_error,
+                    fallback_exc,
+                )
+                return jsonify({
+                    "success": False,
+                    "error": "Report PDF was generated, but saving report metadata failed. Please retry.",
+                }), 500
 
         return jsonify({
             "success": True,
