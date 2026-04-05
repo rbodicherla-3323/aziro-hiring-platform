@@ -41,6 +41,35 @@ def _parse_dt(value) -> datetime | None:
     return dt
 
 
+DUMMY_CANDIDATE_NAME_PREFIX = "test_"
+DUMMY_CANDIDATE_SQL_NAME_PREFIX_PATTERN = r"test\_%"
+
+
+def is_dummy_candidate_name(name: str) -> bool:
+    normalized = str(name or "").strip().lower()
+    if not normalized:
+        return False
+    return normalized.startswith(DUMMY_CANDIDATE_NAME_PREFIX)
+
+
+def _exclude_dummy_test_links(query):
+    return query.filter(
+        ~db.func.lower(TestLink.candidate_name).like(
+            DUMMY_CANDIDATE_SQL_NAME_PREFIX_PATTERN,
+            escape="\\",
+        )
+    )
+
+
+def _exclude_dummy_candidates(query):
+    return query.filter(
+        ~db.func.lower(Candidate.name).like(
+            DUMMY_CANDIDATE_SQL_NAME_PREFIX_PATTERN,
+            escape="\\",
+        )
+    )
+
+
 def save_proctoring_screenshot(
     *,
     session_uuid: str,
@@ -133,6 +162,13 @@ def get_or_create_candidate(name: str, email: str) -> Candidate:
             candidate.name = incoming_name
             db.session.commit()
     return candidate
+
+
+def get_candidate_count(*, include_dummy: bool = False) -> int:
+    query = Candidate.query
+    if not include_dummy:
+        query = _exclude_dummy_candidates(query)
+    return int(query.count())
 
 
 def get_or_create_test_session(candidate_id: int, role_key: str, role_label: str = "",
@@ -335,7 +371,7 @@ def get_test_link_stats(
     until: datetime | None = None,
     created_by: str | None = None,
 ) -> dict:
-    query = TestLink.query
+    query = _exclude_dummy_test_links(TestLink.query)
 
     if created_by:
         query = query.filter(db.func.lower(TestLink.created_by) == created_by.strip().lower())
@@ -386,7 +422,7 @@ def get_active_test_session_count(
     """
     as_of = as_of or _now_utc()
 
-    query = TestLink.query
+    query = _exclude_dummy_test_links(TestLink.query)
     if created_by:
         query = query.filter(db.func.lower(TestLink.created_by) == created_by.strip().lower())
     if since:
@@ -466,9 +502,8 @@ def get_test_link_monthly_series(
         index_by_key[key] = idx
 
     query = (
-        TestLink.query
-        .with_entities(TestLink.session_id, TestLink.created_at)
-        .filter(TestLink.created_at >= buckets[0]["start"])
+        _exclude_dummy_test_links(TestLink.query)
+        .with_entities(TestLink.session_id, TestLink.created_at)        .filter(TestLink.created_at >= buckets[0]["start"])
         .filter(TestLink.created_at < buckets[-1]["end"])
     )
     if created_by:
@@ -537,7 +572,7 @@ def search_candidates(query: str, role_filter: str = ""):
     """Search candidates by name, email, or role."""
     like_query = f"%{query}%"
 
-    base = db.session.query(Candidate, TestSession).join(TestSession)
+    base = _exclude_dummy_candidates(db.session.query(Candidate, TestSession).join(TestSession))
 
     filters = []
     if query:
@@ -638,6 +673,9 @@ def search_candidates_with_reports(query: str, role_filter: str = ""):
     for report, cand, ts in rows:
         email = (cand.email if cand else report.candidate_email) or ""
         email = email.strip().lower()
+        candidate_name = str(cand.name if cand else "").strip()
+        if is_dummy_candidate_name(candidate_name):
+            continue
         role_key = ""
         batch_id = ""
         if ts:
@@ -1002,7 +1040,7 @@ def get_all_roles():
 
 def get_all_candidates_with_results():
     """Get all candidates with their test session results, including report info."""
-    candidates = Candidate.query.all()
+    candidates = _exclude_dummy_candidates(Candidate.query).all()
     results = []
     for c in candidates:
         sessions = TestSession.query.filter_by(candidate_id=c.id).all()
@@ -1020,4 +1058,14 @@ def get_all_candidates_with_results():
                 data["report_filename"] = report.filename if report else ""
                 results.append(data)
     return results
+
+
+
+
+
+
+
+
+
+
 

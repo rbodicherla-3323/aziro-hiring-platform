@@ -20,6 +20,7 @@ from .blueprints.coding import coding_bp
 from .blueprints.reports import reports_bp
 from .blueprints.auth import auth_bp
 from .blueprints.access import access_bp
+from .services.test_candidate_cleanup import purge_expired_test_candidates
 
 
 def create_app():
@@ -79,6 +80,17 @@ def create_app():
             "access_admin_email": admin_display,
             "access_admin_emails": admin_emails,
         }
+
+    @app.before_request
+    def purge_expired_test_candidate_data():
+        from flask import request as req
+
+        if req.path.startswith("/static"):
+            return
+        try:
+            purge_expired_test_candidates()
+        except Exception:
+            app.logger.exception("Failed to purge expired Test_ candidate data")
 
     # -- Permissions-Policy / Feature-Policy headers --
     @app.after_request
@@ -141,3 +153,4 @@ def create_app():
             ):
                 session.clear()
     return app
+
