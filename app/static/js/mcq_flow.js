@@ -2447,6 +2447,63 @@ window.__MCQ_AJAX_FLOW = false;
         }, true);
     }
 
+    function showStartDisclaimerModal() {
+        const modal = document.getElementById("startDisclaimerModal");
+        const okBtn = document.getElementById("startDisclaimerOkBtn");
+        const cancelBtn = document.getElementById("startDisclaimerCancelBtn");
+        if (!modal || !okBtn || !cancelBtn) {
+            return Promise.resolve(true);
+        }
+
+        return new Promise((resolve) => {
+            let settled = false;
+            const previousOverflow = document.body.style.overflow;
+
+            function finalize(accepted) {
+                if (settled) return;
+                settled = true;
+                modal.classList.remove("active");
+                modal.setAttribute("aria-hidden", "true");
+                document.body.style.overflow = previousOverflow;
+                modal.removeEventListener("click", onBackdropClick);
+                document.removeEventListener("keydown", onKeyDown);
+                okBtn.removeEventListener("click", onConfirm);
+                cancelBtn.removeEventListener("click", onCancel);
+                resolve(Boolean(accepted));
+            }
+
+            function onConfirm() {
+                finalize(true);
+            }
+
+            function onCancel() {
+                finalize(false);
+            }
+
+            function onBackdropClick(event) {
+                if (event.target === modal) {
+                    finalize(false);
+                }
+            }
+
+            function onKeyDown(event) {
+                if (event.key === "Escape") {
+                    event.preventDefault();
+                    finalize(false);
+                }
+            }
+
+            modal.classList.add("active");
+            modal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+            okBtn.focus();
+            modal.addEventListener("click", onBackdropClick);
+            document.addEventListener("keydown", onKeyDown);
+            okBtn.addEventListener("click", onConfirm);
+            cancelBtn.addEventListener("click", onCancel);
+        });
+    }
+
     async function bootstrapFromStartPage() {
         const startForm = document.getElementById("mcqStartForm");
         if (!startForm) {
@@ -2466,6 +2523,14 @@ window.__MCQ_AJAX_FLOW = false;
             }
 
             try {
+                const accepted = await showStartDisclaimerModal();
+                if (!accepted) {
+                    if (startButton) {
+                        startButton.disabled = false;
+                    }
+                    return;
+                }
+
                 let proctoringReady = true;
                 if (proctoringEnabled) {
                     proctoringReady = false;

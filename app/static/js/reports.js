@@ -470,12 +470,8 @@
     filterForm.submit();
   }
 
-  var HOVER_DELAY_MS = 40;
-  var LIST_EXIT_DELAY_MS = 180;
   var activeCard = null;
   var lockedCard = null;
-  var enterTimer = null;
-  var leaveTimer = null;
   var cardSwitchToken = 0;
 
   function applyOverlaySpacing(card) {
@@ -532,7 +528,6 @@
   function initCardExpansion() {
     var cards = Array.prototype.slice.call(document.querySelectorAll("[data-candidate-card]"));
     if (!cards.length) return;
-    var reportsList = document.querySelector(".reports-list");
 
     cards.forEach(function (card) {
       card.classList.remove("is-active");
@@ -540,99 +535,11 @@
     });
     setActiveCard(null);
 
-    if (reportsList) {
-      reportsList.addEventListener("mouseenter", function () {
-        window.clearTimeout(leaveTimer);
-      });
-
-      reportsList.addEventListener("mouseleave", function () {
-        if (lockedCard) {
-          return;
-        }
-        window.clearTimeout(enterTimer);
-        window.clearTimeout(leaveTimer);
-        leaveTimer = window.setTimeout(function () {
-          if (lockedCard) {
-            return;
-          }
-          setActiveCard(null);
-        }, LIST_EXIT_DELAY_MS);
-      });
-    }
-
-    function isOverRowActions(card, event) {
-      if (!card || !event) return false;
-      var hitNode = event.target;
-      if ((!hitNode || hitNode === card) && typeof document.elementFromPoint === "function") {
-        hitNode = document.elementFromPoint(event.clientX, event.clientY);
-      }
-      return Boolean(hitNode && hitNode.closest && hitNode.closest(".row-actions"));
-    }
-
     cards.forEach(function (card) {
-      card.addEventListener("mouseenter", function (event) {
-        if (lockedCard && lockedCard !== card) {
-          return;
-        }
-        if (isOverRowActions(card, event)) {
-          window.clearTimeout(enterTimer);
-          return;
-        }
-        window.clearTimeout(leaveTimer);
-        window.clearTimeout(enterTimer);
-        enterTimer = window.setTimeout(function () {
-          setActiveCard(card);
-        }, HOVER_DELAY_MS);
-      });
-
-      card.addEventListener("mouseleave", function () {
-        window.clearTimeout(enterTimer);
-        if (lockedCard) {
-          return;
-        }
-        if (!reportsList) {
-          window.clearTimeout(leaveTimer);
-          leaveTimer = window.setTimeout(function () {
-            if (lockedCard) {
-              return;
-            }
-            if (activeCard === card) {
-              setActiveCard(null);
-            }
-          }, HOVER_DELAY_MS);
-        }
-      });
-
-      card.addEventListener("focusin", function () {
-        if (lockedCard && lockedCard !== card) {
-          return;
-        }
-        window.clearTimeout(leaveTimer);
-        window.clearTimeout(enterTimer);
-        setActiveCard(card);
-      });
-
-      card.addEventListener("focusout", function (event) {
-        var next = event.relatedTarget;
-        if (next && card.contains(next)) {
-          return;
-        }
-        if (lockedCard) {
-          return;
-        }
-        if (activeCard === card) {
-          setActiveCard(null);
-        }
-      });
-
       card.addEventListener("click", function (event) {
-        if (event.target.closest(".row-actions, a, button, input, select, textarea, label")) {
+        if (event.target.closest(".row-actions, .candidate-expanded-grid, a, button, input, select, textarea, label")) {
           return;
         }
-        window.clearTimeout(leaveTimer);
-        window.clearTimeout(enterTimer);
-
-        // Click toggles lock on this card.
         if (lockedCard === card) {
           lockedCard = null;
           setActiveCard(null);
@@ -641,13 +548,6 @@
         lockedCard = card;
         setActiveCard(card);
       });
-
-      var rowActions = card.querySelector(".row-actions");
-      if (rowActions) {
-        rowActions.addEventListener("mouseenter", function () {
-          window.clearTimeout(enterTimer);
-        });
-      }
     });
   }
 
