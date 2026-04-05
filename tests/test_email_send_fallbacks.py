@@ -15,6 +15,7 @@ from app.blueprints.mcq import mcq_bp
 from app.blueprints.tests import routes as tests_routes
 from app.blueprints.tests import tests_bp
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
+from app.services import email_service
 from app.services.generated_tests_store import GENERATED_TESTS
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
 
@@ -143,3 +144,77 @@ def test_generated_tests_retry_send_does_not_force_delegated_token(monkeypatch):
     assert len(sent_calls) == 1
     assert sent_calls[0]["delegated_access_token"] == ""
     assert not sent_calls[0].get("force_delegated", False)
+
+
+def test_send_candidate_test_links_email_shares_with_default_aziro_emails(monkeypatch):
+    monkeypatch.setenv("EMAIL_PROVIDER", "smtp")
+
+    captured = {}
+
+    def _fake_send_via_smtp(*, candidate_email, role_label, body, cc_emails=None):
+        captured["candidate_email"] = candidate_email
+        captured["role_label"] = role_label
+        captured["body"] = body
+        captured["cc_emails"] = list(cc_emails or [])
+        return True, ""
+
+    monkeypatch.setattr(email_service, "_send_via_smtp", _fake_send_via_smtp)
+
+    sent, error = email_service.send_candidate_test_links_email(
+        candidate_name="Candidate One",
+        candidate_email="candidate.one@example.com",
+        role_label="Python QA",
+        tests={
+            "L2": {
+                "label": "MCQ L2",
+                "url": "https://example.com/mcq/start/session-123",
+                "type": "mcq",
+            }
+        },
+    )
+
+    assert sent is True
+    assert error == ""
+    assert captured["candidate_email"] == "candidate.one@example.com"
+    assert captured["cc_emails"] == [
+        "njagadeesh@aziro.com",
+        "rbodicherla@aziro.com",
+        "snaik@aziro.com",
+        "sshaikh@aziro.com",
+    ]
+
+
+def test_send_candidate_test_links_email_excludes_candidate_from_default_share_list(monkeypatch):
+    monkeypatch.setenv("EMAIL_PROVIDER", "smtp")
+
+    captured = {}
+
+    def _fake_send_via_smtp(*, candidate_email, role_label, body, cc_emails=None):
+        captured["candidate_email"] = candidate_email
+        captured["cc_emails"] = list(cc_emails or [])
+        return True, ""
+
+    monkeypatch.setattr(email_service, "_send_via_smtp", _fake_send_via_smtp)
+
+    sent, error = email_service.send_candidate_test_links_email(
+        candidate_name="Internal Candidate",
+        candidate_email="snaik@aziro.com",
+        role_label="Python QA",
+        tests={
+            "L2": {
+                "label": "MCQ L2",
+                "url": "https://example.com/mcq/start/session-456",
+                "type": "mcq",
+            }
+        },
+    )
+
+    assert sent is True
+    assert error == ""
+    assert captured["candidate_email"] == "snaik@aziro.com"
+    assert captured["cc_emails"] == [
+        "njagadeesh@aziro.com",
+        "rbodicherla@aziro.com",
+        "sshaikh@aziro.com",
+    ]
+
