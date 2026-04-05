@@ -1542,6 +1542,124 @@ window.__MCQ_AJAX_FLOW = false;
         return [header, ...bodyParts.map((item) => `    ${item}`)];
     }
 
+    function hasStrongCodeSyntax(text) {
+        const value = String(text || "").trim();
+        if (!value) return false;
+        if (value.includes("```")) return true;
+        if (/[{};]/.test(value)) return true;
+        if (/=>|::|->/.test(value)) return true;
+        if (/^(from\s+[A-Za-z_][A-Za-z0-9_.]*\s+import|import\s+[A-Za-z_][A-Za-z0-9_.]*|def\s+[A-Za-z_][A-Za-z0-9_]*|class\s+[A-Za-z_][A-Za-z0-9_]*|#include\b)/.test(value)) return true;
+        if (/^(if|for|while)\s*\(/.test(value)) return true;
+        if (/^(elif|else|except|finally)\b.*:\s*$/.test(value)) return true;
+        if (/^[A-Za-z_][A-Za-z0-9_]*\s*=\s*[^=\s]/.test(value)) return true;
+        if (/^(?:[A-Za-z_][A-Za-z0-9_<>.\[\]]*\.)?[A-Za-z_][A-Za-z0-9_<>.\[\]]*\([^)\n]*\)\s*;?$/.test(value)) return true;
+        return false;
+    }
+
+    function hasExplicitCodePromptCue(text) {
+        const value = normalizeWhitespace(text).toLowerCase();
+        if (!value) return false;
+        return /(?:which output is correct\?|what is the output(?: of)?\??|what does this output\??|debug this(?: code)?|consider the following code|given the following code|snippet runs with the following behavior)/i.test(value);
+    }
+
+    function isMostlyCodeLines(lines) {
+        const nonEmpty = (Array.isArray(lines) ? lines : [])
+            .map((line) => String(line || "").trim())
+            .filter((line) => line.length > 0);
+        if (nonEmpty.length < 2) return false;
+
+        const codeLikeCount = nonEmpty.filter((line) => hasStrongCodeSyntax(line) || isStrongCodeLine(line)).length;
+        const proseLikeCount = nonEmpty.filter((line) => {
+            if (hasStrongCodeSyntax(line) || isStrongCodeLine(line) || isLikelyCodeLine(line)) return false;
+            const words = line.match(/[A-Za-z][A-Za-z'-]*/g) || [];
+            return words.length >= 5;
+        }).length;
+
+        return codeLikeCount >= Math.max(2, Math.ceil(nonEmpty.length * 0.7)) && proseLikeCount <= 1;
+    }
+
+    function isPythonBlockOpener(line) {
+        const text = String(line || "").trim();
+        if (!text) return false;
+        if (!/:\s*(#.*)?$/.test(text)) return false;
+        return /^(class|def|if|for|while|try|with|elif|else|except|finally)\b/.test(text);
+    }
+
+    function looksLikeFlattenedPythonSnippet(lines) {
+        const sourceLines = Array.isArray(lines) ? lines : [];
+        const nonEmpty = sourceLines
+            .map((line) => String(line || ""))
+            .filter((line) => line.trim().length > 0);
+        if (nonEmpty.length < 3) return false;
+
+        const hasBraceStyle = nonEmpty.some((line) => /[{};]/.test(line));
+        if (hasBraceStyle) return false;
+
+        const openers = nonEmpty.filter((line) => isPythonBlockOpener(line)).length;
+        if (openers < 1) return false;
+
+        const indented = nonEmpty.filter((line) => /^\s{2,}\S/.test(line)).length;
+        if (openers === 1 && nonEmpty.length <= 4) return false;
+        if (indented === 0) return true;
+
+        return indented <= Math.max(1, Math.floor(nonEmpty.length * 0.2)) && openers >= 2;
+    }
+
+    function autoIndentFlattenedPython(lines) {
+        const sourceLines = Array.isArray(lines) ? lines : [];
+        const output = [];
+        const blockStack = [];
+        let indentLevel = 0;
+        let prevBlank = false;
+
+        sourceLines.forEach((rawLine) => {
+            const trimmed = String(rawLine || "").trim();
+            if (!trimmed) {
+                output.push("");
+                prevBlank = true;
+                return;
+            }
+
+            if (/^(elif|else|except|finally)\b/.test(trimmed)) {
+                if (indentLevel > 0) indentLevel -= 1;
+                if (blockStack.length > 0) blockStack.pop();
+            }
+
+            if (
+                prevBlank &&
+                indentLevel > 0 &&
+                /^(?:[A-Za-z_][A-Za-z0-9_]*\s*=|print\(|class\b|def\b|from\b|import\b|if\b|for\b|while\b|try\b|with\b)/.test(trimmed) &&
+                !/^self\./.test(trimmed) &&
+                !/^(return|raise|pass|break|continue)\b/.test(trimmed)
+            ) {
+                indentLevel = 0;
+                blockStack.length = 0;
+            }
+
+            if (
+                blockStack.length >= 2 &&
+                blockStack[blockStack.length - 1] === "def" &&
+                /^(def\b|class\b|@)/.test(trimmed)
+            ) {
+                if (indentLevel > 0) indentLevel -= 1;
+                blockStack.pop();
+            }
+
+            const padded = `${" ".repeat(Math.max(0, indentLevel) * 4)}${trimmed}`;
+            output.push(padded);
+
+            if (isPythonBlockOpener(trimmed)) {
+                const opener = (trimmed.match(/^(class|def|if|for|while|try|with|elif|else|except|finally)\b/) || [])[1] || "flow";
+                blockStack.push(opener);
+                indentLevel += 1;
+            }
+
+            prevBlank = false;
+        });
+
+        return output;
+    }
+
     function formatCodeSegmentForDisplay(text) {
         const normalized = normalizeQuestionText(text).replace(/\t/g, "    ");
         const inputLines = normalized.split("\n");
@@ -1579,7 +1697,10 @@ window.__MCQ_AJAX_FLOW = false;
             });
         });
 
-        return trimSurroundingBlankLines(formatted.join("\n"));
+        const repaired = looksLikeFlattenedPythonSnippet(formatted)
+            ? autoIndentFlattenedPython(formatted)
+            : formatted;
+        return trimSurroundingBlankLines(repaired.join("\n"));
     }
 
     function isEmbeddedCodeCandidate(text) {
@@ -1776,6 +1897,30 @@ window.__MCQ_AJAX_FLOW = false;
         return segments.length ? segments : null;
     }
 
+    function splitPromptAndCodeAcrossLines(text) {
+        const normalized = trimSurroundingBlankLines(text);
+        if (!normalized || !normalized.includes("\n")) return null;
+
+        if (!hasExplicitCodePromptCue(normalized)) return null;
+
+        const promptCodeMatch = normalized.match(
+            /^(.*?(?:Which output is correct\?|What is the output of:?|What does this output\?|Debug this(?:\s+code)?[:?]))\s*([\s\S]+)$/i
+        );
+        if (!promptCodeMatch) return null;
+
+        const prompt = trimSurroundingBlankLines(promptCodeMatch[1] || "");
+        const payload = trimSurroundingBlankLines(promptCodeMatch[2] || "");
+        if (!prompt || !payload) return null;
+
+        const payloadLines = payload.split("\n").map((line) => String(line || "")).filter((line) => line.trim().length > 0);
+        if (!isMostlyCodeLines(payloadLines)) return null;
+
+        return [
+            { type: "text", text: prompt },
+            { type: "code", text: payload }
+        ];
+    }
+
     function findFirstCodeStartIndex(lines) {
         for (let i = 0; i < lines.length; i += 1) {
             const line = String(lines[i] || "").trim();
@@ -1821,6 +1966,11 @@ window.__MCQ_AJAX_FLOW = false;
             return fenced;
         }
 
+        const multilinePromptCode = splitPromptAndCodeAcrossLines(normalized);
+        if (multilinePromptCode) {
+            return multilinePromptCode;
+        }
+
         if (!normalized.includes("\n")) {
             const inline = splitSingleLineQuestionWithInlineCode(normalized);
             if (inline) {
@@ -1830,6 +1980,10 @@ window.__MCQ_AJAX_FLOW = false;
         }
 
         const lines = expandMixedProseCodeLines(normalized.split("\n"));
+        if (isMostlyCodeLines(lines)) {
+            return [{ type: "code", text: trimSurroundingBlankLines(lines.join("\n")) }];
+        }
+
         const codeStart = findFirstCodeStartIndex(lines);
         if (codeStart < 0) {
             return [{ type: "text", text: trimSurroundingBlankLines(normalized) }];
@@ -1843,6 +1997,10 @@ window.__MCQ_AJAX_FLOW = false;
         const prefix = trimSurroundingBlankLines(lines.slice(0, codeStart).join("\n"));
         const code = trimSurroundingBlankLines(lines.slice(codeStart, codeEnd + 1).join("\n"));
         const suffix = trimSurroundingBlankLines(lines.slice(codeEnd + 1).join("\n"));
+
+        if (!hasExplicitCodePromptCue(prefix || normalized)) {
+            return [{ type: "text", text: trimSurroundingBlankLines(normalized) }];
+        }
 
         const nonEmptyCodeLines = code.split("\n").filter((line) => String(line || "").trim() !== "");
         const strongCount = nonEmptyCodeLines.filter((line) => isStrongCodeLine(line)).length;
@@ -1880,6 +2038,17 @@ window.__MCQ_AJAX_FLOW = false;
         }).join("");
     }
 
+    function collectOptionRawTextsFromDom() {
+        const labels = document.querySelectorAll("#mcqOptionsContainer .mcq-option");
+        const values = [];
+        labels.forEach((labelEl) => {
+            const textEl = labelEl.querySelector(".mcq-option-text");
+            if (!textEl) return;
+            values.push(String(textEl.textContent || "").trim());
+        });
+        return values;
+    }
+
     function applyQuestionTextFormattingToDom() {
         const questionTextEl = document.getElementById("mcqQuestionText");
         if (!questionTextEl) return;
@@ -1900,7 +2069,7 @@ window.__MCQ_AJAX_FLOW = false;
             rawText = questionTextEl.textContent || "";
         }
         questionTextEl.dataset.rawQuestion = rawText;
-        questionTextEl.innerHTML = renderQuestionTextHtml(rawText);
+        questionTextEl.innerHTML = renderQuestionTextHtml(rawText, collectOptionRawTextsFromDom());
     }
 
     function resetViewportToTop() {

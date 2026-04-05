@@ -38,5 +38,5 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{{ url_for('static', filename='js/mcq_flow.js', v='20260327-mcq-submit-nav-v10') }}"></script>
+<script src="{{ url_for('static', filename='js/mcq_flow.js') }}?v={{ ASSET_VERSION }}"></script>
 {% endblock %}
