@@ -55,6 +55,63 @@ window.__CODING_AJAX_FLOW = true;
         });
     }
 
+    function showStartDisclaimerModal() {
+        var modal = document.getElementById("startDisclaimerModal");
+        var okBtn = document.getElementById("startDisclaimerOkBtn");
+        var cancelBtn = document.getElementById("startDisclaimerCancelBtn");
+        if (!modal || !okBtn || !cancelBtn) {
+            return Promise.resolve(true);
+        }
+
+        return new Promise(function (resolve) {
+            var settled = false;
+            var previousOverflow = document.body.style.overflow;
+
+            function finalize(accepted) {
+                if (settled) return;
+                settled = true;
+                modal.classList.remove("active");
+                modal.setAttribute("aria-hidden", "true");
+                document.body.style.overflow = previousOverflow;
+                modal.removeEventListener("click", onBackdropClick);
+                document.removeEventListener("keydown", onKeyDown);
+                okBtn.removeEventListener("click", onConfirm);
+                cancelBtn.removeEventListener("click", onCancel);
+                resolve(Boolean(accepted));
+            }
+
+            function onConfirm() {
+                finalize(true);
+            }
+
+            function onCancel() {
+                finalize(false);
+            }
+
+            function onBackdropClick(event) {
+                if (event.target === modal) {
+                    finalize(false);
+                }
+            }
+
+            function onKeyDown(event) {
+                if (event.key === "Escape") {
+                    event.preventDefault();
+                    finalize(false);
+                }
+            }
+
+            modal.classList.add("active");
+            modal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+            okBtn.focus();
+            modal.addEventListener("click", onBackdropClick);
+            document.addEventListener("keydown", onKeyDown);
+            okBtn.addEventListener("click", onConfirm);
+            cancelBtn.addEventListener("click", onCancel);
+        });
+    }
+
     // CodeMirror CDN resources to load in SPA flow
     var CM_BASE = "https://cdn.jsdelivr.net/npm/codemirror@5.65.18";
     var cmResources = {
@@ -84,6 +141,11 @@ window.__CODING_AJAX_FLOW = true;
         if (startButton) startButton.disabled = true;
 
         try {
+            var accepted = await showStartDisclaimerModal();
+            if (!accepted) {
+                if (startButton) startButton.disabled = false;
+                return;
+            }
             // ── 1. Acquire screen share + fullscreen ────────
             var proctoringReady = true;
             if (proctoringEnabled) {
@@ -210,3 +272,4 @@ window.__CODING_AJAX_FLOW = true;
     }, true); // ← capture phase: fires before proctoring.js handler
 
 })();
+

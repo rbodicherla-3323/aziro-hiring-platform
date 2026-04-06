@@ -190,6 +190,111 @@
     background: linear-gradient(135deg, #ff9a3a 0%, #f97316 100%);
     box-shadow: 0 10px 18px rgba(249, 115, 22, 0.24);
 }
+.test-start-v2 .start-disclaimer-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(18, 33, 67, 0.52);
+    backdrop-filter: blur(2px);
+}
+.test-start-v2 .start-disclaimer-backdrop.active {
+    display: flex;
+}
+.test-start-v2 .start-disclaimer-dialog {
+    width: min(94vw, 660px);
+    border: 1px solid #dbe3f3;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+    box-shadow: 0 20px 42px rgba(14, 34, 78, 0.24);
+    overflow: hidden;
+}
+.test-start-v2 .start-disclaimer-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid #e7ecf7;
+    background: linear-gradient(135deg, #f8fbff 0%, #f2f6ff 100%);
+}
+.test-start-v2 .start-disclaimer-head i {
+    color: #f97316;
+    font-size: 16px;
+}
+.test-start-v2 .start-disclaimer-head h3 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: #1c2d57;
+}
+.test-start-v2 .start-disclaimer-body {
+    padding: 14px 16px 8px;
+}
+.test-start-v2 .start-disclaimer-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    border: 1px solid #f4c7c7;
+    border-radius: 10px;
+    background: #fff2f2;
+    color: #b42318;
+    padding: 9px 11px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.45;
+    font-weight: 600;
+}
+.test-start-v2 .start-disclaimer-alert i {
+    margin-top: 1px;
+    font-size: 14px;
+}
+.test-start-v2 .start-disclaimer-alert-title {
+    font-size: 15px;
+    font-weight: 800;
+}
+.test-start-v2 .start-disclaimer-body p {
+    margin: 0 0 10px;
+    color: #526384;
+    font-size: 14px;
+    line-height: 1.45;
+}
+.test-start-v2 .start-disclaimer-list {
+    margin: 0;
+    padding-left: 18px;
+    color: #3c4f78;
+    font-size: 14px;
+    line-height: 1.48;
+}
+.test-start-v2 .start-disclaimer-list li + li {
+    margin-top: 6px;
+}
+.test-start-v2 .start-disclaimer-foot {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 12px 16px 14px;
+    border-top: 1px solid #e7ecf7;
+    background: #fbfcff;
+}
+.test-start-v2 .start-disclaimer-btn {
+    border: 1px solid #d5deef;
+    border-radius: 8px;
+    min-height: 38px;
+    padding: 0 14px;
+    font-size: 14px;
+    font-weight: 600;
+    background: #f5f8ff;
+    color: #334a78;
+}
+.test-start-v2 .start-disclaimer-btn.primary {
+    border-color: #e67a25;
+    color: #ffffff;
+    background: linear-gradient(135deg, #ff9a3a 0%, #f97316 100%);
+    box-shadow: 0 8px 16px rgba(249, 115, 22, 0.26);
+}
 @media (max-width: 767px) {
     .test-start-v2 .overview-grid {
         grid-template-columns: 1fr;
@@ -293,11 +398,38 @@
             </form>
         </div>
     </div>
+
+    <div class="start-disclaimer-backdrop" id="startDisclaimerModal" aria-hidden="true">
+        <div class="start-disclaimer-dialog" role="dialog" aria-modal="true" aria-labelledby="startDisclaimerTitle">
+            <div class="start-disclaimer-head">
+                <i class="bi bi-shield-exclamation"></i>
+                <h3 id="startDisclaimerTitle">Proctored Assessment Notice</h3>
+            </div>
+            <div class="start-disclaimer-body">
+                <div class="start-disclaimer-alert">
+                    <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+                    <span><strong class="start-disclaimer-alert-title">Warning:</strong> This is a live proctored assessment. Policy violations may lead to disqualification.</span>
+                </div>
+                <p>This assessment is monitored for integrity and compliance. Please review before starting.</p>
+                <ul class="start-disclaimer-list">
+                    <li>Webcam, screen activity, and full-screen status are monitored.</li>
+                    <li>Tab switches and window changes are recorded with timestamps.</li>
+                    <li>Screenshots may be captured for audit and review.</li>
+                    <li>Copy/paste, right-click, and restricted shortcuts may be blocked.</li>
+                    <li>Policy violations can result in warnings, auto-submit, or disqualification.</li>
+                </ul>
+            </div>
+            <div class="start-disclaimer-foot">
+                <button type="button" class="start-disclaimer-btn" id="startDisclaimerCancelBtn">Cancel</button>
+                <button type="button" class="start-disclaimer-btn primary" id="startDisclaimerOkBtn">I Understand, Start Test</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
 
 {% block extra_js %}
-<script src="{{ url_for('static', filename='js/mcq_flow.js', v='20260327-mcq-submit-nav-v10') }}"></script>
+<script src="{{ url_for('static', filename='js/mcq_flow.js') }}?v={{ ASSET_VERSION }}"></script>
 {% endblock %}
 

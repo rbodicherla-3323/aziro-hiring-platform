@@ -139,3 +139,34 @@ def test_reports_page_search_includes_report_backed_candidates(monkeypatch):
     assert "Archived Candidate" in body
     assert "archived@example.com" in body
     assert "archived_candidate_report.pdf" in body
+
+
+def test_proctoring_screenshots_list_falls_back_to_empty_when_db_lookup_fails(monkeypatch):
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_round_session_uuids_for_test_session",
+        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("screenshots unavailable")),
+    )
+
+    response = client.get("/reports/proctoring/screenshots?test_session_id=101")
+
+    assert response.status_code == 200
+    assert response.get_json() == {"screenshots": []}
+
+
+def test_proctoring_screenshot_detail_returns_404_when_db_lookup_fails(monkeypatch):
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_proctoring_screenshot_by_id",
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(RuntimeError("screenshot unavailable")),
+    )
+
+    response = client.get("/reports/proctoring/screenshot/12")
+
+    assert response.status_code == 404

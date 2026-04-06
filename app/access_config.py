@@ -28,7 +28,8 @@ ACCESS_ADMIN_EMAIL = (get_access_admin_emails() or [""])[0]
 DEFAULT_FULL_ACCESS_EMAILS = {
     "njagadeesh@aziro.com",
     "snaik@aziro.com",
-    "sshaikh@aziro.com"
+    "sshaikh@aziro.com",
+    "rbodicherla@aziro.com"
 }
 
 ACCESS_REQUEST_NOTIFY_ENABLED = True

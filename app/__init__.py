@@ -80,6 +80,18 @@ def create_app():
             "access_admin_emails": admin_emails,
         }
 
+    @app.before_request
+    def purge_expired_test_candidate_data():
+        from flask import request as req
+
+        if req.path.startswith("/static"):
+            return
+        try:
+            from .services.test_candidate_cleanup import purge_expired_test_candidates
+            purge_expired_test_candidates()
+        except Exception:
+            app.logger.exception("Failed to purge expired Test_ candidate data")
+
     # -- Permissions-Policy / Feature-Policy headers --
     @app.after_request
     def set_permissions_policy(response):
@@ -141,3 +153,4 @@ def create_app():
             ):
                 session.clear()
     return app
+

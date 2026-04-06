@@ -78,6 +78,33 @@ def test_coding_submit_invalidates_link_for_reentry(monkeypatch):
         _cleanup_session(session_id)
 
 
+def test_coding_submit_completion_page_survives_persisted_meta_failure(monkeypatch):
+    session_id = f"coding-complete-{uuid.uuid4().hex[:8]}"
+    _register_coding_session(session_id)
+
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    monkeypatch.setattr(
+        coding_routes.db_service,
+        "get_test_link_meta",
+        lambda _sid: (_ for _ in ()).throw(RuntimeError("persisted meta unavailable")),
+    )
+
+    try:
+        response = client.post(
+            f"/coding/submit/{session_id}",
+            json={"code": "print('done')"},
+            follow_redirects=True,
+        )
+
+        assert response.status_code == 200
+        body = response.get_data(as_text=True)
+        assert "Candidate" in body
+    finally:
+        _cleanup_session(session_id)
+
+
 def test_coding_reentry_before_submit_preserves_timer_and_code(monkeypatch):
     session_id = f"coding-resume-{uuid.uuid4().hex[:8]}"
     _register_coding_session(session_id)

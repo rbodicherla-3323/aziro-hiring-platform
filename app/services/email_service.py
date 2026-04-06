@@ -14,6 +14,7 @@ from urllib.parse import quote
 
 import msal
 import requests
+from app.access_config import DEFAULT_FULL_ACCESS_EMAILS
 from app.utils.round_order import ordered_present_round_keys
 
 
@@ -29,6 +30,35 @@ def _env_bool(name: str, default: bool = False) -> bool:
     if raw is None:
         return default
     return raw.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _normalize_email(value: str) -> str:
+    return str(value or "").strip().lower()
+
+
+def _get_default_test_link_share_emails(candidate_email: str = "") -> list[str]:
+    candidate_key = _normalize_email(candidate_email)
+    configured = sorted(
+        _normalize_email(email)
+        for email in (DEFAULT_FULL_ACCESS_EMAILS or set())
+        if _normalize_email(email)
+    )
+    seen = set()
+    recipients = []
+    for email in configured:
+        if email == candidate_key or email in seen:
+            continue
+        seen.add(email)
+        recipients.append(email)
+    return recipients
+
+
+def _graph_recipients(emails: list[str]) -> list[dict]:
+    return [
+        {"emailAddress": {"address": email}}
+        for email in (emails or [])
+        if _normalize_email(email)
+    ]
 
 
 def _build_email_body(candidate_name: str, role_label: str, tests: dict) -> str:
@@ -67,6 +97,7 @@ def _send_via_smtp(
     candidate_email: str,
     role_label: str,
     body: str,
+    cc_emails: list[str] | None = None,
 ) -> Tuple[bool, str]:
     smtp_enabled = _env_bool("SMTP_ENABLED", default=True)
     if not smtp_enabled:
@@ -90,6 +121,9 @@ def _send_via_smtp(
     message["Subject"] = _build_email_subject(role_label)
     message["From"] = smtp_from_email
     message["To"] = candidate_email
+    cc_list = [email for email in (cc_emails or []) if _normalize_email(email)]
+    if cc_list:
+        message["Cc"] = ", ".join(cc_list)
     message.set_content(body)
 
     try:
@@ -109,6 +143,7 @@ def _send_via_graph(
     candidate_email: str,
     role_label: str,
     body: str,
+    cc_emails: list[str] | None = None,
 ) -> Tuple[bool, str]:
     tenant_id = os.getenv("AZURE_TENANT_ID", "").strip()
     client_id = os.getenv("AZURE_CLIENT_ID", "").strip()
@@ -147,13 +182,8 @@ def _send_via_graph(
                 "contentType": "Text",
                 "content": body,
             },
-            "toRecipients": [
-                {
-                    "emailAddress": {
-                        "address": candidate_email,
-                    }
-                }
-            ],
+            "toRecipients": _graph_recipients([candidate_email]),
+            "ccRecipients": _graph_recipients(cc_emails or []),
         },
         "saveToSentItems": "true",
     }
@@ -191,6 +221,7 @@ def _send_via_graph_delegated(
     body: str,
     delegated_access_token: str = "",
     delegated_sender_email: str = "",
+    cc_emails: list[str] | None = None,
 ) -> Tuple[bool, str]:
     access_token = str(delegated_access_token or "").strip()
     if not access_token:
@@ -206,13 +237,8 @@ def _send_via_graph_delegated(
                 "contentType": "Text",
                 "content": body,
             },
-            "toRecipients": [
-                {
-                    "emailAddress": {
-                        "address": candidate_email,
-                    }
-                }
-            ],
+            "toRecipients": _graph_recipients([candidate_email]),
+            "ccRecipients": _graph_recipients(cc_emails or []),
         },
         "saveToSentItems": "true",
     }
@@ -255,6 +281,7 @@ def _send_via_resend(
     candidate_email: str,
     role_label: str,
     body: str,
+    cc_emails: list[str] | None = None,
 ) -> Tuple[bool, str]:
     api_key = os.getenv("RESEND_API_KEY", "").strip()
     from_email = (
@@ -272,6 +299,7 @@ def _send_via_resend(
     payload = {
         "from": from_email,
         "to": [candidate_email],
+        "cc": [email for email in (cc_emails or []) if _normalize_email(email)],
         "subject": _build_email_subject(role_label),
         "text": body,
     }
@@ -338,6 +366,7 @@ def send_candidate_test_links_email(
         return False, "No generated test links found for candidate."
 
     body = _build_email_body(candidate_name, role_label, tests)
+    cc_emails = _get_default_test_link_share_emails(candidate_email)
 
     # Prefer logged-in user's mailbox whenever a delegated token is available.
     if force_delegated:
@@ -349,6 +378,7 @@ def send_candidate_test_links_email(
             body=body,
             delegated_access_token=delegated_access_token,
             delegated_sender_email=delegated_sender_email,
+            cc_emails=cc_emails,
         )
         if delegated_ok:
             return True, ""
@@ -360,6 +390,7 @@ def send_candidate_test_links_email(
             body=body,
             delegated_access_token=delegated_access_token,
             delegated_sender_email=delegated_sender_email,
+            cc_emails=cc_emails,
         )
         if delegated_ok:
             return True, ""
@@ -371,6 +402,7 @@ def send_candidate_test_links_email(
             candidate_email=candidate_email,
             role_label=role_label,
             body=body,
+            cc_emails=cc_emails,
         )
 
     if email_provider == "graph_delegated":
@@ -381,6 +413,7 @@ def send_candidate_test_links_email(
             candidate_email=candidate_email,
             role_label=role_label,
             body=body,
+            cc_emails=cc_emails,
         )
 
     if email_provider == "resend":
@@ -388,6 +421,7 @@ def send_candidate_test_links_email(
             candidate_email=candidate_email,
             role_label=role_label,
             body=body,
+            cc_emails=cc_emails,
         )
 
     # auto mode: try delegated Graph, then Resend, then app Graph, then SMTP.
@@ -397,6 +431,7 @@ def send_candidate_test_links_email(
         body=body,
         delegated_access_token=delegated_access_token,
         delegated_sender_email=delegated_sender_email,
+        cc_emails=cc_emails,
     )
     if delegated_ok:
         return True, ""
@@ -406,6 +441,7 @@ def send_candidate_test_links_email(
         candidate_email=candidate_email,
         role_label=role_label,
         body=body,
+        cc_emails=cc_emails,
     )
     if resend_ok:
         return True, ""
@@ -414,6 +450,7 @@ def send_candidate_test_links_email(
         candidate_email=candidate_email,
         role_label=role_label,
         body=body,
+        cc_emails=cc_emails,
     )
     if graph_ok:
         return True, ""
@@ -422,6 +459,7 @@ def send_candidate_test_links_email(
         candidate_email=candidate_email,
         role_label=role_label,
         body=body,
+        cc_emails=cc_emails,
     )
     if smtp_ok:
         return True, ""
@@ -726,3 +764,6 @@ def send_plain_email(
             f"SMTP failed: {smtp_err}"
         ),
     )
+
+
+
