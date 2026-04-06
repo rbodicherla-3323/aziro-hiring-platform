@@ -15,6 +15,7 @@ from urllib.parse import quote
 import msal
 import requests
 from app.access_config import DEFAULT_FULL_ACCESS_EMAILS
+from app.utils.email_validator import validate_email
 from app.utils.round_order import ordered_present_round_keys
 
 
@@ -360,6 +361,10 @@ def send_candidate_test_links_email(
             False,
             f"Invalid EMAIL_PROVIDER: {email_provider}. Use one of: smtp, graph, graph_delegated, resend, auto.",
         )
+
+    email_ok, email_error = validate_email(candidate_email)
+    if not email_ok:
+        return False, email_error
 
     has_any_link = any((tests.get(k, {}) or {}).get("url") for k in tests.keys())
     if not has_any_link:
