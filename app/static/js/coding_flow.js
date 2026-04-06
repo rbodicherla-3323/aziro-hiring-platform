@@ -146,6 +146,11 @@ window.__CODING_AJAX_FLOW = true;
             var newPage = doc.querySelector(".page");
             if (!newPage || !newPage.innerHTML.trim()) throw new Error("Parsed editor page has no .page content");
             page.innerHTML = newPage.innerHTML;
+            // Always start editor view from top (prevents inherited scroll position from start page).
+            if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
 
             // Apply editor-specific page styles (from editor.html extra_css)
             page.style.maxWidth = "100%";
