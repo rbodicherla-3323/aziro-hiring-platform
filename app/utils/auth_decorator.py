@@ -38,7 +38,16 @@ def login_required(f):
 
         user = session.get("user", {}) if isinstance(session.get("user"), dict) else {}
         user_email = str(user.get("email", "") or "").strip().lower()
-        decision = decide_access(email=user_email)
+        try:
+            decision = decide_access(email=user_email)
+        except Exception:
+            clear_graph_delegated_token(user_email)
+            session.clear()
+            flash(
+                "We could not verify your access right now. Please sign in again shortly or contact an access administrator.",
+                "danger",
+            )
+            return redirect(url_for("auth.login"))
         if not decision.allowed:
             clear_graph_delegated_token(user_email)
             session.clear()

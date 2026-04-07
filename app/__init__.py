@@ -106,8 +106,13 @@ def create_app():
     # Create DB tables
     with app.app_context():
         from . import models  # noqa: F401
+        from .services.access_approvals_service import ensure_access_approvals_schema
 
         db.create_all()
+        try:
+            ensure_access_approvals_schema()
+        except Exception:
+            app.logger.exception("Failed to ensure access approvals schema")
 
     # Inject asset version into all templates for cache busting
     from .config import Config

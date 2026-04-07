@@ -19,6 +19,13 @@ from app.access_config import (
 
 log = logging.getLogger(__name__)
 
+_ACCESS_APPROVALS_REQUIRED_COLUMNS = {
+    "approved_by": "VARCHAR(320)",
+    "approved_at": "TIMESTAMP",
+    "requested_at": "TIMESTAMP",
+    "last_notified_at": "TIMESTAMP",
+}
+
 def _normalize_email(email: str) -> str:
     return str(email or "").strip().lower()
 
@@ -41,6 +48,53 @@ def _access_approvals_has_team() -> bool:
         return "team" in cols
     except Exception:
         return False
+
+
+def ensure_access_approvals_schema() -> None:
+    """
+    Keep the access_approvals table compatible with the current ORM model.
+
+    Production VMs may already have an older version of the table. ``db.create_all()``
+    will not alter that existing table, so we patch in the missing nullable columns
+    at runtime to avoid user-specific login/admin 500s.
+    """
+    bind = db.session.get_bind()
+    inspector = sa.inspect(bind)
+    table_names = set(inspector.get_table_names())
+    if "access_approvals" not in table_names:
+        AccessApproval.__table__.create(bind=bind, checkfirst=True)
+        db.session.commit()
+        return
+
+    cols = {c.get("name") for c in inspector.get_columns("access_approvals")}
+    missing_cols = [
+        col_name
+        for col_name in _ACCESS_APPROVALS_REQUIRED_COLUMNS
+        if col_name not in cols
+    ]
+    if not missing_cols:
+        return
+
+    try:
+        for col_name in missing_cols:
+            col_type = _ACCESS_APPROVALS_REQUIRED_COLUMNS[col_name]
+            db.session.execute(
+                sa.text(
+                    f"ALTER TABLE access_approvals ADD COLUMN {col_name} {col_type}"
+                )
+            )
+        db.session.commit()
+        log.info(
+            "Updated access_approvals schema with missing columns: %s",
+            ", ".join(missing_cols),
+        )
+    except Exception:
+        db.session.rollback()
+        log.exception(
+            "Failed to update access_approvals schema with missing columns: %s",
+            ", ".join(missing_cols),
+        )
+        raise
 
 
 def _legacy_insert_access_request_with_team(email: str, requested_at: datetime) -> None:
@@ -95,6 +149,7 @@ class ApprovalDecision:
 
 
 def list_approvals() -> list[AccessApproval]:
+    ensure_access_approvals_schema()
     rows = AccessApproval.query.all()
     # Sort in python to avoid cross-DB NULL ordering differences.
     def _sort_key(a: AccessApproval):
@@ -114,6 +169,7 @@ def get_approval(email: str) -> Optional[AccessApproval]:
     email = _normalize_email(email)
     if not email:
         return None
+    ensure_access_approvals_schema()
     return AccessApproval.query.filter_by(email=email).first()
 
 
@@ -123,6 +179,7 @@ def delete_approval(email: str) -> bool:
     if not email:
         return False
 
+    ensure_access_approvals_schema()
     row = AccessApproval.query.filter_by(email=email).first()
     if not row:
         return False
@@ -135,6 +192,7 @@ def upsert_access_request(email: str) -> AccessApproval:
     email = _normalize_email(email)
     log.info("Access request upsert start: %s", email)
 
+    ensure_access_approvals_schema()
     row = AccessApproval.query.filter_by(email=email).first()
     if row:
         if not row.requested_at:
@@ -205,6 +263,7 @@ def set_access_active(email: str, is_active: bool, approved_by: str) -> AccessAp
     approved_by = _normalize_email(approved_by)
 
     now = _now_utc()
+    ensure_access_approvals_schema()
     row = AccessApproval.query.filter_by(email=email).first()
     if not row:
         # Create a request row first (handles legacy schemas with NOT NULL team).

@@ -1,3 +1,4 @@
+import logging
 import csv
 import io
 import math
@@ -15,6 +16,8 @@ from app.services.access_approvals_service import (
 )
 from app.services.email_service import send_plain_email
 from app.utils.auth_decorator import login_required
+
+log = logging.getLogger(__name__)
 
 
 def _normalize_email(email: str) -> str:
@@ -260,7 +263,15 @@ def access_management_page():
     page = _parse_int(request.args.get("page"), default=1, minimum=1, maximum=10000)
     per_page = _parse_int(request.args.get("per_page"), default=6, minimum=1, maximum=100)
 
-    rows_all = _approval_rows(list_approvals())
+    try:
+        rows_all = _approval_rows(list_approvals())
+    except Exception:
+        log.exception("Failed to load access approvals for management page")
+        flash(
+            "Access approvals could not be fully loaded right now. The page is being shown with no rows while the system recovers.",
+            "warning",
+        )
+        rows_all = []
     total_requests = len(rows_all)
     approved_count = sum(1 for r in rows_all if r["status_key"] == "approved")
     pending_count = sum(1 for r in rows_all if r["status_key"] == "pending")
@@ -309,7 +320,12 @@ def access_management_view():
         flash("Only @aziro.com emails are allowed.", "danger")
         return redirect(url_for("access.access_management_page"))
 
-    approval = get_approval(email)
+    try:
+        approval = get_approval(email)
+    except Exception:
+        log.exception("Failed to load approval detail for %s", email)
+        flash("Could not load that access record right now.", "warning")
+        return redirect(url_for("access.access_management_page"))
     if not approval:
         flash(f"No approval entry found for {email}.", "warning")
         return redirect(url_for("access.access_management_page"))

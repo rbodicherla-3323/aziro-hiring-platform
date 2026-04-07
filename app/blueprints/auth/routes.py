@@ -200,11 +200,19 @@ def auth_callback():
 
     default_full_access = sorted([e for e in DEFAULT_FULL_ACCESS_EMAILS])
     access_admin_emails = get_access_admin_emails()
-    decision = decide_access(
-        email=email,
-        default_full_access_emails=default_full_access,
-        access_admin_emails=access_admin_emails,
-    )
+    try:
+        decision = decide_access(
+            email=email,
+            default_full_access_emails=default_full_access,
+            access_admin_emails=access_admin_emails,
+        )
+    except Exception:
+        log.exception("Access decision failed for %s", email)
+        flash(
+            "We could not verify your access right now. Please try again shortly or contact an access administrator.",
+            "danger",
+        )
+        return redirect(url_for("auth.login"))
     log.info("Access decision: email=%s allowed=%s", email, decision.allowed)
     if not decision.allowed:
         # Record the request for audit/UI visibility.
