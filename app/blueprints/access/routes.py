@@ -360,27 +360,31 @@ def access_management_add():
         flash("Only @aziro.com emails are allowed.", "danger")
         return redirect(url_for("access.access_management_page"))
 
-    existing = get_approval(email)
-    was_active = bool(existing and existing.is_active)
+    try:
+        existing = get_approval(email)
+        was_active = bool(existing and existing.is_active)
 
-    set_access_active(email=email, is_active=True, approved_by=_current_user_email())
+        set_access_active(email=email, is_active=True, approved_by=_current_user_email())
 
-    if not was_active:
-        user_ok, user_err = _send_access_approved_user_email(email)
-        approver_ok, approver_err = _send_access_approved_approver_email(email)
+        if not was_active:
+            user_ok, user_err = _send_access_approved_user_email(email)
+            approver_ok, approver_err = _send_access_approved_approver_email(email)
 
-        if user_ok and approver_ok:
-            flash(f"Added access for {email}. Emails sent to user and approver.", "success")
+            if user_ok and approver_ok:
+                flash(f"Added access for {email}. Emails sent to user and approver.", "success")
+            else:
+                parts = []
+                if not user_ok:
+                    parts.append(f"user email failed: {user_err}")
+                if not approver_ok:
+                    parts.append(f"approver email failed: {approver_err}")
+                detail = "; ".join([p for p in parts if p])
+                flash(f"Added access for {email}, but notifications had issues: {detail}", "warning")
         else:
-            parts = []
-            if not user_ok:
-                parts.append(f"user email failed: {user_err}")
-            if not approver_ok:
-                parts.append(f"approver email failed: {approver_err}")
-            detail = "; ".join([p for p in parts if p])
-            flash(f"Added access for {email}, but notifications had issues: {detail}", "warning")
-    else:
-        flash(f"{email} already has access.", "success")
+            flash(f"{email} already has access.", "success")
+    except Exception:
+        log.exception("Access add failed for %s", email)
+        flash(f"Could not add access for {email} right now.", "danger")
 
     return redirect(url_for("access.access_management_page"))
 
@@ -397,27 +401,31 @@ def access_management_approve():
         flash("Only @aziro.com emails are allowed.", "danger")
         return redirect(url_for("access.access_management_page"))
 
-    existing = get_approval(email)
-    was_active = bool(existing and existing.is_active)
+    try:
+        existing = get_approval(email)
+        was_active = bool(existing and existing.is_active)
 
-    set_access_active(email=email, is_active=True, approved_by=_current_user_email())
+        set_access_active(email=email, is_active=True, approved_by=_current_user_email())
 
-    if not was_active:
-        user_ok, user_err = _send_access_approved_user_email(email)
-        approver_ok, approver_err = _send_access_approved_approver_email(email)
+        if not was_active:
+            user_ok, user_err = _send_access_approved_user_email(email)
+            approver_ok, approver_err = _send_access_approved_approver_email(email)
 
-        if user_ok and approver_ok:
-            flash(f"Approved access for {email}. Emails sent to user and approver.", "success")
+            if user_ok and approver_ok:
+                flash(f"Approved access for {email}. Emails sent to user and approver.", "success")
+            else:
+                parts = []
+                if not user_ok:
+                    parts.append(f"user email failed: {user_err}")
+                if not approver_ok:
+                    parts.append(f"approver email failed: {approver_err}")
+                detail = "; ".join([p for p in parts if p])
+                flash(f"Approved access for {email}, but notifications had issues: {detail}", "warning")
         else:
-            parts = []
-            if not user_ok:
-                parts.append(f"user email failed: {user_err}")
-            if not approver_ok:
-                parts.append(f"approver email failed: {approver_err}")
-            detail = "; ".join([p for p in parts if p])
-            flash(f"Approved access for {email}, but notifications had issues: {detail}", "warning")
-    else:
-        flash(f"Approved access for {email}.", "success")
+            flash(f"Approved access for {email}.", "success")
+    except Exception:
+        log.exception("Access approve failed for %s", email)
+        flash(f"Could not approve access for {email} right now.", "danger")
 
     return redirect(url_for("access.access_management_page"))
 
@@ -434,12 +442,16 @@ def access_management_reject():
         flash("Only @aziro.com emails are allowed.", "danger")
         return redirect(url_for("access.access_management_page"))
 
-    if not get_approval(email):
-        flash(f"No approval entry found for {email}.", "warning")
-        return redirect(url_for("access.access_management_page"))
+    try:
+        if not get_approval(email):
+            flash(f"No approval entry found for {email}.", "warning")
+            return redirect(url_for("access.access_management_page"))
 
-    set_access_active(email=email, is_active=False, approved_by=_current_user_email())
-    flash(f"Rejected access for {email}.", "warning")
+        set_access_active(email=email, is_active=False, approved_by=_current_user_email())
+        flash(f"Rejected access for {email}.", "warning")
+    except Exception:
+        log.exception("Access reject failed for %s", email)
+        flash(f"Could not reject access for {email} right now.", "danger")
     return redirect(url_for("access.access_management_page"))
 
 
@@ -455,39 +467,41 @@ def access_management_revoke():
         flash("Only @aziro.com emails are allowed.", "danger")
         return redirect(url_for("access.access_management_page"))
 
-    existed = bool(get_approval(email))
-    if existed:
-        set_access_active(email=email, is_active=False, approved_by=_current_user_email())
+    try:
+        existed = bool(get_approval(email))
+        if existed:
+            set_access_active(email=email, is_active=False, approved_by=_current_user_email())
 
-    # Notify revoker (confirmation) and other admins.
-    revoker_ok, revoker_err = _send_access_revoked_revoker_email(email)
-    admin_ok, admin_err = _send_access_revoked_admin_email(email, existed=existed)
+        # Notify revoker (confirmation) and other admins.
+        revoker_ok, revoker_err = _send_access_revoked_revoker_email(email)
+        admin_ok, admin_err = _send_access_revoked_admin_email(email, existed=existed)
 
-    all_ok = revoker_ok and admin_ok
-    if existed:
-        if all_ok:
-            flash(f"Revoked access for {email}. Notifications sent.", "warning")
+        all_ok = revoker_ok and admin_ok
+        if existed:
+            if all_ok:
+                flash(f"Revoked access for {email}. Notifications sent.", "warning")
+            else:
+                parts = []
+                if not revoker_ok:
+                    parts.append(f"revoker email failed: {revoker_err}")
+                if not admin_ok:
+                    parts.append(f"admin email failed: {admin_err}")
+                detail = "; ".join(p for p in parts if p)
+                flash(f"Revoked access for {email}, but notifications had issues: {detail}", "warning")
         else:
-            parts = []
-            if not revoker_ok:
-                parts.append(f"revoker email failed: {revoker_err}")
-            if not admin_ok:
-                parts.append(f"admin email failed: {admin_err}")
-            detail = "; ".join(p for p in parts if p)
-            flash(f"Revoked access for {email}, but notifications had issues: {detail}", "warning")
-    else:
-        if all_ok:
-            flash(f"No approval entry found for {email}. Notifications sent.", "warning")
-        else:
-            parts = []
-            if not revoker_ok:
-                parts.append(f"revoker email failed: {revoker_err}")
-            if not admin_ok:
-                parts.append(f"admin email failed: {admin_err}")
-            detail = "; ".join(p for p in parts if p)
-            flash(f"No approval entry found for {email}. Notifications had issues: {detail}", "warning")
-
-
+            if all_ok:
+                flash(f"No approval entry found for {email}. Notifications sent.", "warning")
+            else:
+                parts = []
+                if not revoker_ok:
+                    parts.append(f"revoker email failed: {revoker_err}")
+                if not admin_ok:
+                    parts.append(f"admin email failed: {admin_err}")
+                detail = "; ".join(p for p in parts if p)
+                flash(f"No approval entry found for {email}. Notifications had issues: {detail}", "warning")
+    except Exception:
+        log.exception("Access revoke failed for %s", email)
+        flash(f"Could not revoke access for {email} right now.", "danger")
 
     return redirect(url_for("access.access_management_page"))
 
@@ -504,10 +518,14 @@ def access_management_delete():
         flash("Only @aziro.com emails are allowed.", "danger")
         return redirect(url_for("access.access_management_page"))
 
-    if delete_approval(email):
-        flash(f"Deleted access record for {email}.", "warning")
-    else:
-        flash(f"No approval entry found for {email}.", "warning")
+    try:
+        if delete_approval(email):
+            flash(f"Deleted access record for {email}.", "warning")
+        else:
+            flash(f"No approval entry found for {email}.", "warning")
+    except Exception:
+        log.exception("Access delete failed for %s", email)
+        flash(f"Could not delete access record for {email} right now.", "danger")
     return redirect(url_for("access.access_management_page"))
 
 
@@ -528,25 +546,29 @@ def access_management_bulk():
         flash("Select at least one user.", "warning")
         return redirect(url_for("access.access_management_page"))
 
-    updated = 0
-    for email in emails:
-        if not email.endswith("@aziro.com"):
-            continue
-        if bulk_action == "approve":
-            set_access_active(email=email, is_active=True, approved_by=_current_user_email())
-            updated += 1
-        elif bulk_action in {"reject", "revoke"}:
-            if get_approval(email):
-                set_access_active(email=email, is_active=False, approved_by=_current_user_email())
+    try:
+        updated = 0
+        for email in emails:
+            if not email.endswith("@aziro.com"):
+                continue
+            if bulk_action == "approve":
+                set_access_active(email=email, is_active=True, approved_by=_current_user_email())
                 updated += 1
-        elif bulk_action == "delete":
-            if delete_approval(email):
-                updated += 1
+            elif bulk_action in {"reject", "revoke"}:
+                if get_approval(email):
+                    set_access_active(email=email, is_active=False, approved_by=_current_user_email())
+                    updated += 1
+            elif bulk_action == "delete":
+                if delete_approval(email):
+                    updated += 1
 
-    if updated:
-        flash(f"Bulk action '{bulk_action}' applied to {updated} user(s).", "success")
-    else:
-        flash("No records were updated.", "warning")
+        if updated:
+            flash(f"Bulk action '{bulk_action}' applied to {updated} user(s).", "success")
+        else:
+            flash("No records were updated.", "warning")
+    except Exception:
+        log.exception("Bulk access action failed: %s", bulk_action)
+        flash("Could not complete the bulk access action right now.", "danger")
     return redirect(url_for("access.access_management_page"))
 
 
@@ -557,23 +579,28 @@ def access_management_export():
     if denied:
         return denied
 
-    rows = _approval_rows(list_approvals())
-    output = io.StringIO()
-    writer = csv.writer(output)
-    writer.writerow(["email", "status", "requested_on", "approved_by", "approved_at"])
-    for row in rows:
-        writer.writerow(
-            [
-                row["email"],
-                row["status_label"],
-                row["requested_on"],
-                row["approved_by"],
-                row["approved_at"],
-            ]
-        )
+    try:
+        rows = _approval_rows(list_approvals())
+        output = io.StringIO()
+        writer = csv.writer(output)
+        writer.writerow(["email", "status", "requested_on", "approved_by", "approved_at"])
+        for row in rows:
+            writer.writerow(
+                [
+                    row["email"],
+                    row["status_label"],
+                    row["requested_on"],
+                    row["approved_by"],
+                    row["approved_at"],
+                ]
+            )
 
-    response = make_response(output.getvalue())
-    response.headers["Content-Type"] = "text/csv; charset=utf-8"
-    response.headers["Content-Disposition"] = "attachment; filename=access_management.csv"
-    return response
+        response = make_response(output.getvalue())
+        response.headers["Content-Type"] = "text/csv; charset=utf-8"
+        response.headers["Content-Disposition"] = "attachment; filename=access_management.csv"
+        return response
+    except Exception:
+        log.exception("Access export failed")
+        flash("Could not export access approvals right now.", "danger")
+        return redirect(url_for("access.access_management_page"))
 

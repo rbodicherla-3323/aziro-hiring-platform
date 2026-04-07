@@ -9,9 +9,11 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.blueprints.access import access_bp
+from app.blueprints.access import routes as access_routes
 from app.blueprints.auth import auth_bp
 from app.blueprints.auth import routes as auth_routes
 from app.extensions import db
+from app.services import access_approvals_service as access_service
 from app.services.access_approvals_service import ensure_access_approvals_schema, get_approval
 from app.access_config import get_access_admin_emails
 
@@ -33,6 +35,7 @@ def _make_access_app(monkeypatch):
     app.jinja_env.globals["ASSET_VERSION"] = "test"
     db.init_app(app)
     app.register_blueprint(access_bp)
+    app.register_blueprint(auth_bp)
 
     @app.context_processor
     def inject_access_admin_context():
@@ -155,3 +158,62 @@ def test_auth_callback_redirects_cleanly_when_access_decision_errors(monkeypatch
 
     assert response.status_code == 302
     assert response.headers["Location"].endswith("/login")
+
+
+def test_access_management_approve_works_with_legacy_schema_when_schema_sync_fails(monkeypatch):
+    app = _make_access_app(monkeypatch)
+    with app.app_context():
+        _create_legacy_access_table()
+
+    monkeypatch.setattr(
+        access_service,
+        "ensure_access_approvals_schema",
+        lambda: (_ for _ in ()).throw(PermissionError("ALTER TABLE denied")),
+    )
+    monkeypatch.setattr(access_routes, "_send_access_approved_user_email", lambda email: (False, "mail disabled"))
+    monkeypatch.setattr(access_routes, "_send_access_approved_approver_email", lambda email: (False, "mail disabled"))
+
+    client = app.test_client()
+    _seed_admin_session(client)
+
+    response = client.post(
+        "/access-management/approve",
+        data={"email": "fresh.user@aziro.com"},
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 302
+    assert response.headers["Location"].endswith("/access-management")
+    with app.app_context():
+        approval = get_approval("fresh.user@aziro.com")
+        assert approval is not None
+        assert approval.email == "fresh.user@aziro.com"
+        assert bool(approval.is_active) is True
+
+
+def test_access_management_add_redirects_cleanly_when_notification_raises(monkeypatch):
+    app = _make_access_app(monkeypatch)
+    with app.app_context():
+        db.create_all()
+
+    monkeypatch.setattr(
+        access_routes,
+        "send_plain_email",
+        lambda **kwargs: (_ for _ in ()).throw(RuntimeError("mail transport crashed")),
+    )
+
+    client = app.test_client()
+    _seed_admin_session(client)
+
+    response = client.post(
+        "/access-management/add",
+        data={"email": "invite.user@aziro.com"},
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 302
+    assert response.headers["Location"].endswith("/access-management")
+    with app.app_context():
+        approval = get_approval("invite.user@aziro.com")
+        assert approval is not None
+        assert bool(approval.is_active) is True
