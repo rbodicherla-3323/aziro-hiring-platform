@@ -476,6 +476,7 @@
                 <option value="pending">Pending</option>
             </select>
             <select id="dateFilter" class="gt-filter-select">
+                <option value="present_session" selected>Present Session</option>
                 <option value="all">All Dates</option>
                 <option value="today">Today</option>
                 <option value="last7">Last 7 Days</option>
@@ -563,6 +564,7 @@
         const roleFilter = document.getElementById("roleFilter");
         const statusFilter = document.getElementById("statusFilter");
         const dateFilter = document.getElementById("dateFilter");
+        const PRESENT_SESSION_STARTED_AT_KEY = "generated_tests_present_session_started_at";
 
         const rows = () => Array.from(candidateList.querySelectorAll(".candidate-row-card"));
         const checks = () => Array.from(candidateList.querySelectorAll(".candidate-check"));
@@ -681,11 +683,27 @@
             return Number.isNaN(dt.getTime()) ? null : dt;
         }
 
+        function getPresentSessionAnchorMs() {
+            const nowMs = Date.now();
+            try {
+                const stored = sessionStorage.getItem(PRESENT_SESSION_STARTED_AT_KEY);
+                const parsed = Number(stored);
+                if (Number.isFinite(parsed) && parsed > 0) return parsed;
+                sessionStorage.setItem(PRESENT_SESSION_STARTED_AT_KEY, String(nowMs));
+                return nowMs;
+            } catch (_) {
+                return nowMs;
+            }
+        }
+
+        const presentSessionAnchorMs = getPresentSessionAnchorMs();
+
         function isDateMatch(createdAt, filterValue) {
             if (filterValue === "all") return true;
             const dt = parseDate(createdAt);
             if (!dt) return false;
             const now = new Date();
+            if (filterValue === "present_session") return dt.getTime() >= presentSessionAnchorMs;
             if (filterValue === "today") return dt.toDateString() === now.toDateString();
             if (filterValue === "last7") return (now.getTime() - dt.getTime()) <= 7 * 24 * 60 * 60 * 1000;
             return true;
@@ -898,6 +916,7 @@
         });
 
         populateRoleFilter();
+        dateFilter.value = "present_session";
         updateSelectedCount();
         applyFilters();
     })();

@@ -32,6 +32,7 @@ AUTHORITY = f"https://login.microsoftonline.com/{AZURE_TENANT_ID}"
 # Keep only resource scopes for MSAL auth request; reserved OIDC scopes are
 # added by the library as needed.
 SCOPES = ["User.Read", "Mail.Send"]
+DEFAULT_MAX_SESSION_GRAPH_TOKEN_LEN = 1200
 
 log = logging.getLogger(__name__)
 
@@ -200,11 +201,16 @@ def auth_callback():
 
     default_full_access = sorted([e for e in DEFAULT_FULL_ACCESS_EMAILS])
     access_admin_emails = get_access_admin_emails()
-    decision = decide_access(
-        email=email,
-        default_full_access_emails=default_full_access,
-        access_admin_emails=access_admin_emails,
-    )
+    try:
+        decision = decide_access(
+            email=email,
+            default_full_access_emails=default_full_access,
+            access_admin_emails=access_admin_emails,
+        )
+    except Exception:
+        log.exception("Access decision lookup failed during auth callback for %s", email)
+        flash("Authentication failed due to a temporary access check issue. Please try again.", "danger")
+        return redirect(url_for("auth.login"))
     log.info("Access decision: email=%s allowed=%s", email, decision.allowed)
     if not decision.allowed:
         # Record the request for audit/UI visibility.
@@ -233,11 +239,16 @@ def auth_callback():
 
         flash(decision.reason or "Access denied.", "danger")
         return redirect(url_for("auth.login"))
-    session["user"] = {
-        "name": name,
-        "email": email,
-        "authenticated": True,
-    }
+    try:
+        session["user"] = {
+            "name": name,
+            "email": email,
+            "authenticated": True,
+        }
+    except Exception:
+        log.exception("Failed to write user session during auth callback for %s", email)
+        flash("Authentication failed due to a temporary session issue. Please try again.", "danger")
+        return redirect(url_for("auth.login"))
 
     expires_in = result.get("expires_in", 3600)
     set_graph_delegated_token(
@@ -251,10 +262,38 @@ def auth_callback():
         ttl = 3600
     if ttl < 60:
         ttl = 60
-    session["oauth"] = {
-        "graph_access_token": access_token,
+    # Keep session cookie small. Some users can receive very large delegated
+    # access tokens (for example, due to heavy directory claims), which can
+    # cause callback failures behind proxies when stored in cookie-backed sessions.
+    max_token_len_raw = os.getenv(
+        "MAX_SESSION_GRAPH_TOKEN_LEN",
+        str(DEFAULT_MAX_SESSION_GRAPH_TOKEN_LEN),
+    ).strip()
+    try:
+        max_session_graph_token_len = max(0, int(max_token_len_raw))
+    except ValueError:
+        max_session_graph_token_len = DEFAULT_MAX_SESSION_GRAPH_TOKEN_LEN
+
+    oauth_payload = {
         "graph_access_token_expires_at": int(time.time()) + ttl,
     }
+    if access_token and len(access_token) <= max_session_graph_token_len:
+        oauth_payload["graph_access_token"] = access_token
+    else:
+        oauth_payload["graph_access_token_omitted"] = True
+        if access_token:
+            log.warning(
+                "Skipped storing delegated Graph token in session (len=%s, max=%s) for %s",
+                len(access_token),
+                max_session_graph_token_len,
+                email,
+            )
+    try:
+        session["oauth"] = oauth_payload
+    except Exception:
+        log.exception("Failed to write oauth session during auth callback for %s", email)
+        flash("Authentication failed due to a temporary session issue. Please try again.", "danger")
+        return redirect(url_for("auth.login"))
 
     return redirect(url_for("dashboard.dashboard"))
 

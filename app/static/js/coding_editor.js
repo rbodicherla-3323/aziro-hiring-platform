@@ -156,8 +156,13 @@
             }
         });
 
-        // Focus the editor
-        setTimeout(function () { cmEditor.focus(); cmEditor.refresh(); }, 100);
+        // Keep initial viewport pinned to top; focusing the editor can force-scroll down on long prompts.
+        setTimeout(function () {
+            cmEditor.refresh();
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        }, 100);
 
     } else if (textarea) {
         // â”€â”€ Fallback: plain textarea with manual key handling â”€â”€
