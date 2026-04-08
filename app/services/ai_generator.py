@@ -306,6 +306,7 @@ def _get_ai_client():
     client_mode = str(_get_env_value("GEMINI_CLIENT_MODE", "auto") or "auto").strip().lower()
     prefer_rest = (
         client_mode == "rest"
+        or (client_mode == "auto" and _should_trust_requests_env())
         or sys.version_info >= (3, 14)
     )
     if prefer_rest:

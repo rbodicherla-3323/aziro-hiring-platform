@@ -2,6 +2,9 @@
 """
 Reports page - recent session candidates + historical report search.
 """
+import base64
+import json
+import mimetypes
 from datetime import datetime, timezone, timedelta
 from io import BytesIO
 from math import ceil
@@ -24,7 +27,9 @@ from app.services.pdf_service import generate_candidate_pdf, generate_consolidat
 reports_bp = Blueprint("reports", __name__)
 _VALID_PERIOD_FILTERS = {"today", "24h", "7d", "28d", "date"}
 _MAX_CONSOLIDATED_SUMMARY_CANDIDATES = 60
-_PROJECT_ROOT = Path(__file__).resolve().parents[2]
+_PROJECT_ROOT = Path(__file__).resolve().parents[3]
+_PROCTORING_SCREENSHOT_ROOT = (_PROJECT_ROOT / "app" / "runtime" / "proctoring" / "screenshots").resolve()
+_PROCTORING_EVENTS_FILE = _PROJECT_ROOT / "app" / "runtime" / "proctoring" / "events.jsonl"
 
 
 def _get_db_service():
@@ -108,6 +113,118 @@ def _created_sort_key(item):
 
 def _normalize_email(value: str) -> str:
     return str(value or "").strip().lower()
+
+
+def _encode_screenshot_file_ref(path_value: str) -> str:
+    raw = str(path_value or "").strip()
+    if not raw:
+        return ""
+    encoded = base64.urlsafe_b64encode(raw.encode("utf-8")).decode("ascii").rstrip("=")
+    return f"file_{encoded}"
+
+
+def _decode_screenshot_file_ref(ref: str) -> str:
+    value = str(ref or "").strip()
+    if not value.startswith("file_"):
+        return ""
+    payload = value[len("file_") :]
+    if not payload:
+        return ""
+    try:
+        padded = payload + ("=" * ((4 - len(payload) % 4) % 4))
+        return base64.urlsafe_b64decode(padded.encode("ascii")).decode("utf-8")
+    except Exception:
+        return ""
+
+
+def _resolve_screenshot_file(path_value: str) -> Path | None:
+    raw = str(path_value or "").strip()
+    if not raw:
+        return None
+    candidate = Path(raw)
+    if not candidate.is_absolute():
+        candidate = (_PROJECT_ROOT / candidate).resolve()
+    else:
+        candidate = candidate.resolve()
+    try:
+        candidate.relative_to(_PROCTORING_SCREENSHOT_ROOT)
+    except Exception:
+        return None
+    if not candidate.exists() or not candidate.is_file():
+        return None
+    return candidate
+
+
+def _load_proctoring_screenshots_from_events(*, email: str = "", session_ids=None, limit: int = 200):
+    if not _PROCTORING_EVENTS_FILE.exists():
+        return []
+
+    email_key = _normalize_email(email)
+    normalized_sessions = {
+        str(session_id or "").strip().lower()
+        for session_id in (session_ids or [])
+        if str(session_id or "").strip()
+    }
+    results = []
+    seen = set()
+
+    try:
+        with _PROCTORING_EVENTS_FILE.open("r", encoding="utf-8") as handle:
+            for raw_line in handle:
+                line = str(raw_line or "").strip()
+                if not line:
+                    continue
+                try:
+                    event = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+
+                event_type = str(event.get("event_type") or "").strip()
+                if not event_type.lower().startswith("screenshot:"):
+                    continue
+
+                event_email = _normalize_email(event.get("email", ""))
+                session_uuid = str(event.get("session_id") or "").strip().lower()
+                if normalized_sessions:
+                    if not session_uuid or session_uuid not in normalized_sessions:
+                        continue
+                elif email_key and event_email != email_key:
+                    continue
+                elif not event_email and not session_uuid:
+                    continue
+
+                screenshot_path = str(event.get("screenshot_path") or "").strip()
+                resolved_path = _resolve_screenshot_file(screenshot_path)
+                if resolved_path is None:
+                    continue
+
+                dedupe_key = str(resolved_path).lower()
+                if dedupe_key in seen:
+                    continue
+                seen.add(dedupe_key)
+
+                details = event.get("details")
+                if not isinstance(details, dict):
+                    details = {}
+
+                results.append(
+                    {
+                        "id": _encode_screenshot_file_ref(str(resolved_path)),
+                        "captured_at": str(event.get("ts") or ""),
+                        "round_key": str(details.get("round_key") or ""),
+                        "round_label": str(event.get("round_label") or details.get("round_label") or ""),
+                        "source": str(details.get("capture_source") or "events"),
+                        "event_type": event_type,
+                    }
+                )
+    except OSError:
+        return []
+
+    def _sort_key(item: dict):
+        dt = _parse_created_at(item.get("captured_at", ""))
+        return dt or datetime.min.replace(tzinfo=timezone.utc)
+
+    return sorted(results, key=_sort_key, reverse=True)[:limit]
 
 
 def _attach_report_info(candidate: dict):
@@ -1051,6 +1168,7 @@ def generate_report(email):
 @login_required
 def list_proctoring_screenshots():
     email = request.args.get("email", "").strip().lower()
+    session_ids = []
     try:
         test_session_id = int(request.args.get("test_session_id", "") or 0) or None
     except (TypeError, ValueError):
@@ -1082,7 +1200,15 @@ def list_proctoring_screenshots():
             test_session_id,
             exc,
         )
-        return jsonify({"screenshots": []})
+        records = []
+    if not records:
+        fallback = _load_proctoring_screenshots_from_events(
+            email=email,
+            session_ids=session_ids if test_session_id else None,
+            limit=limit,
+        )
+        if fallback:
+            return jsonify({"screenshots": fallback})
     screenshots = []
     for rec in records:
         captured = rec.captured_at.isoformat() if rec.captured_at else ""
@@ -1098,44 +1224,59 @@ def list_proctoring_screenshots():
     return jsonify({"screenshots": screenshots})
 
 
-@reports_bp.route("/reports/proctoring/screenshot/<int:screenshot_id>")
+@reports_bp.route("/reports/proctoring/screenshot/<path:screenshot_ref>")
 @login_required
-def get_proctoring_screenshot(screenshot_id):
-    try:
-        rec = db_service.get_proctoring_screenshot_by_id(screenshot_id)
-    except Exception as exc:
-        current_app.logger.exception(
-            "Failed to load proctoring screenshot id=%s: %s",
-            screenshot_id,
-            exc,
-        )
-        abort(404, description="Screenshot not found")
-    if not rec:
+def get_proctoring_screenshot(screenshot_ref):
+    screenshot_key = str(screenshot_ref or "").strip()
+    if not screenshot_key:
         abort(404, description="Screenshot not found")
 
-    if rec.image_bytes:
-        filename = f"proctoring_{rec.id}.png"
-        return send_file(
-            BytesIO(bytes(rec.image_bytes)),
-            mimetype=rec.mime_type or "image/png",
-            download_name=filename,
-            as_attachment=False,
-        )
+    if screenshot_key.isdigit():
+        screenshot_id = int(screenshot_key)
+        try:
+            rec = db_service.get_proctoring_screenshot_by_id(screenshot_id)
+        except Exception as exc:
+            current_app.logger.exception(
+                "Failed to load proctoring screenshot id=%s: %s",
+                screenshot_id,
+                exc,
+            )
+            abort(404, description="Screenshot not found")
+        if not rec:
+            abort(404, description="Screenshot not found")
 
-    screenshot_raw = str(rec.screenshot_path or "").strip()
-    if screenshot_raw:
-        screenshot_path = Path(screenshot_raw)
-        if not screenshot_path.is_absolute():
-            screenshot_path = (_PROJECT_ROOT / screenshot_path).resolve()
-        if screenshot_path.exists():
+        if rec.image_bytes:
+            filename = f"proctoring_{rec.id}.png"
             return send_file(
-                str(screenshot_path),
+                BytesIO(bytes(rec.image_bytes)),
                 mimetype=rec.mime_type or "image/png",
-                download_name=screenshot_path.name,
+                download_name=filename,
                 as_attachment=False,
             )
 
-    abort(404, description="Screenshot not found")
+        resolved = _resolve_screenshot_file(rec.screenshot_path)
+        if resolved is not None:
+            guessed_mime = rec.mime_type or mimetypes.guess_type(resolved.name)[0] or "image/png"
+            return send_file(
+                str(resolved),
+                mimetype=guessed_mime,
+                download_name=resolved.name,
+                as_attachment=False,
+            )
+        abort(404, description="Screenshot not found")
+
+    decoded_path = _decode_screenshot_file_ref(screenshot_key)
+    resolved = _resolve_screenshot_file(decoded_path)
+    if resolved is None:
+        abort(404, description="Screenshot not found")
+
+    guessed_mime = mimetypes.guess_type(resolved.name)[0] or "image/png"
+    return send_file(
+        str(resolved),
+        mimetype=guessed_mime,
+        download_name=resolved.name,
+        as_attachment=False,
+    )
 
 
 @reports_bp.route("/reports/view/<path:filename>")

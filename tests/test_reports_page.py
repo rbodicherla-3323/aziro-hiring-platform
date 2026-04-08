@@ -152,6 +152,11 @@ def test_proctoring_screenshots_list_falls_back_to_empty_when_db_lookup_fails(mo
         "get_round_session_uuids_for_test_session",
         lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("screenshots unavailable")),
     )
+    monkeypatch.setattr(
+        reports_routes,
+        "_load_proctoring_screenshots_from_events",
+        lambda **kwargs: [],
+    )
 
     response = client.get("/reports/proctoring/screenshots?test_session_id=101")
 
@@ -209,11 +214,47 @@ def test_proctoring_screenshots_list_falls_back_to_email_when_session_scope_empt
     assert response.get_json()["screenshots"][0]["id"] == 7
 
 
+def test_proctoring_screenshots_list_uses_events_fallback_when_db_rows_missing(monkeypatch):
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_round_session_uuids_for_test_session",
+        lambda *args, **kwargs: ["session-abc"],
+    )
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_proctoring_screenshots_by_session_ids",
+        lambda *args, **kwargs: [],
+    )
+    monkeypatch.setattr(
+        reports_routes,
+        "_load_proctoring_screenshots_from_events",
+        lambda **kwargs: [
+            {
+                "id": "file_demo_token",
+                "captured_at": "2026-04-08T10:30:00+00:00",
+                "round_key": "L2",
+                "round_label": "Python Theory",
+                "source": "screen_stream",
+                "event_type": "screenshot:interval_1min",
+            }
+        ],
+    )
+
+    response = client.get("/reports/proctoring/screenshots?test_session_id=101&email=alice@example.com")
+
+    assert response.status_code == 200
+    payload = response.get_json()
+    assert payload["screenshots"][0]["id"] == "file_demo_token"
+
+
 def test_proctoring_screenshot_detail_serves_filesystem_fallback(monkeypatch):
     app = _create_test_app(monkeypatch)
     client = app.test_client()
 
-    image_dir = PROJECT_ROOT / "app" / "runtime" / "reports_test_assets"
+    image_dir = PROJECT_ROOT / "app" / "runtime" / "proctoring" / "screenshots" / "tests"
     image_dir.mkdir(parents=True, exist_ok=True)
     image_path = image_dir / f"shot_{uuid4().hex}.png"
     image_bytes = b"\x89PNG\r\n\x1a\nfallback-image"
@@ -231,6 +272,24 @@ def test_proctoring_screenshot_detail_serves_filesystem_fallback(monkeypatch):
     )
 
     response = client.get("/reports/proctoring/screenshot/22")
+
+    assert response.status_code == 200
+    assert response.data == image_bytes
+
+
+def test_proctoring_screenshot_detail_serves_encoded_file_ref(monkeypatch):
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    image_dir = PROJECT_ROOT / "app" / "runtime" / "proctoring" / "screenshots" / "tests"
+    image_dir.mkdir(parents=True, exist_ok=True)
+    image_path = image_dir / f"shot_{uuid4().hex}.jpg"
+    image_bytes = b"jpeg-fallback-image"
+    image_path.write_bytes(image_bytes)
+
+    encoded_ref = reports_routes._encode_screenshot_file_ref(str(image_path))
+
+    response = client.get(f"/reports/proctoring/screenshot/{encoded_ref}")
 
     assert response.status_code == 200
     assert response.data == image_bytes
