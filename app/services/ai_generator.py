@@ -27,6 +27,42 @@ def _get_env_value(name: str, default: str | None = None):
     return default
 
 
+def _env_flag(name: str, default: bool | None = None) -> bool | None:
+    value = _get_env_value(name)
+    if value is None:
+        return default
+    normalized = str(value).strip().lower()
+    if normalized in {"1", "true", "yes", "on"}:
+        return True
+    if normalized in {"0", "false", "no", "off"}:
+        return False
+    return default
+
+
+def _should_trust_requests_env() -> bool:
+    explicit = _env_flag("GEMINI_TRUST_ENV", None)
+    if explicit is not None:
+        return explicit
+
+    # Auto-enable env-backed requests behavior when the runtime is configured
+    # through proxy or certificate env vars (common in production VMs).
+    env_markers = (
+        "HTTPS_PROXY",
+        "HTTP_PROXY",
+        "ALL_PROXY",
+        "NO_PROXY",
+        "REQUESTS_CA_BUNDLE",
+        "CURL_CA_BUNDLE",
+        "SSL_CERT_FILE",
+        "SSL_CERT_DIR",
+        "https_proxy",
+        "http_proxy",
+        "all_proxy",
+        "no_proxy",
+    )
+    return any(bool(_get_env_value(name, "")) for name in env_markers)
+
+
 class _GeminiRestResponse:
     def __init__(self, text: str):
         self.text = text or ""
@@ -36,8 +72,9 @@ class _GeminiRestModels:
     def __init__(self, api_key: str):
         self._api_key = str(api_key or "").strip()
         self._session = requests.Session()
-        # Avoid inheriting broken proxy env vars (seen in local debug setups).
-        self._session.trust_env = False
+        # Respect proxy/certificate env vars in production, while still allowing
+        # local environments to opt out through GEMINI_TRUST_ENV=false.
+        self._session.trust_env = _should_trust_requests_env()
 
     @staticmethod
     def _part_from_unknown(value):
@@ -213,6 +250,48 @@ class _GeminiRestClient:
         self.models = _GeminiRestModels(api_key)
 
 
+class _FallbackGeminiModels:
+    def __init__(self, primary_models=None, secondary_models=None):
+        self._primary_models = primary_models
+        self._secondary_models = secondary_models
+
+    def generate_content(self, *args, **kwargs):
+        primary_exc = None
+
+        if self._primary_models is not None:
+            try:
+                return self._primary_models.generate_content(*args, **kwargs)
+            except Exception as exc:
+                primary_exc = exc
+                log.warning("Primary Gemini client failed during generation; trying REST fallback: %s", exc)
+
+        if self._secondary_models is not None:
+            return self._secondary_models.generate_content(*args, **kwargs)
+
+        if primary_exc is not None:
+            raise primary_exc
+        raise RuntimeError("Gemini client is unavailable")
+
+
+class _FallbackGeminiClient:
+    def __init__(self, primary_client=None, secondary_client=None):
+        self.models = _FallbackGeminiModels(
+            getattr(primary_client, "models", None),
+            getattr(secondary_client, "models", None),
+        )
+
+
+def _build_rest_client(api_key: str):
+    key = str(api_key or "").strip()
+    if not key:
+        return None
+    try:
+        return _GeminiRestClient(api_key=key)
+    except Exception as exc:
+        log.warning("Gemini REST client initialization failed: %s", exc)
+        return None
+
+
 def _get_ai_client():
     """Lazily initialize Gemini client from environment."""
     global AI_CLIENT
@@ -230,36 +309,31 @@ def _get_ai_client():
         or sys.version_info >= (3, 14)
     )
     if prefer_rest:
-        try:
-            AI_CLIENT = _GeminiRestClient(api_key=api_key)
-            return AI_CLIENT
-        except Exception as rest_exc:
-            log.warning("Gemini REST client initialization failed: %s", rest_exc)
-            return None
+        AI_CLIENT = _build_rest_client(api_key)
+        return AI_CLIENT
 
     # Lazy import to avoid importing Google SDK when key is not configured.
     try:
         from google import genai
     except Exception as exc:
         log.debug("Gemini SDK unavailable; using REST fallback client: %s", exc)
-        try:
-            AI_CLIENT = _GeminiRestClient(api_key=api_key)
-            return AI_CLIENT
-        except Exception as rest_exc:
-            log.warning("Gemini REST fallback initialization failed: %s", rest_exc)
-            return None
+        AI_CLIENT = _build_rest_client(api_key)
+        return AI_CLIENT
 
     try:
-        AI_CLIENT = genai.Client(api_key=api_key)
-        return AI_CLIENT
+        sdk_client = genai.Client(api_key=api_key)
     except Exception as exc:
         log.warning("Gemini SDK client initialization failed; trying REST fallback: %s", exc)
-        try:
-            AI_CLIENT = _GeminiRestClient(api_key=api_key)
-            return AI_CLIENT
-        except Exception as rest_exc:
-            log.warning("Gemini REST fallback initialization failed: %s", rest_exc)
-            return None
+        AI_CLIENT = _build_rest_client(api_key)
+        return AI_CLIENT
+
+    rest_client = _build_rest_client(api_key)
+    if rest_client is not None:
+        AI_CLIENT = _FallbackGeminiClient(primary_client=sdk_client, secondary_client=rest_client)
+        return AI_CLIENT
+
+    AI_CLIENT = sdk_client
+    return AI_CLIENT
 
 
 def _build_fallback_summary(candidate_data):

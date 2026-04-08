@@ -207,10 +207,11 @@
 
   function buildScopedGalleryUrl(context) {
     var params = new URLSearchParams();
+    if (context.email) {
+      params.set("email", context.email);
+    }
     if (context.testSessionId) {
       params.set("test_session_id", context.testSessionId);
-    } else if (context.email) {
-      params.set("email", context.email);
     }
     params.set("limit", "300");
     return "/reports/proctoring/screenshots?" + params.toString();

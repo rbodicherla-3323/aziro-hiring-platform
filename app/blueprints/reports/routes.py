@@ -5,6 +5,7 @@ Reports page - recent session candidates + historical report search.
 from datetime import datetime, timezone, timedelta
 from io import BytesIO
 from math import ceil
+from pathlib import Path
 from flask import Blueprint, render_template, request, session, jsonify, send_file, abort, current_app
 
 from app.utils.auth_decorator import login_required
@@ -23,6 +24,7 @@ from app.services.pdf_service import generate_candidate_pdf, generate_consolidat
 reports_bp = Blueprint("reports", __name__)
 _VALID_PERIOD_FILTERS = {"today", "24h", "7d", "28d", "date"}
 _MAX_CONSOLIDATED_SUMMARY_CANDIDATES = 60
+_PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
 def _get_db_service():
@@ -1048,7 +1050,7 @@ def generate_report(email):
 @reports_bp.route("/reports/proctoring/screenshots")
 @login_required
 def list_proctoring_screenshots():
-    email = request.args.get("email", "").strip()
+    email = request.args.get("email", "").strip().lower()
     try:
         test_session_id = int(request.args.get("test_session_id", "") or 0) or None
     except (TypeError, ValueError):
@@ -1069,6 +1071,8 @@ def list_proctoring_screenshots():
                 attempted_only=False,
             )
             records = db_service.get_proctoring_screenshots_by_session_ids(session_ids, limit=limit)
+            if not records and email:
+                records = db_service.get_proctoring_screenshots_by_email(email, limit=limit)
         else:
             records = db_service.get_proctoring_screenshots_by_email(email, limit=limit)
     except Exception as exc:
@@ -1106,16 +1110,32 @@ def get_proctoring_screenshot(screenshot_id):
             exc,
         )
         abort(404, description="Screenshot not found")
-    if not rec or not rec.image_bytes:
+    if not rec:
         abort(404, description="Screenshot not found")
 
-    filename = f"proctoring_{rec.id}.png"
-    return send_file(
-        BytesIO(bytes(rec.image_bytes)),
-        mimetype=rec.mime_type or "image/png",
-        download_name=filename,
-        as_attachment=False,
-    )
+    if rec.image_bytes:
+        filename = f"proctoring_{rec.id}.png"
+        return send_file(
+            BytesIO(bytes(rec.image_bytes)),
+            mimetype=rec.mime_type or "image/png",
+            download_name=filename,
+            as_attachment=False,
+        )
+
+    screenshot_raw = str(rec.screenshot_path or "").strip()
+    if screenshot_raw:
+        screenshot_path = Path(screenshot_raw)
+        if not screenshot_path.is_absolute():
+            screenshot_path = (_PROJECT_ROOT / screenshot_path).resolve()
+        if screenshot_path.exists():
+            return send_file(
+                str(screenshot_path),
+                mimetype=rec.mime_type or "image/png",
+                download_name=screenshot_path.name,
+                as_attachment=False,
+            )
+
+    abort(404, description="Screenshot not found")
 
 
 @reports_bp.route("/reports/view/<path:filename>")

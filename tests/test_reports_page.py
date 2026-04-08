@@ -1,6 +1,8 @@
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from types import SimpleNamespace
+from uuid import uuid4
 
 from flask import Flask
 
@@ -170,3 +172,65 @@ def test_proctoring_screenshot_detail_returns_404_when_db_lookup_fails(monkeypat
     response = client.get("/reports/proctoring/screenshot/12")
 
     assert response.status_code == 404
+
+
+def test_proctoring_screenshots_list_falls_back_to_email_when_session_scope_empty(monkeypatch):
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_round_session_uuids_for_test_session",
+        lambda *args, **kwargs: [],
+    )
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_proctoring_screenshots_by_session_ids",
+        lambda *args, **kwargs: [],
+    )
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_proctoring_screenshots_by_email",
+        lambda *args, **kwargs: [
+            SimpleNamespace(
+                id=7,
+                captured_at=datetime(2026, 4, 8, 10, 30, tzinfo=timezone.utc),
+                round_key="L2",
+                round_label="Python Theory",
+                source="mcq",
+                event_type="interval_1min",
+            )
+        ],
+    )
+
+    response = client.get("/reports/proctoring/screenshots?test_session_id=101&email=alice@example.com")
+
+    assert response.status_code == 200
+    assert response.get_json()["screenshots"][0]["id"] == 7
+
+
+def test_proctoring_screenshot_detail_serves_filesystem_fallback(monkeypatch):
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    image_dir = PROJECT_ROOT / "app" / "runtime" / "reports_test_assets"
+    image_dir.mkdir(parents=True, exist_ok=True)
+    image_path = image_dir / f"shot_{uuid4().hex}.png"
+    image_bytes = b"\x89PNG\r\n\x1a\nfallback-image"
+    image_path.write_bytes(image_bytes)
+
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_proctoring_screenshot_by_id",
+        lambda *_args, **_kwargs: SimpleNamespace(
+            id=22,
+            image_bytes=None,
+            screenshot_path=str(image_path),
+            mime_type="image/png",
+        ),
+    )
+
+    response = client.get("/reports/proctoring/screenshot/22")
+
+    assert response.status_code == 200
+    assert response.data == image_bytes
