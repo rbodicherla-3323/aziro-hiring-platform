@@ -22,6 +22,11 @@ class _SuccessfulModels:
         return SimpleNamespace(text=self._text)
 
 
+class _EmptyModels:
+    def generate_content(self, *args, **kwargs):
+        return SimpleNamespace(text="   ")
+
+
 def test_rest_client_trusts_proxy_env_when_present(monkeypatch):
     monkeypatch.setenv("HTTPS_PROXY", "http://proxy.internal:8080")
     monkeypatch.delenv("GEMINI_TRUST_ENV", raising=False)
@@ -35,6 +40,27 @@ def test_generate_summary_uses_secondary_client_when_primary_fails(monkeypatch):
     summary_text = "AI summary from fallback client."
     fallback_client = ai_generator._FallbackGeminiClient(
         primary_client=SimpleNamespace(models=_FailingModels()),
+        secondary_client=SimpleNamespace(models=_SuccessfulModels(summary_text)),
+    )
+
+    monkeypatch.setattr(ai_generator, "_get_ai_client", lambda: fallback_client)
+
+    result = ai_generator.generate_evaluation_summary(
+        {
+            "name": "Alice Example",
+            "role": "Python Developer",
+            "summary": {"attempted_rounds": 1, "total_rounds": 1, "passed_rounds": 1, "failed_rounds": 0},
+            "rounds": {},
+        }
+    )
+
+    assert result == summary_text
+
+
+def test_generate_summary_uses_secondary_client_when_primary_returns_empty(monkeypatch):
+    summary_text = "AI summary from secondary client."
+    fallback_client = ai_generator._FallbackGeminiClient(
+        primary_client=SimpleNamespace(models=_EmptyModels()),
         secondary_client=SimpleNamespace(models=_SuccessfulModels(summary_text)),
     )
 

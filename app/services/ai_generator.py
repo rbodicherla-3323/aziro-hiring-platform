@@ -260,7 +260,12 @@ class _FallbackGeminiModels:
 
         if self._primary_models is not None:
             try:
-                return self._primary_models.generate_content(*args, **kwargs)
+                response = self._primary_models.generate_content(*args, **kwargs)
+                response_text = str(getattr(response, "text", "") or "").strip()
+                if response_text:
+                    return response
+                primary_exc = RuntimeError("Primary Gemini client returned empty response text")
+                log.warning("%s; trying REST fallback", primary_exc)
             except Exception as exc:
                 primary_exc = exc
                 log.warning("Primary Gemini client failed during generation; trying REST fallback: %s", exc)
@@ -306,7 +311,6 @@ def _get_ai_client():
     client_mode = str(_get_env_value("GEMINI_CLIENT_MODE", "auto") or "auto").strip().lower()
     prefer_rest = (
         client_mode == "rest"
-        or (client_mode == "auto" and _should_trust_requests_env())
         or sys.version_info >= (3, 14)
     )
     if prefer_rest:
@@ -655,9 +659,12 @@ def generate_evaluation_summary(candidate_data):
             model='gemini-2.5-flash',
             contents=prompt
         )
-        return _normalize_overall_summary(response.text.strip())
+        text = str(getattr(response, "text", "") or "").strip()
+        if not text:
+            raise RuntimeError("Gemini returned empty overall summary text")
+        return _normalize_overall_summary(text)
     except Exception as e:
-        print(f"Error generating summary: {e}. Using fallback summary.")
+        log.warning("Error generating overall summary; using fallback summary: %s", e)
         return _normalize_overall_summary(_build_fallback_summary(candidate_data))
 
 
@@ -693,9 +700,12 @@ def generate_coding_round_summary(coding_data):
             model='gemini-2.5-flash',
             contents=prompt
         )
-        return _strip_coding_overview_lines(response.text.strip())
+        text = str(getattr(response, "text", "") or "").strip()
+        if not text:
+            raise RuntimeError("Gemini returned empty coding summary text")
+        return _strip_coding_overview_lines(text)
     except Exception as e:
-        print(f"Error generating coding summary: {e}. Using fallback coding summary.")
+        log.warning("Error generating coding summary; using fallback coding summary: %s", e)
         return _strip_coding_overview_lines(_build_fallback_coding_summary(coding_data))
 
 
@@ -742,7 +752,10 @@ def generate_consolidated_evaluation_summary(consolidated_payload):
             model='gemini-2.5-flash',
             contents=prompt
         )
-        return response.text.strip()
+        text = str(getattr(response, "text", "") or "").strip()
+        if not text:
+            raise RuntimeError("Gemini returned empty consolidated summary text")
+        return text
     except Exception as e:
-        print(f"Error generating consolidated summary: {e}. Using fallback consolidated summary.")
+        log.warning("Error generating consolidated summary; using fallback consolidated summary: %s", e)
         return _build_fallback_consolidated_summary(consolidated_payload)
