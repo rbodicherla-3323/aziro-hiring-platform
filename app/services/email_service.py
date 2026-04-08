@@ -699,21 +699,46 @@ def send_plain_email(
     delegated_sender_email: str = "",
 ) -> Tuple[bool, str]:
     """Send a plain-text email (used for access request notifications)."""
-    email_provider = os.getenv("EMAIL_PROVIDER", "smtp").strip().lower()
-    valid_providers = {"smtp", "graph", "graph_delegated", "resend", "auto"}
-    if email_provider not in valid_providers:
-        return (
-            False,
-            f"Invalid EMAIL_PROVIDER: {email_provider}. Use one of: smtp, graph, graph_delegated, resend, auto.",
-        )
+    try:
+        email_provider = os.getenv("EMAIL_PROVIDER", "smtp").strip().lower()
+        valid_providers = {"smtp", "graph", "graph_delegated", "resend", "auto"}
+        if email_provider not in valid_providers:
+            return (
+                False,
+                f"Invalid EMAIL_PROVIDER: {email_provider}. Use one of: smtp, graph, graph_delegated, resend, auto.",
+            )
 
-    to_email = str(to_email or "").strip()
-    subject = str(subject or "").strip()
-    body = str(body or "")
-    if not to_email or not subject:
-        return False, "Recipient and subject are required."
+        to_email = str(to_email or "").strip()
+        subject = str(subject or "").strip()
+        body = str(body or "")
+        if not to_email or not subject:
+            return False, "Recipient and subject are required."
 
-    if delegated_access_token:
+        if delegated_access_token:
+            delegated_ok, delegated_err = _send_plain_via_graph_delegated(
+                to_email=to_email,
+                subject=subject,
+                body=body,
+                delegated_access_token=delegated_access_token,
+                delegated_sender_email=delegated_sender_email,
+            )
+            if delegated_ok:
+                return True, ""
+            if email_provider == "graph_delegated":
+                return False, delegated_err
+
+        if email_provider == "graph":
+            return _send_plain_via_graph(to_email=to_email, subject=subject, body=body)
+
+        if email_provider == "graph_delegated":
+            return False, "Delegated Graph token is missing or expired. Please sign in with Microsoft again."
+
+        if email_provider == "smtp":
+            return _send_plain_via_smtp(to_email=to_email, subject=subject, body=body)
+
+        if email_provider == "resend":
+            return _send_plain_via_resend(to_email=to_email, subject=subject, body=body)
+
         delegated_ok, delegated_err = _send_plain_via_graph_delegated(
             to_email=to_email,
             subject=subject,
@@ -723,52 +748,30 @@ def send_plain_email(
         )
         if delegated_ok:
             return True, ""
-        if email_provider == "graph_delegated":
-            return False, delegated_err
 
-    if email_provider == "graph":
-        return _send_plain_via_graph(to_email=to_email, subject=subject, body=body)
+        resend_ok, resend_err = _send_plain_via_resend(to_email=to_email, subject=subject, body=body)
+        if resend_ok:
+            return True, ""
 
-    if email_provider == "graph_delegated":
-        return False, "Delegated Graph token is missing or expired. Please sign in with Microsoft again."
+        graph_ok, graph_err = _send_plain_via_graph(to_email=to_email, subject=subject, body=body)
+        if graph_ok:
+            return True, ""
 
-    if email_provider == "smtp":
-        return _send_plain_via_smtp(to_email=to_email, subject=subject, body=body)
+        smtp_ok, smtp_err = _send_plain_via_smtp(to_email=to_email, subject=subject, body=body)
+        if smtp_ok:
+            return True, ""
 
-    if email_provider == "resend":
-        return _send_plain_via_resend(to_email=to_email, subject=subject, body=body)
-
-    delegated_ok, delegated_err = _send_plain_via_graph_delegated(
-        to_email=to_email,
-        subject=subject,
-        body=body,
-        delegated_access_token=delegated_access_token,
-        delegated_sender_email=delegated_sender_email,
-    )
-    if delegated_ok:
-        return True, ""
-
-    resend_ok, resend_err = _send_plain_via_resend(to_email=to_email, subject=subject, body=body)
-    if resend_ok:
-        return True, ""
-
-    graph_ok, graph_err = _send_plain_via_graph(to_email=to_email, subject=subject, body=body)
-    if graph_ok:
-        return True, ""
-
-    smtp_ok, smtp_err = _send_plain_via_smtp(to_email=to_email, subject=subject, body=body)
-    if smtp_ok:
-        return True, ""
-
-    return (
-        False,
-        (
-            f"Delegated Graph failed: {delegated_err} | "
-            f"Resend failed: {resend_err} | "
-            f"Graph failed: {graph_err} | "
-            f"SMTP failed: {smtp_err}"
-        ),
-    )
+        return (
+            False,
+            (
+                f"Delegated Graph failed: {delegated_err} | "
+                f"Resend failed: {resend_err} | "
+                f"Graph failed: {graph_err} | "
+                f"SMTP failed: {smtp_err}"
+            ),
+        )
+    except Exception as exc:
+        return False, f"Plain email send failed unexpectedly: {exc}"
 
 
 
