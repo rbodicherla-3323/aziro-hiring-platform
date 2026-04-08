@@ -4,7 +4,8 @@ import base64
 import json
 import sys
 from pathlib import Path
-from dotenv import load_dotenv
+from functools import lru_cache
+from dotenv import load_dotenv, dotenv_values
 import requests
 from app.utils.round_order import ordered_present_round_keys, round_number_map, round_sort_key
 
@@ -15,8 +16,43 @@ AI_CLIENT = None
 log = logging.getLogger(__name__)
 
 
+@lru_cache(maxsize=1)
+def _get_dotenv_gemini_overrides() -> dict[str, str]:
+    """Read Gemini-specific overrides from repo env files.
+
+    Load `.env.production` first and `.env` second so `.env` wins when both define
+    the same Gemini variable. This keeps the override limited to Gemini-related
+    settings and avoids changing broader process env precedence for the app.
+    """
+    merged: dict[str, str] = {}
+    for path in (_PROJECT_ROOT / ".env.production", _PROJECT_ROOT / ".env"):
+        if not path.exists():
+            continue
+        try:
+            values = dotenv_values(path)
+        except Exception:
+            continue
+        for key, value in values.items():
+            if value is None:
+                continue
+            normalized_key = str(key or "")
+            if not normalized_key:
+                continue
+            for candidate_key in (normalized_key, normalized_key.lstrip("\ufeff")):
+                if candidate_key.startswith("GEMINI_"):
+                    merged[candidate_key] = str(value)
+    return merged
+
+
 def _get_env_value(name: str, default: str | None = None):
     """Read env var with fallback for BOM-prefixed keys."""
+    if str(name or "").startswith("GEMINI_"):
+        dotenv_value = _get_dotenv_gemini_overrides().get(name)
+        if dotenv_value is not None:
+            return dotenv_value
+        bom_dotenv_value = _get_dotenv_gemini_overrides().get(f"\ufeff{name}")
+        if bom_dotenv_value is not None:
+            return bom_dotenv_value
     value = os.getenv(name)
     if value is not None:
         return value
@@ -306,6 +342,7 @@ def _get_ai_client():
 
     api_key = _get_env_value("GEMINI_API_KEY")
     if not api_key:
+        log.warning("GEMINI_API_KEY is not configured; AI summaries will use deterministic fallback text.")
         return None
 
     client_mode = str(_get_env_value("GEMINI_CLIENT_MODE", "auto") or "auto").strip().lower()

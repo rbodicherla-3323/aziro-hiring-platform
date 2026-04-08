@@ -76,3 +76,25 @@ def test_generate_summary_uses_secondary_client_when_primary_returns_empty(monke
     )
 
     assert result == summary_text
+
+
+def test_gemini_env_value_prefers_repo_dotenv_override(monkeypatch):
+    monkeypatch.setenv("GEMINI_API_KEY", "stale-env-key")
+    monkeypatch.setattr(
+        ai_generator,
+        "_get_dotenv_gemini_overrides",
+        lambda: {"GEMINI_API_KEY": "fresh-dotenv-key"},
+    )
+
+    assert ai_generator._get_env_value("GEMINI_API_KEY") == "fresh-dotenv-key"
+
+
+def test_non_gemini_env_value_keeps_process_env_precedence(monkeypatch):
+    monkeypatch.setenv("SOME_OTHER_SETTING", "process-value")
+    monkeypatch.setattr(
+        ai_generator,
+        "_get_dotenv_gemini_overrides",
+        lambda: {"GEMINI_API_KEY": "fresh-dotenv-key"},
+    )
+
+    assert ai_generator._get_env_value("SOME_OTHER_SETTING") == "process-value"

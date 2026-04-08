@@ -1110,7 +1110,12 @@ def generate_report(email):
             email_key,
             candidate_data=candidate_data,
         )
-    except Exception:
+    except Exception as exc:
+        current_app.logger.exception(
+            "Failed to generate AI overall summary for %s: %s",
+            email_key,
+            exc,
+        )
         candidate_data["ai_overall_summary"] = None
 
     try:
@@ -1118,7 +1123,12 @@ def generate_report(email):
             email_key,
             candidate_data=candidate_data,
         )
-    except Exception:
+    except Exception as exc:
+        current_app.logger.exception(
+            "Failed to generate AI coding summary for %s: %s",
+            email_key,
+            exc,
+        )
         candidate_data["ai_coding_summary"] = None
     try:
         candidate_data["coding_round_data"] = EvaluationService.get_candidate_coding_round_data(
@@ -1423,14 +1433,24 @@ def generate_report_by_session():
             email_key,
             candidate_data=candidate_data,
         )
-    except Exception:
+    except Exception as exc:
+        current_app.logger.exception(
+            "Failed to generate AI overall summary for %s in generate-report-test: %s",
+            email_key,
+            exc,
+        )
         candidate_data["ai_overall_summary"] = None
     try:
         candidate_data["ai_coding_summary"] = EvaluationService.generate_candidate_coding_round_summary(
             email_key,
             candidate_data=candidate_data,
         )
-    except Exception:
+    except Exception as exc:
+        current_app.logger.exception(
+            "Failed to generate AI coding summary for %s in generate-report-test: %s",
+            email_key,
+            exc,
+        )
         candidate_data["ai_coding_summary"] = None
     try:
         candidate_data["coding_round_data"] = EvaluationService.get_candidate_coding_round_data(
