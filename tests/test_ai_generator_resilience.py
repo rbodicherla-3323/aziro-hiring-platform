@@ -98,3 +98,14 @@ def test_non_gemini_env_value_keeps_process_env_precedence(monkeypatch):
     )
 
     assert ai_generator._get_env_value("SOME_OTHER_SETTING") == "process-value"
+
+
+def test_gemini_env_missing_in_dotenv_does_not_inherit_stale_process_flag(monkeypatch):
+    monkeypatch.setenv("GEMINI_CLIENT_MODE", "rest")
+    monkeypatch.setattr(
+        ai_generator,
+        "_get_dotenv_gemini_overrides",
+        lambda: {"GEMINI_API_KEY": "fresh-dotenv-key"},
+    )
+
+    assert ai_generator._get_env_value("GEMINI_CLIENT_MODE") is None

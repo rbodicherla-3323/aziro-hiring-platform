@@ -20,18 +20,22 @@ log = logging.getLogger(__name__)
 def _get_dotenv_gemini_overrides() -> dict[str, str]:
     """Read Gemini-specific overrides from repo env files.
 
-    Load `.env.production` first and `.env` second so `.env` wins when both define
-    the same Gemini variable. This keeps the override limited to Gemini-related
-    settings and avoids changing broader process env precedence for the app.
+    Prefer `.env` as the single source of truth for Gemini settings when it
+    contains any `GEMINI_*` keys. Otherwise fall back to `.env.production`.
+    This prevents stale production-only Gemini flags from leaking into the app
+    after an operator intentionally updates `.env` on the VM.
     """
-    merged: dict[str, str] = {}
-    for path in (_PROJECT_ROOT / ".env.production", _PROJECT_ROOT / ".env"):
+    sources = (_PROJECT_ROOT / ".env", _PROJECT_ROOT / ".env.production")
+    selected: dict[str, str] = {}
+
+    for path in sources:
         if not path.exists():
             continue
         try:
             values = dotenv_values(path)
         except Exception:
             continue
+        current: dict[str, str] = {}
         for key, value in values.items():
             if value is None:
                 continue
@@ -40,19 +44,26 @@ def _get_dotenv_gemini_overrides() -> dict[str, str]:
                 continue
             for candidate_key in (normalized_key, normalized_key.lstrip("\ufeff")):
                 if candidate_key.startswith("GEMINI_"):
-                    merged[candidate_key] = str(value)
-    return merged
+                    current[candidate_key] = str(value)
+        if current:
+            selected = current
+            break
+
+    return selected
 
 
 def _get_env_value(name: str, default: str | None = None):
     """Read env var with fallback for BOM-prefixed keys."""
     if str(name or "").startswith("GEMINI_"):
-        dotenv_value = _get_dotenv_gemini_overrides().get(name)
+        overrides = _get_dotenv_gemini_overrides()
+        dotenv_value = overrides.get(name)
         if dotenv_value is not None:
             return dotenv_value
-        bom_dotenv_value = _get_dotenv_gemini_overrides().get(f"\ufeff{name}")
+        bom_dotenv_value = overrides.get(f"\ufeff{name}")
         if bom_dotenv_value is not None:
             return bom_dotenv_value
+        if overrides:
+            return default
     value = os.getenv(name)
     if value is not None:
         return value
