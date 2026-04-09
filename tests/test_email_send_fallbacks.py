@@ -218,3 +218,128 @@ def test_send_candidate_test_links_email_excludes_candidate_from_default_share_l
         "sshaikh@aziro.com",
     ]
 
+
+
+def test_send_candidate_test_links_email_rejects_invalid_candidate_email(monkeypatch):
+    monkeypatch.setenv("EMAIL_PROVIDER", "smtp")
+
+    sent, error = email_service.send_candidate_test_links_email(
+        candidate_name="Candidate One",
+        candidate_email="candidate.one@gmail",
+        role_label="Python QA",
+        tests={
+            "L2": {
+                "label": "MCQ L2",
+                "url": "https://example.com/mcq/start/session-invalid",
+                "type": "mcq",
+            }
+        },
+    )
+
+    assert sent is False
+    assert error == "Invalid candidate email address."
+
+
+def test_create_test_skips_invalid_candidate_email(monkeypatch):
+    GENERATED_TESTS.clear()
+    MCQ_SESSION_REGISTRY.clear()
+    CODING_SESSION_REGISTRY.clear()
+
+    monkeypatch.setenv("AUTH_DISABLED", "true")
+    monkeypatch.setenv("AUTO_SEND_TEST_EMAILS", "true")
+    monkeypatch.setenv("EMAIL_PROVIDER", "smtp")
+    monkeypatch.setattr(dashboard_routes, "get_valid_graph_delegated_token", lambda _email: "")
+    monkeypatch.setattr(dashboard_routes, "get_valid_graph_delegated_token_from_session", lambda _oauth: "")
+
+    sent_calls = []
+
+    def _fake_send_candidate_test_links_email(**kwargs):
+        sent_calls.append(kwargs)
+        return True, ""
+
+    monkeypatch.setattr(
+        dashboard_routes,
+        "send_candidate_test_links_email",
+        _fake_send_candidate_test_links_email,
+    )
+
+    app = _make_app()
+    client = app.test_client()
+    _seed_auth_session(client, with_oauth=False)
+
+    response = client.post(
+        "/create-test",
+        data={
+            "name[]": ["Candidate One"],
+            "email[]": ["candidate.one@gmail"],
+            "role[]": ["Java Entry Level (0-2 Years)"],
+            "domain[]": ["None"],
+        },
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 302
+    assert sent_calls == []
+    assert GENERATED_TESTS == []
+    assert len(MCQ_SESSION_REGISTRY) == 0
+    assert len(CODING_SESSION_REGISTRY) == 0
+
+
+def test_generated_tests_retry_send_reports_invalid_candidate_email(monkeypatch):
+    monkeypatch.setenv("AUTH_DISABLED", "true")
+    monkeypatch.setenv("EMAIL_PROVIDER", "smtp")
+    monkeypatch.setattr(tests_routes, "get_valid_graph_delegated_token", lambda _email: "")
+    monkeypatch.setattr(tests_routes, "get_valid_graph_delegated_token_from_session", lambda _oauth: "")
+    monkeypatch.setattr(
+        tests_routes,
+        "get_tests_for_user_today",
+        lambda _email: [
+            {
+                "name": "Candidate One",
+                "email": "candidate.one@gmail",
+                "role": "Python QA (5+ Years)",
+                "tests": {
+                    "L2": {
+                        "session_id": "session-123",
+                        "label": "MCQ L2",
+                        "url": "https://example.com/mcq/start/session-123",
+                        "type": "mcq",
+                    }
+                },
+            }
+        ],
+    )
+
+    sent_calls = []
+
+    def _fake_send_candidate_test_links_email(**kwargs):
+        sent_calls.append(kwargs)
+        return True, ""
+
+    monkeypatch.setattr(
+        tests_routes,
+        "send_candidate_test_links_email",
+        _fake_send_candidate_test_links_email,
+    )
+
+    app = _make_app()
+    client = app.test_client()
+    _seed_auth_session(client, with_oauth=False)
+
+    response = client.post(
+        "/generated-tests/send-emails",
+        json={"emails": ["candidate.one@gmail"]},
+    )
+
+    assert response.status_code == 200
+    payload = response.get_json()
+    assert payload["success"] is True
+    assert payload["sent_count"] == 0
+    assert payload["failed_count"] == 1
+    assert payload["failures"] == [
+        {
+            "email": "candidate.one@gmail",
+            "reason": "Invalid candidate email address.",
+        }
+    ]
+    assert sent_calls == []

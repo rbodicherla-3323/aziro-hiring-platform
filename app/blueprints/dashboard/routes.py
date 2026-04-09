@@ -13,6 +13,7 @@ from app.utils.auth_decorator import login_required
 from app.utils.role_normalizer import normalize_role, ROLE_NAME_TO_KEY
 from app.utils.role_round_mapping import ROLE_ROUND_MAPPING, ROLE_CODING_LANGUAGE
 from app.utils.round_display_mapping import ROUND_DISPLAY_MAPPING
+from app.utils.email_validator import normalize_email, validate_email
 from app.utils.round_question_mapping import DOMAIN_QUESTION_FILES
 
 from app.services.generated_tests_store import add_generated_test
@@ -426,7 +427,7 @@ def create_test():
 
     for i in range(len(names)):
         name = names[i].strip()
-        email = emails[i].strip()
+        email = normalize_email(emails[i])
         role_label = roles[i].strip()
         domain = domains[i].strip() if i < len(domains) else "None"
 
@@ -441,6 +442,11 @@ def create_test():
             jd_path = save_uploaded_file(jd_files[i], name, "jd")
 
         if not name or not email or not role_label:
+            continue
+
+        email_ok, email_error = validate_email(email)
+        if not email_ok:
+            flash(f"{email_error} Candidate '{name}' was skipped.", "warning")
             continue
 
         role_key = normalize_role(role_label)

@@ -29,6 +29,7 @@ from app.services.document_intelligence import (
     get_mime_type_for_filename,
 )
 from app.utils.round_order import INTERNAL_ROUND_ORDER
+from app.utils.email_validator import normalize_email, validate_email
 
 
 # --------------------------------------------
@@ -254,7 +255,7 @@ def send_generated_tests_emails():
     selected_emails = []
     seen = set()
     for item in raw_emails:
-        email = str(item or "").strip().lower()
+        email = normalize_email(item)
         if not email or email in seen:
             continue
         selected_emails.append(email)
@@ -286,9 +287,15 @@ def send_generated_tests_emails():
             failures.append({"email": email, "reason": "Candidate not found for this session."})
             continue
 
+        candidate_email = normalize_email(candidate.get("email", email))
+        email_ok, email_error = validate_email(candidate_email)
+        if not email_ok:
+            failures.append({"email": candidate.get("email", email), "reason": email_error})
+            continue
+
         sent, error = send_candidate_test_links_email(
             candidate_name=candidate.get("name", "Candidate"),
-            candidate_email=candidate.get("email", email),
+            candidate_email=candidate_email,
             role_label=candidate.get("role", ""),
             tests=candidate.get("tests", {}),
             delegated_access_token=delegated_access_token,
