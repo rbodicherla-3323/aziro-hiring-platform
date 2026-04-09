@@ -5,23 +5,98 @@
 {% block head %}
 <style>
 :root {
-    --ev-brand: #0f766e;
-    --ev-az-blue: #2050a0;
+    --ev-brand: #2d63da;
+    --ev-az-blue: #2d63da;
     --ev-az-orange: #f06000;
     --ev-ink: #0f172a;
     --ev-muted: #64748b;
     --ev-border: #e2e8f0;
     --ev-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
-    --ev-bg: #f5f7fa;
+    --ev-bg: #f4f6ff;
+    --ev-fs-page-title: var(--az-fs-page-title);
+    --ev-fs-subtitle: var(--az-fs-page-subtitle);
+    --ev-fs-heading: var(--az-fs-heading);
+    --ev-fs-body: var(--az-fs-body);
+    --ev-fs-label: var(--az-fs-label);
+    --ev-fs-btn: var(--az-fs-btn);
+    --ev-fs-meta: var(--az-fs-meta);
 }
-.evaluation-page { padding: 8px 0 24px; background: var(--ev-bg); min-height: 100vh; font-family: "Poppins", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif; }
-.eval-breadcrumb { font-size: 0.78rem; color: var(--ev-muted); margin-bottom: 4px; }
+.sidebar,
+.az-topbar,
+.evaluation-page {
+    font-family: "Poppins", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+.breadcrumb {
+    display: none;
+}
+
+.content-area > footer {
+    display: none;
+}
+
+.evaluation-page {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #dfe6f7;
+    border-radius: 20px;
+    padding: 16px 18px 18px;
+    background:
+        radial-gradient(760px 280px at -6% -10%, rgba(45, 99, 218, 0.19) 0%, rgba(45, 99, 218, 0) 69%),
+        radial-gradient(520px 220px at 92% 0%, rgba(255, 122, 26, 0.16) 0%, rgba(255, 122, 26, 0) 71%),
+        linear-gradient(180deg, #fafbff 0%, #f4f3fc 62%, #efedf9 100%);
+    min-height: 0;
+    font-size: var(--ev-fs-body);
+    line-height: 1.5;
+    font-style: normal;
+    letter-spacing: 0;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+}
+
+.evaluation-page::before {
+    content: "";
+    position: absolute;
+    top: 154px;
+    right: -20px;
+    width: 560px;
+    height: 170px;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at 8% 70%, rgba(229, 237, 255, 0.82) 0, rgba(229, 237, 255, 0.82) 24%, transparent 26%),
+        radial-gradient(ellipse at 24% 72%, rgba(223, 232, 253, 0.84) 0, rgba(223, 232, 253, 0.84) 24%, transparent 26%),
+        radial-gradient(ellipse at 40% 70%, rgba(220, 230, 251, 0.82) 0, rgba(220, 230, 251, 0.82) 24%, transparent 26%),
+        radial-gradient(ellipse at 56% 72%, rgba(214, 224, 248, 0.78) 0, rgba(214, 224, 248, 0.78) 24%, transparent 26%),
+        radial-gradient(ellipse at 72% 70%, rgba(210, 221, 247, 0.76) 0, rgba(210, 221, 247, 0.76) 24%, transparent 26%),
+        radial-gradient(ellipse at 88% 70%, rgba(207, 218, 244, 0.7) 0, rgba(207, 218, 244, 0.7) 24%, transparent 26%);
+    opacity: 0.92;
+}
+
+.evaluation-page::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 180px;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(240, 239, 251, 0) 0%, rgba(225, 231, 248, 0.58) 100%);
+}
+
+.evaluation-page > * {
+    position: relative;
+    z-index: 1;
+}
+
+.eval-breadcrumb { font-size: var(--ev-fs-label); color: var(--ev-muted); margin-bottom: 4px; }
 .eval-breadcrumb a { color: var(--ev-brand); text-decoration: none; font-weight: 500; }
 .eval-breadcrumb a:hover { text-decoration: underline; }
 .eval-title-bar { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px; flex-wrap: wrap; gap: 10px; }
-.eval-title-h4 { font-size: 1.45rem; font-weight: 700; color: var(--ev-ink); margin: 0; letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px; line-height: 1.3; }
+.eval-title-h4 { font-size: var(--ev-fs-page-title); font-weight: 600; color: var(--ev-ink); margin: 0; letter-spacing: 0; display: flex; align-items: center; gap: 8px; line-height: 1.2; }
+.eval-subtitle { margin: 6px 0 0; color: var(--ev-muted); font-size: var(--ev-fs-subtitle); }
 .threshold-legend { background: #fff; border: 1px solid var(--ev-border); border-radius: 10px; padding: 12px 20px; margin-bottom: 20px; display: flex; align-items: center; flex-wrap: wrap; gap: 14px; box-shadow: var(--ev-shadow); }
-.threshold-item { display: inline-flex; align-items: center; gap: 6px; font-size: 0.79rem; color: var(--ev-muted); }
+.threshold-item { display: inline-flex; align-items: center; gap: 6px; font-size: var(--ev-fs-label); color: var(--ev-muted); }
 .threshold-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
 .candidate-selector { border: 1px solid var(--ev-border); border-radius: 10px; background: #fff; box-shadow: var(--ev-shadow); margin-bottom: 20px; transition: border-color 0.2s; }
 .candidate-selector:hover { border-color: var(--ev-brand); }
@@ -35,15 +110,15 @@
 .select-all-bar { padding: 8px 0; border-bottom: 2px solid #e2e8f0; margin-bottom: 4px; }
 .candidate-result-card { background: #fff; border: 1px solid var(--ev-border); border-radius: 14px; overflow: hidden; margin-bottom: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
 .candidate-result-header { padding: 22px 26px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid var(--ev-border); background: #fff; }
-.candidate-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #0f766e, #14b8a6); color: #fff; font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; letter-spacing: 0.5px; }
+.candidate-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #3b87f0, #2b5fd3); color: #fff; font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; letter-spacing: 0.5px; }
 .candidate-info-wrap { display: flex; align-items: center; gap: 14px; }
-.candidate-name { font-size: 1.15rem; font-weight: 700; color: var(--ev-ink); margin: 0; line-height: 1.2; }
-.candidate-email { font-size: 0.82rem; color: var(--ev-muted); margin: 3px 0 6px; }
-.role-badge { display: inline-block; background: #e0f2fe; color: #0369a1; font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; letter-spacing: 0.2px; }
+.candidate-name { font-size: var(--ev-fs-heading); font-weight: 600; color: var(--ev-ink); margin: 0; line-height: 1.2; }
+.candidate-email { font-size: var(--ev-fs-body); color: var(--ev-muted); margin: 3px 0 6px; }
+.role-badge { display: inline-block; background: #e0f2fe; color: #0369a1; font-size: var(--ev-fs-meta); font-weight: 600; padding: 3px 10px; border-radius: 999px; letter-spacing: 0; }
 .result-pills { display: flex; gap: 10px; flex-shrink: 0; }
 .result-pill { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 68px; padding: 10px 14px; border-radius: 10px; text-align: center; }
-.result-pill .pill-value { font-size: 1.35rem; font-weight: 700; line-height: 1; }
-.result-pill .pill-label { font-size: 0.67rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 4px; }
+.result-pill .pill-value { font-size: 1.15rem; font-weight: 600; line-height: 1; }
+.result-pill .pill-label { font-size: var(--ev-fs-meta); font-weight: 600; text-transform: uppercase; letter-spacing: 0.2px; margin-top: 4px; }
 .pill-pass { background: var(--ev-az-blue); color: #fff; }
 .pill-fail { background: var(--ev-az-orange); color: #ffffff; }
 .pill-attempted { background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; }
@@ -51,34 +126,34 @@
 @media (max-width: 768px) { .summary-row { grid-template-columns: 1fr; } }
 .summary-panel { padding: 16px 22px; }
 .summary-panel:first-child { border-right: 1px solid var(--ev-border); }
-.summary-panel-title { display: flex; align-items: center; gap: 7px; font-size: 0.78rem; font-weight: 700; color: #334155; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+.summary-panel-title { display: flex; align-items: center; gap: 7px; font-size: var(--ev-fs-label); font-weight: 600; color: #334155; text-transform: uppercase; letter-spacing: 0.2px; margin-bottom: 10px; }
 .summary-panel-title .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
 .chips-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 6px; font-size: 0.74rem; font-weight: 500; background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+.chip { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 6px; font-size: var(--ev-fs-meta); font-weight: 500; background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
 .chip.alert-chip { background: var(--ev-az-orange); color: #ffffff; border-color: var(--ev-az-orange); }
 .chip.risk-high { background: var(--ev-az-orange); color: #ffffff; border-color: var(--ev-az-orange); }
 .chip.risk-medium { background: #fffbeb; color: #92400e; border-color: #fde68a; }
 .chip.risk-low { background: #f0fdf4; color: #166534; border-color: #bbf7d0; }
-.score-table { margin: 0; font-size: 0.875rem; width: 100%; }
-.score-table thead th { background: #1e293b; color: #e2e8f0; font-weight: 600; padding: 13px 18px; border: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.6px; white-space: nowrap; }
+.score-table { margin: 0; font-size: var(--ev-fs-body); width: 100%; }
+.score-table thead th { background: #1e293b; color: #e2e8f0; font-weight: 600; padding: 13px 18px; border: none; font-size: var(--ev-fs-meta); text-transform: uppercase; letter-spacing: 0.2px; white-space: nowrap; }
 .score-table tbody td { padding: 14px 18px; vertical-align: middle; border-bottom: 1px solid #f1f5f9; color: #334155; }
 .score-table tbody tr:last-child td { border-bottom: none; }
 .score-table tbody tr:hover { background: #f8fafc; }
-.round-name { font-weight: 600; color: #0f172a; font-size: 0.88rem; }
-.round-key-badge { display: inline-block; background: #f1f5f9; color: #64748b; font-size: 0.67rem; font-weight: 600; padding: 1px 6px; border-radius: 4px; margin-top: 3px; letter-spacing: 0.3px; }
+.round-name { font-weight: 600; color: #0f172a; font-size: var(--ev-fs-body); }
+.round-key-badge { display: inline-block; background: #f1f5f9; color: #64748b; font-size: var(--ev-fs-meta); font-weight: 600; padding: 1px 6px; border-radius: 4px; margin-top: 3px; letter-spacing: 0.1px; }
 .score-progress { height: 7px; border-radius: 4px; background: #e9ecef; overflow: hidden; min-width: 80px; }
 .score-progress-bar { height: 100%; border-radius: 4px; transition: width 0.7s ease; }
-.status-pill { padding: 4px 13px; border-radius: 20px; font-weight: 600; font-size: 0.73rem; display: inline-block; text-transform: uppercase; letter-spacing: 0.4px; }
+.status-pill { padding: 4px 13px; border-radius: 20px; font-weight: 600; font-size: var(--ev-fs-meta); display: inline-block; text-transform: uppercase; letter-spacing: 0.15px; }
 .status-pass { background: rgba(32,80,160,0.14); color: var(--ev-az-blue); }
 .status-fail { background: var(--ev-az-orange); color: #ffffff; }
 .status-pending { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
-.card-footer-note { padding: 12px 22px; background: #f8fafc; border-top: 1px solid var(--ev-border); font-size: 0.77rem; color: var(--ev-muted); }
-.rounds-section-title { font-size: 0.88rem; font-weight: 700; color: #0f172a; margin-bottom: 0; letter-spacing: -0.1px; padding: 16px 22px 12px; }
+.card-footer-note { padding: 12px 22px; background: #f8fafc; border-top: 1px solid var(--ev-border); font-size: var(--ev-fs-label); color: var(--ev-muted); }
+.rounds-section-title { font-size: var(--ev-fs-heading); font-weight: 600; color: #0f172a; margin-bottom: 0; letter-spacing: 0; padding: 16px 22px 12px; }
 .eval-empty-state { text-align: center; padding: 60px 22px; border: 1.5px dashed #cbd5e1; border-radius: 12px; background: #fff; }
 .eval-empty-state .empty-icon { font-size: 2.8rem; color: #cbd5e1; margin-bottom: 14px; }
 .eval-empty-state h5 { color: #64748b; font-weight: 600; }
-.eval-empty-state p { color: #94a3b8; font-size: 0.88rem; }
-.btn-evaluate { background: var(--ev-az-blue); color: #fff; border: none; border-radius: 8px; padding: 10px 26px; font-weight: 600; font-size: 0.88rem; cursor: pointer; transition: background 0.2s, transform 0.15s, box-shadow 0.15s; box-shadow: 0 1px 3px rgba(32,80,160,0.25); }
+.eval-empty-state p { color: #94a3b8; font-size: var(--ev-fs-body); }
+.btn-evaluate { background: var(--ev-az-blue); color: #fff; border: none; border-radius: 8px; padding: 10px 26px; font-weight: 600; font-size: var(--ev-fs-btn); cursor: pointer; transition: background 0.2s, transform 0.15s, box-shadow 0.15s; box-shadow: 0 1px 3px rgba(32,80,160,0.25); }
 .btn-evaluate:hover { background: #1b458c; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(32,80,160,0.3); color: #fff; }
 .btn-evaluate:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
@@ -96,17 +171,18 @@
                 <span>Candidate Evaluation</span>
             </div>
             <div class="eval-title-h4">
-                <i class="bi bi-clipboard-data" style="color:#0f766e;"></i>
+                <i class="bi bi-clipboard-data" style="color:#2d63da;"></i>
                 Candidate Evaluation
             </div>
+            <p class="eval-subtitle">Review round-wise candidate performance, pass status, and evaluation signals for this session.</p>
         </div>
     </div>
 
     <div class="threshold-legend">
         <span style="font-size:0.78rem; font-weight:600; color:#334155;">
-            <i class="bi bi-info-circle me-1" style="color:#0f766e;"></i> Pass Thresholds:
+            <i class="bi bi-info-circle me-1" style="color:#2d63da;"></i> Pass Thresholds:
         </span>
-        <span class="threshold-item"><span class="threshold-dot" style="background:#0f766e;"></span>Aptitude: {{ pass_thresholds.get('L1', default_threshold) }}%</span>
+        <span class="threshold-item"><span class="threshold-dot" style="background:#2d63da;"></span>Aptitude: {{ pass_thresholds.get('L1', default_threshold) }}%</span>
         <span class="threshold-item"><span class="threshold-dot" style="background:#6610f2;"></span>Technical: {{ pass_thresholds.get('L2', default_threshold) }}%</span>
         <span class="threshold-item"><span class="threshold-dot" style="background:#e76f51;"></span>Practical: {{ pass_thresholds.get('L3', default_threshold) }}%</span>
         <span class="threshold-item"><span class="threshold-dot" style="background:#2a9d8f;"></span>Soft Skills: {{ pass_thresholds.get('L5', default_threshold) }}%</span>
@@ -138,7 +214,7 @@
                         <input class="form-check-input candidate-checkbox" type="checkbox" name="candidates" value="{{ c.candidate_key }}" id="cand_{{ loop.index }}" {% if c.candidate_key in selected_candidate_keys %}checked{% endif %}>
                         <label class="form-check-label" for="cand_{{ loop.index }}">
                             <span class="fw-semibold" style="color:#0f172a;">{{ c.name }}</span>
-                            <div style="font-size:0.82rem; color:#64748b;">{{ c.email }} &nbsp;&middot;&nbsp; <span style="color:#0f766e;">{{ c.role }}</span>{% if c.batch_id %} &nbsp;&middot;&nbsp; <span>{{ c.batch_id }}</span>{% endif %}</div>
+                            <div style="font-size:0.82rem; color:#64748b;">{{ c.email }} &nbsp;&middot;&nbsp; <span style="color:#2d63da;">{{ c.role }}</span>{% if c.batch_id %} &nbsp;&middot;&nbsp; <span>{{ c.batch_id }}</span>{% endif %}</div>
                         </label>
                     </div>
                     {% endfor %}
@@ -289,7 +365,7 @@
             </div>
 
             <div class="card-footer-note">
-                <i class="bi bi-lightbulb me-1" style="color:#0f766e;"></i>
+                <i class="bi bi-lightbulb me-1" style="color:#2d63da;"></i>
                 Each round has its own pass threshold. A candidate is <strong>Selected</strong> only if they pass <strong>all</strong> rounds.
             </div>
 
@@ -328,8 +404,8 @@ document.querySelectorAll('.score-progress-bar').forEach(function(bar) {
     var thr = parseFloat(label.dataset.threshold) || 70;
     bar.style.width = pct + '%';
     if (pct >= thr) {
-        bar.style.background = 'linear-gradient(90deg,#0f766e,#14b8a6)';
-        label.style.color = '#0f766e';
+        bar.style.background = 'linear-gradient(90deg,#2d63da,#3b87f0)';
+        label.style.color = '#2d63da';
     } else if (pct >= thr - 10) {
         bar.style.background = 'linear-gradient(90deg,#f59e0b,#fcd34d)';
         label.style.color = '#d97706';

@@ -2148,9 +2148,9 @@
 {% else %}
     {% set overview_label = 'Today' %}
 {% endif %}
-{% set perf_max = (chart_y_ticks[0].value if chart_y_ticks else 1) | int %}
+{% set perf_max = (chart_y_ticks[0].value if chart_y_ticks else 100) | float %}
 {% if perf_max <= 0 %}
-    {% set perf_max = 1 %}
+    {% set perf_max = 100 %}
 {% endif %}
 {% set tests_width = ((chart_latest.tests | float) * 100.0 / perf_max) %}
 {% if tests_width > 100 %}
@@ -2160,20 +2160,10 @@
 {% if completed_width > 100 %}
     {% set completed_width = 100 %}
 {% endif %}
-{% set latest_tests = chart_latest.tests | int %}
-{% set latest_completed = chart_latest.completed | int %}
-{% if latest_tests > 0 %}
-    {% set latest_completion_ratio = (latest_completed * 100.0) / latest_tests %}
-{% else %}
-    {% set latest_completion_ratio = 0 %}
-{% endif %}
-{% set overall_latest_tests = overall_chart_latest.tests | int %}
-{% set overall_latest_completed = overall_chart_latest.completed | int %}
-{% if overall_latest_tests > 0 %}
-    {% set overall_latest_completion_ratio = (overall_latest_completed * 100.0) / overall_latest_tests %}
-{% else %}
-    {% set overall_latest_completion_ratio = 0 %}
-{% endif %}
+{% set latest_pass_ratio = chart_latest.tests | float %}
+{% set latest_fail_ratio = chart_latest.completed | float %}
+{% set overall_latest_pass_ratio = overall_chart_latest.tests | float %}
+{% set overall_latest_fail_ratio = overall_chart_latest.completed | float %}
 {% if my_total > 0 %}
     {% set pending_pressure_width = ((my_stats.pending | float) * 100.0 / my_total) %}
 {% else %}
@@ -2220,12 +2210,12 @@
                             <div class="dash-side-live">
                                 <div class="dash-overall-live-head">
                                     <div class="dash-live-legend">
-                                        <span class="tests"><i class="bi bi-circle-fill"></i>Tests</span>
-                                        <span class="completed"><i class="bi bi-circle-fill"></i>Completed</span>
+                                        <span class="tests"><i class="bi bi-circle-fill"></i>Pass %</span>
+                                        <span class="completed"><i class="bi bi-circle-fill"></i>Fail %</span>
                                     </div>
                                     <span class="dash-live-pill"><i class="bi bi-broadcast-pin"></i>Live Org Trend</span>
                                 </div>
-                                <svg class="dash-overall-live-chart" viewBox="0 0 360 225" role="img" aria-label="Organization monthly trend for tests and completions">
+                                <svg class="dash-overall-live-chart" viewBox="0 0 360 225" role="img" aria-label="Organization monthly pass and fail percentage trend">
                                     {% for tick in overall_chart_y_ticks %}
                                     <line class="grid" x1="40" y1="{{ tick.y }}" x2="338" y2="{{ tick.y }}"/>
                                     <text x="34" y="{{ tick.y + 3 }}" text-anchor="end">{{ tick.value }}</text>
@@ -2259,15 +2249,15 @@
                                     </div>
                                     <div class="dash-overall-kpi">
                                         <span class="k-label">Latest Month</span>
-                                        <span class="k-value">{{ overall_latest_tests }}</span>
+                                        <span class="k-value">{{ "%.1f"|format(overall_latest_pass_ratio) }}%</span>
                                     </div>
                                     <div class="dash-overall-kpi">
-                                        <span class="k-label">Completion</span>
-                                        <span class="k-value">{{ "%.1f"|format(overall_latest_completion_ratio) }}%</span>
+                                        <span class="k-label">Pass %</span>
+                                        <span class="k-value">{{ "%.1f"|format(overall_latest_pass_ratio) }}%</span>
                                     </div>
                                     <div class="dash-overall-kpi">
-                                        <span class="k-label">Pending</span>
-                                        <span class="k-value">{{ overview_pending }}</span>
+                                        <span class="k-label">Fail %</span>
+                                        <span class="k-value">{{ "%.1f"|format(overall_latest_fail_ratio) }}%</span>
                                     </div>
                                 </div>
                             </div>
@@ -2280,12 +2270,12 @@
                             <div class="dash-side-live">
                                 <div class="dash-personal-live-head">
                                     <div class="dash-live-legend">
-                                        <span class="tests"><i class="bi bi-circle-fill"></i>Tests</span>
-                                        <span class="completed"><i class="bi bi-circle-fill"></i>Completed</span>
+                                        <span class="tests"><i class="bi bi-circle-fill"></i>Pass %</span>
+                                        <span class="completed"><i class="bi bi-circle-fill"></i>Fail %</span>
                                     </div>
                                     <span class="dash-live-pill"><i class="bi bi-person-badge"></i>My Trend</span>
                                 </div>
-                                <svg class="dash-personal-live-chart" viewBox="0 0 360 225" role="img" aria-label="Personal monthly trend for tests and completions">
+                                <svg class="dash-personal-live-chart" viewBox="0 0 360 225" role="img" aria-label="Personal monthly pass and fail percentage trend">
                                     {% for tick in chart_y_ticks %}
                                     <line class="grid" x1="40" y1="{{ tick.y }}" x2="338" y2="{{ tick.y }}"/>
                                     {% endfor %}
@@ -2318,13 +2308,13 @@
                                 </div>
                                 <div class="dash-carousel-metric">
                                     <span class="icon"><i class="bi bi-arrow-left-right"></i></span>
-                                    <span class="label">Tests Created</span>
-                                    <span class="value">{{ my_total }}</span>
+                                    <span class="label">Pass %</span>
+                                    <span class="value">{{ "%.1f"|format(latest_pass_ratio) }}%</span>
                                 </div>
                                 <div class="dash-carousel-metric">
                                     <span class="icon"><i class="bi bi-check2"></i></span>
-                                    <span class="label">Completed</span>
-                                    <span class="value">{{ my_completed }}</span>
+                                    <span class="label">Fail %</span>
+                                    <span class="value">{{ "%.1f"|format(latest_fail_ratio) }}%</span>
                                 </div>
                                 <div class="dash-carousel-metric">
                                     <span class="icon"><i class="bi bi-graph-up-arrow"></i></span>
@@ -2397,8 +2387,8 @@
                             <div class="dash-carousel-performance">
                                 <div class="dash-perf-card">
                                     <div class="dash-perf-head">
-                                        <span>Throughput Momentum</span>
-                                        <span>{{ chart_latest.tests | int }}</span>
+                                        <span>Pass Percentage</span>
+                                        <span>{{ "%.1f"|format(chart_latest.tests | float) }}%</span>
                                     </div>
                                     <div class="dash-perf-track">
                                         <div class="dash-perf-fill warm" style="width: {{ '%.1f'|format(tests_width) }}%;"></div>
@@ -2407,13 +2397,13 @@
                                 </div>
                                 <div class="dash-perf-card">
                                     <div class="dash-perf-head">
-                                        <span>Completion Reliability</span>
-                                        <span>{{ "%.1f"|format(latest_completion_ratio) }}%</span>
+                                        <span>Fail Percentage</span>
+                                        <span>{{ "%.1f"|format(chart_latest.completed | float) }}%</span>
                                     </div>
                                     <div class="dash-perf-track">
                                         <div class="dash-perf-fill cool" style="width: {{ '%.1f'|format(completed_width) }}%;"></div>
                                     </div>
-                                    <div class="dash-perf-meta">{{ chart_latest.completed | int }} completed out of {{ chart_latest.tests | int }} created</div>
+                                    <div class="dash-perf-meta">{% if chart_completed_trend.is_up %}+{% else %}-{% endif %}{{ "%.1f"|format(chart_completed_trend.pct | float) }}% vs previous month</div>
                                 </div>
                                 <div class="dash-perf-card">
                                     <div class="dash-perf-head">
@@ -2558,13 +2548,13 @@
         <div class="dash-chart-wrap">
             <div class="dash-chart-meta">
                 <div class="dash-chart-kpi">
-                    <span><span class="dot dot-orange"></span>{{ chart_latest.tests | int }}</span>
+                    <span><span class="dot dot-orange"></span>{{ "%.1f"|format(chart_latest.tests | float) }}%</span>
                     <span class="trend {% if chart_tests_trend.is_up %}up{% else %}down{% endif %}">
                         {% if chart_tests_trend.is_up %}+{% else %}-{% endif %}{{ "%.1f"|format(chart_tests_trend.pct | float) }}%
                     </span>
                 </div>
                 <div class="dash-chart-kpi">
-                    <span><span class="dot dot-blue"></span>{{ chart_latest.completed | int }}</span>
+                    <span><span class="dot dot-blue"></span>{{ "%.1f"|format(chart_latest.completed | float) }}%</span>
                     <span class="trend {% if chart_completed_trend.is_up %}up{% else %}down{% endif %}">
                         {% if chart_completed_trend.is_up %}+{% else %}-{% endif %}{{ "%.1f"|format(chart_completed_trend.pct | float) }}%
                     </span>
