@@ -403,19 +403,74 @@ def _build_fallback_summary(candidate_data):
     total_rounds = summary.get("total_rounds", len(rounds))
     passed_rounds = summary.get("passed_rounds", 0)
     failed_rounds = summary.get("failed_rounds", 0)
+    overall_percentage = float(summary.get("overall_percentage", 0) or 0)
+
+    def _round_narrative(round_label: str, status: str, pct: float, correct: int, total: int, threshold: float) -> str:
+        if status == "PASS" and pct >= max(85.0, float(threshold)):
+            insight = "The candidate demonstrated strong command in this area and cleared the round comfortably."
+        elif status == "PASS":
+            insight = "The candidate met the expected benchmark and showed workable role-aligned understanding in this round."
+        elif pct >= max(float(threshold) - 10.0, 55.0):
+            insight = "The candidate showed partial familiarity, but the round remained below the expected bar."
+        elif pct >= 35.0:
+            insight = "The result suggests limited working understanding, with noticeable gaps in the concepts assessed here."
+        else:
+            insight = "The score indicates a significant gap in this area and the current response quality remained well below expectation."
+
+        return (
+            f"**{round_label}**: {insight} "
+            f"Final score was {pct:.2f}% ({correct}/{total}) against a pass threshold of {threshold:.1f}%."
+        )
+
+    strength_labels = []
+    concern_labels = []
+    for rk in ordered_present_round_keys(rounds):
+        rv = rounds.get(rk) or {}
+        label = str(rv.get("round_label", rk) or rk)
+        status = str(rv.get("status", "") or "").strip().upper()
+        pct = float(rv.get("percentage", 0) or 0)
+        if status == "PASS" or pct >= 75.0:
+            strength_labels.append(label)
+        elif status == "FAIL" and pct < 50.0:
+            concern_labels.append(label)
+
+    if passed_rounds == total_rounds and total_rounds > 0:
+        snapshot = (
+            f"The candidate completed all {total_rounds} rounds successfully and delivered an overall score of "
+            f"{overall_percentage:.2f}%, which indicates a consistently strong assessment profile."
+        )
+    elif passed_rounds > failed_rounds:
+        snapshot = (
+            f"The candidate attempted {attempted_rounds}/{total_rounds} rounds, passing {passed_rounds} and failing {failed_rounds}, "
+            f"with an overall score of {overall_percentage:.2f}%. The profile shows more strengths than gaps, but still requires targeted review."
+        )
+    elif passed_rounds == failed_rounds and attempted_rounds:
+        snapshot = (
+            f"The candidate attempted {attempted_rounds}/{total_rounds} rounds with a mixed outcome, recording "
+            f"{passed_rounds} passes and {failed_rounds} failures. The overall score of {overall_percentage:.2f}% suggests a partially aligned profile."
+        )
+    else:
+        snapshot = (
+            f"The candidate attempted {attempted_rounds}/{total_rounds} rounds, passing {passed_rounds} and failing {failed_rounds}. "
+            f"With an overall score of {overall_percentage:.2f}%, the assessment indicates substantial improvement is still needed for this role."
+        )
+
+    context_notes = []
+    if strength_labels:
+        context_notes.append(f"Relative strengths were observed in {', '.join(strength_labels[:3])}.")
+    if concern_labels:
+        context_notes.append(f"The most visible gaps appeared in {', '.join(concern_labels[:3])}.")
 
     lines = [
         (
             f"{name} was evaluated for the {role} role. "
-            "This overall summary captures performance across all evaluation rounds for TA review."
+            "This summary is intended to give TA and hiring stakeholders a concise decision-support view of the candidate's performance."
         ),
         "",
-        (
-            f"The candidate attempted {attempted_rounds}/{total_rounds} rounds, "
-            f"passing {passed_rounds} and failing {failed_rounds}."
-        ),
+        snapshot,
+        *(["", " ".join(context_notes)] if context_notes else []),
         "",
-        "**Round-wise Detailed Insights:**",
+        "### Round-wise Detailed Insights",
     ]
     ordered_keys = ordered_present_round_keys(rounds)
     numbers = round_number_map(ordered_keys)
@@ -431,10 +486,7 @@ def _build_fallback_summary(candidate_data):
         total = rv.get("total", 0)
         threshold = rv.get("pass_threshold", 0)
 
-        lines.append(
-            f"- **{round_number}. {round_label}**: Status = {status}; Score = {pct}% ({correct}/{total}); "
-            f"Pass Threshold = {threshold}%."
-        )
+        lines.append(f"- **{round_number}. {round_label}**: {_round_narrative(round_label, status, float(pct or 0), int(correct or 0), int(total or 0), float(threshold or 0)).split(': ', 1)[1]}")
 
     return "\n".join(lines)
 
@@ -474,30 +526,76 @@ def _build_fallback_coding_summary(coding_data):
     submitted_code = coding_data.get("submitted_code", "")
     overall_rounds = coding_data.get("overall_rounds", {}) or {}
 
+    code_text = str(submitted_code or "").strip()
+    normalized_code = code_text.lower()
+    has_todo = "todo" in normalized_code
+    prints_output = "print(" in normalized_code
+    returns_none = "return none" in normalized_code or "returnnull" in normalized_code.replace(" ", "")
+    syntax_hint = ""
+
+    if str(language or "").strip().lower() == "python" and code_text:
+        try:
+            compile(code_text, "<candidate_code>", "exec")
+        except Exception as exc:
+            syntax_hint = str(exc)
+
     insight_lines = []
-    ordered_keys = ordered_present_round_keys(overall_rounds)
-    numbers = round_number_map(ordered_keys)
-    for rk in ordered_keys:
-        rd = overall_rounds.get(rk)
-        if not rd:
-            continue
-        number = rd.get("round_number", numbers.get(rk, 0))
+    if status == "PASS" and percentage >= 90:
         insight_lines.append(
-            f"- {number}. {rd.get('round_label', rk)}: {rd.get('status', 'Pending')} "
-            f"({rd.get('percentage', 0)}%, {rd.get('correct', 0)}/{rd.get('total', 0)})"
+            "- The submitted solution aligns well with the expected outcome and the score suggests the implementation was functionally correct."
         )
-    key_insights = "\n".join(insight_lines) if insight_lines else "- Round-wise insights not available."
+    elif status == "PASS":
+        insight_lines.append(
+            "- The candidate produced a working or near-working solution, though the submission still appears to have room for refinement in structure or completeness."
+        )
+    elif percentage >= 50:
+        insight_lines.append(
+            "- The submission shows partial problem understanding, but the implementation still contains correctness or completeness gaps that prevented a full pass."
+        )
+    else:
+        insight_lines.append(
+            "- The current submission does not yet satisfy the core problem requirements and reflects a significant execution gap in the coding round."
+        )
+
+    if has_todo:
+        insight_lines.append(
+            "- The retained TODO markers suggest the problem was not fully completed before submission."
+        )
+    if prints_output:
+        insight_lines.append(
+            "- The code appears to rely on printed output, which may not satisfy the required return contract expected by the evaluator."
+        )
+    if returns_none and status != "PASS":
+        insight_lines.append(
+            "- The return path still points to a placeholder or incomplete result, which likely contributed to the low evaluation score."
+        )
+    if syntax_hint:
+        insight_lines.append(
+            f"- A syntax-level issue is likely present in the submission ({syntax_hint}), which would block reliable execution."
+        )
+
+    if not insight_lines:
+        insight_lines.append("- Round-wise insights are available, but the coding submission did not expose enough detail for a deeper heuristic analysis.")
+
+    assessment_line = (
+        "Assessment: The submission shows a strong and largely correct implementation."
+        if status == "PASS" and percentage >= 85
+        else "Assessment: The submission shows workable intent, but the current implementation would still need refinement before it can be treated as a dependable solution."
+        if percentage >= 50
+        else "Assessment: The implementation remains incomplete or incorrect for the expected coding objective and would require rework."
+    )
 
     return (
         "Key Insights:\n"
-        f"{key_insights}\n\n"
-        "Coding Round Summary\n"
+        f"{chr(10).join(insight_lines)}\n\n"
+        "### Coding Round Summary\n"
         f"Round: {round_label}\n"
         f"Score: {percentage}% ({correct}/{total})\n"
         f"Language: {language}\n"
         f"Question: {question_title}\n"
         f"Problem Statement: {question_text}\n"
-        f"Submitted Code:\n{submitted_code if submitted_code else 'No submitted code found.'}"
+        f"Submitted Code:\n{submitted_code if submitted_code else 'No submitted code found.'}\n\n"
+        f"{assessment_line}"
     )
 
 
