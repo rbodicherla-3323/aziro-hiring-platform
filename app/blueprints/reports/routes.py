@@ -841,9 +841,9 @@ def reports():
     specific_date = str(request.args.get("date", "") or "").strip()
     from_date = str(request.args.get("from", "") or "").strip()
     to_date = str(request.args.get("to", "") or "").strip()
-    admin_view = str(request.args.get("admin_view", "created_by") or "created_by").strip().lower()
-    if admin_view not in {"created_by", "login_users"}:
-        admin_view = "created_by"
+    admin_view_raw = str(request.args.get("admin_view", "") or "").strip().lower()
+    admin_view_explicit = admin_view_raw in {"created_by", "login_users"}
+    admin_view = admin_view_raw if admin_view_explicit else "created_by"
     admin_user_filter = _normalize_email(request.args.get("admin_user", ""))
     is_access_admin = _is_reports_admin(user_email)
     try:
@@ -879,6 +879,8 @@ def reports():
         to_date=to_date,
         is_access_admin=is_access_admin,
     )
+    if admin_db_scope.get("active") and not admin_view_explicit:
+        admin_view = "login_users"
     admin_user_options = [
         {
             "email": str(group.get("user_email", "") or "").strip().lower(),
@@ -901,6 +903,31 @@ def reports():
             if _normalize_email(group.get("user_email", "")) == admin_user_filter:
                 admin_selected_group = group
                 break
+
+    def _normalize_report_ids(values) -> list[int]:
+        normalized = []
+        seen = set()
+        for value in values or []:
+            try:
+                report_id = int(value)
+            except (TypeError, ValueError):
+                continue
+            if report_id <= 0 or report_id in seen:
+                continue
+            seen.add(report_id)
+            normalized.append(report_id)
+        return normalized
+
+    admin_all_report_ids = _normalize_report_ids(
+        [
+            report_id
+            for group in admin_db_scope.get("groups", [])
+            for report_id in (group.get("report_ids", []) or [])
+        ]
+    )
+    admin_selected_group_report_ids = _normalize_report_ids(
+        admin_selected_group.get("report_ids", []) if admin_selected_group else []
+    )
     filtered_candidates = scope["filtered_candidates"]
     filtered_total_candidates = scope["filtered_total_candidates"]
     range_start = scope["range_start"]
@@ -1028,6 +1055,8 @@ def reports():
         admin_user_filter=admin_user_filter,
         admin_user_options=admin_user_options,
         admin_selected_group=admin_selected_group,
+        admin_all_report_ids=admin_all_report_ids,
+        admin_selected_group_report_ids=admin_selected_group_report_ids,
         is_reports_admin=is_access_admin,
     )
 

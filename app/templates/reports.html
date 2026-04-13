@@ -1920,11 +1920,11 @@
         <div class="reports-session" style="justify-content: space-between; gap: 12px; align-items: flex-start;">
             <div style="display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                 <span class="session-indicator"><i class="bi bi-database"></i></span>
-                <span class="session-title">User Details</span>
+                <span class="session-title">Database Date Range Results</span>
             </div>
             <div class="reports-note" style="margin: 0;">
                 {% if admin_date_range_mode %}
-                    Showing user details for {{ admin_db_period_label }}.
+                    Showing database-backed candidates for {{ admin_db_period_label }}.
                 {% else %}
                     Choose <strong>From</strong> and <strong>To</strong> dates below to fetch database data separately from the existing reports list.
                 {% endif %}
@@ -1970,13 +1970,25 @@
                 </a>
             </form>
             {% if admin_date_range_mode %}
-            <form method="post" action="{{ url_for('reports.download_admin_login_activity_pdf') }}" style="margin:0; display:flex; align-items:center;">
-                <input type="hidden" name="from" value="{{ admin_date_from }}">
-                <input type="hidden" name="to" value="{{ admin_date_to }}">
-                <button type="submit" class="row-action-btn" style="height:34px; white-space:nowrap;">
-                    <i class="bi bi-file-earmark-pdf"></i> Download All User Logins PDF
-                </button>
-            </form>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                {% if admin_all_report_ids %}
+                <form method="post" action="{{ url_for('reports.download_admin_db_reports_zip') }}" style="margin:0; display:flex; align-items:center;">
+                    {% for report_id in admin_all_report_ids %}
+                    <input type="hidden" name="report_ids" value="{{ report_id }}">
+                    {% endfor %}
+                    <button type="submit" class="row-action-btn" style="height:34px; white-space:nowrap;">
+                        <i class="bi bi-file-earmark-zip"></i> Download All Available Reports (.zip)
+                    </button>
+                </form>
+                {% endif %}
+                <form method="post" action="{{ url_for('reports.download_admin_login_activity_pdf') }}" style="margin:0; display:flex; align-items:center;">
+                    <input type="hidden" name="from" value="{{ admin_date_from }}">
+                    <input type="hidden" name="to" value="{{ admin_date_to }}">
+                    <button type="submit" class="row-action-btn" style="height:34px; white-space:nowrap;">
+                        <i class="bi bi-file-earmark-pdf"></i> Download All User Logins PDF
+                    </button>
+                </form>
+            </div>
             {% endif %}
         </div>
 
@@ -2046,7 +2058,7 @@
                     <div class="candidate-meta" style="cursor:default; align-items:flex-start;">
                         <span class="candidate-avatar avatar-highlight">{{ initials(admin_selected_group.user_name or admin_selected_group.user_email or 'U') }}</span>
                         <div>
-                            <div class="reports-note" style="margin:0 0 4px 0;">Logged-In User</div>
+                            <div class="reports-note" style="margin:0 0 4px 0;">User Logged In</div>
                             <h3 class="candidate-name">{{ admin_selected_group.user_name or 'Unknown User' }}</h3>
                             <div class="candidate-email-row" style="flex-wrap:wrap; gap:8px;">
                                 <span class="candidate-email">{{ admin_selected_group.user_email or 'Email not recorded' }}</span>
@@ -2056,6 +2068,16 @@
                             </div>
                         </div>
                     </div>
+                    {% if admin_selected_group_report_ids %}
+                    <form method="post" action="{{ url_for('reports.download_admin_db_reports_zip') }}" style="margin:0; display:flex; align-items:center;">
+                        {% for report_id in admin_selected_group_report_ids %}
+                        <input type="hidden" name="report_ids" value="{{ report_id }}">
+                        {% endfor %}
+                        <button type="submit" class="row-action-btn" style="height:34px; white-space:nowrap;">
+                            <i class="bi bi-file-earmark-zip"></i> Download User Reports
+                        </button>
+                    </form>
+                    {% endif %}
                 </div>
                 <div style="overflow-x:auto; margin-top:14px;">
                     <table style="width:100%; border-collapse:collapse; min-width:900px;">
