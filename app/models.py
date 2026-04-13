@@ -72,6 +72,19 @@ class Report(db.Model):
     def __repr__(self):
         return f"<Report {self.filename}>"
 
+class LoginAudit(db.Model):
+    __tablename__ = "login_audits"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_email = db.Column(db.String(320), nullable=False, index=True, default="")
+    user_name = db.Column(db.String(200), nullable=True, default="")
+    auth_provider = db.Column(db.String(50), nullable=True, default="")
+    logged_in_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), index=True)
+
+    def __repr__(self):
+        return f"<LoginAudit {self.user_email} {self.logged_in_at}>"
+
+
 class ProctoringScreenshot(db.Model):
     __tablename__ = "proctoring_screenshots"
 

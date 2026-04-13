@@ -3,6 +3,10 @@
   var roleSelect = document.getElementById("reportsRoleSelect");
   var periodSelect = document.getElementById("reportsPeriodSelect");
   var dateInput = document.getElementById("reportsDateInput");
+  var fromDateInput = document.getElementById("reportsFromDateInput");
+  var toDateInput = document.getElementById("reportsToDateInput");
+  var dbRangeForm = document.getElementById("reportsDbRangeForm");
+  var dbRangeClear = document.getElementById("reportsDbRangeClear");
   var searchInput = document.getElementById("reportsSearchInput");
   var pageInput = document.getElementById("reportsPageInput");
   var perPageInput = document.getElementById("reportsPerPageInput");
@@ -50,6 +54,18 @@
     isGenerating: false,
     isDownloading: false,
   };
+
+  if (dbRangeClear) {
+    dbRangeClear.addEventListener("click", function (event) {
+      event.preventDefault();
+      if (fromDateInput) fromDateInput.value = "";
+      if (toDateInput) toDateInput.value = "";
+      var clearUrl = new URL(dbRangeClear.href, window.location.origin);
+      clearUrl.searchParams.delete("from");
+      clearUrl.searchParams.delete("to");
+      window.location.href = clearUrl.toString();
+    });
+  }
 
   function syncBodyModalState() {
     var hasActiveModal = Boolean(
@@ -449,6 +465,15 @@
           }
         }
       });
+  }
+
+  function clearAdminDateRangeInputs() {
+    if (fromDateInput) {
+      fromDateInput.value = "";
+    }
+    if (toDateInput) {
+      toDateInput.value = "";
+    }
   }
 
   function syncDateFilterVisibility() {
@@ -1325,6 +1350,7 @@
 
   if (roleSelect && filterForm) {
     roleSelect.addEventListener("change", function () {
+      clearAdminDateRangeInputs();
       submitFilters(true);
     });
   }
@@ -1355,7 +1381,20 @@
       if (periodSelect && periodSelect.value !== "date") {
         return;
       }
+      clearAdminDateRangeInputs();
       submitFilters(true);
+    });
+  }
+
+  if ((fromDateInput || toDateInput) && dbRangeForm) {
+    [fromDateInput, toDateInput].forEach(function (input) {
+      if (!input) return;
+      input.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          dbRangeForm.submit();
+        }
+      });
     });
   }
 

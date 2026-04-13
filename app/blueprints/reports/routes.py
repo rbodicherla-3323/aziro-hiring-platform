@@ -5,6 +5,7 @@ Reports page - recent session candidates + historical report search.
 import base64
 import json
 import mimetypes
+import zipfile
 from datetime import datetime, timezone, timedelta
 from io import BytesIO
 from math import ceil
@@ -22,7 +23,8 @@ from app.services.plagiarism_service import (
     build_plagiarism_summary_by_candidates,
     blank_plagiarism_summary,
 )
-from app.services.pdf_service import generate_candidate_pdf, generate_consolidated_summary_pdf, REPORTS_DIR
+from app.services.pdf_service import generate_candidate_pdf, generate_consolidated_summary_pdf, generate_login_activity_pdf, REPORTS_DIR
+from app.access_config import get_access_admin_emails
 
 reports_bp = Blueprint("reports", __name__)
 _VALID_PERIOD_FILTERS = {"today", "24h", "7d", "28d", "date"}
@@ -50,6 +52,12 @@ def _get_pdf_service():
 
 def _log_non_blocking_report_issue(message: str, *args):
     current_app.logger.exception(message, *args)
+
+
+def _row_value(row, key: str, default=None):
+    if isinstance(row, dict):
+        return row.get(key, default)
+    return getattr(row, key, default)
 
 
 def _resolve_date_range(filter_type: str, specific_date: str = "", offset: int = 0):
@@ -90,6 +98,52 @@ def _period_label(filter_type: str, specific_date: str = "") -> str:
     if filter_type == "date" and specific_date:
         return specific_date
     return "Today"
+
+
+def _parse_iso_date(value: str) -> datetime | None:
+    raw = str(value or "").strip()
+    if not raw:
+        return None
+    try:
+        return datetime.strptime(raw, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+    except ValueError:
+        return None
+
+
+def _normalize_admin_date_range(from_date: str = "", to_date: str = "") -> tuple[str, str, datetime | None, datetime | None]:
+    from_raw = str(from_date or "").strip()
+    to_raw = str(to_date or "").strip()
+    from_dt = _parse_iso_date(from_raw)
+    to_dt = _parse_iso_date(to_raw)
+
+    if from_raw and not from_dt:
+        from_raw = ""
+    if to_raw and not to_dt:
+        to_raw = ""
+
+    start = from_dt
+    end = (to_dt + timedelta(days=1)) if to_dt else None
+    if start and end and start >= end:
+        from_raw, to_raw = to_raw, from_raw
+        start, end = _parse_iso_date(from_raw), (_parse_iso_date(to_raw) + timedelta(days=1)) if _parse_iso_date(to_raw) else None
+
+    return from_raw, to_raw, start, end
+
+
+def _admin_period_label(from_date: str = "", to_date: str = "") -> str:
+    if from_date and to_date:
+        return f"{from_date} to {to_date}"
+    if from_date:
+        return f"From {from_date}"
+    if to_date:
+        return f"Up to {to_date}"
+    return "Custom Range"
+
+
+def _is_reports_admin(user_email: str) -> bool:
+    email = _normalize_email(user_email)
+    return bool(email and email in {_normalize_email(value) for value in get_access_admin_emails()})
+
 
 def _parse_created_at(value):
     if isinstance(value, datetime):
@@ -298,6 +352,9 @@ def _collect_reports_scope(
     date_filter: str = "today",
     specific_date: str = "",
     date_offset: int = 0,
+    is_access_admin: bool = False,
+    from_date: str = "",
+    to_date: str = "",
 ):
     q = str(q or "").strip()
     role_filter = str(role_filter or "").strip()
@@ -316,6 +373,9 @@ def _collect_reports_scope(
         date_filter = "today"
     if date_filter != "date":
         specific_date = ""
+
+    admin_from_date, admin_to_date, _admin_range_start, _admin_range_end = _normalize_admin_date_range(from_date, to_date)
+    admin_date_range_mode = bool(is_access_admin and (admin_from_date or admin_to_date))
 
     range_start, range_end = _resolve_date_range(date_filter, specific_date, date_offset)
     if not range_start or not range_end:
@@ -407,15 +467,23 @@ def _collect_reports_scope(
         evaluated_candidate_keys.add(candidate_key)
         all_candidates_by_key[candidate_key] = session_candidates[-1]
 
-    if search_global_mode:
+    database_scope_mode = bool(search_global_mode)
+    if database_scope_mode:
         db_role_filter = role_filter if role_filter.lower() not in {"all", "all roles"} else ""
+        db_query = q if search_global_mode else ""
         try:
-            db_matches = db_service.search_candidates(q, db_role_filter)
+            db_matches = db_service.search_candidates(
+                db_query,
+                db_role_filter,
+            )
         except Exception as exc:
             current_app.logger.exception("DB candidate search failed: %s", exc)
             db_matches = []
         try:
-            report_matches = db_service.search_candidates_with_reports(q, db_role_filter)
+            report_matches = db_service.search_candidates_with_reports(
+                db_query,
+                db_role_filter,
+            )
         except Exception as exc:
             current_app.logger.exception("DB report search failed: %s", exc)
             report_matches = []
@@ -478,7 +546,7 @@ def _collect_reports_scope(
     session_candidates.sort(key=_created_sort_key, reverse=True)
     all_candidates_pool = list(all_candidates_by_key.values())
     all_candidates_pool.sort(key=_created_sort_key, reverse=True)
-    base_candidates = list(all_candidates_pool) if search_global_mode else list(session_candidates)
+    base_candidates = list(all_candidates_pool) if database_scope_mode else list(session_candidates)
     base_total_candidates = len(base_candidates)
 
     role_options = sorted(
@@ -515,7 +583,10 @@ def _collect_reports_scope(
         "role_options": role_options,
         "selected_role": role_filter or "All Roles",
         "search_query": q,
-        "search_global_mode": search_global_mode,
+        "search_global_mode": database_scope_mode,
+        "admin_date_range_mode": admin_date_range_mode,
+        "admin_date_from": admin_from_date,
+        "admin_date_to": admin_to_date,
         "date_filter": date_filter,
         "specific_date": specific_date,
         "date_offset": date_offset,
@@ -566,6 +637,199 @@ def _build_batch_options(candidates: list[dict]) -> list[dict]:
     return sorted(counts.values(), key=_sort_key)
 
 
+def _collect_admin_database_candidates(*, q: str = "", role_filter: str = "", from_date: str = "", to_date: str = "", is_access_admin: bool = False) -> dict:
+    admin_from_date, admin_to_date, range_start, range_end = _normalize_admin_date_range(from_date, to_date)
+    active = bool(is_access_admin and (admin_from_date or admin_to_date) and range_start and range_end)
+    if not active:
+        return {
+            "active": False,
+            "candidates": [],
+            "groups": [],
+            "count": 0,
+            "total_candidates": 0,
+            "total_reports": 0,
+            "total_logins": 0,
+            "period_label": "",
+            "from_date": admin_from_date,
+            "to_date": admin_to_date,
+        }
+
+    db_role_filter = role_filter if str(role_filter or "").strip().lower() not in {"all", "all roles"} else ""
+    db_query = str(q or "").strip()
+    try:
+        activity_rows = db_service.get_created_candidate_activity(
+            since=range_start,
+            until=range_end,
+            query_text=db_query,
+            role_filter=db_role_filter,
+        )
+    except Exception as exc:
+        current_app.logger.exception("Admin DB candidate activity lookup failed: %s", exc)
+        activity_rows = []
+
+    try:
+        login_rows = db_service.get_login_audits_by_range(since=range_start, until=range_end)
+    except Exception as exc:
+        current_app.logger.exception("Admin DB login audit lookup failed: %s", exc)
+        login_rows = []
+
+    login_by_email = {}
+    total_logins = 0
+    for row in login_rows:
+        email_key = _normalize_email(_row_value(row, "user_email", ""))
+        if not email_key:
+            continue
+        total_logins += 1
+        existing = login_by_email.get(email_key)
+        logged_in_at = _row_value(row, "logged_in_at")
+        row_name = str(_row_value(row, "user_name", "") or "").strip()
+        auth_provider = str(_row_value(row, "auth_provider", "") or "").strip()
+        if existing is None:
+            login_by_email[email_key] = {
+                "user_name": row_name,
+                "logged_in_at": logged_in_at,
+                "auth_provider": auth_provider,
+                "login_count": 1,
+            }
+            continue
+
+        existing["login_count"] = int(existing.get("login_count", 0) or 0) + 1
+        if row_name and not str(existing.get("user_name", "") or "").strip():
+            existing["user_name"] = row_name
+        if auth_provider and not str(existing.get("auth_provider", "") or "").strip():
+            existing["auth_provider"] = auth_provider
+        if (logged_in_at or datetime.min.replace(tzinfo=timezone.utc)) > (existing.get("logged_in_at") or datetime.min.replace(tzinfo=timezone.utc)):
+            existing["logged_in_at"] = logged_in_at
+            if row_name:
+                existing["user_name"] = row_name
+            if auth_provider:
+                existing["auth_provider"] = auth_provider
+
+    groups_by_email = {}
+    for email_key, login_meta in login_by_email.items():
+        display_name = str(login_meta.get("user_name", "") or "").strip()
+        if not display_name:
+            display_name = email_key.split("@")[0].replace(".", " ").title()
+        groups_by_email[email_key] = {
+            "user_email": email_key,
+            "user_name": display_name or "Unknown User",
+            "last_login_at": login_meta.get("logged_in_at"),
+            "auth_provider": str(login_meta.get("auth_provider", "") or "").strip(),
+            "login_count": int(login_meta.get("login_count", 0) or 0),
+            "candidates": [],
+            "report_ids": [],
+            "report_count": 0,
+        }
+
+    for row in activity_rows:
+        creator_email = _normalize_email(row.get("creator_email", ""))
+        if not creator_email:
+            continue
+        group = groups_by_email.get(creator_email)
+        if group is None:
+            group = {
+                "user_email": creator_email,
+                "user_name": creator_email.split("@")[0].replace(".", " ").title(),
+                "last_login_at": None,
+                "auth_provider": "",
+                "login_count": 0,
+                "candidates": [],
+                "report_ids": [],
+                "report_count": 0,
+            }
+            groups_by_email[creator_email] = group
+
+        candidate = {
+            "candidate_key": get_candidate_key(
+                {
+                    "email": row.get("candidate_email", ""),
+                    "role_key": row.get("role_key", ""),
+                    "role": row.get("role", ""),
+                    "batch_id": row.get("batch_id", ""),
+                }
+            ),
+            "name": str(row.get("candidate_name", "") or "").strip() or _normalize_email(row.get("candidate_email", "")),
+            "email": _normalize_email(row.get("candidate_email", "")),
+            "role": str(row.get("role", "") or "").strip(),
+            "role_key": str(row.get("role_key", "") or "").strip(),
+            "batch_id": str(row.get("batch_id", "") or "").strip(),
+            "created_at": str(row.get("created_at", "") or "").strip(),
+            "test_session_id": row.get("test_session_id"),
+            "report_id": row.get("report_id"),
+            "report_filename": str(row.get("report_filename", "") or "").strip(),
+            "has_report": bool(row.get("report_id") and row.get("report_filename")),
+        }
+        if not candidate["has_report"]:
+            _attach_report_info(candidate)
+        group["candidates"].append(candidate)
+
+        report_id = candidate.get("report_id")
+        if report_id and report_id not in group["report_ids"]:
+            group["report_ids"].append(report_id)
+
+    groups = sorted(
+        groups_by_email.values(),
+        key=lambda item: (
+            item.get("user_email") != "",
+            item.get("user_name", "").lower(),
+            item.get("user_email", "").lower(),
+        ),
+    )
+
+    total_reports = 0
+    total_candidates = 0
+    for group in groups:
+        group["candidates"] = sorted(group["candidates"], key=_created_sort_key, reverse=True)
+        group["report_count"] = len(group["report_ids"])
+        total_reports += group["report_count"]
+        total_candidates += len(group["candidates"])
+
+    return {
+        "active": True,
+        "candidates": [candidate for group in groups for candidate in group["candidates"]],
+        "groups": groups,
+        "count": len(groups),
+        "total_candidates": total_candidates,
+        "total_reports": total_reports,
+        "total_logins": total_logins,
+        "period_label": _admin_period_label(admin_from_date, admin_to_date),
+        "from_date": admin_from_date,
+        "to_date": admin_to_date,
+    }
+
+
+def _hydrate_candidate_from_db(candidate: dict):
+    if not isinstance(candidate, dict):
+        return
+    summary = candidate.get("summary", {}) or {}
+    if candidate.get("rounds") or candidate.get("results") or int(summary.get("attempted_rounds", 0) or 0) > 0:
+        return
+
+    email_key = _normalize_email(candidate.get("email", ""))
+    test_session_id = candidate.get("test_session_id")
+    if not email_key or not test_session_id:
+        return
+
+    try:
+        db_candidate = db_service.get_candidate_report_data(
+            email_key,
+            test_session_id=test_session_id,
+            role_key=str(candidate.get("role_key", "") or "").strip(),
+            batch_id=str(candidate.get("batch_id", "") or "").strip(),
+        )
+    except Exception as exc:
+        current_app.logger.exception("Failed to hydrate report candidate from DB for %s: %s", email_key, exc)
+        return
+
+    if not db_candidate:
+        return
+
+    preserved_key = str(candidate.get("candidate_key", "") or "").strip()
+    candidate.update(db_candidate)
+    if preserved_key and not str(candidate.get("candidate_key", "") or "").strip():
+        candidate["candidate_key"] = preserved_key
+
+
 @reports_bp.route("/reports")
 @login_required
 def reports():
@@ -575,6 +839,13 @@ def reports():
     role_filter = request.args.get("role", "").strip()
     date_filter = str(request.args.get("filter", "today") or "today").strip().lower()
     specific_date = str(request.args.get("date", "") or "").strip()
+    from_date = str(request.args.get("from", "") or "").strip()
+    to_date = str(request.args.get("to", "") or "").strip()
+    admin_view = str(request.args.get("admin_view", "created_by") or "created_by").strip().lower()
+    if admin_view not in {"created_by", "login_users"}:
+        admin_view = "created_by"
+    admin_user_filter = _normalize_email(request.args.get("admin_user", ""))
+    is_access_admin = _is_reports_admin(user_email)
     try:
         date_offset = int(request.args.get("offset", "0"))
     except (TypeError, ValueError):
@@ -597,7 +868,39 @@ def reports():
         date_filter=date_filter,
         specific_date=specific_date,
         date_offset=date_offset,
+        is_access_admin=is_access_admin,
+        from_date=from_date,
+        to_date=to_date,
     )
+    admin_db_scope = _collect_admin_database_candidates(
+        q=q,
+        role_filter=role_filter,
+        from_date=from_date,
+        to_date=to_date,
+        is_access_admin=is_access_admin,
+    )
+    admin_user_options = [
+        {
+            "email": str(group.get("user_email", "") or "").strip().lower(),
+            "name": str(group.get("user_name", "") or "").strip() or str(group.get("user_email", "") or "").strip().lower(),
+            "login_count": int(group.get("login_count", 0) or 0),
+        }
+        for group in admin_db_scope.get("groups", [])
+        if str(group.get("user_email", "") or "").strip()
+    ]
+    admin_user_options = sorted(admin_user_options, key=lambda item: ((item["name"] or "").lower(), item["email"]))
+    admin_selected_group = None
+    if admin_user_filter:
+        for group in admin_db_scope.get("groups", []):
+            if _normalize_email(group.get("user_email", "")) == admin_user_filter:
+                admin_selected_group = group
+                break
+    if admin_view == "login_users" and not admin_selected_group and admin_user_options:
+        admin_user_filter = admin_user_options[0]["email"]
+        for group in admin_db_scope.get("groups", []):
+            if _normalize_email(group.get("user_email", "")) == admin_user_filter:
+                admin_selected_group = group
+                break
     filtered_candidates = scope["filtered_candidates"]
     filtered_total_candidates = scope["filtered_total_candidates"]
     range_start = scope["range_start"]
@@ -611,6 +914,7 @@ def reports():
     showing_from = start_idx + 1 if filtered_total_candidates else 0
     showing_to = start_idx + len(paged_candidates)
     for candidate in paged_candidates:
+        _hydrate_candidate_from_db(candidate)
         _attach_report_info(candidate)
     for candidate in paged_candidates:
         email_key = str(candidate.get("email", "")).strip().lower()
@@ -710,6 +1014,21 @@ def reports():
         specific_date=scope["specific_date"],
         date_offset=scope["date_offset"],
         period_label=scope["period_label"],
+        admin_date_range_mode=admin_db_scope["active"],
+        admin_date_from=admin_db_scope["from_date"],
+        admin_date_to=admin_db_scope["to_date"],
+        admin_db_candidates=admin_db_scope["candidates"],
+        admin_db_groups=admin_db_scope["groups"],
+        admin_db_count=admin_db_scope["count"],
+        admin_db_total_candidates=admin_db_scope["total_candidates"],
+        admin_db_total_reports=admin_db_scope["total_reports"],
+        admin_db_total_logins=admin_db_scope["total_logins"],
+        admin_db_period_label=admin_db_scope["period_label"],
+        admin_view=admin_view,
+        admin_user_filter=admin_user_filter,
+        admin_user_options=admin_user_options,
+        admin_selected_group=admin_selected_group,
+        is_reports_admin=is_access_admin,
     )
 
 
@@ -1338,6 +1657,126 @@ def download_report(report_id):
         as_attachment=True,
         download_name=report.filename,
         mimetype="application/pdf",
+    )
+
+
+@reports_bp.route("/reports/admin/db-bulk-download", methods=["POST"])
+@login_required
+def download_admin_db_reports_zip():
+    user = session.get("user", {}) if isinstance(session.get("user"), dict) else {}
+    user_email = str(user.get("email", "") or "").strip().lower()
+    if not _is_reports_admin(user_email):
+        abort(403)
+
+    raw_ids = request.form.getlist("report_ids")
+    report_ids = []
+    seen_ids = set()
+    for value in raw_ids:
+        try:
+            report_id = int(str(value or "").strip())
+        except (TypeError, ValueError):
+            continue
+        if report_id <= 0 or report_id in seen_ids:
+            continue
+        seen_ids.add(report_id)
+        report_ids.append(report_id)
+
+    if not report_ids:
+        abort(400, description="No reports selected")
+
+    reports = db_service.get_reports_by_ids(report_ids)
+    report_files = []
+    for report in reports:
+        filename = str(getattr(report, "filename", "") or "").strip()
+        if not filename:
+            continue
+        filepath = REPORTS_DIR / filename
+        if not filepath.exists() or not filepath.is_file():
+            continue
+        report_files.append((filename, filepath))
+
+    if not report_files:
+        abort(404, description="Report files not found")
+
+    buffer = BytesIO()
+    with zipfile.ZipFile(buffer, mode="w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for filename, filepath in report_files:
+            archive.write(filepath, arcname=filename)
+    buffer.seek(0)
+
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    return send_file(
+        buffer,
+        mimetype="application/zip",
+        as_attachment=True,
+        download_name=f"candidate_reports_{timestamp}.zip",
+    )
+
+
+@reports_bp.route("/reports/admin/login-activity-pdf", methods=["POST"])
+@login_required
+def download_admin_login_activity_pdf():
+    user = session.get("user", {}) if isinstance(session.get("user"), dict) else {}
+    user_email = str(user.get("email", "") or "").strip().lower()
+    if not _is_reports_admin(user_email):
+        abort(403)
+
+    from_date = str(request.form.get("from", "") or "").strip()
+    to_date = str(request.form.get("to", "") or "").strip()
+    from_date, to_date, range_start, range_end = _normalize_admin_date_range(from_date, to_date)
+    if not (range_start and range_end):
+        abort(400, description="Valid from/to dates are required")
+
+    try:
+        login_rows = db_service.get_login_audits_by_range(since=range_start, until=range_end)
+    except Exception as exc:
+        current_app.logger.exception("Admin login activity PDF lookup failed: %s", exc)
+        abort(500, description="Failed to load login activity")
+
+    normalized_rows = []
+    unique_users = set()
+    for row in login_rows:
+        user_email_value = str(_row_value(row, "user_email", "") or "").strip().lower()
+        user_name_value = str(_row_value(row, "user_name", "") or "").strip()
+        auth_provider = str(_row_value(row, "auth_provider", "") or "").strip()
+        logged_in_at = _row_value(row, "logged_in_at")
+        logged_in_label = "-"
+        if isinstance(logged_in_at, datetime):
+            logged_in_label = logged_in_at.astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+        elif logged_in_at:
+            logged_in_label = str(logged_in_at)
+
+        if user_email_value:
+            unique_users.add(user_email_value)
+
+        normalized_rows.append({
+            "user_name": user_name_value or "Unknown User",
+            "user_email": user_email_value or "-",
+            "auth_provider": auth_provider or "-",
+            "logged_in_at": logged_in_label,
+        })
+
+    try:
+        filename = generate_login_activity_pdf(
+            normalized_rows,
+            {
+                "period_label": _admin_period_label(from_date, to_date),
+                "generated_by": user_email,
+                "total_logins": len(normalized_rows),
+                "unique_users": len(unique_users),
+            },
+        )
+    except Exception as exc:
+        current_app.logger.exception("Failed to generate login activity PDF: %s", exc)
+        abort(500, description="Failed to generate login activity PDF")
+
+    filepath = REPORTS_DIR / filename
+    return send_file(
+        filepath,
+        as_attachment=True,
+        download_name=filename,
+        mimetype="application/pdf",
+        max_age=0,
     )
 
 

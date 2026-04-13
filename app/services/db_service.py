@@ -7,7 +7,7 @@ from datetime import datetime, timezone, timedelta
 
 from app.services.candidate_scope import build_candidate_key
 from app.extensions import db
-from app.models import Candidate, TestSession, RoundResult, Report, ProctoringScreenshot, TestLink
+from app.models import Candidate, TestSession, RoundResult, Report, ProctoringScreenshot, TestLink, LoginAudit
 
 log = logging.getLogger(__name__)
 
@@ -568,8 +568,13 @@ def get_test_link_monthly_series(
     ]
 
 
-def search_candidates(query: str, role_filter: str = ""):
-    """Search candidates by name, email, or role."""
+def search_candidates(
+    query: str = "",
+    role_filter: str = "",
+    date_start: datetime | None = None,
+    date_end: datetime | None = None,
+):
+    """Search candidates by name, email, or role, optionally constrained by test session dates."""
     like_query = f"%{query}%"
 
     base = _exclude_dummy_candidates(db.session.query(Candidate, TestSession).join(TestSession))
@@ -592,6 +597,10 @@ def search_candidates(query: str, role_filter: str = ""):
                 TestSession.role_key.ilike(like_role),
             )
         )
+    if date_start:
+        filters.append(TestSession.created_at >= date_start)
+    if date_end:
+        filters.append(TestSession.created_at < date_end)
 
     if filters:
         base = base.filter(*filters)
@@ -599,7 +608,7 @@ def search_candidates(query: str, role_filter: str = ""):
     rows = (
         base
         .order_by(TestSession.created_at.desc(), TestSession.id.desc())
-        .limit(100)
+        .limit(250)
         .all()
     )
 
@@ -622,7 +631,12 @@ def search_candidates(query: str, role_filter: str = ""):
     return results
 
 
-def search_candidates_with_reports(query: str, role_filter: str = ""):
+def search_candidates_with_reports(
+    query: str = "",
+    role_filter: str = "",
+    date_start: datetime | None = None,
+    date_end: datetime | None = None,
+):
     """Search candidates that have at least one generated report."""
     like_query = f"%{query}%"
 
@@ -657,6 +671,20 @@ def search_candidates_with_reports(query: str, role_filter: str = ""):
                 TestSession.role_key.ilike(like_role),
             )
         )
+    if date_start:
+        filters.append(
+            db.or_(
+                Report.created_at >= date_start,
+                TestSession.created_at >= date_start,
+            )
+        )
+    if date_end:
+        filters.append(
+            db.or_(
+                Report.created_at < date_end,
+                TestSession.created_at < date_end,
+            )
+        )
 
     if filters:
         base = base.filter(*filters)
@@ -664,7 +692,7 @@ def search_candidates_with_reports(query: str, role_filter: str = ""):
     rows = (
         base
         .order_by(Report.created_at.desc())
-        .limit(100)
+        .limit(250)
         .all()
     )
 
@@ -710,6 +738,98 @@ def search_candidates_with_reports(query: str, role_filter: str = ""):
         })
         seen_rows.add(dedupe_key)
     return results
+
+
+def record_login_audit(user_email: str, user_name: str = "", auth_provider: str = "") -> LoginAudit | None:
+    email = str(user_email or "").strip().lower()
+    if not email:
+        return None
+    audit = LoginAudit(
+        user_email=email,
+        user_name=str(user_name or "").strip(),
+        auth_provider=str(auth_provider or "").strip(),
+    )
+    db.session.add(audit)
+    db.session.commit()
+    return audit
+
+
+def get_login_audits_by_range(*, since: datetime | None = None, until: datetime | None = None) -> list[LoginAudit]:
+    query = LoginAudit.query
+    if since:
+        query = query.filter(LoginAudit.logged_in_at >= since)
+    if until:
+        query = query.filter(LoginAudit.logged_in_at < until)
+    return query.order_by(LoginAudit.logged_in_at.desc(), LoginAudit.id.desc()).all()
+
+
+def get_created_candidate_activity(*, since: datetime | None = None, until: datetime | None = None, query_text: str = "", role_filter: str = "") -> list[dict]:
+    query = _exclude_dummy_candidates(
+        db.session.query(TestSession, Candidate)
+        .join(Candidate, TestSession.candidate_id == Candidate.id)
+    )
+    if since:
+        query = query.filter(TestSession.created_at >= since)
+    if until:
+        query = query.filter(TestSession.created_at < until)
+    if role_filter and role_filter.strip().lower() not in {"all", "all roles"}:
+        role_like = f"%{role_filter.strip()}%"
+        query = query.filter(db.or_(TestSession.role_label.ilike(role_like), TestSession.role_key.ilike(role_like)))
+    if query_text:
+        like = f"%{query_text.strip()}%"
+        query = query.filter(db.or_(Candidate.name.ilike(like), Candidate.email.ilike(like), TestSession.created_by.ilike(like), TestSession.role_label.ilike(like), TestSession.role_key.ilike(like), TestSession.batch_id.ilike(like)))
+
+    rows = query.order_by(TestSession.created_at.desc(), TestSession.id.desc()).all()
+    activity = []
+    creator_cache = {}
+    for ts, cand in rows:
+        report = Report.query.filter(Report.test_session_id == ts.id).order_by(Report.created_at.desc(), Report.id.desc()).first()
+        candidate_email = str(cand.email or "").strip().lower()
+        role_key = str(ts.role_key or "").strip()
+        batch_id = str(ts.batch_id or "").strip()
+        creator_email = str(ts.created_by or "").strip().lower()
+
+        if not creator_email:
+            cache_key = (candidate_email, role_key.lower(), batch_id.lower())
+            creator_email = creator_cache.get(cache_key, "")
+            if not creator_email:
+                link = (
+                    TestLink.query
+                    .filter(db.func.lower(TestLink.candidate_email) == candidate_email)
+                    .filter(db.func.lower(TestLink.role_key) == role_key.lower())
+                    .filter(db.func.lower(TestLink.batch_id) == batch_id.lower())
+                    .filter(db.func.length(db.func.trim(db.func.coalesce(TestLink.created_by, ""))) > 0)
+                    .order_by(TestLink.created_at.desc())
+                    .first()
+                )
+                creator_email = str(link.created_by or "").strip().lower() if link else ""
+                creator_cache[cache_key] = creator_email
+
+        activity.append({
+            "creator_email": creator_email,
+            "candidate_name": str(cand.name or "").strip(),
+            "candidate_email": candidate_email,
+            "role": str(ts.role_label or ts.role_key or "").strip(),
+            "role_key": role_key,
+            "batch_id": batch_id,
+            "created_at": ts.created_at,
+            "test_session_id": ts.id,
+            "report_id": int(report.id) if report else None,
+            "report_filename": str(report.filename or "").strip() if report else "",
+        })
+    return activity
+
+
+def get_reports_by_ids(report_ids) -> list[Report]:
+    normalized = []
+    for value in (report_ids or []):
+        try:
+            normalized.append(int(value))
+        except (TypeError, ValueError):
+            continue
+    if not normalized:
+        return []
+    return Report.query.filter(Report.id.in_(normalized)).order_by(Report.created_at.desc(), Report.id.desc()).all()
 
 
 def has_report_for_email(email: str) -> bool:
