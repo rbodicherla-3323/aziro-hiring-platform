@@ -229,3 +229,69 @@ def test_generate_consolidated_summary_pdf_creates_file(monkeypatch):
     pdf_path = output_dir / filename
     assert pdf_path.exists()
     assert pdf_path.stat().st_size > 0
+
+
+def test_generate_candidate_pdf_uses_role_scoped_summary_services(monkeypatch):
+    output_dir = PROJECT_ROOT / "app" / "runtime" / "reports"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    monkeypatch.setattr(pdf_service, "REPORTS_DIR", output_dir)
+
+    candidate_data = {
+        "name": "Alice Example",
+        "email": "alice@example.com",
+        "role": "Python Developer",
+        "batch_id": "batch_py_1",
+        "test_session_id": 42,
+        "rounds": {
+            "L2": {
+                "round_label": "Python Theory",
+                "correct": 10,
+                "total": 15,
+                "percentage": 66.7,
+                "status": "FAIL",
+                "pass_threshold": 70,
+            },
+            "L4": {
+                "round_label": "Coding Challenge",
+                "correct": 1,
+                "total": 1,
+                "percentage": 100,
+                "status": "PASS",
+                "pass_threshold": 70,
+            },
+        },
+        "proctoring_summary": {},
+        "plagiarism_summary": {},
+    }
+
+    captured = {}
+
+    def _fake_overall(email, candidate_data=None):
+        captured["overall_email"] = email
+        captured["overall_candidate"] = dict(candidate_data or {})
+        return "Scoped overall summary"
+
+    def _fake_coding(email, candidate_data=None):
+        captured["coding_email"] = email
+        captured["coding_candidate"] = dict(candidate_data or {})
+        return "Scoped coding summary"
+
+    monkeypatch.setattr(
+        "app.services.evaluation_service.EvaluationService.generate_candidate_overall_summary",
+        staticmethod(_fake_overall),
+    )
+    monkeypatch.setattr(
+        "app.services.evaluation_service.EvaluationService.generate_candidate_coding_round_summary",
+        staticmethod(_fake_coding),
+    )
+    monkeypatch.setattr(
+        pdf_service,
+        "generate_evaluation_summary",
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(AssertionError("raw fallback should not be used")),
+    )
+
+    filename = pdf_service.generate_candidate_pdf(candidate_data)
+
+    assert filename.endswith(".pdf")
+    assert captured["overall_email"] == "alice@example.com"
+    assert captured["coding_email"] == "alice@example.com"

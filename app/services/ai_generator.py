@@ -4,8 +4,10 @@ import base64
 import json
 import sys
 from pathlib import Path
-from dotenv import load_dotenv
+from functools import lru_cache
+from dotenv import load_dotenv, dotenv_values
 import requests
+from app.services.ai_settings_service import resolve_feature_execution_plan
 from app.utils.round_order import ordered_present_round_keys, round_number_map, round_sort_key
 
 # Load .env from project root deterministically (works in stdin / script / module runs).
@@ -15,8 +17,54 @@ AI_CLIENT = None
 log = logging.getLogger(__name__)
 
 
+@lru_cache(maxsize=1)
+def _get_dotenv_gemini_overrides() -> dict[str, str]:
+    """Read Gemini-specific overrides from repo env files.
+
+    Prefer `.env` as the single source of truth for Gemini settings when it
+    contains any `GEMINI_*` keys. Otherwise fall back to `.env.production`.
+    This prevents stale production-only Gemini flags from leaking into the app
+    after an operator intentionally updates `.env` on the VM.
+    """
+    sources = (_PROJECT_ROOT / ".env", _PROJECT_ROOT / ".env.production")
+    selected: dict[str, str] = {}
+
+    for path in sources:
+        if not path.exists():
+            continue
+        try:
+            values = dotenv_values(path)
+        except Exception:
+            continue
+        current: dict[str, str] = {}
+        for key, value in values.items():
+            if value is None:
+                continue
+            normalized_key = str(key or "")
+            if not normalized_key:
+                continue
+            for candidate_key in (normalized_key, normalized_key.lstrip("\ufeff")):
+                if candidate_key.startswith("GEMINI_"):
+                    current[candidate_key] = str(value)
+        if current:
+            selected = current
+            break
+
+    return selected
+
+
 def _get_env_value(name: str, default: str | None = None):
     """Read env var with fallback for BOM-prefixed keys."""
+    if str(name or "").startswith("GEMINI_"):
+        overrides = _get_dotenv_gemini_overrides()
+        dotenv_value = overrides.get(name)
+        if dotenv_value is not None:
+            return dotenv_value
+        bom_dotenv_value = overrides.get(f"\ufeff{name}")
+        if bom_dotenv_value is not None:
+            return bom_dotenv_value
+        if overrides:
+            return default
     value = os.getenv(name)
     if value is not None:
         return value
@@ -25,6 +73,42 @@ def _get_env_value(name: str, default: str | None = None):
     if bom_value is not None:
         return bom_value
     return default
+
+
+def _env_flag(name: str, default: bool | None = None) -> bool | None:
+    value = _get_env_value(name)
+    if value is None:
+        return default
+    normalized = str(value).strip().lower()
+    if normalized in {"1", "true", "yes", "on"}:
+        return True
+    if normalized in {"0", "false", "no", "off"}:
+        return False
+    return default
+
+
+def _should_trust_requests_env() -> bool:
+    explicit = _env_flag("GEMINI_TRUST_ENV", None)
+    if explicit is not None:
+        return explicit
+
+    # Auto-enable env-backed requests behavior when the runtime is configured
+    # through proxy or certificate env vars (common in production VMs).
+    env_markers = (
+        "HTTPS_PROXY",
+        "HTTP_PROXY",
+        "ALL_PROXY",
+        "NO_PROXY",
+        "REQUESTS_CA_BUNDLE",
+        "CURL_CA_BUNDLE",
+        "SSL_CERT_FILE",
+        "SSL_CERT_DIR",
+        "https_proxy",
+        "http_proxy",
+        "all_proxy",
+        "no_proxy",
+    )
+    return any(bool(_get_env_value(name, "")) for name in env_markers)
 
 
 class _GeminiRestResponse:
@@ -36,8 +120,9 @@ class _GeminiRestModels:
     def __init__(self, api_key: str):
         self._api_key = str(api_key or "").strip()
         self._session = requests.Session()
-        # Avoid inheriting broken proxy env vars (seen in local debug setups).
-        self._session.trust_env = False
+        # Respect proxy/certificate env vars in production, while still allowing
+        # local environments to opt out through GEMINI_TRUST_ENV=false.
+        self._session.trust_env = _should_trust_requests_env()
 
     @staticmethod
     def _part_from_unknown(value):
@@ -213,15 +298,73 @@ class _GeminiRestClient:
         self.models = _GeminiRestModels(api_key)
 
 
-def _get_ai_client():
-    """Lazily initialize Gemini client from environment."""
+class _FallbackGeminiModels:
+    def __init__(self, primary_models=None, secondary_models=None):
+        self._primary_models = primary_models
+        self._secondary_models = secondary_models
+
+    def generate_content(self, *args, **kwargs):
+        primary_exc = None
+
+        if self._primary_models is not None:
+            try:
+                response = self._primary_models.generate_content(*args, **kwargs)
+                response_text = str(getattr(response, "text", "") or "").strip()
+                if response_text:
+                    return response
+                primary_exc = RuntimeError("Primary Gemini client returned empty response text")
+                log.warning("%s; trying REST fallback", primary_exc)
+            except Exception as exc:
+                primary_exc = exc
+                log.warning("Primary Gemini client failed during generation; trying REST fallback: %s", exc)
+
+        if self._secondary_models is not None:
+            return self._secondary_models.generate_content(*args, **kwargs)
+
+        if primary_exc is not None:
+            raise primary_exc
+        raise RuntimeError("Gemini client is unavailable")
+
+
+class _FallbackGeminiClient:
+    def __init__(self, primary_client=None, secondary_client=None):
+        self.models = _FallbackGeminiModels(
+            getattr(primary_client, "models", None),
+            getattr(secondary_client, "models", None),
+        )
+
+
+def _build_rest_client(api_key: str):
+    key = str(api_key or "").strip()
+    if not key:
+        return None
+    try:
+        return _GeminiRestClient(api_key=key)
+    except Exception as exc:
+        log.warning("Gemini REST client initialization failed: %s", exc)
+        return None
+
+
+def reset_ai_runtime_state():
+    """Clear cached AI clients and dotenv overrides after runtime config changes."""
+    global AI_CLIENT
+    AI_CLIENT = None
+    _get_dotenv_gemini_overrides.cache_clear()
+
+
+def _get_ai_client(api_key: str | None = None):
+    """Lazily initialize Gemini client from environment or explicit runtime config."""
     global AI_CLIENT
 
-    if AI_CLIENT is not None:
+    explicit_api_key = str(api_key or "").strip()
+    use_cache = not explicit_api_key
+
+    if use_cache and AI_CLIENT is not None:
         return AI_CLIENT
 
-    api_key = _get_env_value("GEMINI_API_KEY")
-    if not api_key:
+    resolved_api_key = explicit_api_key or str(_get_env_value("GEMINI_API_KEY") or "").strip()
+    if not resolved_api_key:
+        log.warning("GEMINI_API_KEY is not configured; AI summaries will use deterministic fallback text.")
         return None
 
     client_mode = str(_get_env_value("GEMINI_CLIENT_MODE", "auto") or "auto").strip().lower()
@@ -230,36 +373,181 @@ def _get_ai_client():
         or sys.version_info >= (3, 14)
     )
     if prefer_rest:
-        try:
-            AI_CLIENT = _GeminiRestClient(api_key=api_key)
-            return AI_CLIENT
-        except Exception as rest_exc:
-            log.warning("Gemini REST client initialization failed: %s", rest_exc)
-            return None
+        client = _build_rest_client(resolved_api_key)
+        if use_cache:
+            AI_CLIENT = client
+        return client
 
     # Lazy import to avoid importing Google SDK when key is not configured.
     try:
         from google import genai
     except Exception as exc:
         log.debug("Gemini SDK unavailable; using REST fallback client: %s", exc)
-        try:
-            AI_CLIENT = _GeminiRestClient(api_key=api_key)
-            return AI_CLIENT
-        except Exception as rest_exc:
-            log.warning("Gemini REST fallback initialization failed: %s", rest_exc)
-            return None
+        client = _build_rest_client(resolved_api_key)
+        if use_cache:
+            AI_CLIENT = client
+        return client
 
     try:
-        AI_CLIENT = genai.Client(api_key=api_key)
-        return AI_CLIENT
+        sdk_client = genai.Client(api_key=resolved_api_key)
     except Exception as exc:
         log.warning("Gemini SDK client initialization failed; trying REST fallback: %s", exc)
+        client = _build_rest_client(resolved_api_key)
+        if use_cache:
+            AI_CLIENT = client
+        return client
+
+    rest_client = _build_rest_client(resolved_api_key)
+    if rest_client is not None:
+        client = _FallbackGeminiClient(primary_client=sdk_client, secondary_client=rest_client)
+        if use_cache:
+            AI_CLIENT = client
+        return client
+
+    if use_cache:
+        AI_CLIENT = sdk_client
+    return sdk_client
+
+
+def _provider_http_session():
+    session = requests.Session()
+    session.trust_env = _should_trust_requests_env()
+    return session
+
+
+def _extract_openai_text(payload):
+    choices = payload.get("choices") or []
+    if not choices:
+        return ""
+    message = (choices[0] or {}).get("message") or {}
+    content = message.get("content")
+    if isinstance(content, str):
+        return content.strip()
+    if isinstance(content, list):
+        parts = []
+        for item in content:
+            if isinstance(item, dict) and item.get("type") == "text":
+                parts.append(str(item.get("text", "")))
+        return "\n".join(part for part in parts if part).strip()
+    return ""
+
+
+def _generate_openai_text(api_key: str, model: str, prompt: str, *, json_mode: bool = False, temperature: float | None = None):
+    session = _provider_http_session()
+    body = {
+        "model": str(model or "gpt-4.1-mini").strip(),
+        "messages": [{"role": "user", "content": str(prompt or "")}],
+    }
+    if temperature is not None:
+        body["temperature"] = temperature
+    if json_mode:
+        body["response_format"] = {"type": "json_object"}
+    response = session.post(
+        "https://api.openai.com/v1/chat/completions",
+        headers={
+            "Authorization": f"Bearer {str(api_key or '').strip()}",
+            "Content-Type": "application/json",
+        },
+        json=body,
+        timeout=60,
+    )
+    response.raise_for_status()
+    return _extract_openai_text(response.json())
+
+
+def _generate_claude_text(api_key: str, model: str, prompt: str, *, temperature: float | None = None):
+    session = _provider_http_session()
+    body = {
+        "model": str(model or "claude-3-5-sonnet-latest").strip(),
+        "max_tokens": 2500,
+        "messages": [{"role": "user", "content": str(prompt or "")}],
+    }
+    if temperature is not None:
+        body["temperature"] = temperature
+    response = session.post(
+        "https://api.anthropic.com/v1/messages",
+        headers={
+            "x-api-key": str(api_key or "").strip(),
+            "anthropic-version": "2023-06-01",
+            "content-type": "application/json",
+        },
+        json=body,
+        timeout=60,
+    )
+    response.raise_for_status()
+    payload = response.json()
+    texts = []
+    for item in payload.get("content") or []:
+        if isinstance(item, dict) and item.get("type") == "text":
+            texts.append(str(item.get("text", "")))
+    return "\n".join(text for text in texts if text).strip()
+
+
+def _generate_gemini_text(api_key: str, model: str, prompt: str, *, json_mode: bool = False, temperature: float | None = None):
+    if str(api_key or "").strip():
         try:
-            AI_CLIENT = _GeminiRestClient(api_key=api_key)
-            return AI_CLIENT
-        except Exception as rest_exc:
-            log.warning("Gemini REST fallback initialization failed: %s", rest_exc)
-            return None
+            ai_client = _get_ai_client(api_key=api_key)
+        except TypeError as exc:
+            if "api_key" not in str(exc):
+                raise
+            ai_client = _get_ai_client()
+    else:
+        ai_client = _get_ai_client()
+    if not ai_client:
+        return ""
+
+    config = None
+    if json_mode or temperature is not None:
+        config = {}
+        if json_mode:
+            config["response_mime_type"] = "application/json"
+        if temperature is not None:
+            config["temperature"] = temperature
+
+    response = ai_client.models.generate_content(
+        model=str(model or "gemini-2.5-flash").strip(),
+        contents=prompt,
+        config=config,
+    )
+    return str(getattr(response, "text", "") or "").strip()
+
+
+def _generate_text_for_feature(feature_key: str, prompt: str, *, json_mode: bool = False, temperature: float | None = None):
+    execution_plan = resolve_feature_execution_plan(feature_key)
+    provider_chain = execution_plan.get("providers", [])
+
+    for provider in provider_chain:
+        provider_key = str(provider.get("provider_key", "") or "").strip().lower()
+        api_key = str(provider.get("api_key", "") or "").strip()
+        model = str(provider.get("model", "") or "").strip()
+        if not provider_key:
+            continue
+        try:
+            if provider_key == "gemini":
+                text = _generate_gemini_text(api_key, model, prompt, json_mode=json_mode, temperature=temperature)
+            elif provider_key == "openai":
+                text = _generate_openai_text(api_key, model, prompt, json_mode=json_mode, temperature=temperature)
+            elif provider_key == "claude":
+                if json_mode:
+                    # Claude JSON mode stays prompt-driven for now; parsing remains best-effort.
+                    text = _generate_claude_text(api_key, model, prompt, temperature=temperature)
+                else:
+                    text = _generate_claude_text(api_key, model, prompt, temperature=temperature)
+            else:
+                text = ""
+
+            if text:
+                return text
+            raise RuntimeError(f"{provider_key} returned empty response text")
+        except Exception as exc:
+            log.warning(
+                "AI provider %s failed for feature %s; trying next provider if available: %s",
+                provider_key,
+                feature_key,
+                exc,
+            )
+
+    return ""
 
 
 def _build_fallback_summary(candidate_data):
@@ -276,19 +564,74 @@ def _build_fallback_summary(candidate_data):
     total_rounds = summary.get("total_rounds", len(rounds))
     passed_rounds = summary.get("passed_rounds", 0)
     failed_rounds = summary.get("failed_rounds", 0)
+    overall_percentage = float(summary.get("overall_percentage", 0) or 0)
+
+    def _round_narrative(round_label: str, status: str, pct: float, correct: int, total: int, threshold: float) -> str:
+        if status == "PASS" and pct >= max(85.0, float(threshold)):
+            insight = "The candidate demonstrated strong command in this area and cleared the round comfortably."
+        elif status == "PASS":
+            insight = "The candidate met the expected benchmark and showed workable role-aligned understanding in this round."
+        elif pct >= max(float(threshold) - 10.0, 55.0):
+            insight = "The candidate showed partial familiarity, but the round remained below the expected bar."
+        elif pct >= 35.0:
+            insight = "The result suggests limited working understanding, with noticeable gaps in the concepts assessed here."
+        else:
+            insight = "The score indicates a significant gap in this area and the current response quality remained well below expectation."
+
+        return (
+            f"**{round_label}**: {insight} "
+            f"Final score was {pct:.2f}% ({correct}/{total}) against a pass threshold of {threshold:.1f}%."
+        )
+
+    strength_labels = []
+    concern_labels = []
+    for rk in ordered_present_round_keys(rounds):
+        rv = rounds.get(rk) or {}
+        label = str(rv.get("round_label", rk) or rk)
+        status = str(rv.get("status", "") or "").strip().upper()
+        pct = float(rv.get("percentage", 0) or 0)
+        if status == "PASS" or pct >= 75.0:
+            strength_labels.append(label)
+        elif status == "FAIL" and pct < 50.0:
+            concern_labels.append(label)
+
+    if passed_rounds == total_rounds and total_rounds > 0:
+        snapshot = (
+            f"The candidate completed all {total_rounds} rounds successfully and delivered an overall score of "
+            f"{overall_percentage:.2f}%, which indicates a consistently strong assessment profile."
+        )
+    elif passed_rounds > failed_rounds:
+        snapshot = (
+            f"The candidate attempted {attempted_rounds}/{total_rounds} rounds, passing {passed_rounds} and failing {failed_rounds}, "
+            f"with an overall score of {overall_percentage:.2f}%. The profile shows more strengths than gaps, but still requires targeted review."
+        )
+    elif passed_rounds == failed_rounds and attempted_rounds:
+        snapshot = (
+            f"The candidate attempted {attempted_rounds}/{total_rounds} rounds with a mixed outcome, recording "
+            f"{passed_rounds} passes and {failed_rounds} failures. The overall score of {overall_percentage:.2f}% suggests a partially aligned profile."
+        )
+    else:
+        snapshot = (
+            f"The candidate attempted {attempted_rounds}/{total_rounds} rounds, passing {passed_rounds} and failing {failed_rounds}. "
+            f"With an overall score of {overall_percentage:.2f}%, the assessment indicates substantial improvement is still needed for this role."
+        )
+
+    context_notes = []
+    if strength_labels:
+        context_notes.append(f"Relative strengths were observed in {', '.join(strength_labels[:3])}.")
+    if concern_labels:
+        context_notes.append(f"The most visible gaps appeared in {', '.join(concern_labels[:3])}.")
 
     lines = [
         (
             f"{name} was evaluated for the {role} role. "
-            "This overall summary captures performance across all evaluation rounds for TA review."
+            "This summary is intended to give TA and hiring stakeholders a concise decision-support view of the candidate's performance."
         ),
         "",
-        (
-            f"The candidate attempted {attempted_rounds}/{total_rounds} rounds, "
-            f"passing {passed_rounds} and failing {failed_rounds}."
-        ),
+        snapshot,
+        *(["", " ".join(context_notes)] if context_notes else []),
         "",
-        "**Round-wise Detailed Insights:**",
+        "### Round-wise Detailed Insights",
     ]
     ordered_keys = ordered_present_round_keys(rounds)
     numbers = round_number_map(ordered_keys)
@@ -304,10 +647,7 @@ def _build_fallback_summary(candidate_data):
         total = rv.get("total", 0)
         threshold = rv.get("pass_threshold", 0)
 
-        lines.append(
-            f"- **{round_number}. {round_label}**: Status = {status}; Score = {pct}% ({correct}/{total}); "
-            f"Pass Threshold = {threshold}%."
-        )
+        lines.append(f"- **{round_number}. {round_label}**: {_round_narrative(round_label, status, float(pct or 0), int(correct or 0), int(total or 0), float(threshold or 0)).split(': ', 1)[1]}")
 
     return "\n".join(lines)
 
@@ -347,30 +687,76 @@ def _build_fallback_coding_summary(coding_data):
     submitted_code = coding_data.get("submitted_code", "")
     overall_rounds = coding_data.get("overall_rounds", {}) or {}
 
+    code_text = str(submitted_code or "").strip()
+    normalized_code = code_text.lower()
+    has_todo = "todo" in normalized_code
+    prints_output = "print(" in normalized_code
+    returns_none = "return none" in normalized_code or "returnnull" in normalized_code.replace(" ", "")
+    syntax_hint = ""
+
+    if str(language or "").strip().lower() == "python" and code_text:
+        try:
+            compile(code_text, "<candidate_code>", "exec")
+        except Exception as exc:
+            syntax_hint = str(exc)
+
     insight_lines = []
-    ordered_keys = ordered_present_round_keys(overall_rounds)
-    numbers = round_number_map(ordered_keys)
-    for rk in ordered_keys:
-        rd = overall_rounds.get(rk)
-        if not rd:
-            continue
-        number = rd.get("round_number", numbers.get(rk, 0))
+    if status == "PASS" and percentage >= 90:
         insight_lines.append(
-            f"- {number}. {rd.get('round_label', rk)}: {rd.get('status', 'Pending')} "
-            f"({rd.get('percentage', 0)}%, {rd.get('correct', 0)}/{rd.get('total', 0)})"
+            "- The submitted solution aligns well with the expected outcome and the score suggests the implementation was functionally correct."
         )
-    key_insights = "\n".join(insight_lines) if insight_lines else "- Round-wise insights not available."
+    elif status == "PASS":
+        insight_lines.append(
+            "- The candidate produced a working or near-working solution, though the submission still appears to have room for refinement in structure or completeness."
+        )
+    elif percentage >= 50:
+        insight_lines.append(
+            "- The submission shows partial problem understanding, but the implementation still contains correctness or completeness gaps that prevented a full pass."
+        )
+    else:
+        insight_lines.append(
+            "- The current submission does not yet satisfy the core problem requirements and reflects a significant execution gap in the coding round."
+        )
+
+    if has_todo:
+        insight_lines.append(
+            "- The retained TODO markers suggest the problem was not fully completed before submission."
+        )
+    if prints_output:
+        insight_lines.append(
+            "- The code appears to rely on printed output, which may not satisfy the required return contract expected by the evaluator."
+        )
+    if returns_none and status != "PASS":
+        insight_lines.append(
+            "- The return path still points to a placeholder or incomplete result, which likely contributed to the low evaluation score."
+        )
+    if syntax_hint:
+        insight_lines.append(
+            f"- A syntax-level issue is likely present in the submission ({syntax_hint}), which would block reliable execution."
+        )
+
+    if not insight_lines:
+        insight_lines.append("- Round-wise insights are available, but the coding submission did not expose enough detail for a deeper heuristic analysis.")
+
+    assessment_line = (
+        "Assessment: The submission shows a strong and largely correct implementation."
+        if status == "PASS" and percentage >= 85
+        else "Assessment: The submission shows workable intent, but the current implementation would still need refinement before it can be treated as a dependable solution."
+        if percentage >= 50
+        else "Assessment: The implementation remains incomplete or incorrect for the expected coding objective and would require rework."
+    )
 
     return (
         "Key Insights:\n"
-        f"{key_insights}\n\n"
-        "Coding Round Summary\n"
+        f"{chr(10).join(insight_lines)}\n\n"
+        "### Coding Round Summary\n"
         f"Round: {round_label}\n"
         f"Score: {percentage}% ({correct}/{total})\n"
         f"Language: {language}\n"
         f"Question: {question_title}\n"
         f"Problem Statement: {question_text}\n"
-        f"Submitted Code:\n{submitted_code if submitted_code else 'No submitted code found.'}"
+        f"Submitted Code:\n{submitted_code if submitted_code else 'No submitted code found.'}\n\n"
+        f"{assessment_line}"
     )
 
 
@@ -548,11 +934,6 @@ def generate_evaluation_summary(candidate_data):
     candidate_data: dict containing candidate's evaluation details.
     Returns a summary string or None.
     """
-    ai_client = _get_ai_client()
-    if not ai_client:
-        print("Gemini AI client not initialized. Using fallback summary.")
-        return _normalize_overall_summary(_build_fallback_summary(candidate_data))
-
     prompt = f""" 
     Create a professional overall evaluation summary for TA review from the candidate data below.
 
@@ -576,13 +957,12 @@ def generate_evaluation_summary(candidate_data):
     {candidate_data} """
 
     try:
-        response = ai_client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=prompt
-        )
-        return _normalize_overall_summary(response.text.strip())
+        text = _generate_text_for_feature("overall_summary", prompt)
+        if not text:
+            raise RuntimeError("AI provider returned empty overall summary text")
+        return _normalize_overall_summary(text)
     except Exception as e:
-        print(f"Error generating summary: {e}. Using fallback summary.")
+        log.warning("Error generating overall summary; using fallback summary: %s", e)
         return _normalize_overall_summary(_build_fallback_summary(candidate_data))
 
 
@@ -590,11 +970,6 @@ def generate_coding_round_summary(coding_data):
     """
     Generate an AI-based summary for coding round with question and submitted code.
     """
-    ai_client = _get_ai_client()
-    if not ai_client:
-        print("Gemini AI client not initialized. Using fallback coding summary.")
-        return _strip_coding_overview_lines(_build_fallback_coding_summary(coding_data))
-
     prompt = f"""
     Rewrite the following coding round data into a professional, HR-readable summary.
 
@@ -614,13 +989,12 @@ def generate_coding_round_summary(coding_data):
     {coding_data}
     """
     try:
-        response = ai_client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=prompt
-        )
-        return _strip_coding_overview_lines(response.text.strip())
+        text = _generate_text_for_feature("coding_summary", prompt)
+        if not text:
+            raise RuntimeError("AI provider returned empty coding summary text")
+        return _strip_coding_overview_lines(text)
     except Exception as e:
-        print(f"Error generating coding summary: {e}. Using fallback coding summary.")
+        log.warning("Error generating coding summary; using fallback coding summary: %s", e)
         return _strip_coding_overview_lines(_build_fallback_coding_summary(coding_data))
 
 
@@ -628,11 +1002,6 @@ def generate_consolidated_evaluation_summary(consolidated_payload):
     """
     Generate an AI-based consolidated summary across multiple selected candidates.
     """
-    ai_client = _get_ai_client()
-    if not ai_client:
-        print("Gemini AI client not initialized. Using fallback consolidated summary.")
-        return _build_fallback_consolidated_summary(consolidated_payload)
-
     prompt = f"""
     Create a professional consolidated interview-performance summary from the structured data below.
 
@@ -663,11 +1032,10 @@ def generate_consolidated_evaluation_summary(consolidated_payload):
     """
 
     try:
-        response = ai_client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=prompt
-        )
-        return response.text.strip()
+        text = _generate_text_for_feature("consolidated_summary", prompt)
+        if not text:
+            raise RuntimeError("AI provider returned empty consolidated summary text")
+        return text
     except Exception as e:
-        print(f"Error generating consolidated summary: {e}. Using fallback consolidated summary.")
+        log.warning("Error generating consolidated summary; using fallback consolidated summary: %s", e)
         return _build_fallback_consolidated_summary(consolidated_payload)

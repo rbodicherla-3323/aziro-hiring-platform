@@ -239,7 +239,25 @@ def generate_candidate_pdf(candidate_data: dict) -> str:
     ai_overall_summary = candidate_data.get("ai_overall_summary")
     ai_coding_summary = candidate_data.get("ai_coding_summary")
     if not ai_overall_summary:
-        ai_overall_summary = generate_evaluation_summary(candidate_data)
+        try:
+            from app.services.evaluation_service import EvaluationService
+
+            ai_overall_summary = EvaluationService.generate_candidate_overall_summary(
+                email,
+                candidate_data=candidate_data,
+            )
+        except Exception:
+            ai_overall_summary = generate_evaluation_summary(candidate_data)
+    if not ai_coding_summary:
+        try:
+            from app.services.evaluation_service import EvaluationService
+
+            ai_coding_summary = EvaluationService.generate_candidate_coding_round_summary(
+                email,
+                candidate_data=candidate_data,
+            )
+        except Exception:
+            ai_coding_summary = None
     ts_id = candidate_data.get("test_session_id", 0)
 
     safe_name = "".join(c if c.isalnum() or c in " _-" else "_" for c in name).strip()

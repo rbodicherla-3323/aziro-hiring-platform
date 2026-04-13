@@ -38,6 +38,7 @@
       { text: "Evaluation", href: "/evaluation", keywords: ["evaluate", "score", "results"] },
       { text: "Reports", href: "/reports", keywords: ["report", "download report", "candidate report"] },
       { text: "Access Management", href: "/access-management", keywords: ["users", "roles", "permissions"] },
+      { text: "AI Settings", href: "/ai-settings", keywords: ["provider", "api keys", "gpt", "gemini", "claude"] },
       { text: "Logout", href: "/logout", keywords: ["sign out", "exit"] },
     ];
 

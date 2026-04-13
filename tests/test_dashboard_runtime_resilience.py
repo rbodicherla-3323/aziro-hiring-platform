@@ -128,3 +128,36 @@ def test_generated_tests_store_returns_in_memory_rows_when_db_fallback_fails(mon
 
     assert len(rows) == 1
     assert rows[0]["email"] == "candidate.one@example.com"
+
+
+def test_generated_tests_page_shows_multiple_candidates_from_same_batch(monkeypatch):
+    GENERATED_TESTS.clear()
+
+    monkeypatch.setenv("AUTH_DISABLED", "true")
+    monkeypatch.setenv("AUTO_SEND_TEST_EMAILS", "false")
+    monkeypatch.setattr(coding_routes, "get_language_runtime_status", lambda _language: (True, "ok"))
+    monkeypatch.setattr(
+        dashboard_routes.db_service,
+        "save_test_link",
+        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("persist unavailable")),
+    )
+
+    app = _make_app(include_test_generation=True)
+    client = app.test_client()
+
+    response = client.post(
+        "/create-test",
+        data={
+            "name[]": ["Candidate One", "Candidate Two"],
+            "email[]": ["candidate.one@example.com", "candidate.two@example.com"],
+            "role[]": ["Java Entry Level (0-2 Years)", "Java Entry Level (0-2 Years)"],
+            "domain[]": ["None", "None"],
+        },
+        follow_redirects=True,
+    )
+
+    assert response.status_code == 200
+    body = response.get_data(as_text=True)
+    assert "Candidate One" in body
+    assert "Candidate Two" in body
+    assert len(GENERATED_TESTS) == 2

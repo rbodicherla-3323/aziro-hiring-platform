@@ -128,3 +128,37 @@ class TestLink(db.Model):
 
     def __repr__(self):
         return f"<TestLink {self.session_id} {self.test_type}>"
+
+
+class AIProviderConfig(db.Model):
+    __tablename__ = "ai_provider_configs"
+
+    provider_key = db.Column(db.String(50), primary_key=True)
+    is_enabled = db.Column(db.Boolean, nullable=False, default=False)
+    api_key_encrypted = db.Column(db.Text, nullable=True, default="")
+    api_key_last4 = db.Column(db.String(16), nullable=True, default="")
+    default_model = db.Column(db.String(120), nullable=True, default="")
+    updated_by = db.Column(db.String(320), nullable=True, default="")
+    updated_at = db.Column(db.DateTime, nullable=True)
+
+    def __repr__(self):
+        return f"<AIProviderConfig {self.provider_key} enabled={self.is_enabled}>"
+
+
+class AIFeatureSetting(db.Model):
+    __tablename__ = "ai_feature_settings"
+
+    feature_key = db.Column(db.String(80), primary_key=True)
+    is_enabled = db.Column(db.Boolean, nullable=False, default=True)
+    primary_provider = db.Column(db.String(50), nullable=True, default="")
+    fallback_provider = db.Column(db.String(50), nullable=True, default="")
+    model_override = db.Column(db.String(120), nullable=True, default="")
+    fallback_model_override = db.Column(db.String(120), nullable=True, default="")
+    updated_by = db.Column(db.String(320), nullable=True, default="")
+    updated_at = db.Column(db.DateTime, nullable=True)
+
+    def __repr__(self):
+        return (
+            f"<AIFeatureSetting {self.feature_key} primary={self.primary_provider} "
+            f"fallback={self.fallback_provider}>"
+        )

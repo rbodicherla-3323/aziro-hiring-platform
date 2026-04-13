@@ -40,11 +40,23 @@ def _parse_created_at(value):
 
 
 def _entry_identity(entry: dict):
+    created_by = str(entry.get("created_by", "")).strip().lower()
+    batch_id = str(entry.get("batch_id", "")).strip().lower()
     email = str(entry.get("email", "")).strip().lower()
-    role = str(entry.get("role", "")).strip().lower()
+    name = str(entry.get("name", "")).strip().lower()
+    role = str(entry.get("role_key", "") or entry.get("role", "")).strip().lower()
+    candidate_key = email or name
+    if not candidate_key:
+        tests_map = entry.get("tests", {}) or {}
+        session_ids = sorted(
+            str((test_meta or {}).get("session_id", "")).strip().lower()
+            for test_meta in tests_map.values()
+            if str((test_meta or {}).get("session_id", "")).strip()
+        )
+        candidate_key = "|".join(session_ids)
     created_at = _parse_created_at(entry.get("created_at", ""))
     day_key = created_at.date().isoformat() if created_at else ""
-    return email, role, day_key
+    return created_by, batch_id, candidate_key, role, day_key
 
 
 def _merge_entry_lists(primary: list[dict], secondary: list[dict]) -> list[dict]:
@@ -124,12 +136,21 @@ def _load_db_tests_for_user(user_email: str, since: datetime | None = None) -> l
             created_at = created_at.replace(tzinfo=timezone.utc)
 
         role_label = str(getattr(row, "role_label", "") or getattr(row, "role_key", "") or "General").strip()
-        dedupe_key = (email, role_label.lower(), created_at.date().isoformat())
+        role_key = str(getattr(row, "role_key", "") or role_label).strip().lower()
+        batch_id = str(getattr(row, "batch_id", "") or "").strip().lower()
+        candidate_name = str(getattr(row, "candidate_name", "") or email).strip() or email
+        dedupe_key = (
+            user_key,
+            batch_id,
+            email or candidate_name.lower(),
+            role_key,
+            created_at.date().isoformat(),
+        )
 
         entry = grouped.get(dedupe_key)
         if entry is None:
             entry = {
-                "name": str(getattr(row, "candidate_name", "") or email).strip() or email,
+                "name": candidate_name,
                 "email": email,
                 "role": role_label,
                 "role_key": str(getattr(row, "role_key", "") or "").strip(),
@@ -204,16 +225,26 @@ def add_generated_test(entry: dict):
     entry_day = entry_dt.date()
     entry_creator = str(entry.get("created_by", "")).lower()
     entry_email = str(entry.get("email", "")).lower()
+    entry_name = str(entry.get("name", "")).strip().lower()
     entry_role = str(entry.get("role", "")).strip().lower()
+    entry_role_key = str(entry.get("role_key", "")).strip().lower()
+    entry_batch_id = str(entry.get("batch_id", "")).strip().lower()
+    entry_candidate_key = entry_email or entry_name
 
     # Remove existing same-day duplicate records for same candidate+role by same creator.
     duplicate_indexes = []
     for idx, test in enumerate(GENERATED_TESTS):
         if str(test.get("created_by", "")).lower() != entry_creator:
             continue
-        if str(test.get("email", "")).lower() != entry_email:
+        existing_email = str(test.get("email", "")).lower()
+        existing_name = str(test.get("name", "")).strip().lower()
+        existing_candidate_key = existing_email or existing_name
+        if existing_candidate_key != entry_candidate_key:
             continue
-        if str(test.get("role", "")).strip().lower() != entry_role:
+        existing_role = str(test.get("role_key", "") or test.get("role", "")).strip().lower()
+        if existing_role != (entry_role_key or entry_role):
+            continue
+        if str(test.get("batch_id", "")).strip().lower() != entry_batch_id:
             continue
 
         existing_created = test.get("created_at", "")
