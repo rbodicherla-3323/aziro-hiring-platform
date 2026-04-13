@@ -20,7 +20,12 @@ from app.services.access_approvals_service import (
     maybe_notify_admin_of_request,
     upsert_access_request,
 )
-from app.access_config import DEFAULT_FULL_ACCESS_EMAILS, get_access_admin_emails
+from app.access_config import (
+    get_access_admin_emails,
+    get_allowed_login_domain_hint,
+    get_default_full_access_emails,
+    is_allowed_login_email,
+)
 from app.services.db_service import record_login_audit
 
 # Azure AD Configuration
@@ -42,6 +47,13 @@ def _parse_csv_emails(env_value: str) -> list[str]:
     raw = str(env_value or "")
     parts = [p.strip().lower() for p in raw.split(",")]
     return [p for p in parts if p]
+
+
+def _allowed_email_error() -> str:
+    message = f"Only allowed work email domains can sign in: {get_allowed_login_domain_hint()}."
+    if not str(os.getenv("DATABASE_URL", "") or "").strip():
+        message += " For local dev, update ALLOWED_LOGIN_DOMAINS in .env if needed."
+    return message
 
 def _build_msal_app(cache=None):
     return msal.ConfidentialClientApplication(
@@ -83,8 +95,8 @@ def login():
         username = request.form.get("username", "").strip()
         password = request.form.get("password", "").strip()
 
-        if not username.endswith("@aziro.com"):
-            error = "Only @aziro.com email addresses are allowed."
+        if not is_allowed_login_email(username):
+            error = _allowed_email_error()
         elif password == "aziro123":  # Dev mode password
             session["user"] = {
                 "name": username.split("@")[0].title(),
@@ -199,12 +211,12 @@ def auth_callback():
     if not name:
         name = email.split("@")[0].title() if email else "User"
 
-    # Restrict to @aziro.com emails
-    if not email.endswith("@aziro.com"):
-        flash("Access denied. Only @aziro.com accounts are allowed.", "danger")
+    # Restrict to configured work email domains.
+    if not is_allowed_login_email(email):
+        flash(f"Access denied. {_allowed_email_error()}", "danger")
         return redirect(url_for("auth.login"))
 
-    default_full_access = sorted([e for e in DEFAULT_FULL_ACCESS_EMAILS])
+    default_full_access = get_default_full_access_emails()
     access_admin_emails = get_access_admin_emails()
     try:
         decision = decide_access(

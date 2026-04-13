@@ -13,8 +13,10 @@ from app.services.email_service import send_plain_email
 from app.access_config import (
     ACCESS_REQUEST_COOLDOWN_HOURS,
     ACCESS_REQUEST_NOTIFY_ENABLED,
-    DEFAULT_FULL_ACCESS_EMAILS,
     get_access_admin_emails,
+    get_allowed_login_domain_hint,
+    get_default_full_access_emails,
+    is_allowed_login_email,
 )
 
 log = logging.getLogger(__name__)
@@ -513,7 +515,7 @@ def decide_access(
     # Default to hardcoded config.
     default_full_access = {
         _normalize_email(e)
-        for e in (default_full_access_emails or DEFAULT_FULL_ACCESS_EMAILS or [])
+        for e in (default_full_access_emails or get_default_full_access_emails() or [])
         if _normalize_email(e)
     }
     admin_emails = {
@@ -522,8 +524,14 @@ def decide_access(
         if _normalize_email(e)
     }
 
-    if not email.endswith("@aziro.com"):
-        return ApprovalDecision(False, "Only @aziro.com emails are allowed.")
+    if not is_allowed_login_email(email):
+        reason = f"Only allowed work email domains can sign in: {get_allowed_login_domain_hint()}."
+        if not str(os.getenv("DATABASE_URL", "") or "").strip():
+            reason += " For local dev, update ALLOWED_LOGIN_DOMAINS in .env if needed."
+        return ApprovalDecision(
+            False,
+            reason,
+        )
 
     if email and (email in default_full_access or email in admin_emails):
         return ApprovalDecision(True, "")
@@ -532,7 +540,10 @@ def decide_access(
     if row and row.is_active:
         return ApprovalDecision(True, "")
 
-    return ApprovalDecision(False, "Access request submitted. Please wait for approver approval.")
+    reason = "Access request submitted. Please wait for approver approval."
+    if not str(os.getenv("DATABASE_URL", "") or "").strip():
+        reason += " For local dev, add your email to DEFAULT_FULL_ACCESS_EMAILS or ACCESS_ADMIN_EMAILS in .env."
+    return ApprovalDecision(False, reason)
 
 
 def maybe_notify_admin_of_request(

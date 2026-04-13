@@ -15,7 +15,11 @@ from app.blueprints.auth import routes as auth_routes
 from app.extensions import db
 from app.services import access_approvals_service as access_service
 from app.services.access_approvals_service import ensure_access_approvals_schema, get_approval
-from app.access_config import get_access_admin_emails
+from app.access_config import (
+    get_access_admin_emails,
+    get_default_full_access_emails,
+    is_allowed_login_email,
+)
 
 
 def _make_access_app(monkeypatch):
@@ -217,3 +221,28 @@ def test_access_management_add_redirects_cleanly_when_notification_raises(monkey
         approval = get_approval("invite.user@aziro.com")
         assert approval is not None
         assert bool(approval.is_active) is True
+
+
+def test_env_extensions_allow_non_default_work_domain_login(monkeypatch):
+    monkeypatch.setenv("ALLOWED_LOGIN_DOMAINS", "aziro.com,ad.msystechnologies.com")
+    monkeypatch.setenv(
+        "DEFAULT_FULL_ACCESS_EMAILS",
+        "bodicherla.ravikumar@ad.msystechnologies.com",
+    )
+
+    assert is_allowed_login_email("bodicherla.ravikumar@ad.msystechnologies.com") is True
+    assert "bodicherla.ravikumar@ad.msystechnologies.com" in get_default_full_access_emails()
+
+    decision = access_service.decide_access("bodicherla.ravikumar@ad.msystechnologies.com")
+
+    assert decision.allowed is True
+
+
+def test_local_denied_access_reason_points_to_env_allowlist(monkeypatch):
+    monkeypatch.delenv("DATABASE_URL", raising=False)
+    monkeypatch.setattr(access_service, "get_approval", lambda email: None)
+
+    decision = access_service.decide_access("new.user@aziro.com")
+
+    assert decision.allowed is False
+    assert "DEFAULT_FULL_ACCESS_EMAILS" in decision.reason

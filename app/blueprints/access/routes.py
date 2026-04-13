@@ -1,4 +1,5 @@
 import logging
+import os
 import csv
 import io
 import math
@@ -7,7 +8,11 @@ from datetime import datetime, timezone
 from flask import flash, make_response, redirect, render_template, request, session, url_for
 
 from . import access_bp
-from app.access_config import get_access_admin_emails
+from app.access_config import (
+    get_access_admin_emails,
+    get_allowed_login_domain_hint,
+    is_allowed_login_email,
+)
 from app.services.access_approvals_service import (
     delete_approval,
     get_approval,
@@ -44,6 +49,13 @@ def _access_admin_emails() -> list[str]:
 
 def _access_admin_display() -> str:
     return ", ".join(_access_admin_emails())
+
+
+def _allowed_email_error() -> str:
+    message = f"Only allowed work email domains are supported: {get_allowed_login_domain_hint()}."
+    if not str(os.getenv("DATABASE_URL", "") or "").strip():
+        message += " For local dev, update ALLOWED_LOGIN_DOMAINS in .env if needed."
+    return message
 
 
 def _is_access_admin() -> bool:
@@ -325,8 +337,8 @@ def access_management_view():
         return denied
 
     email = _normalize_email(request.args.get("email", ""))
-    if not email or not email.endswith("@aziro.com"):
-        flash("Only @aziro.com emails are allowed.", "danger")
+    if not email or not is_allowed_login_email(email):
+        flash(_allowed_email_error(), "danger")
         return redirect(url_for("access.access_management_page"))
 
     try:
@@ -365,8 +377,8 @@ def access_management_add():
         return denied
 
     email = _extract_email_from_form()
-    if not email.endswith("@aziro.com"):
-        flash("Only @aziro.com emails are allowed.", "danger")
+    if not is_allowed_login_email(email):
+        flash(_allowed_email_error(), "danger")
         return redirect(url_for("access.access_management_page"))
 
     try:
@@ -406,8 +418,8 @@ def access_management_approve():
         return denied
 
     email = _extract_email_from_form()
-    if not email.endswith("@aziro.com"):
-        flash("Only @aziro.com emails are allowed.", "danger")
+    if not is_allowed_login_email(email):
+        flash(_allowed_email_error(), "danger")
         return redirect(url_for("access.access_management_page"))
 
     try:
@@ -447,8 +459,8 @@ def access_management_reject():
         return denied
 
     email = _extract_email_from_form()
-    if not email.endswith("@aziro.com"):
-        flash("Only @aziro.com emails are allowed.", "danger")
+    if not is_allowed_login_email(email):
+        flash(_allowed_email_error(), "danger")
         return redirect(url_for("access.access_management_page"))
 
     try:
@@ -472,8 +484,8 @@ def access_management_revoke():
         return denied
 
     email = _extract_email_from_form()
-    if not email.endswith("@aziro.com"):
-        flash("Only @aziro.com emails are allowed.", "danger")
+    if not is_allowed_login_email(email):
+        flash(_allowed_email_error(), "danger")
         return redirect(url_for("access.access_management_page"))
 
     try:
@@ -523,8 +535,8 @@ def access_management_delete():
         return denied
 
     email = _extract_email_from_form()
-    if not email.endswith("@aziro.com"):
-        flash("Only @aziro.com emails are allowed.", "danger")
+    if not is_allowed_login_email(email):
+        flash(_allowed_email_error(), "danger")
         return redirect(url_for("access.access_management_page"))
 
     try:
@@ -558,7 +570,7 @@ def access_management_bulk():
     try:
         updated = 0
         for email in emails:
-            if not email.endswith("@aziro.com"):
+            if not is_allowed_login_email(email):
                 continue
             if bulk_action == "approve":
                 set_access_active(email=email, is_active=True, approved_by=_current_user_email())

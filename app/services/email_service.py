@@ -14,7 +14,7 @@ from urllib.parse import quote
 
 import msal
 import requests
-from app.access_config import DEFAULT_FULL_ACCESS_EMAILS
+from app.access_config import get_default_full_access_emails
 from app.utils.email_validator import validate_email
 from app.utils.round_order import ordered_present_round_keys
 
@@ -41,7 +41,7 @@ def _get_default_test_link_share_emails(candidate_email: str = "") -> list[str]:
     candidate_key = _normalize_email(candidate_email)
     configured = sorted(
         _normalize_email(email)
-        for email in (DEFAULT_FULL_ACCESS_EMAILS or set())
+        for email in (get_default_full_access_emails() or [])
         if _normalize_email(email)
     )
     seen = set()
