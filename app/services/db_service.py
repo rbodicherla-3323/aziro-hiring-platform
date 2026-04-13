@@ -568,6 +568,140 @@ def get_test_link_monthly_series(
     ]
 
 
+def get_test_link_monthly_pass_series(
+    *,
+    points: int = 6,
+    created_by: str | None = None,
+) -> list[dict]:
+    """
+    Return monthly PASS/FAIL percentage series from attempted tests.
+    Each item:
+    {
+        "key": "YYYY-MM",
+        "label": "Mon",
+        "attempted": int,
+        "passed": int,
+        "failed": int,
+        "pass_percentage": float,
+        "fail_percentage": float,
+    }
+    """
+    points = max(2, int(points or 6))
+    now = _now_utc()
+    current_month = _month_start_utc(now)
+
+    buckets = []
+    index_by_key = {}
+    for idx in range(points):
+        start = _add_months_utc(current_month, -(points - 1 - idx))
+        end = _add_months_utc(start, 1)
+        key = f"{start.year:04d}-{start.month:02d}"
+        buckets.append(
+            {
+                "key": key,
+                "label": start.strftime("%b"),
+                "start": start,
+                "end": end,
+                "attempted": 0,
+                "passed": 0,
+                "failed": 0,
+            }
+        )
+        index_by_key[key] = idx
+
+    query = (
+        _exclude_dummy_test_links(TestLink.query)
+        .with_entities(TestLink.session_id, TestLink.created_at)
+        .filter(TestLink.created_at >= buckets[0]["start"])
+        .filter(TestLink.created_at < buckets[-1]["end"])
+    )
+    if created_by:
+        query = query.filter(db.func.lower(TestLink.created_by) == created_by.strip().lower())
+
+    links = query.all()
+    if not links:
+        return [
+            {
+                "key": b["key"],
+                "label": b["label"],
+                "attempted": 0,
+                "passed": 0,
+                "failed": 0,
+                "pass_percentage": 0.0,
+                "fail_percentage": 0.0,
+            }
+            for b in buckets
+        ]
+
+    link_entries = []
+    session_ids = set()
+    for row in links:
+        session_id = str(getattr(row, "session_id", "") or "").strip().lower()
+        created_at = getattr(row, "created_at", None)
+        if not session_id or not created_at:
+            continue
+        if created_at.tzinfo is None:
+            created_at = created_at.replace(tzinfo=timezone.utc)
+        key = f"{created_at.year:04d}-{created_at.month:02d}"
+        bucket_idx = index_by_key.get(key)
+        if bucket_idx is None:
+            continue
+        session_ids.add(session_id)
+        link_entries.append((session_id, bucket_idx))
+
+    status_by_session = {}
+    if session_ids:
+        status_rows = (
+            db.session.query(
+                db.func.lower(RoundResult.session_uuid),
+                RoundResult.status,
+            )
+            .filter(db.func.lower(RoundResult.session_uuid).in_(session_ids))
+            .filter(RoundResult.status.in_(("PASS", "FAIL")))
+            .order_by(
+                db.func.lower(RoundResult.session_uuid).asc(),
+                RoundResult.created_at.desc(),
+            )
+            .all()
+        )
+        for sid, status in status_rows:
+            sid_key = str(sid or "").strip().lower()
+            if not sid_key or sid_key in status_by_session:
+                continue
+            status_by_session[sid_key] = str(status or "").strip().upper()
+
+    for session_id, bucket_idx in link_entries:
+        final_status = status_by_session.get(session_id)
+        if final_status not in {"PASS", "FAIL"}:
+            continue
+        buckets[bucket_idx]["attempted"] += 1
+        if final_status == "PASS":
+            buckets[bucket_idx]["passed"] += 1
+        else:
+            buckets[bucket_idx]["failed"] += 1
+
+    result = []
+    for b in buckets:
+        attempted = int(b["attempted"])
+        passed = int(b["passed"])
+        failed = int(b["failed"])
+        pass_percentage = round((passed * 100.0 / attempted), 1) if attempted > 0 else 0.0
+        fail_percentage = round((failed * 100.0 / attempted), 1) if attempted > 0 else 0.0
+        result.append(
+            {
+                "key": b["key"],
+                "label": b["label"],
+                "attempted": attempted,
+                "passed": passed,
+                "failed": failed,
+                "pass_percentage": pass_percentage,
+                "fail_percentage": fail_percentage,
+            }
+        )
+
+    return result
+
+
 def search_candidates(
     query: str = "",
     role_filter: str = "",

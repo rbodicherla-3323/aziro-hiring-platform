@@ -260,7 +260,13 @@ def dashboard():
     pending_trend = _trend_payload(my_stats.get("pending", 0), prev_stats.get("pending", 0))
     completed_trend = _trend_payload(my_stats.get("completed", 0), prev_stats.get("completed", 0))
 
-    def _build_chart_payload(series: list[dict]) -> dict:
+    def _build_chart_payload(
+        series: list[dict],
+        *,
+        value_a_key: str = "tests",
+        value_b_key: str = "completed",
+        forced_max: float | None = None,
+    ) -> dict:
         series_count = len(series)
         chart_top = 32.0
         chart_bottom = 184.0
@@ -268,27 +274,30 @@ def dashboard():
         chart_right = 338.0
         chart_height = chart_bottom - chart_top
         chart_width = chart_right - chart_left
-        chart_max = max(
-            1,
-            max((pt.get("tests", 0) for pt in series), default=0),
-            max((pt.get("completed", 0) for pt in series), default=0),
-        )
+        if forced_max is not None:
+            chart_max = max(1.0, float(forced_max))
+        else:
+            chart_max = max(
+                1.0,
+                max((float(pt.get(value_a_key, 0) or 0) for pt in series), default=0.0),
+                max((float(pt.get(value_b_key, 0) or 0) for pt in series), default=0.0),
+            )
 
         points = []
         for idx, point in enumerate(series):
             x = chart_left
             if series_count > 1:
                 x = chart_left + (chart_width * idx / (series_count - 1))
-            tests_value = int(point.get("tests", 0) or 0)
-            completed_value = int(point.get("completed", 0) or 0)
-            y_tests = chart_bottom - (tests_value / chart_max) * chart_height
-            y_completed = chart_bottom - (completed_value / chart_max) * chart_height
+            value_a = float(point.get(value_a_key, 0) or 0)
+            value_b = float(point.get(value_b_key, 0) or 0)
+            y_tests = chart_bottom - (value_a / chart_max) * chart_height
+            y_completed = chart_bottom - (value_b / chart_max) * chart_height
             points.append(
                 {
                     "label": point.get("label", ""),
                     "x": round(x, 1),
-                    "tests": tests_value,
-                    "completed": completed_value,
+                    "tests": round(value_a, 1),
+                    "completed": round(value_b, 1),
                     "y_tests": round(y_tests, 1),
                     "y_completed": round(y_completed, 1),
                 }
@@ -303,9 +312,12 @@ def dashboard():
             y_pos = chart_bottom
             if chart_max > 0:
                 y_pos = chart_bottom - (tick_value / chart_max) * chart_height
+            tick_display = round(float(tick_value), 1)
+            if abs(tick_display - round(tick_display)) < 0.05:
+                tick_display = int(round(tick_display))
             y_ticks.append(
                 {
-                    "value": int(round(tick_value)),
+                    "value": tick_display,
                     "y": round(y_pos, 1),
                 }
             )
@@ -323,24 +335,70 @@ def dashboard():
             "completed_trend": _trend_payload(latest.get("completed", 0), previous.get("completed", 0)),
         }
 
-    # Member (current HR) monthly chart.
-    performance_series = _safe_dashboard_value(
-        lambda: db_service.get_test_link_monthly_series(
+    # Member (current HR) monthly PASS/FAIL percentage chart.
+    performance_pass_series = _safe_dashboard_value(
+        lambda: db_service.get_test_link_monthly_pass_series(
             points=6,
             created_by=user_email,
         ),
-        _empty_monthly_series(6),
-        "my_monthly_series",
+        [
+            {
+                "key": f"fallback-{idx}",
+                "label": "",
+                "attempted": 0,
+                "passed": 0,
+                "failed": 0,
+                "pass_percentage": 0.0,
+                "fail_percentage": 0.0,
+            }
+            for idx in range(max(2, 6))
+        ],
+        "my_monthly_pass_series",
     )
-    my_chart = _build_chart_payload(performance_series)
+    performance_series = [
+        {
+            "key": point.get("key", ""),
+            "label": point.get("label", ""),
+            "tests": point.get("pass_percentage", 0.0),
+            "completed": point.get("fail_percentage", 0.0),
+            "attempted": point.get("attempted", 0),
+            "passed": point.get("passed", 0),
+            "failed": point.get("failed", 0),
+        }
+        for point in performance_pass_series
+    ]
+    my_chart = _build_chart_payload(performance_series, forced_max=100.0)
 
-    # Organization-wide monthly chart.
-    overall_performance_series = _safe_dashboard_value(
-        lambda: db_service.get_test_link_monthly_series(points=8),
-        _empty_monthly_series(8),
-        "overall_monthly_series",
+    # Organization-wide monthly PASS/FAIL percentage chart.
+    overall_pass_series = _safe_dashboard_value(
+        lambda: db_service.get_test_link_monthly_pass_series(points=8),
+        [
+            {
+                "key": f"fallback-{idx}",
+                "label": "",
+                "attempted": 0,
+                "passed": 0,
+                "failed": 0,
+                "pass_percentage": 0.0,
+                "fail_percentage": 0.0,
+            }
+            for idx in range(max(2, 8))
+        ],
+        "overall_monthly_pass_series",
     )
-    overall_chart = _build_chart_payload(overall_performance_series)
+    overall_performance_series = [
+        {
+            "key": point.get("key", ""),
+            "label": point.get("label", ""),
+            "tests": point.get("pass_percentage", 0.0),
+            "completed": point.get("fail_percentage", 0.0),
+            "attempted": point.get("attempted", 0),
+            "passed": point.get("passed", 0),
+            "failed": point.get("failed", 0),
+        }
+        for point in overall_pass_series
+    ]
+    overall_chart = _build_chart_payload(overall_performance_series, forced_max=100.0)
 
     chart_points = my_chart["points"]
     chart_y_ticks = my_chart["y_ticks"]
