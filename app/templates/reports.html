@@ -1515,15 +1515,18 @@
 {% block content %}
 {% set role_query = selected_role if selected_role != "All Roles" else None %}
 {% set date_query = specific_date if date_filter == "date" and specific_date else None %}
+{% set from_query = admin_date_from or None %}
+{% set to_query = admin_date_to or None %}
 {% set prev_offset = (date_offset | int) - 1 %}
 {% set next_offset = (date_offset | int) + 1 %}
+{% set prev_disabled = False %}
 {% set next_disabled = (date_offset | int) >= 0 %}
 {% if date_filter == 'date' and specific_date %}
-    {% set prev_period_url = url_for('reports.reports', q=search_query or None, role=role_query, filter='date', date=specific_date, offset=prev_offset, per_page=per_page, page=1) %}
-    {% set next_period_url = url_for('reports.reports', q=search_query or None, role=role_query, filter='date', date=specific_date, offset=next_offset, per_page=per_page, page=1) %}
+    {% set prev_period_url = url_for('reports.reports', q=search_query or None, role=role_query, filter='date', date=specific_date, from=from_query, to=to_query, offset=prev_offset, per_page=per_page, page=1) %}
+    {% set next_period_url = url_for('reports.reports', q=search_query or None, role=role_query, filter='date', date=specific_date, from=from_query, to=to_query, offset=next_offset, per_page=per_page, page=1) %}
 {% else %}
-    {% set prev_period_url = url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, offset=prev_offset, per_page=per_page, page=1) %}
-    {% set next_period_url = url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, offset=next_offset, per_page=per_page, page=1) %}
+    {% set prev_period_url = url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, from=from_query, to=to_query, offset=prev_offset, per_page=per_page, page=1) %}
+    {% set next_period_url = url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, from=from_query, to=to_query, offset=next_offset, per_page=per_page, page=1) %}
 {% endif %}
 {% set window_start = page - 1 if page > 1 else 1 %}
 {% set window_end = window_start + 2 %}
@@ -1557,7 +1560,7 @@
             <span class="session-title">{% if search_global_mode %}Search Results (All Candidates){% else %}{{ period_label }} Session{% endif %}</span>
             <span class="session-count">{{ base_total_candidates }} Candidates</span>
             <div class="reports-period-nav">
-                <a href="{{ prev_period_url }}" class="period-nav-btn" aria-label="Previous period"><i class="bi bi-chevron-left"></i></a>
+                <a href="{{ prev_period_url }}" class="period-nav-btn {% if prev_disabled %}disabled{% endif %}" aria-label="Previous period"><i class="bi bi-chevron-left"></i></a>
                 <a href="{{ next_period_url }}" class="period-nav-btn {% if next_disabled %}disabled{% endif %}" aria-label="Next period"><i class="bi bi-chevron-right"></i></a>
             </div>
         </div>
@@ -1875,7 +1878,7 @@
         <div class="reports-pagination">
             <a
                 class="page-btn {% if page <= 1 %}disabled{% endif %}"
-                href="{{ url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, date=date_query, offset=date_offset, page=page-1, per_page=per_page) }}"
+                href="{{ url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, date=date_query, from=from_query, to=to_query, offset=date_offset, page=page-1, per_page=per_page) }}"
                 aria-label="Previous page"
             >
                 <i class="bi bi-chevron-left"></i>
@@ -1884,13 +1887,13 @@
             {% for p in range(window_start, window_end + 1) %}
                 <a
                     class="page-btn {% if p == page %}active{% endif %}"
-                    href="{{ url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, date=date_query, offset=date_offset, page=p, per_page=per_page) }}"
+                    href="{{ url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, date=date_query, from=from_query, to=to_query, offset=date_offset, page=p, per_page=per_page) }}"
                 >{{ p }}</a>
             {% endfor %}
 
             <a
                 class="page-btn {% if page >= total_pages %}disabled{% endif %}"
-                href="{{ url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, date=date_query, offset=date_offset, page=page+1, per_page=per_page) }}"
+                href="{{ url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, date=date_query, from=from_query, to=to_query, offset=date_offset, page=page+1, per_page=per_page) }}"
                 aria-label="Next page"
             >
                 <i class="bi bi-chevron-right"></i>
@@ -1905,9 +1908,207 @@
                 / page
             </label>
         </div>
+
     </div>
     </div>
+
 </div>
+
+    {% if is_reports_admin %}
+    <div style="width:100%; clear:both; display:block; margin-top:18px;">
+    <div class="reports-panel" style="padding: 14px; margin-bottom: 12px; width:100%; box-sizing:border-box;">
+        <div class="reports-session" style="justify-content: space-between; gap: 12px; align-items: flex-start;">
+            <div style="display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <span class="session-indicator"><i class="bi bi-database"></i></span>
+                <span class="session-title">User Details</span>
+            </div>
+            <div class="reports-note" style="margin: 0;">
+                {% if admin_date_range_mode %}
+                    Showing user details for {{ admin_db_period_label }}.
+                {% else %}
+                    Choose <strong>From</strong> and <strong>To</strong> dates below to fetch database data separately from the existing reports list.
+                {% endif %}
+            </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; gap:12px; align-items:flex-start; flex-wrap:wrap; margin-top:12px;">
+            <form method="get" action="{{ url_for('reports.reports') }}" id="reportsDbRangeForm" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:0; flex:1 1 720px;">
+                <input type="hidden" name="q" value="{{ search_query }}">
+                <input type="hidden" name="role" value="{{ selected_role }}">
+                <input type="hidden" name="filter" value="{{ date_filter }}">
+                <input type="hidden" name="date" value="{{ specific_date }}">
+                <input type="hidden" name="offset" value="{{ date_offset | int }}">
+                <input type="hidden" name="per_page" value="{{ per_page }}">
+                <input type="hidden" name="page" value="1">
+                <input type="hidden" name="admin_view" value="{{ admin_view }}">
+                {% if admin_user_filter %}
+                <input type="hidden" name="admin_user" value="{{ admin_user_filter }}">
+                {% endif %}
+                <input
+                    type="date"
+                    class="reports-date-input"
+                    name="from"
+                    id="reportsFromDateInput"
+                    value="{{ admin_date_from }}"
+                    aria-label="From date"
+                    title="From date"
+                >
+                <input
+                    type="date"
+                    class="reports-date-input"
+                    name="to"
+                    id="reportsToDateInput"
+                    value="{{ admin_date_to }}"
+                    aria-label="To date"
+                    title="To date"
+                >
+                <button type="submit" class="row-action-btn" style="height:34px;">
+                    <i class="bi bi-funnel"></i> Fetch Data
+                </button>
+                <a class="row-action-btn" id="reportsDbRangeClear" href="{{ url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, date=date_query, offset=date_offset, per_page=per_page, page=1, admin_view=admin_view, admin_user=admin_user_filter or None) }}" style="height:34px;">
+                    <i class="bi bi-arrow-counterclockwise"></i> Clear Range
+                </a>
+            </form>
+            {% if admin_date_range_mode %}
+            <form method="post" action="{{ url_for('reports.download_admin_login_activity_pdf') }}" style="margin:0; display:flex; align-items:center;">
+                <input type="hidden" name="from" value="{{ admin_date_from }}">
+                <input type="hidden" name="to" value="{{ admin_date_to }}">
+                <button type="submit" class="row-action-btn" style="height:34px; white-space:nowrap;">
+                    <i class="bi bi-file-earmark-pdf"></i> Download All User Logins PDF
+                </button>
+            </form>
+            {% endif %}
+        </div>
+
+        {% if admin_date_range_mode %}
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:14px; margin-bottom:14px;">
+            <a class="row-action-btn {% if admin_view == 'created_by' %}view{% endif %}" href="{{ url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, date=date_query, from=admin_date_from or None, to=admin_date_to or None, offset=date_offset, per_page=per_page, page=1, admin_view='created_by') }}" style="height:34px;">
+                <i class="bi bi-people"></i> Candidates Created By
+            </a>
+            <a class="row-action-btn {% if admin_view == 'login_users' %}view{% endif %}" href="{{ url_for('reports.reports', q=search_query or None, role=role_query, filter=date_filter, date=date_query, from=admin_date_from or None, to=admin_date_to or None, offset=date_offset, per_page=per_page, page=1, admin_view='login_users', admin_user=admin_user_filter or None) }}" style="height:34px;">
+                <i class="bi bi-person-check"></i> Logged-In Users
+            </a>
+            {% if admin_view == 'login_users' %}
+            <form method="get" action="{{ url_for('reports.reports') }}" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:0;">
+                <input type="hidden" name="q" value="{{ search_query }}">
+                <input type="hidden" name="role" value="{{ selected_role }}">
+                <input type="hidden" name="filter" value="{{ date_filter }}">
+                <input type="hidden" name="date" value="{{ specific_date }}">
+                <input type="hidden" name="from" value="{{ admin_date_from }}">
+                <input type="hidden" name="to" value="{{ admin_date_to }}">
+                <input type="hidden" name="offset" value="{{ date_offset | int }}">
+                <input type="hidden" name="per_page" value="{{ per_page }}">
+                <input type="hidden" name="page" value="1">
+                <input type="hidden" name="admin_view" value="login_users">
+                <select class="reports-role-select" name="admin_user" onchange="this.form.submit()" style="min-width:280px;">
+                    <option value="">Select logged-in user</option>
+                    {% for option in admin_user_options %}
+                    <option value="{{ option.email }}" {% if admin_user_filter == option.email %}selected{% endif %}>{{ option.name }} ({{ option.email }})</option>
+                    {% endfor %}
+                </select>
+            </form>
+            {% endif %}
+        </div>
+
+        {% if admin_view == 'created_by' %}
+            {% if admin_db_groups %}
+            <div class="reports-list" style="margin-top: 12px; gap: 12px; display: grid;">
+                {% for group in admin_db_groups %}
+                <div class="candidate-item" style="height:auto; padding:16px;">
+                    <div class="candidate-row" style="align-items:flex-start; gap:16px; justify-content:space-between;">
+                        <div class="candidate-meta" style="cursor:default; align-items:flex-start;">
+                            <span class="candidate-avatar {{ 'avatar-highlight' if loop.index0 % 4 == 0 else ('avatar-blue' if loop.index0 % 4 == 1 else ('avatar-peach' if loop.index0 % 4 == 2 else 'avatar-orange')) }}">{{ initials(group.user_name or group.user_email or 'U') }}</span>
+                            <div>
+                                <div class="reports-note" style="margin:0 0 4px 0;">Candidates Created By</div>
+                                <h3 class="candidate-name">{{ group.user_name or 'Unknown User' }}</h3>
+                                <div class="candidate-email-row" style="flex-wrap:wrap; gap:8px;">
+                                    <span class="candidate-email">{{ group.user_email or 'Email not recorded' }}</span>
+                                    <span class="role-pill">{{ group.candidates|length }} Candidate{% if group.candidates|length != 1 %}s{% endif %}</span>
+                                    <span class="role-pill">{{ group.report_count }} Report{% if group.report_count != 1 %}s{% endif %}</span>
+                                    <span class="candidate-email">{% if group.last_login_at %}Last login: {{ group.last_login_at.strftime('%Y-%m-%d %H:%M UTC') }}{% else %}Last login not recorded in selected range{% endif %}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="reports-empty" style="margin-top: 12px;">
+                <h4>No creator records found</h4>
+                <p>Try changing the from/to date range.</p>
+            </div>
+            {% endif %}
+        {% else %}
+            {% if admin_selected_group %}
+            <div class="candidate-item" style="height:auto; padding:16px; margin-top:12px;">
+                <div class="candidate-row" style="align-items:flex-start; gap:16px; justify-content:space-between;">
+                    <div class="candidate-meta" style="cursor:default; align-items:flex-start;">
+                        <span class="candidate-avatar avatar-highlight">{{ initials(admin_selected_group.user_name or admin_selected_group.user_email or 'U') }}</span>
+                        <div>
+                            <div class="reports-note" style="margin:0 0 4px 0;">Logged-In User</div>
+                            <h3 class="candidate-name">{{ admin_selected_group.user_name or 'Unknown User' }}</h3>
+                            <div class="candidate-email-row" style="flex-wrap:wrap; gap:8px;">
+                                <span class="candidate-email">{{ admin_selected_group.user_email or 'Email not recorded' }}</span>
+                                <span class="role-pill">{{ admin_selected_group.login_count }} Login{% if admin_selected_group.login_count != 1 %}s{% endif %}</span>
+                                <span class="role-pill">{{ admin_selected_group.auth_provider or 'Provider not recorded' }}</span>
+                                <span class="candidate-email">{% if admin_selected_group.last_login_at %}Last login: {{ admin_selected_group.last_login_at.strftime('%Y-%m-%d %H:%M UTC') }}{% else %}Last login not recorded in selected range{% endif %}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="overflow-x:auto; margin-top:14px;">
+                    <table style="width:100%; border-collapse:collapse; min-width:900px;">
+                        <thead>
+                            <tr style="border-bottom:1px solid rgba(148, 163, 184, 0.24); text-align:left;">
+                                <th style="padding:10px 8px; font-size:12px; text-transform:uppercase; letter-spacing:0.04em;">Candidate</th>
+                                <th style="padding:10px 8px; font-size:12px; text-transform:uppercase; letter-spacing:0.04em;">Email</th>
+                                <th style="padding:10px 8px; font-size:12px; text-transform:uppercase; letter-spacing:0.04em;">Role</th>
+                                <th style="padding:10px 8px; font-size:12px; text-transform:uppercase; letter-spacing:0.04em;">Date</th>
+                                <th style="padding:10px 8px; font-size:12px; text-transform:uppercase; letter-spacing:0.04em;">Time</th>
+                                <th style="padding:10px 8px; font-size:12px; text-transform:uppercase; letter-spacing:0.04em;">Evaluation Report</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if admin_selected_group.candidates %}
+                                {% for cand in admin_selected_group.candidates %}
+                                {% set created_parts = (cand.created_at or '').split(' ') %}
+                                <tr style="border-bottom:1px solid rgba(148, 163, 184, 0.16);">
+                                    <td style="padding:12px 8px; font-weight:600;">{{ cand.name or '-' }}</td>
+                                    <td style="padding:12px 8px;">{{ cand.email or '-' }}</td>
+                                    <td style="padding:12px 8px;">{{ cand.role or 'General Role' }}</td>
+                                    <td style="padding:12px 8px;">{{ created_parts[0] if created_parts else (cand.created_at or '-') }}</td>
+                                    <td style="padding:12px 8px;">{{ created_parts[1] if created_parts|length > 1 else '-' }}</td>
+                                    <td style="padding:12px 8px;">
+                                        {% if cand.has_report and cand.report_filename %}
+                                        <a class="row-action-btn" href="/reports/download-file/{{ cand.report_filename }}" title="Download evaluation report" aria-label="Download evaluation report"><i class="bi bi-download"></i> Download Report</a>
+                                        {% else %}
+                                        <span class="candidate-email">No report</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="6" style="padding:16px 8px; color:#4f5f89;">No candidates were created by this user in the selected range.</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% else %}
+            <div class="reports-empty" style="margin-top: 12px;">
+                <h4>No logged-in user selected</h4>
+                <p>Select a logged-in user to see the candidates created by that user.</p>
+            </div>
+            {% endif %}
+        {% endif %}
+        {% endif %}
+    </div>
+    </div>
+    {% endif %}
+
 {% endblock %}
 
 {% block page_instructions %}

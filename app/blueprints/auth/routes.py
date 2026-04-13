@@ -21,6 +21,7 @@ from app.services.access_approvals_service import (
     upsert_access_request,
 )
 from app.access_config import DEFAULT_FULL_ACCESS_EMAILS, get_access_admin_emails
+from app.services.db_service import record_login_audit
 
 # Azure AD Configuration
 AZURE_CLIENT_ID = os.getenv("AZURE_CLIENT_ID", "")
@@ -89,6 +90,10 @@ def login():
                 "email": username,
                 "authenticated": True,
             }
+            try:
+                record_login_audit(username, username.split("@")[0].title(), auth_provider="password")
+            except Exception:
+                log.exception("Failed to record login audit for %s", username)
             return redirect(url_for("dashboard.dashboard"))
         else:
             error = "Invalid credentials."
@@ -246,6 +251,10 @@ def auth_callback():
         "email": email,
         "authenticated": True,
     }
+    try:
+        record_login_audit(email, name, auth_provider="microsoft")
+    except Exception:
+        log.exception("Failed to record login audit for %s", email)
 
     expires_in = result.get("expires_in", 3600)
     set_graph_delegated_token(
