@@ -554,6 +554,18 @@
         margin-top: 3px;
         line-height: 1.2;
     }
+    .email-valid-note {
+        display: none;
+        min-height: 16px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: #1d7a46;
+        margin-top: 3px;
+        line-height: 1.2;
+    }
+    .email-valid-note.is-visible {
+        display: block;
+    }
     .auto-fill-badge,
     .extract-spinner {
         display: none !important;
@@ -734,6 +746,7 @@
                             <div class="col-md-6">
                                 <label class="form-label ghost-label">Email</label>
                                 <input type="email" class="form-control candidate-email" name="email[]" placeholder="john.doe@email.com" required>
+                                <span class="email-valid-note" aria-live="polite">Email Validated!</span>
                                 <span class="field-error email-error"></span>
                             </div>
                             <div class="col-md-6">
@@ -857,16 +870,20 @@ function validateRequiredFields() {
 
     let valid = true;
     nameInputs.forEach((input, index) => {
-        if (!input.value.trim() || !emailInputs[index].value.trim() || !roleSelects[index].value) {
+        const emailInput = emailInputs[index];
+        const roleSelect = roleSelects[index];
+        const hasInvalidEmail = !!emailInput && !!emailInput.value.trim() && !emailInput.checkValidity();
+
+        if (!input.value.trim() || !emailInput.value.trim() || hasInvalidEmail || !roleSelect.value) {
             valid = false;
             if (!input.value.trim()) input.classList.add("is-invalid");
-            if (!emailInputs[index].value.trim()) emailInputs[index].classList.add("is-invalid");
-            if (!roleSelects[index].value) roleSelects[index].classList.add("is-invalid");
+            if (!emailInput.value.trim() || hasInvalidEmail) emailInput.classList.add("is-invalid");
+            if (!roleSelect.value) roleSelect.classList.add("is-invalid");
         }
     });
 
     if (!valid && typeof showToast === "function") {
-        showToast("Please fill all required fields", "warning");
+        showToast("Please fill all required fields with valid email addresses", "warning");
     }
     return valid;
 }
@@ -887,6 +904,16 @@ function getSelectedOptionText(selectField, fallback) {
     return getFieldDisplayValue(selectField, fallback);
 }
 
+function updateEmailValidationNote(row) {
+    if (!row) return;
+    const emailField = row.querySelector(".candidate-email");
+    const note = row.querySelector(".email-valid-note");
+    if (!emailField || !note) return;
+
+    const hasValidEmail = !!emailField.value.trim() && emailField.checkValidity();
+    note.classList.toggle("is-visible", hasValidEmail);
+}
+
 function syncReviewForRow(row) {
     if (!row) return;
 
@@ -904,6 +931,7 @@ function syncReviewForRow(row) {
     if (emailCell) emailCell.textContent = getFieldDisplayValue(emailField, "john.doe@email.com");
     if (roleCell) roleCell.textContent = getSelectedOptionText(roleField, "Select role");
     if (domainCell) domainCell.textContent = getSelectedOptionText(domainField, "None");
+    updateEmailValidationNote(row);
 }
 
 function populateReviewPanel() {
@@ -1118,6 +1146,9 @@ function resetCandidateRow(row) {
     row.querySelectorAll(".field-error").forEach((node) => {
         node.textContent = "";
     });
+    row.querySelectorAll(".email-valid-note").forEach((node) => {
+        node.classList.remove("is-visible");
+    });
     setAutofillStatus(row, "", "");
     const reviewName = row.querySelector(".review-name-value");
     const reviewEmail = row.querySelector(".review-email-value");
@@ -1221,7 +1252,12 @@ function setupFileInputListeners(row) {
         nameField.addEventListener("input", () => clearFieldError(row, ".name-error"));
     }
     if (emailField) {
-        emailField.addEventListener("input", () => clearFieldError(row, ".email-error"));
+        emailField.addEventListener("input", () => {
+            clearFieldError(row, ".email-error");
+            updateEmailValidationNote(row);
+        });
+        emailField.addEventListener("change", () => updateEmailValidationNote(row));
+        updateEmailValidationNote(row);
     }
     if (roleField) {
         roleField.addEventListener("change", () => clearFieldError(row, ".role-error"));
@@ -1374,6 +1410,10 @@ form.addEventListener("submit", (event) => {
 document.addEventListener("input", (event) => {
     if (event.target.classList.contains("is-invalid")) {
         event.target.classList.remove("is-invalid");
+    }
+    if (event.target.classList.contains("candidate-email")) {
+        const row = event.target.closest(".candidate-row");
+        updateEmailValidationNote(row);
     }
 });
 </script>
