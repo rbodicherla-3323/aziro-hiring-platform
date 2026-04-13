@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import sqlalchemy as sa
 from flask import Flask, session
@@ -69,6 +70,7 @@ def _make_auth_app(monkeypatch):
     app.config["TESTING"] = True
     app.jinja_env.globals["ASSET_VERSION"] = "test"
     app.register_blueprint(auth_bp)
+    app.add_url_rule("/dashboard", endpoint="dashboard.dashboard", view_func=lambda: "dashboard")
     return app
 
 
@@ -162,6 +164,62 @@ def test_auth_callback_redirects_cleanly_when_access_decision_errors(monkeypatch
 
     assert response.status_code == 302
     assert response.headers["Location"].endswith("/login")
+
+
+def test_auth_callback_prefers_allowed_graph_mail_over_guest_upn(monkeypatch):
+    class _FakeMsalApp:
+        def acquire_token_by_authorization_code(self, code, scopes, redirect_uri):
+            return {
+                "access_token": "graph-token",
+                "expires_in": 3600,
+                "id_token_claims": {
+                    "preferred_username": "bodicherla_ravikumar_ad.msystechnologies.com#ext#@tenant.onmicrosoft.com",
+                    "name": "Ravikumar Bodicherla",
+                },
+            }
+
+    class _FakeGraphResponse:
+        status_code = 200
+        content = b'{"ok": true}'
+
+        @staticmethod
+        def json():
+            return {
+                "displayName": "Ravikumar Bodicherla",
+                "mail": "bodicherla.ravikumar@ad.msystechnologies.com",
+                "userPrincipalName": "bodicherla_ravikumar_ad.msystechnologies.com#ext#@tenant.onmicrosoft.com",
+                "otherMails": ["rbodicherla@aziro.com"],
+            }
+
+    resolved = {}
+    monkeypatch.setenv("ALLOWED_LOGIN_DOMAINS", "aziro.com,ad.msystechnologies.com")
+    monkeypatch.setenv(
+        "DEFAULT_FULL_ACCESS_EMAILS",
+        "bodicherla.ravikumar@ad.msystechnologies.com",
+    )
+
+    app = _make_auth_app(monkeypatch)
+    client = app.test_client()
+
+    monkeypatch.setattr(auth_routes, "_build_msal_app", lambda cache=None: _FakeMsalApp())
+    monkeypatch.setattr(auth_routes.requests, "get", lambda *args, **kwargs: _FakeGraphResponse())
+    monkeypatch.setattr(auth_routes, "set_graph_delegated_token", lambda **kwargs: None)
+    monkeypatch.setattr(auth_routes, "record_login_audit", lambda *args, **kwargs: None)
+
+    def _allow_access(email, **kwargs):
+        resolved["email"] = email
+        return SimpleNamespace(allowed=True, reason="")
+
+    monkeypatch.setattr(auth_routes, "decide_access", _allow_access)
+
+    response = client.get("/auth/callback?code=test-code", follow_redirects=False)
+
+    assert response.status_code == 302
+    assert response.headers["Location"].endswith("/dashboard")
+    assert resolved["email"] == "bodicherla.ravikumar@ad.msystechnologies.com"
+    with client.session_transaction() as sess:
+        assert sess["user"]["email"] == "bodicherla.ravikumar@ad.msystechnologies.com"
+        assert bool(sess["user"]["authenticated"]) is True
 
 
 def test_access_management_approve_works_with_legacy_schema_when_schema_sync_fails(monkeypatch):

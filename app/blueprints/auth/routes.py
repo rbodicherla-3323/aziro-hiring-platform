@@ -49,6 +49,89 @@ def _parse_csv_emails(env_value: str) -> list[str]:
     return [p for p in parts if p]
 
 
+def _normalize_email(value: str) -> str:
+    return str(value or "").strip().lower()
+
+
+def _ordered_email_candidates(*values) -> list[str]:
+    seen: set[str] = set()
+    candidates: list[str] = []
+    for value in values:
+        normalized = _normalize_email(value)
+        if not normalized or "@" not in normalized or normalized in seen:
+            continue
+        seen.add(normalized)
+        candidates.append(normalized)
+    return candidates
+
+
+def _graph_profile_email_candidates(profile: dict) -> list[str]:
+    if not isinstance(profile, dict):
+        return []
+    other_mails = profile.get("otherMails") or []
+    if isinstance(other_mails, str):
+        other_mails = [other_mails]
+    elif not isinstance(other_mails, (list, tuple, set)):
+        other_mails = []
+    return _ordered_email_candidates(
+        profile.get("mail"),
+        *other_mails,
+        profile.get("userPrincipalName"),
+    )
+
+
+def _fetch_graph_profile(access_token: str) -> dict:
+    if not access_token:
+        return {}
+    try:
+        me_resp = requests.get(
+            "https://graph.microsoft.com/v1.0/me?$select=displayName,mail,userPrincipalName,otherMails",
+            headers={"Authorization": f"Bearer {access_token}"},
+            timeout=10,
+        )
+        if me_resp.status_code == 200:
+            payload = me_resp.json() if me_resp.content else {}
+            return payload if isinstance(payload, dict) else {}
+    except Exception:
+        log.exception("Failed to fetch Graph /me profile during auth callback")
+    return {}
+
+
+def _resolve_identity_email_and_name(user_info: dict, access_token: str) -> tuple[str, str]:
+    if not isinstance(user_info, dict):
+        user_info = {}
+
+    claim_candidates = _ordered_email_candidates(
+        user_info.get("email"),
+        user_info.get("preferred_username"),
+        user_info.get("upn"),
+    )
+    name = str(
+        user_info.get("name")
+        or user_info.get("given_name")
+        or ""
+    ).strip()
+
+    if access_token and (not claim_candidates or not any(is_allowed_login_email(e) for e in claim_candidates) or not name):
+        graph_profile = _fetch_graph_profile(access_token)
+        graph_candidates = _graph_profile_email_candidates(graph_profile)
+        merged_candidates = _ordered_email_candidates(
+            *graph_candidates,
+            *claim_candidates,
+        )
+        if merged_candidates:
+            claim_candidates = merged_candidates
+        if not name:
+            name = str(graph_profile.get("displayName") or "").strip()
+
+    email = next((candidate for candidate in claim_candidates if is_allowed_login_email(candidate)), "")
+    if not email and claim_candidates:
+        email = claim_candidates[0]
+    if not name:
+        name = email.split("@")[0].title() if email else "User"
+    return email, name
+
+
 def _allowed_email_error() -> str:
     message = f"Only allowed work email domains can sign in: {get_allowed_login_domain_hint()}."
     if not str(os.getenv("DATABASE_URL", "") or "").strip():
@@ -169,47 +252,11 @@ def auth_callback():
         flash(f"Authentication failed: {result.get('error_description', result['error'])}", "danger")
         return redirect(url_for("auth.login"))
 
-    # Get user identity from ID token claims (preferred), fallback to Graph /me.
-    user_info = result.get("id_token_claims") or {}
-    if not isinstance(user_info, dict):
-        user_info = {}
-
-    email = str(
-        user_info.get("preferred_username")
-        or user_info.get("upn")
-        or user_info.get("email")
-        or ""
-    ).strip().lower()
-    name = str(
-        user_info.get("name")
-        or user_info.get("given_name")
-        or ""
-    ).strip()
-
     access_token = result.get("access_token", "")
-    if (not email or not name) and access_token:
-        try:
-            me_resp = requests.get(
-                "https://graph.microsoft.com/v1.0/me?$select=displayName,mail,userPrincipalName",
-                headers={"Authorization": f"Bearer {access_token}"},
-                timeout=10,
-            )
-            if me_resp.status_code == 200:
-                me = me_resp.json() if me_resp.content else {}
-                if not email:
-                    email = str(
-                        me.get("mail")
-                        or me.get("userPrincipalName")
-                        or ""
-                    ).strip().lower()
-                if not name:
-                    name = str(me.get("displayName") or "").strip()
-        except Exception:
-            # Keep existing values; explicit validation below handles empty email.
-            pass
-
-    if not name:
-        name = email.split("@")[0].title() if email else "User"
+    email, name = _resolve_identity_email_and_name(
+        result.get("id_token_claims") or {},
+        access_token,
+    )
 
     # Restrict to configured work email domains.
     if not is_allowed_login_email(email):
