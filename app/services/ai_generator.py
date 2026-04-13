@@ -7,6 +7,7 @@ from pathlib import Path
 from functools import lru_cache
 from dotenv import load_dotenv, dotenv_values
 import requests
+from app.services.ai_settings_service import resolve_feature_execution_plan
 from app.utils.round_order import ordered_present_round_keys, round_number_map, round_sort_key
 
 # Load .env from project root deterministically (works in stdin / script / module runs).
@@ -344,15 +345,25 @@ def _build_rest_client(api_key: str):
         return None
 
 
-def _get_ai_client():
-    """Lazily initialize Gemini client from environment."""
+def reset_ai_runtime_state():
+    """Clear cached AI clients and dotenv overrides after runtime config changes."""
+    global AI_CLIENT
+    AI_CLIENT = None
+    _get_dotenv_gemini_overrides.cache_clear()
+
+
+def _get_ai_client(api_key: str | None = None):
+    """Lazily initialize Gemini client from environment or explicit runtime config."""
     global AI_CLIENT
 
-    if AI_CLIENT is not None:
+    explicit_api_key = str(api_key or "").strip()
+    use_cache = not explicit_api_key
+
+    if use_cache and AI_CLIENT is not None:
         return AI_CLIENT
 
-    api_key = _get_env_value("GEMINI_API_KEY")
-    if not api_key:
+    resolved_api_key = explicit_api_key or str(_get_env_value("GEMINI_API_KEY") or "").strip()
+    if not resolved_api_key:
         log.warning("GEMINI_API_KEY is not configured; AI summaries will use deterministic fallback text.")
         return None
 
@@ -362,31 +373,181 @@ def _get_ai_client():
         or sys.version_info >= (3, 14)
     )
     if prefer_rest:
-        AI_CLIENT = _build_rest_client(api_key)
-        return AI_CLIENT
+        client = _build_rest_client(resolved_api_key)
+        if use_cache:
+            AI_CLIENT = client
+        return client
 
     # Lazy import to avoid importing Google SDK when key is not configured.
     try:
         from google import genai
     except Exception as exc:
         log.debug("Gemini SDK unavailable; using REST fallback client: %s", exc)
-        AI_CLIENT = _build_rest_client(api_key)
-        return AI_CLIENT
+        client = _build_rest_client(resolved_api_key)
+        if use_cache:
+            AI_CLIENT = client
+        return client
 
     try:
-        sdk_client = genai.Client(api_key=api_key)
+        sdk_client = genai.Client(api_key=resolved_api_key)
     except Exception as exc:
         log.warning("Gemini SDK client initialization failed; trying REST fallback: %s", exc)
-        AI_CLIENT = _build_rest_client(api_key)
-        return AI_CLIENT
+        client = _build_rest_client(resolved_api_key)
+        if use_cache:
+            AI_CLIENT = client
+        return client
 
-    rest_client = _build_rest_client(api_key)
+    rest_client = _build_rest_client(resolved_api_key)
     if rest_client is not None:
-        AI_CLIENT = _FallbackGeminiClient(primary_client=sdk_client, secondary_client=rest_client)
-        return AI_CLIENT
+        client = _FallbackGeminiClient(primary_client=sdk_client, secondary_client=rest_client)
+        if use_cache:
+            AI_CLIENT = client
+        return client
 
-    AI_CLIENT = sdk_client
-    return AI_CLIENT
+    if use_cache:
+        AI_CLIENT = sdk_client
+    return sdk_client
+
+
+def _provider_http_session():
+    session = requests.Session()
+    session.trust_env = _should_trust_requests_env()
+    return session
+
+
+def _extract_openai_text(payload):
+    choices = payload.get("choices") or []
+    if not choices:
+        return ""
+    message = (choices[0] or {}).get("message") or {}
+    content = message.get("content")
+    if isinstance(content, str):
+        return content.strip()
+    if isinstance(content, list):
+        parts = []
+        for item in content:
+            if isinstance(item, dict) and item.get("type") == "text":
+                parts.append(str(item.get("text", "")))
+        return "\n".join(part for part in parts if part).strip()
+    return ""
+
+
+def _generate_openai_text(api_key: str, model: str, prompt: str, *, json_mode: bool = False, temperature: float | None = None):
+    session = _provider_http_session()
+    body = {
+        "model": str(model or "gpt-4.1-mini").strip(),
+        "messages": [{"role": "user", "content": str(prompt or "")}],
+    }
+    if temperature is not None:
+        body["temperature"] = temperature
+    if json_mode:
+        body["response_format"] = {"type": "json_object"}
+    response = session.post(
+        "https://api.openai.com/v1/chat/completions",
+        headers={
+            "Authorization": f"Bearer {str(api_key or '').strip()}",
+            "Content-Type": "application/json",
+        },
+        json=body,
+        timeout=60,
+    )
+    response.raise_for_status()
+    return _extract_openai_text(response.json())
+
+
+def _generate_claude_text(api_key: str, model: str, prompt: str, *, temperature: float | None = None):
+    session = _provider_http_session()
+    body = {
+        "model": str(model or "claude-3-5-sonnet-latest").strip(),
+        "max_tokens": 2500,
+        "messages": [{"role": "user", "content": str(prompt or "")}],
+    }
+    if temperature is not None:
+        body["temperature"] = temperature
+    response = session.post(
+        "https://api.anthropic.com/v1/messages",
+        headers={
+            "x-api-key": str(api_key or "").strip(),
+            "anthropic-version": "2023-06-01",
+            "content-type": "application/json",
+        },
+        json=body,
+        timeout=60,
+    )
+    response.raise_for_status()
+    payload = response.json()
+    texts = []
+    for item in payload.get("content") or []:
+        if isinstance(item, dict) and item.get("type") == "text":
+            texts.append(str(item.get("text", "")))
+    return "\n".join(text for text in texts if text).strip()
+
+
+def _generate_gemini_text(api_key: str, model: str, prompt: str, *, json_mode: bool = False, temperature: float | None = None):
+    if str(api_key or "").strip():
+        try:
+            ai_client = _get_ai_client(api_key=api_key)
+        except TypeError as exc:
+            if "api_key" not in str(exc):
+                raise
+            ai_client = _get_ai_client()
+    else:
+        ai_client = _get_ai_client()
+    if not ai_client:
+        return ""
+
+    config = None
+    if json_mode or temperature is not None:
+        config = {}
+        if json_mode:
+            config["response_mime_type"] = "application/json"
+        if temperature is not None:
+            config["temperature"] = temperature
+
+    response = ai_client.models.generate_content(
+        model=str(model or "gemini-2.5-flash").strip(),
+        contents=prompt,
+        config=config,
+    )
+    return str(getattr(response, "text", "") or "").strip()
+
+
+def _generate_text_for_feature(feature_key: str, prompt: str, *, json_mode: bool = False, temperature: float | None = None):
+    execution_plan = resolve_feature_execution_plan(feature_key)
+    provider_chain = execution_plan.get("providers", [])
+
+    for provider in provider_chain:
+        provider_key = str(provider.get("provider_key", "") or "").strip().lower()
+        api_key = str(provider.get("api_key", "") or "").strip()
+        model = str(provider.get("model", "") or "").strip()
+        if not provider_key:
+            continue
+        try:
+            if provider_key == "gemini":
+                text = _generate_gemini_text(api_key, model, prompt, json_mode=json_mode, temperature=temperature)
+            elif provider_key == "openai":
+                text = _generate_openai_text(api_key, model, prompt, json_mode=json_mode, temperature=temperature)
+            elif provider_key == "claude":
+                if json_mode:
+                    # Claude JSON mode stays prompt-driven for now; parsing remains best-effort.
+                    text = _generate_claude_text(api_key, model, prompt, temperature=temperature)
+                else:
+                    text = _generate_claude_text(api_key, model, prompt, temperature=temperature)
+            else:
+                text = ""
+
+            if text:
+                return text
+            raise RuntimeError(f"{provider_key} returned empty response text")
+        except Exception as exc:
+            log.warning(
+                "AI provider %s failed for feature %s; trying next provider if available: %s",
+                provider_key,
+                feature_key,
+                exc,
+            )
+
+    return ""
 
 
 def _build_fallback_summary(candidate_data):
@@ -773,11 +934,6 @@ def generate_evaluation_summary(candidate_data):
     candidate_data: dict containing candidate's evaluation details.
     Returns a summary string or None.
     """
-    ai_client = _get_ai_client()
-    if not ai_client:
-        print("Gemini AI client not initialized. Using fallback summary.")
-        return _normalize_overall_summary(_build_fallback_summary(candidate_data))
-
     prompt = f""" 
     Create a professional overall evaluation summary for TA review from the candidate data below.
 
@@ -801,13 +957,9 @@ def generate_evaluation_summary(candidate_data):
     {candidate_data} """
 
     try:
-        response = ai_client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=prompt
-        )
-        text = str(getattr(response, "text", "") or "").strip()
+        text = _generate_text_for_feature("overall_summary", prompt)
         if not text:
-            raise RuntimeError("Gemini returned empty overall summary text")
+            raise RuntimeError("AI provider returned empty overall summary text")
         return _normalize_overall_summary(text)
     except Exception as e:
         log.warning("Error generating overall summary; using fallback summary: %s", e)
@@ -818,11 +970,6 @@ def generate_coding_round_summary(coding_data):
     """
     Generate an AI-based summary for coding round with question and submitted code.
     """
-    ai_client = _get_ai_client()
-    if not ai_client:
-        print("Gemini AI client not initialized. Using fallback coding summary.")
-        return _strip_coding_overview_lines(_build_fallback_coding_summary(coding_data))
-
     prompt = f"""
     Rewrite the following coding round data into a professional, HR-readable summary.
 
@@ -842,13 +989,9 @@ def generate_coding_round_summary(coding_data):
     {coding_data}
     """
     try:
-        response = ai_client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=prompt
-        )
-        text = str(getattr(response, "text", "") or "").strip()
+        text = _generate_text_for_feature("coding_summary", prompt)
         if not text:
-            raise RuntimeError("Gemini returned empty coding summary text")
+            raise RuntimeError("AI provider returned empty coding summary text")
         return _strip_coding_overview_lines(text)
     except Exception as e:
         log.warning("Error generating coding summary; using fallback coding summary: %s", e)
@@ -859,11 +1002,6 @@ def generate_consolidated_evaluation_summary(consolidated_payload):
     """
     Generate an AI-based consolidated summary across multiple selected candidates.
     """
-    ai_client = _get_ai_client()
-    if not ai_client:
-        print("Gemini AI client not initialized. Using fallback consolidated summary.")
-        return _build_fallback_consolidated_summary(consolidated_payload)
-
     prompt = f"""
     Create a professional consolidated interview-performance summary from the structured data below.
 
@@ -894,13 +1032,9 @@ def generate_consolidated_evaluation_summary(consolidated_payload):
     """
 
     try:
-        response = ai_client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=prompt
-        )
-        text = str(getattr(response, "text", "") or "").strip()
+        text = _generate_text_for_feature("consolidated_summary", prompt)
         if not text:
-            raise RuntimeError("Gemini returned empty consolidated summary text")
+            raise RuntimeError("AI provider returned empty consolidated summary text")
         return text
     except Exception as e:
         log.warning("Error generating consolidated summary; using fallback consolidated summary: %s", e)

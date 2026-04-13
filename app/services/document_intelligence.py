@@ -12,7 +12,8 @@ import time
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
 from xml.etree import ElementTree
 
-from app.services.ai_generator import _get_ai_client
+from app.services.ai_generator import _generate_text_for_feature, _get_ai_client
+from app.services.ai_settings_service import resolve_feature_execution_plan
 from app.utils.role_normalizer import normalize_role
 
 
@@ -162,9 +163,10 @@ def _is_ai_connectivity_error(exc: Exception):
 def _sanitize_exception_message(exc: Exception):
     message = str(exc or "")
     message = re.sub(r"(key=)[^&\s]+", r"\1REDACTED", message, flags=re.IGNORECASE)
-    api_key = os.getenv("GEMINI_API_KEY", "")
-    if api_key:
-        message = message.replace(api_key, "REDACTED")
+    for env_name in ("GEMINI_API_KEY", "OPENAI_API_KEY", "ANTHROPIC_API_KEY"):
+        api_key = os.getenv(env_name, "")
+        if api_key:
+            message = message.replace(api_key, "REDACTED")
     return message
 
 
@@ -1053,10 +1055,6 @@ def _ai_resume_extraction(text: str):
     if _ai_temporarily_unavailable():
         return None
 
-    client = _get_ai_client()
-    if not client:
-        return None
-
     prompt = f"""
 Extract candidate name and candidate email from this resume text.
 Return strict JSON only, no markdown:
@@ -1071,15 +1069,8 @@ Resume text:
 {text[:12000]}
 """
     try:
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt,
-            config={
-                "response_mime_type": "application/json",
-                "temperature": 0.1,
-            },
-        )
-        payload = _safe_json_from_text(getattr(response, "text", "") or "")
+        raw_text = _generate_text_for_feature("resume_identity", prompt, json_mode=True, temperature=0.1)
+        payload = _safe_json_from_text(raw_text or "")
         if not isinstance(payload, dict):
             return None
         return {
@@ -1093,6 +1084,14 @@ Resume text:
             _mark_ai_temporarily_unavailable()
         log.warning("AI resume extraction failed: %s", _sanitize_exception_message(exc))
         return None
+
+
+def _get_gemini_feature_provider(feature_key: str):
+    plan = resolve_feature_execution_plan(feature_key)
+    for provider in plan.get("providers", []):
+        if str(provider.get("provider_key", "") or "").strip().lower() == "gemini":
+            return provider
+    return None
 
 
 def _build_genai_document_part(file_bytes: bytes, mime_type: str):
@@ -1119,8 +1118,12 @@ def _ai_resume_extraction_from_document(file_bytes: bytes, mime_type: str):
     if _ai_temporarily_unavailable():
         return None
 
-    client = _get_ai_client()
-    if not client or not file_bytes:
+    provider = _get_gemini_feature_provider("resume_identity")
+    if not provider or not file_bytes:
+        return None
+
+    client = _get_ai_client(api_key=provider.get("api_key"))
+    if not client:
         return None
 
     part = _build_genai_document_part(file_bytes, mime_type)
@@ -1139,7 +1142,7 @@ Return strict JSON only, no markdown:
 """
     try:
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model=str(provider.get("model") or "gemini-2.5-flash"),
             contents=[prompt, part],
             config={
                 "response_mime_type": "application/json",
@@ -1228,7 +1231,7 @@ def extract_resume_identity(
         else:
             warnings.append("AI resume document fallback returned no result or timed out.")
             warnings.append(
-                "AI service unavailable or unreachable. Verify GEMINI_API_KEY and outbound access to Gemini API."
+                "AI service unavailable or unreachable. Verify configured provider credentials and outbound access."
             )
 
     messages = {}
@@ -1396,9 +1399,6 @@ def _ai_jd_role_match(text: str, available_roles):
     if _ai_temporarily_unavailable():
         return None
 
-    client = _get_ai_client()
-    if not client:
-        return None
     role_list = "\n".join(f"- {role}" for role in available_roles)
     prompt = f"""
 Choose the single best matching role for the following JD.
@@ -1416,15 +1416,8 @@ JD text:
 {text[:14000]}
 """
     try:
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt,
-            config={
-                "response_mime_type": "application/json",
-                "temperature": 0.1,
-            },
-        )
-        payload = _safe_json_from_text(getattr(response, "text", "") or "")
+        raw_text = _generate_text_for_feature("jd_role_match", prompt, json_mode=True, temperature=0.1)
+        payload = _safe_json_from_text(raw_text or "")
         if not isinstance(payload, dict):
             return None
         role = payload.get("role")
@@ -1444,8 +1437,12 @@ def _ai_jd_role_match_from_document(file_bytes: bytes, mime_type: str, available
     if _ai_temporarily_unavailable():
         return None
 
-    client = _get_ai_client()
-    if not client or not file_bytes:
+    provider = _get_gemini_feature_provider("jd_role_match")
+    if not provider or not file_bytes:
+        return None
+
+    client = _get_ai_client(api_key=provider.get("api_key"))
+    if not client:
         return None
 
     part = _build_genai_document_part(file_bytes, mime_type)
@@ -1467,7 +1464,7 @@ Return strict JSON only:
 """
     try:
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model=str(provider.get("model") or "gemini-2.5-flash"),
             contents=[prompt, part],
             config={
                 "response_mime_type": "application/json",
@@ -1758,7 +1755,7 @@ def match_role_from_jd(
         else:
             warnings.append("AI JD document fallback returned no result.")
             warnings.append(
-                "AI service unavailable or unreachable. Verify GEMINI_API_KEY and outbound access to Gemini API."
+                "AI service unavailable or unreachable. Verify configured provider credentials and outbound access."
             )
 
     if not role_found:

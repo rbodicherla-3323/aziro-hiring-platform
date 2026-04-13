@@ -1,0 +1,340 @@
+{% extends "base.html" %}
+{% block title %}AI Settings{% endblock %}
+{% block breadcrumb %}AI Settings{% endblock %}
+
+{% block head %}
+<style>
+  .ai-settings-page {
+    --ai-border: #dbe4f2;
+    --ai-ink: #1f315c;
+    --ai-muted: #64748b;
+    --ai-blue: #2d63da;
+    --ai-blue-deep: #244db7;
+    --ai-panel: #ffffff;
+    --ai-soft: #f8fbff;
+    --ai-soft-2: #f2f6ff;
+    --ai-warning: #fff7e8;
+    --ai-success: #eff8f0;
+    --ai-danger: #fff1f2;
+  }
+
+  .ai-settings-page .card {
+    border: 1px solid var(--ai-border);
+    border-radius: 18px;
+    box-shadow: 0 16px 36px rgba(40, 66, 124, 0.08);
+  }
+
+  .ai-settings-page .hero-card {
+    background:
+      radial-gradient(680px 220px at -8% -10%, rgba(45, 99, 218, 0.16) 0%, rgba(45, 99, 218, 0) 72%),
+      radial-gradient(440px 180px at 100% 0%, rgba(80, 130, 255, 0.12) 0%, rgba(80, 130, 255, 0) 75%),
+      linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
+  }
+
+  .ai-settings-page .hero-title {
+    color: var(--ai-ink);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .ai-settings-page .hero-subtitle {
+    color: var(--ai-muted);
+    max-width: 920px;
+  }
+
+  .ai-settings-page .section-title {
+    color: var(--ai-ink);
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .ai-settings-page .surface-card {
+    background: linear-gradient(180deg, var(--ai-panel) 0%, #fbfdff 100%);
+  }
+
+  .ai-settings-page .provider-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+  }
+
+  .ai-settings-page .provider-card {
+    border: 1px solid var(--ai-border);
+    border-radius: 16px;
+    padding: 1rem;
+    background: linear-gradient(180deg, #ffffff 0%, var(--ai-soft) 100%);
+  }
+
+  .ai-settings-page .provider-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .ai-settings-page .provider-name {
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--ai-ink);
+  }
+
+  .ai-settings-page .provider-meta {
+    color: var(--ai-muted);
+    font-size: 0.88rem;
+  }
+
+  .ai-settings-page .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.32rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  .ai-settings-page .status-pill.ok {
+    background: var(--ai-success);
+    color: #13683f;
+  }
+
+  .ai-settings-page .status-pill.warn {
+    background: var(--ai-warning);
+    color: #8a5b06;
+  }
+
+  .ai-settings-page .status-pill.off {
+    background: #eff3f8;
+    color: #516074;
+  }
+
+  .ai-settings-page .runtime-note {
+    margin-top: 0.75rem;
+    padding: 0.7rem 0.85rem;
+    border-radius: 12px;
+    font-size: 0.86rem;
+    background: #f6f9fe;
+    color: #4c5d7c;
+  }
+
+  .ai-settings-page .security-box {
+    border-radius: 14px;
+    border: 1px solid var(--ai-border);
+    padding: 0.95rem 1rem;
+    background: linear-gradient(180deg, #fffdf8 0%, #fff8ed 100%);
+  }
+
+  .ai-settings-page .feature-table th {
+    background: var(--ai-soft-2);
+    color: var(--ai-ink);
+    font-weight: 700;
+    font-size: 0.84rem;
+    border-bottom: 1px solid var(--ai-border);
+  }
+
+  .ai-settings-page .feature-table td {
+    vertical-align: middle;
+    font-size: 0.92rem;
+    color: #334155;
+    border-color: #e8eef8;
+  }
+
+  .ai-settings-page .feature-name {
+    font-weight: 600;
+    color: var(--ai-ink);
+  }
+
+  .ai-settings-page .feature-group {
+    font-size: 0.78rem;
+    color: var(--ai-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="ai-settings-page py-2">
+  <div class="card hero-card border-0 mb-4">
+    <div class="card-body p-4 p-lg-5">
+      <div class="d-flex flex-wrap align-items-start justify-content-between gap-3">
+        <div>
+          <div class="text-uppercase text-primary fw-semibold small mb-2">Access Admin Controls</div>
+          <h1 class="hero-title h3 mb-2">AI Settings and Provider Management</h1>
+          <p class="hero-subtitle mb-0">
+            Configure Gemini, OpenAI/GPT, and Claude keys from the UI, then route each AI feature to a primary and fallback provider without editing VM environment files during hiring operations.
+          </p>
+        </div>
+        <div class="security-box">
+          <div class="fw-semibold text-dark mb-1">Encrypted Storage Status</div>
+          {% if security_status.ready %}
+            <div class="small text-success mb-1">Ready via {{ security_status.source }}</div>
+          {% else %}
+            <div class="small text-danger mb-1">Not ready</div>
+          {% endif %}
+          <div class="small text-muted">
+            {{ security_status.warning if security_status.warning else "Stored keys are encrypted before they are written to the database." }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card surface-card mb-4">
+    <div class="card-body p-4">
+      <div class="section-title">Provider Credentials</div>
+      <div class="provider-grid">
+        {% for provider in provider_rows %}
+        <form method="post" action="{{ url_for('access.ai_settings_save_provider', provider_key=provider.provider_key) }}" class="provider-card">
+          <div class="provider-head">
+            <div>
+              <h2 class="provider-name">{{ provider.label }}</h2>
+              <div class="provider-meta">Default model: {{ provider.default_model }}</div>
+            </div>
+            {% if provider.available %}
+              <span class="status-pill ok"><i class="bi bi-check-circle-fill"></i> Active</span>
+            {% elif provider.configured %}
+              <span class="status-pill warn"><i class="bi bi-exclamation-triangle-fill"></i> Incomplete</span>
+            {% else %}
+              <span class="status-pill off"><i class="bi bi-slash-circle"></i> Not Configured</span>
+            {% endif %}
+          </div>
+
+          <input type="hidden" name="is_enabled" value="0">
+          <div class="form-check form-switch mb-3">
+            <input class="form-check-input" type="checkbox" role="switch" id="enabled-{{ provider.provider_key }}" name="is_enabled" value="1" {% if provider.is_enabled %}checked{% endif %}>
+            <label class="form-check-label" for="enabled-{{ provider.provider_key }}">Enable this provider</label>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">API Key</label>
+            <input type="password" class="form-control" name="api_key" placeholder="Enter a new API key to rotate or add">
+            <div class="form-text">
+              {% if provider.masked_key %}
+                Stored key: {{ provider.masked_key }}
+              {% else %}
+                No stored key in UI yet. Environment fallback will still be used when available.
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Default Model</label>
+            <input type="text" class="form-control" name="default_model" value="{{ provider.stored_model or provider.effective_model }}" placeholder="{{ provider.default_model }}">
+          </div>
+
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" value="1" id="clear-{{ provider.provider_key }}" name="clear_api_key">
+            <label class="form-check-label" for="clear-{{ provider.provider_key }}">
+              Clear stored UI key and rely on environment only
+            </label>
+          </div>
+
+          <div class="runtime-note">
+            Runtime source: <strong>{{ provider.runtime_source }}</strong><br>
+            Effective model: <strong>{{ provider.effective_model }}</strong>
+            {% if provider.updated_by %}
+              <br>Last updated by {{ provider.updated_by }}{% if provider.updated_at %} on {{ provider.updated_at.strftime('%Y-%m-%d %H:%M:%S') }} UTC{% endif %}
+            {% endif %}
+          </div>
+
+          <div class="d-flex justify-content-end mt-3">
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-save me-1"></i>Save Provider
+            </button>
+          </div>
+        </form>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="card surface-card">
+    <div class="card-body p-4">
+      <div class="d-flex flex-wrap align-items-start justify-content-between gap-3 mb-3">
+        <div>
+          <div class="section-title mb-1">Feature Routing</div>
+          <div class="text-muted small">Choose which provider should handle each AI feature first, plus an optional fallback.</div>
+        </div>
+      </div>
+
+      <form method="post" action="{{ url_for('access.ai_settings_save_features') }}">
+        <div class="table-responsive">
+          <table class="table feature-table align-middle mb-0">
+            <thead>
+              <tr>
+                <th style="min-width: 220px;">Feature</th>
+                <th style="min-width: 120px;">Enabled</th>
+                <th style="min-width: 180px;">Primary Provider</th>
+                <th style="min-width: 180px;">Fallback Provider</th>
+                <th style="min-width: 180px;">Primary Model Override</th>
+                <th style="min-width: 180px;">Fallback Model Override</th>
+                <th style="min-width: 160px;">Effective Routing</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for feature in feature_rows %}
+              <tr>
+                <td>
+                  <div class="feature-name">{{ feature.label }}</div>
+                  <div class="feature-group">{{ feature.group.replace('_', ' ') }}</div>
+                </td>
+                <td>
+                  <input type="hidden" name="enabled__{{ feature.feature_key }}" value="0">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" name="enabled__{{ feature.feature_key }}" value="1" {% if feature.is_enabled %}checked{% endif %}>
+                  </div>
+                </td>
+                <td>
+                  <select class="form-select form-select-sm" name="primary__{{ feature.feature_key }}">
+                    <option value="">Auto</option>
+                    {% for provider in provider_options %}
+                      <option value="{{ provider.provider_key }}" {% if feature.primary_provider == provider.provider_key %}selected{% endif %}>{{ provider.label }}</option>
+                    {% endfor %}
+                  </select>
+                </td>
+                <td>
+                  <select class="form-select form-select-sm" name="fallback__{{ feature.feature_key }}">
+                    <option value="">None</option>
+                    {% for provider in provider_options %}
+                      <option value="{{ provider.provider_key }}" {% if feature.fallback_provider == provider.provider_key %}selected{% endif %}>{{ provider.label }}</option>
+                    {% endfor %}
+                  </select>
+                </td>
+                <td>
+                  <input type="text" class="form-control form-control-sm" name="model__{{ feature.feature_key }}" value="{{ feature.model_override }}" placeholder="Optional">
+                </td>
+                <td>
+                  <input type="text" class="form-control form-control-sm" name="fallback_model__{{ feature.feature_key }}" value="{{ feature.fallback_model_override }}" placeholder="Optional">
+                </td>
+                <td class="small text-muted">
+                  Primary: <strong>{{ feature.effective_primary or "Auto" }}</strong><br>
+                  Fallback: <strong>{{ feature.effective_fallback or "None" }}</strong>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="d-flex justify-content-end mt-4">
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-sliders me-1"></i>Save Feature Routing
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block page_instructions %}
+<p class="mb-2">Use this page to manage AI providers and route each feature to the most appropriate model provider.</p>
+<ul class="mb-0 ps-3">
+  <li>Store UI-managed keys only when encrypted storage is ready.</li>
+  <li>Leave an API key blank if you only want to keep the current stored key.</li>
+  <li>Use feature routing to move summaries or parsing to GPT/OpenAI or Claude gradually while keeping Gemini as fallback.</li>
+</ul>
+{% endblock %}

@@ -87,6 +87,12 @@
             <i class="bi bi-shield-check me-2"></i>Access Management
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {% if request.path.startswith('/ai-settings') %}active{% endif %}"
+           href="/ai-settings">
+            <i class="bi bi-cpu me-2"></i>AI Settings
+        </a>
+    </li>
     {% endif %}
 </ul>
 
@@ -159,6 +165,9 @@
             {% if is_access_admin %}
             <a class="page-nav-link {% if request.path.startswith('/access-management') %}active{% endif %}" href="/access-management">
                 <i class="bi bi-shield-check me-1"></i>Access Management
+            </a>
+            <a class="page-nav-link {% if request.path.startswith('/ai-settings') %}active{% endif %}" href="/ai-settings">
+                <i class="bi bi-cpu me-1"></i>AI Settings
             </a>
             {% endif %}
             <a class="page-nav-link logout" href="/logout">
