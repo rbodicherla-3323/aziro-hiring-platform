@@ -4,6 +4,7 @@
 import os
 
 ACCESS_ADMIN_EMAILS = {
+    "dev@aziro.com",
     "njagadeesh@aziro.com",
     "rbodicherla@aziro.com",
     "snaik@aziro.com",

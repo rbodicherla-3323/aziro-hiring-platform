@@ -304,3 +304,7 @@ def test_local_denied_access_reason_points_to_env_allowlist(monkeypatch):
 
     assert decision.allowed is False
     assert "DEFAULT_FULL_ACCESS_EMAILS" in decision.reason
+
+
+def test_default_access_admins_include_dev_account():
+    assert "dev@aziro.com" in get_access_admin_emails()
