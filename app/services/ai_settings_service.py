@@ -183,6 +183,47 @@ def _safe_feature_row(feature_key: str):
         return None
 
 
+def _list_provider_rows() -> list[AIProviderConfig]:
+    try:
+        return list(AIProviderConfig.query.all())
+    except (SQLAlchemyError, RuntimeError):
+        return []
+
+
+def _provider_row_sort_value(row) -> float:
+    dt = getattr(row, "updated_at", None)
+    if isinstance(dt, datetime):
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt.timestamp()
+    return 0.0
+
+
+def _selected_provider_row():
+    rows = [
+        row
+        for row in _list_provider_rows()
+        if _normalize_provider_key(getattr(row, "provider_key", "")) in PROVIDER_CATALOG
+    ]
+    if not rows:
+        return None
+
+    enabled_rows = [row for row in rows if bool(getattr(row, "is_enabled", False))]
+    candidates = enabled_rows or rows
+    candidates.sort(
+        key=lambda row: (_provider_row_sort_value(row), str(getattr(row, "provider_key", ""))),
+        reverse=True,
+    )
+    return candidates[0]
+
+
+def _selected_provider_key() -> str:
+    row = _selected_provider_row()
+    if row is None:
+        return ""
+    return _normalize_provider_key(getattr(row, "provider_key", ""))
+
+
 def _env_provider_key(feature_key: str) -> str:
     feature_meta = FEATURE_CATALOG.get(feature_key) or {}
     direct_env = feature_meta.get("provider_env", "")
@@ -228,11 +269,11 @@ def get_provider_runtime_config(provider_key: str) -> dict:
                 "provider_key": provider,
                 "label": meta["label"],
                 "available": False,
-                "configured": bool(row.api_key_encrypted or env_api_key),
+                "configured": bool(row.api_key_encrypted),
                 "source": "ui_disabled",
                 "api_key": "",
                 "masked_key": "",
-                "model": str(row.default_model or env_model or meta["default_model"]).strip(),
+                "model": str(row.default_model or meta["default_model"]).strip(),
             }
 
         decrypted = _decrypt_api_key(row.api_key_encrypted)
@@ -245,26 +286,14 @@ def get_provider_runtime_config(provider_key: str) -> dict:
                 "source": "ui",
                 "api_key": decrypted,
                 "masked_key": mask_api_key(decrypted),
-                "model": str(row.default_model or env_model or meta["default_model"]).strip(),
-            }
-
-        if env_api_key:
-            return {
-                "provider_key": provider,
-                "label": meta["label"],
-                "available": True,
-                "configured": True,
-                "source": "env",
-                "api_key": env_api_key,
-                "masked_key": mask_api_key(env_api_key),
-                "model": str(row.default_model or env_model or meta["default_model"]).strip(),
+                "model": str(row.default_model or meta["default_model"]).strip(),
             }
 
         return {
             "provider_key": provider,
             "label": meta["label"],
             "available": False,
-            "configured": bool(row.default_model),
+            "configured": bool(row.api_key_encrypted),
             "source": "ui_missing_key",
             "api_key": "",
             "masked_key": "",
@@ -296,6 +325,7 @@ def get_provider_runtime_config(provider_key: str) -> dict:
 
 
 def list_provider_statuses() -> list[dict]:
+    selected_provider = _selected_provider_key()
     rows = []
     for provider_key, meta in PROVIDER_CATALOG.items():
         runtime = get_provider_runtime_config(provider_key)
@@ -314,9 +344,96 @@ def list_provider_statuses() -> list[dict]:
                 "stored_model": str(row.default_model or "").strip() if row is not None else "",
                 "updated_by": str(row.updated_by or "").strip() if row is not None else "",
                 "updated_at": row.updated_at if row is not None else None,
+                "is_selected": provider_key == selected_provider,
+                "is_active": provider_key == selected_provider and runtime["available"],
             }
         )
     return rows
+
+
+def get_global_ai_settings_state() -> dict:
+    selected_row = _selected_provider_row()
+    provider_key = _selected_provider_key()
+    meta = PROVIDER_CATALOG.get(provider_key, {})
+    runtime = get_provider_runtime_config(provider_key) if provider_key else {}
+
+    return {
+        "provider_key": provider_key,
+        "label": meta.get("label", "No provider selected"),
+        "default_model": meta.get("default_model", ""),
+        "model": str(runtime.get("model", "") or meta.get("default_model", "")).strip(),
+        "masked_key": str(runtime.get("masked_key", "") or "").strip(),
+        "available": bool(runtime.get("available")),
+        "configured": bool(runtime.get("configured")),
+        "source": str(runtime.get("source", "none") or "none"),
+        "is_enabled": bool(selected_row.is_enabled) if selected_row is not None else False,
+        "updated_by": str(selected_row.updated_by or "").strip() if selected_row is not None else "",
+        "updated_at": selected_row.updated_at if selected_row is not None else None,
+        "fallback_mode": not bool(runtime.get("available")),
+    }
+
+
+def save_global_ai_settings(
+    provider_key: str,
+    *,
+    api_key: str = "",
+    default_model: str = "",
+    is_enabled: bool = True,
+    clear_api_key: bool = False,
+    updated_by: str = "",
+):
+    provider = _normalize_provider_key(provider_key)
+    if provider not in PROVIDER_CATALOG:
+        raise ValueError("Unsupported AI provider.")
+
+    now = _utcnow()
+    rows_by_key = {row.provider_key: row for row in _list_provider_rows()}
+    selected_row = rows_by_key.get(provider)
+    if selected_row is None:
+        selected_row = AIProviderConfig(provider_key=provider)
+
+    cleaned_key = str(api_key or "").strip()
+    cleaned_model = str(default_model or "").strip()
+
+    if clear_api_key:
+        selected_row.api_key_encrypted = ""
+        selected_row.api_key_last4 = ""
+    elif cleaned_key:
+        selected_row.api_key_encrypted = _encrypt_api_key(cleaned_key)
+        selected_row.api_key_last4 = cleaned_key[-4:]
+
+    selected_row.default_model = cleaned_model or str(selected_row.default_model or PROVIDER_CATALOG[provider]["default_model"]).strip()
+    selected_row.updated_by = str(updated_by or "").strip()
+    selected_row.updated_at = now
+    selected_row.is_enabled = bool(is_enabled and _decrypt_api_key(selected_row.api_key_encrypted))
+    db.session.add(selected_row)
+
+    for other_provider_key in PROVIDER_CATALOG:
+        if other_provider_key == provider:
+            continue
+        row = rows_by_key.get(other_provider_key)
+        if row is None:
+            continue
+        row.is_enabled = False
+        row.updated_by = str(updated_by or row.updated_by or "").strip()
+        row.updated_at = now
+        db.session.add(row)
+
+    for feature_key in FEATURE_CATALOG:
+        feature_row = _safe_feature_row(feature_key)
+        if feature_row is None:
+            feature_row = AIFeatureSetting(feature_key=feature_key)
+        feature_row.primary_provider = provider
+        feature_row.fallback_provider = ""
+        feature_row.model_override = ""
+        feature_row.fallback_model_override = ""
+        feature_row.is_enabled = True
+        feature_row.updated_by = str(updated_by or "").strip()
+        feature_row.updated_at = now
+        db.session.add(feature_row)
+
+    db.session.commit()
+    return selected_row
 
 
 def _default_chain_without_row(feature_key: str) -> list[str]:
@@ -332,7 +449,34 @@ def _default_chain_without_row(feature_key: str) -> list[str]:
     return chain or ["gemini"]
 
 
-def resolve_feature_execution_plan(feature_key: str) -> dict:
+def _resolve_global_execution_plan(feature_key: str) -> dict:
+    feature = _normalize_feature_key(feature_key)
+    meta = FEATURE_CATALOG.get(feature, {})
+    provider_key = _selected_provider_key()
+    providers = []
+
+    if provider_key in PROVIDER_CATALOG:
+        runtime = get_provider_runtime_config(provider_key)
+        if runtime["available"]:
+            providers.append(
+                {
+                    **runtime,
+                    "provider_key": provider_key,
+                    "model": str(runtime.get("model") or PROVIDER_CATALOG[provider_key]["default_model"]).strip(),
+                }
+            )
+
+    return {
+        "feature_key": feature,
+        "label": meta.get("label", feature),
+        "enabled": True,
+        "providers": providers,
+        "model_override": "",
+        "fallback_model_override": "",
+    }
+
+
+def _resolve_legacy_feature_execution_plan(feature_key: str) -> dict:
     feature = _normalize_feature_key(feature_key)
     meta = FEATURE_CATALOG.get(feature, {})
     row = _safe_feature_row(feature)
@@ -396,7 +540,14 @@ def resolve_feature_execution_plan(feature_key: str) -> dict:
     }
 
 
+def resolve_feature_execution_plan(feature_key: str) -> dict:
+    if _list_provider_rows():
+        return _resolve_global_execution_plan(feature_key)
+    return _resolve_legacy_feature_execution_plan(feature_key)
+
+
 def list_feature_statuses() -> list[dict]:
+    global_provider = _selected_provider_key() if _list_provider_rows() else ""
     rows = []
     for feature_key, meta in FEATURE_CATALOG.items():
         row = _safe_feature_row(feature_key)
@@ -408,12 +559,12 @@ def list_feature_statuses() -> list[dict]:
                 "label": meta["label"],
                 "group": meta["group"],
                 "is_enabled": plan["enabled"],
-                "primary_provider": str(row.primary_provider or "").strip() if row is not None else "",
-                "fallback_provider": str(row.fallback_provider or "").strip() if row is not None else "",
+                "primary_provider": global_provider or (str(row.primary_provider or "").strip() if row is not None else ""),
+                "fallback_provider": "" if global_provider else (str(row.fallback_provider or "").strip() if row is not None else ""),
                 "effective_primary": providers[0]["provider_key"] if providers else "",
                 "effective_fallback": providers[1]["provider_key"] if len(providers) > 1 else "",
-                "model_override": str(row.model_override or "").strip() if row is not None else "",
-                "fallback_model_override": str(row.fallback_model_override or "").strip() if row is not None else "",
+                "model_override": "" if global_provider else (str(row.model_override or "").strip() if row is not None else ""),
+                "fallback_model_override": "" if global_provider else (str(row.fallback_model_override or "").strip() if row is not None else ""),
                 "updated_by": str(row.updated_by or "").strip() if row is not None else "",
                 "updated_at": row.updated_at if row is not None else None,
             }

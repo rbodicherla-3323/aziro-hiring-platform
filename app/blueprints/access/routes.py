@@ -20,13 +20,11 @@ from app.services.access_approvals_service import (
     set_access_active,
 )
 from app.services.ai_settings_service import (
+    get_global_ai_settings_state,
     get_key_storage_status,
-    list_feature_statuses,
     list_provider_statuses,
     list_supported_features,
-    list_supported_providers,
-    upsert_feature_setting,
-    upsert_provider_config,
+    save_global_ai_settings,
 )
 from app.services.email_service import send_plain_email
 from app.utils.auth_decorator import login_required
@@ -626,36 +624,7 @@ def access_management_export():
         return redirect(url_for("access.access_management_page"))
 
 
-@access_bp.route("/ai-settings")
-@login_required
-def ai_settings_page():
-    denied = _require_access_admin_page()
-    if denied:
-        return denied
-
-    try:
-        provider_rows = list_provider_statuses()
-        feature_rows = list_feature_statuses()
-        security_status = get_key_storage_status()
-    except Exception:
-        log.exception("Failed to load AI settings page")
-        flash("AI settings could not be loaded right now.", "danger")
-        return redirect(url_for("dashboard.dashboard"))
-
-    return render_template(
-        "ai_settings.html",
-        provider_rows=provider_rows,
-        feature_rows=feature_rows,
-        provider_options=list_supported_providers(),
-        feature_options=list_supported_features(),
-        security_status=security_status,
-        access_admin_email=_access_admin_display(),
-    )
-
-
-@access_bp.route("/ai-settings/provider/<provider_key>", methods=["POST"])
-@login_required
-def ai_settings_save_provider(provider_key):
+def _save_global_ai_settings_from_request(provider_key: str):
     denied = _require_access_admin_page()
     if denied:
         return denied
@@ -667,7 +636,7 @@ def ai_settings_save_provider(provider_key):
     api_key = str(request.form.get("api_key", "") or "").strip()
 
     try:
-        upsert_provider_config(
+        save_global_ai_settings(
             provider,
             api_key=api_key,
             default_model=model,
@@ -678,12 +647,61 @@ def ai_settings_save_provider(provider_key):
         from app.services.ai_generator import reset_ai_runtime_state
 
         reset_ai_runtime_state()
-        flash(f"Saved AI provider settings for {provider}.", "success")
+        global_state = get_global_ai_settings_state()
+        if global_state["available"]:
+            flash(
+                f"Saved AI settings. {global_state['label']} will now power all AI features.",
+                "success",
+            )
+        else:
+            flash(
+                "Saved AI settings. AI calls will use deterministic Python fallback until a valid provider key is configured.",
+                "warning",
+            )
     except Exception as exc:
-        log.exception("Failed to save AI provider settings for %s", provider)
-        flash(f"Could not save AI provider settings for {provider}: {exc}", "danger")
+        log.exception("Failed to save unified AI settings for %s", provider)
+        flash(f"Could not save AI settings for {provider}: {exc}", "danger")
 
     return redirect(url_for("access.ai_settings_page"))
+
+
+@access_bp.route("/ai-settings")
+@login_required
+def ai_settings_page():
+    denied = _require_access_admin_page()
+    if denied:
+        return denied
+
+    try:
+        provider_rows = list_provider_statuses()
+        global_state = get_global_ai_settings_state()
+        security_status = get_key_storage_status()
+    except Exception:
+        log.exception("Failed to load AI settings page")
+        flash("AI settings could not be loaded right now.", "danger")
+        return redirect(url_for("dashboard.dashboard"))
+
+    return render_template(
+        "ai_settings.html",
+        provider_rows=provider_rows,
+        supported_features=list_supported_features(),
+        global_state=global_state,
+        security_status=security_status,
+        access_admin_email=_access_admin_display(),
+    )
+
+
+@access_bp.route("/ai-settings", methods=["POST"])
+@login_required
+def ai_settings_save():
+    provider = str(request.form.get("provider_key", "") or "").strip().lower()
+    return _save_global_ai_settings_from_request(provider)
+
+
+@access_bp.route("/ai-settings/provider/<provider_key>", methods=["POST"])
+@login_required
+def ai_settings_save_provider(provider_key):
+    return _save_global_ai_settings_from_request(provider_key)
 
 
 @access_bp.route("/ai-settings/features", methods=["POST"])
@@ -693,32 +711,9 @@ def ai_settings_save_features():
     if denied:
         return denied
 
-    try:
-        for feature in list_supported_features():
-            feature_key = feature["feature_key"]
-            is_enabled = str(request.form.get(f"enabled__{feature_key}", "0")).strip().lower() in {"1", "true", "yes", "on"}
-            primary_provider = str(request.form.get(f"primary__{feature_key}", "") or "").strip()
-            fallback_provider = str(request.form.get(f"fallback__{feature_key}", "") or "").strip()
-            model_override = str(request.form.get(f"model__{feature_key}", "") or "").strip()
-            fallback_model_override = str(request.form.get(f"fallback_model__{feature_key}", "") or "").strip()
-
-            upsert_feature_setting(
-                feature_key,
-                primary_provider=primary_provider,
-                fallback_provider=fallback_provider,
-                model_override=model_override,
-                fallback_model_override=fallback_model_override,
-                is_enabled=is_enabled,
-                updated_by=_current_user_email(),
-            )
-
-        from app.services.ai_generator import reset_ai_runtime_state
-
-        reset_ai_runtime_state()
-        flash("Saved AI feature routing successfully.", "success")
-    except Exception as exc:
-        log.exception("Failed to save AI feature routing")
-        flash(f"Could not save AI feature routing: {exc}", "danger")
-
+    flash(
+        "Feature-level AI routing has been replaced by the unified AI setting. Select one provider and it will apply across all AI features.",
+        "info",
+    )
     return redirect(url_for("access.ai_settings_page"))
 
