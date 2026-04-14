@@ -67,6 +67,30 @@ def test_validate_email_rejects_missing_mx_when_enabled(monkeypatch):
     assert error == "Candidate email domain has no valid MX records."
 
 
+def test_validate_email_skips_mx_when_dependency_missing_by_default(monkeypatch):
+    monkeypatch.delenv("EMAIL_VALIDATE_DOMAIN", raising=False)
+    monkeypatch.setenv("EMAIL_VALIDATE_MX", "true")
+    monkeypatch.delenv("EMAIL_VALIDATE_MX_STRICT", raising=False)
+    monkeypatch.setattr(email_validator, "_DNS_RESOLVER", None)
+
+    valid, error = email_validator.validate_email("candidate.one@example.com")
+
+    assert valid is True
+    assert error == ""
+
+
+def test_validate_email_rejects_when_mx_dependency_missing_in_strict_mode(monkeypatch):
+    monkeypatch.delenv("EMAIL_VALIDATE_DOMAIN", raising=False)
+    monkeypatch.setenv("EMAIL_VALIDATE_MX", "true")
+    monkeypatch.setenv("EMAIL_VALIDATE_MX_STRICT", "true")
+    monkeypatch.setattr(email_validator, "_DNS_RESOLVER", None)
+
+    valid, error = email_validator.validate_email("candidate.one@example.com")
+
+    assert valid is False
+    assert error == "MX verification is enabled but dnspython is not installed."
+
+
 def test_validate_email_accepts_domain_with_mx_when_enabled(monkeypatch):
     monkeypatch.delenv("EMAIL_VALIDATE_DOMAIN", raising=False)
     monkeypatch.setenv("EMAIL_VALIDATE_MX", "true")

@@ -850,6 +850,7 @@ const prevStepBtn = document.getElementById("prevStepBtn");
 const backToDashboardBtn = document.getElementById("backToDashboardBtn");
 const viewGeneratedTestsBtn = document.getElementById("viewGeneratedTestsBtn");
 const createTestPage = document.querySelector(".create-test-page");
+const GENERATED_TESTS_PRESENT_SESSION_STARTED_AT_KEY = "generated_tests_present_session_started_at";
 const TOTAL_STEPS = 2;
 let currentStep = 1;
 let isSubmitting = false;
@@ -1390,6 +1391,12 @@ form.addEventListener("submit", (event) => {
     if (!validateRequiredFields()) {
         return;
     }
+    try {
+        sessionStorage.setItem(
+            GENERATED_TESTS_PRESENT_SESSION_STARTED_AT_KEY,
+            String(Date.now()),
+        );
+    } catch (_) {}
     isSubmitting = true;
 
     generateBtn.disabled = true;

@@ -198,6 +198,20 @@ def test_generated_tests_page_shows_multiple_candidates_from_same_batch(monkeypa
     assert len(GENERATED_TESTS) == 2
 
 
+def test_generated_tests_page_defaults_present_session_anchor_to_zero(monkeypatch):
+    monkeypatch.setenv("AUTH_DISABLED", "true")
+
+    app = _make_app()
+    client = app.test_client()
+
+    response = client.get("/generated-tests")
+
+    assert response.status_code == 200
+    body = response.get_data(as_text=True)
+    assert 'sessionStorage.setItem(PRESENT_SESSION_STARTED_AT_KEY, "0");' in body
+    assert "if (Number.isFinite(parsed) && parsed >= 0) return parsed;" in body
+
+
 def test_create_test_and_generated_tests_work_with_server_side_graph_token(monkeypatch):
     GENERATED_TESTS.clear()
     MCQ_SESSION_REGISTRY.clear()

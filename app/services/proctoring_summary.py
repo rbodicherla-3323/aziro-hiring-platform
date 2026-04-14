@@ -16,6 +16,7 @@ def blank_proctoring_summary():
         "webcam_stream_interruptions": 0,
         "webcam_stream_mute_events": 0,
         "webcam_recording_errors": 0,
+        "external_device_events": 0,
         "multi_face_events": 0,
         "no_face_events": 0,
         "no_face_duration_seconds": 0.0,
@@ -126,6 +127,8 @@ def build_proctoring_summary_by_email(
                     summary["webcam_stream_mute_events"] += 1
                 elif event_type == "webcam recording error":
                     summary["webcam_recording_errors"] += 1
+                elif event_type == "external device activity detected":
+                    summary["external_device_events"] += 1
                 elif event_type == "multiple faces detected":
                     summary["multi_face_events"] += 1
                 elif event_type == "no face detected":
