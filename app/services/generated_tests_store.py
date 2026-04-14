@@ -198,6 +198,12 @@ def _safe_db_tests_for_user(user_email: str, since: datetime | None = None) -> l
     try:
         return _load_db_tests_for_user(user_email, since=since)
     except Exception:
+        try:
+            from app.extensions import db
+
+            db.session.rollback()
+        except Exception:
+            pass
         return []
 
 

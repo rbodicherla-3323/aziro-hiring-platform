@@ -6,6 +6,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.services import generated_tests_store
+from app.extensions import db
 
 
 def test_generated_tests_store_keeps_distinct_batches_for_same_candidate_same_day(monkeypatch):
@@ -41,3 +42,20 @@ def test_generated_tests_store_keeps_distinct_batches_for_same_candidate_same_da
 
     assert len(rows) == 2
     assert {row["batch_id"] for row in rows} == {"batch_alpha", "batch_beta"}
+
+
+def test_generated_tests_store_rolls_back_failed_db_fallback(monkeypatch):
+    generated_tests_store.GENERATED_TESTS.clear()
+    rollback_calls = []
+
+    monkeypatch.setattr(
+        generated_tests_store,
+        "_load_db_tests_for_user",
+        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("db offline")),
+    )
+    monkeypatch.setattr(db.session, "rollback", lambda: rollback_calls.append(True))
+
+    rows = generated_tests_store.get_tests_for_user_today("owner@example.com")
+
+    assert rows == []
+    assert rollback_calls == [True]

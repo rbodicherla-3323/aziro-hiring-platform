@@ -1583,10 +1583,7 @@ document.addEventListener("input", (event) => {
     });
 
     form.addEventListener("submit", function () {
-        sessionStorage.removeItem(stateKey);
-        if (window.AziroPageState && typeof window.AziroPageState.clear === "function") {
-            window.AziroPageState.clear();
-        }
+        captureState();
     });
 })();
 </script>

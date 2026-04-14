@@ -553,6 +553,15 @@
 
 <script>
     (function () {
+        try {
+            sessionStorage.removeItem("aziro:create-test-state:v1");
+            if (window.AziroPageState && typeof window.AziroPageState.clear === "function") {
+                window.AziroPageState.clear();
+            }
+        } catch (_) {
+            // Ignore storage cleanup failures; page behavior should still work.
+        }
+
         const selectAll = document.getElementById("selectAll");
         const selectedCountEl = document.getElementById("selectedCount");
         const bulkEmailBtn = document.getElementById("bulkEmailBtn");

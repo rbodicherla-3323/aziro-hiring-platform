@@ -161,7 +161,7 @@ def _persist_test_link_record(
     created_by: str,
     created_at: datetime,
     expires_at: datetime,
-) -> None:
+) -> bool:
     try:
         db_service.save_test_link(
             meta=meta,
@@ -170,13 +170,19 @@ def _persist_test_link_record(
             created_at=created_at,
             expires_at=expires_at,
         )
+        return True
     except Exception:
+        try:
+            db_service.db.session.rollback()
+        except Exception:
+            pass
         current_app.logger.exception(
             "Failed to persist test link session_id=%s type=%s candidate=%s",
             str((meta or {}).get("session_id", "") or "").strip(),
             str(test_type or "").strip().lower(),
             str((meta or {}).get("email", "") or "").strip().lower(),
         )
+        return False
 
 
 # --------------------------------------------
@@ -486,6 +492,10 @@ def create_test():
     auto_failures = []
     auto_send_blocked = auto_send_enabled and email_provider == "graph_delegated" and not delegated_access_token
     present_session_started_at = None
+    generated_candidates = 0
+    generated_links = 0
+    skipped_candidates = 0
+    persist_failures = 0
 
     for i in range(len(names)):
         name = names[i].strip()
@@ -503,16 +513,22 @@ def create_test():
             from app.blueprints.tests.routes import save_uploaded_file
             jd_path = save_uploaded_file(jd_files[i], name, "jd")
 
+        if not name and not email and not role_label:
+            continue
         if not name or not email or not role_label:
+            skipped_candidates += 1
+            flash("Each candidate row needs name, email, and role before links can be generated.", "warning")
             continue
 
         email_ok, email_error = validate_email(email)
         if not email_ok:
+            skipped_candidates += 1
             flash(f"{email_error} Candidate '{name}' was skipped.", "warning")
             continue
 
         role_key = normalize_role(role_label)
         if not role_key:
+            skipped_candidates += 1
             flash(f"Unknown role: {role_label}", "warning")
             continue
 
@@ -636,13 +652,14 @@ def create_test():
             if frozen_payload:
                 mcq_meta.update(frozen_payload)
             MCQ_SESSION_REGISTRY[session_id] = mcq_meta
-            _persist_test_link_record(
+            if not _persist_test_link_record(
                 meta=mcq_meta,
                 test_type="mcq",
                 created_by=user_email,
                 created_at=link_created_at,
                 expires_at=link_expires_at,
-            )
+            ):
+                persist_failures += 1
 
             tests[round_key] = {
                 "session_id": session_id,
@@ -651,6 +668,7 @@ def create_test():
                 "type": "mcq",
             }
         if candidate_generation_failed:
+            skipped_candidates += 1
             continue
 
         # Generate Coding round links
@@ -677,13 +695,14 @@ def create_test():
                 "test_url": test_url,
             }
             CODING_SESSION_REGISTRY[session_id] = coding_meta
-            _persist_test_link_record(
+            if not _persist_test_link_record(
                 meta=coding_meta,
                 test_type="coding",
                 created_by=user_email,
                 created_at=link_created_at,
                 expires_at=link_expires_at,
-            )
+            ):
+                persist_failures += 1
 
             tests[round_key] = {
                 "session_id": session_id,
@@ -717,13 +736,14 @@ def create_test():
                 "test_url": test_url,
             }
             MCQ_SESSION_REGISTRY[session_id] = mcq_domain_meta
-            _persist_test_link_record(
+            if not _persist_test_link_record(
                 meta=mcq_domain_meta,
                 test_type="mcq",
                 created_by=user_email,
                 created_at=link_created_at,
                 expires_at=link_expires_at,
-            )
+            ):
+                persist_failures += 1
 
             tests[round_key] = {
                 "session_id": session_id,
@@ -731,6 +751,14 @@ def create_test():
                 "url": test_url,
                 "type": "mcq",
             }
+
+        if not tests:
+            skipped_candidates += 1
+            flash(
+                f"No usable test links were generated for candidate '{name}'. Please check role setup and runtime availability.",
+                "warning",
+            )
+            continue
 
         # Store in generated tests
         add_generated_test({
@@ -746,6 +774,8 @@ def create_test():
             "created_by": user_email,
             "created_at": datetime.now(timezone.utc).isoformat(),
         })
+        generated_candidates += 1
+        generated_links += len(tests)
         if tests and present_session_started_at is None:
             present_session_started_at = link_created_at
 
@@ -766,7 +796,29 @@ def create_test():
     if present_session_started_at is not None:
         session[GENERATED_TESTS_PRESENT_SESSION_KEY] = present_session_started_at.isoformat()
 
-    flash("Test links generated successfully!", "success")
+    if generated_candidates == 0:
+        flash(
+            "No test links were generated. Please review the warnings on the Create Test flow and try again.",
+            "danger",
+        )
+        if persist_failures:
+            flash(
+                "Database persistence failed during generation. The app rolled the DB session back so the next attempt can recover cleanly.",
+                "warning",
+            )
+        return redirect(url_for("dashboard.create_test"))
+
+    flash(
+        f"Generated {generated_links} test link(s) for {generated_candidates} candidate(s).",
+        "success",
+    )
+    if skipped_candidates:
+        flash(f"{skipped_candidates} candidate row(s) were skipped during generation.", "warning")
+    if persist_failures:
+        flash(
+            "Some generated links could not be persisted to the database. The DB session was recovered, but please regenerate if rows disappear after a refresh.",
+            "warning",
+        )
     if auto_send_enabled:
         if auto_sent:
             flash(f"Auto emails sent to {auto_sent} candidate(s) from {user_email}.", "success")
