@@ -1,5 +1,7 @@
 import sys
 from datetime import datetime, timezone
+from io import BytesIO
+import zipfile
 from pathlib import Path
 from types import SimpleNamespace
 from uuid import uuid4
@@ -313,12 +315,12 @@ def test_reports_page_admin_date_range_fetches_database_candidates(monkeypatch):
 
     with client.session_transaction() as sess:
         sess["user"] = {
-            "name": "Reports Admin",
-            "email": "admin@aziro.com",
+            "name": "Creator User",
+            "email": "creator@example.com",
             "authenticated": True,
         }
 
-    monkeypatch.setattr(reports_routes, "get_access_admin_emails", lambda: ["admin@aziro.com"])
+    monkeypatch.setattr(reports_routes, "get_access_admin_emails", lambda: ["creator@example.com"])
     monkeypatch.setattr(reports_routes, "get_tests_for_user_in_range", lambda user_email, since: [])
     monkeypatch.setattr(reports_routes.EvaluationAggregator, "get_candidates", staticmethod(lambda: []))
     monkeypatch.setattr(
@@ -364,15 +366,17 @@ def test_reports_page_admin_date_range_fetches_database_candidates(monkeypatch):
 
     assert response.status_code == 200
     body = response.get_data(as_text=True)
-    assert "Database Date Range Results" in body
+    assert "User Details" in body
+    assert "Candidates Created By" in body
     assert "Showing database-backed candidates for 2026-04-01 to 2026-04-10." in body
-    assert "User Logged In" in body
+    assert "Logged-in user summary for the selected database date range." in body
     assert "Creator User" in body
     assert "creator@example.com" in body
-    assert "Date Scoped Candidate" in body
-    assert "date_scoped_candidate_report.pdf" in body
-    assert "Download All Available Reports (.zip)" in body
-    assert "Download User Reports" in body
+    assert 'value="" selected disabled hidden>Logged-in User<' in body
+    assert 'id="adminCreatedBySelectBtn"' in body
+    assert "Select a logged-in user and click Select to view the candidates created by that user." in body
+    assert "Date Scoped Candidate" not in body
+    assert "Download All User Logins PDF" in body
 
 
 def test_admin_db_bulk_download_returns_zip(monkeypatch, tmp_path):
@@ -393,11 +397,612 @@ def test_admin_db_bulk_download_returns_zip(monkeypatch, tmp_path):
     monkeypatch.setattr(
         reports_routes.db_service,
         "get_reports_by_ids",
-        lambda report_ids: [{"id": 7, "filename": "bulk_candidate_report.pdf"}],
+        lambda report_ids: [
+            SimpleNamespace(
+                id=7,
+                filename="bulk_candidate_report.pdf",
+                candidate_email="arjun@example.com",
+                created_at=datetime(2026, 3, 31, 9, 0, tzinfo=timezone.utc),
+                test_session=SimpleNamespace(
+                    created_at=datetime(2026, 3, 31, 11, 19, tzinfo=timezone.utc),
+                    candidate=SimpleNamespace(name="Arjun Patel"),
+                ),
+            )
+        ],
     )
 
     response = client.post("/reports/admin/db-bulk-download", data={"report_ids": ["7"]})
 
     assert response.status_code == 200
     assert response.mimetype == "application/zip"
-    assert b"bulk_candidate_report.pdf" in response.data
+    assert 'consolidated_candidate_reports_' in response.headers.get("Content-Disposition", "")
+    with zipfile.ZipFile(BytesIO(response.data)) as archive:
+        assert archive.namelist() == ["Arjun_Patel-2026-03-31.pdf"]
+
+
+def test_admin_db_bulk_download_keeps_same_day_reports_distinct(monkeypatch, tmp_path):
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    with client.session_transaction() as sess:
+        sess["user"] = {
+            "name": "Reports Admin",
+            "email": "admin@aziro.com",
+            "authenticated": True,
+        }
+
+    monkeypatch.setattr(reports_routes, "get_access_admin_emails", lambda: ["admin@aziro.com"])
+    first_pdf_path = tmp_path / "bulk_candidate_report_1.pdf"
+    second_pdf_path = tmp_path / "bulk_candidate_report_2.pdf"
+    first_pdf_path.write_bytes(b"%PDF-1.4 first test pdf")
+    second_pdf_path.write_bytes(b"%PDF-1.4 second test pdf")
+    monkeypatch.setattr(reports_routes, "REPORTS_DIR", tmp_path)
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_reports_by_ids",
+        lambda report_ids: [
+            SimpleNamespace(
+                id=7,
+                filename="bulk_candidate_report_1.pdf",
+                candidate_email="arjun@example.com",
+                created_at=datetime(2026, 3, 26, 9, 0, tzinfo=timezone.utc),
+                test_session=SimpleNamespace(
+                    created_at=datetime(2026, 3, 26, 9, 23, 42, tzinfo=timezone.utc),
+                    candidate=SimpleNamespace(name="Arjun Patel"),
+                ),
+            ),
+            SimpleNamespace(
+                id=8,
+                filename="bulk_candidate_report_2.pdf",
+                candidate_email="arjun@example.com",
+                created_at=datetime(2026, 3, 26, 9, 0, tzinfo=timezone.utc),
+                test_session=SimpleNamespace(
+                    created_at=datetime(2026, 3, 26, 9, 40, 43, tzinfo=timezone.utc),
+                    candidate=SimpleNamespace(name="Arjun Patel"),
+                ),
+            ),
+        ],
+    )
+
+    response = client.post("/reports/admin/db-bulk-download", data={"report_ids": ["7", "8"]})
+
+    assert response.status_code == 200
+    assert response.mimetype == "application/zip"
+    with zipfile.ZipFile(BytesIO(response.data)) as archive:
+        assert archive.namelist() == [
+            "Arjun_Patel-2026-03-26.pdf",
+            "Arjun_Patel-2026-03-26_2.pdf",
+        ]
+
+
+def test_admin_db_bulk_download_regenerates_missing_report_files(monkeypatch, tmp_path):
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    with client.session_transaction() as sess:
+        sess["user"] = {
+            "name": "Reports Admin",
+            "email": "admin@aziro.com",
+            "authenticated": True,
+        }
+
+    monkeypatch.setattr(reports_routes, "get_access_admin_emails", lambda: ["admin@aziro.com"])
+    existing_pdf_path = tmp_path / "existing_report.pdf"
+    existing_pdf_path.write_bytes(b"%PDF-1.4 existing test pdf")
+    monkeypatch.setattr(reports_routes, "REPORTS_DIR", tmp_path)
+
+    missing_report = SimpleNamespace(
+        id=8,
+        filename="missing_report.pdf",
+        candidate_email="arjun@example.com",
+        test_session_id=108,
+        created_at=datetime(2026, 3, 31, 9, 0, tzinfo=timezone.utc),
+        test_session=SimpleNamespace(
+            id=108,
+            created_at=datetime(2026, 3, 31, 11, 6, 48, tzinfo=timezone.utc),
+            candidate=SimpleNamespace(name="Arjun Patel", email="arjun@example.com"),
+        ),
+    )
+    existing_report = SimpleNamespace(
+        id=7,
+        filename="existing_report.pdf",
+        candidate_email="arjun@example.com",
+        test_session_id=107,
+        created_at=datetime(2026, 3, 31, 9, 0, tzinfo=timezone.utc),
+        test_session=SimpleNamespace(
+            id=107,
+            created_at=datetime(2026, 3, 31, 11, 19, 13, tzinfo=timezone.utc),
+            candidate=SimpleNamespace(name="Arjun Patel", email="arjun@example.com"),
+        ),
+    )
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_reports_by_ids",
+        lambda report_ids: [existing_report, missing_report],
+    )
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_candidate_report_data",
+        lambda email, test_session_id=None, **kwargs: {
+            "candidate_key": f"candidate::{test_session_id}",
+            "name": "Arjun Patel",
+            "email": email,
+            "role": "Python QA (4+ Years)",
+            "role_key": "python_qa",
+            "batch_id": "batch_py_1",
+            "test_session_id": test_session_id,
+            "rounds": {
+                "L1": {
+                    "round_label": "Python MCQ",
+                    "correct": 8,
+                    "total": 10,
+                    "attempted": 10,
+                    "percentage": 80,
+                    "pass_threshold": 70,
+                    "status": "PASS",
+                    "time_taken_seconds": 600,
+                }
+            },
+            "summary": {
+                "total_rounds": 1,
+                "attempted_rounds": 1,
+                "passed_rounds": 1,
+                "failed_rounds": 0,
+                "total_correct": 8,
+                "total_questions": 10,
+                "overall_percentage": 80,
+                "overall_verdict": "Selected",
+            },
+        },
+    )
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_round_session_uuids_for_test_session",
+        lambda *args, **kwargs: {"round-session-1"},
+    )
+    monkeypatch.setattr(
+        reports_routes,
+        "build_proctoring_summary_by_email",
+        lambda emails, session_ids_by_email=None: {
+            email: reports_routes.blank_proctoring_summary() for email in emails
+        },
+    )
+    monkeypatch.setattr(reports_routes, "build_plagiarism_summary_by_candidates", lambda candidates: {})
+    monkeypatch.setattr(
+        reports_routes.EvaluationService,
+        "generate_candidate_overall_summary",
+        staticmethod(lambda email, candidate_data=None: "Overall summary"),
+    )
+    monkeypatch.setattr(
+        reports_routes.EvaluationService,
+        "generate_candidate_coding_round_summary",
+        staticmethod(lambda email, candidate_data=None: "Coding summary"),
+    )
+    monkeypatch.setattr(
+        reports_routes.EvaluationService,
+        "get_candidate_coding_round_data",
+        staticmethod(lambda email, candidate_data=None: None),
+    )
+    monkeypatch.setattr(reports_routes, "_save_report_metadata_best_effort", lambda **kwargs: (None, True))
+
+    def _fake_generate_candidate_pdf(candidate_data):
+        filename = f"generated_{candidate_data['test_session_id']}.pdf"
+        (tmp_path / filename).write_bytes(b"%PDF-1.4 regenerated test pdf")
+        return filename
+
+    monkeypatch.setattr(reports_routes, "generate_candidate_pdf", _fake_generate_candidate_pdf)
+
+    response = client.post("/reports/admin/db-bulk-download", data={"report_ids": ["7", "8"]})
+
+    assert response.status_code == 200
+    assert response.mimetype == "application/zip"
+    with zipfile.ZipFile(BytesIO(response.data)) as archive:
+        assert archive.namelist() == [
+            "Arjun_Patel-2026-03-31.pdf",
+            "Arjun_Patel-2026-03-31_2.pdf",
+        ]
+
+
+def test_admin_db_bulk_download_includes_filename_only_rows(monkeypatch, tmp_path):
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    with client.session_transaction() as sess:
+        sess["user"] = {
+            "name": "Reports Admin",
+            "email": "admin@aziro.com",
+            "authenticated": True,
+        }
+
+    monkeypatch.setattr(reports_routes, "get_access_admin_emails", lambda: ["admin@aziro.com"])
+    first_pdf_path = tmp_path / "existing_report_1.pdf"
+    second_pdf_path = tmp_path / "existing_report_2.pdf"
+    first_pdf_path.write_bytes(b"%PDF-1.4 first visible file")
+    second_pdf_path.write_bytes(b"%PDF-1.4 second visible file")
+    monkeypatch.setattr(reports_routes, "REPORTS_DIR", tmp_path)
+    monkeypatch.setattr(reports_routes.db_service, "get_reports_by_ids", lambda report_ids: [])
+
+    response = client.post(
+        "/reports/admin/db-bulk-download",
+        data={"report_filenames": ["existing_report_1.pdf", "existing_report_2.pdf"]},
+    )
+
+    assert response.status_code == 200
+    assert response.mimetype == "application/zip"
+    with zipfile.ZipFile(BytesIO(response.data)) as archive:
+        assert archive.namelist() == ["existing_report_1.pdf", "existing_report_2.pdf"]
+
+
+def test_admin_db_bulk_download_uses_selected_user_scope(monkeypatch, tmp_path):
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    with client.session_transaction() as sess:
+        sess["user"] = {
+            "name": "Reports Admin",
+            "email": "admin@aziro.com",
+            "authenticated": True,
+        }
+
+    monkeypatch.setattr(reports_routes, "get_access_admin_emails", lambda: ["admin@aziro.com"])
+    first_pdf_path = tmp_path / "scoped_report_1.pdf"
+    second_pdf_path = tmp_path / "scoped_report_2.pdf"
+    first_pdf_path.write_bytes(b"%PDF-1.4 scoped file 1")
+    second_pdf_path.write_bytes(b"%PDF-1.4 scoped file 2")
+    monkeypatch.setattr(reports_routes, "REPORTS_DIR", tmp_path)
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_created_candidate_activity",
+        lambda **kwargs: [
+            {
+                "creator_email": "creator@example.com",
+                "candidate_name": "Arjun Patel",
+                "candidate_email": "arjun@example.com",
+                "role": "Python QA (4+ Years)",
+                "role_key": "python_qa",
+                "batch_id": "batch_py_1",
+                "created_at": "2026-03-31 11:19:13",
+                "test_session_id": 107,
+                "report_id": 7,
+                "report_filename": "scoped_report_1.pdf",
+            },
+            {
+                "creator_email": "creator@example.com",
+                "candidate_name": "Arjun Patel",
+                "candidate_email": "arjun@example.com",
+                "role": "Python QA (4+ Years)",
+                "role_key": "python_qa",
+                "batch_id": "batch_py_1",
+                "created_at": "2026-03-31 11:06:48",
+                "test_session_id": 108,
+                "report_id": 8,
+                "report_filename": "scoped_report_2.pdf",
+            },
+        ],
+    )
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_login_audits_by_range",
+        lambda **kwargs: [
+            {
+                "user_email": "creator@example.com",
+                "user_name": "Creator User",
+                "logged_in_at": datetime(2026, 4, 9, 11, 45, tzinfo=timezone.utc),
+                "auth_provider": "microsoft",
+            }
+        ],
+    )
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_reports_by_ids",
+        lambda report_ids: [],
+    )
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_candidate_report_data",
+        lambda email, test_session_id=None, **kwargs: {
+            "candidate_key": f"candidate::{test_session_id}",
+            "name": "Arjun Patel",
+            "email": email,
+            "role": "Python QA (4+ Years)",
+            "role_key": "python_qa",
+            "batch_id": "batch_py_1",
+            "test_session_id": test_session_id,
+            "rounds": {
+                "L1": {
+                    "round_label": "Python MCQ",
+                    "correct": 8,
+                    "total": 10,
+                    "attempted": 10,
+                    "percentage": 80,
+                    "pass_threshold": 70,
+                    "status": "PASS",
+                    "time_taken_seconds": 600,
+                }
+            },
+            "summary": {
+                "total_rounds": 1,
+                "attempted_rounds": 1,
+                "passed_rounds": 1,
+                "failed_rounds": 0,
+                "total_correct": 8,
+                "total_questions": 10,
+                "overall_percentage": 80,
+                "overall_verdict": "Selected",
+            },
+        },
+    )
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_round_session_uuids_for_test_session",
+        lambda *args, **kwargs: {"round-session-1"},
+    )
+    monkeypatch.setattr(
+        reports_routes,
+        "build_proctoring_summary_by_email",
+        lambda emails, session_ids_by_email=None: {
+            email: reports_routes.blank_proctoring_summary() for email in emails
+        },
+    )
+    monkeypatch.setattr(reports_routes, "build_plagiarism_summary_by_candidates", lambda candidates: {})
+    monkeypatch.setattr(
+        reports_routes.EvaluationService,
+        "generate_candidate_overall_summary",
+        staticmethod(lambda email, candidate_data=None: "Overall summary"),
+    )
+    monkeypatch.setattr(
+        reports_routes.EvaluationService,
+        "generate_candidate_coding_round_summary",
+        staticmethod(lambda email, candidate_data=None: "Coding summary"),
+    )
+    monkeypatch.setattr(
+        reports_routes.EvaluationService,
+        "get_candidate_coding_round_data",
+        staticmethod(lambda email, candidate_data=None: None),
+    )
+
+    def _fake_generate_candidate_pdf(candidate_data):
+        filename = f"generated_{candidate_data['test_session_id']}.pdf"
+        (tmp_path / filename).write_bytes(f"%PDF-1.4 {candidate_data['test_session_id']}".encode())
+        return filename
+
+    monkeypatch.setattr(reports_routes, "generate_candidate_pdf", _fake_generate_candidate_pdf)
+
+    response = client.post(
+        "/reports/admin/db-bulk-download",
+        data={
+            "admin_user": "creator@example.com",
+            "from": "2026-03-01",
+            "to": "2026-03-31",
+            "q": "",
+            "role": "",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.mimetype == "application/zip"
+    with zipfile.ZipFile(BytesIO(response.data)) as archive:
+        assert archive.namelist() == [
+            "Arjun_Patel-2026-03-31.pdf",
+            "Arjun_Patel-2026-03-31_2.pdf",
+        ]
+
+
+def test_admin_db_bulk_download_scope_exports_all_visible_rows(monkeypatch, tmp_path):
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    with client.session_transaction() as sess:
+        sess["user"] = {
+            "name": "Reports Admin",
+            "email": "admin@aziro.com",
+            "authenticated": True,
+        }
+
+    monkeypatch.setattr(reports_routes, "get_access_admin_emails", lambda: ["admin@aziro.com"])
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_created_candidate_activity",
+        lambda **kwargs: [
+            {
+                "creator_email": "creator@example.com",
+                "candidate_name": "Arjun Patel",
+                "candidate_email": "arjun@example.com",
+                "role": "Python QA (4+ Years)",
+                "role_key": "python_qa",
+                "batch_id": "batch_py_1",
+                "created_at": "2026-03-31 11:19:13.846009",
+                "test_session_id": 107,
+                "report_id": None,
+                "report_filename": "",
+            },
+            {
+                "creator_email": "creator@example.com",
+                "candidate_name": "Arjun Patel",
+                "candidate_email": "arjun@example.com",
+                "role": "Python QA (4+ Years)",
+                "role_key": "python_qa",
+                "batch_id": "batch_py_1",
+                "created_at": "2026-03-31 11:06:48.572426",
+                "test_session_id": 108,
+                "report_id": None,
+                "report_filename": "",
+            },
+            {
+                "creator_email": "creator@example.com",
+                "candidate_name": "Arjun Patel",
+                "candidate_email": "arjun@example.com",
+                "role": "Python QA (4+ Years)",
+                "role_key": "python_qa",
+                "batch_id": "batch_py_1",
+                "created_at": "2026-03-30 08:17:37.762033",
+                "test_session_id": 109,
+                "report_id": None,
+                "report_filename": "",
+            },
+        ],
+    )
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_login_audits_by_range",
+        lambda **kwargs: [
+            {
+                "user_email": "creator@example.com",
+                "user_name": "Creator User",
+                "logged_in_at": datetime(2026, 4, 9, 11, 45, tzinfo=timezone.utc),
+                "auth_provider": "microsoft",
+            }
+        ],
+    )
+    monkeypatch.setattr(reports_routes, "REPORTS_DIR", tmp_path)
+    monkeypatch.setattr(reports_routes.db_service, "get_reports_by_ids", lambda report_ids: [])
+    monkeypatch.setattr(reports_routes.db_service, "get_latest_report_for_email", lambda *args, **kwargs: None)
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_candidate_report_data",
+        lambda email, test_session_id=None, **kwargs: {
+            "candidate_key": f"candidate::{test_session_id}",
+            "name": "Arjun Patel",
+            "email": email,
+            "role": "Python QA (4+ Years)",
+            "role_key": "python_qa",
+            "batch_id": "batch_py_1",
+            "test_session_id": test_session_id,
+            "rounds": {
+                "L1": {
+                    "round_label": "Python MCQ",
+                    "correct": 8,
+                    "total": 10,
+                    "attempted": 10,
+                    "percentage": 80,
+                    "pass_threshold": 70,
+                    "status": "PASS",
+                    "time_taken_seconds": 600,
+                }
+            },
+            "summary": {
+                "total_rounds": 1,
+                "attempted_rounds": 1,
+                "passed_rounds": 1,
+                "failed_rounds": 0,
+                "total_correct": 8,
+                "total_questions": 10,
+                "overall_percentage": 80,
+                "overall_verdict": "Selected",
+            },
+        },
+    )
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_round_session_uuids_for_test_session",
+        lambda *args, **kwargs: {"round-session-1"},
+    )
+    monkeypatch.setattr(
+        reports_routes,
+        "build_proctoring_summary_by_email",
+        lambda emails, session_ids_by_email=None: {
+            email: reports_routes.blank_proctoring_summary() for email in emails
+        },
+    )
+    monkeypatch.setattr(reports_routes, "build_plagiarism_summary_by_candidates", lambda candidates: {})
+    monkeypatch.setattr(
+        reports_routes.EvaluationService,
+        "generate_candidate_overall_summary",
+        staticmethod(lambda email, candidate_data=None: "Overall summary"),
+    )
+    monkeypatch.setattr(
+        reports_routes.EvaluationService,
+        "generate_candidate_coding_round_summary",
+        staticmethod(lambda email, candidate_data=None: "Coding summary"),
+    )
+    monkeypatch.setattr(
+        reports_routes.EvaluationService,
+        "get_candidate_coding_round_data",
+        staticmethod(lambda email, candidate_data=None: None),
+    )
+
+    def _fake_generate_candidate_pdf(candidate_data):
+        filename = f"generated_{candidate_data['test_session_id']}.pdf"
+        (tmp_path / filename).write_bytes(f"%PDF-1.4 {candidate_data['test_session_id']}".encode())
+        return filename
+
+    monkeypatch.setattr(reports_routes, "generate_candidate_pdf", _fake_generate_candidate_pdf)
+
+    response = client.post(
+        "/reports/admin/db-bulk-download",
+        data={
+            "admin_user": "creator@example.com",
+            "from": "2026-03-01",
+            "to": "2026-03-31",
+            "q": "",
+            "role": "",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.mimetype == "application/zip"
+    with zipfile.ZipFile(BytesIO(response.data)) as archive:
+        assert archive.namelist() == [
+            "Arjun_Patel-2026-03-31.pdf",
+            "Arjun_Patel-2026-03-31_2.pdf",
+            "Arjun_Patel-2026-03-30.pdf",
+        ]
+
+
+def test_admin_created_by_details_endpoint_defaults_to_logged_in_user(monkeypatch):
+    app = _create_test_app(monkeypatch)
+    client = app.test_client()
+
+    with client.session_transaction() as sess:
+        sess["user"] = {
+            "name": "Creator User",
+            "email": "creator@example.com",
+            "authenticated": True,
+        }
+
+    monkeypatch.setattr(reports_routes, "get_access_admin_emails", lambda: ["creator@example.com"])
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_created_candidate_activity",
+        lambda **kwargs: [
+            {
+                "creator_email": "creator@example.com",
+                "candidate_name": "Date Scoped Candidate",
+                "candidate_email": "scoped@example.com",
+                "role": "Python Developer",
+                "role_key": "python",
+                "batch_id": "batch_py_1",
+                "created_at": "2026-04-08 10:15",
+                "test_session_id": 55,
+                "report_id": 21,
+                "report_filename": "date_scoped_candidate_report.pdf",
+            }
+        ],
+    )
+    monkeypatch.setattr(
+        reports_routes.db_service,
+        "get_login_audits_by_range",
+        lambda **kwargs: [
+            {
+                "user_email": "creator@example.com",
+                "user_name": "Creator User",
+                "logged_in_at": datetime(2026, 4, 9, 11, 45, tzinfo=timezone.utc),
+                "auth_provider": "microsoft",
+            }
+        ],
+    )
+
+    response = client.get("/reports/admin/created-by-details?from=2026-04-01&to=2026-04-10")
+
+    assert response.status_code == 200
+    payload = response.get_json()
+    assert payload["selected_email"] == ""
+    assert "Select a logged-in user and click Select to view the candidates created by that user." in payload["html"]
+
+    response = client.get("/reports/admin/created-by-details?from=2026-04-01&to=2026-04-10&admin_user=creator@example.com")
+
+    assert response.status_code == 200
+    payload = response.get_json()
+    assert payload["selected_email"] == "creator@example.com"
+    assert "Date Scoped Candidate" in payload["html"]
+    assert "Consolidated Evaluation Reports" in payload["html"]
