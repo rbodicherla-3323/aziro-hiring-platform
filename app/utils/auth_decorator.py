@@ -4,7 +4,11 @@ from functools import wraps
 from flask import flash, redirect, session, url_for
 
 from app.services.access_approvals_service import decide_access
-from app.services.user_token_store import clear_graph_delegated_token
+from app.services.user_token_store import (
+    clear_graph_delegated_token,
+    get_valid_graph_delegated_token,
+    get_valid_graph_delegated_token_from_session,
+)
 
 
 def _dev_bypass_enabled() -> bool:
@@ -54,8 +58,10 @@ def login_required(f):
             flash("Your access has been revoked. Please sign in again.", "danger")
             return redirect(url_for("auth.login"))
 
-        oauth = session.get("oauth")
-        token = oauth.get("graph_access_token") if isinstance(oauth, dict) else ""
+        oauth = session.get("oauth") if isinstance(session.get("oauth"), dict) else {}
+        token = get_valid_graph_delegated_token(user_email)
+        if not token:
+            token = get_valid_graph_delegated_token_from_session(oauth)
         if not token:
             session.clear()
             flash("Please sign in with Microsoft.", "danger")

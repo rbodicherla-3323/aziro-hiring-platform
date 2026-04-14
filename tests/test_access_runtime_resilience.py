@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 from types import SimpleNamespace
+import time
 
 import sqlalchemy as sa
 from flask import Flask, session
@@ -21,6 +22,8 @@ from app.access_config import (
     get_default_full_access_emails,
     is_allowed_login_email,
 )
+from app.utils import auth_decorator
+from app.utils.auth_decorator import login_required
 
 
 def _make_access_app(monkeypatch):
@@ -71,6 +74,12 @@ def _make_auth_app(monkeypatch):
     app.jinja_env.globals["ASSET_VERSION"] = "test"
     app.register_blueprint(auth_bp)
     app.add_url_rule("/dashboard", endpoint="dashboard.dashboard", view_func=lambda: "dashboard")
+
+    @app.route("/protected")
+    @login_required
+    def protected():
+        return "protected"
+
     return app
 
 
@@ -81,7 +90,10 @@ def _seed_admin_session(client):
             "email": "njagadeesh@aziro.com",
             "authenticated": True,
         }
-        sess["oauth"] = {"graph_access_token": "test-token"}
+        sess["oauth"] = {
+            "graph_access_token": "test-token",
+            "graph_access_token_expires_at": int(time.time()) + 3600,
+        }
 
 
 def _create_legacy_access_table():
@@ -220,6 +232,41 @@ def test_auth_callback_prefers_allowed_graph_mail_over_guest_upn(monkeypatch):
     with client.session_transaction() as sess:
         assert sess["user"]["email"] == "bodicherla.ravikumar@ad.msystechnologies.com"
         assert bool(sess["user"]["authenticated"]) is True
+
+
+def test_auth_callback_keeps_user_signed_in_when_graph_token_is_omitted_from_session(monkeypatch):
+    class _FakeMsalApp:
+        def acquire_token_by_authorization_code(self, code, scopes, redirect_uri):
+            return {
+                "access_token": "x" * 5000,
+                "expires_in": 3600,
+                "id_token_claims": {
+                    "preferred_username": "loop.user@aziro.com",
+                    "name": "Loop User",
+                },
+            }
+
+    app = _make_auth_app(monkeypatch)
+    client = app.test_client()
+
+    monkeypatch.setattr(auth_routes, "_build_msal_app", lambda cache=None: _FakeMsalApp())
+    monkeypatch.setattr(auth_routes, "record_login_audit", lambda *args, **kwargs: None)
+    monkeypatch.setattr(auth_routes, "decide_access", lambda **kwargs: SimpleNamespace(allowed=True, reason=""))
+    monkeypatch.setattr(auth_decorator, "decide_access", lambda **kwargs: SimpleNamespace(allowed=True, reason=""))
+
+    response = client.get("/auth/callback?code=test-code", follow_redirects=False)
+
+    assert response.status_code == 302
+    assert response.headers["Location"].endswith("/dashboard")
+    with client.session_transaction() as sess:
+        assert sess["user"]["email"] == "loop.user@aziro.com"
+        assert "graph_access_token" not in (sess.get("oauth") or {})
+        assert bool((sess.get("oauth") or {}).get("graph_access_token_omitted")) is True
+
+    protected_response = client.get("/protected", follow_redirects=False)
+
+    assert protected_response.status_code == 200
+    assert protected_response.get_data(as_text=True) == "protected"
 
 
 def test_access_management_approve_works_with_legacy_schema_when_schema_sync_fails(monkeypatch):

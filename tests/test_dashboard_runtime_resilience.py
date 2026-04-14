@@ -1,5 +1,7 @@
 import sys
 from pathlib import Path
+import time
+from datetime import datetime, timezone
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
@@ -17,6 +19,10 @@ from app.blueprints.reports import reports_bp
 from app.blueprints.tests import tests_bp
 from app.services.generated_tests_store import GENERATED_TESTS
 from app.services import generated_tests_store
+from app.services.coding_session_registry import CODING_SESSION_REGISTRY
+from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
+from app.services.user_token_store import set_graph_delegated_token, clear_graph_delegated_token
+from app.utils import auth_decorator
 
 
 def _make_app(include_test_generation: bool = False):
@@ -120,7 +126,7 @@ def test_generated_tests_store_returns_in_memory_rows_when_db_fallback_fails(mon
                 }
             },
             "created_by": "owner@example.com",
-            "created_at": "2026-04-05T12:00:00+00:00",
+            "created_at": datetime.now(timezone.utc).isoformat(),
         }
     )
 
@@ -161,3 +167,59 @@ def test_generated_tests_page_shows_multiple_candidates_from_same_batch(monkeypa
     assert "Candidate One" in body
     assert "Candidate Two" in body
     assert len(GENERATED_TESTS) == 2
+
+
+def test_create_test_and_generated_tests_work_with_server_side_graph_token(monkeypatch):
+    GENERATED_TESTS.clear()
+    MCQ_SESSION_REGISTRY.clear()
+    CODING_SESSION_REGISTRY.clear()
+    clear_graph_delegated_token("qa.user@aziro.com")
+
+    monkeypatch.setenv("AUTH_DISABLED", "false")
+    monkeypatch.setenv("AZURE_CLIENT_ID", "configured-client-id")
+    monkeypatch.setenv("AUTO_SEND_TEST_EMAILS", "false")
+    monkeypatch.setattr(coding_routes, "get_language_runtime_status", lambda _language: (True, "ok"))
+    monkeypatch.setattr(dashboard_routes.db_service, "save_test_link", lambda *args, **kwargs: None)
+    monkeypatch.setattr(
+        auth_decorator,
+        "decide_access",
+        lambda **kwargs: type("Decision", (), {"allowed": True, "reason": ""})(),
+    )
+
+    app = _make_app(include_test_generation=True)
+    client = app.test_client()
+
+    set_graph_delegated_token("qa.user@aziro.com", "x" * 5000, expires_in=3600)
+    with client.session_transaction() as sess:
+        sess["user"] = {
+            "name": "QA User",
+            "email": "qa.user@aziro.com",
+            "authenticated": True,
+        }
+        sess["oauth"] = {
+            "graph_access_token_omitted": True,
+            "graph_access_token_expires_at": int(time.time()) + 3600,
+        }
+
+    response = client.post(
+        "/create-test",
+        data={
+            "name[]": ["Candidate One"],
+            "email[]": ["candidate.one@example.com"],
+            "role[]": ["Java Entry Level (0-2 Years)"],
+            "domain[]": ["None"],
+        },
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 302
+    assert response.headers["Location"].endswith("/generated-tests")
+
+    page = client.get("/generated-tests")
+
+    assert page.status_code == 200
+    body = page.get_data(as_text=True)
+    assert "Candidate One" in body
+    assert len(GENERATED_TESTS) == 1
+
+    clear_graph_delegated_token("qa.user@aziro.com")

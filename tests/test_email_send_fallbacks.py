@@ -148,6 +148,10 @@ def test_generated_tests_retry_send_does_not_force_delegated_token(monkeypatch):
 
 def test_send_candidate_test_links_email_shares_with_default_aziro_emails(monkeypatch):
     monkeypatch.setenv("EMAIL_PROVIDER", "smtp")
+    monkeypatch.setenv(
+        "DEFAULT_FULL_ACCESS_EMAILS",
+        "njagadeesh@aziro.com,rbodicherla@aziro.com,snaik@aziro.com,sshaikh@aziro.com",
+    )
 
     captured = {}
 
@@ -186,6 +190,10 @@ def test_send_candidate_test_links_email_shares_with_default_aziro_emails(monkey
 
 def test_send_candidate_test_links_email_excludes_candidate_from_default_share_list(monkeypatch):
     monkeypatch.setenv("EMAIL_PROVIDER", "smtp")
+    monkeypatch.setenv(
+        "DEFAULT_FULL_ACCESS_EMAILS",
+        "njagadeesh@aziro.com,rbodicherla@aziro.com,snaik@aziro.com,sshaikh@aziro.com",
+    )
 
     captured = {}
 
