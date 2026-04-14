@@ -565,6 +565,7 @@
         const statusFilter = document.getElementById("statusFilter");
         const dateFilter = document.getElementById("dateFilter");
         const PRESENT_SESSION_STARTED_AT_KEY = "generated_tests_present_session_started_at";
+        const serverPresentSessionStartedAt = {{ (present_session_started_at or "")|tojson }};
 
         const rows = () => Array.from(candidateList.querySelectorAll(".candidate-row-card"));
         const checks = () => Array.from(candidateList.querySelectorAll(".candidate-check"));
@@ -683,16 +684,37 @@
             return Number.isNaN(dt.getTime()) ? null : dt;
         }
 
+        function getRenderedRowsAnchorMs() {
+            const rowTimes = rows()
+                .map((row) => parseDate(row.dataset.createdAt || ""))
+                .filter(Boolean)
+                .map((dt) => dt.getTime())
+                .filter((value) => Number.isFinite(value) && value > 0);
+            return rowTimes.length ? Math.min.apply(null, rowTimes) : Date.now();
+        }
+
         function getPresentSessionAnchorMs() {
+            const serverAnchor = parseDate(serverPresentSessionStartedAt);
+            if (serverAnchor) {
+                const serverAnchorMs = serverAnchor.getTime();
+                try {
+                    sessionStorage.setItem(PRESENT_SESSION_STARTED_AT_KEY, String(serverAnchorMs));
+                } catch (_) {
+                    // Ignore sessionStorage failures and keep using the server-provided anchor.
+                }
+                return serverAnchorMs;
+            }
+
             const nowMs = Date.now();
             try {
                 const stored = sessionStorage.getItem(PRESENT_SESSION_STARTED_AT_KEY);
                 const parsed = Number(stored);
                 if (Number.isFinite(parsed) && parsed > 0) return parsed;
-                sessionStorage.setItem(PRESENT_SESSION_STARTED_AT_KEY, String(nowMs));
-                return nowMs;
+                const fallbackMs = getRenderedRowsAnchorMs();
+                sessionStorage.setItem(PRESENT_SESSION_STARTED_AT_KEY, String(fallbackMs));
+                return fallbackMs;
             } catch (_) {
-                return nowMs;
+                return getRenderedRowsAnchorMs() || nowMs;
             }
         }
 

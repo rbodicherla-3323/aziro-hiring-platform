@@ -13,6 +13,7 @@ from . import tests_bp
 from app.utils.auth_decorator import login_required
 from app.utils.role_normalizer import ROLE_NAME_TO_KEY
 from app.services.generated_tests_store import (
+    GENERATED_TESTS_PRESENT_SESSION_KEY,
     get_tests_for_user_today,
     delete_generated_tests_for_user,
 )
@@ -238,6 +239,7 @@ def generated_tests():
     return render_template(
         "generated_tests.html",
         candidates=candidates,
+        present_session_started_at=session.get(GENERATED_TESTS_PRESENT_SESSION_KEY, ""),
         round_order=INTERNAL_ROUND_ORDER,
     )
 

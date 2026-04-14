@@ -223,3 +223,37 @@ def test_create_test_and_generated_tests_work_with_server_side_graph_token(monke
     assert len(GENERATED_TESTS) == 1
 
     clear_graph_delegated_token("qa.user@aziro.com")
+
+
+def test_generated_tests_page_receives_present_session_anchor_after_generation(monkeypatch):
+    GENERATED_TESTS.clear()
+    MCQ_SESSION_REGISTRY.clear()
+    CODING_SESSION_REGISTRY.clear()
+
+    monkeypatch.setenv("AUTH_DISABLED", "true")
+    monkeypatch.setenv("AUTO_SEND_TEST_EMAILS", "false")
+    monkeypatch.setattr(coding_routes, "get_language_runtime_status", lambda _language: (True, "ok"))
+    monkeypatch.setattr(dashboard_routes.db_service, "save_test_link", lambda *args, **kwargs: None)
+
+    app = _make_app(include_test_generation=True)
+    client = app.test_client()
+
+    response = client.post(
+        "/create-test",
+        data={
+            "name[]": ["Candidate One"],
+            "email[]": ["candidate.one@example.com"],
+            "role[]": ["Java Entry Level (0-2 Years)"],
+            "domain[]": ["None"],
+        },
+        follow_redirects=True,
+    )
+
+    assert response.status_code == 200
+    with client.session_transaction() as sess:
+        present_session_anchor = sess.get("generated_tests_present_session_started_at")
+
+    assert present_session_anchor
+    body = response.get_data(as_text=True)
+    assert "serverPresentSessionStartedAt" in body
+    assert present_session_anchor in body

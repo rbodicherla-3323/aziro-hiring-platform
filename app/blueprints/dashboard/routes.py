@@ -16,7 +16,10 @@ from app.utils.round_display_mapping import ROUND_DISPLAY_MAPPING
 from app.utils.email_validator import normalize_email, validate_email
 from app.utils.round_question_mapping import DOMAIN_QUESTION_FILES
 
-from app.services.generated_tests_store import add_generated_test
+from app.services.generated_tests_store import (
+    GENERATED_TESTS_PRESENT_SESSION_KEY,
+    add_generated_test,
+)
 from app.services.email_service import send_candidate_test_links_email
 from app.services.user_token_store import (
     get_valid_graph_delegated_token,
@@ -482,6 +485,7 @@ def create_test():
     auto_sent = 0
     auto_failures = []
     auto_send_blocked = auto_send_enabled and email_provider == "graph_delegated" and not delegated_access_token
+    present_session_started_at = None
 
     for i in range(len(names)):
         name = names[i].strip()
@@ -742,6 +746,8 @@ def create_test():
             "created_by": user_email,
             "created_at": datetime.now(timezone.utc).isoformat(),
         })
+        if tests and present_session_started_at is None:
+            present_session_started_at = link_created_at
 
         if auto_send_enabled and tests and not auto_send_blocked:
             sent, error = send_candidate_test_links_email(
@@ -756,6 +762,9 @@ def create_test():
                 auto_sent += 1
             else:
                 auto_failures.append({"email": email, "reason": error or "Send failed."})
+
+    if present_session_started_at is not None:
+        session[GENERATED_TESTS_PRESENT_SESSION_KEY] = present_session_started_at.isoformat()
 
     flash("Test links generated successfully!", "success")
     if auto_send_enabled:

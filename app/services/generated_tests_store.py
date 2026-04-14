@@ -7,6 +7,7 @@ from datetime import datetime, timezone, timedelta
 import os
 
 GENERATED_TESTS = []
+GENERATED_TESTS_PRESENT_SESSION_KEY = "generated_tests_present_session_started_at"
 
 
 def _get_int_env(name: str, default: int) -> int:
