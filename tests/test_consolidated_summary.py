@@ -295,3 +295,130 @@ def test_generate_candidate_pdf_uses_role_scoped_summary_services(monkeypatch):
     assert filename.endswith(".pdf")
     assert captured["overall_email"] == "alice@example.com"
     assert captured["coding_email"] == "alice@example.com"
+
+
+def test_build_mcq_submission_details_keeps_unanswered_questions():
+    details = EvaluationService._build_mcq_submission_details(
+        [
+            {
+                "question": "What is Python?",
+                "correct_answer": "Language",
+                "topic": "Python Basics",
+                "tags": ["python"],
+                "options": ["Language", "Database"],
+            },
+            {
+                "question": "What is OOP?",
+                "correct_answer": "Paradigm",
+                "topic": "Concepts",
+                "tags": ["oop"],
+                "options": ["Pattern", "Paradigm"],
+            },
+        ],
+        {"0": "Language"},
+    )
+
+    assert len(details) == 2
+    assert details[0]["is_answered"] is True
+    assert details[0]["is_correct"] is True
+    assert details[1]["is_answered"] is False
+    assert details[1]["selected_answer"] == ""
+    assert details[1]["correct_answer"] == "Paradigm"
+
+
+def test_generate_candidate_pdf_invokes_new_detail_renderers(monkeypatch):
+    output_dir = PROJECT_ROOT / "app" / "runtime" / "reports"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    monkeypatch.setattr(pdf_service, "REPORTS_DIR", output_dir)
+
+    candidate_data = {
+        "name": "Alice Example",
+        "email": "alice@example.com",
+        "role": "Python Developer",
+        "batch_id": "batch_py_1",
+        "test_session_id": 52,
+        "rounds": {
+            "L2": {
+                "round_label": "Python Theory",
+                "correct": 10,
+                "total": 15,
+                "attempted": 12,
+                "percentage": 66.7,
+                "status": "FAIL",
+                "pass_threshold": 70,
+                "submission_details": {
+                    "responses": [
+                        {
+                            "question_no": 1,
+                            "question": "What is list comprehension?",
+                            "selected_answer": "Python expression",
+                            "correct_answer": "Python expression",
+                            "is_answered": True,
+                            "is_correct": True,
+                            "topic": "Python",
+                            "tags": ["python"],
+                        },
+                        {
+                            "question_no": 2,
+                            "question": "What is threading?",
+                            "selected_answer": "",
+                            "correct_answer": "Concurrency",
+                            "is_answered": False,
+                            "is_correct": False,
+                            "topic": "Concurrency",
+                            "tags": ["threads"],
+                        },
+                    ]
+                },
+            },
+            "L4": {
+                "round_label": "Coding Challenge",
+                "correct": 1,
+                "total": 1,
+                "attempted": 1,
+                "percentage": 100,
+                "status": "PASS",
+                "pass_threshold": 70,
+            },
+        },
+        "proctoring_summary": {},
+        "plagiarism_summary": {},
+        "ai_overall_summary": "Overall summary text",
+        "ai_coding_summary": "Coding summary text",
+        "coding_round_data": {
+            "round_label": "Coding Challenge",
+            "status": "PASS",
+            "percentage": 100,
+            "correct": 1,
+            "total": 1,
+            "language": "python",
+            "question_title": "Two Sum",
+            "question_text": "Return indices of two numbers that add to target.",
+            "submitted_code": "def solve(nums, target):\n    return [0, 1]\n",
+            "public_tests": [{"input": [1, 2], "expected": [0, 1]}],
+            "hidden_tests": [{"input": [2, 7, 11, 15], "expected": [0, 1]}],
+        },
+    }
+
+    captured = {"coding_called": False, "mcq_called": False}
+    original_coding_renderer = pdf_service._render_coding_details_section
+    original_mcq_renderer = pdf_service._render_mcq_round_sections
+
+    def _capture_coding(elements, styles, coding_round_data, doc_width):
+        captured["coding_called"] = True
+        assert coding_round_data["question_title"] == "Two Sum"
+        return original_coding_renderer(elements, styles, coding_round_data, doc_width)
+
+    def _capture_mcq(elements, styles, rounds):
+        captured["mcq_called"] = True
+        assert "L2" in rounds
+        return original_mcq_renderer(elements, styles, rounds)
+
+    monkeypatch.setattr(pdf_service, "_render_coding_details_section", _capture_coding)
+    monkeypatch.setattr(pdf_service, "_render_mcq_round_sections", _capture_mcq)
+
+    filename = pdf_service.generate_candidate_pdf(candidate_data)
+
+    assert filename.endswith(".pdf")
+    assert captured["coding_called"] is True
+    assert captured["mcq_called"] is True

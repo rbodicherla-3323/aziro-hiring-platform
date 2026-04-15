@@ -2142,11 +2142,14 @@ def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data
                 "percentage": percentage,
                 "pass_threshold": pass_threshold,
                 "status": status,
-                "time_taken_seconds": time_taken,                "submission_details": {
+                "time_taken_seconds": time_taken,
+                "submission_details": {
                     "question_title": question.get("title", ""),
                     "question_text": question.get("description") or question.get("problem_statement") or "",
                     "language": language,
                     "submitted_code": code if attempted else "",
+                    "public_tests": public_tests,
+                    "hidden_tests": hidden_tests,
                 },
             }
             EVALUATION_STORE[session_id] = result_data
@@ -2165,6 +2168,8 @@ def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data
                     starter_code=starter_code,
                     role_key=session_meta.get("role_key", ""),
                     batch_id=session_meta.get("batch_id", ""),
+                    public_tests=public_tests,
+                    hidden_tests=hidden_tests,
                 )
             return
 
@@ -2258,6 +2263,8 @@ def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data
             "question_text": question.get("description") or question.get("problem_statement") or "",
             "language": language,
             "submitted_code": code if attempted else "",
+            "public_tests": public_tests,
+            "hidden_tests": hidden_tests,
         },
     }
 
@@ -2277,6 +2284,8 @@ def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data
             starter_code=starter_code,
             role_key=session_meta.get("role_key", ""),
             batch_id=session_meta.get("batch_id", ""),
+            public_tests=public_tests,
+            hidden_tests=hidden_tests,
         )
 
 
