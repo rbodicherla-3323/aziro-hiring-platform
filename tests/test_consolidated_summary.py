@@ -457,3 +457,123 @@ def test_build_score_summary_rows_excludes_soft_skills_from_first_row():
     assert rows[1][1] == "Overall (All Rounds)"
     assert rows[1][2] == "19 / 25"
     assert rows[1][3] == "76.0%"
+
+
+def test_resolve_round_submission_details_prefers_latest_mcq_store_responses(monkeypatch):
+    candidate_data = {
+        "email": "alice@example.com",
+        "role_key": "python_qa",
+        "batch_id": "batch_py_1",
+        "rounds": {
+            "L2": {
+                "round_label": "Python Theory",
+                "session_uuid": "mcq-session-001",
+                "submission_details": {
+                    "responses": [
+                        {
+                            "question_no": 1,
+                            "question": "What is Python?",
+                            "selected_answer": "Database",
+                            "correct_answer": "Language",
+                            "is_answered": True,
+                            "is_correct": False,
+                        }
+                    ]
+                },
+            }
+        },
+    }
+
+    monkeypatch.setattr(
+        "app.services.evaluation_service.get_latest_mcq_submission",
+        lambda *args, **kwargs: {
+            "responses": [
+                {
+                    "question_no": 1,
+                    "question": "What is Python?",
+                    "selected_answer": "Language",
+                    "correct_answer": "Language",
+                    "is_answered": True,
+                    "is_correct": True,
+                }
+            ]
+        },
+    )
+    monkeypatch.setattr(
+        "app.services.evaluation_service.get_mcq_session_data",
+        lambda *_args, **_kwargs: {
+            "questions": [{"question": "What is Python?", "correct_answer": "Language"}],
+            "answers": {"0": "Database"},
+        },
+    )
+
+    details = EvaluationService._resolve_round_submission_details(
+        candidate_data,
+        "L2",
+        candidate_data["rounds"]["L2"],
+    )
+    responses = details.get("responses", [])
+
+    assert responses
+    assert responses[0]["selected_answer"] == "Language"
+    assert responses[0]["is_correct"] is True
+
+
+def test_evaluate_mcq_persists_submission_details_to_mcq_store(monkeypatch):
+    session_id = "mcq-persist-001"
+    captured = {}
+    original_store = dict(EVALUATION_STORE)
+    EVALUATION_STORE.clear()
+    from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
+    original_registry_cache = dict(MCQ_SESSION_REGISTRY._cache)
+
+    try:
+        MCQ_SESSION_REGISTRY._cache[session_id] = {
+            "session_id": session_id,
+            "candidate_name": "Alice Example",
+            "email": "alice@example.com",
+            "role_key": "python_qa",
+            "role_label": "Python Developer",
+            "batch_id": "batch_py_1",
+            "round_key": "L2",
+            "round_label": "Python Theory",
+        }
+
+        monkeypatch.setattr(
+            "app.services.evaluation_service.get_mcq_session_data",
+            lambda _sid: {
+                "questions": [
+                    {
+                        "question": "What is Python?",
+                        "correct_answer": "Language",
+                        "topic": "Basics",
+                        "tags": ["python"],
+                    }
+                ],
+                "answers": {"0": "Language"},
+                "start_time": 1000,
+            },
+        )
+        monkeypatch.setattr("app.services.evaluation_service.time.time", lambda: 1060)
+        monkeypatch.setattr(
+            "app.services.evaluation_service.EvaluationService._persist_result_to_db",
+            staticmethod(lambda *_args, **_kwargs: None),
+        )
+
+        def _capture_save(**kwargs):
+            captured.update(kwargs)
+
+        monkeypatch.setattr("app.services.evaluation_service.save_mcq_submission", _capture_save)
+
+        EvaluationService.evaluate_mcq(session_id)
+
+        assert captured.get("session_id") == session_id
+        assert captured.get("email") == "alice@example.com"
+        assert captured.get("round_key") == "L2"
+        assert isinstance(captured.get("responses"), list)
+        assert captured["responses"][0]["selected_answer"] == "Language"
+    finally:
+        EVALUATION_STORE.clear()
+        EVALUATION_STORE.update(original_store)
+        MCQ_SESSION_REGISTRY._cache.clear()
+        MCQ_SESSION_REGISTRY._cache.update(original_registry_cache)

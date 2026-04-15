@@ -2,6 +2,10 @@ from app.services.evaluation_store import EVALUATION_STORE
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 from app.services.coding_submission_store import get_latest_coding_submission
+from app.services.mcq_submission_store import (
+    get_latest_mcq_submission,
+    save_mcq_submission,
+)
 from app.services.candidate_scope import matches_candidate_scope
 from app.services.generated_tests_store import GENERATED_TESTS
 from app.services.ai_generator import (
@@ -198,10 +202,12 @@ class EvaluationService:
     @staticmethod
     def _resolve_round_submission_details(candidate_data: dict, round_key: str, round_data: dict) -> dict:
         base_details = {}
+        session_id_hint = ""
         if isinstance(round_data, dict):
             raw_details = round_data.get("submission_details")
             if isinstance(raw_details, dict):
                 base_details = dict(raw_details)
+            session_id_hint = str(round_data.get("session_uuid", "") or "").strip()
 
         live_result = EvaluationService._get_latest_live_round_result(candidate_data, round_key)
         if isinstance(live_result, dict):
@@ -209,6 +215,30 @@ class EvaluationService:
                 base_details,
                 live_result.get("submission_details") or {},
             )
+
+        if round_key != "L4":
+            latest_submission = get_latest_mcq_submission(
+                candidate_data.get("email", ""),
+                round_key,
+                role_key=str((candidate_data or {}).get("role_key", "") or "").strip(),
+                batch_id=str((candidate_data or {}).get("batch_id", "") or "").strip(),
+                session_id=session_id_hint,
+            ) or {}
+            latest_responses = latest_submission.get("responses", [])
+            if isinstance(latest_responses, list) and latest_responses:
+                # Always prefer the most recently persisted MCQ submission answers.
+                base_details["responses"] = list(latest_responses)
+
+            if not isinstance(base_details.get("responses"), list) or not base_details.get("responses"):
+                mcq_runtime_data = get_mcq_session_data(session_id_hint) if session_id_hint else None
+                if isinstance(mcq_runtime_data, dict):
+                    runtime_questions = mcq_runtime_data.get("questions")
+                    runtime_answers = mcq_runtime_data.get("answers")
+                    if isinstance(runtime_questions, list) and isinstance(runtime_answers, dict):
+                        base_details["responses"] = EvaluationService._build_mcq_submission_details(
+                            runtime_questions,
+                            runtime_answers,
+                        )
 
         if round_key == "L4":
             latest_submission = get_latest_coding_submission(
@@ -374,6 +404,7 @@ class EvaluationService:
                 "pass_threshold": existing.get("pass_threshold", EvaluationService.get_pass_threshold(rk)),
                 "status": existing.get("status", "Not Attempted"),
                 "time_taken_seconds": existing.get("time_taken_seconds", 0),
+                "session_uuid": existing.get("session_uuid", ""),
                 "submission_details": existing.get("submission_details", {}),
                 "round_number": numbers.get(rk, 0),
             }
@@ -1313,6 +1344,7 @@ class EvaluationService:
         # Calculate time taken
         start_time = mcq_data.get("start_time", 0)
         time_taken = int(time.time()) - start_time
+        response_details = EvaluationService._build_mcq_submission_details(questions, answers)
 
         EVALUATION_STORE[session_id] = {
             "candidate_name": session_meta["candidate_name"],
@@ -1330,9 +1362,28 @@ class EvaluationService:
             "status": status,
             "time_taken_seconds": time_taken,
             "submission_details": {
-                "responses": EvaluationService._build_mcq_submission_details(questions, answers)
+                "responses": response_details
             },
         }
+
+        try:
+            save_mcq_submission(
+                session_id=session_id,
+                email=session_meta.get("email", ""),
+                round_key=round_key,
+                round_label=session_meta.get("round_label", round_key),
+                role=session_meta.get("role_label", ""),
+                role_key=session_meta.get("role_key", ""),
+                batch_id=session_meta.get("batch_id", ""),
+                responses=response_details,
+                attempted=attempted,
+                correct=correct,
+                total_questions=total_questions,
+                percentage=percentage,
+                status=status,
+            )
+        except Exception as exc:
+            log.warning("MCQ submission persist failed: %s", exc)
 
 
         # -------------------------------------------------
