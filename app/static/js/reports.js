@@ -16,6 +16,13 @@
   var galleryModal = document.getElementById("reportsGalleryModal");
   var galleryTitle = document.getElementById("reportsGalleryTitle");
   var galleryMeta = document.getElementById("reportsGalleryMeta");
+  var galleryViewer = document.getElementById("reportsGalleryViewer");
+  var galleryViewerImage = document.getElementById("reportsGalleryViewerImage");
+  var galleryViewerCaption = document.getElementById("reportsGalleryViewerCaption");
+  var galleryViewerMeta = document.getElementById("reportsGalleryViewerMeta");
+  var galleryViewerOpen = document.getElementById("reportsGalleryViewerOpen");
+  var galleryPrevBtn = document.getElementById("reportsGalleryPrev");
+  var galleryNextBtn = document.getElementById("reportsGalleryNext");
   var galleryGrid = document.getElementById("reportsGalleryGrid");
   var consolidatedTrigger = document.getElementById("reportsConsolidatedTrigger");
   var consolidatedModal = document.getElementById("reportsConsolidatedModal");
@@ -46,6 +53,8 @@
 
   var searchTimer = null;
   var activeGalleryScopeKey = "";
+  var activeGalleryShots = [];
+  var activeGalleryIndex = -1;
   var reportGenerationProgress = { timer: null, percent: 0, activeCount: 0 };
   var consolidatedState = {
     candidates: [],
@@ -697,11 +706,137 @@
     return { local: local, utc: utc };
   }
 
+  function buildScreenshotUrl(shot) {
+    return "/reports/proctoring/screenshot/" + encodeURIComponent(String((shot && shot.id) || ""));
+  }
+
+  function isModifiedOpenRequest(event) {
+    if (!event) return false;
+    return Boolean(
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      event.button === 1
+    );
+  }
+
+  function updateGalleryNavState() {
+    var hasActiveSelection = activeGalleryIndex >= 0 && activeGalleryIndex < activeGalleryShots.length;
+    if (galleryPrevBtn) {
+      galleryPrevBtn.disabled = !hasActiveSelection || activeGalleryIndex <= 0;
+    }
+    if (galleryNextBtn) {
+      galleryNextBtn.disabled = !hasActiveSelection || activeGalleryIndex >= (activeGalleryShots.length - 1);
+    }
+  }
+
+  function clearGalleryViewer() {
+    activeGalleryShots = [];
+    activeGalleryIndex = -1;
+    if (galleryViewer) {
+      galleryViewer.hidden = true;
+    }
+    if (galleryViewerCaption) {
+      galleryViewerCaption.hidden = true;
+    }
+    if (galleryViewerImage) {
+      galleryViewerImage.removeAttribute("src");
+      galleryViewerImage.alt = "Selected screenshot preview";
+    }
+    if (galleryViewerMeta) {
+      galleryViewerMeta.textContent = "Select a screenshot to preview.";
+    }
+    if (galleryViewerOpen) {
+      galleryViewerOpen.setAttribute("href", "#");
+    }
+    if (galleryGrid) {
+      galleryGrid.querySelectorAll(".reports-shot.is-active").forEach(function (node) {
+        node.classList.remove("is-active");
+      });
+    }
+    updateGalleryNavState();
+  }
+
+  function setActiveGalleryShot(index) {
+    if (!Array.isArray(activeGalleryShots) || !activeGalleryShots.length) {
+      clearGalleryViewer();
+      return;
+    }
+    var numericIndex = Number(index);
+    if (Number.isNaN(numericIndex)) numericIndex = 0;
+    var boundedIndex = Math.max(0, Math.min(activeGalleryShots.length - 1, numericIndex));
+    var shot = activeGalleryShots[boundedIndex] || {};
+    var screenshotUrl = buildScreenshotUrl(shot);
+    var ts = formatExactTimestamp(shot.captured_at);
+    var roundLabel = shot.round_label || shot.round_key || "Round";
+    var eventType = shot.event_type || "capture";
+    var source = shot.source || "system";
+
+    activeGalleryIndex = boundedIndex;
+
+    if (galleryViewer) {
+      galleryViewer.hidden = false;
+    }
+    if (galleryViewerCaption) {
+      galleryViewerCaption.hidden = false;
+    }
+    if (galleryViewerImage) {
+      galleryViewerImage.src = screenshotUrl;
+      galleryViewerImage.alt = "Screenshot " + String(boundedIndex + 1) + " of " + String(activeGalleryShots.length);
+    }
+    if (galleryViewerMeta) {
+      galleryViewerMeta.textContent =
+        "Image " + String(boundedIndex + 1) + " / " + String(activeGalleryShots.length) +
+        " | " + ts.local + (ts.utc ? " | " + ts.utc : "") +
+        " | " + roundLabel + " | " + eventType + " | " + source;
+    }
+    if (galleryViewerOpen) {
+      galleryViewerOpen.href = screenshotUrl;
+    }
+
+    if (galleryGrid) {
+      galleryGrid.querySelectorAll(".reports-shot").forEach(function (node, idx) {
+        node.classList.toggle("is-active", idx === boundedIndex);
+      });
+      var activeNode = galleryGrid.querySelector('.reports-shot[data-shot-index="' + String(boundedIndex) + '"]');
+      if (activeNode && typeof activeNode.scrollIntoView === "function") {
+        activeNode.scrollIntoView({ block: "nearest", inline: "nearest" });
+      }
+    }
+
+    updateGalleryNavState();
+  }
+
+  function moveGallerySelection(step) {
+    if (!Array.isArray(activeGalleryShots) || !activeGalleryShots.length) {
+      return;
+    }
+    if (activeGalleryIndex < 0) {
+      setActiveGalleryShot(step < 0 ? activeGalleryShots.length - 1 : 0);
+      return;
+    }
+    setActiveGalleryShot(activeGalleryIndex + step);
+  }
+
   function renderGallery(capturedScreenshots) {
     if (!galleryGrid) return;
     galleryGrid.innerHTML = "";
+    activeGalleryShots = Array.isArray(capturedScreenshots) ? capturedScreenshots : [];
+    activeGalleryIndex = -1;
+    updateGalleryNavState();
 
-    if (!capturedScreenshots.length) {
+    if (galleryViewer) {
+      galleryViewer.hidden = true;
+    }
+    if (galleryViewerCaption) {
+      galleryViewerCaption.hidden = true;
+    }
+    if (galleryViewerMeta) {
+      galleryViewerMeta.textContent = "Click a screenshot to preview and navigate.";
+    }
+
+    if (!activeGalleryShots.length) {
       var emptyNode = document.createElement("div");
       emptyNode.className = "reports-gallery-empty";
       emptyNode.textContent = "No screenshots captured for this candidate yet.";
@@ -710,20 +845,29 @@
     }
 
     var fragment = document.createDocumentFragment();
-    capturedScreenshots.forEach(function (shot) {
+    activeGalleryShots.forEach(function (shot, index) {
       var article = document.createElement("article");
       article.className = "reports-shot";
+      article.setAttribute("data-shot-index", String(index));
 
       var link = document.createElement("a");
       link.className = "reports-shot-link";
-      link.href = "/reports/proctoring/screenshot/" + encodeURIComponent(String(shot.id || ""));
+      link.href = buildScreenshotUrl(shot);
       link.target = "_blank";
       link.rel = "noopener";
+      link.setAttribute("data-shot-index", String(index));
+      link.addEventListener("click", function (event) {
+        if (isModifiedOpenRequest(event)) {
+          return;
+        }
+        event.preventDefault();
+        setActiveGalleryShot(index);
+      });
 
       var img = document.createElement("img");
       img.loading = "lazy";
       img.src = link.href;
-      img.alt = "Screenshot " + String(shot.id || "");
+      img.alt = "Screenshot " + String((index + 1));
       link.appendChild(img);
 
       var body = document.createElement("div");
@@ -769,6 +913,7 @@
     galleryTitle.textContent = "Proctoring Screenshots - " + (context.name || context.email || "Candidate");
     galleryMeta.textContent = "Loading screenshots...";
     galleryGrid.innerHTML = '<div class="reports-gallery-empty">Loading screenshots...</div>';
+    clearGalleryViewer();
     galleryModal.classList.add("active");
     galleryModal.setAttribute("aria-hidden", "false");
     syncBodyModalState();
@@ -785,6 +930,7 @@
         renderGallery(screenshots);
       })
       .catch(function (error) {
+        clearGalleryViewer();
         galleryMeta.textContent = "Unable to load screenshots";
         galleryGrid.innerHTML = '<div class="reports-gallery-empty">Failed to load screenshots.</div>';
         if (typeof showToast === "function") {
@@ -796,6 +942,10 @@
   function closeGallery() {
     if (!galleryModal) return;
     activeGalleryScopeKey = "";
+    clearGalleryViewer();
+    if (galleryGrid) {
+      galleryGrid.innerHTML = "";
+    }
     galleryModal.classList.remove("active");
     galleryModal.setAttribute("aria-hidden", "true");
     syncBodyModalState();
@@ -1629,6 +1779,20 @@
     });
   }
 
+  if (galleryPrevBtn) {
+    galleryPrevBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+      moveGallerySelection(-1);
+    });
+  }
+
+  if (galleryNextBtn) {
+    galleryNextBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+      moveGallerySelection(1);
+    });
+  }
+
   if (consolidatedModal) {
     consolidatedModal.addEventListener("click", function (event) {
       if (event.target === consolidatedModal) {
@@ -1638,6 +1802,18 @@
   }
 
   document.addEventListener("keydown", function (event) {
+    if (galleryModal && galleryModal.classList.contains("active")) {
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        moveGallerySelection(-1);
+        return;
+      }
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        moveGallerySelection(1);
+        return;
+      }
+    }
     if (event.key === "Escape") {
       closeGallery();
       closeConsolidatedModal();

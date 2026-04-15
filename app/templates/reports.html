@@ -853,6 +853,77 @@
         font-weight: 500;
     }
 
+    .reports-gallery-viewer {
+        margin: 10px 14px 0;
+        border: 1px solid #d7e1f5;
+        border-radius: 12px;
+        background: linear-gradient(180deg, #ffffff 0%, #f5f8ff 100%);
+        padding: 10px;
+        display: grid;
+        grid-template-columns: 40px 1fr 40px;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .reports-gallery-nav {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        border: 1px solid #cdd9ef;
+        background: #f7f9ff;
+        color: #27417e;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .reports-gallery-nav[disabled] {
+        opacity: 0.42;
+        cursor: not-allowed;
+    }
+
+    .reports-gallery-stage {
+        width: 100%;
+        min-height: 260px;
+        max-height: 52vh;
+        border-radius: 10px;
+        border: 1px solid #d9e3f6;
+        background: #ecf2ff;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .reports-gallery-stage img {
+        width: 100%;
+        max-height: 52vh;
+        object-fit: contain;
+        display: block;
+        background: #ecf2ff;
+    }
+
+    .reports-gallery-viewer-caption {
+        margin: 6px 14px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        color: #4d5f8b;
+        font-size: var(--az-fs-meta);
+    }
+
+    .reports-gallery-open-tab {
+        border-radius: 8px;
+        border: 1px solid #c8d5ee;
+        background: #f7f9ff;
+        color: #25407c;
+        padding: 5px 9px;
+        font-size: var(--az-fs-meta);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
     .reports-gallery-grid {
         padding: 10px 14px 16px;
         display: grid;
@@ -867,6 +938,11 @@
         background: #ffffff;
         box-shadow: 0 4px 10px rgba(31, 52, 96, 0.08);
         overflow: hidden;
+    }
+
+    .reports-shot.is-active {
+        border-color: #7ea4ee;
+        box-shadow: 0 8px 18px rgba(39, 81, 162, 0.2);
     }
 
     .reports-shot-link {
@@ -1814,6 +1890,23 @@
                 </button>
             </div>
             <div class="reports-gallery-meta" id="reportsGalleryMeta">Loading screenshots...</div>
+            <div class="reports-gallery-viewer" id="reportsGalleryViewer" hidden>
+                <button type="button" class="reports-gallery-nav" id="reportsGalleryPrev" aria-label="Previous screenshot">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <div class="reports-gallery-stage">
+                    <img id="reportsGalleryViewerImage" src="" alt="Selected screenshot preview" />
+                </div>
+                <button type="button" class="reports-gallery-nav" id="reportsGalleryNext" aria-label="Next screenshot">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+            <div class="reports-gallery-viewer-caption" id="reportsGalleryViewerCaption" hidden>
+                <span id="reportsGalleryViewerMeta">Select a screenshot to preview.</span>
+                <a class="reports-gallery-open-tab" id="reportsGalleryViewerOpen" href="#" target="_blank" rel="noopener">
+                    Open In New Tab
+                </a>
+            </div>
             <div class="reports-gallery-grid" id="reportsGalleryGrid"></div>
         </div>
     </div>
