@@ -17,7 +17,7 @@ def _get_int_env(name: str, default: int) -> int:
         return int(default)
 
 
-SESSION_RETENTION_DAYS = _get_int_env("SESSION_RETENTION_DAYS", 7)
+SESSION_RETENTION_DAYS = max(1, _get_int_env("SESSION_RETENTION_DAYS", 7))
 
 
 def _within_retention(dt: datetime) -> bool:
@@ -198,6 +198,12 @@ def _safe_db_tests_for_user(user_email: str, since: datetime | None = None) -> l
     try:
         return _load_db_tests_for_user(user_email, since=since)
     except Exception:
+        try:
+            from app.extensions import db
+
+            db.session.rollback()
+        except Exception:
+            pass
         return []
 
 

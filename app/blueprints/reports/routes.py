@@ -11,6 +11,7 @@ from io import BytesIO
 from math import ceil
 from pathlib import Path
 from flask import Blueprint, render_template, request, session, jsonify, send_file, abort, current_app
+from werkzeug.utils import secure_filename
 
 from app.utils.auth_decorator import login_required
 from app.services.candidate_scope import get_candidate_key, matches_candidate_scope
@@ -58,6 +59,15 @@ def _row_value(row, key: str, default=None):
     if isinstance(row, dict):
         return row.get(key, default)
     return getattr(row, key, default)
+
+
+def _initials(value: str) -> str:
+    parts = [part for part in str(value or "").replace("_", " ").split() if part]
+    if not parts:
+        return "?"
+    if len(parts) == 1:
+        return parts[0][:2].upper()
+    return (parts[0][0] + parts[-1][0]).upper()
 
 
 def _resolve_date_range(filter_type: str, specific_date: str = "", offset: int = 0):
@@ -830,6 +840,336 @@ def _hydrate_candidate_from_db(candidate: dict):
         candidate["candidate_key"] = preserved_key
 
 
+def _normalize_report_ids(values) -> list[int]:
+    normalized = []
+    seen = set()
+    for value in values or []:
+        try:
+            report_id = int(value)
+        except (TypeError, ValueError):
+            continue
+        if report_id <= 0 or report_id in seen:
+            continue
+        seen.add(report_id)
+        normalized.append(report_id)
+    return normalized
+
+
+def _build_admin_user_options(admin_db_scope: dict) -> list[dict]:
+    options = [
+        {
+            "email": str(group.get("user_email", "") or "").strip().lower(),
+            "name": str(group.get("user_name", "") or "").strip() or str(group.get("user_email", "") or "").strip().lower(),
+            "login_count": int(group.get("login_count", 0) or 0),
+        }
+        for group in admin_db_scope.get("groups", [])
+        if str(group.get("user_email", "") or "").strip()
+    ]
+    return sorted(options, key=lambda item: ((item["name"] or "").lower(), item["email"]))
+
+
+def _resolve_admin_selected_group(admin_db_scope: dict, requested_email: str = "", preferred_email: str = ""):
+    groups_by_email = {
+        _normalize_email(group.get("user_email", "")): group
+        for group in admin_db_scope.get("groups", [])
+        if _normalize_email(group.get("user_email", ""))
+    }
+    admin_user_options = _build_admin_user_options(admin_db_scope)
+
+    requested_key = _normalize_email(requested_email)
+    selected_email = ""
+
+    if requested_key and requested_key in groups_by_email:
+        selected_email = requested_key
+
+    return admin_user_options, selected_email, groups_by_email.get(selected_email)
+
+
+def _render_admin_created_by_details(*, admin_selected_group, admin_selected_group_report_ids):
+    return render_template(
+        "reports_admin_created_by_details.html",
+        admin_selected_group=admin_selected_group,
+        admin_selected_group_report_ids=admin_selected_group_report_ids,
+        initials=_initials,
+    )
+
+
+def _format_zip_report_name(report) -> str:
+    filename = str(getattr(report, "filename", "") or "report.pdf").strip() or "report.pdf"
+    suffix = Path(filename).suffix or ".pdf"
+
+    test_session = getattr(report, "test_session", None)
+    candidate = getattr(test_session, "candidate", None) if test_session else None
+
+    candidate_name = str(getattr(candidate, "name", "") or "").strip()
+    if not candidate_name:
+        candidate_email = str(getattr(report, "candidate_email", "") or "").strip()
+        candidate_name = candidate_email.split("@", 1)[0] if candidate_email else "candidate"
+
+    created_at = getattr(test_session, "created_at", None) or getattr(report, "created_at", None)
+    if isinstance(created_at, datetime):
+        created_label = created_at.strftime("%Y-%m-%d")
+    else:
+        created_label = "unknown-date"
+
+    safe_candidate_name = secure_filename(candidate_name).strip("._") or "candidate"
+    base = f"{safe_candidate_name}-{created_label}"
+    return f"{base}{suffix.lower()}"
+
+
+def _generate_report_file_for_zip(report, generated_by: str = "") -> Path | None:
+    test_session = getattr(report, "test_session", None)
+    candidate = getattr(test_session, "candidate", None) if test_session else None
+
+    email_key = str(
+        getattr(candidate, "email", "") or getattr(report, "candidate_email", "") or ""
+    ).strip().lower()
+    test_session_id = getattr(report, "test_session_id", None) or getattr(test_session, "id", None)
+    if not email_key or not test_session_id:
+        return None
+
+    candidate_data = db_service.get_candidate_report_data(email_key, test_session_id=int(test_session_id))
+    if not candidate_data:
+        return None
+
+    candidate_data["candidate_key"] = str(
+        candidate_data.get("candidate_key", "") or get_candidate_key(candidate_data)
+    ).strip()
+
+    attempted_rounds = _attempted_rounds(candidate_data)
+    if attempted_rounds <= 0:
+        candidate_data["proctoring_summary"] = blank_proctoring_summary()
+    else:
+        try:
+            scoped_session_ids = set(
+                db_service.get_round_session_uuids_for_test_session(
+                    int(test_session_id),
+                    attempted_only=True,
+                )
+            )
+        except Exception as exc:
+            current_app.logger.exception(
+                "Failed to fetch session scope for consolidated zip test_session_id=%s: %s",
+                test_session_id,
+                exc,
+            )
+            scoped_session_ids = set()
+        proctoring_by_email = build_proctoring_summary_by_email(
+            {email_key},
+            session_ids_by_email={email_key: scoped_session_ids},
+        )
+        candidate_data["proctoring_summary"] = proctoring_by_email.get(email_key, blank_proctoring_summary())
+
+    plagiarism_by_email = build_plagiarism_summary_by_candidates([candidate_data])
+    candidate_data["plagiarism_summary"] = plagiarism_by_email.get(email_key, blank_plagiarism_summary())
+
+    try:
+        candidate_data["ai_overall_summary"] = EvaluationService.generate_candidate_overall_summary(
+            email_key,
+            candidate_data=candidate_data,
+        )
+    except Exception as exc:
+        current_app.logger.exception(
+            "Failed to generate AI overall summary for consolidated zip %s: %s",
+            email_key,
+            exc,
+        )
+        candidate_data["ai_overall_summary"] = None
+
+    try:
+        candidate_data["ai_coding_summary"] = EvaluationService.generate_candidate_coding_round_summary(
+            email_key,
+            candidate_data=candidate_data,
+        )
+    except Exception as exc:
+        current_app.logger.exception(
+            "Failed to generate AI coding summary for consolidated zip %s: %s",
+            email_key,
+            exc,
+        )
+        candidate_data["ai_coding_summary"] = None
+
+    try:
+        candidate_data["coding_round_data"] = EvaluationService.get_candidate_coding_round_data(
+            email_key,
+            candidate_data=candidate_data,
+        )
+    except Exception:
+        candidate_data["coding_round_data"] = None
+
+    try:
+        generated_filename = generate_candidate_pdf(candidate_data)
+    except Exception as exc:
+        current_app.logger.exception(
+            "Failed to regenerate missing report for consolidated zip %s (test_session_id=%s): %s",
+            email_key,
+            test_session_id,
+            exc,
+        )
+        return None
+
+    generated_path = REPORTS_DIR / str(generated_filename or "").strip()
+    if not generated_path.exists() or not generated_path.is_file():
+        return None
+
+    if generated_by:
+        try:
+            _save_report_metadata_best_effort(
+                identifier=int(test_session_id),
+                filename=generated_path.name,
+                generated_by=generated_by,
+            )
+        except Exception:
+            current_app.logger.exception(
+                "Failed to save regenerated report metadata for consolidated zip test_session_id=%s",
+                test_session_id,
+            )
+
+    return generated_path
+
+
+def _candidate_created_at_label(candidate: dict) -> str:
+    created_at = candidate.get("created_at")
+    if isinstance(created_at, datetime):
+        return created_at.strftime("%Y-%m-%d")
+
+    created_text = str(created_at or "").strip()
+    if not created_text:
+        return "unknown-date"
+
+    normalized_text = created_text.replace(" UTC", "+00:00")
+    for parser in (datetime.fromisoformat,):
+        try:
+            parsed = parser(normalized_text)
+            return parsed.strftime("%Y-%m-%d")
+        except ValueError:
+            continue
+
+    for pattern in ("%Y-%m-%d %H:%M:%S.%f", "%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M"):
+        try:
+            parsed = datetime.strptime(created_text, pattern)
+            return parsed.strftime("%Y-%m-%d")
+        except ValueError:
+            continue
+
+    date_part = created_text.split(" ", 1)[0].strip()
+    return secure_filename(date_part).strip("._") or "unknown-date"
+
+
+def _format_candidate_zip_name(candidate: dict, suffix: str = ".pdf") -> str:
+    candidate_name = str(candidate.get("name", "") or candidate.get("email", "") or "candidate").strip()
+    created_label = _candidate_created_at_label(candidate)
+    safe_candidate_name = secure_filename(candidate_name).strip("._") or "candidate"
+    base = f"{safe_candidate_name}-{created_label}"
+    return f"{base}{suffix.lower()}"
+
+
+def _generate_candidate_report_file_for_zip(candidate: dict) -> Path | None:
+    email_key = _normalize_email(candidate.get("email", ""))
+    test_session_id = candidate.get("test_session_id")
+    if not email_key or not test_session_id:
+        return None
+
+    candidate_data = db_service.get_candidate_report_data(email_key, test_session_id=int(test_session_id))
+    if not candidate_data:
+        return None
+
+    candidate_data["candidate_key"] = str(
+        candidate_data.get("candidate_key", "") or get_candidate_key(candidate_data)
+    ).strip()
+
+    attempted_rounds = _attempted_rounds(candidate_data)
+    if attempted_rounds <= 0:
+        candidate_data["proctoring_summary"] = blank_proctoring_summary()
+    else:
+        try:
+            scoped_session_ids = set(
+                db_service.get_round_session_uuids_for_test_session(
+                    int(test_session_id),
+                    attempted_only=True,
+                )
+            )
+        except Exception as exc:
+            current_app.logger.exception(
+                "Failed to fetch session scope for consolidated candidate zip test_session_id=%s: %s",
+                test_session_id,
+                exc,
+            )
+            scoped_session_ids = set()
+        proctoring_by_email = build_proctoring_summary_by_email(
+            {email_key},
+            session_ids_by_email={email_key: scoped_session_ids},
+        )
+        candidate_data["proctoring_summary"] = proctoring_by_email.get(email_key, blank_proctoring_summary())
+
+    plagiarism_by_email = build_plagiarism_summary_by_candidates([candidate_data])
+    candidate_data["plagiarism_summary"] = plagiarism_by_email.get(email_key, blank_plagiarism_summary())
+
+    try:
+        candidate_data["ai_overall_summary"] = EvaluationService.generate_candidate_overall_summary(
+            email_key,
+            candidate_data=candidate_data,
+        )
+    except Exception as exc:
+        current_app.logger.exception(
+            "Failed to generate AI overall summary for consolidated candidate zip %s: %s",
+            email_key,
+            exc,
+        )
+        candidate_data["ai_overall_summary"] = None
+
+    try:
+        candidate_data["ai_coding_summary"] = EvaluationService.generate_candidate_coding_round_summary(
+            email_key,
+            candidate_data=candidate_data,
+        )
+    except Exception as exc:
+        current_app.logger.exception(
+            "Failed to generate AI coding summary for consolidated candidate zip %s: %s",
+            email_key,
+            exc,
+        )
+        candidate_data["ai_coding_summary"] = None
+
+    try:
+        candidate_data["coding_round_data"] = EvaluationService.get_candidate_coding_round_data(
+            email_key,
+            candidate_data=candidate_data,
+        )
+    except Exception:
+        candidate_data["coding_round_data"] = None
+
+    try:
+        generated_filename = generate_candidate_pdf(candidate_data)
+    except Exception as exc:
+        current_app.logger.exception(
+            "Failed to generate consolidated zip report for %s (test_session_id=%s): %s",
+            email_key,
+            test_session_id,
+            exc,
+        )
+        return None
+
+    generated_path = REPORTS_DIR / str(generated_filename or "").strip()
+    if not generated_path.exists() or not generated_path.is_file():
+        return None
+    return generated_path
+
+
+def _safe_report_path(filename: str) -> Path | None:
+    name = str(filename or "").strip()
+    if not name:
+        return None
+    path = (REPORTS_DIR / name).resolve()
+    try:
+        path.relative_to(REPORTS_DIR.resolve())
+    except ValueError:
+        return None
+    if not path.exists() or not path.is_file():
+        return None
+    return path
+
+
 @reports_bp.route("/reports")
 @login_required
 def reports():
@@ -881,42 +1221,10 @@ def reports():
     )
     if admin_db_scope.get("active") and not admin_view_explicit:
         admin_view = "login_users"
-    admin_user_options = [
-        {
-            "email": str(group.get("user_email", "") or "").strip().lower(),
-            "name": str(group.get("user_name", "") or "").strip() or str(group.get("user_email", "") or "").strip().lower(),
-            "login_count": int(group.get("login_count", 0) or 0),
-        }
-        for group in admin_db_scope.get("groups", [])
-        if str(group.get("user_email", "") or "").strip()
-    ]
-    admin_user_options = sorted(admin_user_options, key=lambda item: ((item["name"] or "").lower(), item["email"]))
-    admin_selected_group = None
-    if admin_user_filter:
-        for group in admin_db_scope.get("groups", []):
-            if _normalize_email(group.get("user_email", "")) == admin_user_filter:
-                admin_selected_group = group
-                break
-    if admin_view == "login_users" and not admin_selected_group and admin_user_options:
-        admin_user_filter = admin_user_options[0]["email"]
-        for group in admin_db_scope.get("groups", []):
-            if _normalize_email(group.get("user_email", "")) == admin_user_filter:
-                admin_selected_group = group
-                break
-
-    def _normalize_report_ids(values) -> list[int]:
-        normalized = []
-        seen = set()
-        for value in values or []:
-            try:
-                report_id = int(value)
-            except (TypeError, ValueError):
-                continue
-            if report_id <= 0 or report_id in seen:
-                continue
-            seen.add(report_id)
-            normalized.append(report_id)
-        return normalized
+    admin_user_options, admin_user_filter, admin_selected_group = _resolve_admin_selected_group(
+        admin_db_scope,
+        requested_email=admin_user_filter,
+    )
 
     admin_all_report_ids = _normalize_report_ids(
         [
@@ -1059,6 +1367,46 @@ def reports():
         admin_selected_group_report_ids=admin_selected_group_report_ids,
         is_reports_admin=is_access_admin,
     )
+
+
+@reports_bp.route("/reports/admin/created-by-details")
+@login_required
+def admin_created_by_details():
+    user = session.get("user", {}) if isinstance(session.get("user"), dict) else {}
+    user_email = str(user.get("email", "") or "").strip().lower()
+    if not _is_reports_admin(user_email):
+        abort(403)
+
+    q = request.args.get("q", "").strip()
+    role_filter = request.args.get("role", "").strip()
+    from_date = str(request.args.get("from", "") or "").strip()
+    to_date = str(request.args.get("to", "") or "").strip()
+    requested_user = _normalize_email(request.args.get("admin_user", ""))
+
+    admin_db_scope = _collect_admin_database_candidates(
+        q=q,
+        role_filter=role_filter,
+        from_date=from_date,
+        to_date=to_date,
+        is_access_admin=True,
+    )
+    admin_user_options, admin_user_filter, admin_selected_group = _resolve_admin_selected_group(
+        admin_db_scope,
+        requested_email=requested_user,
+    )
+    admin_selected_group_report_ids = _normalize_report_ids(
+        admin_selected_group.get("report_ids", []) if admin_selected_group else []
+    )
+
+    html = _render_admin_created_by_details(
+        admin_selected_group=admin_selected_group,
+        admin_selected_group_report_ids=admin_selected_group_report_ids,
+    )
+    return jsonify({
+        "html": html,
+        "selected_email": admin_user_filter,
+        "has_options": bool(admin_user_options),
+    })
 
 
 @reports_bp.route("/reports/search")
@@ -1698,6 +2046,12 @@ def download_admin_db_reports_zip():
         abort(403)
 
     raw_ids = request.form.getlist("report_ids")
+    raw_filenames = request.form.getlist("report_filenames")
+    selected_admin_user = _normalize_email(request.form.get("admin_user", ""))
+    scoped_from_date = str(request.form.get("from", "") or "").strip()
+    scoped_to_date = str(request.form.get("to", "") or "").strip()
+    scoped_query = str(request.form.get("q", "") or "").strip()
+    scoped_role_filter = str(request.form.get("role", "") or "").strip()
     report_ids = []
     seen_ids = set()
     for value in raw_ids:
@@ -1710,35 +2064,125 @@ def download_admin_db_reports_zip():
         seen_ids.add(report_id)
         report_ids.append(report_id)
 
-    if not report_ids:
+    report_filenames = []
+    seen_filenames = set()
+    for value in raw_filenames:
+        filename = str(value or "").strip()
+        if not filename or filename in seen_filenames:
+            continue
+        seen_filenames.add(filename)
+        report_filenames.append(filename)
+
+    selected_group = None
+    if selected_admin_user and (scoped_from_date or scoped_to_date):
+        scoped_admin_db = _collect_admin_database_candidates(
+            q=scoped_query,
+            role_filter=scoped_role_filter,
+            from_date=scoped_from_date,
+            to_date=scoped_to_date,
+            is_access_admin=True,
+        )
+        _, _, selected_group = _resolve_admin_selected_group(
+            scoped_admin_db,
+            requested_email=selected_admin_user,
+        )
+        for candidate in selected_group.get("candidates", []) if selected_group else []:
+            report_id = candidate.get("report_id")
+            if report_id:
+                try:
+                    report_id = int(report_id)
+                except (TypeError, ValueError):
+                    report_id = None
+            if report_id and report_id not in seen_ids:
+                seen_ids.add(report_id)
+                report_ids.append(report_id)
+
+            filename = str(candidate.get("report_filename", "") or "").strip()
+            if filename and filename not in seen_filenames:
+                seen_filenames.add(filename)
+                report_filenames.append(filename)
+
+    scoped_candidates = selected_group.get("candidates", []) if selected_group else []
+
+    if not report_ids and not report_filenames and not scoped_candidates:
         abort(400, description="No reports selected")
 
-    reports = db_service.get_reports_by_ids(report_ids)
+    reports = db_service.get_reports_by_ids(report_ids) if report_ids else []
     report_files = []
+    used_names = {}
+    seen_paths = set()
+    if scoped_candidates:
+        for candidate in scoped_candidates:
+            filepath = _generate_candidate_report_file_for_zip(candidate)
+            if filepath is None:
+                filepath = _safe_report_path(str(candidate.get("report_filename", "") or "").strip())
+            if filepath is None or not filepath.exists() or not filepath.is_file():
+                continue
+            resolved_path = str(filepath.resolve())
+            if resolved_path in seen_paths:
+                continue
+            seen_paths.add(resolved_path)
+            archive_name = _format_candidate_zip_name(candidate, suffix=filepath.suffix or ".pdf")
+            duplicate_index = used_names.get(archive_name, 0)
+            used_names[archive_name] = duplicate_index + 1
+            if duplicate_index:
+                stem = Path(archive_name).stem
+                suffix = Path(archive_name).suffix
+                archive_name = f"{stem}_{duplicate_index + 1}{suffix}"
+            report_files.append((archive_name, filepath))
+
+        report_ids = []
+        report_filenames = []
+
+    generated_by = str(user.get("email", "") or "").strip()
     for report in reports:
         filename = str(getattr(report, "filename", "") or "").strip()
         if not filename:
-            continue
-        filepath = REPORTS_DIR / filename
+            filepath = None
+        else:
+            filepath = REPORTS_DIR / filename
         if not filepath.exists() or not filepath.is_file():
+            filepath = _generate_report_file_for_zip(report, generated_by=generated_by)
+        if filepath is None or not filepath.exists() or not filepath.is_file():
             continue
-        report_files.append((filename, filepath))
+        archive_name = _format_zip_report_name(report)
+        duplicate_index = used_names.get(archive_name, 0)
+        used_names[archive_name] = duplicate_index + 1
+        if duplicate_index:
+            stem = Path(archive_name).stem
+            suffix = Path(archive_name).suffix
+            archive_name = f"{stem}_{duplicate_index + 1}{suffix}"
+        resolved_path = str(filepath.resolve())
+        if resolved_path in seen_paths:
+            continue
+        seen_paths.add(resolved_path)
+        report_files.append((archive_name, filepath))
+
+    for filename in report_filenames:
+        filepath = _safe_report_path(filename)
+        if filepath is None:
+            continue
+        resolved_path = str(filepath.resolve())
+        if resolved_path in seen_paths:
+            continue
+        seen_paths.add(resolved_path)
+        report_files.append((filepath.name, filepath))
 
     if not report_files:
         abort(404, description="Report files not found")
 
     buffer = BytesIO()
     with zipfile.ZipFile(buffer, mode="w", compression=zipfile.ZIP_DEFLATED) as archive:
-        for filename, filepath in report_files:
-            archive.write(filepath, arcname=filename)
+        for archive_name, filepath in report_files:
+            archive.write(filepath, arcname=archive_name)
     buffer.seek(0)
 
-    timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    timestamp = datetime.now(timezone.utc).strftime("%d_%m_%Y")
     return send_file(
         buffer,
         mimetype="application/zip",
         as_attachment=True,
-        download_name=f"candidate_reports_{timestamp}.zip",
+        download_name=f"consolidated_candidate_reports_{timestamp}.zip",
     )
 
 

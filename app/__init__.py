@@ -80,6 +80,15 @@ def create_app():
             "access_admin_emails": admin_emails,
         }
 
+    try:
+        from .services.test_candidate_cleanup import (
+            purge_expired_test_candidates,
+            start_test_candidate_cleanup_scheduler,
+        )
+        start_test_candidate_cleanup_scheduler(app)
+    except Exception:
+        app.logger.exception("Failed to start background Test_ candidate cleanup")
+
     @app.before_request
     def purge_expired_test_candidate_data():
         from flask import request as req
@@ -87,7 +96,6 @@ def create_app():
         if req.path.startswith("/static"):
             return
         try:
-            from .services.test_candidate_cleanup import purge_expired_test_candidates
             purge_expired_test_candidates()
         except Exception:
             app.logger.exception("Failed to purge expired Test_ candidate data")

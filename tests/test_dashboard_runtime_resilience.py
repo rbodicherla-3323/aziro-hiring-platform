@@ -74,6 +74,7 @@ def test_dashboard_renders_when_test_link_stats_fail(monkeypatch):
 
 def test_create_test_survives_test_link_persistence_failure(monkeypatch):
     GENERATED_TESTS.clear()
+    rollback_calls = []
 
     monkeypatch.setenv("AUTH_DISABLED", "true")
     monkeypatch.setenv("AUTO_SEND_TEST_EMAILS", "false")
@@ -83,6 +84,7 @@ def test_create_test_survives_test_link_persistence_failure(monkeypatch):
         "save_test_link",
         lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("persist unavailable")),
     )
+    monkeypatch.setattr(dashboard_routes.db_service.db.session, "rollback", lambda: rollback_calls.append(True))
 
     app = _make_app(include_test_generation=True)
     client = app.test_client()
@@ -102,6 +104,33 @@ def test_create_test_survives_test_link_persistence_failure(monkeypatch):
     assert response.headers["Location"].endswith("/generated-tests")
     assert len(GENERATED_TESTS) == 1
     assert GENERATED_TESTS[0]["email"] == "candidate.one@example.com"
+    assert rollback_calls
+
+
+def test_create_test_returns_to_form_when_no_links_are_generated(monkeypatch):
+    GENERATED_TESTS.clear()
+
+    monkeypatch.setenv("AUTH_DISABLED", "true")
+    monkeypatch.setenv("AUTO_SEND_TEST_EMAILS", "false")
+    monkeypatch.setattr(coding_routes, "get_language_runtime_status", lambda _language: (True, "ok"))
+
+    app = _make_app(include_test_generation=True)
+    client = app.test_client()
+
+    response = client.post(
+        "/create-test",
+        data={
+            "name[]": ["Candidate One"],
+            "email[]": ["not-an-email"],
+            "role[]": ["Java Entry Level (0-2 Years)"],
+            "domain[]": ["None"],
+        },
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 302
+    assert response.headers["Location"].endswith("/create-test")
+    assert GENERATED_TESTS == []
 
 
 def test_generated_tests_store_returns_in_memory_rows_when_db_fallback_fails(monkeypatch):
@@ -167,6 +196,20 @@ def test_generated_tests_page_shows_multiple_candidates_from_same_batch(monkeypa
     assert "Candidate One" in body
     assert "Candidate Two" in body
     assert len(GENERATED_TESTS) == 2
+
+
+def test_generated_tests_page_defaults_present_session_anchor_to_zero(monkeypatch):
+    monkeypatch.setenv("AUTH_DISABLED", "true")
+
+    app = _make_app()
+    client = app.test_client()
+
+    response = client.get("/generated-tests")
+
+    assert response.status_code == 200
+    body = response.get_data(as_text=True)
+    assert 'sessionStorage.setItem(PRESENT_SESSION_STARTED_AT_KEY, "0");' in body
+    assert "if (Number.isFinite(parsed) && parsed >= 0) return parsed;" in body
 
 
 def test_create_test_and_generated_tests_work_with_server_side_graph_token(monkeypatch):

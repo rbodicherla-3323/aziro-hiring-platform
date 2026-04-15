@@ -143,6 +143,24 @@ class TestLink(db.Model):
         return f"<TestLink {self.session_id} {self.test_type}>"
 
 
+class RuntimeSessionState(db.Model):
+    __tablename__ = "runtime_session_states"
+
+    store_name = db.Column(db.String(20), primary_key=True)
+    session_id = db.Column(db.String(64), primary_key=True)
+    payload_json = db.Column(db.Text, nullable=False, default="{}")
+    expires_at = db.Column(db.DateTime, nullable=True, index=True)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = db.Column(
+        db.DateTime,
+        default=lambda: datetime.now(timezone.utc),
+        index=True,
+    )
+
+    def __repr__(self):
+        return f"<RuntimeSessionState {self.store_name} {self.session_id}>"
+
+
 class AIProviderConfig(db.Model):
     __tablename__ = "ai_provider_configs"
 

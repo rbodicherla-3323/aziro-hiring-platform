@@ -40,9 +40,9 @@ def _domain_resolves(domain: str) -> bool:
         return False
 
 
-def _domain_has_mx(domain: str) -> tuple[bool, str]:
+def _domain_has_mx(domain: str) -> tuple[bool | None, str]:
     if _DNS_RESOLVER is None:
-        return False, "MX verification is enabled but dnspython is not installed."
+        return None, "MX verification is enabled but dnspython is not installed."
 
     timeout = float(os.getenv("EMAIL_MX_TIMEOUT_SECONDS", "3") or "3")
     resolver = _DNS_RESOLVER.Resolver()
@@ -78,6 +78,12 @@ def validate_email(value: str) -> tuple[bool, str]:
 
     if _env_bool("EMAIL_VALIDATE_MX", default=False):
         has_mx, message = _domain_has_mx(domain)
+        if has_mx is None:
+            if _env_bool("EMAIL_VALIDATE_MX_STRICT", default=False):
+                return False, message
+            # Fallback-safe: don't block candidate creation when MX checks
+            # cannot run due missing dependency in runtime.
+            return True, ""
         if not has_mx:
             return False, message
 

@@ -42,6 +42,8 @@ const TELEMETRY_MAX_RETRY_ATTEMPTS = 3;
 const TELEMETRY_RETRY_BASE_MS = 1500;
 const TELEMETRY_RETRY_MAX_DELAY_MS = 12000;
 const VIOLATION_AUTO_EVIDENCE_MIN_GAP_MS = 450;
+const EXTERNAL_DEVICE_EVENT_DEBOUNCE_MS = 1500;
+const ENTIRE_SCREEN_PROMPT_DEBOUNCE_MS = 1200;
 const VIOLATION_LABELS = Object.freeze({
     "fullscreen exited": "Full screen exited",
     "fullscreen re-entry attempt": "Full screen resume attempt",
@@ -60,6 +62,7 @@ const VIOLATION_LABELS = Object.freeze({
     "screen capture ended": "Screen sharing stopped",
     "screen capture rejected": "Invalid screen sharing selection",
     "screen capture unavailable": "Screen sharing unavailable",
+    "external device activity detected": "External device activity detected",
     "suspicion threshold exceeded": "Suspicion threshold exceeded"
 });
 const VIOLATION_COUNT_FIELDS = Object.freeze({
@@ -77,6 +80,7 @@ const VIOLATION_COUNT_FIELDS = Object.freeze({
     "webcam stream interrupted": "webcam_stream_interruptions",
     "webcam stream muted": "webcam_stream_mute_event_count",
     "webcam recording error": "webcam_recording_error_count",
+    "external device activity detected": "external_device_event_count",
     "suspicion threshold exceeded": "suspicion_threshold_event_count"
 });
 const VIOLATION_BANNER_TONES = Object.freeze({
@@ -175,6 +179,12 @@ let telemetryFlushInProgress = false;
 let webcamTrackRecoveryInProgress = false;
 let webcamRecorderRecoveryInProgress = false;
 const lastViolationEvidenceCaptureAt = Object.create(null);
+let externalDeviceEventCount = 0;
+let externalDeviceListenersAttached = false;
+let lastEntireScreenPromptAt = 0;
+let lastScreenCaptureRejectReason = "";
+const recentExternalDeviceFingerprints = new Map();
+const externalDeviceDetachHandlers = [];
 
 console.log("PROCTORING ACTIVE");
 
@@ -559,6 +569,185 @@ function isEntireScreenSurface(surface) {
     return surface === "monitor";
 }
 
+function promptEntireScreenOnlySelection() {
+    const now = Date.now();
+    if ((now - lastEntireScreenPromptAt) < ENTIRE_SCREEN_PROMPT_DEBOUNCE_MS) return;
+    lastEntireScreenPromptAt = now;
+    window.alert("Please select 'Entire Screen' only. Sharing a browser tab or window is not allowed.");
+}
+
+function sanitizeDeviceText(value, maxLen = 96) {
+    const text = String(value || "").trim();
+    if (!text) return "";
+    return text.slice(0, maxLen);
+}
+
+function normalizeExternalDeviceInfo(channel, device) {
+    let vendorId = 0;
+    let productId = 0;
+    let productName = "";
+    let serialHint = "";
+
+    if (device && typeof device.getInfo === "function") {
+        try {
+            const info = device.getInfo() || {};
+            const infoVendor = Number(info.usbVendorId);
+            const infoProduct = Number(info.usbProductId);
+            if (Number.isFinite(infoVendor) && infoVendor > 0) vendorId = infoVendor;
+            if (Number.isFinite(infoProduct) && infoProduct > 0) productId = infoProduct;
+        } catch (_) {
+            // Ignore unsupported serial info lookups.
+        }
+    }
+
+    const rawVendor = Number(device && device.vendorId);
+    const rawProduct = Number(device && device.productId);
+    if (!vendorId && Number.isFinite(rawVendor) && rawVendor > 0) vendorId = rawVendor;
+    if (!productId && Number.isFinite(rawProduct) && rawProduct > 0) productId = rawProduct;
+
+    productName = sanitizeDeviceText(
+        (device && (device.productName || device.name || device.manufacturerName)) || ""
+    );
+    const serial = sanitizeDeviceText(device && device.serialNumber ? device.serialNumber : "", 48);
+    if (serial) {
+        serialHint = serial.slice(-6);
+    }
+
+    return {
+        channel,
+        vendor_id: vendorId || 0,
+        product_id: productId || 0,
+        product_name: productName || "unknown",
+        serial_hint: serialHint
+    };
+}
+
+function shouldSkipExternalDeviceEvent(details) {
+    const now = Date.now();
+    const fingerprint = [
+        details.channel || "",
+        details.action || "",
+        details.vendor_id || 0,
+        details.product_id || 0,
+        details.product_name || "",
+        details.serial_hint || ""
+    ].join("|");
+
+    const lastSeenAt = Number(recentExternalDeviceFingerprints.get(fingerprint) || 0);
+    if ((now - lastSeenAt) < EXTERNAL_DEVICE_EVENT_DEBOUNCE_MS) return true;
+    recentExternalDeviceFingerprints.set(fingerprint, now);
+
+    if (recentExternalDeviceFingerprints.size > 180) {
+        for (const [key, ts] of recentExternalDeviceFingerprints.entries()) {
+            if ((now - Number(ts || 0)) > (EXTERNAL_DEVICE_EVENT_DEBOUNCE_MS * 8)) {
+                recentExternalDeviceFingerprints.delete(key);
+            }
+        }
+    }
+    return false;
+}
+
+function reportExternalDeviceActivity(channel, action, device, extraDetails = {}) {
+    if (!IS_TEST_FLOW_PAGE || !proctoringActive || shouldIgnoreProctoringEvent()) return;
+
+    const deviceInfo = normalizeExternalDeviceInfo(channel, device);
+    const details = {
+        action,
+        ...deviceInfo,
+        ...extraDetails
+    };
+    if (shouldSkipExternalDeviceEvent(details)) return;
+
+    externalDeviceEventCount += 1;
+    details.external_device_event_count = externalDeviceEventCount;
+
+    issueWarning("External device activity detected", details, {
+        incrementWarning: false
+    });
+    captureEvidence("external_device_activity", details, true);
+}
+
+function registerExternalDeviceListener(target, eventName, handler) {
+    if (!target || typeof target.addEventListener !== "function") return;
+    target.addEventListener(eventName, handler);
+    externalDeviceDetachHandlers.push(() => {
+        try {
+            target.removeEventListener(eventName, handler);
+        } catch (_) {
+            // Ignore detach failures.
+        }
+    });
+}
+
+function setupExternalDeviceDetection() {
+    if (!IS_TEST_FLOW_PAGE || externalDeviceListenersAttached) return;
+    externalDeviceListenersAttached = true;
+
+    if (navigator.hid) {
+        registerExternalDeviceListener(navigator.hid, "connect", (event) => {
+            reportExternalDeviceActivity("hid", "connected", event && event.device, {
+                reason: "hid_connect"
+            });
+        });
+        registerExternalDeviceListener(navigator.hid, "disconnect", (event) => {
+            reportExternalDeviceActivity("hid", "disconnected", event && event.device, {
+                reason: "hid_disconnect"
+            });
+        });
+    }
+
+    if (navigator.usb) {
+        registerExternalDeviceListener(navigator.usb, "connect", (event) => {
+            reportExternalDeviceActivity("usb", "connected", event && event.device, {
+                reason: "usb_connect"
+            });
+        });
+        registerExternalDeviceListener(navigator.usb, "disconnect", (event) => {
+            reportExternalDeviceActivity("usb", "disconnected", event && event.device, {
+                reason: "usb_disconnect"
+            });
+        });
+    }
+
+    if (navigator.serial) {
+        registerExternalDeviceListener(navigator.serial, "connect", (event) => {
+            reportExternalDeviceActivity("serial", "connected", event && event.target, {
+                reason: "serial_connect"
+            });
+        });
+        registerExternalDeviceListener(navigator.serial, "disconnect", (event) => {
+            reportExternalDeviceActivity("serial", "disconnected", event && event.target, {
+                reason: "serial_disconnect"
+            });
+        });
+    }
+
+    registerExternalDeviceListener(window, "gamepadconnected", (event) => {
+        reportExternalDeviceActivity("gamepad", "connected", event && event.gamepad, {
+            reason: "gamepad_connect",
+            gamepad_index: Number((event && event.gamepad && event.gamepad.index) || -1)
+        });
+    });
+    registerExternalDeviceListener(window, "gamepaddisconnected", (event) => {
+        reportExternalDeviceActivity("gamepad", "disconnected", event && event.gamepad, {
+            reason: "gamepad_disconnect",
+            gamepad_index: Number((event && event.gamepad && event.gamepad.index) || -1)
+        });
+    });
+}
+
+function teardownExternalDeviceDetection() {
+    while (externalDeviceDetachHandlers.length > 0) {
+        const detach = externalDeviceDetachHandlers.pop();
+        try {
+            detach();
+        } catch (_) {
+            // Ignore listener cleanup issues.
+        }
+    }
+    externalDeviceListenersAttached = false;
+}
+
 function getOrCreateScreenCaptureVideo() {
     if (screenCaptureVideo) return screenCaptureVideo;
 
@@ -611,8 +800,10 @@ async function startScreenCaptureMonitor() {
     if (!IS_TEST_FLOW_PAGE) return false;
     if (screenStream && screenStream.active && screenCaptureReady) return true;
     if (screenCapturePromptInFlight) return false;
+    lastScreenCaptureRejectReason = "";
 
     if (!supportsDisplayCapture()) {
+        lastScreenCaptureRejectReason = "display_media_unsupported";
         if (!screenCaptureUnavailableLogged) {
             screenCaptureUnavailableLogged = true;
             sendViolation("Screen capture unavailable", {
@@ -635,12 +826,14 @@ async function startScreenCaptureMonitor() {
             stream.getTracks().forEach((t) => t.stop());
             screenCaptureReady = false;
             screenCaptureSurface = "";
+            lastScreenCaptureRejectReason = "entire_screen_required";
 
             sendViolation("Screen capture rejected", {
                 reason: "entire_screen_required",
                 display_surface: displaySurface || "unknown"
             });
             showBanner("Select 'Entire Screen' to continue the test.", "danger");
+            promptEntireScreenOnlySelection();
             return false;
         }
 
@@ -674,6 +867,7 @@ async function startScreenCaptureMonitor() {
         }
 
         screenCaptureReady = true;
+        lastScreenCaptureRejectReason = "";
         screenCaptureUnavailableLogged = false;
         if (!screenCaptureEnabledLogged) {
             screenCaptureEnabledLogged = true;
@@ -685,6 +879,7 @@ async function startScreenCaptureMonitor() {
 
         return true;
     } catch (error) {
+        lastScreenCaptureRejectReason = (error && error.name) || "permission_denied_or_aborted";
         if (!screenCaptureUnavailableLogged) {
             screenCaptureUnavailableLogged = true;
             sendViolation("Screen capture unavailable", {
@@ -734,11 +929,17 @@ async function ensureProctoringReady(options = {}) {
                 if (screenCaptureReady) break;
                 if (attempt < maxScreenShareAttempts) {
                     showBanner("Please select your Entire Screen (not a tab or window) to continue.", "danger");
+                    if (lastScreenCaptureRejectReason === "entire_screen_required") {
+                        promptEntireScreenOnlySelection();
+                    }
                     await new Promise((resolve) => setTimeout(resolve, 600));
                 }
             }
 
             if (!screenCaptureReady) {
+                if (lastScreenCaptureRejectReason === "entire_screen_required") {
+                    promptEntireScreenOnlySelection();
+                }
                 showBanner("You must share your Entire Screen to start the test.", "danger");
                 return false;
             }
@@ -1949,6 +2150,7 @@ function setupExamProctoring() {
     startPeriodicScreenshotCapture();
     startContentChangeDetection();
     startMultiMonitorDetection();
+    setupExternalDeviceDetection();
 
     // ── CRITICAL FIX ─────────────────────────────────────
     // Only getDisplayMedia (screen share) requires exiting fullscreen
@@ -2060,6 +2262,7 @@ function setupExamProctoring() {
         stopPeriodicScreenshotCapture();
         stopContentChangeDetection();
         stopMultiMonitorDetection();
+        teardownExternalDeviceDetection();
 
         sendViolation("Session page unload", {
             path: window.location.pathname,
@@ -2249,6 +2452,7 @@ function finalizeFullscreenOnCompletion() {
     stopPeriodicScreenshotCapture();
     stopContentChangeDetection();
     stopMultiMonitorDetection();
+    teardownExternalDeviceDetection();
 
     exitAppFullscreen().catch(() => {});
 }

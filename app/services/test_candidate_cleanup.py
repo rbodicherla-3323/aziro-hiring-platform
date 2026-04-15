@@ -1,5 +1,7 @@
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
+import threading
+import time
 
 from app.extensions import db
 from app.models import Candidate, TestSession, RoundResult, Report, ProctoringScreenshot, TestLink
@@ -12,6 +14,9 @@ TEST_CANDIDATE_NAME_PREFIX = "test_"
 TEST_CANDIDATE_SQL_NAME_PREFIX_PATTERN = r"test\_%"
 TEST_CANDIDATE_TTL_MINUTES = 60
 REPORTS_DIR = Path(__file__).resolve().parent.parent / "runtime" / "reports"
+_CLEANUP_THREAD = None
+_CLEANUP_THREAD_LOCK = threading.Lock()
+_CLEANUP_INTERVAL_SECONDS = 60
 
 
 def _now_utc() -> datetime:
@@ -261,3 +266,27 @@ def purge_expired_test_candidates(now: datetime | None = None) -> dict:
 
     db.session.commit()
     return summary
+
+
+def start_test_candidate_cleanup_scheduler(app) -> None:
+    global _CLEANUP_THREAD
+
+    with _CLEANUP_THREAD_LOCK:
+        if _CLEANUP_THREAD and _CLEANUP_THREAD.is_alive():
+            return
+
+        def _worker():
+            while True:
+                try:
+                    with app.app_context():
+                        purge_expired_test_candidates()
+                except Exception:
+                    app.logger.exception("Background purge for expired Test_ candidate data failed")
+                time.sleep(_CLEANUP_INTERVAL_SECONDS)
+
+        _CLEANUP_THREAD = threading.Thread(
+            target=_worker,
+            name="test-candidate-cleanup",
+            daemon=True,
+        )
+        _CLEANUP_THREAD.start()

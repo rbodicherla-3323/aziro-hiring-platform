@@ -553,6 +553,15 @@
 
 <script>
     (function () {
+        try {
+            sessionStorage.removeItem("aziro:create-test-state:v1");
+            if (window.AziroPageState && typeof window.AziroPageState.clear === "function") {
+                window.AziroPageState.clear();
+            }
+        } catch (_) {
+            // Ignore storage cleanup failures; page behavior should still work.
+        }
+
         const selectAll = document.getElementById("selectAll");
         const selectedCountEl = document.getElementById("selectedCount");
         const bulkEmailBtn = document.getElementById("bulkEmailBtn");
@@ -680,8 +689,22 @@
         }
 
         function parseDate(value) {
-            const dt = new Date(String(value || ""));
-            return Number.isNaN(dt.getTime()) ? null : dt;
+            const raw = String(value || "").trim();
+            if (!raw) return null;
+
+            const direct = new Date(raw);
+            if (!Number.isNaN(direct.getTime())) return direct;
+
+            // Browser-safe fallback for values like "2026-04-08 12:44:49.080450"
+            // or timezone-less timestamps.
+            const normalized = raw
+                .replace(/\s+/, "T")
+                .replace(/(\.\d{3})\d+/, "$1");
+            const withZone = /[zZ]|[+-]\d{2}:\d{2}$/.test(normalized)
+                ? normalized
+                : `${normalized}Z`;
+            const fallback = new Date(withZone);
+            return Number.isNaN(fallback.getTime()) ? null : fallback;
         }
 
         function getRenderedRowsAnchorMs() {
@@ -691,6 +714,15 @@
                 .map((dt) => dt.getTime())
                 .filter((value) => Number.isFinite(value) && value > 0);
             return rowTimes.length ? Math.min.apply(null, rowTimes) : Date.now();
+        }
+
+        function getRenderedRowsLatestMs() {
+            const rowTimes = rows()
+                .map((row) => parseDate(row.dataset.createdAt || ""))
+                .filter(Boolean)
+                .map((dt) => dt.getTime())
+                .filter((value) => Number.isFinite(value) && value > 0);
+            return rowTimes.length ? Math.max.apply(null, rowTimes) : 0;
         }
 
         function getPresentSessionAnchorMs() {
@@ -709,7 +741,12 @@
             try {
                 const stored = sessionStorage.getItem(PRESENT_SESSION_STARTED_AT_KEY);
                 const parsed = Number(stored);
-                if (Number.isFinite(parsed) && parsed > 0) return parsed;
+                if (Number.isFinite(parsed) && parsed > 0) {
+                    const latestRowMs = getRenderedRowsLatestMs();
+                    const looksFuture = parsed > (nowMs + 60 * 1000);
+                    const beyondRows = latestRowMs > 0 && parsed > (latestRowMs + 60 * 1000);
+                    if (!looksFuture && !beyondRows) return parsed;
+                }
                 const fallbackMs = getRenderedRowsAnchorMs();
                 sessionStorage.setItem(PRESENT_SESSION_STARTED_AT_KEY, String(fallbackMs));
                 return fallbackMs;
@@ -723,7 +760,7 @@
         function isDateMatch(createdAt, filterValue) {
             if (filterValue === "all") return true;
             const dt = parseDate(createdAt);
-            if (!dt) return false;
+            if (!dt) return filterValue === "present_session";
             const now = new Date();
             if (filterValue === "present_session") return dt.getTime() >= presentSessionAnchorMs;
             if (filterValue === "today") return dt.toDateString() === now.toDateString();
@@ -941,6 +978,10 @@
         dateFilter.value = "present_session";
         updateSelectedCount();
         applyFilters();
+        if (rows().length > 0 && visibleRows().length === 0 && dateFilter.value === "present_session") {
+            dateFilter.value = "all";
+            applyFilters();
+        }
     })();
 </script>
 {% endblock %}

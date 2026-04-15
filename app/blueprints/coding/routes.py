@@ -1890,15 +1890,16 @@ def run_code(session_id):
                     if tr["error"]:
                         output_lines.append(f"  Error:    {tr['error']}")
 
-            coding_data = CodingSessionService.get_session_data(session_id)
-            if coding_data is not None:
-                coding_data["latest_run_summary"] = {
+            CodingSessionService.save_latest_run_summary(
+                session_id,
+                {
                     "passed": total_passed,
                     "total": total,
                     "run_hidden": run_hidden,
                     "time_ms": total_time,
                     "status": "PASS" if total and total_passed == total else "FAIL",
-                }
+                },
+            )
 
             return jsonify({
                 "status": "executed" if total_passed == total else "partial",
@@ -2032,15 +2033,16 @@ def run_code(session_id):
             if tr.get("time_ms"):
                 output_lines.append(f"  Time:     {tr['time_ms']}ms")
 
-        coding_data = CodingSessionService.get_session_data(session_id)
-        if coding_data is not None:
-            coding_data["latest_run_summary"] = {
+        CodingSessionService.save_latest_run_summary(
+            session_id,
+            {
                 "passed": total_passed,
                 "total": total,
                 "run_hidden": run_hidden,
                 "time_ms": total_time,
                 "status": "PASS" if total and total_passed == total else "FAIL",
-            }
+            },
+        )
 
         return jsonify({
             "status": "executed" if total_passed == total else "partial",

@@ -59,6 +59,26 @@
     isDownloading: false,
   };
 
+  function syncDbRangeInputsFromUrl() {
+    if (!fromDateInput && !toDateInput) {
+      return;
+    }
+
+    var params = new URLSearchParams(window.location.search || "");
+    var fromValue = String(params.get("from") || "").trim();
+    var toValue = String(params.get("to") || "").trim();
+
+    if (fromDateInput) {
+      fromDateInput.value = fromValue;
+    }
+    if (toDateInput) {
+      toDateInput.value = toValue;
+    }
+  }
+
+  syncDbRangeInputsFromUrl();
+  window.addEventListener("pageshow", syncDbRangeInputsFromUrl);
+
   if (dbRangeClear) {
     dbRangeClear.addEventListener("click", function (event) {
       event.preventDefault();
