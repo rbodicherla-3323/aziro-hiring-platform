@@ -624,6 +624,15 @@ class CodingSessionService:
         set_coding_session_data(session_id, data)
 
     @staticmethod
+    def save_latest_run_summary(session_id, summary):
+        """Persist the latest run summary for cross-worker production flows."""
+        data = CodingSessionService.get_session_data(session_id)
+        if not data:
+            return
+        data["latest_run_summary"] = dict(summary or {})
+        set_coding_session_data(session_id, data)
+
+    @staticmethod
     def is_submitted(session_id):
         """Check if the session has been submitted."""
         data = CodingSessionService.get_session_data(session_id)

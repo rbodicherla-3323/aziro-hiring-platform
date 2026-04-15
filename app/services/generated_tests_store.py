@@ -17,7 +17,7 @@ def _get_int_env(name: str, default: int) -> int:
         return int(default)
 
 
-SESSION_RETENTION_DAYS = _get_int_env("SESSION_RETENTION_DAYS", 7)
+SESSION_RETENTION_DAYS = max(1, _get_int_env("SESSION_RETENTION_DAYS", 7))
 
 
 def _within_retention(dt: datetime) -> bool:

@@ -7,7 +7,7 @@ import os
 
 from flask import render_template, session, request, jsonify, current_app
 from werkzeug.utils import secure_filename
-from datetime import datetime
+from datetime import datetime, timezone
 
 from . import tests_bp
 from app.utils.auth_decorator import login_required
@@ -63,6 +63,34 @@ def save_uploaded_file(file, candidate_name, file_type):
     filepath = os.path.join(UPLOAD_FOLDER, filename)
     file.save(filepath)
     return filepath
+
+
+def _coerce_iso_timestamp(value) -> str:
+    """Return a best-effort ISO-8601 timestamp for template-safe data attributes."""
+    if isinstance(value, datetime):
+        dt = value if value.tzinfo is not None else value.replace(tzinfo=timezone.utc)
+        return dt.isoformat()
+
+    raw = str(value or "").strip()
+    if not raw:
+        return ""
+
+    try:
+        dt = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt.isoformat()
+    except (TypeError, ValueError):
+        pass
+
+    for fmt in ("%Y-%m-%d %H:%M:%S.%f", "%Y-%m-%d %H:%M:%S"):
+        try:
+            dt = datetime.strptime(raw, fmt).replace(tzinfo=timezone.utc)
+            return dt.isoformat()
+        except ValueError:
+            continue
+
+    return raw
 
 
 # --------------------------------------------
@@ -234,7 +262,14 @@ def generated_tests():
     user = session.get("user", {})
     user_email = user.get("email", "dev@aziro.com")
 
-    candidates = get_tests_for_user_today(user_email)
+    raw_candidates = get_tests_for_user_today(user_email)
+    candidates = []
+    for cand in raw_candidates:
+        if not isinstance(cand, dict):
+            continue
+        cloned = dict(cand)
+        cloned["created_at"] = _coerce_iso_timestamp(cloned.get("created_at", ""))
+        candidates.append(cloned)
 
     return render_template(
         "generated_tests.html",
