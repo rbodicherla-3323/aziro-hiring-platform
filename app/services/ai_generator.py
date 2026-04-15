@@ -812,8 +812,6 @@ def _build_fallback_coding_summary(coding_data):
             f"Language: {language or 'Unknown'}",
             f"Question: {question_title or 'Coding Question'}",
             f"Problem Statement: {question_text or 'Problem statement unavailable.'}",
-            "Submitted Code:",
-            submitted_code if submitted_code else "No submitted code found.",
         ]
     )
     return "\n".join(lines)
@@ -1027,7 +1025,7 @@ def generate_evaluation_summary(candidate_data):
 
 def generate_coding_round_summary(coding_data):
     """
-    Generate an AI-based summary for coding round with question and submitted code.
+    Generate an AI-based summary for coding round with question and evaluation analysis.
     """
     prompt = f"""
     Rewrite the following coding round data into a professional, HR-readable summary.
@@ -1041,7 +1039,7 @@ def generate_coding_round_summary(coding_data):
     - Start with section title: "Key Insights"
     - Add section title: "Key Insights" one insight if code logic is correct but not able to fetch output, another insight if code is efficient or not based on time/space complexity.
     - Include coding question title and short problem statement.
-    - Include submitted code exactly as provided under a "Submitted Code" section.
+    - Do not include submitted code in this textual summary; code is rendered separately in the report.
     - Keep tone factual and concise.
 
     Coding Round Data:

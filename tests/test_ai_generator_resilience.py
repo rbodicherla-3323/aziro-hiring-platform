@@ -168,3 +168,4 @@ def test_fallback_coding_summary_includes_assessment_and_heuristics():
     assert "Assessment:" in summary
     assert "TODO" in summary or "todo" in summary.lower()
     assert "print" in summary.lower()
+    assert "Submitted Code:" not in summary

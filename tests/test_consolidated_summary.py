@@ -422,3 +422,38 @@ def test_generate_candidate_pdf_invokes_new_detail_renderers(monkeypatch):
     assert filename.endswith(".pdf")
     assert captured["coding_called"] is True
     assert captured["mcq_called"] is True
+
+
+def test_strip_submitted_code_block_keeps_question_text_only():
+    raw_summary = (
+        "### Coding Round Summary\n"
+        "Round: Coding Challenge (Python)\n"
+        "Language: python\n"
+        "Question: Remove Duplicates Preserve Order\n"
+        "Problem Statement: Remove duplicates from list while preserving order.\n"
+        "Submitted Code:\n"
+        "def solve(nums):\n"
+        "    return list(set(nums))\n"
+    )
+
+    cleaned = pdf_service._strip_submitted_code_block(raw_summary)
+
+    assert "Submitted Code:" not in cleaned
+    assert "Question: Remove Duplicates Preserve Order" in cleaned
+    assert "Problem Statement: Remove duplicates from list while preserving order." in cleaned
+
+
+def test_build_score_summary_rows_excludes_soft_skills_from_first_row():
+    rounds = {
+        "L2": {"round_label": "Python Theory", "correct": 7, "total": 10},
+        "L4": {"round_label": "Coding Challenge", "correct": 8, "total": 10},
+        "L5": {"round_label": "Soft Skills", "correct": 4, "total": 5},
+    }
+    rows = pdf_service._build_score_summary_rows(rounds, ["L2", "L4", "L5"])
+
+    assert rows[0][1] == "Total (Excl. Soft Skills)"
+    assert rows[0][2] == "15 / 20"
+    assert rows[0][3] == "75.0%"
+    assert rows[1][1] == "Overall (All Rounds)"
+    assert rows[1][2] == "19 / 25"
+    assert rows[1][3] == "76.0%"

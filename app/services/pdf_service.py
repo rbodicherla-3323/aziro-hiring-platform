@@ -34,6 +34,10 @@ FAIL_RED = colors.HexColor("#dc2626")
 PENDING_GREY = colors.HexColor("#6b7280")
 HEADER_BG = colors.HexColor("#e8f0fe")
 ROW_ALT_BG = colors.HexColor("#f8fafc")
+CARD_BG = colors.HexColor("#f8fbff")
+CARD_BORDER = colors.HexColor("#bfdbfe")
+SOFT_SKILL_ROW_BG = colors.HexColor("#f0f9ff")
+OVERALL_ROW_BG = colors.HexColor("#eef2ff")
 
 
 def _build_styles():
@@ -82,6 +86,65 @@ def _status_color(status: str):
     if status == "FAIL":
         return FAIL_RED
     return PENDING_GREY
+
+
+def _is_soft_skill_round(round_key: str, round_data: dict) -> bool:
+    key = str(round_key or "").strip().upper()
+    label = str((round_data or {}).get("round_label", "") or "").strip().lower()
+    if key == "L5":
+        return True
+    return "soft skill" in label
+
+
+def _to_int_score(value) -> int:
+    try:
+        return int(value or 0)
+    except Exception:
+        try:
+            return int(float(value or 0))
+        except Exception:
+            return 0
+
+
+def _build_score_summary_rows(rounds: dict, ordered_keys: list[str]) -> list[list[str]]:
+    total_correct = 0
+    total_questions = 0
+    non_soft_correct = 0
+    non_soft_questions = 0
+
+    for round_key in ordered_keys:
+        round_data = rounds.get(round_key) or {}
+        correct = _to_int_score(round_data.get("correct", 0))
+        total = _to_int_score(round_data.get("total", 0))
+        total_correct += correct
+        total_questions += total
+        if not _is_soft_skill_round(round_key, round_data):
+            non_soft_correct += correct
+            non_soft_questions += total
+
+    def _percentage(correct: int, total: int) -> float:
+        if total <= 0:
+            return 0.0
+        return (float(correct) / float(total)) * 100.0
+
+    return [
+        [
+            "-",
+            "Total (Excl. Soft Skills)",
+            f"{non_soft_correct} / {non_soft_questions}",
+            f"{_percentage(non_soft_correct, non_soft_questions):.1f}%",
+            "-",
+            "Summary",
+        ],
+        [
+            "-",
+            "Overall (All Rounds)",
+            f"{total_correct} / {total_questions}",
+            f"{_percentage(total_correct, total_questions):.1f}%",
+            "-",
+            "Summary",
+        ],
+    ]
 
 
 def _to_inline_html(text: str) -> str:
@@ -194,6 +257,33 @@ def _summary_html(summary_text: str) -> str:
     return "<br/>".join(html_lines)
 
 
+def _strip_submitted_code_block(summary_text: str) -> str:
+    """Remove trailing Submitted Code section from coding summary text."""
+    if not summary_text:
+        return summary_text
+
+    lines = str(summary_text).splitlines()
+    trimmed = []
+    skipping = False
+    for line in lines:
+        stripped = line.strip()
+        if not skipping and stripped.lower().startswith("submitted code:"):
+            skipping = True
+            continue
+
+        if skipping:
+            if stripped.startswith("### ") or stripped.lower().startswith("assessment:") or stripped.lower() == "key insights:":
+                skipping = False
+                trimmed.append(line)
+            continue
+
+        trimmed.append(line)
+
+    cleaned = "\n".join(trimmed).strip()
+    cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
+    return cleaned or str(summary_text).strip()
+
+
 def _build_summary_card(title: str, summary_text: str, styles, width: float):
     """Render summary into a bordered card with styled heading and body."""
     title_para = Paragraph(
@@ -205,14 +295,14 @@ def _build_summary_card(title: str, summary_text: str, styles, width: float):
 
     card = Table([[title_para], [body_para]], colWidths=[width])
     card.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (0, 0), colors.HexColor("#e8f0fe")),
-        ("BACKGROUND", (0, 1), (0, 1), colors.HexColor("#f8fafc")),
-        ("BOX", (0, 0), (-1, -1), 0.8, colors.HexColor("#cbd5e1")),
-        ("LINEBELOW", (0, 0), (0, 0), 0.6, colors.HexColor("#cbd5e1")),
-        ("TOPPADDING", (0, 0), (-1, -1), 6),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
-        ("LEFTPADDING", (0, 0), (-1, -1), 8),
-        ("RIGHTPADDING", (0, 0), (-1, -1), 8),
+        ("BACKGROUND", (0, 0), (0, 0), colors.HexColor("#dbeafe")),
+        ("BACKGROUND", (0, 1), (0, 1), CARD_BG),
+        ("BOX", (0, 0), (-1, -1), 0.85, CARD_BORDER),
+        ("LINEBELOW", (0, 0), (0, 0), 0.7, CARD_BORDER),
+        ("TOPPADDING", (0, 0), (-1, -1), 8),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+        ("LEFTPADDING", (0, 0), (-1, -1), 10),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 10),
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
     ]))
     return card
@@ -357,11 +447,10 @@ def _render_coding_details_section(elements, styles, coding_round_data: dict, do
         [
             ["Round", str(coding_round_data.get("round_label", "Coding Round"))],
             ["Language", language],
-            ["Question Title", question_title],
             ["Score", f"{float(coding_round_data.get('percentage', 0) or 0):.2f}% ({int(coding_round_data.get('correct', 0) or 0)}/{int(coding_round_data.get('total', 0) or 0)})"],
             ["Status", str(coding_round_data.get("status", "Pending"))],
         ],
-        colWidths=[42 * mm, 118 * mm],
+        colWidths=[42 * mm, doc_width - (42 * mm)],
     )
     coding_meta.setStyle(TableStyle([
         ("FONTNAME", (0, 0), (0, -1), "Helvetica-Bold"),
@@ -373,8 +462,33 @@ def _render_coding_details_section(elements, styles, coding_round_data: dict, do
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
     ]))
     elements.append(coding_meta)
-    elements.append(Spacer(1, 2 * mm))
-    elements.append(Paragraph(f"<b>Problem Statement:</b> {escape(question_text)}", styles["CellText"]))
+    elements.append(Spacer(1, 3 * mm))
+    elements.append(Paragraph("Assigned Question", styles["CellTextBold"]))
+
+    question_card = Table(
+        [
+            [
+                Paragraph("<b>Question Title</b>", styles["CellTextBold"]),
+                Paragraph(escape(question_title), styles["CellText"]),
+            ],
+            [
+                Paragraph("<b>Problem Statement</b>", styles["CellTextBold"]),
+                Paragraph(escape(question_text), styles["CellText"]),
+            ],
+        ],
+        colWidths=[38 * mm, doc_width - (38 * mm)],
+    )
+    question_card.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#eff6ff")),
+        ("BACKGROUND", (0, 1), (-1, 1), colors.HexColor("#f8fafc")),
+        ("GRID", (0, 0), (-1, -1), 0.45, colors.HexColor("#bfdbfe")),
+        ("TOPPADDING", (0, 0), (-1, -1), 6),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+        ("LEFTPADDING", (0, 0), (-1, -1), 6),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 6),
+        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+    ]))
+    elements.append(question_card)
 
     def _render_test_case_table(title: str, rows: list[dict], empty_label: str):
         elements.append(Spacer(1, 3 * mm))
@@ -395,12 +509,17 @@ def _render_coding_details_section(elements, styles, coding_round_data: dict, do
                 Paragraph(escape(_format_value_for_pdf(test.get("input", ""))), styles["CellText"]),
                 Paragraph(escape(_format_value_for_pdf(test.get("expected", ""))), styles["CellText"]),
             ])
-        table = Table(table_data, colWidths=[12 * mm, 72 * mm, 76 * mm], repeatRows=1)
+        idx_col = 12 * mm
+        remaining = max(doc_width - idx_col, 90 * mm)
+        io_col = remaining / 2.0
+        table = Table(table_data, colWidths=[idx_col, io_col, io_col], repeatRows=1)
         table.setStyle(TableStyle([
             ("BACKGROUND", (0, 0), (-1, 0), HEADER_BG),
             ("GRID", (0, 0), (-1, -1), 0.35, colors.HexColor("#cbd5e1")),
             ("TOPPADDING", (0, 0), (-1, -1), 4),
             ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+            ("LEFTPADDING", (0, 0), (-1, -1), 5),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 5),
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ]))
         elements.append(table)
@@ -586,6 +705,8 @@ def generate_candidate_pdf(candidate_data: dict) -> str:
                 raise RuntimeError("Evaluation service unavailable")
         except Exception:
             ai_coding_summary = None
+    if ai_coding_summary:
+        ai_coding_summary = _strip_submitted_code_block(ai_coding_summary)
     ts_id = candidate_data.get("test_session_id", 0)
 
     safe_name = "".join(c if c.isalnum() or c in " _-" else "_" for c in name).strip()
@@ -722,6 +843,10 @@ def generate_candidate_pdf(candidate_data: dict) -> str:
         number = rd.get("round_number", numbers.get(rk, 0))
         table_data.append([str(number), rd.get("round_label", rk), score_text, pct_text, thresh_text, status_text])
 
+    summary_row_start = len(table_data)
+    summary_rows = _build_score_summary_rows(rounds if isinstance(rounds, dict) else {}, ordered_keys)
+    table_data.extend(summary_rows)
+
     col_widths = [14 * mm, 56 * mm, 25 * mm, 25 * mm, 25 * mm, 25 * mm]
     score_table = Table(table_data, colWidths=col_widths)
 
@@ -739,15 +864,29 @@ def generate_candidate_pdf(candidate_data: dict) -> str:
     ]
 
     # Alternating row backgrounds
-    for i in range(1, len(table_data)):
+    for i in range(1, summary_row_start):
         if i % 2 == 0:
             ts_cmds.append(("BACKGROUND", (0, i), (-1, i), ROW_ALT_BG))
 
     # Colour the Status column
-    for i in range(1, len(table_data)):
+    for i in range(1, summary_row_start):
         status_val = table_data[i][-1]
         ts_cmds.append(("TEXTCOLOR", (-1, i), (-1, i), _status_color(status_val)))
         ts_cmds.append(("FONTNAME", (-1, i), (-1, i), "Helvetica-Bold"))
+
+    if len(summary_rows) >= 1:
+        ts_cmds.extend([
+            ("BACKGROUND", (0, summary_row_start), (-1, summary_row_start), SOFT_SKILL_ROW_BG),
+            ("FONTNAME", (0, summary_row_start), (-1, summary_row_start), "Helvetica-Bold"),
+            ("TEXTCOLOR", (-1, summary_row_start), (-1, summary_row_start), AZIRO_BLUE),
+        ])
+    if len(summary_rows) >= 2:
+        overall_row = summary_row_start + 1
+        ts_cmds.extend([
+            ("BACKGROUND", (0, overall_row), (-1, overall_row), OVERALL_ROW_BG),
+            ("FONTNAME", (0, overall_row), (-1, overall_row), "Helvetica-Bold"),
+            ("TEXTCOLOR", (-1, overall_row), (-1, overall_row), AZIRO_BLUE),
+        ])
 
     score_table.setStyle(TableStyle(ts_cmds))
     elements.append(score_table)
