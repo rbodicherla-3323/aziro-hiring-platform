@@ -40,9 +40,13 @@
   var consolidatedDownloadBtn = document.getElementById("reportsConsolidatedDownload");
   var consolidatedGenerateBtn = document.getElementById("reportsConsolidatedGenerate");
   var consolidatedCopyBtn = document.getElementById("reportsConsolidatedCopy");
+  var reportsGenerateProgress = document.getElementById("reportsGenerateProgress");
+  var reportsGenerateProgressFill = document.getElementById("reportsGenerateProgressFill");
+  var reportsGenerateProgressValue = document.getElementById("reportsGenerateProgressValue");
 
   var searchTimer = null;
   var activeGalleryScopeKey = "";
+  var reportGenerationProgress = { timer: null, percent: 0, activeCount: 0 };
   var consolidatedState = {
     candidates: [],
     selectedCandidateKeys: {},
@@ -439,6 +443,65 @@
     renderActionHub(card, true, links);
   }
 
+  function setGlobalReportProgress(percent) {
+    if (!reportsGenerateProgress || !reportsGenerateProgressFill || !reportsGenerateProgressValue) return;
+    var safePercent = Math.max(0, Math.min(100, Number(percent) || 0));
+    reportGenerationProgress.percent = safePercent;
+    reportsGenerateProgress.hidden = false;
+    reportsGenerateProgressFill.style.width = safePercent + "%";
+    reportsGenerateProgressValue.textContent = Math.round(safePercent) + "%";
+  }
+
+  function clearGlobalReportProgress() {
+    if (reportGenerationProgress.timer) {
+      window.clearInterval(reportGenerationProgress.timer);
+      reportGenerationProgress.timer = null;
+    }
+    reportGenerationProgress.percent = 0;
+    if (!reportsGenerateProgress || !reportsGenerateProgressFill || !reportsGenerateProgressValue) return;
+    reportsGenerateProgress.hidden = true;
+    reportsGenerateProgressFill.style.width = "0%";
+    reportsGenerateProgressValue.textContent = "0%";
+  }
+
+  function startReportProgress() {
+    reportGenerationProgress.activeCount += 1;
+    if (reportGenerationProgress.activeCount > 1) {
+      if (reportGenerationProgress.percent < 12) setGlobalReportProgress(12);
+      return;
+    }
+    if (reportGenerationProgress.timer) {
+      window.clearInterval(reportGenerationProgress.timer);
+      reportGenerationProgress.timer = null;
+    }
+    setGlobalReportProgress(10);
+    reportGenerationProgress.timer = window.setInterval(function () {
+      var next = reportGenerationProgress.percent;
+      if (next < 45) next += 9;
+      else if (next < 75) next += 4;
+      else if (next < 92) next += 2;
+      if (next > 92) next = 92;
+      setGlobalReportProgress(next);
+    }, 260);
+  }
+
+  function finishReportProgress() {
+    reportGenerationProgress.activeCount = Math.max(0, reportGenerationProgress.activeCount - 1);
+    if (reportGenerationProgress.activeCount > 0) return;
+    if (reportGenerationProgress.timer) {
+      window.clearInterval(reportGenerationProgress.timer);
+      reportGenerationProgress.timer = null;
+    }
+    setGlobalReportProgress(100);
+    window.setTimeout(clearGlobalReportProgress, 500);
+  }
+
+  function failReportProgress() {
+    reportGenerationProgress.activeCount = Math.max(0, reportGenerationProgress.activeCount - 1);
+    if (reportGenerationProgress.activeCount > 0) return;
+    clearGlobalReportProgress();
+  }
+
   function generateReport(context, button, card) {
     context = context || getCardCandidateContext(card, button);
     if (!context.email) return;
@@ -456,6 +519,10 @@
         button.innerHTML = '<i class="bi bi-arrow-repeat"></i> Generating...';
       }
     }
+    if (card && typeof setActiveCard === "function") {
+      setActiveCard(card);
+    }
+    startReportProgress();
 
     fetchJson(buildScopedReportUrl(context), { credentials: "same-origin" })
       .then(function (payload) {
@@ -463,11 +530,13 @@
           throw new Error((payload && payload.error) || "Report generation failed");
         }
         applyReportReadyState(card, payload);
+        finishReportProgress();
         if (typeof showToast === "function") {
           showToast("Report generated successfully", "success");
         }
       })
       .catch(function (error) {
+        failReportProgress();
         if (typeof showToast === "function") {
           showToast(error.message || "Failed to generate report", "danger");
         }

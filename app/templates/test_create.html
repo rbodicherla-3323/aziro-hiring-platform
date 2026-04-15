@@ -629,6 +629,87 @@
         border-color: #89aee8;
         box-shadow: 0 0 0 3px rgba(95, 140, 222, 0.24);
     }
+    .bulk-import-wrapper {
+        border: 1px solid #dce4f6;
+        border-radius: 10px;
+        background: linear-gradient(180deg, #f8fbff 0%, #ffffff 55%);
+        padding: 11px 12px;
+        margin: 0 0 10px;
+    }
+    .bulk-import-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+    }
+    .bulk-import-title {
+        margin: 0;
+        color: #2f4678;
+        font-size: 0.96rem;
+        font-weight: 600;
+    }
+    .bulk-import-subtitle {
+        margin: 2px 0 0;
+        color: #6f7792;
+        font-size: 0.82rem;
+    }
+    .bulk-import-controls {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    .bulk-import-file {
+        min-width: 250px;
+        max-width: 420px;
+    }
+    .bulk-import-btn {
+        border-radius: 8px;
+        border: 1px solid #bdd0f3;
+        background: linear-gradient(180deg, #f5f8ff 0%, #edf2ff 100%);
+        color: #2e4f8e;
+        font-size: 0.83rem;
+        font-weight: 600;
+        padding: 8px 14px;
+    }
+    .bulk-import-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+    .bulk-import-note {
+        margin: 0;
+        color: #647294;
+        font-size: 0.8rem;
+    }
+    .bulk-import-feedback {
+        margin-top: 8px;
+        border-radius: 8px;
+        padding: 8px 10px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        display: none;
+        white-space: pre-line;
+    }
+    .bulk-import-feedback.show {
+        display: block;
+    }
+    .bulk-import-feedback.success {
+        color: #1a6d44;
+        border: 1px solid #c4e7d5;
+        background: #ebf8f0;
+    }
+    .bulk-import-feedback.warning {
+        color: #8a5a22;
+        border: 1px solid #f0ddb8;
+        background: #fff7e9;
+    }
+    .bulk-import-feedback.error {
+        color: #9a2e34;
+        border: 1px solid #f1ced2;
+        background: #fff2f4;
+    }
     .create-test-page[data-step="2"] .mode-grid {
         display: none;
     }
@@ -694,6 +775,22 @@
             <div class="workflow-steps">
                 <div class="workflow-step" data-step="1"><span class="dot" data-step-num="1">1</span>Upload &amp; Candidate Details</div>
                 <div class="workflow-step" data-step="2"><span class="dot" data-step-num="2">2</span>Review &amp; Generate</div>
+            </div>
+            <div class="bulk-import-wrapper d-none" id="bulkImportWrapper">
+                <div class="bulk-import-header">
+                    <div>
+                        <h6 class="bulk-import-title"><i class="fas fa-file-excel me-1"></i>Bulk Upload Candidates</h6>
+                        <p class="bulk-import-subtitle">Import candidate rows from Excel/CSV and auto-fill the form list.</p>
+                    </div>
+                    <div class="bulk-import-controls">
+                        <input type="file" class="form-control bulk-import-file" id="bulkCandidateFile" accept=".xlsx,.csv">
+                        <button type="button" class="btn bulk-import-btn" id="bulkImportBtn">
+                            <i class="fas fa-upload me-1"></i>Import File
+                        </button>
+                    </div>
+                </div>
+                <p class="bulk-import-note">Required columns: <strong>name</strong>, <strong>email</strong>, <strong>role</strong>. Optional: <strong>domain</strong>.</p>
+                <div class="bulk-import-feedback" id="bulkImportFeedback" aria-live="polite"></div>
             </div>
             <div id="candidateContainer">
                 <div class="candidate-card candidate-row">
@@ -840,6 +937,10 @@ const singleLabel = document.getElementById("singleModeLabel");
 const multiLabel = document.getElementById("multiModeLabel");
 const addCandidateWrapper = document.getElementById("addCandidateWrapper");
 const addCandidateBtn = document.getElementById("addCandidateBtn");
+const bulkImportWrapper = document.getElementById("bulkImportWrapper");
+const bulkCandidateFileInput = document.getElementById("bulkCandidateFile");
+const bulkImportBtn = document.getElementById("bulkImportBtn");
+const bulkImportFeedback = document.getElementById("bulkImportFeedback");
 const candidateContainer = document.getElementById("candidateContainer");
 const workflowSteps = Array.from(document.querySelectorAll(".workflow-step"));
 const form = document.getElementById("generateForm");
@@ -1092,10 +1193,105 @@ function updateRemoveButtons() {
     });
 }
 
+function setBulkImportVisible(visible) {
+    if (!bulkImportWrapper) return;
+    bulkImportWrapper.classList.toggle("d-none", !visible);
+}
+
+function setBulkImportFeedback(message, level) {
+    if (!bulkImportFeedback) return;
+    const text = String(message || "").trim();
+    if (!text) {
+        bulkImportFeedback.textContent = "";
+        bulkImportFeedback.className = "bulk-import-feedback";
+        return;
+    }
+    bulkImportFeedback.textContent = text;
+    bulkImportFeedback.className = `bulk-import-feedback show ${level || "success"}`;
+}
+
+function applyImportedDomain(selectField, value) {
+    if (!selectField) return;
+    const desired = normalizeRoleLabel(value || "None");
+    let matched = null;
+    const options = Array.from(selectField.options || []);
+    for (const option of options) {
+        if (normalizeRoleLabel(option.value || option.textContent || "") === desired) {
+            matched = option;
+            break;
+        }
+    }
+    selectField.value = matched ? matched.value : "None";
+    selectField.dispatchEvent(new Event("change", { bubbles: true }));
+}
+
+function ensureCandidateRowCount(targetCount) {
+    const desired = Math.max(1, Number(targetCount) || 1);
+    let rows = candidateContainer.querySelectorAll(".candidate-row");
+    while (rows.length < desired) {
+        addCandidateBtn.click();
+        rows = candidateContainer.querySelectorAll(".candidate-row");
+    }
+    while (rows.length > desired) {
+        removeCandidateRow(rows[rows.length - 1]);
+        rows = candidateContainer.querySelectorAll(".candidate-row");
+    }
+}
+
+function applyImportedCandidates(candidates) {
+    const items = Array.isArray(candidates) ? candidates : [];
+    if (!items.length) return { roleWarnings: [] };
+
+    ensureCandidateRowCount(items.length);
+    const rows = Array.from(candidateContainer.querySelectorAll(".candidate-row"));
+    const roleWarnings = [];
+
+    items.forEach((candidate, idx) => {
+        const row = rows[idx];
+        if (!row) return;
+        resetCandidateRow(row);
+
+        const nameField = row.querySelector(".candidate-name");
+        const emailField = row.querySelector(".candidate-email");
+        const roleField = row.querySelector(".candidate-role");
+        const domainField = row.querySelector('select[name="domain[]"]');
+
+        if (nameField) {
+            nameField.value = String(candidate.name || "").trim();
+            nameField.dispatchEvent(new Event("input", { bubbles: true }));
+        }
+        if (emailField) {
+            emailField.value = String(candidate.email || "").trim().toLowerCase();
+            emailField.dispatchEvent(new Event("input", { bubbles: true }));
+            emailField.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+        if (roleField) {
+            const matched = findRoleOption(roleField, candidate.role || "");
+            if (matched) {
+                roleField.value = matched.value;
+                roleField.dispatchEvent(new Event("change", { bubbles: true }));
+            } else {
+                roleField.value = "";
+                roleField.dispatchEvent(new Event("change", { bubbles: true }));
+                roleWarnings.push(`Row ${candidate.row_number || (idx + 2)}: role "${candidate.role || ""}" not found in role dropdown.`);
+            }
+        }
+        applyImportedDomain(domainField, candidate.domain || "None");
+        syncReviewForRow(row);
+    });
+
+    updateRemoveButtons();
+    setStep(1);
+    return { roleWarnings };
+}
+
 singleMode.addEventListener("change", () => {
     singleLabel.classList.add("active");
     multiLabel.classList.remove("active");
     addCandidateWrapper.classList.add("d-none");
+    setBulkImportVisible(false);
+    if (bulkCandidateFileInput) bulkCandidateFileInput.value = "";
+    setBulkImportFeedback("", "");
     const rows = candidateContainer.querySelectorAll(".candidate-row");
     rows.forEach((row, index) => {
         if (index > 0) row.remove();
@@ -1108,6 +1304,7 @@ multiMode.addEventListener("change", () => {
     multiLabel.classList.add("active");
     singleLabel.classList.remove("active");
     addCandidateWrapper.classList.remove("d-none");
+    setBulkImportVisible(true);
     updateRemoveButtons();
     setStep(1);
 });
@@ -1359,9 +1556,77 @@ function setupFileInputListeners(row) {
 document.addEventListener("DOMContentLoaded", () => {
     const firstRow = candidateContainer.querySelector(".candidate-row");
     if (firstRow) setupFileInputListeners(firstRow);
+    setBulkImportVisible(multiMode.checked);
     updateRemoveButtons();
     setStep(1);
 });
+
+if (bulkImportBtn && bulkCandidateFileInput) {
+    bulkImportBtn.addEventListener("click", async () => {
+        const file = bulkCandidateFileInput.files && bulkCandidateFileInput.files[0];
+        if (!file) {
+            setBulkImportFeedback("Select an Excel/CSV file first.", "warning");
+            if (typeof showToast === "function") showToast("Select an Excel/CSV file first", "warning");
+            return;
+        }
+
+        if (!multiMode.checked) {
+            multiMode.checked = true;
+            multiMode.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+
+        const originalHtml = bulkImportBtn.innerHTML;
+        bulkImportBtn.disabled = true;
+        bulkImportBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Importing';
+        setBulkImportFeedback("", "");
+
+        try {
+            const formData = new FormData();
+            formData.append("candidate_file", file);
+            const response = await fetch("/api/import-candidates", {
+                method: "POST",
+                body: formData,
+            });
+            const payload = await response.json().catch(() => ({}));
+            if (!response.ok || !payload.success) {
+                const message = payload.error || "Failed to import candidate file.";
+                const rowErrors = Array.isArray(payload.row_errors) ? payload.row_errors.slice(0, 6) : [];
+                const detail = rowErrors.length ? `\n${rowErrors.join("\n")}` : "";
+                setBulkImportFeedback(`${message}${detail}`, "error");
+                if (typeof showToast === "function") showToast(message, "danger");
+                return;
+            }
+
+            const imported = Array.isArray(payload.candidates) ? payload.candidates : [];
+            if (!imported.length) {
+                setBulkImportFeedback("No valid rows were found in the uploaded file.", "warning");
+                if (typeof showToast === "function") showToast("No valid rows found in uploaded file", "warning");
+                return;
+            }
+
+            const applyResult = applyImportedCandidates(imported);
+            const warnings = []
+                .concat(Array.isArray(payload.warnings) ? payload.warnings : [])
+                .concat(Array.isArray(payload.row_errors) ? payload.row_errors : [])
+                .concat(applyResult.roleWarnings || []);
+            const warningText = warnings.length ? `\n${warnings.slice(0, 8).join("\n")}` : "";
+            const successMessage = `Imported ${imported.length} candidate(s) from file.${warningText}`;
+            setBulkImportFeedback(successMessage, warnings.length ? "warning" : "success");
+            if (typeof showToast === "function") {
+                showToast(
+                    warnings.length ? `Imported ${imported.length} candidate(s) with warnings` : `Imported ${imported.length} candidate(s)`,
+                    warnings.length ? "warning" : "success",
+                );
+            }
+        } catch (_) {
+            setBulkImportFeedback("Unable to import the selected file right now. Please try again.", "error");
+            if (typeof showToast === "function") showToast("Unable to import the selected file", "danger");
+        } finally {
+            bulkImportBtn.disabled = false;
+            bulkImportBtn.innerHTML = originalHtml;
+        }
+    });
+}
 
 nextStepBtn.addEventListener("click", () => {
     if (currentStep === 1 && !validateRequiredFields()) {
