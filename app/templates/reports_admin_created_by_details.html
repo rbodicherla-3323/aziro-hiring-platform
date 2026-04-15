@@ -1,0 +1,91 @@
+{% if admin_selected_group %}
+<div class="candidate-item" style="height:auto; padding:16px; margin-top:12px;">
+    <div class="candidate-row" style="align-items:flex-start; gap:16px; justify-content:space-between;">
+        <div class="candidate-meta" style="cursor:default; align-items:flex-start;">
+            <span class="candidate-avatar avatar-highlight">{{ initials(admin_selected_group.user_name or admin_selected_group.user_email or 'U') }}</span>
+            <div>
+                <div class="reports-note" style="margin:0 0 4px 0;">Candidates Created By</div>
+                <h3 class="candidate-name">{{ admin_selected_group.user_name or 'Unknown User' }}</h3>
+                <div class="candidate-email-row" style="flex-wrap:wrap; gap:8px;">
+                    <span class="candidate-email">{{ admin_selected_group.user_email or 'Email not recorded' }}</span>
+                    <span class="role-pill">{{ admin_selected_group.login_count }} Login{% if admin_selected_group.login_count != 1 %}s{% endif %}</span>
+                    <span class="role-pill">{{ admin_selected_group.auth_provider or 'Provider not recorded' }}</span>
+                    <span class="candidate-email">{% if admin_selected_group.last_login_at %}Last login: {{ admin_selected_group.last_login_at.strftime('%Y-%m-%d %H:%M UTC') }}{% else %}Last login not recorded in selected range{% endif %}</span>
+                </div>
+            </div>
+        </div>
+        {% set visible_report_ids = [] %}
+        {% set visible_report_filenames = [] %}
+        {% for cand in admin_selected_group.candidates %}
+            {% if cand.has_report and cand.report_id %}
+                {% set _ = visible_report_ids.append(cand.report_id) %}
+            {% endif %}
+            {% if cand.has_report and cand.report_filename %}
+                {% set _ = visible_report_filenames.append(cand.report_filename) %}
+            {% endif %}
+        {% endfor %}
+        {% if visible_report_ids or visible_report_filenames %}
+        <form method="post" action="{{ url_for('reports.download_admin_db_reports_zip') }}" style="margin:0; display:flex; align-items:center;">
+            <input type="hidden" name="admin_user" value="{{ admin_selected_group.user_email or '' }}">
+            <input type="hidden" name="from" value="{{ request.args.get('from', '') }}">
+            <input type="hidden" name="to" value="{{ request.args.get('to', '') }}">
+            <input type="hidden" name="q" value="{{ request.args.get('q', '') }}">
+            <input type="hidden" name="role" value="{{ request.args.get('role', '') }}">
+            {% for report_id in visible_report_ids %}
+            <input type="hidden" name="report_ids" value="{{ report_id }}">
+            {% endfor %}
+            {% for report_filename in visible_report_filenames %}
+            <input type="hidden" name="report_filenames" value="{{ report_filename }}">
+            {% endfor %}
+            <button type="submit" class="row-action-btn" style="height:34px; white-space:nowrap;">
+                <i class="bi bi-file-earmark-zip"></i> Consolidated Evaluation Reports
+            </button>
+        </form>
+        {% endif %}
+    </div>
+    <div style="overflow-x:auto; margin-top:14px;">
+        <table style="width:100%; border-collapse:collapse; min-width:900px;">
+            <thead>
+                <tr style="border-bottom:1px solid rgba(148, 163, 184, 0.24); text-align:left;">
+                    <th style="padding:10px 8px; font-size:12px; text-transform:uppercase; letter-spacing:0.04em;">Candidate</th>
+                    <th style="padding:10px 8px; font-size:12px; text-transform:uppercase; letter-spacing:0.04em;">Email</th>
+                    <th style="padding:10px 8px; font-size:12px; text-transform:uppercase; letter-spacing:0.04em;">Role</th>
+                    <th style="padding:10px 8px; font-size:12px; text-transform:uppercase; letter-spacing:0.04em;">Date</th>
+                    <th style="padding:10px 8px; font-size:12px; text-transform:uppercase; letter-spacing:0.04em;">Time</th>
+                    <th style="padding:10px 8px; font-size:12px; text-transform:uppercase; letter-spacing:0.04em;">Evaluation Report</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if admin_selected_group.candidates %}
+                    {% for cand in admin_selected_group.candidates %}
+                    {% set created_parts = (cand.created_at or '').split(' ') %}
+                    <tr style="border-bottom:1px solid rgba(148, 163, 184, 0.16);">
+                        <td style="padding:12px 8px; font-weight:600;">{{ cand.name or '-' }}</td>
+                        <td style="padding:12px 8px;">{{ cand.email or '-' }}</td>
+                        <td style="padding:12px 8px;">{{ cand.role or 'General Role' }}</td>
+                        <td style="padding:12px 8px;">{{ created_parts[0] if created_parts else (cand.created_at or '-') }}</td>
+                        <td style="padding:12px 8px;">{{ created_parts[1] if created_parts|length > 1 else '-' }}</td>
+                        <td style="padding:12px 8px;">
+                            {% if cand.has_report and cand.report_filename %}
+                            <a class="row-action-btn" href="/reports/download-file/{{ cand.report_filename }}" title="Download evaluation report" aria-label="Download evaluation report"><i class="bi bi-download"></i> Download Report</a>
+                            {% else %}
+                            <span class="candidate-email">No report</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" style="padding:16px 8px; color:#4f5f89;">No candidates were created by this user in the selected range.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="reports-empty" style="margin-top: 12px;">
+    <h4>No logged-in user selected</h4>
+    <p>Select a logged-in user and click Select to view the candidates created by that user.</p>
+</div>
+{% endif %}
