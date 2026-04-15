@@ -213,6 +213,15 @@ class _GeminiRestClient:
         self.models = _GeminiRestModels(api_key)
 
 
+def _try_rest_client(api_key: str):
+    """Helper to attempt REST client initialization with error handling."""
+    try:
+        return _GeminiRestClient(api_key)
+    except Exception as exc:
+        log.warning("Gemini REST client initialization failed: %s", exc)
+        return None
+
+
 def _get_ai_client():
     """Lazily initialize Gemini client from environment."""
     global AI_CLIENT
@@ -225,41 +234,25 @@ def _get_ai_client():
         return None
 
     client_mode = str(_get_env_value("GEMINI_CLIENT_MODE", "auto") or "auto").strip().lower()
-    prefer_rest = (
-        client_mode == "rest"
-        or sys.version_info >= (3, 14)
-    )
-    if prefer_rest:
-        try:
-            AI_CLIENT = _GeminiRestClient(api_key=api_key)
-            return AI_CLIENT
-        except Exception as rest_exc:
-            log.warning("Gemini REST client initialization failed: %s", rest_exc)
-            return None
+    prefer_rest = client_mode == "rest" or sys.version_info >= (3, 14)
 
-    # Lazy import to avoid importing Google SDK when key is not configured.
+    if prefer_rest:
+        AI_CLIENT = _try_rest_client(api_key)
+        return AI_CLIENT
+
+    # Try SDK first, fallback to REST
     try:
         from google import genai
-    except Exception as exc:
-        log.debug("Gemini SDK unavailable; using REST fallback client: %s", exc)
-        try:
-            AI_CLIENT = _GeminiRestClient(api_key=api_key)
-            return AI_CLIENT
-        except Exception as rest_exc:
-            log.warning("Gemini REST fallback initialization failed: %s", rest_exc)
-            return None
-
-    try:
         AI_CLIENT = genai.Client(api_key=api_key)
         return AI_CLIENT
+    except ImportError as exc:
+        log.debug("Gemini SDK unavailable; using REST fallback: %s", exc)
     except Exception as exc:
         log.warning("Gemini SDK client initialization failed; trying REST fallback: %s", exc)
-        try:
-            AI_CLIENT = _GeminiRestClient(api_key=api_key)
-            return AI_CLIENT
-        except Exception as rest_exc:
-            log.warning("Gemini REST fallback initialization failed: %s", rest_exc)
-            return None
+
+    # Final REST fallback
+    AI_CLIENT = _try_rest_client(api_key)
+    return AI_CLIENT
 
 
 def _build_fallback_summary(candidate_data):
