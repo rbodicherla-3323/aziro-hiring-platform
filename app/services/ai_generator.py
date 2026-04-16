@@ -2,6 +2,7 @@ import os
 import logging
 import base64
 import json
+import re
 import sys
 from pathlib import Path
 from functools import lru_cache
@@ -675,89 +676,145 @@ def _build_fallback_coding_summary(coding_data):
     """Return deterministic coding-only summary when AI is unavailable."""
     if not isinstance(coding_data, dict):
         return "Coding submission data is unavailable."
-    
-    round_label = coding_data.get("round_label", "Coding Round")
-    status = coding_data.get("status", "Not Attempted")
-    percentage = coding_data.get("percentage", 0)
-    correct = coding_data.get("correct", 0)
-    total = coding_data.get("total", 0)
-    language = coding_data.get("language", "")
-    question_title = coding_data.get("question_title", "")
-    question_text = coding_data.get("question_text", "")
-    submitted_code = coding_data.get("submitted_code", "")
-    overall_rounds = coding_data.get("overall_rounds", {}) or {}
 
-    code_text = str(submitted_code or "").strip()
+    round_label = str(coding_data.get("round_label", "Coding Round") or "Coding Round")
+    status = str(coding_data.get("status", "Not Attempted") or "Not Attempted")
+    percentage = float(coding_data.get("percentage", 0) or 0)
+    correct = int(coding_data.get("correct", 0) or 0)
+    total = int(coding_data.get("total", 0) or 0)
+    language = str(coding_data.get("language", "") or "").strip()
+    question_title = str(coding_data.get("question_title", "") or "").strip()
+    question_text = str(coding_data.get("question_text", "") or "").strip()
+    submitted_code = str(coding_data.get("submitted_code", "") or "")
+    public_tests = coding_data.get("public_tests", []) if isinstance(coding_data.get("public_tests"), list) else []
+    hidden_tests = coding_data.get("hidden_tests", []) if isinstance(coding_data.get("hidden_tests"), list) else []
+
+    code_text = submitted_code.strip()
     normalized_code = code_text.lower()
     has_todo = "todo" in normalized_code
-    prints_output = "print(" in normalized_code
-    returns_none = "return none" in normalized_code or "returnnull" in normalized_code.replace(" ", "")
-    syntax_hint = ""
+    returns_none = "return none" in normalized_code or "return null" in normalized_code
+    has_prints = "print(" in normalized_code or "console.log(" in normalized_code
+    has_sort = ".sort(" in normalized_code or "sorted(" in normalized_code
+    uses_hash_ds = any(token in normalized_code for token in ("dict(", "set(", "map<", "unordered_map", "hashmap", "hashset"))
+    loop_count = len(re.findall(r"\b(for|while)\b", normalized_code))
+    recursive_hint = False
+    function_candidates = re.findall(r"\bdef\s+([a-zA-Z_]\w*)\s*\(", code_text)
+    for name in function_candidates:
+        if re.search(rf"\b{name}\s*\(", code_text.split(f"def {name}", 1)[-1]):
+            recursive_hint = True
+            break
+    if not recursive_hint:
+        # Non-python generic recursion signal
+        recursive_hint = bool(re.search(r"\breturn\s+\w+\s*\(.*\)", code_text) and re.search(r"\b\w+\s*\(.*\)\s*{", code_text))
 
-    if str(language or "").strip().lower() == "python" and code_text:
+    likely_quadratic = bool(re.search(r"for .*:\n\s+for ", code_text, flags=re.IGNORECASE)) or loop_count >= 3
+    likely_linear = loop_count >= 1 and not likely_quadratic and not has_sort
+
+    estimated_time = "O(n^2) or higher" if likely_quadratic else "O(n log n)" if has_sort else "O(n)" if likely_linear else "O(1) to O(n)"
+    if recursive_hint and estimated_time == "O(n)":
+        estimated_time = "O(n) (recursive)"
+
+    estimated_space = "O(n)" if uses_hash_ds or recursive_hint else "O(1) auxiliary"
+    if "dp" in normalized_code or "memo" in normalized_code:
+        estimated_space = "O(n) to O(n^2) depending on memoization structure"
+
+    syntax_hint = ""
+    if language.lower() == "python" and code_text:
         try:
             compile(code_text, "<candidate_code>", "exec")
         except Exception as exc:
             syntax_hint = str(exc)
 
-    insight_lines = []
-    if status == "PASS" and percentage >= 90:
-        insight_lines.append(
-            "- The submitted solution aligns well with the expected outcome and the score suggests the implementation was functionally correct."
-        )
-    elif status == "PASS":
-        insight_lines.append(
-            "- The candidate produced a working or near-working solution, though the submission still appears to have room for refinement in structure or completeness."
-        )
-    elif percentage >= 50:
-        insight_lines.append(
-            "- The submission shows partial problem understanding, but the implementation still contains correctness or completeness gaps that prevented a full pass."
-        )
+    strengths = []
+    weaknesses = []
+    skill_fit = []
+
+    if status.upper() == "PASS" and percentage >= 90:
+        strengths.append("Solution behavior appears strongly aligned with expected output across the evaluated suite.")
+        strengths.append("Implementation likely demonstrates robust logical flow for this coding competency.")
+    elif status.upper() == "PASS":
+        strengths.append("Submission clears the benchmark and demonstrates practical problem-solving ability.")
+        weaknesses.append("There is still scope to improve structural clarity and optimization depth.")
+    elif percentage >= 60:
+        strengths.append("Candidate demonstrates partial command of the problem and key syntax constructs.")
+        weaknesses.append("Correctness is inconsistent; edge-case handling or completeness appears limited.")
     else:
-        insight_lines.append(
-            "- The current submission does not yet satisfy the core problem requirements and reflects a significant execution gap in the coding round."
-        )
+        weaknesses.append("Implementation currently falls short of expected correctness for the assigned problem.")
+        weaknesses.append("Problem decomposition and execution discipline need significant improvement.")
+
+    if has_sort and not likely_quadratic:
+        strengths.append("Sorting-based strategy selection indicates awareness of standard optimization patterns.")
+    if uses_hash_ds:
+        strengths.append("Use of hash-based structures suggests familiarity with lookup optimization techniques.")
+    if recursive_hint:
+        strengths.append("Recursive decomposition indicates algorithmic reasoning maturity for divide/transform style problems.")
 
     if has_todo:
-        insight_lines.append(
-            "- The retained TODO markers suggest the problem was not fully completed before submission."
-        )
-    if prints_output:
-        insight_lines.append(
-            "- The code appears to rely on printed output, which may not satisfy the required return contract expected by the evaluator."
-        )
-    if returns_none and status != "PASS":
-        insight_lines.append(
-            "- The return path still points to a placeholder or incomplete result, which likely contributed to the low evaluation score."
-        )
+        weaknesses.append("TODO markers indicate incomplete implementation at submission time.")
+    if returns_none and status.upper() != "PASS":
+        weaknesses.append("Return contract appears incomplete, which likely reduced functional correctness.")
+    if has_prints and status.upper() != "PASS":
+        weaknesses.append("Output appears print-driven; evaluator may require explicit return values instead.")
+    if likely_quadratic and (total > 0 and correct < total):
+        weaknesses.append("Nested iteration pattern may create avoidable performance overhead under larger inputs.")
     if syntax_hint:
-        insight_lines.append(
-            f"- A syntax-level issue is likely present in the submission ({syntax_hint}), which would block reliable execution."
+        weaknesses.append(f"Syntax/parsing issue detected in submission: {syntax_hint}")
+
+    if percentage >= 80:
+        skill_fit.append("Candidate appears reasonably strong for this specific coding skill area.")
+    elif percentage >= 60:
+        skill_fit.append("Candidate is moderately aligned with this coding skill area but needs guided strengthening.")
+    elif percentage >= 40:
+        skill_fit.append("Candidate shows early-stage familiarity but lacks consistent applied mastery in this skill.")
+    else:
+        skill_fit.append("Candidate is currently not yet ready for independent execution in this coding skill area.")
+
+    if not strengths:
+        strengths.append("Submission details were limited; strong indicators could not be established with confidence.")
+    if not weaknesses:
+        weaknesses.append("No major structural weakness was explicitly detectable from the available submission snapshot.")
+
+    if status.upper() == "PASS" and percentage >= 80:
+        assessment = "The submission appears production-leaning for this skill slice."
+    elif status.upper() == "PASS":
+        assessment = "The submission is acceptable but still needs engineering polish."
+    elif percentage >= 60:
+        assessment = "The submission is partially acceptable and requires targeted correction."
+    else:
+        assessment = "The submission is currently below expected hiring readiness for this coding competency."
+
+    assessment_line = f"Assessment: {skill_fit[0]} {assessment}"
+
+    lines = [
+        "Key Insights:",
+        f"- Round result: {status} with {percentage:.2f}% ({correct}/{total}).",
+        f"- Estimated time complexity profile: {estimated_time}.",
+        f"- Estimated space complexity profile: {estimated_space}.",
+    ]
+
+    if public_tests or hidden_tests:
+        lines.append(
+            f"- Test coverage observed: {len(public_tests)} sample and {len(hidden_tests)} hidden test cases were associated with this round."
         )
 
-    if not insight_lines:
-        insight_lines.append("- Round-wise insights are available, but the coding submission did not expose enough detail for a deeper heuristic analysis.")
-
-    assessment_line = (
-        "Assessment: The submission shows a strong and largely correct implementation."
-        if status == "PASS" and percentage >= 85
-        else "Assessment: The submission shows workable intent, but the current implementation would still need refinement before it can be treated as a dependable solution."
-        if percentage >= 50
-        else "Assessment: The implementation remains incomplete or incorrect for the expected coding objective and would require rework."
+    lines.extend(["", "### Strengths"])
+    lines.extend([f"- {item}" for item in strengths[:5]])
+    lines.extend(["", "### Weaknesses"])
+    lines.extend([f"- {item}" for item in weaknesses[:6]])
+    lines.extend(["", "### Skill Alignment"])
+    lines.extend([f"- {item}" for item in skill_fit[:3]])
+    lines.extend(["", assessment_line])
+    lines.extend(
+        [
+            "",
+            "### Coding Round Summary",
+            f"Round: {round_label}",
+            f"Language: {language or 'Unknown'}",
+            f"Question: {question_title or 'Coding Question'}",
+            f"Problem Statement: {question_text or 'Problem statement unavailable.'}",
+        ]
     )
-
-    return (
-        "Key Insights:\n"
-        f"{chr(10).join(insight_lines)}\n\n"
-        "### Coding Round Summary\n"
-        f"Round: {round_label}\n"
-        f"Score: {percentage}% ({correct}/{total})\n"
-        f"Language: {language}\n"
-        f"Question: {question_title}\n"
-        f"Problem Statement: {question_text}\n"
-        f"Submitted Code:\n{submitted_code if submitted_code else 'No submitted code found.'}\n\n"
-        f"{assessment_line}"
-    )
+    return "\n".join(lines)
 
 
 def _build_fallback_consolidated_summary(consolidated_payload):
@@ -968,7 +1025,7 @@ def generate_evaluation_summary(candidate_data):
 
 def generate_coding_round_summary(coding_data):
     """
-    Generate an AI-based summary for coding round with question and submitted code.
+    Generate an AI-based summary for coding round with question and evaluation analysis.
     """
     prompt = f"""
     Rewrite the following coding round data into a professional, HR-readable summary.
@@ -982,7 +1039,7 @@ def generate_coding_round_summary(coding_data):
     - Start with section title: "Key Insights"
     - Add section title: "Key Insights" one insight if code logic is correct but not able to fetch output, another insight if code is efficient or not based on time/space complexity.
     - Include coding question title and short problem statement.
-    - Include submitted code exactly as provided under a "Submitted Code" section.
+    - Do not include submitted code in this textual summary; code is rendered separately in the report.
     - Keep tone factual and concise.
 
     Coding Round Data:

@@ -1167,6 +1167,7 @@ def get_candidate_report_data(
             "pass_threshold": rr.pass_threshold,
             "status": rr.status,
             "time_taken_seconds": rr.time_taken_seconds,
+            "session_uuid": rr.session_uuid or "",
         }
 
     # Compute summary

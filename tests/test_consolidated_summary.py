@@ -295,3 +295,285 @@ def test_generate_candidate_pdf_uses_role_scoped_summary_services(monkeypatch):
     assert filename.endswith(".pdf")
     assert captured["overall_email"] == "alice@example.com"
     assert captured["coding_email"] == "alice@example.com"
+
+
+def test_build_mcq_submission_details_keeps_unanswered_questions():
+    details = EvaluationService._build_mcq_submission_details(
+        [
+            {
+                "question": "What is Python?",
+                "correct_answer": "Language",
+                "topic": "Python Basics",
+                "tags": ["python"],
+                "options": ["Language", "Database"],
+            },
+            {
+                "question": "What is OOP?",
+                "correct_answer": "Paradigm",
+                "topic": "Concepts",
+                "tags": ["oop"],
+                "options": ["Pattern", "Paradigm"],
+            },
+        ],
+        {"0": "Language"},
+    )
+
+    assert len(details) == 2
+    assert details[0]["is_answered"] is True
+    assert details[0]["is_correct"] is True
+    assert details[1]["is_answered"] is False
+    assert details[1]["selected_answer"] == ""
+    assert details[1]["correct_answer"] == "Paradigm"
+
+
+def test_generate_candidate_pdf_invokes_new_detail_renderers(monkeypatch):
+    output_dir = PROJECT_ROOT / "app" / "runtime" / "reports"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    monkeypatch.setattr(pdf_service, "REPORTS_DIR", output_dir)
+
+    candidate_data = {
+        "name": "Alice Example",
+        "email": "alice@example.com",
+        "role": "Python Developer",
+        "batch_id": "batch_py_1",
+        "test_session_id": 52,
+        "rounds": {
+            "L2": {
+                "round_label": "Python Theory",
+                "correct": 10,
+                "total": 15,
+                "attempted": 12,
+                "percentage": 66.7,
+                "status": "FAIL",
+                "pass_threshold": 70,
+                "submission_details": {
+                    "responses": [
+                        {
+                            "question_no": 1,
+                            "question": "What is list comprehension?",
+                            "selected_answer": "Python expression",
+                            "correct_answer": "Python expression",
+                            "is_answered": True,
+                            "is_correct": True,
+                            "topic": "Python",
+                            "tags": ["python"],
+                        },
+                        {
+                            "question_no": 2,
+                            "question": "What is threading?",
+                            "selected_answer": "",
+                            "correct_answer": "Concurrency",
+                            "is_answered": False,
+                            "is_correct": False,
+                            "topic": "Concurrency",
+                            "tags": ["threads"],
+                        },
+                    ]
+                },
+            },
+            "L4": {
+                "round_label": "Coding Challenge",
+                "correct": 1,
+                "total": 1,
+                "attempted": 1,
+                "percentage": 100,
+                "status": "PASS",
+                "pass_threshold": 70,
+            },
+        },
+        "proctoring_summary": {},
+        "plagiarism_summary": {},
+        "ai_overall_summary": "Overall summary text",
+        "ai_coding_summary": "Coding summary text",
+        "coding_round_data": {
+            "round_label": "Coding Challenge",
+            "status": "PASS",
+            "percentage": 100,
+            "correct": 1,
+            "total": 1,
+            "language": "python",
+            "question_title": "Two Sum",
+            "question_text": "Return indices of two numbers that add to target.",
+            "submitted_code": "def solve(nums, target):\n    return [0, 1]\n",
+            "public_tests": [{"input": [1, 2], "expected": [0, 1]}],
+            "hidden_tests": [{"input": [2, 7, 11, 15], "expected": [0, 1]}],
+        },
+    }
+
+    captured = {"coding_called": False, "mcq_called": False}
+    original_coding_renderer = pdf_service._render_coding_details_section
+    original_mcq_renderer = pdf_service._render_mcq_round_sections
+
+    def _capture_coding(elements, styles, coding_round_data, doc_width):
+        captured["coding_called"] = True
+        assert coding_round_data["question_title"] == "Two Sum"
+        return original_coding_renderer(elements, styles, coding_round_data, doc_width)
+
+    def _capture_mcq(elements, styles, rounds):
+        captured["mcq_called"] = True
+        assert "L2" in rounds
+        return original_mcq_renderer(elements, styles, rounds)
+
+    monkeypatch.setattr(pdf_service, "_render_coding_details_section", _capture_coding)
+    monkeypatch.setattr(pdf_service, "_render_mcq_round_sections", _capture_mcq)
+
+    filename = pdf_service.generate_candidate_pdf(candidate_data)
+
+    assert filename.endswith(".pdf")
+    assert captured["coding_called"] is True
+    assert captured["mcq_called"] is True
+
+
+def test_strip_submitted_code_block_keeps_question_text_only():
+    raw_summary = (
+        "### Coding Round Summary\n"
+        "Round: Coding Challenge (Python)\n"
+        "Language: python\n"
+        "Question: Remove Duplicates Preserve Order\n"
+        "Problem Statement: Remove duplicates from list while preserving order.\n"
+        "Submitted Code:\n"
+        "def solve(nums):\n"
+        "    return list(set(nums))\n"
+    )
+
+    cleaned = pdf_service._strip_submitted_code_block(raw_summary)
+
+    assert "Submitted Code:" not in cleaned
+    assert "Question: Remove Duplicates Preserve Order" in cleaned
+    assert "Problem Statement: Remove duplicates from list while preserving order." in cleaned
+
+
+def test_build_score_summary_rows_excludes_soft_skills_from_first_row():
+    rounds = {
+        "L2": {"round_label": "Python Theory", "correct": 7, "total": 10},
+        "L4": {"round_label": "Coding Challenge", "correct": 8, "total": 10},
+        "L5": {"round_label": "Soft Skills", "correct": 4, "total": 5},
+    }
+    rows = pdf_service._build_score_summary_rows(rounds, ["L2", "L4", "L5"])
+
+    assert rows[0][1] == "Total (Excl. Soft Skills)"
+    assert rows[0][2] == "15 / 20"
+    assert rows[0][3] == "75.0%"
+    assert rows[1][1] == "Overall (All Rounds)"
+    assert rows[1][2] == "19 / 25"
+    assert rows[1][3] == "76.0%"
+
+
+def test_resolve_round_submission_details_prefers_latest_mcq_store_responses(monkeypatch):
+    candidate_data = {
+        "email": "alice@example.com",
+        "role_key": "python_qa",
+        "batch_id": "batch_py_1",
+        "rounds": {
+            "L2": {
+                "round_label": "Python Theory",
+                "session_uuid": "mcq-session-001",
+                "submission_details": {
+                    "responses": [
+                        {
+                            "question_no": 1,
+                            "question": "What is Python?",
+                            "selected_answer": "Database",
+                            "correct_answer": "Language",
+                            "is_answered": True,
+                            "is_correct": False,
+                        }
+                    ]
+                },
+            }
+        },
+    }
+
+    monkeypatch.setattr(
+        "app.services.evaluation_service.get_latest_mcq_submission",
+        lambda *args, **kwargs: {
+            "responses": [
+                {
+                    "question_no": 1,
+                    "question": "What is Python?",
+                    "selected_answer": "Language",
+                    "correct_answer": "Language",
+                    "is_answered": True,
+                    "is_correct": True,
+                }
+            ]
+        },
+    )
+    monkeypatch.setattr(
+        "app.services.evaluation_service.get_mcq_session_data",
+        lambda *_args, **_kwargs: {
+            "questions": [{"question": "What is Python?", "correct_answer": "Language"}],
+            "answers": {"0": "Database"},
+        },
+    )
+
+    details = EvaluationService._resolve_round_submission_details(
+        candidate_data,
+        "L2",
+        candidate_data["rounds"]["L2"],
+    )
+    responses = details.get("responses", [])
+
+    assert responses
+    assert responses[0]["selected_answer"] == "Language"
+    assert responses[0]["is_correct"] is True
+
+
+def test_evaluate_mcq_persists_submission_details_to_mcq_store(monkeypatch):
+    session_id = "mcq-persist-001"
+    captured = {}
+    original_store = dict(EVALUATION_STORE)
+    EVALUATION_STORE.clear()
+    from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
+    original_registry_cache = dict(MCQ_SESSION_REGISTRY._cache)
+
+    try:
+        MCQ_SESSION_REGISTRY._cache[session_id] = {
+            "session_id": session_id,
+            "candidate_name": "Alice Example",
+            "email": "alice@example.com",
+            "role_key": "python_qa",
+            "role_label": "Python Developer",
+            "batch_id": "batch_py_1",
+            "round_key": "L2",
+            "round_label": "Python Theory",
+        }
+
+        monkeypatch.setattr(
+            "app.services.evaluation_service.get_mcq_session_data",
+            lambda _sid: {
+                "questions": [
+                    {
+                        "question": "What is Python?",
+                        "correct_answer": "Language",
+                        "topic": "Basics",
+                        "tags": ["python"],
+                    }
+                ],
+                "answers": {"0": "Language"},
+                "start_time": 1000,
+            },
+        )
+        monkeypatch.setattr("app.services.evaluation_service.time.time", lambda: 1060)
+        monkeypatch.setattr(
+            "app.services.evaluation_service.EvaluationService._persist_result_to_db",
+            staticmethod(lambda *_args, **_kwargs: None),
+        )
+
+        def _capture_save(**kwargs):
+            captured.update(kwargs)
+
+        monkeypatch.setattr("app.services.evaluation_service.save_mcq_submission", _capture_save)
+
+        EvaluationService.evaluate_mcq(session_id)
+
+        assert captured.get("session_id") == session_id
+        assert captured.get("email") == "alice@example.com"
+        assert captured.get("round_key") == "L2"
+        assert isinstance(captured.get("responses"), list)
+        assert captured["responses"][0]["selected_answer"] == "Language"
+    finally:
+        EVALUATION_STORE.clear()
+        EVALUATION_STORE.update(original_store)
+        MCQ_SESSION_REGISTRY._cache.clear()
+        MCQ_SESSION_REGISTRY._cache.update(original_registry_cache)

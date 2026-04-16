@@ -24,8 +24,12 @@ def save_coding_submission(
     starter_code: str = "",
     role_key: str = "",
     batch_id: str = "",
+    public_tests=None,
+    hidden_tests=None,
 ):
     STORE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    public_tests_value = list(public_tests or []) if isinstance(public_tests, list) else []
+    hidden_tests_value = list(hidden_tests or []) if isinstance(hidden_tests, list) else []
     record = {
         "ts": _utc_now_iso(),
         "session_id": session_id,
@@ -40,6 +44,8 @@ def save_coding_submission(
         "starter_code": starter_code,
         "role_key": role_key,
         "batch_id": batch_id,
+        "public_tests": public_tests_value,
+        "hidden_tests": hidden_tests_value,
     }
     with STORE_FILE.open("a", encoding="utf-8") as f:
         f.write(json.dumps(record, ensure_ascii=False) + "\n")

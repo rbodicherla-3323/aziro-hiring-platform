@@ -2,6 +2,10 @@ from app.services.evaluation_store import EVALUATION_STORE
 from app.services.mcq_session_registry import MCQ_SESSION_REGISTRY
 from app.services.coding_session_registry import CODING_SESSION_REGISTRY
 from app.services.coding_submission_store import get_latest_coding_submission
+from app.services.mcq_submission_store import (
+    get_latest_mcq_submission,
+    save_mcq_submission,
+)
 from app.services.candidate_scope import matches_candidate_scope
 from app.services.generated_tests_store import GENERATED_TESTS
 from app.services.ai_generator import (
@@ -66,17 +70,18 @@ class EvaluationService:
         details = []
         for idx, q in enumerate(questions or []):
             selected_value = answers.get(str(idx))
-            if selected_value is None:
-                continue
             correct_value = q.get("correct_answer")
+            is_answered = selected_value is not None and str(selected_value).strip() != ""
             details.append({
                 "question_no": idx + 1,
                 "question": q.get("question", ""),
                 "topic": q.get("topic", ""),
                 "tags": list(q.get("tags", [])) if isinstance(q.get("tags"), list) else [],
-                "selected_answer": selected_value,
+                "options": list(q.get("options", [])) if isinstance(q.get("options"), list) else [],
+                "selected_answer": selected_value if is_answered else "",
                 "correct_answer": correct_value,
-                "is_correct": selected_value == correct_value,
+                "is_answered": is_answered,
+                "is_correct": is_answered and selected_value == correct_value,
             })
         return details
 
@@ -197,10 +202,12 @@ class EvaluationService:
     @staticmethod
     def _resolve_round_submission_details(candidate_data: dict, round_key: str, round_data: dict) -> dict:
         base_details = {}
+        session_id_hint = ""
         if isinstance(round_data, dict):
             raw_details = round_data.get("submission_details")
             if isinstance(raw_details, dict):
                 base_details = dict(raw_details)
+            session_id_hint = str(round_data.get("session_uuid", "") or "").strip()
 
         live_result = EvaluationService._get_latest_live_round_result(candidate_data, round_key)
         if isinstance(live_result, dict):
@@ -208,6 +215,30 @@ class EvaluationService:
                 base_details,
                 live_result.get("submission_details") or {},
             )
+
+        if round_key != "L4":
+            latest_submission = get_latest_mcq_submission(
+                candidate_data.get("email", ""),
+                round_key,
+                role_key=str((candidate_data or {}).get("role_key", "") or "").strip(),
+                batch_id=str((candidate_data or {}).get("batch_id", "") or "").strip(),
+                session_id=session_id_hint,
+            ) or {}
+            latest_responses = latest_submission.get("responses", [])
+            if isinstance(latest_responses, list) and latest_responses:
+                # Always prefer the most recently persisted MCQ submission answers.
+                base_details["responses"] = list(latest_responses)
+
+            if not isinstance(base_details.get("responses"), list) or not base_details.get("responses"):
+                mcq_runtime_data = get_mcq_session_data(session_id_hint) if session_id_hint else None
+                if isinstance(mcq_runtime_data, dict):
+                    runtime_questions = mcq_runtime_data.get("questions")
+                    runtime_answers = mcq_runtime_data.get("answers")
+                    if isinstance(runtime_questions, list) and isinstance(runtime_answers, dict):
+                        base_details["responses"] = EvaluationService._build_mcq_submission_details(
+                            runtime_questions,
+                            runtime_answers,
+                        )
 
         if round_key == "L4":
             latest_submission = get_latest_coding_submission(
@@ -220,6 +251,8 @@ class EvaluationService:
                 "question_title": latest_submission.get("question_title", ""),
                 "question_text": latest_submission.get("question_text", ""),
                 "language": latest_submission.get("language", ""),
+                "public_tests": latest_submission.get("public_tests", []) or [],
+                "hidden_tests": latest_submission.get("hidden_tests", []) or [],
             }
             base_details = EvaluationService._merge_submission_details(base_details, latest_summary)
 
@@ -371,6 +404,7 @@ class EvaluationService:
                 "pass_threshold": existing.get("pass_threshold", EvaluationService.get_pass_threshold(rk)),
                 "status": existing.get("status", "Not Attempted"),
                 "time_taken_seconds": existing.get("time_taken_seconds", 0),
+                "session_uuid": existing.get("session_uuid", ""),
                 "submission_details": existing.get("submission_details", {}),
                 "round_number": numbers.get(rk, 0),
             }
@@ -527,8 +561,25 @@ class EvaluationService:
 
                 if isinstance(responses, list) and responses:
                     stat["detail_candidates"] += 1
-                    for response in responses:
-                        if not isinstance(response, dict) or bool(response.get("is_correct")):
+                    response_rows = [response for response in responses if isinstance(response, dict)]
+                    has_explicit_answer_state = any("is_answered" in response for response in response_rows)
+                    answered_responses = []
+                    for response in response_rows:
+                        if "is_answered" in response:
+                            if bool(response.get("is_answered")):
+                                answered_responses.append(response)
+                            continue
+                        if "selected_answer" in response:
+                            selected_answer = response.get("selected_answer")
+                            if selected_answer is not None and str(selected_answer).strip() != "":
+                                answered_responses.append(response)
+                            continue
+                        # Legacy payloads may only carry is_correct/question fields.
+                        if "is_correct" in response or "question" in response:
+                            answered_responses.append(response)
+
+                    for response in answered_responses:
+                        if bool(response.get("is_correct")):
                             continue
 
                         incorrect_response_count += 1
@@ -571,7 +622,12 @@ class EvaluationService:
                             signal_entry["related_tags"][tag_key] = signal_entry["related_tags"].get(tag_key, 0) + 1
 
                     total_questions = int(round_data.get("total", 0) or 0)
-                    unanswered_question_count = max(0, total_questions - len(responses)) if total_questions else 0
+                    if has_explicit_answer_state:
+                        unanswered_question_count = sum(
+                            1 for response in response_rows if not bool(response.get("is_answered"))
+                        )
+                    else:
+                        unanswered_question_count = max(0, total_questions - len(response_rows)) if total_questions else 0
                     stat["incorrect_response_count"] += incorrect_response_count
                     stat["unanswered_question_count"] += unanswered_question_count
 
@@ -862,6 +918,85 @@ class EvaluationService:
         return candidate_data
 
     @staticmethod
+    def enrich_candidate_submission_details(candidate_data: dict) -> dict:
+        """Attach round-wise submission artifacts (MCQ answers, coding payloads) for reporting."""
+        if not isinstance(candidate_data, dict):
+            return candidate_data
+
+        rounds = candidate_data.get("rounds") or {}
+        if not isinstance(rounds, dict):
+            return candidate_data
+
+        enriched = dict(candidate_data)
+        enriched_rounds = {str(key): dict(value) if isinstance(value, dict) else value for key, value in rounds.items()}
+        ordered_keys = ordered_present_round_keys(enriched_rounds)
+
+        for round_key in ordered_keys:
+            round_data = enriched_rounds.get(round_key)
+            if not isinstance(round_data, dict):
+                continue
+            details = EvaluationService._resolve_round_submission_details(enriched, round_key, round_data)
+            if isinstance(details, dict) and details:
+                round_data["submission_details"] = details
+                enriched_rounds[round_key] = round_data
+
+        existing_coding_data = (
+            dict(enriched.get("coding_round_data"))
+            if isinstance(enriched.get("coding_round_data"), dict)
+            else {}
+        )
+
+        l4_round = enriched_rounds.get("L4")
+        email_key = EvaluationService._normalize_email(enriched.get("email", ""))
+        if isinstance(l4_round, dict) and email_key:
+            try:
+                coding_data = EvaluationService.get_candidate_coding_round_data(
+                    email_key,
+                    candidate_data=enriched,
+                ) or {}
+            except Exception:
+                coding_data = {}
+
+            if coding_data:
+                coding_for_pdf = dict(existing_coding_data)
+                for key, value in coding_data.items():
+                    if key not in coding_for_pdf:
+                        coding_for_pdf[key] = value
+                        continue
+                    existing_value = coding_for_pdf.get(key)
+                    if isinstance(existing_value, list):
+                        if not existing_value and isinstance(value, list) and value:
+                            coding_for_pdf[key] = list(value)
+                        continue
+                    if str(existing_value or "").strip():
+                        continue
+                    coding_for_pdf[key] = value
+
+                submission_details = dict(l4_round.get("submission_details") or {})
+                for key in (
+                    "language",
+                    "question_title",
+                    "question_text",
+                    "submitted_code",
+                    "public_tests",
+                    "hidden_tests",
+                ):
+                    value = coding_for_pdf.get(key)
+                    if isinstance(value, list):
+                        if value and not submission_details.get(key):
+                            submission_details[key] = value
+                        continue
+                    if str(value or "").strip() and not str(submission_details.get(key, "") or "").strip():
+                        submission_details[key] = value
+
+                l4_round["submission_details"] = submission_details
+                enriched_rounds["L4"] = l4_round
+                enriched["coding_round_data"] = coding_for_pdf
+
+        enriched["rounds"] = enriched_rounds
+        return enriched
+
+    @staticmethod
     def generate_candidate_overall_summary(candidate_email, candidate_data=None):
         """
         Generate an AI-based summary for candidate rounds using role-accurate labels/order.
@@ -1044,6 +1179,13 @@ class EvaluationService:
             def _pick(existing, fallback):
                 return existing if str(existing or "").strip() else fallback
 
+            def _pick_list(existing, fallback):
+                if isinstance(existing, list) and existing:
+                    return list(existing)
+                if isinstance(fallback, list) and fallback:
+                    return list(fallback)
+                return []
+
             coding_data = {
                 "name": latest.get("candidate_name", "Candidate"),
                 "email": candidate_email,
@@ -1057,6 +1199,8 @@ class EvaluationService:
                 "question_title": _pick(submission_details.get("question_title"), latest_submission.get("question_title", "")),
                 "question_text": _pick(submission_details.get("question_text"), latest_submission.get("question_text", "")),
                 "submitted_code": _pick(submission_details.get("submitted_code"), latest_submission.get("submitted_code", "")),
+                "public_tests": _pick_list(submission_details.get("public_tests"), latest_submission.get("public_tests")),
+                "hidden_tests": _pick_list(submission_details.get("hidden_tests"), latest_submission.get("hidden_tests")),
             }
             # If not attempted, clear submitted_code to prevent starter code leaking into AI summary
             if not latest.get("attempted") or coding_data["status"] in ("Not Attempted", "Pending"):
@@ -1085,6 +1229,13 @@ class EvaluationService:
                 def _pick(existing, fallback):
                     return existing if str(existing or "").strip() else fallback
 
+                def _pick_list(existing, fallback):
+                    if isinstance(existing, list) and existing:
+                        return list(existing)
+                    if isinstance(fallback, list) and fallback:
+                        return list(fallback)
+                    return []
+
                 coding_data = {
                     "name": db_candidate_data.get("name", "Candidate"),
                     "email": candidate_email,
@@ -1098,6 +1249,8 @@ class EvaluationService:
                     "question_title": _pick(l4_submission_details.get("question_title"), latest_submission.get("question_title", "")),
                     "question_text": _pick(l4_submission_details.get("question_text"), latest_submission.get("question_text", "")),
                     "submitted_code": _pick(l4_submission_details.get("submitted_code"), latest_submission.get("submitted_code", "")),
+                    "public_tests": _pick_list(l4_submission_details.get("public_tests"), latest_submission.get("public_tests")),
+                    "hidden_tests": _pick_list(l4_submission_details.get("hidden_tests"), latest_submission.get("hidden_tests")),
                 }
                 # If not attempted, clear submitted_code to prevent starter code leaking into AI summary
                 if not l4.get("attempted") or coding_data["status"] in ("Not Attempted", "Pending"):
@@ -1119,6 +1272,8 @@ class EvaluationService:
             "question_title": "",
             "question_text": "",
             "submitted_code": "",
+            "public_tests": [],
+            "hidden_tests": [],
         }
         coding_data.update(overall_context)
         return coding_data
@@ -1189,6 +1344,7 @@ class EvaluationService:
         # Calculate time taken
         start_time = mcq_data.get("start_time", 0)
         time_taken = int(time.time()) - start_time
+        response_details = EvaluationService._build_mcq_submission_details(questions, answers)
 
         EVALUATION_STORE[session_id] = {
             "candidate_name": session_meta["candidate_name"],
@@ -1206,9 +1362,28 @@ class EvaluationService:
             "status": status,
             "time_taken_seconds": time_taken,
             "submission_details": {
-                "responses": EvaluationService._build_mcq_submission_details(questions, answers)
+                "responses": response_details
             },
         }
+
+        try:
+            save_mcq_submission(
+                session_id=session_id,
+                email=session_meta.get("email", ""),
+                round_key=round_key,
+                round_label=session_meta.get("round_label", round_key),
+                role=session_meta.get("role_label", ""),
+                role_key=session_meta.get("role_key", ""),
+                batch_id=session_meta.get("batch_id", ""),
+                responses=response_details,
+                attempted=attempted,
+                correct=correct,
+                total_questions=total_questions,
+                percentage=percentage,
+                status=status,
+            )
+        except Exception as exc:
+            log.warning("MCQ submission persist failed: %s", exc)
 
 
         # -------------------------------------------------

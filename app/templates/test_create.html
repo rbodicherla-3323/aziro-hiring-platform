@@ -261,9 +261,9 @@
     .upload-section {
         border: 1px solid #e4e8f4;
         border-radius: 10px;
-        padding: 14px 14px 12px;
+        padding: 12px 12px 10px;
         background: #fdfdff;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }
     .upload-section-title {
         margin: 0 0 6px;
@@ -272,43 +272,75 @@
         font-weight: 600;
     }
     .upload-section-subtitle {
-        margin: 0 0 12px;
+        margin: 0 0 10px;
         color: #697493;
         font-size: 0.87rem;
     }
     .upload-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
+        gap: 8px;
     }
     .upload-field {
         border: 1px solid #e8ebf4;
         border-radius: 9px;
         background: #ffffff;
-        padding: 9px;
-    }
-    .upload-field-full {
-        margin-bottom: 11px;
+        padding: 8px 9px;
     }
     .upload-field-label {
         color: #304673;
-        font-size: 0.94rem;
+        font-size: 0.92rem;
         font-weight: 600;
-        margin-bottom: 7px;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+    }
+    .upload-field-label span {
         display: inline-flex;
         align-items: center;
         gap: 6px;
     }
+    .upload-parse-status {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 1px solid #cfdaef;
+        background: #f6f8fe;
+        color: #95a4c4;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.62rem;
+        flex: 0 0 auto;
+        transition: all 160ms ease;
+    }
+    .upload-parse-status.is-loading {
+        color: #2f8cff;
+        border-color: #9cc2f3;
+        background: #edf5ff;
+    }
+    .upload-parse-status.is-success {
+        color: #147a52;
+        border-color: #9dd7bf;
+        background: #eaf9f2;
+    }
+    .upload-parse-status.is-error {
+        color: #b63b46;
+        border-color: #e8b3bb;
+        background: #fff1f3;
+    }
     .upload-zone {
         position: relative;
-        min-height: 42px;
+        min-height: 40px;
         border: 1px solid #dfe5f2;
         border-radius: 9px;
         background: #f8faff;
         display: flex;
         align-items: center;
         gap: 8px;
-        padding: 7px 11px;
+        padding: 6px 10px;
         cursor: pointer;
         transition: border-color 0.16s ease, box-shadow 0.16s ease;
     }
@@ -353,15 +385,15 @@
         content: "No file selected";
     }
     .upload-hint {
-        margin-top: 6px;
+        margin-top: 5px;
         color: #7985a4;
-        font-size: 0.78rem;
+        font-size: 0.76rem;
     }
     .candidate-details-section {
         border: 1px solid #d9e4fb;
         border-radius: 10px;
         background: linear-gradient(180deg, #f8fbff 0%, #ffffff 42%);
-        padding: 12px 14px 14px;
+        padding: 10px 12px 12px;
         position: relative;
     }
     .candidate-details-section::before {
@@ -378,14 +410,14 @@
         padding: 0 6px;
     }
     .candidate-details-subtitle {
-        margin: 0 0 10px;
+        margin: 0 0 8px;
         color: #6f7792;
-        font-size: 0.9rem;
+        font-size: 0.88rem;
     }
     .candidate-details-title {
-        margin: 0 0 7px;
+        margin: 0 0 6px;
         color: #2f4678;
-        font-size: 1.02rem;
+        font-size: 1rem;
         font-weight: 600;
     }
     .autofill-status {
@@ -487,9 +519,9 @@
     .candidate-card {
         border: 1px solid #e2e6f2;
         border-radius: 10px;
-        padding: 12px 12px 10px;
+        padding: 10px 10px 8px;
         background: #fbfcff;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         position: relative;
     }
     .remove-btn {
@@ -521,7 +553,7 @@
     }
     .create-test-page .form-control,
     .create-test-page .form-select {
-        min-height: 44px;
+        min-height: 42px;
         border: 1px solid #dde2ef;
         border-radius: 9px;
         font-size: 1rem;
@@ -798,34 +830,44 @@
                     <div class="upload-section">
                         <h6 class="upload-section-title">Step 1: Upload Documents</h6>
                         <p class="upload-section-subtitle">Upload the candidate's resume and job description document (optional).</p>
-                        <div class="upload-field upload-field-full">
-                            <div class="upload-field-label"><i class="fas fa-cloud-upload-alt"></i>Resume</div>
-                            <div class="upload-grid">
+                        <div class="upload-grid">
+                            <div class="upload-field">
+                                <div class="upload-field-label">
+                                    <span><i class="fas fa-cloud-upload-alt"></i>Resume</span>
+                                    <span class="upload-parse-status" data-kind="resume" data-state="idle" title="Resume not parsed yet" aria-label="Resume not parsed yet">
+                                        <i class="fas fa-minus"></i>
+                                    </span>
+                                </div>
                                 <div class="upload-zone">
                                     <input type="file" class="resume-upload" name="resume[]" accept=".pdf,.doc,.docx,.txt">
                                     <div class="upload-icon" data-default-icon="fa-file-pdf"><i class="fas fa-file-pdf"></i></div>
                                     <div class="upload-label">Choose File</div>
                                     <div class="file-name"></div>
                                 </div>
+                                <div class="upload-hint">PDF, DOC, DOCX, TXT Auto-extracts name &amp; email</div>
                             </div>
-                            <div class="upload-hint">PDF, DOC, DOCX, TXT Auto-extracts name &amp; email</div>
-                        </div>
-                        <div class="upload-field upload-field-full">
-                            <div class="upload-field-label"><i class="fas fa-briefcase"></i>Job Description (JD)</div>
-                            <div class="upload-zone">
-                                <input type="file" class="jd-upload" name="jd[]" accept=".pdf,.doc,.docx,.txt">
-                                <div class="upload-icon" data-default-icon="fa-file-alt"><i class="fas fa-file-alt"></i></div>
-                                <div class="upload-label">Choose File</div>
-                                <div class="file-name"></div>
+                            <div class="upload-field">
+                                <div class="upload-field-label">
+                                    <span><i class="fas fa-briefcase"></i>Job Description (JD)</span>
+                                    <span class="upload-parse-status" data-kind="jd" data-state="idle" title="JD not parsed yet" aria-label="JD not parsed yet">
+                                        <i class="fas fa-minus"></i>
+                                    </span>
+                                </div>
+                                <div class="upload-zone">
+                                    <input type="file" class="jd-upload" name="jd[]" accept=".pdf,.doc,.docx,.txt">
+                                    <div class="upload-icon" data-default-icon="fa-file-alt"><i class="fas fa-file-alt"></i></div>
+                                    <div class="upload-label">Choose File</div>
+                                    <div class="file-name"></div>
+                                </div>
+                                <div class="upload-hint">PDF, DOC, TXT Auto-matches role from JD</div>
                             </div>
-                            <div class="upload-hint">PDF, DOC, TXT Auto-matches role from JD</div>
                         </div>
                     </div>
                     <div class="candidate-details-section">
                         <h6 class="candidate-details-title">Candidate Details</h6>
                         <p class="candidate-details-subtitle">Enter the candidate's information to generate test link specific to their role.</p>
                         <div class="autofill-status" aria-live="polite"></div>
-                        <div class="row g-3">
+                        <div class="row g-2">
                             <div class="col-md-6">
                                 <label class="form-label"><i class="fas fa-user me-1"></i>Full Name <span class="auto-fill-badge">Auto-filled</span></label>
                                 <input type="text" class="form-control candidate-name" name="name[]" placeholder="John Doe" required>
@@ -1152,6 +1194,42 @@ function setAutofillStatus(row, message, level) {
     node.classList.add("visible", level === "success" ? "is-success" : "is-info");
 }
 
+function setUploadParseStatus(row, kind, state) {
+    const status = row.querySelector(`.upload-parse-status[data-kind="${kind}"]`);
+    if (!status) return;
+    const normalizedState = String(state || "idle").trim().toLowerCase();
+    status.classList.remove("is-loading", "is-success", "is-error");
+    const config = {
+        idle: {
+            icon: "fa-minus",
+            title: kind === "jd" ? "JD not parsed yet" : "Resume not parsed yet",
+        },
+        loading: {
+            icon: "fa-circle-notch fa-spin",
+            title: kind === "jd" ? "Parsing JD" : "Parsing resume",
+            className: "is-loading",
+        },
+        success: {
+            icon: "fa-check",
+            title: kind === "jd" ? "JD parsed successfully" : "Resume parsed successfully",
+            className: "is-success",
+        },
+        error: {
+            icon: "fa-triangle-exclamation",
+            title: kind === "jd" ? "JD parse failed" : "Resume parse failed",
+            className: "is-error",
+        },
+    }[normalizedState] || {
+        icon: "fa-minus",
+        title: "Parsing status not available",
+    };
+    if (config.className) status.classList.add(config.className);
+    status.dataset.state = normalizedState;
+    status.title = config.title;
+    status.setAttribute("aria-label", config.title);
+    status.innerHTML = `<i class="fas ${config.icon}"></i>`;
+}
+
 function resetUploadZone(zone) {
     if (!zone) return;
     zone.classList.remove("has-file");
@@ -1339,6 +1417,8 @@ function resetCandidateRow(row) {
         node.classList.remove("is-visible");
     });
     setAutofillStatus(row, "", "");
+    setUploadParseStatus(row, "resume", "idle");
+    setUploadParseStatus(row, "jd", "idle");
     const reviewName = row.querySelector(".review-name-value");
     const reviewEmail = row.querySelector(".review-email-value");
     const reviewRole = row.querySelector(".review-role-value");
@@ -1401,7 +1481,7 @@ function applyResumeResponse(row, payload) {
     } else {
         clearFieldError(row, ".email-error");
     }
-
+    return !!(payload.name_found || payload.email_found);
 }
 
 function applyJdResponse(row, payload) {
@@ -1415,7 +1495,7 @@ function applyJdResponse(row, payload) {
             showBadge(badges[1], true);
             clearFieldError(row, ".role-error");
             setAutofillStatus(row, "JD parsed. Role was auto-matched.", "success");
-            return;
+            return true;
         }
     }
 
@@ -1426,6 +1506,7 @@ function applyJdResponse(row, payload) {
     if (payload.role_found) {
         setAutofillStatus(row, "JD parsed. Review the suggested role.", "info");
     }
+    return false;
 }
 
 function setupFileInputListeners(row) {
@@ -1463,6 +1544,7 @@ function setupFileInputListeners(row) {
                 zone.classList.add("has-file");
                 zone.querySelector(".file-name").textContent = file.name;
                 zone.querySelector(".upload-icon").innerHTML = '<i class="fas fa-check-circle"></i>';
+                setUploadParseStatus(row, "resume", "loading");
 
                 clearFieldError(row, ".name-error");
                 clearFieldError(row, ".email-error");
@@ -1483,9 +1565,11 @@ function setupFileInputListeners(row) {
                             if (!emailField || !emailField.value.trim()) {
                                 setFieldError(row, ".email-error", msg);
                             }
+                            setUploadParseStatus(row, "resume", "error");
                             return;
                         }
-                        applyResumeResponse(row, data || {});
+                        const parsed = applyResumeResponse(row, data || {});
+                        setUploadParseStatus(row, "resume", parsed ? "success" : "error");
                         syncReviewForRow(row);
                     })
                     .catch(() => {
@@ -1496,6 +1580,7 @@ function setupFileInputListeners(row) {
                         if (!emailField || !emailField.value.trim()) {
                             setFieldError(row, ".email-error", msg);
                         }
+                        setUploadParseStatus(row, "resume", "error");
                     })
                     .finally(() => {
                         if (spinner) spinner.classList.remove("active");
@@ -1503,6 +1588,7 @@ function setupFileInputListeners(row) {
             } else {
                 resetUploadZone(zone);
                 setAutofillStatus(row, "", "");
+                setUploadParseStatus(row, "resume", "idle");
             }
         });
     }
@@ -1519,6 +1605,7 @@ function setupFileInputListeners(row) {
                 zone.querySelector(".upload-icon").innerHTML = '<i class="fas fa-check-circle"></i>';
                 setAutofillStatus(row, "", "");
                 clearFieldError(row, ".role-error");
+                setUploadParseStatus(row, "jd", "loading");
 
                 if (spinner) spinner.classList.add("active");
 
@@ -1532,15 +1619,18 @@ function setupFileInputListeners(row) {
                             if (!roleField || !roleField.value) {
                                 setFieldError(row, ".role-error", data.error || "Unable to parse JD.");
                             }
+                            setUploadParseStatus(row, "jd", "error");
                             return;
                         }
-                        applyJdResponse(row, data || {});
+                        const matched = applyJdResponse(row, data || {});
+                        setUploadParseStatus(row, "jd", matched ? "success" : "error");
                         syncReviewForRow(row);
                     })
                     .catch(() => {
                         if (!roleField || !roleField.value) {
                             setFieldError(row, ".role-error", "Unable to parse JD.");
                         }
+                        setUploadParseStatus(row, "jd", "error");
                     })
                     .finally(() => {
                         if (spinner) spinner.classList.remove("active");
@@ -1548,6 +1638,7 @@ function setupFileInputListeners(row) {
             } else {
                 resetUploadZone(zone);
                 setAutofillStatus(row, "", "");
+                setUploadParseStatus(row, "jd", "idle");
             }
         });
     }
