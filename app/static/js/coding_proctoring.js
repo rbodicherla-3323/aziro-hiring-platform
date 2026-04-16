@@ -204,6 +204,36 @@ function setNavInProgress(v) { setSessionFlag(NAV_IN_PROGRESS_KEY, v); }
 function isNavInProgress() { return getSessionFlag(NAV_IN_PROGRESS_KEY); }
 function shouldIgnoreProctoringEvent() { return suppressWarnings || isNavInProgress() || screenCapturePromptInFlight; }
 
+function getLiveWebcamTrack(stream) {
+    if (!stream || typeof stream.getVideoTracks !== "function") return null;
+    const tracks = stream.getVideoTracks();
+    if (!Array.isArray(tracks) || tracks.length === 0) return null;
+    for (const track of tracks) {
+        if (!track) continue;
+        if (track.readyState !== "live") continue;
+        if (track.enabled === false) continue;
+        return track;
+    }
+    return null;
+}
+
+function hasUsableWebcamStream(stream) {
+    return !!getLiveWebcamTrack(stream);
+}
+
+function releaseWebcamStream(stream) {
+    if (!stream || typeof stream.getTracks !== "function") return;
+    try {
+        stream.getTracks().forEach((track) => {
+            if (track && typeof track.stop === "function") {
+                track.stop();
+            }
+        });
+    } catch (_) {
+        // Ignore cleanup failures.
+    }
+}
+
 /* ── Fullscreen ────────────────────────────────────── */
 function isInFullscreen() { return !!document.fullscreenElement; }
 function syncFullscreenStateTracking() {
@@ -792,20 +822,40 @@ async function ensureProctoringReady(options = {}) {
                 return false;
             }
 
-            if (!webcamStream || !webcamStream.active) {
+            if (!hasUsableWebcamStream(webcamStream)) {
+                if (webcamStream) {
+                    releaseWebcamStream(webcamStream);
+                    webcamStream = null;
+                }
                 try {
                     webcamStream = await navigator.mediaDevices.getUserMedia({
                         video: { facingMode: "user", width: { ideal: 320 }, height: { ideal: 180 } },
                         audio: false
                     });
-                } catch (_) {
-                    sendViolation("Webcam access denied", { page: "start" });
-                    showBanner("Allow webcam access to continue.", "danger");
+                } catch (error) {
+                    sendViolation("Webcam access denied", {
+                        page: "start",
+                        reason: (error && error.name) || "get_user_media_failed"
+                    });
+                    if (error && error.name === "NotReadableError") {
+                        showBanner("Webcam is busy in another tab/app. Close it and try again.", "danger");
+                    } else {
+                        showBanner("Allow webcam access to continue.", "danger");
+                    }
                     return false;
                 }
             }
 
-            if (webcamStream && webcamStream.active) {
+            if (!hasUsableWebcamStream(webcamStream)) {
+                sendViolation("Webcam unavailable", {
+                    page: "start",
+                    reason: "no_live_video_track"
+                });
+                showBanner("Webcam stream is unavailable. Reconnect camera and try again.", "danger");
+                return false;
+            }
+
+            if (hasUsableWebcamStream(webcamStream)) {
                 attachWebcamTrackMonitoring(webcamStream, "ensure_ready");
                 const dock = getOrCreateWebcamDock();
                 dock.style.display = "block";
@@ -1097,7 +1147,7 @@ function attemptWebcamRecovery(source = "unknown") {
     setTimeout(async () => {
         try {
             await startWebcamPreview();
-            if (webcamStream && webcamStream.active) {
+            if (hasUsableWebcamStream(webcamStream)) {
                 sendViolation("Webcam stream restored", {
                     source,
                     video_track_count: webcamStream.getVideoTracks().length
@@ -1175,7 +1225,7 @@ function finalizeWebcamRecordingUpload() {
 }
 
 async function startWebcamRecording() {
-    if (!isExamPath() || !webcamStream || !webcamStream.active) return;
+    if (!isExamPath() || !hasUsableWebcamStream(webcamStream)) return;
     attachWebcamTrackMonitoring(webcamStream, "recording");
     if (typeof MediaRecorder === "undefined") { sendViolation("Webcam recording unavailable", { reason: "media_recorder_unsupported" }); return; }
     if (webcamRecorder && webcamRecorder.state !== "inactive") return;
@@ -1237,7 +1287,7 @@ function stopWebcamPreview(options = {}) {
     stopWebcamRecording({ final: options.final === true });
     const v = document.getElementById(WEBCAM_VIDEO_ID);
     if (v) v.srcObject = null;
-    if (webcamStream) { webcamStream.getTracks().forEach(t => t.stop()); webcamStream = null; }
+    if (webcamStream) { releaseWebcamStream(webcamStream); webcamStream = null; }
 }
 
 async function startWebcamPreview() {
@@ -1245,12 +1295,13 @@ async function startWebcamPreview() {
     if (!navigator.mediaDevices || typeof navigator.mediaDevices.getUserMedia !== "function") { sendViolation("Webcam unavailable", { reason: "media_devices_unsupported" }); return; }
     const dock = getOrCreateWebcamDock();
     dock.style.display = "block";
-    if (webcamStream && webcamStream.active) {
+    if (hasUsableWebcamStream(webcamStream)) {
         attachWebcamTrackMonitoring(webcamStream, "existing_stream");
         const ev = document.getElementById(WEBCAM_VIDEO_ID);
         if (ev && ev.srcObject !== webcamStream) { ev.srcObject = webcamStream; try { await ev.play(); } catch (_) {} }
         await startWebcamRecording(); return;
     }
+    if (webcamStream) { releaseWebcamStream(webcamStream); webcamStream = null; }
     try {
         webcamStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 320 }, height: { ideal: 180 } }, audio: false });
         attachWebcamTrackMonitoring(webcamStream, "get_user_media");
@@ -1451,7 +1502,11 @@ function setupStartFullscreenGate() {
 
             // Step 2: Request webcam (system dialog)
             // Must happen here, NOT on editor page, or it will break fullscreen
-            if (!webcamStream || !webcamStream.active) {
+            if (!hasUsableWebcamStream(webcamStream)) {
+                if (webcamStream) {
+                    releaseWebcamStream(webcamStream);
+                    webcamStream = null;
+                }
                 try {
                     webcamStream = await navigator.mediaDevices.getUserMedia({
                         video: { facingMode: "user", width: { ideal: 320 }, height: { ideal: 180 } },
@@ -1473,10 +1528,17 @@ function setupStartFullscreenGate() {
                         webcamEnabledLogged = true;
                         sendViolation("Webcam preview enabled", { video_track_count: webcamStream.getVideoTracks().length });
                     }
-                } catch (_) {
-                    sendViolation("Webcam access denied", { page: "start" });
+                } catch (error) {
+                    sendViolation("Webcam access denied", {
+                        page: "start",
+                        reason: (error && error.name) || "get_user_media_failed"
+                    });
                     suppressWarnings = false;
-                    alert("Webcam access is required to start the test.");
+                    if (error && error.name === "NotReadableError") {
+                        alert("Webcam is busy in another tab/app. Close it and try again.");
+                    } else {
+                        alert("Webcam access is required to start the test.");
+                    }
                     return;
                 }
             }
@@ -1533,7 +1595,7 @@ function setupExamProctoring() {
             // works fine INSIDE fullscreen so we never need to leave for it.
             // If getDisplayMedia is not available (e.g. non-HTTPS), skip entirely.
             const needScreenShare = !screenCaptureReady && supportsDisplayCapture();
-            const needWebcam = !webcamStream || !webcamStream.active;
+            const needWebcam = !hasUsableWebcamStream(webcamStream);
 
             if (needScreenShare && isInFullscreen()) {
                 try { await exitAppFullscreen(); } catch (_) {}
@@ -1551,7 +1613,7 @@ function setupExamProctoring() {
             }
 
             // Step 3: Acquire webcam (system dialog — must happen BEFORE fullscreen)
-            if (webcamStream && webcamStream.active) {
+            if (hasUsableWebcamStream(webcamStream)) {
                 attachWebcamTrackMonitoring(webcamStream, "exam_setup_existing_stream");
                 const dock = getOrCreateWebcamDock();
                 dock.style.display = "block";
@@ -1562,6 +1624,10 @@ function setupExamProctoring() {
                 }
                 await startWebcamRecording();
             } else {
+                if (webcamStream) {
+                    releaseWebcamStream(webcamStream);
+                    webcamStream = null;
+                }
                 try {
                     webcamStream = await navigator.mediaDevices.getUserMedia({
                         video: { facingMode: "user", width: { ideal: 320 }, height: { ideal: 180 } },
@@ -1763,7 +1829,7 @@ window.__proctoringGetWebcamVideo = function () {
 // Allow coding_flow.js to hand the webcam stream acquired on the start page
 // to the proctoring module so setupExamProctoring() finds it already active.
 window.__proctoringSetWebcam = function (stream) {
-    if (!stream || !stream.active) return;
+    if (!hasUsableWebcamStream(stream)) return;
     webcamStream = stream;
     attachWebcamTrackMonitoring(webcamStream, "start_page_handoff");
     if (!webcamEnabledLogged) {
