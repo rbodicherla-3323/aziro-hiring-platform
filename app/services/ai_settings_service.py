@@ -32,6 +32,38 @@ PROVIDER_CATALOG = {
     },
 }
 
+PROVIDER_MODEL_VERSION_CATALOG = {
+    "gemini": [
+        "gemini-2.5-pro",
+        "gemini-2.5-flash",
+        "gemini-2.5-flash-lite",
+        "gemini-2.0-pro",
+        "gemini-2.0-flash",
+        "gemini-2.0-flash-lite",
+        "gemini-1.5-pro",
+        "gemini-1.5-flash",
+    ],
+    "openai": [
+        "gpt-5",
+        "gpt-5-mini",
+        "gpt-5-nano",
+        "gpt-4.1",
+        "gpt-4.1-mini",
+        "gpt-4.1-nano",
+        "gpt-4o",
+        "gpt-4o-mini",
+    ],
+    "claude": [
+        "claude-sonnet-4-5",
+        "claude-opus-4-1",
+        "claude-opus-4",
+        "claude-sonnet-4",
+        "claude-3-7-sonnet-latest",
+        "claude-3-5-sonnet-latest",
+        "claude-3-5-haiku-latest",
+    ],
+}
+
 FEATURE_CATALOG = {
     "overall_summary": {
         "label": "Overall Summary Report",
@@ -83,6 +115,28 @@ def list_supported_providers() -> list[dict]:
         {"provider_key": key, **meta}
         for key, meta in PROVIDER_CATALOG.items()
     ]
+
+
+def list_provider_model_versions() -> dict[str, list[str]]:
+    versions_by_provider = {}
+    for provider_key, meta in PROVIDER_CATALOG.items():
+        ordered_versions = []
+        seen = set()
+
+        default_model = str(meta.get("default_model", "") or "").strip()
+        if default_model and default_model not in seen:
+            ordered_versions.append(default_model)
+            seen.add(default_model)
+
+        for model_name in PROVIDER_MODEL_VERSION_CATALOG.get(provider_key, []):
+            cleaned = str(model_name or "").strip()
+            if cleaned and cleaned not in seen:
+                ordered_versions.append(cleaned)
+                seen.add(cleaned)
+
+        versions_by_provider[provider_key] = ordered_versions
+
+    return versions_by_provider
 
 
 def list_supported_features() -> list[dict]:

@@ -22,6 +22,7 @@ from app.services.access_approvals_service import (
 from app.services.ai_settings_service import (
     get_global_ai_settings_state,
     get_key_storage_status,
+    list_provider_model_versions,
     list_provider_statuses,
     list_supported_features,
     save_global_ai_settings,
@@ -684,6 +685,7 @@ def ai_settings_page():
     return render_template(
         "ai_settings.html",
         provider_rows=provider_rows,
+        provider_model_versions=list_provider_model_versions(),
         supported_features=list_supported_features(),
         global_state=global_state,
         security_status=security_status,
