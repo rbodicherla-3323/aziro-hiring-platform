@@ -73,6 +73,14 @@
     color: #435574;
     font-size: 0.9rem;
   }
+
+  .ai-settings-page .custom-model-wrap {
+    margin-top: 0.65rem;
+    padding: 0.7rem 0.75rem;
+    border: 1px solid #e6edf9;
+    border-radius: 10px;
+    background: #fbfdff;
+  }
 </style>
 {% endblock %}
 
@@ -124,15 +132,17 @@
             <select class="form-select" id="model-version-select" aria-label="Model version suggestions">
               <option value="">Select from available versions</option>
             </select>
-            <input
-              type="text"
-              class="form-control mt-2"
-              id="model-version-input"
-              name="default_model"
-              value="{{ global_state.model or global_state.default_model }}"
-              placeholder="Choose above or enter custom version manually"
-            >
-            <div class="form-text">Pick from the dropdown or type any other model version if it is not listed.</div>
+            <div class="form-text">Choose a version from the list. Use "Other" only if you want to type a custom version.</div>
+            <div class="custom-model-wrap d-none" id="custom-model-wrap">
+              <label class="form-label fw-semibold mb-1" for="custom-model-input">Custom Model Version</label>
+              <input
+                type="text"
+                class="form-control"
+                id="custom-model-input"
+                placeholder="Enter custom model version"
+              >
+            </div>
+            <input type="hidden" id="default-model-value" name="default_model" value="{{ global_state.model or global_state.default_model }}">
           </div>
         </div>
 
@@ -159,7 +169,8 @@
 <p class="mb-2">Keep this page simple:</p>
 <ul class="mb-0 ps-3">
   <li>Choose one provider.</li>
-  <li>Select a model version from dropdown or type one manually.</li>
+  <li>Select a model version from dropdown.</li>
+  <li>Choose <strong>Other</strong> only when you need to type a custom model version.</li>
   <li>Add or rotate API key.</li>
   <li>Click <strong>Apply Settings</strong> to use it across all AI features.</li>
 </ul>
@@ -171,10 +182,12 @@
   document.addEventListener("DOMContentLoaded", function () {
     const providerItems = Array.from(document.querySelectorAll(".ai-settings-page .provider-item"));
     const modelVersionSelect = document.getElementById("model-version-select");
-    const modelVersionInput = document.getElementById("model-version-input");
+    const customModelWrap = document.getElementById("custom-model-wrap");
+    const customModelInput = document.getElementById("custom-model-input");
+    const defaultModelValueInput = document.getElementById("default-model-value");
     const providerModelVersions = {{ provider_model_versions | tojson }};
 
-    if (!providerItems.length) {
+    if (!providerItems.length || !modelVersionSelect || !defaultModelValueInput) {
       return;
     }
 
@@ -195,79 +208,144 @@
       return Array.isArray(versions) ? versions : [];
     };
 
-    const syncVersionDropdownFromInput = () => {
-      if (!modelVersionSelect || !modelVersionInput) {
+    const setCustomMode = (enabled) => {
+      if (!customModelWrap) {
         return;
       }
-      const providerKey = getSelectedProviderKey();
-      const versions = providerVersionList(providerKey);
-      const value = String(modelVersionInput.value || "").trim();
-      if (!value) {
-        modelVersionSelect.value = "";
-        return;
+      customModelWrap.classList.toggle("d-none", !enabled);
+      if (enabled && customModelInput) {
+        customModelInput.focus();
       }
-      modelVersionSelect.value = versions.includes(value) ? value : "__custom__";
     };
 
-    const populateVersionDropdown = () => {
-      if (!modelVersionSelect || !modelVersionInput) {
-        return;
+    const setSubmittedModelVersion = (value) => {
+      defaultModelValueInput.value = String(value || "").trim();
+    };
+
+    const resolveModelVersionForProvider = (providerKey, currentValue, resetForProviderChange) => {
+      const versions = providerVersionList(providerKey);
+      const cleanedCurrent = String(currentValue || "").trim();
+
+      if (resetForProviderChange) {
+        if (versions.length > 0) {
+          return { mode: "list", value: versions[0] };
+        }
+        return { mode: "custom", value: "" };
       }
 
-      const providerKey = getSelectedProviderKey();
+      if (cleanedCurrent && versions.includes(cleanedCurrent)) {
+        return { mode: "list", value: cleanedCurrent };
+      }
+
+      if (cleanedCurrent) {
+        return { mode: "custom", value: cleanedCurrent };
+      }
+
+      if (versions.length > 0) {
+        return { mode: "list", value: versions[0] };
+      }
+
+      return { mode: "custom", value: "" };
+    };
+
+    const applyModelVersionState = (providerKey, state) => {
       const versions = providerVersionList(providerKey);
-      const currentInput = String(modelVersionInput.value || "").trim();
 
       modelVersionSelect.innerHTML = "";
-
-      const placeholderOption = new Option("Select from available versions", "");
-      modelVersionSelect.appendChild(placeholderOption);
+      modelVersionSelect.appendChild(new Option("Select from available versions", ""));
 
       versions.forEach((version) => {
         modelVersionSelect.appendChild(new Option(version, version));
       });
 
-      modelVersionSelect.appendChild(new Option("Other (type manually below)", "__custom__"));
+      modelVersionSelect.appendChild(new Option("Other (custom)", "__custom__"));
 
-      if (!currentInput) {
-        if (versions.length > 0) {
-          modelVersionInput.value = versions[0];
-          modelVersionSelect.value = versions[0];
-        } else {
-          modelVersionSelect.value = "";
+      if (state.mode === "custom") {
+        modelVersionSelect.value = "__custom__";
+        setCustomMode(true);
+        if (customModelInput) {
+          customModelInput.value = state.value;
         }
+        setSubmittedModelVersion(state.value);
         return;
       }
 
-      syncVersionDropdownFromInput();
+      modelVersionSelect.value = state.value;
+      setCustomMode(false);
+      if (customModelInput) {
+        customModelInput.value = "";
+      }
+      setSubmittedModelVersion(state.value);
     };
+
+    const syncDropdownSelectionFromCustomInput = () => {
+      if (!customModelInput || modelVersionSelect.value !== "__custom__") {
+        return;
+      }
+      const providerKey = getSelectedProviderKey();
+      const versions = providerVersionList(providerKey);
+      const typed = String(customModelInput.value || "").trim();
+
+      if (!typed) {
+        setSubmittedModelVersion("");
+        return;
+      }
+
+      if (versions.includes(typed)) {
+        modelVersionSelect.value = typed;
+        setCustomMode(false);
+        customModelInput.value = "";
+      }
+      setSubmittedModelVersion(typed);
+    };
+
+    const populateVersionDropdown = (resetForProviderChange = false) => {
+      const providerKey = getSelectedProviderKey();
+      const currentModel = String(defaultModelValueInput.value || "").trim();
+      const state = resolveModelVersionForProvider(providerKey, currentModel, resetForProviderChange);
+      applyModelVersionState(providerKey, state);
+    };
+
+    let lastProviderKey = getSelectedProviderKey();
 
     providerItems.forEach((item) => {
       const radio = item.querySelector('input[type="radio"]');
       if (radio) {
         radio.addEventListener("change", () => {
           refreshSelection();
-          populateVersionDropdown();
+          const selectedProviderKey = getSelectedProviderKey();
+          const providerChanged = selectedProviderKey !== lastProviderKey;
+          lastProviderKey = selectedProviderKey;
+          populateVersionDropdown(providerChanged);
         });
       }
     });
 
-    if (modelVersionSelect && modelVersionInput) {
-      modelVersionSelect.addEventListener("change", () => {
-        const selectedValue = String(modelVersionSelect.value || "").trim();
-        if (selectedValue && selectedValue !== "__custom__") {
-          modelVersionInput.value = selectedValue;
+    modelVersionSelect.addEventListener("change", () => {
+      const selectedValue = String(modelVersionSelect.value || "").trim();
+      if (selectedValue === "__custom__") {
+        setCustomMode(true);
+        if (customModelInput) {
+          setSubmittedModelVersion(customModelInput.value);
+        } else {
+          setSubmittedModelVersion("");
         }
-        if (selectedValue === "__custom__") {
-          modelVersionInput.focus();
-        }
-      });
+        return;
+      }
 
-      modelVersionInput.addEventListener("input", syncVersionDropdownFromInput);
+      setCustomMode(false);
+      if (customModelInput) {
+        customModelInput.value = "";
+      }
+      setSubmittedModelVersion(selectedValue);
+    });
+
+    if (customModelInput) {
+      customModelInput.addEventListener("input", syncDropdownSelectionFromCustomInput);
     }
 
     refreshSelection();
-    populateVersionDropdown();
+    populateVersionDropdown(false);
   });
 </script>
 {% endblock %}
