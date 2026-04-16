@@ -1379,8 +1379,8 @@ class EvaluationService:
         status = "PASS" if percentage >= pass_threshold else "FAIL"
 
         # Calculate time taken
-        start_time = mcq_data.get("start_time", 0)
-        time_taken = int(time.time()) - start_time
+        start_time = int(mcq_data.get("start_time", 0) or 0)
+        time_taken = max(0, int(time.time()) - start_time) if start_time else 0
         response_details = EvaluationService._build_mcq_submission_details(questions, answers)
 
         EVALUATION_STORE[session_id] = {

@@ -293,10 +293,14 @@ def begin_test(session_id):
             return jsonify({"status": "error", "reason": "invalid_session"}), 404
         return "Invalid or expired coding test link", 404
 
+    reset_timer = False
     if not session_meta.get("started"):
         session_meta["started"] = True
         session_meta["started_at"] = _utc_now_iso()
         CODING_SESSION_REGISTRY[session_id] = session_meta
+        reset_timer = True
+
+    CodingSessionService.start_timer(session_id, force_reset=reset_timer)
 
     if _is_ajax_request():
         return jsonify({"status": "ok", "editor_url": url_for("coding.editor", session_id=session_id)})
@@ -311,10 +315,14 @@ def editor(session_id):
     session_meta = CODING_SESSION_REGISTRY.get(session_id)
     if not session_meta:
         return "Invalid or expired coding test link", 404
+    reset_timer = False
     if not session_meta.get("started"):
         session_meta["started"] = True
         session_meta["started_at"] = _utc_now_iso()
         CODING_SESSION_REGISTRY[session_id] = session_meta
+        reset_timer = True
+
+    CodingSessionService.start_timer(session_id, force_reset=reset_timer)
 
     if CodingSessionService.is_submitted(session_id):
         return redirect(url_for("coding.completed", session_id=session_id))
@@ -360,6 +368,13 @@ def save_code(session_id):
     session_meta = CODING_SESSION_REGISTRY.get(session_id)
     if not session_meta:
         return jsonify({"status": "error", "reason": "invalid_session"}), 404
+    reset_timer = False
+    if not session_meta.get("started"):
+        session_meta["started"] = True
+        session_meta["started_at"] = _utc_now_iso()
+        CODING_SESSION_REGISTRY[session_id] = session_meta
+        reset_timer = True
+    CodingSessionService.start_timer(session_id, force_reset=reset_timer)
 
     payload = request.get_json(silent=True) or {}
     code = payload.get("code", "")

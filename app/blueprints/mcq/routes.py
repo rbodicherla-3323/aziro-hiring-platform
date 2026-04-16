@@ -288,10 +288,14 @@ def begin_test(session_id):
     session_meta = MCQ_SESSION_REGISTRY.get(session_id)
     if not session_meta:
         return "Invalid or expired test link", 404
+    reset_timer = False
     if not session_meta.get("started"):
         session_meta["started"] = True
         session_meta["started_at"] = _utc_now_iso()
         MCQ_SESSION_REGISTRY[session_id] = session_meta
+        reset_timer = True
+
+    MCQSessionService.start_timer(session_id, force_reset=reset_timer)
 
     return redirect(
         url_for("mcq.question", session_id=session_id, q=0)
@@ -307,10 +311,14 @@ def question(session_id):
     session_meta = MCQ_SESSION_REGISTRY.get(session_id)
     if not session_meta:
         return "Invalid or expired test link", 404
+    reset_timer = False
     if not session_meta.get("started"):
         session_meta["started"] = True
         session_meta["started_at"] = _utc_now_iso()
         MCQ_SESSION_REGISTRY[session_id] = session_meta
+        reset_timer = True
+
+    MCQSessionService.start_timer(session_id, force_reset=reset_timer)
 
     try:
         q_index = max(0, int(request.args.get("q", 0)))

@@ -100,7 +100,8 @@ class MCQSessionService:
         data = {
             "questions": selected_questions,
             "answers": {},
-            "start_time": int(time.time()),
+            # Timer starts only when candidate actually begins the test.
+            "start_time": 0,
             "duration_seconds": DEFAULT_DURATION_MINUTES * 60,
         }
         set_mcq_session_data(session_id, data)
@@ -156,8 +157,25 @@ class MCQSessionService:
         if not start_time:
             return data["duration_seconds"]
 
-        elapsed = int(time.time()) - start_time
+        elapsed = max(0, int(time.time()) - start_time)
         return max(0, data["duration_seconds"] - elapsed)
+
+    @staticmethod
+    def start_timer(session_id, force_reset=False):
+        """Start timer on first candidate entry; optionally reset stale start times."""
+        data = MCQSessionService.get_session_data(session_id)
+        if not data:
+            return 0
+
+        current_start = int(data.get("start_time", 0) or 0)
+        if force_reset or not current_start:
+            data["start_time"] = int(time.time())
+            if int(data.get("duration_seconds", 0) or 0) <= 0:
+                data["duration_seconds"] = DEFAULT_DURATION_MINUTES * 60
+            set_mcq_session_data(session_id, data)
+            session.modified = True
+
+        return MCQSessionService.remaining_time(session_id)
 
     @staticmethod
     def get_session_data(session_id):
