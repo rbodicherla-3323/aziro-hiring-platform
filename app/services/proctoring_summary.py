@@ -57,7 +57,10 @@ def _normalize_session_scope(session_ids_by_email):
                 sid_key = str(sid or "").strip().lower()
                 if sid_key:
                     values.add(sid_key)
-        scope[email_key] = values
+        # Treat empty/invalid session scopes as "no filter" so reports still aggregate
+        # available proctoring events for that candidate email.
+        if values:
+            scope[email_key] = values
     return scope
 
 
