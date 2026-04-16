@@ -1898,6 +1898,7 @@ def run_code(session_id):
                     "run_hidden": run_hidden,
                     "time_ms": total_time,
                     "status": "PASS" if total and total_passed == total else "FAIL",
+                    "test_results": test_results,
                 },
             )
 
@@ -2041,6 +2042,7 @@ def run_code(session_id):
                 "run_hidden": run_hidden,
                 "time_ms": total_time,
                 "status": "PASS" if total and total_passed == total else "FAIL",
+                "test_results": test_results,
             },
         )
 
@@ -2087,6 +2089,39 @@ def run_code(session_id):
 # -------------------------------------------------
 # SUBMIT CONFIRMATION
 # -------------------------------------------------
+def _normalize_test_result_rows(raw_rows):
+    normalized = []
+    if not isinstance(raw_rows, list):
+        return normalized
+
+    for idx, row in enumerate(raw_rows, start=1):
+        if not isinstance(row, dict):
+            continue
+        try:
+            row_index = int(row.get("index", idx) or idx)
+        except (TypeError, ValueError):
+            row_index = idx
+        normalized.append(
+            {
+                "index": row_index,
+                "passed": bool(row.get("passed")),
+                "input": _display_value(row.get("input", "")),
+                "expected": _display_value(row.get("expected", "")),
+                "actual": _display_value(row.get("actual", "")),
+                "error": str(row.get("error", "") or "").strip(),
+                "time_ms": row.get("time_ms"),
+            }
+        )
+    return normalized
+
+
+def _split_test_results_by_suite(raw_rows, run_hidden: bool):
+    normalized = _normalize_test_result_rows(raw_rows)
+    if run_hidden:
+        return [], normalized
+    return normalized, []
+
+
 def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data=None):
     session_meta = session_meta or CODING_SESSION_REGISTRY.get(session_id)
     if not session_meta:
@@ -2109,6 +2144,8 @@ def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data
 
     hidden_tests = question.get("hidden_tests") or []
     public_tests = question.get("public_tests") or []
+    public_test_results = []
+    hidden_test_results = []
 
     latest_run_summary = coding_data.get("latest_run_summary") or {}
     if attempted and isinstance(latest_run_summary, dict):
@@ -2116,10 +2153,16 @@ def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data
             latest_total = int(latest_run_summary.get("total", 0) or 0)
             latest_passed = int(latest_run_summary.get("passed", 0) or 0)
             latest_run_hidden = bool(latest_run_summary.get("run_hidden", False))
+            public_test_results, hidden_test_results = _split_test_results_by_suite(
+                latest_run_summary.get("test_results"),
+                latest_run_hidden,
+            )
         except (TypeError, ValueError):
             latest_total = 0
             latest_passed = 0
             latest_run_hidden = False
+            public_test_results = []
+            hidden_test_results = []
 
         # If hidden tests exist, use cached run summary only when it came from hidden suite.
         if latest_total > 0 and (latest_run_hidden or not hidden_tests):
@@ -2150,6 +2193,8 @@ def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data
                     "submitted_code": code if attempted else "",
                     "public_tests": public_tests,
                     "hidden_tests": hidden_tests,
+                    "public_test_results": public_test_results,
+                    "hidden_test_results": hidden_test_results,
                 },
             }
             EVALUATION_STORE[session_id] = result_data
@@ -2170,6 +2215,8 @@ def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data
                     batch_id=session_meta.get("batch_id", ""),
                     public_tests=public_tests,
                     hidden_tests=hidden_tests,
+                    public_test_results=public_test_results,
+                    hidden_test_results=hidden_test_results,
                 )
             return
 
@@ -2178,6 +2225,7 @@ def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data
     total_questions = len(test_suite) if test_suite else 1
     correct = 0
     work_dir = None
+    detailed_results = []
 
     if attempted and test_suite:
         try:
@@ -2193,16 +2241,37 @@ def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data
                 if success:
                     batch_results = _parse_csharp_batch_output(stdout) or []
                     for idx, tc in enumerate(test_suite):
-                        if idx >= len(batch_results):
-                            continue
-                        result = batch_results[idx]
-                        if not isinstance(result, dict) or not result.get("ok"):
-                            continue
-                        actual_obj = result.get("output")
-                        if _outputs_match(tc.get("expected"), actual_obj):
+                        tc_input_values = tc.get("input", []) or []
+                        tc_expected_obj = tc.get("expected")
+                        result = batch_results[idx] if idx < len(batch_results) else None
+                        passed = False
+                        error_text = ""
+                        actual_display = "Runtime Error"
+                        if isinstance(result, dict) and result.get("ok"):
+                            actual_obj = result.get("output")
+                            passed = _outputs_match(tc_expected_obj, actual_obj)
+                            actual_display = _display_value(tc_expected_obj if passed else actual_obj)
+                        else:
+                            error_text = (
+                                str((result or {}).get("error", "") or "").strip()
+                                if isinstance(result, dict)
+                                else ""
+                            )
+                            if not error_text and not success:
+                                error_text = str(stderr or "").strip() or "Runtime Error"
+                        if passed:
                             correct += 1
+                        detailed_results.append({
+                            "index": idx + 1,
+                            "passed": passed,
+                            "input": _display_value(tc_input_values),
+                            "expected": _display_value(tc_expected_obj),
+                            "actual": actual_display,
+                            "error": error_text,
+                            "time_ms": None,
+                        })
             else:
-                for tc in test_suite:
+                for idx, tc in enumerate(test_suite):
                     tc_input_values = tc.get("input", []) or []
                     tc_expected_obj = tc.get("expected")
 
@@ -2217,15 +2286,30 @@ def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data
                     success, stdout, stderr, elapsed = _compile_and_run(
                         language, driver_code, "", work_dir
                     )
-                    if not success:
-                        continue
-
-                    actual_obj = _parse_candidate_output(stdout)
-                    if _outputs_match(tc_expected_obj, actual_obj):
+                    passed = False
+                    actual_display = "Runtime Error"
+                    error_text = ""
+                    if success:
+                        actual_obj = _parse_candidate_output(stdout)
+                        passed = _outputs_match(tc_expected_obj, actual_obj)
+                        actual_display = _display_value(tc_expected_obj if passed else actual_obj)
+                    else:
+                        error_text = str(stderr or "").strip()
+                    if passed:
                         correct += 1
+                    detailed_results.append({
+                        "index": idx + 1,
+                        "passed": passed,
+                        "input": _display_value(tc_input_values),
+                        "expected": _display_value(tc_expected_obj),
+                        "actual": actual_display,
+                        "error": error_text,
+                        "time_ms": elapsed,
+                    })
         except Exception:
             # Keep evaluation non-blocking for candidate submit flow.
             correct = 0
+            detailed_results = []
         finally:
             if work_dir:
                 try:
@@ -2236,6 +2320,14 @@ def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data
         # If no test suite is configured, do not block evaluation visibility.
         correct = 1
         total_questions = 1
+        detailed_results = []
+
+    if hidden_tests:
+        hidden_test_results = _normalize_test_result_rows(detailed_results)
+        public_test_results = []
+    else:
+        public_test_results = _normalize_test_result_rows(detailed_results)
+        hidden_test_results = []
 
     percentage = round((correct / total_questions) * 100, 2) if total_questions else 0
     status = "PASS" if attempted and percentage >= pass_threshold else "FAIL"
@@ -2265,6 +2357,8 @@ def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data
             "submitted_code": code if attempted else "",
             "public_tests": public_tests,
             "hidden_tests": hidden_tests,
+            "public_test_results": public_test_results,
+            "hidden_test_results": hidden_test_results,
         },
     }
 
@@ -2286,6 +2380,8 @@ def _evaluate_and_store_coding_result(session_id, session_meta=None, coding_data
             batch_id=session_meta.get("batch_id", ""),
             public_tests=public_tests,
             hidden_tests=hidden_tests,
+            public_test_results=public_test_results,
+            hidden_test_results=hidden_test_results,
         )
 
 

@@ -26,10 +26,14 @@ def save_coding_submission(
     batch_id: str = "",
     public_tests=None,
     hidden_tests=None,
+    public_test_results=None,
+    hidden_test_results=None,
 ):
     STORE_FILE.parent.mkdir(parents=True, exist_ok=True)
     public_tests_value = list(public_tests or []) if isinstance(public_tests, list) else []
     hidden_tests_value = list(hidden_tests or []) if isinstance(hidden_tests, list) else []
+    public_test_results_value = list(public_test_results or []) if isinstance(public_test_results, list) else []
+    hidden_test_results_value = list(hidden_test_results or []) if isinstance(hidden_test_results, list) else []
     record = {
         "ts": _utc_now_iso(),
         "session_id": session_id,
@@ -46,6 +50,8 @@ def save_coding_submission(
         "batch_id": batch_id,
         "public_tests": public_tests_value,
         "hidden_tests": hidden_tests_value,
+        "public_test_results": public_test_results_value,
+        "hidden_test_results": hidden_test_results_value,
     }
     with STORE_FILE.open("a", encoding="utf-8") as f:
         f.write(json.dumps(record, ensure_ascii=False) + "\n")

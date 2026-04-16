@@ -166,42 +166,19 @@ def index():
     return redirect(url_for("auth.login"))
 
 
-@auth_bp.route("/login", methods=["GET", "POST"])
+@auth_bp.route("/login", methods=["GET"])
 def login():
     """Login page."""
     if session.get("user"):
         return redirect(url_for("dashboard.dashboard"))
-
-    error = None
-    if request.method == "POST":
-        # Simple email/password login for dev mode
-        username = request.form.get("username", "").strip()
-        password = request.form.get("password", "").strip()
-
-        if not is_allowed_login_email(username):
-            error = _allowed_email_error()
-        elif password == "aziro123":  # Dev mode password
-            session["user"] = {
-                "name": username.split("@")[0].title(),
-                "email": username,
-                "authenticated": True,
-            }
-            try:
-                record_login_audit(username, username.split("@")[0].title(), auth_provider="password")
-            except Exception:
-                log.exception("Failed to record login audit for %s", username)
-            return redirect(url_for("dashboard.dashboard"))
-        else:
-            error = "Invalid credentials."
-
-    return render_template("login.html", error=error)
+    return render_template("login.html", error=None)
 
 
 @auth_bp.route("/login/microsoft")
 def microsoft_login():
     """Initiate Microsoft OAuth2 flow."""
     if not AZURE_CLIENT_ID or AZURE_CLIENT_ID == "your-azure-client-id":
-        flash("Microsoft login is not configured. Use email/password login.", "warning")
+        flash("Microsoft Outlook login is not configured. Contact admin to enable Azure OAuth.", "warning")
         return redirect(url_for("auth.login"))
 
     try:

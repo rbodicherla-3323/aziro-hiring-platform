@@ -32,6 +32,9 @@ AZIRO_DARK = colors.HexColor("#1e293b")
 PASS_GREEN = colors.HexColor("#16a34a")
 FAIL_RED = colors.HexColor("#dc2626")
 PENDING_GREY = colors.HexColor("#6b7280")
+PASS_ROW_BG = colors.HexColor("#edfdf3")
+FAIL_ROW_BG = colors.HexColor("#fff1f2")
+NEUTRAL_ROW_BG = colors.HexColor("#f8fafc")
 HEADER_BG = colors.HexColor("#e8f0fe")
 ROW_ALT_BG = colors.HexColor("#f8fafc")
 CARD_BG = colors.HexColor("#f8fbff")
@@ -439,6 +442,8 @@ def _render_coding_details_section(elements, styles, coding_round_data: dict, do
     submitted_code = str(coding_round_data.get("submitted_code", "") or "")
     public_tests = coding_round_data.get("public_tests", []) if isinstance(coding_round_data.get("public_tests"), list) else []
     hidden_tests = coding_round_data.get("hidden_tests", []) if isinstance(coding_round_data.get("hidden_tests"), list) else []
+    public_test_results = coding_round_data.get("public_test_results", []) if isinstance(coding_round_data.get("public_test_results"), list) else []
+    hidden_test_results = coding_round_data.get("hidden_test_results", []) if isinstance(coding_round_data.get("hidden_test_results"), list) else []
 
     elements.append(Spacer(1, 5 * mm))
     elements.append(Paragraph("Coding Question & Submission Details", styles["SectionHead"]))
@@ -490,30 +495,84 @@ def _render_coding_details_section(elements, styles, coding_round_data: dict, do
     ]))
     elements.append(question_card)
 
-    def _render_test_case_table(title: str, rows: list[dict], empty_label: str):
+    def _merge_case_rows(rows: list[dict], results: list[dict]) -> list[dict]:
+        merged = []
+        result_map = {}
+        for idx, result in enumerate(results or [], start=1):
+            if not isinstance(result, dict):
+                continue
+            try:
+                result_idx = int(result.get("index", idx) or idx)
+            except (TypeError, ValueError):
+                result_idx = idx
+            result_map[result_idx] = result
+
+        for idx, test in enumerate(rows or [], start=1):
+            if not isinstance(test, dict):
+                continue
+            result = result_map.get(idx, {}) if isinstance(result_map.get(idx, {}), dict) else {}
+            has_status = isinstance(result, dict) and "passed" in result
+            passed = bool(result.get("passed")) if has_status else None
+            merged.append({
+                "index": idx,
+                "input": _format_value_for_pdf(result.get("input", test.get("input", ""))),
+                "expected": _format_value_for_pdf(result.get("expected", test.get("expected", ""))),
+                "actual": _format_value_for_pdf(result.get("actual", "")) if has_status else "-",
+                "passed": passed,
+            })
+        return merged
+
+    def _render_test_case_table(title: str, rows: list[dict], results: list[dict], empty_label: str):
         elements.append(Spacer(1, 3 * mm))
         elements.append(Paragraph(title, styles["CellTextBold"]))
         if not rows:
             elements.append(Paragraph(empty_label, styles["CellText"]))
             return
+        merged_rows = _merge_case_rows(rows, results)
+        passed_count = sum(1 for item in merged_rows if item.get("passed") is True)
+        failed_count = sum(1 for item in merged_rows if item.get("passed") is False)
+        pending_count = sum(1 for item in merged_rows if item.get("passed") is None)
+        summary_bits = [f"Total: {len(merged_rows)}"]
+        if passed_count or failed_count:
+            summary_bits.append(f"Passed: {passed_count}")
+            summary_bits.append(f"Failed: {failed_count}")
+        if pending_count:
+            summary_bits.append(f"Not Evaluated: {pending_count}")
+        elements.append(Paragraph(" | ".join(summary_bits), styles["CellText"]))
+        elements.append(Spacer(1, 1 * mm))
         table_data = [[
             Paragraph("<b>#</b>", styles["CellTextBold"]),
             Paragraph("<b>Input</b>", styles["CellTextBold"]),
             Paragraph("<b>Expected</b>", styles["CellTextBold"]),
+            Paragraph("<b>Actual</b>", styles["CellTextBold"]),
+            Paragraph("<b>Result</b>", styles["CellTextBold"]),
         ]]
-        for idx, test in enumerate(rows, start=1):
-            if not isinstance(test, dict):
-                continue
+        row_styles = []
+        for row_idx, test in enumerate(merged_rows, start=1):
+            result_state = test.get("passed")
+            if result_state is True:
+                result_label = "<b><font color='#16a34a'>PASS</font></b>"
+                row_styles.append(("BACKGROUND", (0, row_idx), (-1, row_idx), PASS_ROW_BG))
+            elif result_state is False:
+                result_label = "<b><font color='#dc2626'>FAIL</font></b>"
+                row_styles.append(("BACKGROUND", (0, row_idx), (-1, row_idx), FAIL_ROW_BG))
+            else:
+                result_label = "<b><font color='#6b7280'>NOT EVALUATED</font></b>"
+                if row_idx % 2 == 0:
+                    row_styles.append(("BACKGROUND", (0, row_idx), (-1, row_idx), NEUTRAL_ROW_BG))
             table_data.append([
-                Paragraph(str(idx), styles["CellText"]),
+                Paragraph(str(test.get("index", row_idx)), styles["CellText"]),
                 Paragraph(escape(_format_value_for_pdf(test.get("input", ""))), styles["CellText"]),
                 Paragraph(escape(_format_value_for_pdf(test.get("expected", ""))), styles["CellText"]),
+                Paragraph(escape(_format_value_for_pdf(test.get("actual", ""))), styles["CellText"]),
+                Paragraph(result_label, styles["CellText"]),
             ])
         idx_col = 12 * mm
-        remaining = max(doc_width - idx_col, 90 * mm)
-        io_col = remaining / 2.0
-        table = Table(table_data, colWidths=[idx_col, io_col, io_col], repeatRows=1)
-        table.setStyle(TableStyle([
+        result_col = 22 * mm
+        remaining = max(doc_width - idx_col - result_col, 70 * mm)
+        io_col = remaining / 3.0
+        table = Table(table_data, colWidths=[idx_col, io_col, io_col, io_col, result_col], repeatRows=1)
+        table_style = [
             ("BACKGROUND", (0, 0), (-1, 0), HEADER_BG),
             ("GRID", (0, 0), (-1, -1), 0.35, colors.HexColor("#cbd5e1")),
             ("TOPPADDING", (0, 0), (-1, -1), 4),
@@ -521,11 +580,23 @@ def _render_coding_details_section(elements, styles, coding_round_data: dict, do
             ("LEFTPADDING", (0, 0), (-1, -1), 5),
             ("RIGHTPADDING", (0, 0), (-1, -1), 5),
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
-        ]))
+        ]
+        table_style.extend(row_styles)
+        table.setStyle(TableStyle(table_style))
         elements.append(table)
 
-    _render_test_case_table("Sample Test Cases", public_tests, "No sample test cases available in persisted artifacts.")
-    _render_test_case_table("Hidden Test Cases", hidden_tests, "No hidden test cases available in persisted artifacts.")
+    _render_test_case_table(
+        "Sample Test Cases",
+        public_tests,
+        public_test_results,
+        "No sample test cases available in persisted artifacts.",
+    )
+    _render_test_case_table(
+        "Hidden Test Cases",
+        hidden_tests,
+        hidden_test_results,
+        "No hidden test cases available in persisted artifacts.",
+    )
 
     elements.append(Spacer(1, 3 * mm))
     elements.append(Paragraph("Submitted Code", styles["CellTextBold"]))

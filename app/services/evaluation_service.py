@@ -253,6 +253,8 @@ class EvaluationService:
                 "language": latest_submission.get("language", ""),
                 "public_tests": latest_submission.get("public_tests", []) or [],
                 "hidden_tests": latest_submission.get("hidden_tests", []) or [],
+                "public_test_results": latest_submission.get("public_test_results", []) or [],
+                "hidden_test_results": latest_submission.get("hidden_test_results", []) or [],
             }
             base_details = EvaluationService._merge_submission_details(base_details, latest_summary)
 
@@ -900,6 +902,13 @@ class EvaluationService:
         def _pick(existing, fallback):
             return existing if str(existing or "").strip() else fallback
 
+        def _pick_list(existing, fallback):
+            if isinstance(existing, list) and existing:
+                return list(existing)
+            if isinstance(fallback, list) and fallback:
+                return list(fallback)
+            return []
+
         submission_details["language"] = _pick(
             submission_details.get("language"), latest_submission.get("language", "")
         )
@@ -911,6 +920,18 @@ class EvaluationService:
         )
         submission_details["submitted_code"] = _pick(
             submission_details.get("submitted_code"), latest_submission.get("submitted_code", "")
+        )
+        submission_details["public_tests"] = _pick_list(
+            submission_details.get("public_tests"), latest_submission.get("public_tests")
+        )
+        submission_details["hidden_tests"] = _pick_list(
+            submission_details.get("hidden_tests"), latest_submission.get("hidden_tests")
+        )
+        submission_details["public_test_results"] = _pick_list(
+            submission_details.get("public_test_results"), latest_submission.get("public_test_results")
+        )
+        submission_details["hidden_test_results"] = _pick_list(
+            submission_details.get("hidden_test_results"), latest_submission.get("hidden_test_results")
         )
         l4["submission_details"] = submission_details
         rounds["L4"] = l4
@@ -980,6 +1001,8 @@ class EvaluationService:
                     "submitted_code",
                     "public_tests",
                     "hidden_tests",
+                    "public_test_results",
+                    "hidden_test_results",
                 ):
                     value = coding_for_pdf.get(key)
                     if isinstance(value, list):
@@ -1201,6 +1224,12 @@ class EvaluationService:
                 "submitted_code": _pick(submission_details.get("submitted_code"), latest_submission.get("submitted_code", "")),
                 "public_tests": _pick_list(submission_details.get("public_tests"), latest_submission.get("public_tests")),
                 "hidden_tests": _pick_list(submission_details.get("hidden_tests"), latest_submission.get("hidden_tests")),
+                "public_test_results": _pick_list(
+                    submission_details.get("public_test_results"), latest_submission.get("public_test_results")
+                ),
+                "hidden_test_results": _pick_list(
+                    submission_details.get("hidden_test_results"), latest_submission.get("hidden_test_results")
+                ),
             }
             # If not attempted, clear submitted_code to prevent starter code leaking into AI summary
             if not latest.get("attempted") or coding_data["status"] in ("Not Attempted", "Pending"):
@@ -1251,6 +1280,12 @@ class EvaluationService:
                     "submitted_code": _pick(l4_submission_details.get("submitted_code"), latest_submission.get("submitted_code", "")),
                     "public_tests": _pick_list(l4_submission_details.get("public_tests"), latest_submission.get("public_tests")),
                     "hidden_tests": _pick_list(l4_submission_details.get("hidden_tests"), latest_submission.get("hidden_tests")),
+                    "public_test_results": _pick_list(
+                        l4_submission_details.get("public_test_results"), latest_submission.get("public_test_results")
+                    ),
+                    "hidden_test_results": _pick_list(
+                        l4_submission_details.get("hidden_test_results"), latest_submission.get("hidden_test_results")
+                    ),
                 }
                 # If not attempted, clear submitted_code to prevent starter code leaking into AI summary
                 if not l4.get("attempted") or coding_data["status"] in ("Not Attempted", "Pending"):
@@ -1274,6 +1309,8 @@ class EvaluationService:
             "submitted_code": "",
             "public_tests": [],
             "hidden_tests": [],
+            "public_test_results": [],
+            "hidden_test_results": [],
         }
         coding_data.update(overall_context)
         return coding_data
